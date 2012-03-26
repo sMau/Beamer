@@ -126,7 +126,7 @@ public class MediaHandler {
 	}
 	
 	/**
-	 * Ruft unter den nötigen Bedingungen einen refresh auf dem Model der JTable auf.
+	 * Ruft unter den noetigen Bedingungen einen refresh auf dem Model der JTable auf.
 	 * Das Model bearbeitet diesen Aufruf intern entsprechend.
 	 */
 	public void refreshDataModel() {
