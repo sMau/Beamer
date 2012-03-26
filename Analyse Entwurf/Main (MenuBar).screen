@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Menu" id="1" x="72" y="48" width="897" text="&amp;File,&amp;Edit" measuredWidth="897" measuredHeight="30" selection="">
+    <items x="5" y="0" width="30" height="30" text="&amp;File"/>
+    <items x="35" y="0" width="33" height="30" text="&amp;Edit"/>
+  </widgets>
+  <widgets xsi:type="model:Popup" id="2" x="72" y="77" width="145" text="Add File&#xA;Add Themeslide&#xA;Add Tickerelement&#xA;Add Countdown&#xA;--&#xA;Import&#xA;Export&#xA;Quit&#xA;" measuredWidth="145" measuredHeight="191">
+    <items x="0" y="2" width="145" height="25" text="Add File"/>
+    <items x="0" y="27" width="145" height="25" text="Add Themeslide"/>
+    <items x="0" y="52" width="145" height="25" text="Add Tickerelement"/>
+    <items x="0" y="77" width="145" height="25" text="Add Countdown"/>
+    <items x="0" y="102" width="145" height="12" text="--"/>
+    <items x="0" y="114" width="145" height="25" text="Import"/>
+    <items x="0" y="139" width="145" height="25" text="Export"/>
+    <items x="0" y="164" width="145" height="25" text="Quit"/>
+  </widgets>
+  <widgets xsi:type="model:Popup" id="3" x="232" y="77" width="113" text="Preferences&#xA;--&#xA;Up&#xA;Down&#xA;---&#xA;Edit&#xA;Delete&#xA;Delete All" measuredWidth="113" measuredHeight="178">
+    <items x="0" y="2" width="113" height="25" text="Preferences"/>
+    <items x="0" y="27" width="113" height="12" text="--"/>
+    <items x="0" y="39" width="113" height="25" text="Up"/>
+    <items x="0" y="64" width="113" height="25" text="Down"/>
+    <items x="0" y="89" width="113" height="12" text="---"/>
+    <items x="0" y="101" width="113" height="25" text="Edit"/>
+    <items x="0" y="126" width="113" height="25" text="Delete"/>
+    <items x="0" y="151" width="113" height="25" text="Delete All"/>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="4" x="184" y="176" width="73" height="177" measuredWidth="73" measuredHeight="177" annotation="true"/>
+  <widgets xsi:type="model:Note" id="5" x="136" y="352" width="319" height="65" text="Führt zu einem Countdown erstellen Dialog (Countdown soll später &quot;normal&quot; in der Playlist auftauchen" measuredWidth="319" measuredHeight="65" annotation="true">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font/>
+</model:Screen>

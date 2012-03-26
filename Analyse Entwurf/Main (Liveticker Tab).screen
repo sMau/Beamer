@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Window" id="20" x="72" y="-32" width="897" height="681" text="Beamerprogramm" measuredWidth="897" measuredHeight="681"/>
+  <widgets xsi:type="model:Menu" id="17" x="72" y="-15" width="897" text="&amp;File,&amp;Edit" measuredWidth="897" measuredHeight="30">
+    <items x="5" y="0" width="30" height="30" text="&amp;File"/>
+    <items x="35" y="0" width="33" height="30" text="&amp;Edit"/>
+  </widgets>
+  <widgets xsi:type="model:TabbedPane" id="29" x="72" y="14" width="897" height="635" text="Filemanager,Liveticker" measuredWidth="897" measuredHeight="635" selection="1">
+    <items x="10" y="0" width="93" height="30" text="Filemanager"/>
+    <items x="103" y="0" width="76" height="30" text="Liveticker"/>
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Table" id="23" x="96" y="104" width="857" height="488" text="(w:40). Postion,(w:10). Show, Text&#xA;1,[x],Hier das ist ein Ticker&#xA;2,[],Ich bin ein Lauftext&#xA;3,[x],Buuhuuuuuuuuuuuuu&#xA;4,[],und noch mehr Text&#xA;5,[x],123" measuredWidth="857" measuredHeight="488" selection="" alternative="#eeeeee">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="24" x="96" y="64" text="Add" measuredWidth="44" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="25" x="208" y="64" text="Delete" measuredWidth="58" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:TextField" id="27" x="897" y="65" width="56" text="50" measuredWidth="56" measuredHeight="25">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="28" x="808" y="65" text="Ticker Speed" measuredWidth="80" measuredHeight="25">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="31" x="152" y="64" text="Edit" measuredWidth="43" measuredHeight="27">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font/>
+</model:Screen>

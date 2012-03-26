@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model:Screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:model="http://wireframesketcher.com/1.0/model.ecore">
+  <widgets xsi:type="model:Window" id="1" x="72" y="-32" width="897" height="681" text="Beamerprogramm" measuredWidth="897" measuredHeight="681"/>
+  <widgets xsi:type="model:TabbedPane" id="7" x="72" y="27" width="897" height="622" text="Filemanager,Liveticker" measuredWidth="897" measuredHeight="622" selection="0">
+    <items x="10" y="0" width="93" height="30" text="Filemanager"/>
+    <items x="103" y="0" width="76" height="30" text="Liveticker"/>
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:HLine" id="14" x="90" y="96" width="853" measuredWidth="853" measuredHeight="6"/>
+  <widgets xsi:type="model:Checkbox" id="15" x="864" y="67" text="Random" measuredWidth="72" measuredHeight="25">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="16" x="767" y="66" text="Automode" measuredWidth="84" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="17" x="90" y="66" text="File" measuredWidth="40" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="18" x="144" y="66" text="Themeslide" measuredWidth="88" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="19" x="320" y="66" text="Down" measuredWidth="55" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="20" x="272" y="66" text="Up" measuredWidth="37" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="21" x="496" y="66" text="Remove" measuredWidth="68" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Button" id="23" x="440" y="66" text="Edit" measuredWidth="43" measuredHeight="27">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:VSplitter" id="24" x="248" y="64" height="31" measuredWidth="11" measuredHeight="31"/>
+  <widgets xsi:type="model:Table" id="25" x="90" y="112" width="863" height="292" text="Name,Priorität,Typ,Status&#xA;CSS Start,2,Themeslide (Turnament),current&#xA;Intro Video,-,Video,-&#xA;Asus Werbung,3,Image, show at 19:45" measuredWidth="863" measuredHeight="292" selection="3" verticalScrollbar="true" alpha="192" rowHeight="20" alternative="#eeeeee">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Image" id="30" x="390" y="480"/>
+  <widgets xsi:type="model:Placeholder" id="31" x="90" y="424" width="367" height="209" text="Preview" measuredWidth="367" measuredHeight="209"/>
+  <widgets xsi:type="model:Group" id="33" x="512" y="416" width="431" height="217" text="File Info" measuredWidth="431" measuredHeight="217">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Text" id="35" x="536" y="438" width="393" height="185" text="&lt;Filename>&#xA;* Typ: Image&#xA;* Pfad: /home/samu/test123.jpg&#xA;* Priorität: 3&#xA;* Status: -&#xA;* Already showed: no&#xA;" measuredWidth="393" measuredHeight="185">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Menu" id="37" x="72" y="-15" width="897" text="&amp;File,&amp;Edit" measuredWidth="897" measuredHeight="30">
+    <items x="5" y="0" width="30" height="30" text="&amp;File"/>
+    <items x="35" y="0" width="33" height="30" text="&amp;Edit"/>
+  </widgets>
+  <widgets xsi:type="model:Label" id="38" x="664" y="67" text="Timeleft: 05:20" measuredWidth="92" measuredHeight="25">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Popup" id="39" x="278" y="208" width="97" text="Up&#xA;Down&#xA;Set&#xA;--&#xA;Priorität, >&#xA;Edit&#xA;Delete" measuredWidth="97" measuredHeight="166">
+    <items x="0" y="2" width="97" height="25" text="Up"/>
+    <items x="0" y="27" width="97" height="25" text="Down"/>
+    <items x="0" y="52" width="97" height="25" text="Set"/>
+    <items x="0" y="77" width="97" height="12" text="--"/>
+    <items x="0" y="89" width="97" height="25" text="Priorität, >"/>
+    <items x="0" y="114" width="97" height="25" text="Edit"/>
+    <items x="0" y="139" width="97" height="25" text="Delete"/>
+  </widgets>
+  <widgets xsi:type="model:Note" id="41" x="-277" y="264" text="Themeslide -> Themeslidecreator&#xA;Rest -> Rename + Priorität ändern + &quot;show at&quot; ändern" measuredWidth="327" measuredHeight="44" annotation="true">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="42" x="49" y="280" width="247" height="37" measuredWidth="247" measuredHeight="37" annotation="true"/>
+  <widgets xsi:type="model:Note" id="43" x="-224" y="403" text="Preview des momentan ausgewählten Bildes" measuredWidth="274" measuredHeight="27" annotation="true">
+    <font/>
+  </widgets>
+  <widgets xsi:type="model:Arrow" id="44" x="-24" y="429" width="146" height="68" measuredWidth="146" measuredHeight="68" annotation="true"/>
+  <widgets xsi:type="model:Button" id="45" x="389" y="66" text="Set" measuredWidth="39" measuredHeight="27">
+    <font/>
+  </widgets>
+  <hRuler/>
+  <vRuler/>
+  <font/>
+</model:Screen>
