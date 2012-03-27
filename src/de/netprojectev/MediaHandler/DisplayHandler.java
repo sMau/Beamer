@@ -186,7 +186,7 @@ public class DisplayHandler {
 			noFileShowed = false;
 		}
 		
-		if(!Constants.UNIT_TESTING) {
+		if(mediaHandler != null) {
 			mediaHandler.refreshDataModel();
 		}
 		

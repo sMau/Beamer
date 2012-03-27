@@ -17,6 +17,5 @@ public class Constants {
 	
 	public static final int DEFAULT_TICKER_SPEED = 500;
 	
-	public static Boolean UNIT_TESTING = false; // wird nur auf true gesetzt für die UNIT Tests damit die GUI refreshes keine Null Pointer erzeugen
 
 }

@@ -35,7 +35,6 @@ public class DisplayHandlerTest {
 		
 		DisplayHandler.reset();
 		displayHandler = DisplayHandler.getInstance();
-		Constants.UNIT_TESTING = true;
 		testFiles = new MediaFile[3];
 		testFiles2 = new MediaFile[1];
 		testFiles3 = new MediaFile[2];

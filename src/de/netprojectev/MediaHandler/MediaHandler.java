@@ -137,13 +137,10 @@ public class MediaHandler {
 	 */
 	public void refreshDataModel() {
 		
-		if(!Constants.UNIT_TESTING) {
-		
-			if(managerFrame != null) {
-				((FileManagerModel) managerFrame.getjTableFileManager().getModel()).updateModel();
-			}
-			
+		if(managerFrame != null) {
+			((FileManagerModel) managerFrame.getjTableFileManager().getModel()).updateModel();
 		}
+
 	}
 
 
