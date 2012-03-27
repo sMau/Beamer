@@ -9,6 +9,9 @@ import java.util.Date;
  */
 public class Status {
 
+	//TODO add a reset played states, invokable via gui
+	
+	
 	private Boolean isCurrent;
 	private Boolean wasShowed;
 	private Date showAt;

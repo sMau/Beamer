@@ -114,11 +114,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Main", jPanelTabMain);
 
-        jList1.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jList1.setModel(new PriorityListModel());
         jScrollPane1.setViewportView(jList1);
 
         jLabelPrioName.setText("Name");
@@ -183,21 +179,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jButtonPrioSave)
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemovePrio, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddPrio, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Priority", jPanelTabPrio);
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
+        jList2.setModel(new ThemeListModel());
         jScrollPane2.setViewportView(jList2);
 
         jLabelThemeName.setText("Name");
