@@ -166,4 +166,12 @@ public class FileThemeDialog extends javax.swing.JDialog {
     private javax.swing.JFileChooser jFileChooserAddFile;
     private javax.swing.JButton themeSlideAddBtn;
     // End of variables declaration//GEN-END:variables
+	public javax.swing.JButton getFileAddbtn() {
+		return fileAddbtn;
+	}
+
+	public javax.swing.JButton getThemeSlideAddBtn() {
+		return themeSlideAddBtn;
+	}
+
 }
