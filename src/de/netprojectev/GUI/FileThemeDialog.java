@@ -103,7 +103,7 @@ public class FileThemeDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_fileAddbtnActionPerformed
 
     private void themeSlideAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themeSlideAddBtnActionPerformed
-        new ThemeslideCreator().setVisible(true);
+        new ThemeslideCreatorFrame().setVisible(true);
         dispose();
     }//GEN-LAST:event_themeSlideAddBtnActionPerformed
 

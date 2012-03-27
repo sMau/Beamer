@@ -122,6 +122,11 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/pencil_edit.png"))); // NOI18N
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
@@ -227,7 +232,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTableFileManager.setModel(new FileManagerModel());
+        jTableFileManager.setModel(new FileManagerTableModel());
         jScrollPane1.setViewportView(jTableFileManager);
 
         jLabel1.setText("no File selected");
@@ -447,6 +452,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddFileActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+    	//TODO For all move and remove actions: implement a proper auto reselection
         int[] selectedRows = jTableFileManager.getSelectedRows();
         if(selectedRows.length > 0) {
         	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows));
@@ -482,6 +488,13 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
     	mediaHandler.getDisplayHandler().showNext();
     }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    	int[] selectedRows = jTableFileManager.getSelectedRows();
+    	if(selectedRows.length > 0) {
+    		new EditMediaFileFrame(Misc.indexListToMediaFiles(selectedRows)[0]).setVisible(true);
+    	}
+    }//GEN-LAST:event_btnEditActionPerformed
 
     /**
      * @param args the command line arguments

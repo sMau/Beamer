@@ -292,6 +292,9 @@
                       <Image iconType="3" name="/de/netprojectev/GFX/pencil_edit.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnRemove">
                   <Properties>

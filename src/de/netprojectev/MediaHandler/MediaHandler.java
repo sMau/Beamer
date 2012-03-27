@@ -2,7 +2,7 @@ package de.netprojectev.MediaHandler;
 
 import java.util.LinkedList;
 
-import de.netprojectev.GUI.FileManagerModel;
+import de.netprojectev.GUI.FileManagerTableModel;
 import de.netprojectev.GUI.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Misc.Constants;
@@ -138,7 +138,7 @@ public class MediaHandler {
 	public void refreshDataModel() {
 		
 		if(managerFrame != null) {
-			((FileManagerModel) managerFrame.getjTableFileManager().getModel()).updateModel();
+			((FileManagerTableModel) managerFrame.getjTableFileManager().getModel()).updateModel();
 		}
 
 	}

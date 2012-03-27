@@ -19,7 +19,7 @@ import de.netprojectev.MediaHandler.MediaHandler;
  * 
  */
 
-public class FileManagerModel extends AbstractTableModel {
+public class FileManagerTableModel extends AbstractTableModel {
     
 	/**
 	 * 
@@ -29,7 +29,7 @@ public class FileManagerModel extends AbstractTableModel {
 	private LinkedList<MediaFile> mediaFiles;
 	private String[] columnNames = {"", "", "Name", "Priority", "Type", "Show At"};
 	
-    public FileManagerModel() {
+    public FileManagerTableModel() {
         super();
         mediaHandler = MediaHandler.getInstance();
         mediaFiles = mediaHandler.getMediaFiles();
@@ -102,8 +102,18 @@ public class FileManagerModel extends AbstractTableModel {
     	
     }
  
+    /**
+     * Updating the table View to the current Data Changes on the Model.
+     * Uses invokeLater for clean and thread-save event handling.
+     */
     public void updateModel() {
-    	fireTableDataChanged();
+    	java.awt.EventQueue.invokeLater(new Runnable() {
+
+            public void run() {
+                fireTableDataChanged();
+            }
+        });
+    	
     }
     
 }

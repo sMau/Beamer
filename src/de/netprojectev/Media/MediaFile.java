@@ -28,7 +28,7 @@ public abstract class MediaFile implements Serializable {
 
 	}
 
-	public abstract ImageIcon generatePreview();
+	protected abstract ImageIcon generatePreview();
 
 	public abstract void show();
 
