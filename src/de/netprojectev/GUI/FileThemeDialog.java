@@ -15,6 +15,10 @@ import de.netprojectev.Misc.Misc;
  */
 public class FileThemeDialog extends javax.swing.JDialog {
 
+	
+	//TODO Pimp the look of the Filechooser used of Ubuntu, maybe with this here:
+	// see FileDialog
+	
     /**
 	 * 
 	 */

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import de.netprojectev.GUI.FileManagerModel;
 import de.netprojectev.GUI.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
+import de.netprojectev.Misc.Constants;
 
 public class MediaHandler {
 
@@ -27,6 +28,7 @@ public class MediaHandler {
 
 		mediaFiles = new LinkedList<MediaFile>();
 		displayHandler = DisplayHandler.getInstance();
+		displayHandler.setMediaHandler(this);
 		
 		
 	}
@@ -69,9 +71,13 @@ public class MediaHandler {
 	 */
 	public void remove(MediaFile[] files) {
 		
+		//TODO prevent curFile from removing
+		//oder ne andere loesung fuer das problem einfallen lassen dass wenn das aktuelle file entfernt wird next und prev nicht funktionieren
+		
 		for (int i = 0; i < files.length; i++) {
 			mediaFiles.remove(files[i]);
 		}
+		displayHandler.remove(files);
 		
 		refreshDataModel();
 	}
@@ -130,8 +136,13 @@ public class MediaHandler {
 	 * Das Model bearbeitet diesen Aufruf intern entsprechend.
 	 */
 	public void refreshDataModel() {
-		if(managerFrame != null) {
-			((FileManagerModel) managerFrame.getjTableFileManager().getModel()).updateModel();
+		
+		if(!Constants.UNIT_TESTING) {
+		
+			if(managerFrame != null) {
+				((FileManagerModel) managerFrame.getjTableFileManager().getModel()).updateModel();
+			}
+			
 		}
 	}
 
@@ -149,6 +160,14 @@ public class MediaHandler {
 
 	public void setManagerFrame(ManagerFrame managerFrame) {
 		this.managerFrame = managerFrame;
+	}
+
+	public DisplayHandler getDisplayHandler() {
+		return displayHandler;
+	}
+
+	public void setDisplayHandler(DisplayHandler displayHandler) {
+		this.displayHandler = displayHandler;
 	}
 	
 

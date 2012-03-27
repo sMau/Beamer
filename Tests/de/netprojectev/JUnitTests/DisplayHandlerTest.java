@@ -7,10 +7,12 @@ import java.util.LinkedList;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.netprojectev.GUI.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.VideoFile;
 import de.netprojectev.MediaHandler.DisplayHandler;
 import de.netprojectev.MediaHandler.MediaHandler;
+import de.netprojectev.Misc.Constants;
 
 public class DisplayHandlerTest {
 
@@ -32,8 +34,8 @@ public class DisplayHandlerTest {
 	public void setUp() {
 		
 		DisplayHandler.reset();
-		
 		displayHandler = DisplayHandler.getInstance();
+		Constants.UNIT_TESTING = true;
 		testFiles = new MediaFile[3];
 		testFiles2 = new MediaFile[1];
 		testFiles3 = new MediaFile[2];

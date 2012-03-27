@@ -11,6 +11,7 @@ import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
 import de.netprojectev.Media.VideoFile;
+import de.netprojectev.Misc.Constants;
 
 /**
  * DisplayHandler ist im Singleton Pattern geschrieben 
@@ -22,6 +23,8 @@ public class DisplayHandler {
 
 	private static DisplayHandler instance = null;
 
+	private MediaHandler mediaHandler;
+	
 	private LinkedList<MediaFile> playingFiles;
 	private Boolean isAutomodeEnabled;
 	private Boolean isShufflingEnabled;
@@ -183,6 +186,11 @@ public class DisplayHandler {
 			noFileShowed = false;
 		}
 		
+		if(!Constants.UNIT_TESTING) {
+			mediaHandler.refreshDataModel();
+		}
+		
+		
 	}
 	
 
@@ -193,19 +201,22 @@ public class DisplayHandler {
 	public void showNext() {
 		
 		int indexOfOldCurrent = playingFiles.indexOf(currentMediaFile);
-		ListIterator<MediaFile> iterator = playingFiles.listIterator(indexOfOldCurrent + 1);
-		if(iterator.hasNext()) {
-			MediaFile nextFile = iterator.next();
-			nextFile.show();
-			currentMediaFile = nextFile;
-			
-		} else if(currentMediaFile != playingFiles.getFirst()) {
-			MediaFile nextFile = playingFiles.getFirst();
-			nextFile.show();
-			currentMediaFile = nextFile;
 		
+		if(indexOfOldCurrent >= 0) {
+			ListIterator<MediaFile> iterator = playingFiles.listIterator(indexOfOldCurrent + 1);
+			if(iterator.hasNext()) {
+				MediaFile nextFile = iterator.next();
+				show(nextFile);
+				currentMediaFile = nextFile;
+				
+			} else if(currentMediaFile != playingFiles.getFirst()) {
+				MediaFile nextFile = playingFiles.getFirst();
+				show(nextFile);
+				currentMediaFile = nextFile;
+			
+			}
+			automodusHasChanged();
 		}
-		automodusHasChanged();
 	}
 
 
@@ -216,19 +227,23 @@ public class DisplayHandler {
 	public void showPrevious() {
 				
 		int indexOfOldCurrent = playingFiles.indexOf(currentMediaFile);
-		ListIterator<MediaFile> iterator = playingFiles.listIterator(indexOfOldCurrent);
-		if(iterator.hasPrevious()) {
-			MediaFile previousFile = iterator.previous();
-			previousFile.show();
-			currentMediaFile = previousFile;
 		
-		} else if(currentMediaFile != playingFiles.getLast()) {
-			MediaFile previousFile = playingFiles.getLast();
-			previousFile.show();
-			currentMediaFile = previousFile;
+		if(indexOfOldCurrent >= 0) {
+			ListIterator<MediaFile> iterator = playingFiles.listIterator(indexOfOldCurrent);
+			if(iterator.hasPrevious()) {
+				MediaFile previousFile = iterator.previous();
+				show(previousFile);
+				currentMediaFile = previousFile;
 			
+			} else if(currentMediaFile != playingFiles.getLast()) {
+				MediaFile previousFile = playingFiles.getLast();
+				show(previousFile);
+				currentMediaFile = previousFile;
+				
+			}
+			automodusHasChanged();
 		}
-		automodusHasChanged();
+
 	}
 
 	/**
@@ -374,6 +389,14 @@ public class DisplayHandler {
 
 	public void setHistoryFile(MediaFile historyFile) {
 		this.historyFile = historyFile;
+	}
+
+	public MediaHandler getMediaHandler() {
+		return mediaHandler;
+	}
+
+	public void setMediaHandler(MediaHandler mediaHandler) {
+		this.mediaHandler = mediaHandler;
 	}
 
 }

@@ -11,17 +11,17 @@ public class TestJTable {
 	/**
 	 * @param args
 	 * 
-	 * Die Klasse dient lediglich zum starten der Oberfläche und zum hinzufügen einiger weniger Testdateien.
-	 * Die Oberfläche muss mit der erzeugten Instanz manuell getestet werden.
+	 * Die Klasse dient lediglich zum starten der Oberflï¿½che und zum hinzufï¿½gen einiger weniger Testdateien.
+	 * Die Oberflï¿½che muss mit der erzeugten Instanz manuell getestet werden.
 	 * 
 	 */
 	public static void main(String[] args) {
 		
 		ManagerFrame frame;
 		
-		MediaFile testFile0 = new ImageFile("Werbung", "/home/samu/Bilder", Constants.DEFAULT_PRIORITY);
-		MediaFile testFile1 = new ImageFile("Hallo", "/home/samu/Bilder", Constants.DEFAULT_PRIORITY);
-		MediaFile testFile2 = new ImageFile("Webung1", "/home/samu/Bilder", Constants.DEFAULT_PRIORITY);
+		MediaFile testFile0 = new ImageFile("Werbung", "/home/samu/Bilder1", Constants.DEFAULT_PRIORITY);
+		MediaFile testFile1 = new ImageFile("Hallo", "/home/samu/Bilder2", Constants.DEFAULT_PRIORITY);
+		MediaFile testFile2 = new ImageFile("Webung1", "/home/samu/Bilder3", Constants.DEFAULT_PRIORITY);
 		MediaFile[] testFiles = new MediaFile[3];
 		testFiles[0] = testFile0;
 		testFiles[1] = testFile1;

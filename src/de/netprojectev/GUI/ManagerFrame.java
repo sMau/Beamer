@@ -5,6 +5,7 @@
 package de.netprojectev.GUI;
 
 import de.netprojectev.LiveTicker.LiveTicker;
+import de.netprojectev.MediaHandler.DisplayHandler;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
 
@@ -190,7 +191,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addComponent(btnPrev)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
                 .addComponent(lblTimeleft)
                 .addGap(18, 18, 18)
                 .addComponent(toogleBtnAuto)
@@ -367,7 +368,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Liveticker", livetickerPanel);
@@ -448,7 +449,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         int[] selectedRows = jTableFileManager.getSelectedRows();
         if(selectedRows.length > 0) {
-        	MediaHandler.getInstance().remove(Misc.indexListToMediaFiles(selectedRows));
+        	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows));
         }
         
     }//GEN-LAST:event_btnRemoveActionPerformed
@@ -456,27 +457,30 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
     	int[] selectedRows = jTableFileManager.getSelectedRows();
     	if(selectedRows.length > 0) {
-    		MediaHandler.getInstance().up(Misc.indexListToMediaFiles(selectedRows));
+    		mediaHandler.up(Misc.indexListToMediaFiles(selectedRows));
     	}
     }//GEN-LAST:event_btnUpActionPerformed
 
     private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownActionPerformed
     	int[] selectedRows = jTableFileManager.getSelectedRows();
     	if(selectedRows.length > 0) {
-    		MediaHandler.getInstance().down(Misc.indexListToMediaFiles(selectedRows));
+    		mediaHandler.down(Misc.indexListToMediaFiles(selectedRows));
     	}
     }//GEN-LAST:event_btnDownActionPerformed
 
     private void btnSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetActionPerformed
-        // TODO add your handling code here:
+    	int[] selectedRows = jTableFileManager.getSelectedRows();
+    	if(selectedRows.length > 0) {
+    		mediaHandler.getDisplayHandler().show(Misc.indexListToMediaFiles(selectedRows)[0]);
+    	}
     }//GEN-LAST:event_btnSetActionPerformed
 
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-        // TODO add your handling code here:
+    	mediaHandler.getDisplayHandler().showPrevious();
     }//GEN-LAST:event_btnPrevActionPerformed
     
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-        // TODO add your handling code here:
+    	mediaHandler.getDisplayHandler().showNext();
     }//GEN-LAST:event_btnNextActionPerformed
 
     /**

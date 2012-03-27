@@ -35,10 +35,6 @@ public class FileManagerModel extends AbstractTableModel {
         mediaFiles = mediaHandler.getMediaFiles();
                 
     }
-    
-    
-   
-    
 
     @Override
     public int getRowCount() {
