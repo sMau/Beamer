@@ -2,7 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.netprojectev.GUI;
+package de.netprojectev.GUI.Preferences;
+
+import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.Media.Priority;
+import de.netprojectev.Misc.Misc;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
  *
@@ -10,10 +15,23 @@ package de.netprojectev.GUI;
  */
 public class PreferencesFrame extends javax.swing.JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5332162076303310401L;
+	private PreferencesHandler preferenceshandler;
+	private Priority selectedPrio;
+	private ManagerFrame managerFrame;
+	
     /**
      * Creates new form PreferencesFrame
      */
-    public PreferencesFrame() {
+    public PreferencesFrame(ManagerFrame managerFrame) {
+    	
+    	this.managerFrame = managerFrame;
+    	this.preferenceshandler = PreferencesHandler.getInstance(); 
+    	preferenceshandler.setPreferencesFrame(this);
+    	preferenceshandler.setManagerFrame(managerFrame);
         initComponents();
     }
 
@@ -35,11 +53,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jSlider1 = new javax.swing.JSlider();
         jPanelTabPrio = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList();
+        jListPrio = new javax.swing.JList();
         jLabelPrioName = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        jTextFieldPrioName = new javax.swing.JTextField();
+        jTextFieldPrioMin = new javax.swing.JTextField();
         jButtonPrioSave = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnAddPrio = new javax.swing.JButton();
@@ -53,7 +71,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jButtonPrioSave1 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        btnAddPrio1 = new javax.swing.JButton();
+        btnAddTheme = new javax.swing.JButton();
         btnRemovePrio1 = new javax.swing.JButton();
         jButtonChooseBgImage = new javax.swing.JButton();
         jButtonCancelPrefs = new javax.swing.JButton();
@@ -65,10 +83,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jButtonReset.setText("Reset Data");
 
         jCheckBox1.setText("Load always on start");
-        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         jCheckBox2.setText("Save always on close");
-        jCheckBox2.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        jCheckBox2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         jLabelTickerSpeed.setText("Ticker Speed");
 
@@ -82,11 +100,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonReset))
-                    .addGroup(jPanelTabMainLayout.createSequentialGroup()
-                        .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jCheckBox2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelTabMainLayout.createSequentialGroup()
                         .addComponent(jLabelTickerSpeed)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -114,14 +129,24 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Main", jPanelTabMain);
 
-        jList1.setModel(new PriorityListModel());
-        jScrollPane1.setViewportView(jList1);
+        jListPrio.setModel(new PriorityListModel());
+        jListPrio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jListPrioMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jListPrio);
 
         jLabelPrioName.setText("Name");
 
         jLabel2.setText("Minutes");
 
         jButtonPrioSave.setText("Save");
+        jButtonPrioSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrioSaveActionPerformed(evt);
+            }
+        });
 
         btnAddPrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
         btnAddPrio.addActionListener(new java.awt.event.ActionListener() {
@@ -131,6 +156,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         btnRemovePrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemovePrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemovePrioActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTabPrioLayout = new javax.swing.GroupLayout(jPanelTabPrio);
         jPanelTabPrio.setLayout(jPanelTabPrioLayout);
@@ -149,11 +179,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                                         .addComponent(jLabelPrioName)
                                         .addGap(38, 38, 38)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(23, 23, 23)
-                                        .addComponent(jTextField2)))
+                                        .addComponent(jTextFieldPrioMin)))
                                 .addComponent(jButtonPrioSave))
                             .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                                 .addComponent(btnAddPrio)
@@ -170,11 +200,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelPrioName)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonPrioSave)
                         .addGap(18, 18, 18)
@@ -210,10 +240,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jButtonPrioSave1.setText("Save");
 
-        btnAddPrio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
-        btnAddPrio1.addActionListener(new java.awt.event.ActionListener() {
+        btnAddTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+        btnAddTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddPrio1ActionPerformed(evt);
+                btnAddThemeActionPerformed(evt);
             }
         });
 
@@ -234,7 +264,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(jPanelTabThemeLayout.createSequentialGroup()
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                                .addComponent(btnAddPrio1)
+                                .addComponent(btnAddTheme)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnRemovePrio1))
                             .addGroup(jPanelTabThemeLayout.createSequentialGroup()
@@ -275,7 +305,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemovePrio1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAddPrio1, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(btnAddTheme, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -290,6 +320,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         jButtonApplyPrefs.setText("Apply");
+        jButtonApplyPrefs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonApplyPrefsActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -322,12 +357,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCancelPrefsActionPerformed
 
     private void btnAddPrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPrioActionPerformed
-        // TODO add your handling code here:
+    	
+    	selectedPrio = null;
+    	jTextFieldPrioName.setText("New Priority");
+    	jTextFieldPrioMin.setText("5");	
+    	jListPrio.clearSelection();
+    	
     }//GEN-LAST:event_btnAddPrioActionPerformed
 
-    private void btnAddPrio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPrio1ActionPerformed
+    private void btnAddThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddThemeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddPrio1ActionPerformed
+    }//GEN-LAST:event_btnAddThemeActionPerformed
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
         // TODO add your handling code here:
@@ -336,6 +376,60 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
+
+    private void jButtonPrioSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrioSaveActionPerformed
+        
+    	Boolean alreadyExists = false;
+    	
+    	if(selectedPrio == null) { //Creation of new Priority
+    		if(!jTextFieldPrioName.getText().isEmpty() && !jTextFieldPrioMin.getText().isEmpty()) {
+        		
+        		for(int i = 0; i < preferenceshandler.getListOfPriorities().size(); i++) {
+        			
+        			if(preferenceshandler.getListOfPriorities().get(i).getName().equals(jTextFieldPrioName.getText())) {
+        				System.out.println("if reached");
+        				alreadyExists = true;
+        			}
+
+        		}
+        		
+        		if(!alreadyExists) {
+        			Priority newPriority = new Priority(jTextFieldPrioName.getText(), Integer.parseInt(jTextFieldPrioMin.getText()));
+                	preferenceshandler.addPriority(newPriority);
+                	jListPrio.setSelectedIndex(preferenceshandler.getListOfPriorities().size() - 1);
+        		} else {
+        			// TODO Error Dialog
+        		}
+        		
+        	}
+    	} else { //Editing the selected Priority
+    		selectedPrio.setName(jTextFieldPrioName.getText());
+    		selectedPrio.setMinutesToShow(Integer.parseInt(jTextFieldPrioMin.getText()));
+    		preferenceshandler.refreshPrioListModel();
+    	}
+    	
+    	
+    }//GEN-LAST:event_jButtonPrioSaveActionPerformed
+
+    private void jListPrioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListPrioMouseClicked
+    	if(jListPrio.getSelectedIndex() >= 0) {
+    		selectedPrio = preferenceshandler.getListOfPriorities().get(jListPrio.getSelectedIndex());
+            jTextFieldPrioName.setText(selectedPrio.getName());
+            jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
+    	}
+    }//GEN-LAST:event_jListPrioMouseClicked
+
+    private void btnRemovePrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemovePrioActionPerformed
+        int[] selectedIndices = jListPrio.getSelectedIndices();
+    	preferenceshandler.removePriorities(Misc.indexListToPriorities(selectedIndices));
+    	
+    }//GEN-LAST:event_btnRemovePrioActionPerformed
+
+    private void jButtonApplyPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyPrefsActionPerformed
+        
+    	//TODO die unter main gesetzten booleans speichern
+    	dispose();
+    }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -374,13 +468,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new PreferencesFrame().setVisible(true);
+                new PreferencesFrame(null).setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddPrio;
-    private javax.swing.JButton btnAddPrio1;
+    private javax.swing.JButton btnAddTheme;
     private javax.swing.JButton btnRemovePrio;
     private javax.swing.JButton btnRemovePrio1;
     private javax.swing.JButton jButtonApplyPrefs;
@@ -396,8 +490,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelThemeBg;
     private javax.swing.JLabel jLabelThemeName;
     private javax.swing.JLabel jLabelTickerSpeed;
-    private javax.swing.JList jList1;
     private javax.swing.JList jList2;
+    private javax.swing.JList jListPrio;
     private javax.swing.JPanel jPanelTabMain;
     private javax.swing.JPanel jPanelTabPrio;
     private javax.swing.JPanel jPanelTabTheme;
@@ -407,9 +501,25 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextFieldPrioMin;
+    private javax.swing.JTextField jTextFieldPrioName;
     // End of variables declaration//GEN-END:variables
+
+	public javax.swing.JList getjListPrio() {
+		return jListPrio;
+	}
+
+	public void setjListPrio(javax.swing.JList jListPrio) {
+		this.jListPrio = jListPrio;
+	}
+
+	public ManagerFrame getManagerFrame() {
+		return managerFrame;
+	}
+
+	public void setManagerFrame(ManagerFrame managerFrame) {
+		this.managerFrame = managerFrame;
+	}
 }

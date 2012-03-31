@@ -1,8 +1,10 @@
-package de.netprojectev.GUI;
+package de.netprojectev.GUI.Preferences;
 
 import javax.swing.AbstractListModel;
 
-import de.netprojectev.Misc.PreferencesHandler;
+import de.netprojectev.Preferences.PreferencesHandler;
+
+
 
 public class ThemeListModel extends AbstractListModel<Object> {
 

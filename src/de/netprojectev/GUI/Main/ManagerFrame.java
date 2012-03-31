@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.netprojectev.GUI;
+package de.netprojectev.GUI.Main;
 
+import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
+import de.netprojectev.GUI.Dialogs.FileThemeDialog;
+import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
@@ -604,7 +607,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemDownActionPerformed
 
     private void jMenuItemPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrefsActionPerformed
-        new PreferencesFrame().setVisible(true);
+        new PreferencesFrame(this).setVisible(true);
     }//GEN-LAST:event_jMenuItemPrefsActionPerformed
 
     private void jRadioButtonMenuItemShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemShuffleActionPerformed

@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.netprojectev.GUI.ManagerFrame;
+import de.netprojectev.GUI.Main.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.VideoFile;
 import de.netprojectev.MediaHandler.DisplayHandler;

@@ -71,13 +71,8 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="jButtonReset" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jCheckBox2" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jCheckBox1" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="jCheckBox2" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jCheckBox1" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabelTickerSpeed" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -120,13 +115,13 @@
             <Component class="javax.swing.JCheckBox" name="jCheckBox1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Load always on start"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JCheckBox" name="jCheckBox2">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save always on close"/>
-                <Property name="horizontalTextPosition" type="int" value="2"/>
+                <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabelTickerSpeed">
@@ -163,12 +158,12 @@
                                           <Group type="102" attributes="0">
                                               <Component id="jLabelPrioName" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                              <Component id="jTextField1" min="-2" pref="131" max="-2" attributes="0"/>
+                                              <Component id="jTextFieldPrioName" min="-2" pref="131" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
                                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                                              <Component id="jTextField2" max="32767" attributes="0"/>
+                                              <Component id="jTextFieldPrioMin" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="jButtonPrioSave" min="-2" max="-2" attributes="0"/>
@@ -194,12 +189,12 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabelPrioName" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldPrioName" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextFieldPrioMin" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButtonPrioSave" min="-2" max="-2" attributes="0"/>
@@ -226,12 +221,15 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JList" name="jList1">
+                <Component class="javax.swing.JList" name="jListPrio">
                   <Properties>
                     <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new PriorityListModel()" type="code"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jListPrioMouseClicked"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
@@ -245,14 +243,17 @@
                 <Property name="text" type="java.lang.String" value="Minutes"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="jTextFieldPrioName">
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField2">
+            <Component class="javax.swing.JTextField" name="jTextFieldPrioMin">
             </Component>
             <Component class="javax.swing.JButton" name="jButtonPrioSave">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Save"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPrioSaveActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator1">
             </Component>
@@ -272,6 +273,9 @@
                   <Image iconType="3" name="/de/netprojectev/GFX/delete_2.png"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemovePrioActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -296,7 +300,7 @@
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="btnAddPrio1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="btnAddTheme" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="btnRemovePrio1" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -350,7 +354,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="btnRemovePrio1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnAddPrio1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnAddTheme" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jScrollPane2" alignment="0" pref="284" max="32767" attributes="0"/>
@@ -404,14 +408,14 @@
             </Component>
             <Component class="javax.swing.JSeparator" name="jSeparator2">
             </Component>
-            <Component class="javax.swing.JButton" name="btnAddPrio1">
+            <Component class="javax.swing.JButton" name="btnAddTheme">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/de/netprojectev/GFX/plus_2.png"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddPrio1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddThemeActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnRemovePrio1">
@@ -442,6 +446,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Apply"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonApplyPrefsActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -1,8 +1,10 @@
-package de.netprojectev.GUI;
+package de.netprojectev.GUI.Preferences;
 
 import javax.swing.AbstractListModel;
 
-import de.netprojectev.Misc.PreferencesHandler;
+import de.netprojectev.Preferences.PreferencesHandler;
+
+
 
 public class PriorityListModel extends AbstractListModel<Object> {
 
@@ -19,7 +21,6 @@ public class PriorityListModel extends AbstractListModel<Object> {
 		
 	}
 	
-	
 
 	@Override
 	public int getSize() {
@@ -29,6 +30,14 @@ public class PriorityListModel extends AbstractListModel<Object> {
 	@Override
 	public Object getElementAt(int index) {
 		return preferencesHandler.getListOfPriorities().get(index).getName();
+	}
+	
+	public void updateList() {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+            	fireContentsChanged(this, 0, preferencesHandler.getListOfPriorities().size());
+            }
+        });
 	}
 
 }

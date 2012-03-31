@@ -2,9 +2,12 @@ package de.netprojectev.Misc;
 
 import java.io.File;
 
+import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
+import de.netprojectev.Media.Priority;
 import de.netprojectev.MediaHandler.MediaHandler;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
  * 
@@ -17,7 +20,7 @@ public class Misc {
 		
 		MediaFile[] mediaFiles = new MediaFile[files.length];
 		
-		//TODO im Moment dumme for schleife; soll in Zukunft automatisch zwischen Video und Bild unterscheiden können und die entsprechende MedienDatei erzeugen
+		//TODO im Moment dumme for schleife; soll in Zukunft automatisch zwischen Video und Bild unterscheiden kï¿½nnen und die entsprechende MedienDatei erzeugen
 		
 		for(int i = 0; i < files.length; i++) {
 			
@@ -42,5 +45,19 @@ public class Misc {
 		}
 		
 		return mediaFiles;
+	}
+	
+	
+	public static Priority[] indexListToPriorities(int[] selectedIndices) {
+		
+		Priority[] priorities = new Priority[selectedIndices.length];
+		
+		for(int i = 0; i < selectedIndices.length; i++) {
+			
+			priorities[i] = PreferencesHandler.getInstance().getListOfPriorities().get(selectedIndices[i]);
+			
+		}
+		
+		return priorities;
 	}
 }

@@ -1,8 +1,9 @@
 package de.netprojectev.Tests;
 
-import de.netprojectev.GUI.PreferencesFrame;
+import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.Media.Priority;
-import de.netprojectev.Misc.PreferencesHandler;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 public class TestPreferences {
 
@@ -26,7 +27,7 @@ public class TestPreferences {
         }
 		
 		
-		new PreferencesFrame().setVisible(true);
+		new PreferencesFrame(new ManagerFrame()).setVisible(true);
 
 	}
 

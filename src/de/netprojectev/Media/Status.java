@@ -10,12 +10,13 @@ import java.util.Date;
 public class Status {
 
 	//TODO add a reset played states, invokable via gui
-	
+	//TODO set wasShowed after a given time, settable via prefs
 	
 	private Boolean isCurrent;
 	private Boolean wasShowed;
 	private Date showAt;
 
+	
 	public Status() {
 		this.isCurrent = false;
 		this.wasShowed = false;

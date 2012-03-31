@@ -1,13 +1,20 @@
-package de.netprojectev.Misc;
+package de.netprojectev.Preferences;
 
 import java.util.LinkedList;
 
+import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.GUI.Preferences.PreferencesFrame;
+import de.netprojectev.GUI.Preferences.PriorityListModel;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
+import de.netprojectev.Misc.Constants;
 
 public class PreferencesHandler {
 	
 	private static PreferencesHandler instance;
+	
+	private PreferencesFrame preferencesFrame;
+	private ManagerFrame managerFrame;
 	
 	private LinkedList<Priority> listOfPriorities;
 	private LinkedList<Theme> listOfThemes;
@@ -20,6 +27,8 @@ public class PreferencesHandler {
 	private PreferencesHandler() {
 		
 		this.listOfPriorities = new LinkedList<Priority>();
+		addPriority(Constants.DEFAULT_PRIORITY);
+		
 		this.listOfThemes = new LinkedList<Theme>();
 		
 		this.loadOnStart = false;
@@ -40,6 +49,7 @@ public class PreferencesHandler {
 	public void addPriority(Priority prio) {
 		if(!listOfPriorities.contains(prio)) {
 			listOfPriorities.add(prio);
+			refreshPrioListModel();
 		}
 		
 	}
@@ -54,6 +64,7 @@ public class PreferencesHandler {
 		for (int i = 0; i < prios.length; i++) {
 			listOfPriorities.remove(prios[i]);
 		}
+		refreshPrioListModel();
 	}
 	
 	public void removeThemes(Theme[] themes) {
@@ -62,6 +73,19 @@ public class PreferencesHandler {
 		}
 	}
 	
+	public void refreshPrioListModel() {
+		if(preferencesFrame != null) {
+			((PriorityListModel) preferencesFrame.getjListPrio().getModel()).updateList();
+		}
+	}
+	
+	public Boolean isPriorityUsed(Priority prio) {
+		
+		//UNUSED
+		
+		return false;
+		
+	}
 
 	public LinkedList<Priority> getListOfPriorities() {
 		return listOfPriorities;
@@ -101,6 +125,22 @@ public class PreferencesHandler {
 
 	public void setTickerSpeed(int tickerSpeed) {
 		this.tickerSpeed = tickerSpeed;
+	}
+
+	public PreferencesFrame getPreferencesFrame() {
+		return preferencesFrame;
+	}
+
+	public void setPreferencesFrame(PreferencesFrame preferencesFrame) {
+		this.preferencesFrame = preferencesFrame;
+	}
+
+	public ManagerFrame getManagerFrame() {
+		return managerFrame;
+	}
+
+	public void setManagerFrame(ManagerFrame managerFrame) {
+		this.managerFrame = managerFrame;
 	}
 	
 

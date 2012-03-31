@@ -2,9 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.netprojectev.GUI;
+package de.netprojectev.GUI.Dialogs;
 
+import de.netprojectev.GUI.Main.FileManagerTableModel;
 import de.netprojectev.Media.MediaFile;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
  *
@@ -23,13 +25,21 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
      */
 	
 	private MediaFile selectedMediaFile;
+	private PreferencesHandler preferencesHandler;
 	
     public EditMediaFileFrame(MediaFile selectedMediaFile) {
     	
     	if(selectedMediaFile != null) {
     		initComponents();
+    		preferencesHandler = PreferencesHandler.getInstance();
     		this.selectedMediaFile = selectedMediaFile;
-            jTextFieldEditFileName.setText(selectedMediaFile.getName());    
+            jTextFieldEditFileName.setText(selectedMediaFile.getName()); 
+            
+            for(int i = 0; i < preferencesHandler.getListOfPriorities().size(); i++) {
+            	jComboBoxPriority.addItem(preferencesHandler.getListOfPriorities().get(i).getName());
+            }
+            jComboBoxPriority.setSelectedItem(selectedMediaFile.getPriority().getName());
+            jLabelMinutes.setText(Integer.toString(selectedMediaFile.getPriority().getMinutesToShow()));
     	}
     }
 
@@ -46,6 +56,10 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
         jLabelEnterNameHint = new javax.swing.JLabel();
         jButtonApply = new javax.swing.JButton();
         jButtonCancel = new javax.swing.JButton();
+        jLabelEnterNameHint1 = new javax.swing.JLabel();
+        jComboBoxPriority = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
+        jLabelMinutes = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Edit File");
@@ -56,7 +70,7 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabelEnterNameHint.setText("Enter a new file name.");
+        jLabelEnterNameHint.setText("File name");
 
         jButtonApply.setText("Apply");
         jButtonApply.addActionListener(new java.awt.event.ActionListener() {
@@ -72,6 +86,18 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabelEnterNameHint1.setText("Priority");
+
+        jComboBoxPriority.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxPriorityActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Minutes:");
+
+        jLabelMinutes.setText("-");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -80,24 +106,39 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelEnterNameHint)
-                        .addGap(0, 136, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 199, Short.MAX_VALUE)
                         .addComponent(jButtonCancel)
                         .addGap(18, 18, 18)
                         .addComponent(jButtonApply))
-                    .addComponent(jTextFieldEditFileName))
+                    .addComponent(jTextFieldEditFileName)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelEnterNameHint)
+                            .addComponent(jLabelEnterNameHint1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jComboBoxPriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabelMinutes)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addComponent(jLabelEnterNameHint)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextFieldEditFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabelEnterNameHint1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxPriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabelMinutes))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonApply)
                     .addComponent(jButtonCancel))
@@ -117,8 +158,17 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
 
     private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed
     	selectedMediaFile.setName(jTextFieldEditFileName.getText());
+    	selectedMediaFile.setPriority(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()));
+    	
+    	if(preferencesHandler.getManagerFrame() != null) {
+			((FileManagerTableModel) preferencesHandler.getManagerFrame().getjTableFileManager().getModel()).updateModel();
+		}
     	dispose();
     }//GEN-LAST:event_jButtonApplyActionPerformed
+
+    private void jComboBoxPriorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPriorityActionPerformed
+    	 jLabelMinutes.setText(Integer.toString(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()).getMinutesToShow()));
+    }//GEN-LAST:event_jComboBoxPriorityActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,7 +214,11 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonApply;
     private javax.swing.JButton jButtonCancel;
+    private javax.swing.JComboBox jComboBoxPriority;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelEnterNameHint;
+    private javax.swing.JLabel jLabelEnterNameHint1;
+    private javax.swing.JLabel jLabelMinutes;
     private javax.swing.JTextField jTextFieldEditFileName;
     // End of variables declaration//GEN-END:variables
 }

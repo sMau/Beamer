@@ -2,10 +2,9 @@ package de.netprojectev.MediaHandler;
 
 import java.util.LinkedList;
 
-import de.netprojectev.GUI.FileManagerTableModel;
-import de.netprojectev.GUI.ManagerFrame;
+import de.netprojectev.GUI.Main.FileManagerTableModel;
+import de.netprojectev.GUI.Main.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
-import de.netprojectev.Misc.Constants;
 
 public class MediaHandler {
 

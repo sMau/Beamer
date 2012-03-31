@@ -15,7 +15,7 @@ public class Constants {
 	
 	public static final String SEPERATOR = " +++ ";
 	
-	public static final int DEFAULT_TICKER_SPEED = 500;
+	public static final int DEFAULT_TICKER_SPEED = 50;
 	
 
 }
