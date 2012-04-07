@@ -4,6 +4,9 @@
  */
 package de.netprojectev.GUI.Main;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
 import de.netprojectev.GUI.Dialogs.FileThemeDialog;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
@@ -68,10 +71,10 @@ public class ManagerFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFileManager = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelPreview = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaFileInfo = new javax.swing.JTextArea();
         livetickerPanel = new javax.swing.JPanel();
         btnPanelLiveticker = new javax.swing.JPanel();
         btnAddFile2 = new javax.swing.JButton();
@@ -253,11 +256,29 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTableFileManager.getColumnModel().getColumn(1).setMinWidth(12);
         jTableFileManager.getColumnModel().getColumn(0).setResizable(false);
         jTableFileManager.getColumnModel().getColumn(1).setResizable(false);
+        jTableFileManager.getSelectionModel().addListSelectionListener(
+            new ListSelectionListener() {
+            	@Override
+                public void valueChanged(ListSelectionEvent event) {
+                    int viewRow = jTableFileManager.getSelectedRow();
+                    if (viewRow < 0) {
+                        jTextAreaFileInfo.setText("No file selected");
+                    } else {
+                        jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).getName());
+                    }
+                }
+            }
+        );
+        jTableFileManager.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTableFileManagerFocusGained(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableFileManager);
 
-        jLabel1.setText("no File selected");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
+        jLabelPreview.setText("no File selected");
+        jLabelPreview.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabelPreview.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -265,21 +286,21 @@ public class ManagerFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jTextArea1.setBackground(new java.awt.Color(240, 240, 240));
-        jTextArea1.setColumns(20);
-        jTextArea1.setEditable(false);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("no File selected");
-        jTextArea1.setToolTipText("");
-        jTextArea1.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
-        jScrollPane2.setViewportView(jTextArea1);
+        jTextAreaFileInfo.setBackground(new java.awt.Color(240, 240, 240));
+        jTextAreaFileInfo.setColumns(20);
+        jTextAreaFileInfo.setEditable(false);
+        jTextAreaFileInfo.setRows(5);
+        jTextAreaFileInfo.setText("no File selected");
+        jTextAreaFileInfo.setToolTipText("");
+        jTextAreaFileInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
+        jScrollPane2.setViewportView(jTextAreaFileInfo);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -626,6 +647,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_toggleBtnShuffleActionPerformed
 
+    private void jTableFileManagerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableFileManagerFocusGained
+    }//GEN-LAST:event_jTableFileManagerFocusGained
+
     /**
      * @param args the command line arguments
      */
@@ -682,7 +706,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnSet;
     private javax.swing.JButton btnUp;
     private javax.swing.JPanel filemangerPanel;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelPreview;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenu jMenuFile;
@@ -713,7 +737,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableFileManager;
     private javax.swing.JTable jTableLiveticker;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea jTextAreaFileInfo;
     private javax.swing.JLabel lblTimeleft;
     private javax.swing.JPanel livetickerPanel;
     private javax.swing.JToggleButton toggleBtnShuffle;

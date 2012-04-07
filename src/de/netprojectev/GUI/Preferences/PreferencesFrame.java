@@ -412,7 +412,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonPrioSaveActionPerformed
 
     private void jListPrioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListPrioMouseClicked
-    	if(jListPrio.getSelectedIndex() >= 0) {
+
+        //TODO change to selection listener cause of keyboard navigation
+        if(jListPrio.getSelectedIndex() >= 0) {
     		selectedPrio = preferenceshandler.getListOfPriorities().get(jListPrio.getSelectedIndex());
             jTextFieldPrioName.setText(selectedPrio.getName());
             jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));

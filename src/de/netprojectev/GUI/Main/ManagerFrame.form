@@ -422,8 +422,11 @@
                     <Property name="showHorizontalLines" type="boolean" value="false"/>
                     <Property name="showVerticalLines" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTableFileManagerFocusGained"/>
+                  </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                int viewRow = table.getSelectedRow();&#xa;                if (viewRow &lt; 0) {&#xa;                    jTextAreaFileInfo.setText(&quot;No file selected&quot;);&#xa;                } else {&#xa;                    jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).getName());&#xa;                }&#xa;            }&#xa;        }&#xa;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -435,18 +438,18 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel1" max="32767" attributes="0"/>
+                          <Component id="jLabelPreview" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
+                      <Component id="jLabelPreview" alignment="0" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel1">
+                <Component class="javax.swing.JLabel" name="jLabelPreview">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="no File selected"/>
                     <Property name="verticalAlignment" type="int" value="1"/>
@@ -485,7 +488,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Component class="javax.swing.JTextArea" name="jTextArea1">
+                    <Component class="javax.swing.JTextArea" name="jTextAreaFileInfo">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f0" green="f0" red="f0" type="rgb"/>

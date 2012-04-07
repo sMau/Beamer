@@ -31,6 +31,13 @@ public abstract class MediaFile implements Serializable {
 	protected abstract ImageIcon generatePreview();
 
 	public abstract void show();
+	
+	public String generateInfoString() {
+		//TODO implement for info field in managerframe, propably overriding implementation in subclasses
+		
+		
+		return name;
+	}
 
 	public String getName() {
 		return name;
