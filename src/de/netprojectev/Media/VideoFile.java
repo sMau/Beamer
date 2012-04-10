@@ -38,6 +38,15 @@ public class VideoFile extends MediaFile {
 		
 	}
 	
+	@Override
+	public String generateInfoString() {
+		
+		//TODO implementing differnt info, cause of video length usw.
+		
+		
+		return super.generateInfoString();
+	}
+	
 	private int generateVideoLength() {
 		
 		//TODO Video Länge aus Datei auslesen.

@@ -51,6 +51,13 @@ public class ManagerFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenuFileTableElement = new javax.swing.JPopupMenu();
+        jMenuItemAddP = new javax.swing.JMenuItem();
+        jMenuItemEditP = new javax.swing.JMenuItem();
+        jMenuItemDeleteP = new javax.swing.JMenuItem();
+        jMenuItemUpP = new javax.swing.JMenuItem();
+        jMenuItemDownP = new javax.swing.JMenuItem();
+        jMenuItemShowP = new javax.swing.JMenuItem();
         jTabbedPane = new javax.swing.JTabbedPane();
         filemangerPanel = new javax.swing.JPanel();
         btnPanelFile = new javax.swing.JPanel();
@@ -73,7 +80,6 @@ public class ManagerFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabelPreview = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaFileInfo = new javax.swing.JTextArea();
         livetickerPanel = new javax.swing.JPanel();
         btnPanelLiveticker = new javax.swing.JPanel();
@@ -85,7 +91,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jSeparator8 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTableLiveticker = new javax.swing.JTable();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuBarMainFrame = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemAddFile = new javax.swing.JMenuItem();
         jMenuItemAddThemeslide = new javax.swing.JMenuItem();
@@ -101,6 +107,54 @@ public class ManagerFrame extends javax.swing.JFrame {
         jRadioButtonMenuItemAuto = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItemShuffle = new javax.swing.JRadioButtonMenuItem();
         jMenuItemPrefs = new javax.swing.JMenuItem();
+
+        jMenuItemAddP.setText("Add");
+        jMenuItemAddP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAddPActionPerformed(evt);
+            }
+        });
+        jPopupMenuFileTableElement.add(jMenuItemAddP);
+
+        jMenuItemEditP.setText("Edit");
+        jMenuItemEditP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemEditPActionPerformed(evt);
+            }
+        });
+        jPopupMenuFileTableElement.add(jMenuItemEditP);
+
+        jMenuItemDeleteP.setText("Delete");
+        jMenuItemDeleteP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDeletePActionPerformed(evt);
+            }
+        });
+        jPopupMenuFileTableElement.add(jMenuItemDeleteP);
+
+        jMenuItemUpP.setText("Up");
+        jMenuItemUpP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemUpPActionPerformed(evt);
+            }
+        });
+        jPopupMenuFileTableElement.add(jMenuItemUpP);
+
+        jMenuItemDownP.setText("Down");
+        jMenuItemDownP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemDownPActionPerformed(evt);
+            }
+        });
+        jPopupMenuFileTableElement.add(jMenuItemDownP);
+
+        jMenuItemShowP.setText("Show");
+        jMenuItemShowP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemShowPActionPerformed(evt);
+            }
+        });
+        jPopupMenuFileTableElement.add(jMenuItemShowP);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Beamermanager");
@@ -258,13 +312,12 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTableFileManager.getColumnModel().getColumn(1).setResizable(false);
         jTableFileManager.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
-            	@Override
                 public void valueChanged(ListSelectionEvent event) {
                     int viewRow = jTableFileManager.getSelectedRow();
                     if (viewRow < 0) {
                         jTextAreaFileInfo.setText("No file selected");
                     } else {
-                        jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).getName());
+                        jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
                     }
                 }
             }
@@ -300,20 +353,22 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTextAreaFileInfo.setText("no File selected");
         jTextAreaFileInfo.setToolTipText("");
         jTextAreaFileInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
-        jScrollPane2.setViewportView(jTextAreaFileInfo);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 11, Short.MAX_VALUE)
+                .addComponent(jTextAreaFileInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 11, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 1, Short.MAX_VALUE)
+                .addComponent(jTextAreaFileInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout filemangerPanelLayout = new javax.swing.GroupLayout(filemangerPanel);
@@ -335,7 +390,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(filemangerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -405,7 +460,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             livetickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnPanelLiveticker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator8)
-            .addComponent(jScrollPane3)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
         );
         livetickerPanelLayout.setVerticalGroup(
             livetickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -452,7 +507,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
         jMenuFile.add(jMenuItemQuit);
 
-        jMenuBar1.add(jMenuFile);
+        jMenuBarMainFrame.add(jMenuFile);
 
         jMenuEdit.setText("Edit");
 
@@ -488,7 +543,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
         jMenuEdit.add(jMenuItemDown);
 
-        jMenuBar1.add(jMenuEdit);
+        jMenuBarMainFrame.add(jMenuEdit);
 
         jMenuPrefs.setText("Preferences");
 
@@ -518,9 +573,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
         jMenuPrefs.add(jMenuItemPrefs);
 
-        jMenuBar1.add(jMenuPrefs);
+        jMenuBarMainFrame.add(jMenuPrefs);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuBarMainFrame);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -650,6 +705,30 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void jTableFileManagerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableFileManagerFocusGained
     }//GEN-LAST:event_jTableFileManagerFocusGained
 
+    private void jMenuItemAddPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemAddPActionPerformed
+
+    private void jMenuItemEditPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEditPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemEditPActionPerformed
+
+    private void jMenuItemDeletePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeletePActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemDeletePActionPerformed
+
+    private void jMenuItemUpPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUpPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemUpPActionPerformed
+
+    private void jMenuItemDownPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDownPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemDownPActionPerformed
+
+    private void jMenuItemShowPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemShowPActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemShowPActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -707,26 +786,32 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnUp;
     private javax.swing.JPanel filemangerPanel;
     private javax.swing.JLabel jLabelPreview;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBarMainFrame;
     private javax.swing.JMenu jMenuEdit;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenuItem jMenuItemAddCntDwn;
     private javax.swing.JMenuItem jMenuItemAddFile;
+    private javax.swing.JMenuItem jMenuItemAddP;
     private javax.swing.JMenuItem jMenuItemAddThemeslide;
     private javax.swing.JMenuItem jMenuItemAddTickerElt;
+    private javax.swing.JMenuItem jMenuItemDeleteP;
     private javax.swing.JMenuItem jMenuItemDown;
+    private javax.swing.JMenuItem jMenuItemDownP;
     private javax.swing.JMenuItem jMenuItemEdit;
+    private javax.swing.JMenuItem jMenuItemEditP;
     private javax.swing.JMenuItem jMenuItemPrefs;
     private javax.swing.JMenuItem jMenuItemQuit;
     private javax.swing.JMenuItem jMenuItemRemove;
+    private javax.swing.JMenuItem jMenuItemShowP;
     private javax.swing.JMenuItem jMenuItemUp;
+    private javax.swing.JMenuItem jMenuItemUpP;
     private javax.swing.JMenu jMenuPrefs;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPopupMenu jPopupMenuFileTableElement;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemAuto;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemShuffle;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;

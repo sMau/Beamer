@@ -1,6 +1,7 @@
 package de.netprojectev.Media;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 
@@ -33,10 +34,55 @@ public abstract class MediaFile implements Serializable {
 	public abstract void show();
 	
 	public String generateInfoString() {
-		//TODO implement for info field in managerframe, propably overriding implementation in subclasses
+		
+		String info;
+		
+		String type;
+		String current;
+		String wasShowed;
+		String showAt;
+		
+		if(this instanceof VideoFile) {
+			type = "Video";
+		} else if(this instanceof ImageFile) {
+			type = "Image";
+		} else if(this instanceof Themeslide) {
+			type = "Themeslide";
+		} else {
+			type = "undefined";
+		}
+		
+		if(this.getStatus().getIsCurrent()) {
+			current = "yes";
+		} else {
+			current = "no";
+		}
+		
+		if(this.getStatus().getWasShowed()) {
+			wasShowed = "yes";
+		} else {
+			wasShowed = "no";
+		}
+		
+		if(this.getStatus().getShowAt() != null) {
+			if(this.getStatus().getShowAt().after(new Date())) {
+				showAt = this.getStatus().getShowAt().toString();
+			} else {
+				showAt = "-";
+			}
+		} else {
+			showAt = "-";
+		}
 		
 		
-		return name;
+		info =	"Name: " + name + "\n" +
+				"Type: " + type + "\n" +
+				"Priority: " + this.priority.getName() + " / " + this.priority.getMinutesToShow() + " min" + "\n" +
+				"Already showed: " + wasShowed + "\n" +
+				"Current: " + current + "\n" + 
+				"Show at: " + showAt;
+		
+		return info;
 	}
 
 	public String getName() {

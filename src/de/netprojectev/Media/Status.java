@@ -20,6 +20,7 @@ public class Status {
 	public Status() {
 		this.isCurrent = false;
 		this.wasShowed = false;
+		this.showAt = null;
 
 	}
 
