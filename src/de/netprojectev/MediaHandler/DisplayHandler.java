@@ -200,6 +200,8 @@ public class DisplayHandler {
 	 */
 	public void showNext() {
 		
+		//TODO inconsistent after adding new files and chagning order
+		
 		int indexOfOldCurrent = playingFiles.indexOf(currentMediaFile);
 		
 		if(indexOfOldCurrent >= 0) {
@@ -226,6 +228,8 @@ public class DisplayHandler {
 	 */
 	public void showPrevious() {
 				
+		//TODO inconsistent after adding new files and chagning order
+		
 		int indexOfOldCurrent = playingFiles.indexOf(currentMediaFile);
 		
 		if(indexOfOldCurrent >= 0) {

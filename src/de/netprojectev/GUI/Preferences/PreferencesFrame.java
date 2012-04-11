@@ -6,8 +6,11 @@ package de.netprojectev.GUI.Preferences;
 
 import de.netprojectev.GUI.Main.ManagerFrame;
 import de.netprojectev.Media.Priority;
+import de.netprojectev.Media.Theme;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -21,6 +24,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = -5332162076303310401L;
 	private PreferencesHandler preferenceshandler;
 	private Priority selectedPrio;
+	private Theme selectedTheme;
 	private ManagerFrame managerFrame;
 	
     /**
@@ -67,12 +71,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jList2 = new javax.swing.JList();
         jLabelThemeName = new javax.swing.JLabel();
         jLabelThemeBg = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jButtonPrioSave1 = new javax.swing.JButton();
+        jTextFieldThemeName = new javax.swing.JTextField();
+        jTextFieldThemeBgImg = new javax.swing.JTextField();
+        btnSaveTheme = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
         btnAddTheme = new javax.swing.JButton();
-        btnRemovePrio1 = new javax.swing.JButton();
+        btnRemoveTheme = new javax.swing.JButton();
         jButtonChooseBgImage = new javax.swing.JButton();
         jButtonCancelPrefs = new javax.swing.JButton();
         jButtonApplyPrefs = new javax.swing.JButton();
@@ -220,25 +224,38 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jTabbedPane1.addTab("Priority", jPanelTabPrio);
 
         jList2.setModel(new ThemeListModel());
+        jList2.getSelectionModel().addListSelectionListener(
+            new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent event) {
+                    int viewRow = jList2.getSelectedIndex();
+
+                }
+            }
+        );
         jScrollPane2.setViewportView(jList2);
 
         jLabelThemeName.setText("Name");
 
         jLabelThemeBg.setText("Background");
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldThemeName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jTextFieldThemeNameActionPerformed(evt);
             }
         });
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldThemeBgImg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                jTextFieldThemeBgImgActionPerformed(evt);
             }
         });
 
-        jButtonPrioSave1.setText("Save");
+        btnSaveTheme.setText("Save");
+        btnSaveTheme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveThemeActionPerformed(evt);
+            }
+        });
 
         btnAddTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
         btnAddTheme.addActionListener(new java.awt.event.ActionListener() {
@@ -247,9 +264,19 @@ public class PreferencesFrame extends javax.swing.JFrame {
             }
         });
 
-        btnRemovePrio1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemoveTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemoveTheme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveThemeActionPerformed(evt);
+            }
+        });
 
         jButtonChooseBgImage.setText("Choose");
+        jButtonChooseBgImage.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonChooseBgImageActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelTabThemeLayout = new javax.swing.GroupLayout(jPanelTabTheme);
         jPanelTabTheme.setLayout(jPanelTabThemeLayout);
@@ -266,19 +293,18 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addGroup(jPanelTabThemeLayout.createSequentialGroup()
                                 .addComponent(btnAddTheme)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnRemovePrio1))
+                                .addComponent(btnRemoveTheme))
                             .addGroup(jPanelTabThemeLayout.createSequentialGroup()
                                 .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButtonPrioSave1)
-                                    .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelTabThemeLayout.createSequentialGroup()
-                                            .addComponent(jLabelThemeBg)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelTabThemeLayout.createSequentialGroup()
+                                    .addComponent(btnSaveTheme)
+                                    .addGroup(jPanelTabThemeLayout.createSequentialGroup()
+                                        .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabelThemeName)
-                                            .addGap(67, 67, 67)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(jLabelThemeBg))
+                                        .addGap(23, 23, 23)
+                                        .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jTextFieldThemeBgImg)
+                                            .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonChooseBgImage)))
                         .addGap(0, 37, Short.MAX_VALUE)))
@@ -292,19 +318,19 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(jPanelTabThemeLayout.createSequentialGroup()
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelThemeName)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabelThemeBg)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextFieldThemeBgImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonChooseBgImage))
                         .addGap(11, 11, 11)
-                        .addComponent(jButtonPrioSave1)
+                        .addComponent(btnSaveTheme)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRemovePrio1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnRemoveTheme, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddTheme, javax.swing.GroupLayout.Alignment.TRAILING)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
                 .addContainerGap())
@@ -366,16 +392,19 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddPrioActionPerformed
 
     private void btnAddThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddThemeActionPerformed
-        // TODO add your handling code here:
+    	selectedTheme = null;
+    	jTextFieldThemeName.setText("New Theme");
+    	jTextFieldThemeBgImg.setText("-");	
+    	jListPrio.clearSelection();
     }//GEN-LAST:event_btnAddThemeActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jTextFieldThemeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldThemeNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jTextFieldThemeNameActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void jTextFieldThemeBgImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldThemeBgImgActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_jTextFieldThemeBgImgActionPerformed
 
     private void jButtonPrioSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrioSaveActionPerformed
         
@@ -433,6 +462,18 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	dispose();
     }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
 
+    private void jButtonChooseBgImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseBgImageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonChooseBgImageActionPerformed
+
+    private void btnSaveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveThemeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveThemeActionPerformed
+
+    private void btnRemoveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveThemeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveThemeActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -478,12 +519,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnAddPrio;
     private javax.swing.JButton btnAddTheme;
     private javax.swing.JButton btnRemovePrio;
-    private javax.swing.JButton btnRemovePrio1;
+    private javax.swing.JButton btnRemoveTheme;
+    private javax.swing.JButton btnSaveTheme;
     private javax.swing.JButton jButtonApplyPrefs;
     private javax.swing.JButton jButtonCancelPrefs;
     private javax.swing.JButton jButtonChooseBgImage;
     private javax.swing.JButton jButtonPrioSave;
-    private javax.swing.JButton jButtonPrioSave1;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
@@ -503,10 +544,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldPrioMin;
     private javax.swing.JTextField jTextFieldPrioName;
+    private javax.swing.JTextField jTextFieldThemeBgImg;
+    private javax.swing.JTextField jTextFieldThemeName;
     // End of variables declaration//GEN-END:variables
 
 	public javax.swing.JList getjListPrio() {
