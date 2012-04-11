@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import de.netprojectev.GUI.Main.ManagerFrame;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.GUI.Preferences.PriorityListModel;
+import de.netprojectev.GUI.Preferences.ThemeListModel;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
 import de.netprojectev.Misc.Constants;
@@ -76,6 +77,12 @@ public class PreferencesHandler {
 	public void refreshPrioListModel() {
 		if(preferencesFrame != null) {
 			((PriorityListModel) preferencesFrame.getjListPrio().getModel()).updateList();
+		}
+	}
+	
+	public void refreshThemeListModel() {
+		if(preferencesFrame != null) {
+			((ThemeListModel) preferencesFrame.getjList2().getModel()).updateList();
 		}
 	}
 	

@@ -31,5 +31,13 @@ public class ThemeListModel extends AbstractListModel<Object> {
 	public Object getElementAt(int index) {
 		return preferencesHandler.getListOfThemes().get(index).getName();
 	}
+	
+	public void updateList() {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+            	fireContentsChanged(this, 0, preferencesHandler.getListOfPriorities().size());
+            }
+        });
+	}
 
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.LinkedList;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.netprojectev.GUI.Main.ManagerFrame;
@@ -194,7 +195,12 @@ public class DisplayHandlerTest {
 
 	}
 	
+	
+	/*
+	 * All up and down tests in Display Handler are depracted, as it now only depends on mediahandler
+	 */
 	@Test
+	@Ignore
 	public void testUp() {
 	
 		displayHandler.add(testFiles2);
@@ -206,6 +212,7 @@ public class DisplayHandlerTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUp2() {
 		
 		displayHandler.add(testFiles4);
@@ -218,6 +225,7 @@ public class DisplayHandlerTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUp3() {
 		
 		displayHandler.setIsShufflingEnabled(true);
@@ -233,6 +241,7 @@ public class DisplayHandlerTest {
 	}
 
 	@Test
+	@Ignore
 	public void testDown() {
 		
 		displayHandler.add(testFiles4);
@@ -246,6 +255,7 @@ public class DisplayHandlerTest {
 	
 
 	@Test
+	@Ignore
 	public void testDown2() {
 	
 		displayHandler.add(testFiles4);
@@ -257,6 +267,7 @@ public class DisplayHandlerTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testDown3() {
 		
 		displayHandler.setIsShufflingEnabled(true);

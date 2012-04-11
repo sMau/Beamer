@@ -4,6 +4,8 @@
  */
 package de.netprojectev.GUI.Preferences;
 
+import java.io.File;
+
 import de.netprojectev.GUI.Main.ManagerFrame;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
@@ -26,8 +28,25 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private Priority selectedPrio;
 	private Theme selectedTheme;
 	private ManagerFrame managerFrame;
+	private File selectedImage;
 	
-    /**
+    public File getSelectedImage() {
+		return selectedImage;
+	}
+
+	public void setSelectedImage(File selectedImage) {
+		this.selectedImage = selectedImage;
+	}
+
+	public javax.swing.JList getjList2() {
+		return jListTheme;
+	}
+
+	public void setjList2(javax.swing.JList jList2) {
+		this.jListTheme = jList2;
+	}
+
+	/**
      * Creates new form PreferencesFrame
      */
     public PreferencesFrame(ManagerFrame managerFrame) {
@@ -48,6 +67,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooserBgImageTheme = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelTabMain = new javax.swing.JPanel();
         jButtonReset = new javax.swing.JButton();
@@ -68,7 +88,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         btnRemovePrio = new javax.swing.JButton();
         jPanelTabTheme = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        jListTheme = new javax.swing.JList();
         jLabelThemeName = new javax.swing.JLabel();
         jLabelThemeBg = new javax.swing.JLabel();
         jTextFieldThemeName = new javax.swing.JTextField();
@@ -80,6 +100,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jButtonChooseBgImage = new javax.swing.JButton();
         jButtonCancelPrefs = new javax.swing.JButton();
         jButtonApplyPrefs = new javax.swing.JButton();
+
+        jFileChooserBgImageTheme.setDialogTitle("Theme background");
+        jFileChooserBgImageTheme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooserBgImageThemeActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Preferences");
@@ -223,16 +250,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Priority", jPanelTabPrio);
 
-        jList2.setModel(new ThemeListModel());
-        jList2.getSelectionModel().addListSelectionListener(
+        jListTheme.setModel(new ThemeListModel());
+        jListTheme.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
-                    int viewRow = jList2.getSelectedIndex();
+                    int viewRow = jListTheme.getSelectedIndex();
+                    selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
 
                 }
             }
         );
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(jListTheme);
 
         jLabelThemeName.setText("Name");
 
@@ -463,16 +491,57 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
 
     private void jButtonChooseBgImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseBgImageActionPerformed
-        // TODO add your handling code here:
+        jFileChooserBgImageTheme.showDialog(this, null);
+        jFileChooserBgImageTheme.setVisible(true);
     }//GEN-LAST:event_jButtonChooseBgImageActionPerformed
 
     private void btnSaveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveThemeActionPerformed
-        // TODO add your handling code here:
+    	
+    	//TODO Very buggy
+    	
+    	Boolean alreadyExists = false;
+    	
+    	if(selectedTheme == null) { //Creation of new Priority
+    		if(!jTextFieldThemeName.getText().isEmpty() && selectedImage.exists()) {
+        		
+    			
+	        	for(int i = 0; i < preferenceshandler.getListOfThemes().size(); i++) {
+	        		
+	        		if(preferenceshandler.getListOfThemes().get(i).getName().equals(jTextFieldThemeName.getText())) {
+	        			System.out.println("if reached");
+	        			alreadyExists = true;
+	        		}
+	
+    			}
+        		
+        		if(!alreadyExists) {
+        			Theme newTheme = new Theme(jTextFieldThemeName.getText(), selectedImage);
+                	preferenceshandler.addTheme(newTheme);
+                	jListTheme.setSelectedIndex(preferenceshandler.getListOfThemes().size() - 1);
+        		} else {
+        			// TODO Error Dialog
+        		}
+        		
+        	}
+    	} else { //Editing the selected Priority
+    		selectedTheme.setName(jTextFieldThemeName.getText());
+    		if(selectedImage.exists()) {
+    			selectedTheme.setBackgroundImage(selectedImage);	
+    		}
+    		preferenceshandler.refreshThemeListModel();
+    	}
+    	
     }//GEN-LAST:event_btnSaveThemeActionPerformed
 
     private void btnRemoveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveThemeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRemoveThemeActionPerformed
+
+    private void jFileChooserBgImageThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserBgImageThemeActionPerformed
+        selectedImage = jFileChooserBgImageTheme.getSelectedFile();
+    	jTextFieldThemeBgImg.setText(selectedImage.getAbsolutePath());
+    	
+    }//GEN-LAST:event_jFileChooserBgImageThemeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -528,13 +597,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonReset;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JFileChooser jFileChooserBgImageTheme;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelPrioName;
     private javax.swing.JLabel jLabelThemeBg;
     private javax.swing.JLabel jLabelThemeName;
     private javax.swing.JLabel jLabelTickerSpeed;
-    private javax.swing.JList jList2;
     private javax.swing.JList jListPrio;
+    private javax.swing.JList jListTheme;
     private javax.swing.JPanel jPanelTabMain;
     private javax.swing.JPanel jPanelTabPrio;
     private javax.swing.JPanel jPanelTabTheme;
