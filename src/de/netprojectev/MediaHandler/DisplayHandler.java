@@ -130,18 +130,9 @@ public class DisplayHandler {
 	public void down(MediaFile[] files) {
 		
 		if(!isShufflingEnabled) {
-			int firstIndex = playingFiles.indexOf(files[0]) + 1;
-			remove(files);
-			
-			if(firstIndex > playingFiles.size() - 1) {
-				firstIndex = playingFiles.size() - 1;
-			}
-			
-			for (int i = files.length -1; i >= 0 ; i--) {
-				playingFiles.add(firstIndex, files[i]);
-	
-			}
+			playingFiles = mediaHandler.getMediaFiles();
 		}
+		
 	}
 
 	/**
@@ -153,20 +144,9 @@ public class DisplayHandler {
 	public void up(MediaFile[] files) {
 		
 		if(!isShufflingEnabled) {
-			int firstIndex = playingFiles.indexOf(files[0]) - 1;
-			remove(files);
-			
-			if(firstIndex < 0) {
-				firstIndex = 0;
-			}
-			
-			for (int i = files.length -1; i >= 0 ; i--) {
-
-				playingFiles.add(firstIndex, files[i]);
-
-			}
+			playingFiles = mediaHandler.getMediaFiles();
 		}
-		
+				
 	}
 	
 	/**
@@ -175,6 +155,8 @@ public class DisplayHandler {
 	 * @param file
 	 */
 	public void show(MediaFile file) {
+		
+		
 		if(currentMediaFile != null) {
 			currentMediaFile.getStatus().setIsCurrent(false);
 		}
@@ -199,8 +181,6 @@ public class DisplayHandler {
 	 * Falls die letzte Datei erreicht wurde springt die Methode zurück zur ersten Datei der Liste.
 	 */
 	public void showNext() {
-		
-		//TODO inconsistent after adding new files and chagning order
 		
 		int indexOfOldCurrent = playingFiles.indexOf(currentMediaFile);
 		
@@ -227,8 +207,6 @@ public class DisplayHandler {
 	 * Falls die Erste Datei erreicht wurde springt die Methode zur letzten Datei der Liste.
 	 */
 	public void showPrevious() {
-				
-		//TODO inconsistent after adding new files and chagning order
 		
 		int indexOfOldCurrent = playingFiles.indexOf(currentMediaFile);
 		

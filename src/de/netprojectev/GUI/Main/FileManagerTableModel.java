@@ -19,7 +19,7 @@ import de.netprojectev.MediaHandler.MediaHandler;
  * 
  */
 
-//TODO Comlumn Name and Prio directly editable
+//TODO Comlumns: Name and Prio, directly editable
 
 public class FileManagerTableModel extends AbstractTableModel {
     
