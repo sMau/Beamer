@@ -6,6 +6,7 @@ import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Priority;
+import de.netprojectev.Media.Theme;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Preferences.PreferencesHandler;
 
@@ -47,7 +48,7 @@ public class Misc {
 		return mediaFiles;
 	}
 	
-	
+	//TODO generic implemenation for these two methodes
 	public static Priority[] indexListToPriorities(int[] selectedIndices) {
 		
 		Priority[] priorities = new Priority[selectedIndices.length];
@@ -59,5 +60,18 @@ public class Misc {
 		}
 		
 		return priorities;
+	}
+	//second method for generic implementation
+	public static Theme[] indexListToThemes(int[] selectedIndices) {
+		
+		Theme[] themes = new Theme[selectedIndices.length];
+		
+		for(int i = 0; i < selectedIndices.length; i++) {
+			
+			themes[i] = PreferencesHandler.getInstance().getListOfThemes().get(selectedIndices[i]);
+			
+		}
+		
+		return themes;
 	}
 }

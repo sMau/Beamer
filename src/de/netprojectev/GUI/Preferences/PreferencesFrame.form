@@ -237,9 +237,9 @@
                       <Connection code="new PriorityListModel()" type="code"/>
                     </Property>
                   </Properties>
-                  <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jListPrioMouseClicked"/>
-                  </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jListPrio.getSelectionModel().addListSelectionListener(&#xa;            new ListSelectionListener() {&#xa;                public void valueChanged(ListSelectionEvent event) {&#xa;                    int viewRow = jListTheme.getSelectedIndex();&#xa;                    if(viewRow != -1) {&#xa;                    &#x9;selectedPrio = preferenceshandler.getListOfPriorities().get(viewRow);&#xa;                    &#x9;jTextFieldPrioName.setText(selectedPrio.getName());&#xa;                    &#x9;jTextFieldPrioMin.setText(selectedPrio.getMinutesToShow());&#xa;                    }&#xa;                }&#xa;            }&#xa;        );"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

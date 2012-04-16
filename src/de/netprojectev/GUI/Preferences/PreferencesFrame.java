@@ -161,11 +161,18 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jTabbedPane1.addTab("Main", jPanelTabMain);
 
         jListPrio.setModel(new PriorityListModel());
-        jListPrio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jListPrioMouseClicked(evt);
+        jListPrio.getSelectionModel().addListSelectionListener(
+            new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent event) {
+                    int viewRow = jListPrio.getSelectedIndex();
+                    if(viewRow != -1) {
+                        selectedPrio = preferenceshandler.getListOfPriorities().get(viewRow);
+                        jTextFieldPrioName.setText(selectedPrio.getName());
+                        jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
+                    }
+                }
             }
-        });
+        );
         jScrollPane1.setViewportView(jListPrio);
 
         jLabelPrioName.setText("Name");
@@ -255,7 +262,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
                     int viewRow = jListTheme.getSelectedIndex();
-                    selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
+                    if(viewRow != -1) {
+                    	selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
+                    	jTextFieldThemeName.setText(selectedTheme.getName());
+                        jTextFieldThemeBgImg.setText(selectedTheme.getBackgroundImage().getAbsolutePath());
+                    }
 
                 }
             }
@@ -422,8 +433,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void btnAddThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddThemeActionPerformed
     	selectedTheme = null;
     	jTextFieldThemeName.setText("New Theme");
-    	jTextFieldThemeBgImg.setText("-");	
-    	jListPrio.clearSelection();
+    	jTextFieldThemeBgImg.setText("-");
+    	jListTheme.clearSelection();
     }//GEN-LAST:event_btnAddThemeActionPerformed
 
     private void jTextFieldThemeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldThemeNameActionPerformed
@@ -468,16 +479,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	
     }//GEN-LAST:event_jButtonPrioSaveActionPerformed
 
-    private void jListPrioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jListPrioMouseClicked
-
-        //TODO change to selection listener cause of keyboard navigation
-        if(jListPrio.getSelectedIndex() >= 0) {
-    		selectedPrio = preferenceshandler.getListOfPriorities().get(jListPrio.getSelectedIndex());
-            jTextFieldPrioName.setText(selectedPrio.getName());
-            jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
-    	}
-    }//GEN-LAST:event_jListPrioMouseClicked
-
     private void btnRemovePrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemovePrioActionPerformed
         int[] selectedIndices = jListPrio.getSelectedIndices();
     	preferenceshandler.removePriorities(Misc.indexListToPriorities(selectedIndices));
@@ -496,10 +497,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonChooseBgImageActionPerformed
 
     private void btnSaveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveThemeActionPerformed
-    	
-    	//TODO Very buggy
-    	
+    	    	
     	Boolean alreadyExists = false;
+    	selectedImage = new File(jTextFieldThemeBgImg.getText());
+    	
     	
     	if(selectedTheme == null) { //Creation of new Priority
     		if(!jTextFieldThemeName.getText().isEmpty() && selectedImage.exists()) {
@@ -523,10 +524,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
         		}
         		
         	}
-    	} else { //Editing the selected Priority
+    	} else { //Editing the selected Theme
     		selectedTheme.setName(jTextFieldThemeName.getText());
     		if(selectedImage.exists()) {
     			selectedTheme.setBackgroundImage(selectedImage);	
+    		} else {
+    			//TODO Error Dialog
     		}
     		preferenceshandler.refreshThemeListModel();
     	}
@@ -534,7 +537,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSaveThemeActionPerformed
 
     private void btnRemoveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveThemeActionPerformed
-        // TODO add your handling code here:
+    	
+    	int[] selectedIndices = jListTheme.getSelectedIndices(); 	
+     	preferenceshandler.removeThemes(Misc.indexListToThemes(selectedIndices));
+     	
     }//GEN-LAST:event_btnRemoveThemeActionPerformed
 
     private void jFileChooserBgImageThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserBgImageThemeActionPerformed

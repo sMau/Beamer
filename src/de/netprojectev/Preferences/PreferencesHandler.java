@@ -58,6 +58,7 @@ public class PreferencesHandler {
 	public void addTheme(Theme theme) {
 		if(!listOfThemes.contains(theme)) {
 			listOfThemes.add(theme);
+			refreshThemeListModel();
 		}
 	}
 	
@@ -72,6 +73,7 @@ public class PreferencesHandler {
 		for (int i = 0; i < themes.length; i++) {
 			listOfThemes.remove(themes[i]);
 		}
+		refreshThemeListModel();
 	}
 	
 	public void refreshPrioListModel() {
