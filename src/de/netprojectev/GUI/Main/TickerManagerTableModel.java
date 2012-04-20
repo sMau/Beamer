@@ -46,13 +46,18 @@ public class TickerManagerTableModel extends AbstractTableModel {
 		} else {
 			return textElements.get(rowIndex).getText();
 		}
-		
-		
+			
 	}
 	
 	@Override
     public void setValueAt(Object val, int row, int column) {
-    	
+	
+		if(column == 0) {			
+			textElements.get(row).setToShow(((Boolean)val).booleanValue());
+		}
+		if(column == 1) {
+			textElements.get(row).setText(val.toString());
+		}
     }
 	
 	@Override
@@ -66,7 +71,7 @@ public class TickerManagerTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 0) {
+		if (columnIndex == 0 || columnIndex == 1) {
 			return true;
 		} else {
 			return false;

@@ -95,9 +95,19 @@ public class FileManagerTableModel extends AbstractTableModel {
     	
     }
     
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+		if (columnIndex == 2) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+    
     @Override
     public void setValueAt( Object val, int row, int column ) {
-    	
+    	if(column == 2) {			
+			mediaFiles.get(row).setName(val.toString());
+		}
     }
     
     @Override
