@@ -1,6 +1,8 @@
 package de.netprojectev.Tests;
 
 import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.LiveTicker.LiveTicker;
+import de.netprojectev.LiveTicker.TickerTextElement;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.MediaHandler.MediaHandler;
@@ -27,6 +29,13 @@ public class TestJTable {
 		testFiles[1] = testFile1;
 		testFiles[2] = testFile2;
 		MediaHandler.getInstance().add(testFiles);
+		
+		
+		LiveTicker.getInstance().add(new TickerTextElement("1231451353105"));
+		LiveTicker.getInstance().add(new TickerTextElement("BUUUUUUUUHHHH"));
+		LiveTicker.getInstance().add(new TickerTextElement("HI"));
+		LiveTicker.getInstance().add(new TickerTextElement("LOLOLOLOLOLOLOLOLOLLLLLLLOOOOOOL"));
+		
 		
 		try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());

@@ -4,15 +4,24 @@
  */
 package de.netprojectev.GUI.Main;
 
+import java.util.EventObject;
+
+import javax.swing.event.CellEditorListener;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import de.netprojectev.GUI.Dialogs.AddTickerElement;
 import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
 import de.netprojectev.GUI.Dialogs.FileThemeDialog;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
+
+import javax.swing.CellEditor;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
 
 /**
  *
@@ -34,6 +43,10 @@ public class ManagerFrame extends javax.swing.JFrame {
     public ManagerFrame() {
         mediaHandler = MediaHandler.getInstance();
         mediaHandler.setManagerFrame(this);
+        
+        liveTicker = LiveTicker.getInstance();
+        liveTicker.setManagerFrame(this);
+        
         initComponents();
         
     }
@@ -83,10 +96,10 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTextAreaFileInfo = new javax.swing.JTextArea();
         livetickerPanel = new javax.swing.JPanel();
         btnPanelLiveticker = new javax.swing.JPanel();
-        btnAddFile2 = new javax.swing.JButton();
+        btnAddTickerElt = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JSeparator();
-        btnEdit2 = new javax.swing.JButton();
-        btnRemove2 = new javax.swing.JButton();
+        btnEditTickerElt = new javax.swing.JButton();
+        btnRemoveTickerElt = new javax.swing.JButton();
         jSeparator7 = new javax.swing.JSeparator();
         jSeparator8 = new javax.swing.JSeparator();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -265,7 +278,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addComponent(btnPrev)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 287, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 462, Short.MAX_VALUE)
                 .addComponent(lblTimeleft)
                 .addGap(18, 18, 18)
                 .addComponent(toogleBtnAuto)
@@ -305,9 +318,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTableFileManager.setShowHorizontalLines(false);
         jTableFileManager.setShowVerticalLines(false);
         jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(12);
-        jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(12);
+        jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);
         jTableFileManager.getColumnModel().getColumn(0).setMinWidth(12);
-        jTableFileManager.getColumnModel().getColumn(1).setMinWidth(12);
+        jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);
         jTableFileManager.getColumnModel().getColumn(0).setResizable(false);
         jTableFileManager.getColumnModel().getColumn(1).setResizable(false);
         jTableFileManager.getSelectionModel().addListSelectionListener(
@@ -405,13 +418,28 @@ public class ManagerFrame extends javax.swing.JFrame {
         livetickerPanel.setName("livetickerTab");
         livetickerPanel.setNextFocusableComponent(filemangerPanel);
 
-        btnAddFile2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+        btnAddTickerElt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+        btnAddTickerElt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddTickerEltActionPerformed(evt);
+            }
+        });
 
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        btnEdit2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/pencil_edit.png"))); // NOI18N
+        btnEditTickerElt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/pencil_edit.png"))); // NOI18N
+        btnEditTickerElt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditTickerEltActionPerformed(evt);
+            }
+        });
 
-        btnRemove2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemoveTickerElt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemoveTickerElt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveTickerEltActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnPanelLivetickerLayout = new javax.swing.GroupLayout(btnPanelLiveticker);
         btnPanelLiveticker.setLayout(btnPanelLivetickerLayout);
@@ -419,13 +447,13 @@ public class ManagerFrame extends javax.swing.JFrame {
             btnPanelLivetickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnPanelLivetickerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnAddFile2)
+                .addComponent(btnAddTickerElt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnEdit2)
+                .addComponent(btnEditTickerElt)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRemove2)
+                .addComponent(btnRemoveTickerElt)
                 .addContainerGap())
             .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
         );
@@ -433,25 +461,34 @@ public class ManagerFrame extends javax.swing.JFrame {
             btnPanelLivetickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnPanelLivetickerLayout.createSequentialGroup()
                 .addGroup(btnPanelLivetickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAddFile2)
+                    .addComponent(btnAddTickerElt)
                     .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRemove2)
-                    .addComponent(btnEdit2))
+                    .addComponent(btnRemoveTickerElt)
+                    .addComponent(btnEditTickerElt))
                 .addGap(2, 2, 2)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTableLiveticker.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
+        jTableLiveticker.setModel(new TickerManagerTableModel());
+        jTableLiveticker.setShowHorizontalLines(false);
+        jTableLiveticker.setShowVerticalLines(false);
+        jTableLiveticker.getColumnModel().getColumn(0).setMaxWidth(48);
+        jTableLiveticker.getColumnModel().getColumn(0).setMinWidth(48);
+        jTableLiveticker.getColumnModel().getColumn(0).setResizable(false);
+        //jTableLiveticker.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(new JCheckBox()));
+        /*jTableLiveticker.getColumnModel().getColumn(0).getCellEditor().addCellEditorListener(new CellEditorListener() {
+
+			@Override
+			public void editingStopped(ChangeEvent e) {
+				System.out.println("EDITING STOPPED");
+			}
+
+			@Override
+			public void editingCanceled(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        });*/
         jScrollPane3.setViewportView(jTableLiveticker);
 
         javax.swing.GroupLayout livetickerPanelLayout = new javax.swing.GroupLayout(livetickerPanel);
@@ -469,7 +506,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Liveticker", livetickerPanel);
@@ -729,6 +766,22 @@ public class ManagerFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItemShowPActionPerformed
 
+    private void btnAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTickerEltActionPerformed
+        new AddTickerElement(null).setVisible(true);
+    }//GEN-LAST:event_btnAddTickerEltActionPerformed
+
+    private void btnEditTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditTickerEltActionPerformed
+        new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow())).setVisible(true);
+    }//GEN-LAST:event_btnEditTickerEltActionPerformed
+
+    private void btnRemoveTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveTickerEltActionPerformed
+        int[] selRows = jTableLiveticker.getSelectedRows();
+        
+        //TODO
+        
+        
+    }//GEN-LAST:event_btnRemoveTickerEltActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -772,16 +825,16 @@ public class ManagerFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddFile;
-    private javax.swing.JButton btnAddFile2;
+    private javax.swing.JButton btnAddTickerElt;
     private javax.swing.JButton btnDown;
     private javax.swing.JButton btnEdit;
-    private javax.swing.JButton btnEdit2;
+    private javax.swing.JButton btnEditTickerElt;
     private javax.swing.JButton btnNext;
     private javax.swing.JPanel btnPanelFile;
     private javax.swing.JPanel btnPanelLiveticker;
     private javax.swing.JButton btnPrev;
     private javax.swing.JButton btnRemove;
-    private javax.swing.JButton btnRemove2;
+    private javax.swing.JButton btnRemoveTickerElt;
     private javax.swing.JButton btnSet;
     private javax.swing.JButton btnUp;
     private javax.swing.JPanel filemangerPanel;
@@ -835,5 +888,21 @@ public class ManagerFrame extends javax.swing.JFrame {
 
 	public void setjTableFileManager(javax.swing.JTable jTableFileManager) {
 		this.jTableFileManager = jTableFileManager;
+	}
+
+
+
+
+
+	public javax.swing.JTable getjTableLiveticker() {
+		return jTableLiveticker;
+	}
+
+
+
+
+
+	public void setjTableLiveticker(javax.swing.JTable jTableLiveticker) {
+		this.jTableLiveticker = jTableLiveticker;
 	}
 }

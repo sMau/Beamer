@@ -80,11 +80,7 @@ public class FileManagerTableModel extends AbstractTableModel {
 	    		return "";
 	    	}
 	    case 1:
-	    	if(rowObject.getStatus().getWasShowed()) {
-	    		return "#";	
-	    	} else {
-	    		return "";	
-	    	}
+	    	return rowObject.getStatus().getWasShowed();
 		case 2:
 			return rowObject.getName();	
 		case 3:
@@ -102,6 +98,26 @@ public class FileManagerTableModel extends AbstractTableModel {
     @Override
     public void setValueAt( Object val, int row, int column ) {
     	
+    }
+    
+    @Override
+	public Class<?> getColumnClass(int columnIndex) {
+    	switch (columnIndex) {
+	    case 0:
+	    	return String.class;
+	    case 1:
+	    	return Boolean.class;
+		case 2:
+			return String.class;
+		case 3:
+			return String.class;
+		case 4:
+			return String.class;
+		case 5:
+			return String.class;
+		default:
+			return Object.class;
+		}
     }
  
     /**

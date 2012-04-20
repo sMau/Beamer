@@ -3,6 +3,8 @@ package de.netprojectev.LiveTicker;
 import java.io.Serializable;
 import java.util.LinkedList;
 
+import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.GUI.Main.TickerManagerTableModel;
 import de.netprojectev.Misc.Constants;
 
 /**
@@ -16,6 +18,8 @@ public class LiveTicker implements Serializable {
 	private static final long serialVersionUID = 6806990368618523192L;
 
 	private static LiveTicker instance;
+	
+	private ManagerFrame managerFrame;
 	
 	private LinkedList<TickerTextElement> textElements;
 	private int speed;
@@ -50,7 +54,16 @@ public class LiveTicker implements Serializable {
 		if(!textElements.contains(element)) {
 			textElements.add(element);
 		}
+		
+		refreshDataModel();
 	
+	}
+
+	private void refreshDataModel() {
+		if(managerFrame != null) {
+			((TickerManagerTableModel) managerFrame.getjTableLiveticker().getModel()).updateModel();
+		}
+		
 	}
 	
 	/**
@@ -73,6 +86,7 @@ public class LiveTicker implements Serializable {
 	 */
 	public void editElement(TickerTextElement element, String newText) {
 		element.setText(newText);
+		refreshDataModel();
 	}
 	
 	/**
@@ -112,6 +126,14 @@ public class LiveTicker implements Serializable {
 	}
 	public void setCompleteTickerText(String completeTickerText) {
 		this.completeTickerText = completeTickerText;
+	}
+
+	public ManagerFrame getManagerFrame() {
+		return managerFrame;
+	}
+
+	public void setManagerFrame(ManagerFrame managerFrame) {
+		this.managerFrame = managerFrame;
 	}
 	
 }

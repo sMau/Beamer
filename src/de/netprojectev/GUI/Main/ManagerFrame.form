@@ -180,7 +180,7 @@
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="title" type="java.lang.String" value="Beamermanager"/>
     <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-      <Color id="Standardcursor"/>
+      <Color id="Default Cursor"/>
     </Property>
     <Property name="name" type="java.lang.String" value="managerframe"/>
   </Properties>
@@ -299,7 +299,7 @@
                           <Component id="btnPrev" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnNext" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="287" max="32767" attributes="0"/>
+                          <EmptySpace pref="462" max="32767" attributes="0"/>
                           <Component id="lblTimeleft" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="toogleBtnAuto" min="-2" max="-2" attributes="0"/>
@@ -482,7 +482,7 @@
                     <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTableFileManagerFocusGained"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                int viewRow = jTableFileManager.getSelectedRow();&#xa;                if (viewRow &lt; 0) {&#xa;                    jTextAreaFileInfo.setText(&quot;No file selected&quot;);&#xa;                } else {&#xa;                    jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());&#xa;                }&#xa;            }&#xa;        }&#xa;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                int viewRow = jTableFileManager.getSelectedRow();&#xa;                if (viewRow &lt; 0) {&#xa;                    jTextAreaFileInfo.setText(&quot;No file selected&quot;);&#xa;                } else {&#xa;                    jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());&#xa;                }&#xa;            }&#xa;        }&#xa;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -595,7 +595,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator8" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="442" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="444" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -608,13 +608,13 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="btnAddFile2" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAddTickerElt" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jSeparator6" min="-2" pref="6" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnEdit2" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnEditTickerElt" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnRemove2" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnRemoveTickerElt" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Component id="jSeparator7" alignment="0" pref="851" max="32767" attributes="0"/>
@@ -624,10 +624,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnAddFile2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAddTickerElt" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jSeparator6" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
-                              <Component id="btnRemove2" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnEdit2" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnRemoveTickerElt" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnEditTickerElt" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                           <Component id="jSeparator7" min="-2" pref="10" max="-2" attributes="0"/>
@@ -636,31 +636,40 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="btnAddFile2">
+                <Component class="javax.swing.JButton" name="btnAddTickerElt">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/plus_2.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddTickerEltActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator6">
                   <Properties>
                     <Property name="orientation" type="int" value="1"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnEdit2">
+                <Component class="javax.swing.JButton" name="btnEditTickerElt">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/pencil_edit.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditTickerEltActionPerformed"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnRemove2">
+                <Component class="javax.swing.JButton" name="btnRemoveTickerElt">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/delete_2.png"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveTickerEltActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JSeparator" name="jSeparator7">
                 </Component>
@@ -674,15 +683,15 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="jTableLiveticker">
                   <Properties>
-                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="4">
-                        <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                        <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                      </Table>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="new TickerManagerTableModel()" type="code"/>
                     </Property>
+                    <Property name="showHorizontalLines" type="boolean" value="false"/>
+                    <Property name="showVerticalLines" type="boolean" value="false"/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableLiveticker.getColumnModel().getColumn(0).setMaxWidth(48);&#xa;jTableLiveticker.getColumnModel().getColumn(0).setMinWidth(48);&#xa;jTableLiveticker.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableLiveticker.getColumnModel().getColumn(0).getCellEditor().addCellEditorListener(new CellEditorListener() {&#xa;});"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
