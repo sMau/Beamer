@@ -8,11 +8,14 @@ import java.util.LinkedList;
 
 import javax.swing.table.AbstractTableModel;
 
+import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
 import de.netprojectev.Media.VideoFile;
 import de.netprojectev.MediaHandler.MediaHandler;
+import de.netprojectev.Misc.Constants;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
  *
@@ -28,6 +31,7 @@ public class FileManagerTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 122422256133966805L;
 	private MediaHandler mediaHandler;
+	private PreferencesHandler preferencesHandler;
 	private LinkedList<MediaFile> mediaFiles;
 	private String[] columnNames = {"", "", "Name", "Priority", "Type", "Show At"};
 	
@@ -35,6 +39,8 @@ public class FileManagerTableModel extends AbstractTableModel {
         super();
         mediaHandler = MediaHandler.getInstance();
         mediaFiles = mediaHandler.getMediaFiles();
+        
+        preferencesHandler = PreferencesHandler.getInstance();
                 
     }
 
@@ -96,7 +102,7 @@ public class FileManagerTableModel extends AbstractTableModel {
     }
     
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 2) {
+		if (columnIndex == 2 || columnIndex == 3) {
 			return true;
 		} else {
 			return false;
@@ -108,6 +114,14 @@ public class FileManagerTableModel extends AbstractTableModel {
     	if(column == 2) {			
 			mediaFiles.get(row).setName(val.toString());
 		}
+    	if(column == 3) {
+    		if(preferencesHandler.searchForPriority(val.toString()) != null) {
+    			mediaFiles.get(row).setPriority(preferencesHandler.searchForPriority(val.toString()));
+    		} else {
+    			mediaFiles.get(row).setPriority(Constants.DEFAULT_PRIORITY);
+    		}
+    		
+    	}
     }
     
     @Override

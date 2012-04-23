@@ -4,10 +4,6 @@
  */
 package de.netprojectev.GUI.Main;
 
-import java.util.EventObject;
-
-import javax.swing.event.CellEditorListener;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -18,10 +14,11 @@ import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
+import de.netprojectev.Preferences.PreferencesHandler;
 
-import javax.swing.CellEditor;
 import javax.swing.DefaultCellEditor;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.table.TableColumn;
 
 /**
  *
@@ -30,13 +27,16 @@ import javax.swing.JCheckBox;
 public class ManagerFrame extends javax.swing.JFrame {
 
     
+	
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 2853526692923366703L;
 	private MediaHandler mediaHandler;
 	private LiveTicker liveTicker;
-    
+	private PreferencesHandler preferencesHandler;
+	private JComboBox<String> comboBox;
+	
     /**
      * Creates new form ManagerFrame
      */
@@ -46,6 +46,8 @@ public class ManagerFrame extends javax.swing.JFrame {
         
         liveTicker = LiveTicker.getInstance();
         liveTicker.setManagerFrame(this);
+        
+        preferencesHandler = PreferencesHandler.getInstance();
         
         initComponents();
         
@@ -323,6 +325,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);
         jTableFileManager.getColumnModel().getColumn(0).setResizable(false);
         jTableFileManager.getColumnModel().getColumn(1).setResizable(false);
+
+        refreshComboBoxCellEditor();
+
         jTableFileManager.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
@@ -475,20 +480,6 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTableLiveticker.getColumnModel().getColumn(0).setMaxWidth(48);
         jTableLiveticker.getColumnModel().getColumn(0).setMinWidth(48);
         jTableLiveticker.getColumnModel().getColumn(0).setResizable(false);
-        //jTableLiveticker.getColumnModel().getColumn(0).setCellEditor(new DefaultCellEditor(new JCheckBox()));
-        /*jTableLiveticker.getColumnModel().getColumn(0).getCellEditor().addCellEditorListener(new CellEditorListener() {
-
-			@Override
-			public void editingStopped(ChangeEvent e) {
-				System.out.println("EDITING STOPPED");
-			}
-
-			@Override
-			public void editingCanceled(ChangeEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-        });*/
         jScrollPane3.setViewportView(jTableLiveticker);
 
         javax.swing.GroupLayout livetickerPanelLayout = new javax.swing.GroupLayout(livetickerPanel);
@@ -629,6 +620,19 @@ public class ManagerFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
+
+
+
+	public void refreshComboBoxCellEditor() {
+		TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);
+        comboBox = new JComboBox();
+        for(int i = 0; i < preferencesHandler.getListOfPriorities().size(); i++) {
+            comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());
+        }
+        prioColumn.setCellEditor(new DefaultCellEditor(comboBox));
+	}
 
     private void btnAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFileActionPerformed
         new FileThemeDialog(this, true).setVisible(true);
@@ -776,10 +780,10 @@ public class ManagerFrame extends javax.swing.JFrame {
 
     private void btnRemoveTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveTickerEltActionPerformed
         int[] selRows = jTableLiveticker.getSelectedRows();
-        
-        //TODO
-        
-        
+        if(selRows.length > 0) {
+        	liveTicker.remove(Misc.indexListToTickerElts(selRows));
+        }
+            
     }//GEN-LAST:event_btnRemoveTickerEltActionPerformed
 
     /**

@@ -76,6 +76,8 @@ public class LiveTicker implements Serializable {
 			textElements.remove(elements[i]);	
 		}
 		
+		refreshDataModel();
+		
 	}
 	
 	/**

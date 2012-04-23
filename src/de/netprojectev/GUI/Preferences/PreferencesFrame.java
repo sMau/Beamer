@@ -476,6 +476,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     		preferenceshandler.refreshPrioListModel();
     	}
     	
+    	managerFrame.refreshComboBoxCellEditor();
     	
     }//GEN-LAST:event_jButtonPrioSaveActionPerformed
 

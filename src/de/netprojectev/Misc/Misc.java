@@ -3,6 +3,8 @@ package de.netprojectev.Misc;
 import java.io.File;
 
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
+import de.netprojectev.LiveTicker.LiveTicker;
+import de.netprojectev.LiveTicker.TickerTextElement;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Priority;
@@ -73,5 +75,18 @@ public class Misc {
 		}
 		
 		return themes;
+	}
+	
+	public static TickerTextElement[] indexListToTickerElts(int[] selectedIndices) {
+		
+		TickerTextElement[] elements = new TickerTextElement[selectedIndices.length];
+		
+		for(int i = 0; i < selectedIndices.length; i++) {
+			
+			elements[i] = LiveTicker.getInstance().getTextElements().get(selectedIndices[i]);
+			
+		}
+		
+		return elements;
 	}
 }

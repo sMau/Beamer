@@ -95,6 +95,20 @@ public class PreferencesHandler {
 		return false;
 		
 	}
+	
+	public Priority searchForPriority(String name) {
+		
+		Priority res = null;
+		if(name != null && !name.equals("")) {
+			for(int i = 0; i < listOfPriorities.size(); i++) {
+				if(listOfPriorities.get(i).getName().equals(name)) {
+					res = listOfPriorities.get(i);
+				}
+			}
+		}
+		
+		return res;
+	}
 
 	public LinkedList<Priority> getListOfPriorities() {
 		return listOfPriorities;
