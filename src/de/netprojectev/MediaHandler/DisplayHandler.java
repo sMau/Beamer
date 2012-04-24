@@ -100,6 +100,8 @@ public class DisplayHandler {
 	 */
 	public void add(MediaFile[] files) {
 
+		//TODO if shuffling is enabled, new files also have to be shuffled in an adequat way
+		
 		for (int i = 0; i < files.length; i++) {
 			if (!playingFiles.contains(files[i])) {
 				playingFiles.add(files[i]);

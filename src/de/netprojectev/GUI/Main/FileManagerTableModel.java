@@ -115,6 +115,8 @@ public class FileManagerTableModel extends AbstractTableModel {
 			mediaFiles.get(row).setName(val.toString());
 		}
     	if(column == 3) {
+    		
+    		//TODO prevent user from changing prio of current file
     		if(preferencesHandler.searchForPriority(val.toString()) != null) {
     			mediaFiles.get(row).setPriority(preferencesHandler.searchForPriority(val.toString()));
     		} else {

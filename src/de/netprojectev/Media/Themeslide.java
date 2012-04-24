@@ -1,6 +1,7 @@
 package de.netprojectev.Media;
 
 import java.awt.Point;
+import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
@@ -39,7 +40,7 @@ public class Themeslide extends MediaFile {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		System.out.println("Show file: " + name);
+		System.out.println("Show file: " + name + "   " + new Date());
 
 	}
 

@@ -1,5 +1,7 @@
 package de.netprojectev.Media;
 
+import java.util.Date;
+
 import javax.swing.ImageIcon;
 
 import de.netprojectev.Misc.Constants;
@@ -30,7 +32,7 @@ public class ImageFile extends MediaFile {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		System.out.println("Show file: " + path);
+		System.out.println("Show file: " + path + "   " + new Date());
 		
 	}
 

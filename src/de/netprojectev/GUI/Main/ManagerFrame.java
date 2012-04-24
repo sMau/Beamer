@@ -326,7 +326,12 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTableFileManager.getColumnModel().getColumn(0).setResizable(false);
         jTableFileManager.getColumnModel().getColumn(1).setResizable(false);
 
-        refreshComboBoxCellEditor();
+        TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);
+        comboBox = new JComboBox();
+        for(int i = 0; i < preferencesHandler.getListOfPriorities().size(); i++) {
+            comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());
+        }
+        prioColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
         jTableFileManager.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
@@ -575,7 +580,6 @@ public class ManagerFrame extends javax.swing.JFrame {
 
         jMenuPrefs.setText("Preferences");
 
-        jRadioButtonMenuItemAuto.setSelected(true);
         jRadioButtonMenuItemAuto.setText("Automode");
         jRadioButtonMenuItemAuto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -584,7 +588,6 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
         jMenuPrefs.add(jRadioButtonMenuItemAuto);
 
-        jRadioButtonMenuItemShuffle.setSelected(true);
         jRadioButtonMenuItemShuffle.setText("Shuffle");
         jRadioButtonMenuItemShuffle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -728,19 +731,50 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemPrefsActionPerformed
 
     private void jRadioButtonMenuItemShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemShuffleActionPerformed
-        // TODO add your handling code here:
+    	if(jRadioButtonMenuItemShuffle.isSelected()) {
+    		mediaHandler.getDisplayHandler().startShuffle();
+    		toggleBtnShuffle.setSelected(true);
+    	} else {
+    		mediaHandler.getDisplayHandler().stopShuffle();
+    		toggleBtnShuffle.setSelected(false);
+    	}
     }//GEN-LAST:event_jRadioButtonMenuItemShuffleActionPerformed
 
     private void jRadioButtonMenuItemAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemAutoActionPerformed
-        // TODO add your handling code here:
+    	if(jRadioButtonMenuItemAuto.isSelected()) {
+    		mediaHandler.getDisplayHandler().startAutomodus();
+    		toogleBtnAuto.setSelected(true);
+    	} else {
+    		mediaHandler.getDisplayHandler().startAutomodus();
+    		toogleBtnAuto.setSelected(false);
+    	}
+    	
+    	
     }//GEN-LAST:event_jRadioButtonMenuItemAutoActionPerformed
 
     private void toogleBtnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toogleBtnAutoActionPerformed
-        // TODO add your handling code here:
+    	if(toogleBtnAuto.isSelected()) {
+    		mediaHandler.getDisplayHandler().startAutomodus();
+    		jRadioButtonMenuItemAuto.setSelected(true);
+    	} else {
+    		mediaHandler.getDisplayHandler().stopAutomodus();
+    		jRadioButtonMenuItemAuto.setSelected(false);
+    	}
+    	
+    	
+    	
     }//GEN-LAST:event_toogleBtnAutoActionPerformed
 
     private void toggleBtnShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBtnShuffleActionPerformed
-        // TODO add your handling code here:
+
+    	if(toggleBtnShuffle.isSelected()) {
+    		mediaHandler.getDisplayHandler().startShuffle();
+    		jRadioButtonMenuItemShuffle.setSelected(true);
+    	} else {
+    		mediaHandler.getDisplayHandler().stopShuffle();
+    		jRadioButtonMenuItemShuffle.setSelected(false);
+    	}
+
     }//GEN-LAST:event_toggleBtnShuffleActionPerformed
 
     private void jTableFileManagerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableFileManagerFocusGained
@@ -775,7 +809,10 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddTickerEltActionPerformed
 
     private void btnEditTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditTickerEltActionPerformed
-        new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow())).setVisible(true);
+        
+    	if(jTableLiveticker.getSelectedRow() >= 0) {
+    		new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow())).setVisible(true);
+    	}
     }//GEN-LAST:event_btnEditTickerEltActionPerformed
 
     private void btnRemoveTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveTickerEltActionPerformed

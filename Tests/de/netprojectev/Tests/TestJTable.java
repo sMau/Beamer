@@ -10,6 +10,8 @@ import de.netprojectev.Misc.Constants;
 
 public class TestJTable {
 
+	//TODO Fill everythin with tooltips
+	
 	/**
 	 * @param args
 	 * 
