@@ -4,6 +4,8 @@
  */
 package de.netprojectev.GUI.Main;
 
+import java.io.File;
+
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -12,6 +14,7 @@ import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
 import de.netprojectev.GUI.Dialogs.FileThemeDialog;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
+import de.netprojectev.Media.ImageFile;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
@@ -26,8 +29,6 @@ import javax.swing.table.TableColumn;
  */
 public class ManagerFrame extends javax.swing.JFrame {
 
-    
-	
     /**
 	 * 
 	 */
@@ -48,7 +49,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         liveTicker.setManagerFrame(this);
         
         preferencesHandler = PreferencesHandler.getInstance();
-        
+                
         initComponents();
         
     }
@@ -340,7 +341,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                     if (viewRow < 0) {
                         jTextAreaFileInfo.setText("No file selected");
                     } else {
-                        jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
+                        jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());                      
                     }
                 }
             }
