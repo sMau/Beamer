@@ -4,7 +4,7 @@
  */
 package de.netprojectev.GUI.Main;
 
-import java.io.File;
+import java.awt.Image;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -14,12 +14,12 @@ import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
 import de.netprojectev.GUI.Dialogs.FileThemeDialog;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
-import de.netprojectev.Media.ImageFile;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.table.TableColumn;
 
@@ -340,8 +340,11 @@ public class ManagerFrame extends javax.swing.JFrame {
                     int viewRow = jTableFileManager.getSelectedRow();
                     if (viewRow < 0) {
                         jTextAreaFileInfo.setText("No file selected");
+                        jLabelPreview.setText("No file selected");
                     } else {
-                        jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());                      
+                        jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
+                        jLabelPreview.setText("");
+                        jLabelPreview.setIcon(scaleIcon(mediaHandler.getMediaFiles().get(viewRow).getPreview()));
                     }
                 }
             }
@@ -390,9 +393,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addComponent(jTextAreaFileInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+                .addGap(1, 1, 1)
+                .addComponent(jTextAreaFileInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                .addGap(1, 1, 1))
         );
 
         javax.swing.GroupLayout filemangerPanelLayout = new javax.swing.GroupLayout(filemangerPanel);
@@ -494,7 +497,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             livetickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnPanelLiveticker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator8)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1026, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1038, Short.MAX_VALUE)
         );
         livetickerPanelLayout.setVerticalGroup(
             livetickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -824,6 +827,38 @@ public class ManagerFrame extends javax.swing.JFrame {
             
     }//GEN-LAST:event_btnRemoveTickerEltActionPerformed
 
+    
+    
+    private ImageIcon scaleIcon(ImageIcon preview) {
+    	
+    	//TODO Image Scaling doesnt work correctly
+    	
+    	double compVal = 16/9;
+    	double scalingFactor;
+    	double prevWidth = preview.getIconWidth();
+    	double prevHeight = preview.getIconHeight();
+    	double lblWidth = jLabelPreview.getSize().getWidth();
+    	double lblHeight = jLabelPreview.getSize().getHeight();
+    	
+    	if(lblWidth/prevHeight <= compVal) {
+    		scalingFactor = lblWidth/prevWidth;
+    	} else {
+    		scalingFactor = lblHeight/prevHeight;
+    		
+    	}
+    	
+    	System.out.println(prevWidth);
+    	System.out.println(prevHeight);
+    	System.out.println(lblWidth);
+    	System.out.println(lblHeight);
+    	System.out.println(scalingFactor);
+    	
+    	preview.setImage(preview.getImage().getScaledInstance((int)(prevWidth*scalingFactor),(int)(prevHeight*scalingFactor),Image.SCALE_DEFAULT));
+    	
+    	return preview;
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -932,18 +967,10 @@ public class ManagerFrame extends javax.swing.JFrame {
 		this.jTableFileManager = jTableFileManager;
 	}
 
-
-
-
-
 	public javax.swing.JTable getjTableLiveticker() {
 		return jTableLiveticker;
 	}
-
-
-
-
-
+	
 	public void setjTableLiveticker(javax.swing.JTable jTableLiveticker) {
 		this.jTableLiveticker = jTableLiveticker;
 	}

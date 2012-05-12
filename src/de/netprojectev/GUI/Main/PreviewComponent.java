@@ -7,6 +7,14 @@ import java.io.File;
 
 import javax.swing.JComponent;
 
+/**
+ * 
+ * @author samu
+ *
+ * Class is not used at the moment, was thought for previewing images but didnt worked yet.
+ *
+ */
+
 public class PreviewComponent extends JComponent {
 	private Image image;
 

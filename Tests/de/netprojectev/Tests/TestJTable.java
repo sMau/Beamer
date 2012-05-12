@@ -21,16 +21,8 @@ public class TestJTable {
 	 */
 	public static void main(String[] args) {
 		
-		ManagerFrame frame;
 		
-		MediaFile testFile0 = new ImageFile("Werbung", "/home/samu/Bilder1", Constants.DEFAULT_PRIORITY);
-		MediaFile testFile1 = new ImageFile("Hallo", "/home/samu/Bilder2", Constants.DEFAULT_PRIORITY);
-		MediaFile testFile2 = new ImageFile("Webung1", "/home/samu/Bilder3", Constants.DEFAULT_PRIORITY);
-		MediaFile[] testFiles = new MediaFile[3];
-		testFiles[0] = testFile0;
-		testFiles[1] = testFile1;
-		testFiles[2] = testFile2;
-		MediaHandler.getInstance().add(testFiles);
+		ManagerFrame frame;
 		
 		
 		LiveTicker.getInstance().add(new TickerTextElement("1231451353105"));

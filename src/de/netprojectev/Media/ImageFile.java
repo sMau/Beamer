@@ -16,17 +16,24 @@ public class ImageFile extends MediaFile {
 
 	private static final long serialVersionUID = -6684164019970242002L;
 	private String path;
+	private ImageIcon preview;
 
 	public ImageFile(String name, String path, Priority priority) {
 		super(name, priority);
 		this.path = path;
 		this.priority = Constants.DEFAULT_PRIORITY;
+		this.preview = generatePreview();
 	}
 
 	@Override
 	public ImageIcon generatePreview() {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("generate Preview   " + path);
+		if(path != null) {
+			return new ImageIcon(path);
+		} else {
+			return null;
+		}
+
 	}
 
 	@Override
@@ -42,6 +49,14 @@ public class ImageFile extends MediaFile {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public ImageIcon getPreview() {
+		return preview;
+	}
+
+	public void setPreview(ImageIcon preview) {
+		this.preview = preview;
 	}
 
 }
