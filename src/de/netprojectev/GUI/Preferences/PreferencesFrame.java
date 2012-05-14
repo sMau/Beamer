@@ -56,6 +56,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	preferenceshandler.setPreferencesFrame(this);
     	preferenceshandler.setManagerFrame(managerFrame);
         initComponents();
+        setLocation(Misc.currentMousePosition());
     }
 
     /**
@@ -110,6 +111,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Preferences");
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
 
         jButtonReset.setText("Reset Data");
 
@@ -137,7 +139,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jLabelTickerSpeed)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 193, Short.MAX_VALUE)))
+                        .addGap(0, 194, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelTabMainLayout.setVerticalGroup(
@@ -153,7 +155,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(jPanelTabMainLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabelTickerSpeed)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addComponent(jButtonReset)
                 .addContainerGap())
         );
@@ -164,7 +166,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jListPrio.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
-                    int viewRow = jListPrio.getSelectedIndex();
+                    int viewRow = jListTheme.getSelectedIndex();
                     if(viewRow != -1) {
                         selectedPrio = preferenceshandler.getListOfPriorities().get(viewRow);
                         jTextFieldPrioName.setText(selectedPrio.getName());
@@ -187,6 +189,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         btnAddPrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+        btnAddPrio.setToolTipText("Add new Priority.");
         btnAddPrio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddPrioActionPerformed(evt);
@@ -194,6 +197,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         btnRemovePrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemovePrio.setToolTipText("Delete selected priority");
         btnRemovePrio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemovePrioActionPerformed(evt);
@@ -213,15 +217,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanelTabPrioLayout.createSequentialGroup()
-                                        .addComponent(jLabelPrioName)
-                                        .addGap(38, 38, 38)
-                                        .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                                .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                                    .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel2)
-                                        .addGap(23, 23, 23)
-                                        .addComponent(jTextFieldPrioMin)))
+                                        .addComponent(jLabelPrioName))
+                                    .addGap(23, 23, 23)
+                                    .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(jButtonPrioSave))
                             .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                                 .addComponent(btnAddPrio)
@@ -247,7 +250,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jButtonPrioSave)
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemovePrio, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddPrio, javax.swing.GroupLayout.Alignment.TRAILING)))
@@ -262,11 +265,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
                     int viewRow = jListTheme.getSelectedIndex();
-                    if(viewRow != -1) {
-                    	selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
-                    	jTextFieldThemeName.setText(selectedTheme.getName());
-                        jTextFieldThemeBgImg.setText(selectedTheme.getBackgroundImage().getAbsolutePath());
-                    }
+                    selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
 
                 }
             }
@@ -297,6 +296,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         btnAddTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+        btnAddTheme.setToolTipText("Add new theme.");
         btnAddTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddThemeActionPerformed(evt);
@@ -304,6 +304,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         btnRemoveTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemoveTheme.setToolTipText("Delete selected theme.");
         btnRemoveTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveThemeActionPerformed(evt);
@@ -346,7 +347,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                             .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonChooseBgImage)))
-                        .addGap(0, 37, Short.MAX_VALUE)))
+                        .addGap(0, 38, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelTabThemeLayout.setVerticalGroup(
@@ -367,7 +368,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(btnSaveTheme)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemoveTheme, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddTheme, javax.swing.GroupLayout.Alignment.TRAILING)))

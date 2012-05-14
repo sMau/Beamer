@@ -4,6 +4,7 @@
  */
 package de.netprojectev.GUI.Themeslide;
 
+import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
@@ -28,7 +29,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         	jComboBoxTheme.addItem(PreferencesHandler.getInstance().getListOfThemes().get(i).getName());
         }
         
-        
+        setLocation(Misc.currentMousePosition());
     }
 
     /**

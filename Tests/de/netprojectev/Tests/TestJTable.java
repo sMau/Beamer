@@ -1,16 +1,8 @@
 package de.netprojectev.Tests;
 
 import de.netprojectev.GUI.Main.ManagerFrame;
-import de.netprojectev.LiveTicker.LiveTicker;
-import de.netprojectev.LiveTicker.TickerTextElement;
-import de.netprojectev.Media.ImageFile;
-import de.netprojectev.Media.MediaFile;
-import de.netprojectev.MediaHandler.MediaHandler;
-import de.netprojectev.Misc.Constants;
 
 public class TestJTable {
-
-	//TODO Fill everythin with tooltips
 	
 	/**
 	 * @param args
@@ -20,31 +12,12 @@ public class TestJTable {
 	 * 
 	 */
 	public static void main(String[] args) {
-		
-		
-		ManagerFrame frame;
-		
-		
-		LiveTicker.getInstance().add(new TickerTextElement("1231451353105"));
-		LiveTicker.getInstance().add(new TickerTextElement("BUUUUUUUUHHHH"));
-		LiveTicker.getInstance().add(new TickerTextElement("HI"));
-		LiveTicker.getInstance().add(new TickerTextElement("LOLOLOLOLOLOLOLOLOLLLLLLLOOOOOOL"));
-		
-		
 		try {
             javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception e) {
             System.out.println(e);
         }
-
-        /*
-         * Create and display the form
-         */
-        
-		frame = new ManagerFrame();
-		frame.setVisible(true);
-
+		new ManagerFrame().setVisible(true);
 	}
-
 }

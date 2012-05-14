@@ -246,9 +246,9 @@
                   <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jPanel1" max="32767" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" max="32767" attributes="0"/>
+                      <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane4" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -259,11 +259,11 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="240" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="230" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jPanel1" max="32767" attributes="0"/>
-                          <Component id="jPanel2" max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="187" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" min="-2" pref="187" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -297,7 +297,7 @@
                           <Component id="btnPrev" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnNext" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="462" max="32767" attributes="0"/>
+                          <EmptySpace pref="412" max="32767" attributes="0"/>
                           <Component id="lblTimeleft" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="toogleBtnAuto" min="-2" max="-2" attributes="0"/>
@@ -350,6 +350,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/plus_2.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Add a file from disc or create a new Themeslide."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddFileActionPerformed"/>
@@ -365,6 +366,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/arrow_down.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Move selected file down in list."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDownActionPerformed"/>
@@ -375,6 +377,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/pencil_edit.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Edit the selected file."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditActionPerformed"/>
@@ -385,6 +388,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/delete_2.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Delete the selected file."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveActionPerformed"/>
@@ -400,6 +404,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/arrow_up.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Move selected file up in list."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpActionPerformed"/>
@@ -410,6 +415,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/play.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Show selected."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSetActionPerformed"/>
@@ -420,6 +426,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/previous.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Show previous."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrevActionPerformed"/>
@@ -430,6 +437,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/next.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Show next."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNextActionPerformed"/>
@@ -440,6 +448,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/shuffle-icon.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Toggle shuffle"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toggleBtnShuffleActionPerformed"/>
@@ -450,6 +459,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/Clockwise-arrow128.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Toggle automode"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toogleBtnAutoActionPerformed"/>
@@ -458,6 +468,7 @@
                 <Component class="javax.swing.JLabel" name="lblTimeleft">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Timeleft: 00:40"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Timeleft until next change."/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -480,28 +491,14 @@
                     <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTableFileManagerFocusGained"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(12);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;&#xa;TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);&#xa;comboBox = new JComboBox();&#xa;for(int i = 0; i &lt; preferencesHandler.getListOfPriorities().size(); i++) {&#xa;        comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());&#xa;}&#xa;prioColumn.setCellEditor(new DefaultCellEditor(comboBox));&#xa;&#xa;&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                int viewRow = jTableFileManager.getSelectedRow();&#xa;                if (viewRow &lt; 0) {&#xa;                    jTextAreaFileInfo.setText(&quot;No file selected&quot;);&#xa;                    jLabelPreview.setText(&quot;No file selected&quot;);&#xa;                } else {&#xa;                    jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());&#xa;                    jLabelPreview.setText(&quot;&quot;);&#xa;                    jLabelPreview.setIcon(scaleIcon(mediaHandler.getMediaFiles().get(viewRow).getPreview()));&#xa;                }&#xa;            }&#xa;        }&#xa;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(16);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(16);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;&#xa;TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);&#xa;comboBox = new JComboBox();&#xa;for(int i = 0; i &lt; preferencesHandler.getListOfPriorities().size(); i++) {&#xa;        comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());&#xa;}&#xa;prioColumn.setCellEditor(new DefaultCellEditor(comboBox));&#xa;&#xa;&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                int viewRow = jTableFileManager.getSelectedRow();&#xa;                if (viewRow &lt; 0) {&#xa;                    jTextAreaFileInfo.setText(&quot;No file selected&quot;);&#xa;                    jLabelPreview.setIcon(null);&#xa;                    jLabelPreview.setText(&quot;No file selected&quot;);&#xa;                } else {&#xa;                    jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());&#xa;                    jLabelPreview.setText(&quot;&quot;);&#xa;                    jLabelPreview.setIcon(scaleIcon(mediaHandler.getMediaFiles().get(viewRow).getPreview()));&#xa;                }&#xa;            }&#xa;        }&#xa;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel1">
+            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
 
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabelPreview" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jLabelPreview" alignment="0" max="32767" attributes="0"/>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JLabel" name="jLabelPreview">
                   <Properties>
@@ -516,28 +513,9 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel2">
+            <Container class="javax.swing.JScrollPane" name="jScrollPane4">
 
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
-                          <Component id="jTextAreaFileInfo" min="-2" pref="393" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Component id="jTextAreaFileInfo" pref="178" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JTextArea" name="jTextAreaFileInfo">
                   <Properties>
@@ -583,7 +561,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnPanelLiveticker" max="32767" attributes="0"/>
                   <Component id="jSeparator8" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jScrollPane3" alignment="0" pref="1038" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" alignment="0" pref="988" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -593,7 +571,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator8" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="444" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="435" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -615,7 +593,7 @@
                           <Component id="btnRemoveTickerElt" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jSeparator7" alignment="0" pref="851" max="32767" attributes="0"/>
+                      <Component id="jSeparator7" alignment="0" pref="988" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -639,6 +617,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/plus_2.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Add ticker element."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddTickerEltActionPerformed"/>
@@ -654,6 +633,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/pencil_edit.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Edit selected ticker element."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditTickerEltActionPerformed"/>
@@ -664,6 +644,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/delete_2.png"/>
                     </Property>
+                    <Property name="toolTipText" type="java.lang.String" value="Delete selected ticker element."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveTickerEltActionPerformed"/>

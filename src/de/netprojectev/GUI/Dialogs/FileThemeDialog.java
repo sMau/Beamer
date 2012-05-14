@@ -30,6 +30,7 @@ public class FileThemeDialog extends javax.swing.JDialog {
     public FileThemeDialog(java.awt.Frame parent, boolean modal) {
     	super(parent, modal);
         initComponents();
+        setLocation(Misc.currentMousePosition());
     }
 
     /**

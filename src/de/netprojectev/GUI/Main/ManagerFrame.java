@@ -15,6 +15,7 @@ import de.netprojectev.GUI.Dialogs.FileThemeDialog;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.MediaHandler.MediaHandler;
+import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
@@ -51,6 +52,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         preferencesHandler = PreferencesHandler.getInstance();
                 
         initComponents();
+        setLocation(Misc.currentMousePosition());
         
     }
     
@@ -93,9 +95,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableFileManager = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
         jLabelPreview = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
         jTextAreaFileInfo = new javax.swing.JTextArea();
         livetickerPanel = new javax.swing.JPanel();
         btnPanelLiveticker = new javax.swing.JPanel();
@@ -181,6 +183,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         filemangerPanel.setNextFocusableComponent(livetickerPanel);
 
         btnAddFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+        btnAddFile.setToolTipText("Add a file from disc or create a new Themeslide.");
         btnAddFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddFileActionPerformed(evt);
@@ -190,6 +193,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         btnDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/arrow_down.png"))); // NOI18N
+        btnDown.setToolTipText("Move selected file down in list.");
         btnDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDownActionPerformed(evt);
@@ -197,6 +201,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         btnEdit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/pencil_edit.png"))); // NOI18N
+        btnEdit.setToolTipText("Edit the selected file.");
         btnEdit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditActionPerformed(evt);
@@ -204,6 +209,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemove.setToolTipText("Delete the selected file.");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveActionPerformed(evt);
@@ -213,6 +219,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         btnUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/arrow_up.png"))); // NOI18N
+        btnUp.setToolTipText("Move selected file up in list.");
         btnUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpActionPerformed(evt);
@@ -220,6 +227,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         btnSet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/play.png"))); // NOI18N
+        btnSet.setToolTipText("Show selected.");
         btnSet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSetActionPerformed(evt);
@@ -227,6 +235,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         btnPrev.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/previous.png"))); // NOI18N
+        btnPrev.setToolTipText("Show previous.");
         btnPrev.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPrevActionPerformed(evt);
@@ -234,6 +243,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         btnNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/next.png"))); // NOI18N
+        btnNext.setToolTipText("Show next.");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNextActionPerformed(evt);
@@ -241,6 +251,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         toggleBtnShuffle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/shuffle-icon.png"))); // NOI18N
+        toggleBtnShuffle.setToolTipText("Toggle shuffle");
         toggleBtnShuffle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 toggleBtnShuffleActionPerformed(evt);
@@ -248,6 +259,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         toogleBtnAuto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/Clockwise-arrow128.png"))); // NOI18N
+        toogleBtnAuto.setToolTipText("Toggle automode");
         toogleBtnAuto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 toogleBtnAutoActionPerformed(evt);
@@ -255,6 +267,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         lblTimeleft.setText("Timeleft: 00:40");
+        lblTimeleft.setToolTipText("Timeleft until next change.");
 
         javax.swing.GroupLayout btnPanelFileLayout = new javax.swing.GroupLayout(btnPanelFile);
         btnPanelFile.setLayout(btnPanelFileLayout);
@@ -281,7 +294,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addComponent(btnPrev)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 462, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 412, Short.MAX_VALUE)
                 .addComponent(lblTimeleft)
                 .addGap(18, 18, 18)
                 .addComponent(toogleBtnAuto)
@@ -320,9 +333,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTableFileManager.setModel(new FileManagerTableModel());
         jTableFileManager.setShowHorizontalLines(false);
         jTableFileManager.setShowVerticalLines(false);
-        jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(12);
+        jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(16);
         jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);
-        jTableFileManager.getColumnModel().getColumn(0).setMinWidth(12);
+        jTableFileManager.getColumnModel().getColumn(0).setMinWidth(16);
         jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);
         jTableFileManager.getColumnModel().getColumn(0).setResizable(false);
         jTableFileManager.getColumnModel().getColumn(1).setResizable(false);
@@ -340,6 +353,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                     int viewRow = jTableFileManager.getSelectedRow();
                     if (viewRow < 0) {
                         jTextAreaFileInfo.setText("No file selected");
+                        jLabelPreview.setIcon(null);
                         jLabelPreview.setText("No file selected");
                     } else {
                         jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
@@ -359,19 +373,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jLabelPreview.setText("no File selected");
         jLabelPreview.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabelPreview.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jScrollPane2.setViewportView(jLabelPreview);
 
         jTextAreaFileInfo.setBackground(new java.awt.Color(240, 240, 240));
         jTextAreaFileInfo.setColumns(20);
@@ -380,23 +382,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTextAreaFileInfo.setText("no File selected");
         jTextAreaFileInfo.setToolTipText("");
         jTextAreaFileInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 11, Short.MAX_VALUE)
-                .addComponent(jTextAreaFileInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addComponent(jTextAreaFileInfo, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
-        );
+        jScrollPane4.setViewportView(jTextAreaFileInfo);
 
         javax.swing.GroupLayout filemangerPanelLayout = new javax.swing.GroupLayout(filemangerPanel);
         filemangerPanel.setLayout(filemangerPanelLayout);
@@ -406,9 +392,9 @@ public class ManagerFrame extends javax.swing.JFrame {
             .addComponent(jSeparator3)
             .addComponent(jScrollPane1)
             .addGroup(filemangerPanelLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jScrollPane4))
         );
         filemangerPanelLayout.setVerticalGroup(
             filemangerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -417,11 +403,11 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(filemangerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -433,6 +419,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         livetickerPanel.setNextFocusableComponent(filemangerPanel);
 
         btnAddTickerElt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+        btnAddTickerElt.setToolTipText("Add ticker element.");
         btnAddTickerElt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddTickerEltActionPerformed(evt);
@@ -442,6 +429,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jSeparator6.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         btnEditTickerElt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/pencil_edit.png"))); // NOI18N
+        btnEditTickerElt.setToolTipText("Edit selected ticker element.");
         btnEditTickerElt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditTickerEltActionPerformed(evt);
@@ -449,6 +437,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         btnRemoveTickerElt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+        btnRemoveTickerElt.setToolTipText("Delete selected ticker element.");
         btnRemoveTickerElt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveTickerEltActionPerformed(evt);
@@ -469,7 +458,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRemoveTickerElt)
                 .addContainerGap())
-            .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
+            .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
         );
         btnPanelLivetickerLayout.setVerticalGroup(
             btnPanelLivetickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -497,7 +486,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             livetickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnPanelLiveticker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator8)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1038, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
         );
         livetickerPanelLayout.setVerticalGroup(
             livetickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -506,7 +495,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Liveticker", livetickerPanel);
@@ -759,9 +748,11 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void toogleBtnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toogleBtnAutoActionPerformed
     	if(toogleBtnAuto.isSelected()) {
     		mediaHandler.getDisplayHandler().startAutomodus();
+    		
     		jRadioButtonMenuItemAuto.setSelected(true);
     	} else {
     		mediaHandler.getDisplayHandler().stopAutomodus();
+    		lblTimeleft.setText("Timeleft: --:--");
     		jRadioButtonMenuItemAuto.setSelected(false);
     	}
     	
@@ -831,31 +822,14 @@ public class ManagerFrame extends javax.swing.JFrame {
     
     private ImageIcon scaleIcon(ImageIcon preview) {
     	
-    	//TODO Image Scaling doesnt work correctly
-    	
-    	double compVal = 16/9;
-    	double scalingFactor;
-    	double prevWidth = preview.getIconWidth();
-    	double prevHeight = preview.getIconHeight();
-    	double lblWidth = jLabelPreview.getSize().getWidth();
-    	double lblHeight = jLabelPreview.getSize().getHeight();
-    	
-    	if(lblWidth/prevHeight <= compVal) {
-    		scalingFactor = lblWidth/prevWidth;
-    	} else {
-    		scalingFactor = lblHeight/prevHeight;
-    		
-    	}
-    	
-    	System.out.println(prevWidth);
-    	System.out.println(prevHeight);
-    	System.out.println(lblWidth);
-    	System.out.println(lblHeight);
-    	System.out.println(scalingFactor);
-    	
-    	preview.setImage(preview.getImage().getScaledInstance((int)(prevWidth*scalingFactor),(int)(prevHeight*scalingFactor),Image.SCALE_DEFAULT));
+    	preview.setImage(preview.getImage().getScaledInstance(Constants.DEFAULT_SCALE_WIDTH, -1,Image.SCALE_DEFAULT));
     	
     	return preview;
+    }
+    
+    public void refreshTimeleftLbl(int timeleft) {
+    	
+    	lblTimeleft.setText("Timeleft: " + Integer.toString(timeleft));
     }
     
     
@@ -936,13 +910,13 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemUp;
     private javax.swing.JMenuItem jMenuItemUpP;
     private javax.swing.JMenu jMenuPrefs;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenuFileTableElement;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemAuto;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemShuffle;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

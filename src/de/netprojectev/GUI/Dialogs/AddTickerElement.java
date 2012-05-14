@@ -6,6 +6,7 @@ package de.netprojectev.GUI.Dialogs;
 
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.LiveTicker.TickerTextElement;
+import de.netprojectev.Misc.Misc;
 
 /**
  *
@@ -27,7 +28,7 @@ public class AddTickerElement extends javax.swing.JFrame {
     public AddTickerElement(TickerTextElement tickerElt) {
         this.currentTickerElt = tickerElt;
         initComponents();
-        
+        setLocation(Misc.currentMousePosition());
         if(tickerElt == null) { //New Ticker Elt.
             currentTickerElt = new TickerTextElement("New element");
             editMode = false;

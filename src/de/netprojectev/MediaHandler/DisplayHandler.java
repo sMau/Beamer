@@ -11,7 +11,6 @@ import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
 import de.netprojectev.Media.VideoFile;
-import de.netprojectev.Misc.Constants;
 
 /**
  * DisplayHandler ist im Singleton Pattern geschrieben 
@@ -33,6 +32,14 @@ public class DisplayHandler {
 	private Timer automodusTimer;
 	private Boolean noFileShowed;
 	
+	private int timeleft;
+	
+	private Timer refreshTimeLeftTimer;
+	
+	
+	
+	
+	
 	/**
 	 * 
 	 * Innere Klasse um Attribute des DisplayHandlers verwenden zu können.
@@ -42,6 +49,16 @@ public class DisplayHandler {
 	class AutomodusTimer extends TimerTask {
 		public void run() {
 			showNext();    
+		}
+	}
+	
+	class RefreshTimeleftTimer extends TimerTask {
+		
+		public void run() {
+			
+			mediaHandler.getManagerFrame().refreshTimeleftLbl(timeleft);
+			timeleft--;
+
 		}
 	}
 	
@@ -78,7 +95,9 @@ public class DisplayHandler {
 		this.noFileShowed = true;
 		this.currentMediaFile = null;
 		this.setHistoryFile(null);
+		this.timeleft = 0;
 		this.automodusTimer = new Timer();
+		this.refreshTimeLeftTimer = new Timer();
 		
 	}
 
@@ -173,7 +192,7 @@ public class DisplayHandler {
 		if(mediaHandler != null) {
 			mediaHandler.refreshDataModel();
 		}
-		
+		automodusHasChanged();
 		
 	}
 	
@@ -271,19 +290,16 @@ public class DisplayHandler {
 	 */
 	public void startAutomodus() {
 		
-		if(currentMediaFile == null) {
-			currentMediaFile = playingFiles.getFirst();			
-		}
-		
-		//aufräumen bevor der Timer modifiziert wird, falls bereits gelaufen
 		if(isAutomodeEnabled) {
 			automodusTimer.cancel();
 			automodusTimer.purge();
 			
+			refreshTimeLeftTimer.cancel();
+			refreshTimeLeftTimer.purge();
+			
 			automodusTimer = new Timer();
-		} else {
-			show(currentMediaFile);
-		}
+			refreshTimeLeftTimer = new Timer();
+		} 
 		
 		isAutomodeEnabled = true;
 		
@@ -293,16 +309,22 @@ public class DisplayHandler {
 				
 				ImageFile currentImageFile = (ImageFile) currentMediaFile;
 				automodusTimer.schedule(new AutomodusTimer(), currentImageFile.getPriority().getMinutesToShow()*1000*60);
+				timeleft = currentImageFile.getPriority().getMinutesToShow()*60;
+				refreshTimeLeftTimer.schedule(new RefreshTimeleftTimer(), 0, 1000);
 				
 			} else if(currentMediaFile instanceof Themeslide) {
 				
 				Themeslide currentThemeslide = (Themeslide) currentMediaFile;
 				automodusTimer.schedule(new AutomodusTimer(), currentThemeslide.getPriority().getMinutesToShow()*1000*60);
+				timeleft = currentThemeslide.getPriority().getMinutesToShow()*60;
+				refreshTimeLeftTimer.schedule(new RefreshTimeleftTimer(), 0, 1000);
 				
 			} else if(currentMediaFile instanceof VideoFile){
 				
 				VideoFile currentVideoFile = (VideoFile) currentMediaFile;
 				automodusTimer.schedule(new AutomodusTimer(), currentVideoFile.getLength());
+				timeleft = currentVideoFile.getLength();
+				refreshTimeLeftTimer.schedule(new RefreshTimeleftTimer(), 0, 1000);
 				
 			}
 			
@@ -317,6 +339,9 @@ public class DisplayHandler {
 		isAutomodeEnabled = false;
 		automodusTimer.cancel();
 		automodusTimer.purge();
+		refreshTimeLeftTimer.cancel();
+		refreshTimeLeftTimer.purge();
+		
 	}
 	
 	/**

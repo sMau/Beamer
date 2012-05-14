@@ -6,6 +6,7 @@ package de.netprojectev.GUI.Dialogs;
 
 import de.netprojectev.GUI.Main.FileManagerTableModel;
 import de.netprojectev.Media.MediaFile;
+import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
@@ -31,6 +32,7 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
     	
     	if(selectedMediaFile != null) {
     		initComponents();
+    		setLocation(Misc.currentMousePosition());
     		preferencesHandler = PreferencesHandler.getInstance();
     		this.selectedMediaFile = selectedMediaFile;
             jTextFieldEditFileName.setText(selectedMediaFile.getName()); 

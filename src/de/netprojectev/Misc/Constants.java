@@ -17,5 +17,7 @@ public class Constants {
 	
 	public static final int DEFAULT_TICKER_SPEED = 50;
 	
+	public static final int DEFAULT_SCALE_WIDTH = 640;
+	
 
 }

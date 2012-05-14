@@ -1,5 +1,9 @@
 package de.netprojectev.Misc;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
+import java.awt.Rectangle;
 import java.io.File;
 
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
@@ -88,5 +92,10 @@ public class Misc {
 		}
 		
 		return elements;
+	}
+	
+	public static Point currentMousePosition() {
+		PointerInfo info = MouseInfo.getPointerInfo();
+		return info.getLocation();
 	}
 }
