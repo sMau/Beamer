@@ -22,6 +22,8 @@ import de.netprojectev.Preferences.PreferencesHandler;
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.RowFilter;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 
 /**
@@ -73,8 +75,6 @@ public class ManagerFrame extends javax.swing.JFrame {
         jMenuItemAddP = new javax.swing.JMenuItem();
         jMenuItemEditP = new javax.swing.JMenuItem();
         jMenuItemDeleteP = new javax.swing.JMenuItem();
-        jMenuItemUpP = new javax.swing.JMenuItem();
-        jMenuItemDownP = new javax.swing.JMenuItem();
         jMenuItemShowP = new javax.swing.JMenuItem();
         jTabbedPane = new javax.swing.JTabbedPane();
         filemangerPanel = new javax.swing.JPanel();
@@ -149,22 +149,6 @@ public class ManagerFrame extends javax.swing.JFrame {
             }
         });
         jPopupMenuFileTableElement.add(jMenuItemDeleteP);
-
-        jMenuItemUpP.setText("Up");
-        jMenuItemUpP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemUpPActionPerformed(evt);
-            }
-        });
-        jPopupMenuFileTableElement.add(jMenuItemUpP);
-
-        jMenuItemDownP.setText("Down");
-        jMenuItemDownP.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemDownPActionPerformed(evt);
-            }
-        });
-        jPopupMenuFileTableElement.add(jMenuItemDownP);
 
         jMenuItemShowP.setText("Show");
         jMenuItemShowP.addActionListener(new java.awt.event.ActionListener() {
@@ -266,7 +250,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             }
         });
 
-        lblTimeleft.setText("Timeleft: 00:40");
+        lblTimeleft.setText("Timeleft: --:--");
         lblTimeleft.setToolTipText("Timeleft until next change.");
 
         javax.swing.GroupLayout btnPanelFileLayout = new javax.swing.GroupLayout(btnPanelFile);
@@ -294,7 +278,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addComponent(btnPrev)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 412, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
                 .addComponent(lblTimeleft)
                 .addGap(18, 18, 18)
                 .addComponent(toogleBtnAuto)
@@ -363,6 +347,11 @@ public class ManagerFrame extends javax.swing.JFrame {
                 }
             }
         );
+        jTableFileManager.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableFileManagerMouseClicked(evt);
+            }
+        });
         jTableFileManager.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTableFileManagerFocusGained(evt);
@@ -631,97 +620,184 @@ public class ManagerFrame extends javax.swing.JFrame {
 	}
 
     private void btnAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFileActionPerformed
-        new FileThemeDialog(this, true).setVisible(true);
+        addFileGeneral();
     }//GEN-LAST:event_btnAddFileActionPerformed
 
+
+
+
+
+	private void addFileGeneral() {
+		new FileThemeDialog(this, true).setVisible(true);
+	}
+
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-    	//TODO For all move and remove actions: implement a proper auto reselection
-        int[] selectedRows = jTableFileManager.getSelectedRows();
-        if(selectedRows.length > 0) {
-        	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows));
-        }
+    	
+        removeFiles();
         
     }//GEN-LAST:event_btnRemoveActionPerformed
 
-    private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
-    	int[] selectedRows = jTableFileManager.getSelectedRows();
-    	if(selectedRows.length > 0) {
-    		mediaHandler.up(Misc.indexListToMediaFiles(selectedRows));
-    	}
-    }//GEN-LAST:event_btnUpActionPerformed
 
-    private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownActionPerformed
-    	int[] selectedRows = jTableFileManager.getSelectedRows();
-    	if(selectedRows.length > 0) {
-    		mediaHandler.down(Misc.indexListToMediaFiles(selectedRows));
-    	}
-    }//GEN-LAST:event_btnDownActionPerformed
 
-    private void btnSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetActionPerformed
-    	int[] selectedRows = jTableFileManager.getSelectedRows();
-    	if(selectedRows.length > 0) {
-    		mediaHandler.getDisplayHandler().show(Misc.indexListToMediaFiles(selectedRows)[0]);
-    	}
-    }//GEN-LAST:event_btnSetActionPerformed
 
-    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
-    	mediaHandler.getDisplayHandler().showPrevious();
-    }//GEN-LAST:event_btnPrevActionPerformed
-    
-    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
-    	mediaHandler.getDisplayHandler().showNext();
-    }//GEN-LAST:event_btnNextActionPerformed
 
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-    	int[] selectedRows = jTableFileManager.getSelectedRows();
-    	if(selectedRows.length > 0) {
-    		new EditMediaFileFrame(Misc.indexListToMediaFiles(selectedRows)[0]).setVisible(true);
-    	}
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void jMenuItemAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddFileActionPerformed
-    	new FileThemeDialog(this, true).getFileAddbtn().doClick();
-    }//GEN-LAST:event_jMenuItemAddFileActionPerformed
-
-    private void jMenuItemAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddThemeslideActionPerformed
-    	new FileThemeDialog(this, true).getThemeSlideAddBtn().doClick();
-    }//GEN-LAST:event_jMenuItemAddThemeslideActionPerformed
-
-    private void jMenuItemQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemQuitActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_jMenuItemQuitActionPerformed
-
-    private void jMenuItemEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEditActionPerformed
-    	int[] selectedRows = jTableFileManager.getSelectedRows();
-    	if(selectedRows.length > 0) {
-    		new EditMediaFileFrame(Misc.indexListToMediaFiles(selectedRows)[0]).setVisible(true);
-    	}
-    }//GEN-LAST:event_jMenuItemEditActionPerformed
-
-    private void jMenuItemRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRemoveActionPerformed
-    	int[] selectedRows = jTableFileManager.getSelectedRows();
+	private void removeFiles() {
+		//TODO For all move and remove actions: implement a proper auto reselection
+		int[] selectedRows = jTableFileManager.getSelectedRows();
         if(selectedRows.length > 0) {
         	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows));
         }
-    }//GEN-LAST:event_jMenuItemRemoveActionPerformed
+	}
 
-    private void jMenuItemUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUpActionPerformed
-    	int[] selectedRows = jTableFileManager.getSelectedRows();
+    private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
+    	moveFilesUp();
+    }//GEN-LAST:event_btnUpActionPerformed
+
+
+
+
+
+	private void moveFilesUp() {
+		int[] selectedRows = jTableFileManager.getSelectedRows();
+		
     	if(selectedRows.length > 0) {
+    		
     		mediaHandler.up(Misc.indexListToMediaFiles(selectedRows));
     	}
-    }//GEN-LAST:event_jMenuItemUpActionPerformed
+	}
 
-    private void jMenuItemDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDownActionPerformed
-    	int[] selectedRows = jTableFileManager.getSelectedRows();
+    private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownActionPerformed
+    	moveFilesDown();
+    }//GEN-LAST:event_btnDownActionPerformed
+
+
+
+
+
+	private void moveFilesDown() {
+		int[] selectedRows = jTableFileManager.getSelectedRows();
     	if(selectedRows.length > 0) {
     		mediaHandler.down(Misc.indexListToMediaFiles(selectedRows));
     	}
+	}
+
+    private void btnSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetActionPerformed
+    	showFile();
+    }//GEN-LAST:event_btnSetActionPerformed
+
+
+
+
+
+	private void showFile() {
+		int[] selectedRows = jTableFileManager.getSelectedRows();
+    	if(selectedRows.length > 0) {
+    		mediaHandler.getDisplayHandler().show(Misc.indexListToMediaFiles(selectedRows)[0]);
+    	}
+	}
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+    	showPrevious();
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+
+
+
+
+	private void showPrevious() {
+		mediaHandler.getDisplayHandler().showPrevious();
+	}
+    
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+    	showNext();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+
+
+
+
+	private void showNext() {
+		mediaHandler.getDisplayHandler().showNext();
+	}
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+    	editFile();
+    }//GEN-LAST:event_btnEditActionPerformed
+
+
+
+
+
+	private void editFile() {
+		int[] selectedRows = jTableFileManager.getSelectedRows();
+    	if(selectedRows.length > 0) {
+    		new EditMediaFileFrame(Misc.indexListToMediaFiles(selectedRows)[0]).setVisible(true);
+    	}
+	}
+
+    private void jMenuItemAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddFileActionPerformed
+    	addFileFromDisk();
+    }//GEN-LAST:event_jMenuItemAddFileActionPerformed
+
+
+
+
+
+	private void addFileFromDisk() {
+		new FileThemeDialog(this, true).getFileAddbtn().doClick();
+	}
+
+    private void jMenuItemAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddThemeslideActionPerformed
+    	addThemeSlide();
+    }//GEN-LAST:event_jMenuItemAddThemeslideActionPerformed
+
+
+
+
+
+	private void addThemeSlide() {
+		new FileThemeDialog(this, true).getThemeSlideAddBtn().doClick();
+	}
+
+    private void jMenuItemQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemQuitActionPerformed
+        quit();
+    }//GEN-LAST:event_jMenuItemQuitActionPerformed
+
+
+
+
+
+	private void quit() {
+		System.exit(0);
+	}
+
+    private void jMenuItemEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEditActionPerformed
+    	editFile();
+    }//GEN-LAST:event_jMenuItemEditActionPerformed
+
+    private void jMenuItemRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRemoveActionPerformed
+    	removeFiles();
+    }//GEN-LAST:event_jMenuItemRemoveActionPerformed
+
+    private void jMenuItemUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUpActionPerformed
+    	moveFilesUp();
+    }//GEN-LAST:event_jMenuItemUpActionPerformed
+
+    private void jMenuItemDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDownActionPerformed
+    	moveFilesDown();
     }//GEN-LAST:event_jMenuItemDownActionPerformed
 
     private void jMenuItemPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrefsActionPerformed
-        new PreferencesFrame(this).setVisible(true);
+        openPreferences();
     }//GEN-LAST:event_jMenuItemPrefsActionPerformed
+
+
+
+
+
+	private void openPreferences() {
+		new PreferencesFrame(this).setVisible(true);
+	}
 
     private void jRadioButtonMenuItemShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemShuffleActionPerformed
     	if(jRadioButtonMenuItemShuffle.isSelected()) {
@@ -741,27 +817,22 @@ public class ManagerFrame extends javax.swing.JFrame {
     		mediaHandler.getDisplayHandler().startAutomodus();
     		toogleBtnAuto.setSelected(false);
     	}
-    	
-    	
+
     }//GEN-LAST:event_jRadioButtonMenuItemAutoActionPerformed
 
     private void toogleBtnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toogleBtnAutoActionPerformed
     	if(toogleBtnAuto.isSelected()) {
-    		mediaHandler.getDisplayHandler().startAutomodus();
-    		
+    		mediaHandler.getDisplayHandler().startAutomodus();   		
     		jRadioButtonMenuItemAuto.setSelected(true);
     	} else {
     		mediaHandler.getDisplayHandler().stopAutomodus();
     		lblTimeleft.setText("Timeleft: --:--");
     		jRadioButtonMenuItemAuto.setSelected(false);
     	}
-    	
-    	
-    	
+
     }//GEN-LAST:event_toogleBtnAutoActionPerformed
 
     private void toggleBtnShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBtnShuffleActionPerformed
-
     	if(toggleBtnShuffle.isSelected()) {
     		mediaHandler.getDisplayHandler().startShuffle();
     		jRadioButtonMenuItemShuffle.setSelected(true);
@@ -776,47 +847,82 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableFileManagerFocusGained
 
     private void jMenuItemAddPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddPActionPerformed
-        // TODO add your handling code here:
+        addFileGeneral();
     }//GEN-LAST:event_jMenuItemAddPActionPerformed
 
     private void jMenuItemEditPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEditPActionPerformed
-        // TODO add your handling code here:
+    	editFile();
     }//GEN-LAST:event_jMenuItemEditPActionPerformed
 
     private void jMenuItemDeletePActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDeletePActionPerformed
-        // TODO add your handling code here:
+    	removeFiles();
     }//GEN-LAST:event_jMenuItemDeletePActionPerformed
 
-    private void jMenuItemUpPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUpPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemUpPActionPerformed
-
-    private void jMenuItemDownPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDownPActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemDownPActionPerformed
-
     private void jMenuItemShowPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemShowPActionPerformed
-        // TODO add your handling code here:
+    	showFile();
     }//GEN-LAST:event_jMenuItemShowPActionPerformed
 
     private void btnAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTickerEltActionPerformed
-        new AddTickerElement(null).setVisible(true);
+        addTickerElement();
     }//GEN-LAST:event_btnAddTickerEltActionPerformed
+
+
+
+
+
+	private void addTickerElement() {
+		new AddTickerElement(null).setVisible(true);
+	}
 
     private void btnEditTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditTickerEltActionPerformed
         
-    	if(jTableLiveticker.getSelectedRow() >= 0) {
-    		new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow())).setVisible(true);
-    	}
+    	editTicketElement();
     }//GEN-LAST:event_btnEditTickerEltActionPerformed
 
+
+
+
+
+	private void editTicketElement() {
+		if(jTableLiveticker.getSelectedRow() >= 0) {
+    		new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow())).setVisible(true);
+    	}
+	}
+
     private void btnRemoveTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveTickerEltActionPerformed
-        int[] selRows = jTableLiveticker.getSelectedRows();
+        removeTickerElements();
+            
+    }//GEN-LAST:event_btnRemoveTickerEltActionPerformed
+
+
+
+
+
+	private void removeTickerElements() {
+		int[] selRows = jTableLiveticker.getSelectedRows();
         if(selRows.length > 0) {
         	liveTicker.remove(Misc.indexListToTickerElts(selRows));
         }
-            
-    }//GEN-LAST:event_btnRemoveTickerEltActionPerformed
+	}
+
+    private void jTableFileManagerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFileManagerMouseClicked
+    	boolean isRowAlreadySelected = false;
+    	if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
+    		
+    	    int dataRow = jTableFileManager.rowAtPoint(evt.getPoint());
+    	    for(int i = 0; i < jTableFileManager.getSelectedRows().length; i++) {
+    	    	if(jTableFileManager.getSelectedRows()[i] == dataRow) {
+    	    		isRowAlreadySelected = true;
+    	    	}
+    	    }
+    	    if(!isRowAlreadySelected) {
+    	    	jTableFileManager.changeSelection(dataRow, 0, false, false);
+    	    }
+    	    if (dataRow >= 0) {
+    	    	jPopupMenuFileTableElement.show(evt.getComponent(), evt.getX(), evt.getY());
+    	    }
+    	  }
+    }//GEN-LAST:event_jTableFileManagerMouseClicked
 
     
     
@@ -900,7 +1006,6 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemAddTickerElt;
     private javax.swing.JMenuItem jMenuItemDeleteP;
     private javax.swing.JMenuItem jMenuItemDown;
-    private javax.swing.JMenuItem jMenuItemDownP;
     private javax.swing.JMenuItem jMenuItemEdit;
     private javax.swing.JMenuItem jMenuItemEditP;
     private javax.swing.JMenuItem jMenuItemPrefs;
@@ -908,7 +1013,6 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemRemove;
     private javax.swing.JMenuItem jMenuItemShowP;
     private javax.swing.JMenuItem jMenuItemUp;
-    private javax.swing.JMenuItem jMenuItemUpP;
     private javax.swing.JMenu jMenuPrefs;
     private javax.swing.JPopupMenu jPopupMenuFileTableElement;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemAuto;

@@ -5,6 +5,8 @@
 package de.netprojectev.GUI.Dialogs;
 
 import de.netprojectev.GUI.Themeslide.ThemeslideCreatorFrame;
+
+import java.awt.FileDialog;
 import java.io.File;
 
 import de.netprojectev.MediaHandler.MediaHandler;
@@ -15,10 +17,8 @@ import de.netprojectev.Misc.Misc;
  * 
  */
 public class FileThemeDialog extends javax.swing.JDialog {
-
 	
-	//TODO Pimp the look of the Filechooser used of Ubuntu, maybe with this here:
-	// see FileDialog
+	private FileDialog fd;
 	
     /**
 	 * 
@@ -42,18 +42,8 @@ public class FileThemeDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooserAddFile = new javax.swing.JFileChooser();
         fileAddbtn = new javax.swing.JButton();
         themeSlideAddBtn = new javax.swing.JButton();
-
-        jFileChooserAddFile.setDialogTitle("Add File");
-        jFileChooserAddFile.setMultiSelectionEnabled(true);
-        jFileChooserAddFile.setName("Add file");
-        jFileChooserAddFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooserAddFileActionPerformed(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Add File");
@@ -99,20 +89,17 @@ public class FileThemeDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileAddbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileAddbtnActionPerformed
-        jFileChooserAddFile.showDialog(this, null);
-        jFileChooserAddFile.setVisible(true);
-        dispose();
+    	dispose();
+    	fd = new FileDialog(this, "Load files", FileDialog.LOAD);
+        fd.setMultipleMode(true);
+        fd.setVisible(true);
+        MediaHandler.getInstance().add(Misc.createMediaFromFiles(fd.getFiles()));
     }//GEN-LAST:event_fileAddbtnActionPerformed
 
     private void themeSlideAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themeSlideAddBtnActionPerformed
-        new ThemeslideCreatorFrame().setVisible(true);
-        dispose();
+    	dispose();
+    	new ThemeslideCreatorFrame().setVisible(true);
     }//GEN-LAST:event_themeSlideAddBtnActionPerformed
-
-    private void jFileChooserAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserAddFileActionPerformed
-        File[] files = jFileChooserAddFile.getSelectedFiles();
-        MediaHandler.getInstance().add(Misc.createMediaFromFiles(files));
-    }//GEN-LAST:event_jFileChooserAddFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,7 +152,6 @@ public class FileThemeDialog extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton fileAddbtn;
-    private javax.swing.JFileChooser jFileChooserAddFile;
     private javax.swing.JButton themeSlideAddBtn;
     // End of variables declaration//GEN-END:variables
 	public javax.swing.JButton getFileAddbtn() {
@@ -174,6 +160,14 @@ public class FileThemeDialog extends javax.swing.JDialog {
 
 	public javax.swing.JButton getThemeSlideAddBtn() {
 		return themeSlideAddBtn;
+	}
+
+	public FileDialog getFd() {
+		return fd;
+	}
+
+	public void setFd(FileDialog fd) {
+		this.fd = fd;
 	}
 
 }

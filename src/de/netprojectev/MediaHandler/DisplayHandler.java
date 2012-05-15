@@ -288,7 +288,7 @@ public class DisplayHandler {
 	 * Diese Methode startet den Automodus.
 	 * Außerdem wird sie jedes mal nach einem Dateiwechsel aufgerufen um den Timer anzupassen (bzgl der Priority der nächsten Date).
 	 */
-	public void startAutomodus() {
+	public synchronized void startAutomodus() {
 		
 		if(isAutomodeEnabled) {
 			automodusTimer.cancel();
@@ -308,6 +308,7 @@ public class DisplayHandler {
 			if(currentMediaFile instanceof ImageFile) {
 				
 				ImageFile currentImageFile = (ImageFile) currentMediaFile;
+				//TODO throwed once a illegal state exc. cause timer were cancelled already before
 				automodusTimer.schedule(new AutomodusTimer(), currentImageFile.getPriority().getMinutesToShow()*1000*60);
 				timeleft = currentImageFile.getPriority().getMinutesToShow()*60;
 				refreshTimeLeftTimer.schedule(new RefreshTimeleftTimer(), 0, 1000);
@@ -335,7 +336,7 @@ public class DisplayHandler {
 	/**
 	 * Stoppt den Automodus und räumt den Timer auf.
 	 */
-	public void stopAutomodus() {
+	public synchronized void stopAutomodus() {
 		isAutomodeEnabled = false;
 		automodusTimer.cancel();
 		automodusTimer.purge();

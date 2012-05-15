@@ -1,7 +1,26 @@
 Tooltips check agagin
 Reselection after basic ops (like up down delete) (propably easy goin in models)
-right click context menus
+right click context menus, extending for changeprio and change name, and so on
 move up down via drag n drop
 formatting the timeleft lbl to mm:ss
-Add File dialog positioning and the "better one".
+Add File dialog positioning
 autorefreshing infobox and preview box after editing.
+saving and restoring and start and quit
+mouse resizable preview window
+"big" preview window as "popup" own frame
+after themeslide creation suggest to add a ticker elt.
+keylistener v.a. in jtable 
+up down move, change algo that files wont glue together anymore automatically
+
+
+
+PrioListe
+
+-Themeslide creation
+-Displaying Unit
+	Images
+	Themeslides
+	LiveTicker
+-Bugfixing and points above
+
+

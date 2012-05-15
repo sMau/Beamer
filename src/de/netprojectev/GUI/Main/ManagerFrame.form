@@ -32,22 +32,6 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemDeletePActionPerformed"/>
           </Events>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemUpP">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Up"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemUpPActionPerformed"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemDownP">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Down"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemDownPActionPerformed"/>
-          </Events>
-        </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="jMenuItemShowP">
           <Properties>
             <Property name="text" type="java.lang.String" value="Show"/>
@@ -297,7 +281,7 @@
                           <Component id="btnPrev" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnNext" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="412" max="32767" attributes="0"/>
+                          <EmptySpace pref="432" max="32767" attributes="0"/>
                           <Component id="lblTimeleft" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="toogleBtnAuto" min="-2" max="-2" attributes="0"/>
@@ -467,7 +451,7 @@
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTimeleft">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Timeleft: 00:40"/>
+                    <Property name="text" type="java.lang.String" value="Timeleft: --:--"/>
                     <Property name="toolTipText" type="java.lang.String" value="Timeleft until next change."/>
                   </Properties>
                 </Component>
@@ -488,6 +472,7 @@
                     <Property name="showVerticalLines" type="boolean" value="false"/>
                   </Properties>
                   <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableFileManagerMouseClicked"/>
                     <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTableFileManagerFocusGained"/>
                   </Events>
                   <AuxValues>
