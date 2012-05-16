@@ -4,6 +4,7 @@
  */
 package de.netprojectev.GUI.Preferences;
 
+import java.awt.FileDialog;
 import java.io.File;
 
 import de.netprojectev.GUI.Main.ManagerFrame;
@@ -29,6 +30,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private Theme selectedTheme;
 	private ManagerFrame managerFrame;
 	private File selectedImage;
+	
+	private FileDialog fd;
 	
     public File getSelectedImage() {
 		return selectedImage;
@@ -68,7 +71,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooserBgImageTheme = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelTabMain = new javax.swing.JPanel();
         jButtonReset = new javax.swing.JButton();
@@ -101,13 +103,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jButtonChooseBgImage = new javax.swing.JButton();
         jButtonCancelPrefs = new javax.swing.JButton();
         jButtonApplyPrefs = new javax.swing.JButton();
-
-        jFileChooserBgImageTheme.setDialogTitle("Theme background");
-        jFileChooserBgImageTheme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooserBgImageThemeActionPerformed(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Preferences");
@@ -167,7 +162,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
                     int viewRow = jListTheme.getSelectedIndex();
-                    if(viewRow != -1) {
+                    if(viewRow >= 0) {
                         selectedPrio = preferenceshandler.getListOfPriorities().get(viewRow);
                         jTextFieldPrioName.setText(selectedPrio.getName());
                         jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
@@ -265,8 +260,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
                     int viewRow = jListTheme.getSelectedIndex();
-                    selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
-
+                    System.out.println(viewRow);
+                    if(viewRow >= 0) {
+                    	selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
+                    	jTextFieldThemeName.setText(selectedTheme.getName());
+                    	jTextFieldThemeBgImg.setText(selectedTheme.getBackgroundImage().getAbsolutePath());
+                    }
                 }
             }
         );
@@ -494,8 +493,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
 
     private void jButtonChooseBgImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseBgImageActionPerformed
-        jFileChooserBgImageTheme.showDialog(this, null);
-        jFileChooserBgImageTheme.setVisible(true);
+    	fd = new FileDialog(this, "Load Background", FileDialog.LOAD);
+        fd.setMultipleMode(false);
+        fd.setVisible(true);
+    	selectedImage = fd.getFiles()[0];
+		jTextFieldThemeBgImg.setText(selectedImage.getAbsolutePath());
     }//GEN-LAST:event_jButtonChooseBgImageActionPerformed
 
     private void btnSaveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveThemeActionPerformed
@@ -544,12 +546,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
      	preferenceshandler.removeThemes(Misc.indexListToThemes(selectedIndices));
      	
     }//GEN-LAST:event_btnRemoveThemeActionPerformed
-
-    private void jFileChooserBgImageThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserBgImageThemeActionPerformed
-        selectedImage = jFileChooserBgImageTheme.getSelectedFile();
-    	jTextFieldThemeBgImg.setText(selectedImage.getAbsolutePath());
-    	
-    }//GEN-LAST:event_jFileChooserBgImageThemeActionPerformed
 
     /**
      * @param args the command line arguments
@@ -605,7 +601,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonReset;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JFileChooser jFileChooserBgImageTheme;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelPrioName;
     private javax.swing.JLabel jLabelThemeBg;

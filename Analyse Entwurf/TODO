@@ -11,6 +11,10 @@ mouse resizable preview window
 after themeslide creation suggest to add a ticker elt.
 keylistener v.a. in jtable 
 up down move, change algo that files wont glue together anymore automatically
+FileChoosing "recently" not working -> nullpointer, check if can be excluded
+
+
+
 
 
 

@@ -14,10 +14,14 @@ import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
 import de.netprojectev.GUI.Dialogs.FileThemeDialog;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
+import de.netprojectev.Media.ImageFile;
+import de.netprojectev.Media.Themeslide;
+import de.netprojectev.Media.VideoFile;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
+import java.awt.Toolkit;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -126,6 +130,8 @@ public class ManagerFrame extends javax.swing.JFrame {
         jRadioButtonMenuItemShuffle = new javax.swing.JRadioButtonMenuItem();
         jMenuItemPrefs = new javax.swing.JMenuItem();
 
+        jPopupMenuFileTableElement.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
         jMenuItemAddP.setText("Add");
         jMenuItemAddP.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,6 +167,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Beamermanager");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/de/netprojectev/GFX/icon.png")));
         setName("managerframe");
 
         filemangerPanel.setName("filemanagerTab");
@@ -278,7 +285,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addComponent(btnPrev)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblTimeleft)
                 .addGap(18, 18, 18)
                 .addComponent(toogleBtnAuto)
@@ -359,10 +366,16 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableFileManager);
 
+        jScrollPane2.setBorder(null);
+        jScrollPane2.setViewportBorder(null);
+
         jLabelPreview.setText("no File selected");
         jLabelPreview.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         jLabelPreview.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
         jScrollPane2.setViewportView(jLabelPreview);
+
+        jScrollPane4.setBorder(null);
+        jScrollPane4.setViewportBorder(null);
 
         jTextAreaFileInfo.setBackground(new java.awt.Color(240, 240, 240));
         jTextAreaFileInfo.setColumns(20);
@@ -381,9 +394,9 @@ public class ManagerFrame extends javax.swing.JFrame {
             .addComponent(jSeparator3)
             .addComponent(jScrollPane1)
             .addGroup(filemangerPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane2)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane4))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         filemangerPanelLayout.setVerticalGroup(
             filemangerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -392,12 +405,11 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(filemangerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 187, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 201, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)))
         );
 
         jTabbedPane.addTab("Filemanager", filemangerPanel);
@@ -447,7 +459,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRemoveTickerElt)
                 .addContainerGap())
-            .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
+            .addComponent(jSeparator7, javax.swing.GroupLayout.DEFAULT_SIZE, 996, Short.MAX_VALUE)
         );
         btnPanelLivetickerLayout.setVerticalGroup(
             btnPanelLivetickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,7 +487,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             livetickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnPanelLiveticker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator8)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 996, Short.MAX_VALUE)
         );
         livetickerPanelLayout.setVerticalGroup(
             livetickerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,13 +496,14 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 435, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Liveticker", livetickerPanel);
         livetickerPanel.getAccessibleContext().setAccessibleName("livetickerTab");
 
         jMenuFile.setText("File");
+        jMenuFile.setMargin(new java.awt.Insets(0, 4, 0, 4));
 
         jMenuItemAddFile.setText("Add File");
         jMenuItemAddFile.addActionListener(new java.awt.event.ActionListener() {
@@ -525,6 +538,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jMenuBarMainFrame.add(jMenuFile);
 
         jMenuEdit.setText("Edit");
+        jMenuEdit.setMargin(new java.awt.Insets(0, 4, 0, 4));
 
         jMenuItemEdit.setText("Edit");
         jMenuItemEdit.addActionListener(new java.awt.event.ActionListener() {
@@ -561,6 +575,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jMenuBarMainFrame.add(jMenuEdit);
 
         jMenuPrefs.setText("Preferences");
+        jMenuPrefs.setMargin(new java.awt.Insets(0, 4, 0, 4));
 
         jRadioButtonMenuItemAuto.setText("Automode");
         jRadioButtonMenuItemAuto.addActionListener(new java.awt.event.ActionListener() {
@@ -829,7 +844,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     		lblTimeleft.setText("Timeleft: --:--");
     		jRadioButtonMenuItemAuto.setSelected(false);
     	}
-
+    	
     }//GEN-LAST:event_toogleBtnAutoActionPerformed
 
     private void toggleBtnShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBtnShuffleActionPerformed
