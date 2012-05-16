@@ -69,6 +69,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         previewThemeslideComponent1 = new de.netprojectev.GUI.Themeslide.PreviewThemeslideComponent();
         jScrollPane1 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
+        jComboBoxFontSize = new javax.swing.JComboBox();
+        jComboBoxFontType = new javax.swing.JComboBox();
+        jToggleButtonBold = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Themeslide Creator");
@@ -127,23 +130,43 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         previewThemeslideComponent1.setLayout(previewThemeslideComponent1Layout);
         previewThemeslideComponent1Layout.setHorizontalGroup(
             previewThemeslideComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE)
         );
         previewThemeslideComponent1Layout.setVerticalGroup(
             previewThemeslideComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE)
         );
 
         jScrollPane1.getViewport().setOpaque(false);
 
         jScrollPane2.setViewportView(previewThemeslideComponent1);
 
+        jComboBoxFontSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFontSizeActionPerformed(evt);
+            }
+        });
+
+        jComboBoxFontType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFontTypeActionPerformed(evt);
+            }
+        });
+
+        jToggleButtonBold.setText("Bold");
+        jToggleButtonBold.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonBoldActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jToggleButtonBold)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -153,8 +176,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAddAndShow)
                         .addGap(12, 12, 12))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jSeparator1)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jComboBoxFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxFontType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -170,7 +195,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxPriority, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1029, Short.MAX_VALUE)
+                    .addComponent(jSeparator1))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -186,8 +212,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
+                .addGap(9, 9, 9)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxFontType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButtonBold))
+                .addGap(6, 6, 6)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 513, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
@@ -237,6 +268,28 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private void jComboBoxPriorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPriorityActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxPriorityActionPerformed
+
+    private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBoldActionPerformed
+
+    	int start = jEditorPane1.getSelectionStart();
+    	int end = jEditorPane1.getSelectionEnd() + 3;
+    	String text = jEditorPane1.getText();
+    	StringBuilder strBuilder = new StringBuilder(text);    
+    	strBuilder.insert(start, "<b>");
+    	strBuilder.insert(end, "</b>");
+    	text = strBuilder.toString();
+    	System.out.println(text);
+    	jEditorPane1.setText(text);
+
+    }//GEN-LAST:event_jToggleButtonBoldActionPerformed
+
+    private void jComboBoxFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontSizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxFontSizeActionPerformed
+
+    private void jComboBoxFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxFontTypeActionPerformed
     
     private void addThemeslide() {
     	Priority priority = null;
@@ -322,6 +375,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonAddAndShow;
     private javax.swing.JButton jButtonCancel;
+    private javax.swing.JComboBox jComboBoxFontSize;
+    private javax.swing.JComboBox jComboBoxFontType;
     private javax.swing.JComboBox jComboBoxPriority;
     private javax.swing.JComboBox jComboBoxTheme;
     private javax.swing.JEditorPane jEditorPane1;
@@ -333,6 +388,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldThemeSlideName;
+    private javax.swing.JToggleButton jToggleButtonBold;
     private de.netprojectev.GUI.Themeslide.PreviewThemeslideComponent previewThemeslideComponent1;
     // End of variables declaration//GEN-END:variables
 }
