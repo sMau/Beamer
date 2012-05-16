@@ -7,6 +7,9 @@ package de.netprojectev.GUI.Themeslide;
 import java.awt.Point;
 import java.util.LinkedList;
 
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
@@ -66,6 +69,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jComboBoxPriority = new javax.swing.JComboBox();
         jScrollPane2 = new javax.swing.JScrollPane();
         previewThemeslideComponent1 = new de.netprojectev.GUI.Themeslide.PreviewThemeslideComponent();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextAreaPreview = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Themeslide Creator");
@@ -84,6 +89,24 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
         jTextAreaText.setColumns(20);
         jTextAreaText.setRows(5);
+        jTextAreaText.setTabSize(4);
+        jTextAreaText.getDocument().addDocumentListener(new DocumentListener() {
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                textChanged(e);
+            }
+        });
         jScrollPane1.setViewportView(jTextAreaText);
 
         jButtonCancel.setText("Cancel");
@@ -115,16 +138,30 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane3.setToolTipText("");
+        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        jScrollPane3.setOpaque(false);
+
+        jTextAreaPreview.setColumns(20);
+        jTextAreaPreview.setEditable(false);
+        jTextAreaPreview.setRows(5);
+        jTextAreaPreview.setTabSize(4);
+        jTextAreaPreview.setOpaque(false);
+        jScrollPane3.setViewportView(jTextAreaPreview);
+
         javax.swing.GroupLayout previewThemeslideComponent1Layout = new javax.swing.GroupLayout(previewThemeslideComponent1);
         previewThemeslideComponent1.setLayout(previewThemeslideComponent1Layout);
         previewThemeslideComponent1Layout.setHorizontalGroup(
             previewThemeslideComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 967, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 967, Short.MAX_VALUE)
         );
         previewThemeslideComponent1Layout.setVerticalGroup(
             previewThemeslideComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 357, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
         );
+
+        jScrollPane3.getViewport().setOpaque(false);
 
         jScrollPane2.setViewportView(previewThemeslideComponent1);
 
@@ -152,7 +189,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jComboBoxPriority, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +213,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)
+                .addComponent(jScrollPane2)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
@@ -204,7 +241,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     private void jComboBoxThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeActionPerformed
 
-    	System.out.println("combobox listener reached");
     	previewThemeslideComponent1.setThemeBackground(PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
     	
     }//GEN-LAST:event_jComboBoxThemeActionPerformed
@@ -270,6 +306,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	
     
     }
+    
+    private void textChanged(DocumentEvent e) {
+    	
+    	jTextAreaPreview.setText(jTextAreaText.getText());
+    
+    }
 
     /**
      * @param args the command line arguments
@@ -324,7 +366,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextArea jTextAreaPreview;
     private javax.swing.JTextArea jTextAreaText;
     private javax.swing.JTextField jTextFieldThemeSlideName;
     private de.netprojectev.GUI.Themeslide.PreviewThemeslideComponent previewThemeslideComponent1;
