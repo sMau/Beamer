@@ -1,5 +1,6 @@
 package de.netprojectev.Misc;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
@@ -21,6 +22,7 @@ import de.netprojectev.Preferences.PreferencesHandler;
  * Hier werden nirgendwo sonst hinpassende globale Schnittstellen angeboten
  */
 public class Misc {
+	
 	
 	
 	public static MediaFile[] createMediaFromFiles(File[] files) {
@@ -98,4 +100,23 @@ public class Misc {
 		PointerInfo info = MouseInfo.getPointerInfo();
 		return info.getLocation();
 	}
+	
+	public static String[] generateFontSizes() {
+		int n = 4;
+		int start = 12;
+		int end = 80;
+		int arraySize = 0;
+		
+		for(int i = start; i < end + 1;  i+= n) {
+			arraySize++;
+		}
+		String[] sizes = new String[arraySize];
+		int index = 0;
+		for(int i = start; i < end + 1; i+=n) {
+			sizes[index] = Integer.toString(i) + "px";
+			index++;
+		}
+		return sizes;
+	}
+
 }

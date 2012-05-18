@@ -14,17 +14,19 @@ up down move, change algo that files wont glue together anymore automatically
 FileChoosing "recently" not working -> nullpointer, check if can be excluded
 
 
-
-
+Anchor in themeslidecreation resets after resizing
+Anchor font family, font size, font color -> presettings
+Bordering in Themeslidecreator for better orientation
 
 
 PrioListe
 
--Themeslide creation
+-Themeslide creation (beta state ready), color would be good to be added
 -Displaying Unit
 	Images
 	Themeslides
 	LiveTicker
+-Serialisierung
 -Bugfixing and points above
-
-
+-assure clean loading (force all singletons to create instances and so on)
+-refactor previewing only in image not in themeslide

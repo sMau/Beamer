@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.netprojectev.GUI.Display.DisplayMainFrame;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
@@ -23,6 +24,7 @@ public class DisplayHandler {
 	private static DisplayHandler instance = null;
 
 	private MediaHandler mediaHandler;
+	private DisplayDispatcher displayDispatcher;
 	
 	private LinkedList<MediaFile> playingFiles;
 	private Boolean isAutomodeEnabled;
@@ -98,6 +100,8 @@ public class DisplayHandler {
 		this.timeleft = 0;
 		this.automodusTimer = new Timer();
 		this.refreshTimeLeftTimer = new Timer();
+		this.displayDispatcher = DisplayDispatcher.getInstance();
+		this.displayDispatcher.setDisplayFrame(new DisplayMainFrame());
 		
 	}
 

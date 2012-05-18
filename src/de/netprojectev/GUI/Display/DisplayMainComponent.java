@@ -1,4 +1,4 @@
-package de.netprojectev.GUI.Themeslide;
+package de.netprojectev.GUI.Display;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -8,11 +8,12 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
-public class PreviewThemeslideComponent extends JComponent {
+public class DisplayMainComponent extends JComponent {
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -4411192008897145428L;
+	private static final long serialVersionUID = 3915763660057625809L;
 	private Image image;
 	private ImageIcon iconRepre;
 

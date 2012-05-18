@@ -27,7 +27,6 @@ public class ImageFile extends MediaFile {
 
 	@Override
 	public ImageIcon generatePreview() {
-		System.out.println("generate Preview   " + path);
 		if(path != null) {
 			return new ImageIcon(path);
 		} else {

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JTextPane;
 
 /**
  * Konkrete implementierung der Datenstruktur MediaFile
@@ -18,16 +19,16 @@ public class Themeslide extends MediaFile {
 	private static final long serialVersionUID = -1132804586378123305L;
 	
 	private Theme theme;
-	private LinkedList<String> textElements;
-	private Point textPosition;
+	private Point anchor;
+	private JTextPane text;
 
-	public Themeslide(String name,Priority priority, Theme theme, LinkedList<String> textElements,
-			Point textPosition) {
+	public Themeslide(String name,Priority priority, Theme theme, JTextPane text, Point textPosition) {
 		super(name, priority);
 		
 		this.theme = theme;
-		this.textElements = textElements;
-		this.textPosition = textPosition;
+		this.anchor = textPosition;
+		this.text = text;
+		this.text.setEditable(false);
 
 	}
 
@@ -52,20 +53,20 @@ public class Themeslide extends MediaFile {
 		this.theme = theme;
 	}
 
-	public LinkedList<String> getTextElements() {
-		return textElements;
-	}
-
-	public void setTextElements(LinkedList<String> textElements) {
-		this.textElements = textElements;
-	}
-
 	public Point getTextPosition() {
-		return textPosition;
+		return anchor;
 	}
 
 	public void setTextPosition(Point textPosition) {
-		this.textPosition = textPosition;
+		this.anchor = textPosition;
+	}
+
+	public JTextPane getText() {
+		return text;
+	}
+
+	public void setText(JTextPane text) {
+		this.text = text;
 	}
 
 }

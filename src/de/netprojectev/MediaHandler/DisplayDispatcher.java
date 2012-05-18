@@ -1,0 +1,33 @@
+package de.netprojectev.MediaHandler;
+
+import de.netprojectev.GUI.Display.DisplayMainFrame;
+
+public class DisplayDispatcher {
+
+	private static DisplayDispatcher instance = null;
+	
+	private DisplayMainFrame displayFrame;
+	
+	private DisplayDispatcher() {
+				
+	}
+	
+	public static DisplayDispatcher getInstance() {
+		
+		if(instance == null) {
+			instance = new DisplayDispatcher();
+		}
+		return instance;
+	}
+
+	public DisplayMainFrame getDisplayFrame() {
+		return displayFrame;
+	}
+
+	public void setDisplayFrame(DisplayMainFrame displayFrame) {
+		this.displayFrame = displayFrame;
+		this.displayFrame.setEnabled(true);
+		this.displayFrame.setVisible(true);
+	}
+	
+}

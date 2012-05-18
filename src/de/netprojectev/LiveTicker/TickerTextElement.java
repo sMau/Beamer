@@ -29,6 +29,7 @@ public class TickerTextElement implements Serializable {
 	}
 	public void setToShow(Boolean toShow) {
 		this.toShow = toShow;
+		LiveTicker.getInstance().generateCompleteTickerString();
 	}
 	
 	

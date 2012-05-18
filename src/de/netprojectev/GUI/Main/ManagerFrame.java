@@ -349,7 +349,12 @@ public class ManagerFrame extends javax.swing.JFrame {
                     } else {
                         jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
                         jLabelPreview.setText("");
-                        jLabelPreview.setIcon(scaleIcon(mediaHandler.getMediaFiles().get(viewRow).getPreview()));
+                        if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
+                        	jLabelPreview.setIcon(scaleIcon(mediaHandler.getMediaFiles().get(viewRow).getPreview()));
+                        } else if(mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
+                        	jLabelPreview.setText(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getText().getText());
+                        }
+                        
                     }
                 }
             }
