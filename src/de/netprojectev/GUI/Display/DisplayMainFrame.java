@@ -26,9 +26,12 @@ public class DisplayMainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        displayMainComponent = new de.netprojectev.GUI.Display.DisplayMainComponent();
         tickerComponent = new de.netprojectev.GUI.Display.TickerComponent();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        displayMainComponent.setDoubleBuffered(true);
 
         tickerComponent.setDoubleBuffered(true);
         tickerComponent.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
@@ -44,17 +47,28 @@ public class DisplayMainFrame extends javax.swing.JFrame {
             .addGap(0, 61, Short.MAX_VALUE)
         );
 
+        javax.swing.GroupLayout displayMainComponentLayout = new javax.swing.GroupLayout(displayMainComponent);
+        displayMainComponent.setLayout(displayMainComponentLayout);
+        displayMainComponentLayout.setHorizontalGroup(
+            displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        displayMainComponentLayout.setVerticalGroup(
+            displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayMainComponentLayout.createSequentialGroup()
+                .addContainerGap(416, Short.MAX_VALUE)
+                .addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 416, Short.MAX_VALUE)
-                .addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -102,6 +116,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private de.netprojectev.GUI.Display.DisplayMainComponent displayMainComponent;
     private de.netprojectev.GUI.Display.TickerComponent tickerComponent;
     // End of variables declaration//GEN-END:variables
 	public de.netprojectev.GUI.Display.TickerComponent getTickerComponent() {
@@ -111,5 +126,14 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 	public void setTickerComponent(
 			de.netprojectev.GUI.Display.TickerComponent tickerComponent) {
 		this.tickerComponent = tickerComponent;
+	}
+
+	public de.netprojectev.GUI.Display.DisplayMainComponent getDisplayMainComponent() {
+		return displayMainComponent;
+	}
+
+	public void setDisplayMainComponent(
+			de.netprojectev.GUI.Display.DisplayMainComponent displayMainComponent) {
+		this.displayMainComponent = displayMainComponent;
 	}
 }

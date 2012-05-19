@@ -18,6 +18,7 @@ Anchor in themeslidecreation resets after resizing
 Anchor font family, font size, font color -> presettings
 Bordering in Themeslidecreator for better orientation
 
+BUffered Image and IMage loading with ImageIO
 
 PrioListe
 
@@ -30,3 +31,5 @@ PrioListe
 -Bugfixing and points above
 -assure clean loading (force all singletons to create instances and so on)
 -refactor previewing only in image not in themeslide
+
+!!!Themeslide size configurable, cause of scaling difficult in display unit

@@ -28,12 +28,6 @@ public class VideoFile extends MediaFile {
 	}
 
 	@Override
-	public ImageIcon generatePreview() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void show() {
 		// TODO Auto-generated method stub
 		System.out.println("Show file: " + path + "   " + new Date());

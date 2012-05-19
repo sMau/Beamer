@@ -5,6 +5,9 @@ import java.util.Date;
 
 import javax.swing.ImageIcon;
 
+import de.netprojectev.GUI.Display.DisplayMainFrame;
+import de.netprojectev.MediaHandler.DisplayDispatcher;
+
 /**
  * 
  * Abstrakte Datenstruktur einer Medien Datei.
@@ -17,19 +20,18 @@ public abstract class MediaFile implements Serializable {
 	protected String name;
 	protected transient Status status;
 	protected Priority priority;
-	protected ImageIcon preview;
-
+	
+	protected DisplayMainFrame display;
+	
+	
 	protected MediaFile(String name, Priority priority) {
 
-		
 		this.name = name;
 		this.status = new Status();
 		this.priority = priority;
-		this.preview = generatePreview();
+		this.display = DisplayDispatcher.getInstance().getDisplayFrame();
 
 	}
-
-	protected abstract ImageIcon generatePreview();
 
 	public abstract void show();
 	
@@ -99,14 +101,6 @@ public abstract class MediaFile implements Serializable {
 
 	public void setStatus(Status status) {
 		this.status = status;
-	}
-
-	public ImageIcon getPreview() {
-		return preview;
-	}
-
-	public void setPreview(ImageIcon preview) {
-		this.preview = preview;
 	}
 
 	public Priority getPriority() {

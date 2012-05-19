@@ -4,20 +4,15 @@
  */
 package de.netprojectev.GUI.Themeslide;
 
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
+import java.awt.Dimension;
 import java.awt.Point;
-import java.util.LinkedList;
 
-import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
-import javax.swing.text.StyledEditorKit.FontSizeAction;
 
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Priority;
@@ -415,7 +410,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		if(!jTextFieldAnchorWidth.getText().isEmpty()) {
 	    	try {
 				if(Integer.parseInt(jTextFieldAnchorWidth.getText()) > 0) {
-					jTextPaneText.setLocation(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getLocation().getY());
+
+					jTextPaneText.setBounds(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getLocation().getY(), ((int) jTextPaneText.getBounds().getWidth()) - Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getBounds().getHeight());
+					
 				}
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
@@ -432,11 +429,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldAnchorHeightActionPerformed
 
 	private void anchorHeightModified() {
-		//TODO not working if frame smaller than set anchor
+		//TODO not working if frame smaller than set anchor (setting anchor needs a resize of textpane)
 		if(!jTextFieldAnchorHeight.getText().isEmpty()) {
 			try {
 				if(Integer.parseInt(jTextFieldAnchorHeight.getText()) > 0) {
-					jTextPaneText.setLocation((int) jTextPaneText.getLocation().getX(), Integer.parseInt(jTextFieldAnchorHeight.getText()));
+
+					jTextPaneText.setBounds((int) jTextPaneText.getLocation().getX(), Integer.parseInt(jTextFieldAnchorHeight.getText()),(int) jTextPaneText.getBounds().getWidth(), ((int) jTextPaneText.getBounds().getHeight()) - Integer.parseInt(jTextFieldAnchorHeight.getText()));
 				}
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block

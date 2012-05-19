@@ -350,7 +350,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                         jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
                         jLabelPreview.setText("");
                         if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
-                        	jLabelPreview.setIcon(scaleIcon(mediaHandler.getMediaFiles().get(viewRow).getPreview()));
+                        	jLabelPreview.setIcon(scaleIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview()));
                         } else if(mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
                         	jLabelPreview.setText(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getText().getText());
                         }

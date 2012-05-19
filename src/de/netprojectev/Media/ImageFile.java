@@ -1,5 +1,6 @@
 package de.netprojectev.Media;
 
+import java.io.File;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -17,6 +18,7 @@ public class ImageFile extends MediaFile {
 	private static final long serialVersionUID = -6684164019970242002L;
 	private String path;
 	private ImageIcon preview;
+	
 
 	public ImageFile(String name, String path, Priority priority) {
 		super(name, priority);
@@ -25,7 +27,6 @@ public class ImageFile extends MediaFile {
 		this.preview = generatePreview();
 	}
 
-	@Override
 	public ImageIcon generatePreview() {
 		if(path != null) {
 			return new ImageIcon(path);
@@ -39,6 +40,7 @@ public class ImageFile extends MediaFile {
 	public void show() {
 		// TODO Auto-generated method stub
 		System.out.println("Show file: " + path + "   " + new Date());
+		display.getDisplayMainComponent().setImageToDraw(new File(path));
 		
 	}
 

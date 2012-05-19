@@ -21,7 +21,7 @@ import de.netprojectev.Media.VideoFile;
  */
 public class DisplayHandler {
 
-	private static DisplayHandler instance = null;
+	private static volatile DisplayHandler instance = null;
 
 	private MediaHandler mediaHandler;
 	private DisplayDispatcher displayDispatcher;
@@ -38,10 +38,7 @@ public class DisplayHandler {
 	
 	private Timer refreshTimeLeftTimer;
 	
-	
-	
-	
-	
+
 	/**
 	 * 
 	 * Innere Klasse um Attribute des DisplayHandlers verwenden zu können.
@@ -105,7 +102,7 @@ public class DisplayHandler {
 		
 	}
 
-	public static DisplayHandler getInstance() {
+	public static synchronized DisplayHandler getInstance() {
 		if (instance == null) {
 			instance = new DisplayHandler();
 		}

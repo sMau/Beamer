@@ -2,9 +2,7 @@ package de.netprojectev.Media;
 
 import java.awt.Point;
 import java.util.Date;
-import java.util.LinkedList;
 
-import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 
 /**
@@ -31,16 +29,12 @@ public class Themeslide extends MediaFile {
 		this.text.setEditable(false);
 
 	}
-
-	@Override
-	public ImageIcon generatePreview() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+				
+		display.getDisplayMainComponent().setImageToDraw(theme.getBackgroundImage());
+		display.getDisplayMainComponent().add(text);
 		System.out.println("Show file: " + name + "   " + new Date());
 
 	}

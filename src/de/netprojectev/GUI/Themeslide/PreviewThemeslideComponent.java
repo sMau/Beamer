@@ -14,13 +14,11 @@ public class PreviewThemeslideComponent extends JComponent {
 	 */
 	private static final long serialVersionUID = -4411192008897145428L;
 	private Image image;
-	private ImageIcon iconRepre;
-
+	
 	public void setThemeBackground(File file) {
 		image = Toolkit.getDefaultToolkit().getImage(file.getAbsolutePath());
 		if (image != null) {
-			iconRepre = new ImageIcon(image);
-			setSize(iconRepre.getIconWidth(), iconRepre.getIconHeight());
+			setSize(image.getWidth(null), image.getHeight(null));
 			setMinimumSize(getSize());
 			setMaximumSize(getSize());
 			setPreferredSize(getSize());
