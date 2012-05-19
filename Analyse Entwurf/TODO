@@ -3,7 +3,6 @@ Reselection after basic ops (like up down delete) (propably easy goin in models)
 right click context menus, extending for changeprio and change name, and so on
 move up down via drag n drop
 formatting the timeleft lbl to mm:ss
-Add File dialog positioning
 autorefreshing infobox and preview box after editing.
 saving and restoring and start and quit
 mouse resizable preview window
@@ -14,10 +13,8 @@ up down move, change algo that files wont glue together anymore automatically
 FileChoosing "recently" not working -> nullpointer, check if can be excluded
 
 
-Anchor in themeslidecreation resets after resizing
-Anchor font family, font size, font color -> presettings
 Bordering in Themeslidecreator for better orientation
-
+Anchor in themeslidecreation resets after resizing
 BUffered Image and IMage loading with ImageIO
 
 PrioListe
@@ -30,6 +27,11 @@ PrioListe
 -Serialisierung
 -Bugfixing and points above
 -assure clean loading (force all singletons to create instances and so on)
--refactor previewing only in image not in themeslide
 
 !!!Themeslide size configurable, cause of scaling difficult in display unit
+
+
+
+Preferences
+
+Anchor font family, font size, font color -> presettings

@@ -495,6 +495,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void jButtonChooseBgImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseBgImageActionPerformed
     	fd = new FileDialog(this, "Load Background", FileDialog.LOAD);
         fd.setMultipleMode(false);
+        fd.setDirectory(System.getProperty("user.home"));
+        fd.setLocation(Misc.currentMousePosition());
         fd.setVisible(true);
     	selectedImage = fd.getFiles()[0];
 		jTextFieldThemeBgImg.setText(selectedImage.getAbsolutePath());

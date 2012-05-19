@@ -9,6 +9,8 @@ import de.netprojectev.GUI.Themeslide.ThemeslideCreatorFrame;
 import java.awt.FileDialog;
 import java.io.File;
 
+import javax.swing.SwingUtilities;
+
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
 
@@ -90,10 +92,15 @@ public class FileThemeDialog extends javax.swing.JDialog {
 
     private void fileAddbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileAddbtnActionPerformed
     	dispose();
-    	fd = new FileDialog(this, "Load files", FileDialog.LOAD);
-        fd.setMultipleMode(true);
-        fd.setVisible(true);
-        MediaHandler.getInstance().add(Misc.createMediaFromFiles(fd.getFiles()));
+    	
+    
+		fd = new FileDialog(this, "Load files", FileDialog.LOAD);
+		fd.setMultipleMode(true);
+		fd.setDirectory(System.getProperty("user.home"));
+		fd.setLocation(Misc.currentMousePosition());
+		fd.setVisible(true);
+		MediaHandler.getInstance().add(Misc.createMediaFromFiles(fd.getFiles()));
+	
     }//GEN-LAST:event_fileAddbtnActionPerformed
 
     private void themeSlideAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themeSlideAddBtnActionPerformed
