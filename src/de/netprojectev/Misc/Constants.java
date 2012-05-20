@@ -25,6 +25,7 @@ public class Constants {
 	
 	public static final String[] fontSizes = Misc.generateFontSizes();
 
+	public static final String savePath = System.getProperty("user.home") + "/.beamermanager/";
 	
 
 }

@@ -21,7 +21,7 @@ public abstract class MediaFile implements Serializable {
 	protected transient Status status;
 	protected Priority priority;
 	
-	protected DisplayMainFrame display;
+	protected transient DisplayMainFrame display;
 	
 	
 	protected MediaFile(String name, Priority priority) {

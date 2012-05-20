@@ -6,6 +6,12 @@ import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
@@ -117,6 +123,56 @@ public class Misc {
 			index++;
 		}
 		return sizes;
+	}
+	
+	public synchronized static void saveToFile(Serializable toSave) {
+		
+		String filename = "undefined";
+		String path = Constants.savePath;
+		
+		if(!new File(path).exists()) {
+			new File(path).mkdirs();
+		}
+		
+		if(toSave instanceof MediaHandler) {
+			filename = "mediafiles.brm";
+		} else if(toSave instanceof PreferencesHandler) {
+			filename = "settings.brm";
+		}
+		System.out.println(path + filename);
+		try {
+			FileOutputStream file = new FileOutputStream(path + filename);
+			ObjectOutputStream o = new ObjectOutputStream(file);
+			o.writeObject(toSave);
+			o.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			//TODO Error Dialog
+		}
+		
+		
+	}
+	
+	public synchronized static Object loadFromFile(String filename) {
+		
+		Object fileToLoad = null;
+		String path = Constants.savePath;
+		
+		try {
+			FileInputStream file = new FileInputStream(path + filename);
+			ObjectInputStream o = new ObjectInputStream(file);
+			fileToLoad = o.readObject();
+			o.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			//TODO Error Dialog
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			//TODO Error Dialog
+		}
+
+		return fileToLoad;
 	}
 
 }

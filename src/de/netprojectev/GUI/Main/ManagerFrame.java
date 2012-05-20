@@ -22,10 +22,12 @@ import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
@@ -62,7 +64,18 @@ public class ManagerFrame extends javax.swing.JFrame {
         
     }
     
-    
+    @Override
+    protected void processWindowEvent(WindowEvent e) {
+
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+       
+            quit();
+           
+        } else {
+
+            super.processWindowEvent(e);
+        }
+    }
     
     
 
@@ -169,6 +182,11 @@ public class ManagerFrame extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/de/netprojectev/GFX/icon.png")));
         setName("managerframe");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+               
+            }
+        });
 
         filemangerPanel.setName("filemanagerTab");
         filemangerPanel.setNextFocusableComponent(livetickerPanel);
@@ -351,7 +369,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                         jLabelPreview.setText("");
                         if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
                         	jLabelPreview.setIcon(scaleIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview()));
-                        } else if(mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
+                        } else if (mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
                         	jLabelPreview.setText(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getText().getText());
                         }
                         
@@ -788,7 +806,13 @@ public class ManagerFrame extends javax.swing.JFrame {
 
 
 	private void quit() {
-		System.exit(0);
+        int exit = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Quit", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION) {
+    		Misc.saveToFile(mediaHandler);
+    		Misc.saveToFile(preferencesHandler);
+    		System.exit(0);
+        }
+		
 	}
 
     private void jMenuItemEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEditActionPerformed
@@ -943,6 +967,10 @@ public class ManagerFrame extends javax.swing.JFrame {
     	    }
     	  }
     }//GEN-LAST:event_jTableFileManagerMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        System.out.println("closed");
+    }//GEN-LAST:event_formWindowClosed
 
     
     

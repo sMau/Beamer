@@ -17,7 +17,7 @@ public class ImageFile extends MediaFile {
 
 	private static final long serialVersionUID = -6684164019970242002L;
 	private String path;
-	private ImageIcon preview;
+	private transient ImageIcon preview; //TODO Make imageicons serializable throwin exception if cannot be loaded cause of no image file
 	
 
 	public ImageFile(String name, String path, Priority priority) {
