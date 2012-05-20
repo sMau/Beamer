@@ -1,5 +1,6 @@
 package de.netprojectev.Preferences;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 import de.netprojectev.GUI.Main.ManagerFrame;
@@ -10,12 +11,17 @@ import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
 import de.netprojectev.Misc.Constants;
 
-public class PreferencesHandler {
+public class PreferencesHandler implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6106813225767041329L;
+
 	private static PreferencesHandler instance;
 	
-	private PreferencesFrame preferencesFrame;
-	private ManagerFrame managerFrame;
+	private transient PreferencesFrame preferencesFrame;
+	private transient ManagerFrame managerFrame;
 	
 	private LinkedList<Priority> listOfPriorities;
 	private LinkedList<Theme> listOfThemes;

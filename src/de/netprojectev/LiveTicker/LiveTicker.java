@@ -21,9 +21,9 @@ public class LiveTicker implements Serializable {
 
 	private static LiveTicker instance;
 	
-	private ManagerFrame managerFrame;
+	private transient ManagerFrame managerFrame;
 	
-	private DisplayMainFrame display;
+	private transient DisplayMainFrame display;
 	
 	
 	private LinkedList<TickerTextElement> textElements;
