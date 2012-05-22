@@ -112,24 +112,22 @@ public class AddTickerElement extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonAddTickerEltCancelActionPerformed
 
-    private void jButtonAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddTickerEltActionPerformed
-        
-    	editAndAddTickerElement();
-    }//GEN-LAST:event_jButtonAddTickerEltActionPerformed
-
     /**
      * Edits a ticker element or adds a new ticker element to the @see LiveTicker
      */
-	private void editAndAddTickerElement() {
-		currentTickerElt.setText(jTextFieldTickerEltText.getText());
+    private void jButtonAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddTickerEltActionPerformed
+
+    	currentTickerElt.setText(jTextFieldTickerEltText.getText());
         currentTickerElt.setToShow(jCheckBoxTickerEltShow.isSelected());
     	
     	if(!editMode) {
     		LiveTicker.getInstance().add(currentTickerElt);
     	}
 
-    	dispose();
-	}
+    	dispose();    
+    }//GEN-LAST:event_jButtonAddTickerEltActionPerformed
+
+
 
     /**
      * @param args the command line arguments

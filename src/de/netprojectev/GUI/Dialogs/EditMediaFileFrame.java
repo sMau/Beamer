@@ -148,37 +148,27 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
-    private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed
-    	editMediaFile();
-    }//GEN-LAST:event_jButtonApplyActionPerformed
-
-    private void jComboBoxPriorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPriorityActionPerformed
-    	 updateJLabelMinutes();
-    }//GEN-LAST:event_jComboBoxPriorityActionPerformed
-
-    
     /**
      * Editing the selected media file. Changing the name and the priority.
      * In the end a GUI update is called.
      */
-	private void editMediaFile() {
-		selectedMediaFile.setName(jTextFieldEditFileName.getText());
+    private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed
+    	selectedMediaFile.setName(jTextFieldEditFileName.getText());
     	selectedMediaFile.setPriority(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()));
     	
     	if(preferencesHandler.getManagerFrame() != null) {
 			((FileManagerTableModel) preferencesHandler.getManagerFrame().getjTableFileManager().getModel()).updateModel();
 		}
     	dispose();
-	}
-    
-	/**
-	 * Update the text label showing the minutes of current priority.
-	 */
-	private void updateJLabelMinutes() {
-		jLabelMinutes.setText(Integer.toString(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()).getMinutesToShow()));
-	}
+    }//GEN-LAST:event_jButtonApplyActionPerformed
 
-	
+    /**
+	 * Update on selection change of the combo box, the text label showing the minutes of current priority.
+	 */
+    private void jComboBoxPriorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPriorityActionPerformed
+		jLabelMinutes.setText(Integer.toString(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()).getMinutesToShow()));
+    }//GEN-LAST:event_jComboBoxPriorityActionPerformed
+
     /**
      * @param args the command line arguments
      */

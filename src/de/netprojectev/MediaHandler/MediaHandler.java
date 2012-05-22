@@ -6,6 +6,12 @@ import de.netprojectev.GUI.Manager.FileManagerTableModel;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
 
+/**
+ * Handles all media files currently loaded.
+ * It synchs itself with the GUI and updates the display handler if necessary.
+ * @author samu
+ *
+ */
 public class MediaHandler {
 
 
@@ -16,13 +22,6 @@ public class MediaHandler {
 	private LinkedList<MediaFile> mediaFiles;
 	
 	private ManagerFrame managerFrame;
-
-	
-	/**
-	 * MediaHandler ist im Singleton Pattern geschrieben.
-	 * Zuständig für das Handling aller geladenen Dateien.
-	 * Synchronisiert sich mit der GUI (dem Kontrollfenster)
-	 */
 
 	private MediaHandler() {
 
@@ -46,8 +45,8 @@ public class MediaHandler {
 	}
 
 	/**
-	 * Fügt die übergebenen MediaFiles in die Dateiliste ein und übergibt dem DisplayHandler den Auftrag sich entsprechend zu synchronisieren.
-	 * @param files
+	 * Adds the media files to list and if necessary invokes updates on the GUI and the display handler.
+	 * @param files files to add
 	 */
 	public void add(MediaFile[] files) {
 
@@ -66,8 +65,8 @@ public class MediaHandler {
 
 	
 	/**
-	 * Entfernt die übergebenen MediaFiles aus der Dateiliste und übergibt dem DisplayHandler den Auftrag sich entsprechend zu synchronisieren.
-	 * @param files
+	 * removes the media files from the list and if necessary invokes updates on the GUI and the display handler.	 * @param files files to remove
+	 * @param files files to remove
 	 */
 	public void remove(MediaFile[] files) {
 		
@@ -83,9 +82,9 @@ public class MediaHandler {
 	}
 	
 	/**
-	 *  Die übergebenen Dateien werden zum kleinsten Index der übergebenen Dateien gestaucht und der Index jeder Datei um eins erhöht
-	 *  Der DisplayHandler wird angewiesen sich gegebenenfalls zu synchronisieren
-	 * @param files
+	 * The files are shrinked to the one with the smalles index and then moved down one step
+	 * If necessary a update on the GUI and the display handler is called
+	 * @param files files to move down
 	 */
 	public void down(MediaFile[] files) {
 
@@ -107,9 +106,9 @@ public class MediaHandler {
 	}
 	
 	/**
-	 *	Die übergebenen Dateien werden zum kleinsten Index der übergebenen Dateien gestaucht und der Index jeder Datei um eins gesenkt
-	 *  Der DisplayHandler wird angewiesen sich gegebenenfalls zu synchronisieren
-	 *  @param files
+	 * The files are shrinked to the one with the smalles index and then moved up one step
+	 * If necessary a update on the GUI and the display handler is called
+	 * @param files files to move up
 	 */
 	public void up(MediaFile[] files) {
 		
@@ -132,8 +131,7 @@ public class MediaHandler {
 	}
 	
 	/**
-	 * Ruft unter den noetigen Bedingungen einen refresh auf dem Model der JTable auf.
-	 * Das Model bearbeitet diesen Aufruf intern entsprechend.
+	 * updates the model of the jtable to update the view
 	 */
 	public void refreshDataModel() {
 		

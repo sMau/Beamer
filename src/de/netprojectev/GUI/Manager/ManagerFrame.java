@@ -37,23 +37,19 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 
 /**
+ * A GUI class which is the first object to be intialized on program start.
+ * Managing the main part of the GUI the controlling unit frame.
+ * @author samu
  *
- * 
  */
 public class ManagerFrame extends javax.swing.JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7019176172214701606L;
 	private MediaHandler mediaHandler;
 	private LiveTicker liveTicker;
 	private PreferencesHandler preferencesHandler;
 	private JComboBox<String> comboBox;
 	
-    /**
-     * Creates new form ManagerFrame
-     */
     public ManagerFrame() {
         mediaHandler = MediaHandler.getInstance();
         mediaHandler.setManagerFrame(this);
@@ -65,27 +61,10 @@ public class ManagerFrame extends javax.swing.JFrame {
         
         initComponents();
         setLocation(Misc.currentMousePosition());
-        
-        
-        
+
         loadFromDisk();
         
     }
-    
-    @Override
-    protected void processWindowEvent(WindowEvent e) {
-
-        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-       
-            quit();
-           
-        } else {
-
-            super.processWindowEvent(e);
-        }
-    }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -367,32 +346,13 @@ public class ManagerFrame extends javax.swing.JFrame {
         jTableFileManager.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
-                    int viewRow = jTableFileManager.getSelectedRow();
-                    if (viewRow < 0) {
-                        jTextAreaFileInfo.setText("No file selected");
-                        jLabelPreview.setIcon(null);
-                        jLabelPreview.setText("No file selected");
-                    } else {
-                        jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
-                        jLabelPreview.setText("");
-                        if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
-                        	jLabelPreview.setIcon(scaleIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview()));
-                        } else if (mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
-                        	jLabelPreview.setText(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getText().getText());
-                        }
-                        
-                    }
+                    onSelectionChangeJtableFile();
                 }
             }
         );
         jTableFileManager.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableFileManagerMouseClicked(evt);
-            }
-        });
-        jTableFileManager.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                jTableFileManagerFocusGained(evt);
             }
         });
         jScrollPane1.setViewportView(jTableFileManager);
@@ -652,178 +612,42 @@ public class ManagerFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
-
-
-
-	public void refreshComboBoxCellEditor() {
-		TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);
-        comboBox = new JComboBox();
-        for(int i = 0; i < preferencesHandler.getListOfPriorities().size(); i++) {
-            comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());
-        }
-        prioColumn.setCellEditor(new DefaultCellEditor(comboBox));
-	}
-
+    
     private void btnAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddFileActionPerformed
         addFileGeneral();
     }//GEN-LAST:event_btnAddFileActionPerformed
 
-
-
-
-
-	private void addFileGeneral() {
-		new FileThemeDialog(this, true).setVisible(true);
-	}
-
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-    	
-        removeFiles();
-        
+        removeFiles(); 
     }//GEN-LAST:event_btnRemoveActionPerformed
-
-
-
-
-
-	private void removeFiles() {
-		//TODO For all move and remove actions: implement a proper auto reselection
-		int[] selectedRows = jTableFileManager.getSelectedRows();
-        if(selectedRows.length > 0) {
-        	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows));
-        }
-	}
 
     private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
     	moveFilesUp();
     }//GEN-LAST:event_btnUpActionPerformed
 
-
-
-
-
-	private void moveFilesUp() {
-		int[] selectedRows = jTableFileManager.getSelectedRows();
-		
-    	if(selectedRows.length > 0) {
-    		
-    		mediaHandler.up(Misc.indexListToMediaFiles(selectedRows));
-    	}
-	}
-
     private void btnDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDownActionPerformed
     	moveFilesDown();
     }//GEN-LAST:event_btnDownActionPerformed
-
-
-
-
-
-	private void moveFilesDown() {
-		int[] selectedRows = jTableFileManager.getSelectedRows();
-    	if(selectedRows.length > 0) {
-    		mediaHandler.down(Misc.indexListToMediaFiles(selectedRows));
-    	}
-	}
 
     private void btnSetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSetActionPerformed
     	showFile();
     }//GEN-LAST:event_btnSetActionPerformed
 
-
-
-
-
-	private void showFile() {
-		int[] selectedRows = jTableFileManager.getSelectedRows();
-    	if(selectedRows.length > 0) {
-    		mediaHandler.getDisplayHandler().show(Misc.indexListToMediaFiles(selectedRows)[0]);
-    	}
-	}
-
     private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
     	showPrevious();
     }//GEN-LAST:event_btnPrevActionPerformed
-
-
-
-
-
-	private void showPrevious() {
-		mediaHandler.getDisplayHandler().showPrevious();
-	}
     
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
     	showNext();
     }//GEN-LAST:event_btnNextActionPerformed
 
-
-
-
-
-	private void showNext() {
-		mediaHandler.getDisplayHandler().showNext();
-	}
-
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
     	editFile();
     }//GEN-LAST:event_btnEditActionPerformed
 
-
-
-
-
-	private void editFile() {
-		int[] selectedRows = jTableFileManager.getSelectedRows();
-    	if(selectedRows.length > 0) {
-    		new EditMediaFileFrame(Misc.indexListToMediaFiles(selectedRows)[0]).setVisible(true);
-    	}
-	}
-
-    private void jMenuItemAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddFileActionPerformed
-    	addFileFromDisk();
-    }//GEN-LAST:event_jMenuItemAddFileActionPerformed
-
-
-
-
-
-	private void addFileFromDisk() {
-		new FileThemeDialog(this, true).getFileAddbtn().doClick();
-	}
-
-    private void jMenuItemAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddThemeslideActionPerformed
-    	addThemeSlide();
-    }//GEN-LAST:event_jMenuItemAddThemeslideActionPerformed
-
-
-
-
-
-	private void addThemeSlide() {
-		new FileThemeDialog(this, true).getThemeSlideAddBtn().doClick();
-	}
-
     private void jMenuItemQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemQuitActionPerformed
         quit();
     }//GEN-LAST:event_jMenuItemQuitActionPerformed
-
-
-
-
-
-	private void quit() {
-        int exit = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Quit", JOptionPane.YES_NO_OPTION);
-        if (exit == JOptionPane.YES_OPTION) {
-    		
-        	saveToDisk();
-        
-        	
-    		System.exit(0);
-        }
-		
-	}
 
     private void jMenuItemEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEditActionPerformed
     	editFile();
@@ -840,65 +664,6 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void jMenuItemDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemDownActionPerformed
     	moveFilesDown();
     }//GEN-LAST:event_jMenuItemDownActionPerformed
-
-    private void jMenuItemPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrefsActionPerformed
-        openPreferences();
-    }//GEN-LAST:event_jMenuItemPrefsActionPerformed
-
-
-
-
-
-	private void openPreferences() {
-		new PreferencesFrame(this).setVisible(true);
-	}
-
-    private void jRadioButtonMenuItemShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemShuffleActionPerformed
-    	if(jRadioButtonMenuItemShuffle.isSelected()) {
-    		mediaHandler.getDisplayHandler().startShuffle();
-    		toggleBtnShuffle.setSelected(true);
-    	} else {
-    		mediaHandler.getDisplayHandler().stopShuffle();
-    		toggleBtnShuffle.setSelected(false);
-    	}
-    }//GEN-LAST:event_jRadioButtonMenuItemShuffleActionPerformed
-
-    private void jRadioButtonMenuItemAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemAutoActionPerformed
-    	if(jRadioButtonMenuItemAuto.isSelected()) {
-    		mediaHandler.getDisplayHandler().startAutomodus();
-    		toogleBtnAuto.setSelected(true);
-    	} else {
-    		mediaHandler.getDisplayHandler().startAutomodus();
-    		toogleBtnAuto.setSelected(false);
-    	}
-
-    }//GEN-LAST:event_jRadioButtonMenuItemAutoActionPerformed
-
-    private void toogleBtnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toogleBtnAutoActionPerformed
-    	if(toogleBtnAuto.isSelected()) {
-    		mediaHandler.getDisplayHandler().startAutomodus();   		
-    		jRadioButtonMenuItemAuto.setSelected(true);
-    	} else {
-    		mediaHandler.getDisplayHandler().stopAutomodus();
-    		lblTimeleft.setText("Timeleft: --:--");
-    		jRadioButtonMenuItemAuto.setSelected(false);
-    	}
-    	
-    }//GEN-LAST:event_toogleBtnAutoActionPerformed
-
-    private void toggleBtnShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBtnShuffleActionPerformed
-    	if(toggleBtnShuffle.isSelected()) {
-    		mediaHandler.getDisplayHandler().startShuffle();
-    		jRadioButtonMenuItemShuffle.setSelected(true);
-    	} else {
-    		mediaHandler.getDisplayHandler().stopShuffle();
-    		jRadioButtonMenuItemShuffle.setSelected(false);
-    	}
-
-    }//GEN-LAST:event_toggleBtnShuffleActionPerformed
-
-    private void jTableFileManagerFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTableFileManagerFocusGained
-    }//GEN-LAST:event_jTableFileManagerFocusGained
 
     private void jMenuItemAddPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddPActionPerformed
         addFileGeneral();
@@ -919,46 +684,109 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void btnAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddTickerEltActionPerformed
         addTickerElement();
     }//GEN-LAST:event_btnAddTickerEltActionPerformed
-
-
-
-
-
-	private void addTickerElement() {
-		new AddTickerElement(null).setVisible(true);
-	}
-
-    private void btnEditTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditTickerEltActionPerformed
-        
+	
+    private void btnEditTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditTickerEltActionPerformed   
     	editTicketElement();
     }//GEN-LAST:event_btnEditTickerEltActionPerformed
 
-
-
-
-
-	private void editTicketElement() {
-		if(jTableLiveticker.getSelectedRow() >= 0) {
-    		new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow())).setVisible(true);
-    	}
-	}
-
     private void btnRemoveTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveTickerEltActionPerformed
-        removeTickerElements();
-            
+        removeTickerElements();       
     }//GEN-LAST:event_btnRemoveTickerEltActionPerformed
 
+    /**
+     * opening a file dialog
+     * @param evt
+     */
+    private void jMenuItemAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddFileActionPerformed
+		new FileThemeDialog(this, true).getFileAddbtn().doClick();
+    }//GEN-LAST:event_jMenuItemAddFileActionPerformed
 
+    /**
+     * opening the themeslide creator
+     * @param evt
+     */
+    private void jMenuItemAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddThemeslideActionPerformed
+		new FileThemeDialog(this, true).getThemeSlideAddBtn().doClick();
+    }//GEN-LAST:event_jMenuItemAddThemeslideActionPerformed
+    
+    /**
+     * opening the preferences
+     * @param evt
+     */
+    private void jMenuItemPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrefsActionPerformed
+		new PreferencesFrame(this).setVisible(true);
+    }//GEN-LAST:event_jMenuItemPrefsActionPerformed
 
+    /**
+     * activating the shuffling of the displayhandler
+     * and synchs with its corresponding radiobutton
+     * @param evt
+     */
+    private void jRadioButtonMenuItemShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemShuffleActionPerformed
+    	if(jRadioButtonMenuItemShuffle.isSelected()) {
+    		mediaHandler.getDisplayHandler().startShuffle();
+    		toggleBtnShuffle.setSelected(true);
+    	} else {
+    		mediaHandler.getDisplayHandler().stopShuffle();
+    		toggleBtnShuffle.setSelected(false);
+    	}
+    }//GEN-LAST:event_jRadioButtonMenuItemShuffleActionPerformed
 
+    /**
+     * activating the auto mode of the displayhandler
+     * and synchs with its corresponding radiobutton
+     * @param evt
+     */
+    private void jRadioButtonMenuItemAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemAutoActionPerformed
+    	if(jRadioButtonMenuItemAuto.isSelected()) {
+    		mediaHandler.getDisplayHandler().startAutomodus();
+    		toogleBtnAuto.setSelected(true);
+    	} else {
+    		mediaHandler.getDisplayHandler().startAutomodus();
+    		toogleBtnAuto.setSelected(false);
+    	}
 
-	private void removeTickerElements() {
-		int[] selRows = jTableLiveticker.getSelectedRows();
-        if(selRows.length > 0) {
-        	liveTicker.remove(Misc.indexListToTickerElts(selRows));
-        }
-	}
+    }//GEN-LAST:event_jRadioButtonMenuItemAutoActionPerformed
 
+    /**
+     * activating the auto mode of the displayhandler
+     * and synchs with its corresponding radio menu item
+     * @param evt
+     */
+    private void toogleBtnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toogleBtnAutoActionPerformed
+    	if(toogleBtnAuto.isSelected()) {
+    		mediaHandler.getDisplayHandler().startAutomodus();   		
+    		jRadioButtonMenuItemAuto.setSelected(true);
+    	} else {
+    		mediaHandler.getDisplayHandler().stopAutomodus();
+    		lblTimeleft.setText("Timeleft: --:--");
+    		jRadioButtonMenuItemAuto.setSelected(false);
+    	}
+    	
+    }//GEN-LAST:event_toogleBtnAutoActionPerformed
+
+    /**
+     * activating the shuffling of the displayhandler
+     * and synchs with its corresponding radio menu item
+     * @param evt
+     */
+    private void toggleBtnShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBtnShuffleActionPerformed
+    	if(toggleBtnShuffle.isSelected()) {
+    		mediaHandler.getDisplayHandler().startShuffle();
+    		jRadioButtonMenuItemShuffle.setSelected(true);
+    	} else {
+    		mediaHandler.getDisplayHandler().stopShuffle();
+    		jRadioButtonMenuItemShuffle.setSelected(false);
+    	}
+
+    }//GEN-LAST:event_toggleBtnShuffleActionPerformed
+
+    /**
+     * handling for rightclicking on the jtable files.
+     * first changes the selection to the rightclicked element
+     * if a row is selected a popup menu is generated
+     * @param evt
+     */
     private void jTableFileManagerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableFileManagerMouseClicked
     	boolean isRowAlreadySelected = false;
     	if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
@@ -977,8 +805,122 @@ public class ManagerFrame extends javax.swing.JFrame {
     	    }
     	  }
     }//GEN-LAST:event_jTableFileManagerMouseClicked
+    
+    /**
+     * opens a dialog to choose between adding a file from disk or a themeslide
+     */
+	private void addFileGeneral() {
+		new FileThemeDialog(this, true).setVisible(true);
+	}
 
+	/**
+	 * handling the programs termination
+	 * showing up a confirmation dialog and invokes the serialization
+	 */
+	private void quit() {
+        int exit = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Quit", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION) {	
+        	saveToDisk();
+    		System.exit(0);
+        }
+	}
+	
+    /**
+     * opens the add ticker element dialog
+     */
+    private void addTickerElement() {
+		new AddTickerElement(null).setVisible(true);
+	}
 
+    /**
+     * opens the add ticker element dialog with the selected element in the jtable
+     */
+    private void editTicketElement() {
+		if(jTableLiveticker.getSelectedRow() >= 0) {
+    		new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow())).setVisible(true);
+    	}
+	}
+    
+    /**
+     * invokes the showNext method of the display handler
+     */
+    private void showNext() {
+		mediaHandler.getDisplayHandler().showNext();
+	}
+
+    /**
+     * invokes the showPrevious method of the display handler
+     */
+	private void showPrevious() {
+		mediaHandler.getDisplayHandler().showPrevious();
+	}
+
+	/**
+	 * opens the edit media file dialog with the first selected file 
+	 */
+	private void editFile() {
+		int[] selectedRows = jTableFileManager.getSelectedRows();
+    	if(selectedRows.length > 0) {
+    		new EditMediaFileFrame(Misc.indexListToMediaFiles(selectedRows)[0]).setVisible(true);
+    	}
+	}
+	
+	/**
+	 * invokes the show method of the display handler with the first selected file
+	 */
+	private void showFile() {
+		int[] selectedRows = jTableFileManager.getSelectedRows();
+    	if(selectedRows.length > 0) {
+    		mediaHandler.getDisplayHandler().show(Misc.indexListToMediaFiles(selectedRows)[0]);
+    	}
+	}
+
+	/**
+	 * invokes the remove method of the live ticker with the selected elements
+	 */
+	private void removeTickerElements() {
+		int[] selRows = jTableLiveticker.getSelectedRows();
+        if(selRows.length > 0) {
+        	liveTicker.remove(Misc.indexListToTickerElts(selRows));
+        }
+	}
+
+	/**
+	 * invokes the up method of media handler with the selected files
+	 */
+    private void moveFilesUp() {
+		int[] selectedRows = jTableFileManager.getSelectedRows();	
+    	if(selectedRows.length > 0) {
+    		mediaHandler.up(Misc.indexListToMediaFiles(selectedRows));
+    	}
+	}
+	
+    /**
+     * invokes the remove method of media handler with the selected files
+     */
+	private void removeFiles() {
+		//TODO For all move and remove actions: implement a proper auto reselection
+		int[] selectedRows = jTableFileManager.getSelectedRows();
+        if(selectedRows.length > 0) {
+        	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows));
+        }
+	}
+
+	/**
+	 * invokes the down method of media handler with the selected files
+	 */
+	private void moveFilesDown() {
+		int[] selectedRows = jTableFileManager.getSelectedRows();
+    	if(selectedRows.length > 0) {
+    		mediaHandler.down(Misc.indexListToMediaFiles(selectedRows));
+    	}
+	}
+    
+    /**
+     * 
+     * @param preview the ImageIcon to scale
+     * @return scaled preview instance of the given ImageIcon
+     */
     private ImageIcon scaleIcon(ImageIcon preview) {
     	
     	preview.setImage(preview.getImage().getScaledInstance(Constants.DEFAULT_SCALE_WIDTH, -1,Image.SCALE_DEFAULT));
@@ -986,14 +928,35 @@ public class ManagerFrame extends javax.swing.JFrame {
     	return preview;
     }
     
+    /**
+     * making the priority column of the file jtable editable with a jcombobox
+     * it receives the priorities from the preference handlers list.
+     */
+	public void refreshComboBoxCellEditor() {
+		TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);
+        comboBox = new JComboBox();
+        for(int i = 0; i < preferencesHandler.getListOfPriorities().size(); i++) {
+            comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());
+        }
+        prioColumn.setCellEditor(new DefaultCellEditor(comboBox));
+	}
+    
+	/**
+	 * refreshes the jlable which shows the time left until next event
+	 * @param timeleft time in seconds left until next event
+	 */
     public void refreshTimeleftLbl(int timeleft) {
     	
     	lblTimeleft.setText("Timeleft: " + Integer.toString(timeleft));
     }
     
+    /**
+     * handles the file loading and to update the current instance of the program to its states.
+     * @return true if successful else false
+     */
     @SuppressWarnings("unchecked")
 	private Boolean loadFromDisk() {
-    	
+    	//TODO use return statement to indicate if a error occurred
     	LinkedList<MediaFile> tmpMedia = (LinkedList<MediaFile>) Misc.loadFromFile(Constants.FILENAME_MEDIAFILES);
     	LinkedList<Priority> tmpPriority = (LinkedList<Priority>) Misc.loadFromFile(Constants.FILENAME_PRIORITIES);
     	LinkedList<Theme> tmpTheme = (LinkedList<Theme>) Misc.loadFromFile(Constants.FILENAME_THEMES);
@@ -1012,7 +975,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     		
     	}
     	
-    	//i = 1, to prevent adding multpile default priorities
+    	//i = 1, to prevent adding multiple default priorities
     	if(tmpPriority != null) {
     		for(int i = 1; i < tmpPriority.size(); i++) {
     			preferencesHandler.addPriority(tmpPriority.get(i));
@@ -1029,13 +992,52 @@ public class ManagerFrame extends javax.swing.JFrame {
 	
     }
     
-    
+    /**
+     * handles the serialization of the current instance of the program
+     * @return true if successful else false 
+     */
     private Boolean saveToDisk() {
-    	
+    	//TODO use return statement to indicate if a error occurred
     	Misc.saveToFile(mediaHandler.getMediaFiles(), Constants.FILENAME_MEDIAFILES);
     	Misc.saveToFile(preferencesHandler.getListOfPriorities(), Constants.FILENAME_PRIORITIES);
     	Misc.saveToFile(preferencesHandler.getListOfThemes(), Constants.FILENAME_THEMES);
     	return true;
+    }
+    
+    /**
+     * handles the behaviour when the selection in the file jtable changes.
+     * it updates the info area and the previewing
+     */
+	private void onSelectionChangeJtableFile() {
+		int viewRow = jTableFileManager.getSelectedRow();
+		if (viewRow < 0) {
+		    jTextAreaFileInfo.setText("No file selected");
+		    jLabelPreview.setIcon(null);
+		    jLabelPreview.setText("No file selected");
+		} else {
+		    jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
+		    jLabelPreview.setText("");
+		    if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
+		    	jLabelPreview.setIcon(scaleIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview()));
+		    } else if (mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
+		    	jLabelPreview.setText(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getText().getText());
+		    }
+		    
+		}
+	}
+    
+	/**
+	 * changing programs standard behaviour if user clicks the "x" on the main frame
+	 * therefore it invokes the quit method 
+	 */
+    @Override
+    protected void processWindowEvent(WindowEvent e) {
+
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            quit();  
+        } else {
+        	super.processWindowEvent(e);
+        }
     }
     
     
@@ -1137,9 +1139,10 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JToggleButton toogleBtnAuto;
     // End of variables declaration//GEN-END:variables
 
+    
 	public javax.swing.JTable getjTableFileManager() {
 		return jTableFileManager;
-        }
+    }
 
 	public void setjTableFileManager(javax.swing.JTable jTableFileManager) {
 		this.jTableFileManager = jTableFileManager;
@@ -1152,4 +1155,5 @@ public class ManagerFrame extends javax.swing.JFrame {
 	public void setjTableLiveticker(javax.swing.JTable jTableLiveticker) {
 		this.jTableLiveticker = jTableLiveticker;
 	}
+
 }

@@ -16,7 +16,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- * 
+ * GUI main class of preferences.
+ * handles all user changes on the preferences
  * @author samu
  */
 public class PreferencesFrame extends javax.swing.JFrame {
@@ -378,10 +379,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     private void jButtonCancelPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelPrefsActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelPrefsActionPerformed
 
+    /**
+     * preparing the fields to add a new priority and clearing list selection
+     * @param evt
+     */
     private void btnAddPrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPrioActionPerformed
     	
     	selectedPrio = null;
@@ -391,6 +397,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	
     }//GEN-LAST:event_btnAddPrioActionPerformed
 
+    /**
+     * preparing the fields to add a new priority and clearing list selection
+     * @param evt
+     */
     private void btnAddThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddThemeActionPerformed
     	selectedTheme = null;
     	jTextFieldThemeName.setText("New Theme");
@@ -398,6 +408,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	jListTheme.clearSelection();
     }//GEN-LAST:event_btnAddThemeActionPerformed
 
+    /**
+     * handling the editing/saving of the current selected or a new priority
+     * @param evt
+     */
     private void jButtonPrioSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrioSaveActionPerformed
         
     	Boolean alreadyExists = false;
@@ -433,18 +447,30 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	
     }//GEN-LAST:event_jButtonPrioSaveActionPerformed
 
+    /**
+     * removes the selected priorities from the list and the preferences handler
+     * @param evt
+     */
     private void btnRemovePrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemovePrioActionPerformed
         int[] selectedIndices = jListPrio.getSelectedIndices();
     	preferenceshandler.removePriorities(Misc.indexListToPriorities(selectedIndices));
     	
     }//GEN-LAST:event_btnRemovePrioActionPerformed
 
+    /**
+     * 
+     * @param evt
+     */
     private void jButtonApplyPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyPrefsActionPerformed
         
     	//TODO die unter main gesetzten booleans speichern
     	dispose();
     }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
 
+    /**
+     * opens a file dialog to let the user choose a file from disk as background image for the selected/new theme
+     * @param evt
+     */
     private void jButtonChooseBgImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseBgImageActionPerformed
     	fd = new FileDialog(this, "Load Background", FileDialog.LOAD);
         fd.setMultipleMode(false);
@@ -455,6 +481,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		jTextFieldThemeBgImg.setText(selectedImage.getAbsolutePath());
     }//GEN-LAST:event_jButtonChooseBgImageActionPerformed
 
+    /**
+     * handling the editing/saving of the current selected or a new theme
+     * @param evt
+     */
     private void btnSaveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveThemeActionPerformed
     	    	
     	Boolean alreadyExists = false;
@@ -495,6 +525,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	
     }//GEN-LAST:event_btnSaveThemeActionPerformed
 
+    /**
+     * removes selected themes from list and preferences handler
+     * @param evt
+     */
     private void btnRemoveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveThemeActionPerformed
     	
     	int[] selectedIndices = jListTheme.getSelectedIndices(); 	
@@ -502,7 +536,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
      	
     }//GEN-LAST:event_btnRemoveThemeActionPerformed
 
-    
+    /**
+     * on selection change, updates the name and background image fields
+     */
 	private void listThemeSelectionChanged() {
 		int viewRow = jListTheme.getSelectedIndex();
 		System.out.println(viewRow);
@@ -513,6 +549,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		}
 	}
 
+	/**
+	 * on selection change, updates the name and minutes fields
+	 */
 	private void listPrioritySelectionChanged() {
 		int viewRow = jListTheme.getSelectedIndex();
 		if(viewRow >= 0) {

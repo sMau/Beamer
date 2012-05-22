@@ -2,6 +2,11 @@ package de.netprojectev.MediaHandler;
 
 import de.netprojectev.GUI.Display.DisplayMainFrame;
 
+/**
+ * Singleton class to grant global access to the displayFrame
+ * @author samu
+ *
+ */
 public class DisplayDispatcher {
 
 	private static DisplayDispatcher instance = null;

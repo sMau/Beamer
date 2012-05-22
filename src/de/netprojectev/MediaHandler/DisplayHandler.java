@@ -14,10 +14,9 @@ import de.netprojectev.Media.Themeslide;
 import de.netprojectev.Media.VideoFile;
 
 /**
- * DisplayHandler ist im Singleton Pattern geschrieben 
- * DisplayHandler arbeitet auf der gleichen
- * Menge Dateien wie der MediaHandler, allerdings werden diese was die Reihenfolge betrifft
- * nicht zwingend synchronisiert (Shufflemodus)
+ * The display handler contains the same files as the mediahandler. The order of the files can differ concerning the shuffle mode.
+ * Furthermore auto mode and shuffling is realized within this class. Methods like next and previous act on the files of display handler.
+ * @author samu
  */
 public class DisplayHandler {
 
@@ -40,10 +39,9 @@ public class DisplayHandler {
 	
 
 	/**
-	 * 
-	 * Innere Klasse um Attribute des DisplayHandlers verwenden zu können.
-	 * Automodus ist eine Timer Klasse um die Zeit abhängigen Methoden zu steuern.
-	 * 
+	 * Inner class to handle auto mode timer
+	 * @author samu
+	 *
 	 */
 	class AutomodusTimer extends TimerTask {
 		public void run() {
@@ -51,6 +49,11 @@ public class DisplayHandler {
 		}
 	}
 	
+	/**
+	 * inner class to handle the refreshing of the timeleft lable in the main frame
+	 * @author samu
+	 *
+	 */
 	class RefreshTimeleftTimer extends TimerTask {
 		
 		public void run() {
@@ -60,11 +63,10 @@ public class DisplayHandler {
 
 		}
 	}
-	
+		
 	/**
-	 * 
-	 * Innere Klasse die konkurriernde Timer zu AutomodusTimer verwaltet, um das zeigen einer Datei zu einem bestimmten
-	 * Zeitpunkt zu ermöglichen.
+	 * inner class to handle showing a file to a specific time.
+	 * @author samu
 	 *
 	 */
 	class ShowFileAtTimer extends TimerTask {
@@ -82,10 +84,6 @@ public class DisplayHandler {
 		}
 	}
 	
-	
-	/**
-	 * Konstruktor initalisierung mit vernünftigen Standardwerten.
-	 */
 	private DisplayHandler() {
 
 		this.playingFiles = new LinkedList<MediaFile>();
@@ -114,9 +112,8 @@ public class DisplayHandler {
 	}
 	
 	/**
-	 * Fügt die im übergebenen Array enthalten MediaFiles der "Playlist" (playingFiles) hinzu.
-	 * Synchronisation zwischen MediaHandler und DisplayHandler
-	 * @param files
+	 * Adds given files to the filelist. Used for synching with media handler
+	 * @param files files to add
 	 */
 	public void add(MediaFile[] files) {
 
@@ -132,9 +129,8 @@ public class DisplayHandler {
 	}
 	
 	/**
-	 * Entfernt die übergebenen MediaFiles aus der "Playlist" (playingFiles)
-	 * Synchronisation zwischen MediaHandler und DisplayHandler
-	 * @param files
+	 * Removes given files to the filelist. Used for synching with media handler
+	 * @param files files to remove
 	 */
 	public void remove(MediaFile[] files) {
 		
@@ -145,9 +141,8 @@ public class DisplayHandler {
 	}
 	
 	/**
-	 * Die übergebenen Dateien werden zum kleinsten Index der übergebenen Dateien gestaucht und der Index jeder Datei um eins erhöht
-	 * Wird nur aufgerufen wenn der shuffle Modus nicht aktiviert ist.
-	 * @param files
+	 * Moves given files down. Used for synching with media handler, only invoked when shuffling disabled
+	 * @param files to move down
 	 */
 	public void down(MediaFile[] files) {
 		
@@ -158,10 +153,8 @@ public class DisplayHandler {
 	}
 
 	/**
-	 * Die übergebenen Dateien werden zum kleinsten Index der übergebenen Dateien gestaucht und der Index jeder Datei um eins gesenkt
-	 * Wird nur aufgerufen wenn der shuffle Modus nicht aktiviert ist.
-	 * @param files
-	 *  
+	 * Moves given files up. Used for synching with media handler, only invoked when shuffling disabled
+	 * @param files files to move up
 	 */
 	public void up(MediaFile[] files) {
 		
@@ -172,8 +165,7 @@ public class DisplayHandler {
 	}
 	
 	/**
-	 * Das übergebene MediaFile wird angewiesen seine show Methode aufzurufen. Es wird auf dem DisplayFrame gezeigt.
-	 * Es werden vor zeigen der Datei verschiedene Bedingungen geprüft sowie die Stati der involvierten Dateien angepasst.
+	 * invokes the show method of the given file and updates the auto mode timer if necessary and the status of involved files
 	 * @param file
 	 */
 	public void show(MediaFile file) {
@@ -199,8 +191,8 @@ public class DisplayHandler {
 	
 
 	/**
-	 * Zeigt die nächste Datei in playingFiles
-	 * Falls die letzte Datei erreicht wurde springt die Methode zurück zur ersten Datei der Liste.
+	 * invokes the show method of next file from list
+	 * method is cyclic implemented
 	 */
 	public void showNext() {
 		
@@ -225,8 +217,8 @@ public class DisplayHandler {
 
 
 	/**
-	 * Zeigt die vorherige Datei aus der Playlist.
-	 * Falls die Erste Datei erreicht wurde springt die Methode zur letzten Datei der Liste.
+	 * invokes the show method of previous file from list
+	 * method is cyclic implemented
 	 */
 	public void showPrevious() {
 		
@@ -251,7 +243,7 @@ public class DisplayHandler {
 	}
 
 	/**
-	 * Startet den Shuffle Modus
+	 * sets the shuffling mode to enabled and invokes the shuffling method
 	 */
 	public void startShuffle() {
 		isShufflingEnabled = true;
@@ -261,7 +253,7 @@ public class DisplayHandler {
 	}
 	
 	/**
-	 * Stoppt den Shuffle Modus
+	 * sets shuffling mode to disabled and synchs files back with media handler file order
 	 */
 	@SuppressWarnings("unchecked")
 	public void stopShuffle() {
@@ -271,9 +263,9 @@ public class DisplayHandler {
 	}
 	
 	/**
-	 * Die übergebene Datei wird zum übergebenen Zeiptpunkt gezeigt.
-	 * @param fileToShow
-	 * @param date
+	 * shows a media file to given date
+	 * @param fileToShow file to show
+	 * @param date show at
 	 */
 	public void showFileAt(MediaFile fileToShow, Date date) {
 		
@@ -286,8 +278,9 @@ public class DisplayHandler {
 	}
 
 	/**
-	 * Diese Methode startet den Automodus.
-	 * Außerdem wird sie jedes mal nach einem Dateiwechsel aufgerufen um den Timer anzupassen (bzgl der Priority der nächsten Date).
+	 * sets auto mode to enabled
+	 * initalizes timers for next current file change and to update the time left label 
+	 * furthermore invoked after every current file change to update the timer
 	 */
 	public synchronized void startAutomodus() {
 		
@@ -335,7 +328,7 @@ public class DisplayHandler {
 	}
 
 	/**
-	 * Stoppt den Automodus und räumt den Timer auf.
+	 * sets auto mode to disabled and tidies up the timers
 	 */
 	public synchronized void stopAutomodus() {
 		isAutomodeEnabled = false;
@@ -347,7 +340,7 @@ public class DisplayHandler {
 	}
 	
 	/**
-	 * Jedes mal nach einem Übergang wird diese Methode aufgerufen um die neue Priority mit einzubeziehen.
+	 * invoked after every update of current file to take new priority into account
 	 */
 	private void automodusHasChanged() {
 		if(isAutomodeEnabled) {
@@ -356,7 +349,7 @@ public class DisplayHandler {
 	}
 	
 	/**
-	 * Eine Hilfsmethode welche die Elemente der "Playlist" neu und zufällig anordnet.
+	 * shuffles the list of the display handler
 	 */
 	private void shuffleList() {
 		Collections.shuffle(playingFiles);

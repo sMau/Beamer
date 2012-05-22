@@ -53,8 +53,8 @@ public class PreferencesHandler {
 	}
 	
 	/**
-	 * 
-	 * @param prio
+	 * Adds a priority to the list.
+	 * @param prio the priority to add to handlers list
 	 */
 	public void addPriority(Priority prio) {
 		if(!listOfPriorities.contains(prio)) {
@@ -63,7 +63,10 @@ public class PreferencesHandler {
 		}
 		
 	}
-	
+	/**
+	 * Adds a theme to the list.
+	 * @param theme the theme to add to handlers list
+	 */
 	public void addTheme(Theme theme) {
 		if(!listOfThemes.contains(theme)) {
 			listOfThemes.add(theme);
@@ -71,6 +74,10 @@ public class PreferencesHandler {
 		}
 	}
 	
+	/**
+	 * removes the given priorities from handlers list
+	 * @param prios priorities to remove
+	 */
 	public void removePriorities(Priority[] prios) {
 		for (int i = 0; i < prios.length; i++) {
 			listOfPriorities.remove(prios[i]);
@@ -78,6 +85,10 @@ public class PreferencesHandler {
 		refreshPrioListModel();
 	}
 	
+	/**
+	 * removes the given array of themes from handlers list
+	 * @param themes themes to remove
+	 */
 	public void removeThemes(Theme[] themes) {
 		for (int i = 0; i < themes.length; i++) {
 			listOfThemes.remove(themes[i]);
@@ -85,12 +96,18 @@ public class PreferencesHandler {
 		refreshThemeListModel();
 	}
 	
+	/**
+	 * Invokes a update on the model of the JList to update the view
+	 */
 	public void refreshPrioListModel() {
 		if(preferencesFrame != null) {
 			((PriorityListModel) preferencesFrame.getjListPrio().getModel()).updateList();
 		}
 	}
 	
+	/**
+	 * Invokes a update on the model of the JList to update the view
+	 */
 	public void refreshThemeListModel() {
 		if(preferencesFrame != null) {
 			((ThemeListModel) preferencesFrame.getjList2().getModel()).updateList();
@@ -105,6 +122,11 @@ public class PreferencesHandler {
 		
 	}
 	
+	/**
+	 * 
+	 * @param name priorities name to search for
+	 * @return priority matching the given name
+	 */
 	public Priority searchForPriority(String name) {
 		
 		Priority res = null;

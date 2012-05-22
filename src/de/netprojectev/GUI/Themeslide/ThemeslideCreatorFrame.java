@@ -270,23 +270,22 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTextFieldAnchorWidth.getDocument().addDocumentListener(new DocumentListener() {@Override
+        jTextFieldAnchorWidth.getDocument().addDocumentListener(new DocumentListener() {
+        	@Override
             public void insertUpdate(DocumentEvent e) {
                 anchorWidthModified();
-
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
                 anchorWidthModified();
-
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
                 anchorWidthModified();
-
-            }});
+            }
+        });
             jTextFieldAnchorHeight.getDocument().addDocumentListener(new DocumentListener() {@Override
                 public void insertUpdate(DocumentEvent e) {
                     anchorHeightModified();
@@ -323,13 +322,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
             }// </editor-fold>//GEN-END:initComponents
 
     
-    
-    private void jComboBoxThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeActionPerformed
-
-    	previewThemeslideComponent1.setThemeBackground(PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
-    	
-    }//GEN-LAST:event_jComboBoxThemeActionPerformed
-
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
     	dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
@@ -345,6 +337,61 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	dispose();
     }//GEN-LAST:event_jButtonAddAndShowActionPerformed
 
+    /**
+     * on selection change, change the background image to the new selected themes background
+     * @param evt
+     */
+    private void jComboBoxThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeActionPerformed
+    	previewThemeslideComponent1.setThemeBackground(PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
+    }//GEN-LAST:event_jComboBoxThemeActionPerformed
+
+    /**
+     * changing the selected text to bold
+     * @param evt
+     */
+    private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBoldActionPerformed
+    	//TODO toggling use, to unbold alrady bolded text
+    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
+    		int length = jTextPaneText.getSelectedText().length();
+        	styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, jTextPaneText.getStyle("bold"), false);
+    	}
+    	
+    }//GEN-LAST:event_jToggleButtonBoldActionPerformed
+
+    /**
+     * on selection change, changing the selected text to the new font size
+     * @param evt
+     */
+    private void jComboBoxFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontSizeActionPerformed
+
+    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
+    		int length = jTextPaneText.getSelectedText().length();
+        	SimpleAttributeSet sattr = new SimpleAttributeSet();
+            sattr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
+            styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sattr, false);
+    	}
+
+    }//GEN-LAST:event_jComboBoxFontSizeActionPerformed
+
+    /**
+     * on selection change, changing the selected text to the new font family
+     * @param evt
+     */
+    private void jComboBoxFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontTypeActionPerformed
+        
+    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
+	    	int length = jTextPaneText.getSelectedText().length();
+	    	SimpleAttributeSet sas = new SimpleAttributeSet();
+	        StyleConstants.setFontFamily(sas, (String) jComboBoxFontType.getSelectedItem());
+	        styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sas, false);
+    	}
+
+    }//GEN-LAST:event_jComboBoxFontTypeActionPerformed
+
+    /**
+     * handles the adding of the new themeslide to the media handler.
+     * checks all data and adds it if everything is fine, else showing an error dialog
+     */
     private void addThemeslide() {
     	Priority priority = null;
     	Theme theme = null;
@@ -391,38 +438,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     }
     
-
-    private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBoldActionPerformed
-
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-    		int length = jTextPaneText.getSelectedText().length();
-        	styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, jTextPaneText.getStyle("bold"), false);
-    	}
-    	
-    }//GEN-LAST:event_jToggleButtonBoldActionPerformed
-
-    private void jComboBoxFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontSizeActionPerformed
-
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-    		int length = jTextPaneText.getSelectedText().length();
-        	SimpleAttributeSet sattr = new SimpleAttributeSet();
-            sattr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
-            styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sattr, false);
-    	}
-
-    }//GEN-LAST:event_jComboBoxFontSizeActionPerformed
-
-    private void jComboBoxFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontTypeActionPerformed
-        
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-	    	int length = jTextPaneText.getSelectedText().length();
-	    	SimpleAttributeSet sas = new SimpleAttributeSet();
-	        StyleConstants.setFontFamily(sas, (String) jComboBoxFontType.getSelectedItem());
-	        styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sas, false);
-    	}
-
-    }//GEN-LAST:event_jComboBoxFontTypeActionPerformed
-
+    /**
+     * when anchor width textfield changed, this method changes the anchor width of the JTextPane
+     */
 	private void anchorWidthModified() {
 		//TODO not working if frame smaller than set anchor
 		if(!jTextFieldAnchorWidth.getText().isEmpty()) {
@@ -439,6 +457,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		}
 	}
 
+	/**
+	 * when anchor height textfield changed, this method changes the anchor height of the JTextPane
+	 */
 	private void anchorHeightModified() {
 		//TODO not working if frame smaller than set anchor (setting anchor needs a resize of textpane)
 		if(!jTextFieldAnchorHeight.getText().isEmpty()) {
