@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.VideoFile;
 import de.netprojectev.MediaHandler.DisplayHandler;

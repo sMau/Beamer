@@ -1,6 +1,6 @@
 package de.netprojectev.Tests;
 
-import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Preferences.PreferencesHandler;

@@ -4,7 +4,6 @@
  */
 package de.netprojectev.GUI.Themeslide;
 
-import java.awt.Dimension;
 import java.awt.Point;
 
 import javax.swing.event.DocumentEvent;
@@ -24,14 +23,13 @@ import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
+ * This is a GUI class to create and design a new Themeslide.
+ * It contains a small text editor and the possibilty to select a Theme (background).
+ * @author samu
  *
- * 
  */
 public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -3653577264825548156L;
 	
 	private StyledDocument styledDoc;
@@ -39,11 +37,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	
 	private int anchorWidth = 0;
 	private int anchorHeight = 0;
-	
 
-	/**
-     * Creates new form ThemeslideCreator
-     */
     public ThemeslideCreatorFrame() {
     	initComponents();
     	
@@ -53,13 +47,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         for(int i = 0; i < PreferencesHandler.getInstance().getListOfPriorities().size(); i++) {
         	jComboBoxPriority.addItem(PreferencesHandler.getInstance().getListOfPriorities().get(i).getName());
         }
-        String[] font = Constants.fontsFamilies;
+        String[] font = Constants.FONT_FAMILIES;
         for(int i = 0; i < font.length; i++) {
         	jComboBoxFontType.addItem(font[i]);
         }
 
-        for(int i = 0; i < Constants.fontSizes.length; i++) {
-        	jComboBoxFontSize.addItem(Constants.fontSizes[i]);
+        for(int i = 0; i < Constants.FONT_SIZES.length; i++) {
+        	jComboBoxFontSize.addItem(Constants.FONT_SIZES[i]);
         }
         
         jComboBoxFontType.setSelectedItem(jTextPaneText.getFont().getFamily());
@@ -142,11 +136,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Priority");
 
-        jComboBoxPriority.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxPriorityActionPerformed(evt);
-            }
-        });
 
         jScrollPane3.setBorder(null);
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -202,18 +191,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jLabelAnchor.setText("Anchor");
 
         jTextFieldAnchorWidth.setText("0");
-        jTextFieldAnchorWidth.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldAnchorWidthActionPerformed(evt);
-            }
-        });
 
         jTextFieldAnchorHeight.setText("0");
-        jTextFieldAnchorHeight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldAnchorHeightActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -343,6 +322,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                 pack();
             }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void jComboBoxThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeActionPerformed
 
     	previewThemeslideComponent1.setThemeBackground(PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
@@ -364,87 +345,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	dispose();
     }//GEN-LAST:event_jButtonAddAndShowActionPerformed
 
-    private void jComboBoxPriorityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPriorityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxPriorityActionPerformed
-
-    private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBoldActionPerformed
-
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-    		int length = jTextPaneText.getSelectedText().length();
-        	styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, jTextPaneText.getStyle("bold"), false);
-    	}
-    	
-    }//GEN-LAST:event_jToggleButtonBoldActionPerformed
-
-    private void jComboBoxFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontSizeActionPerformed
-
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-    		int length = jTextPaneText.getSelectedText().length();
-        	SimpleAttributeSet sattr = new SimpleAttributeSet();
-            sattr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
-            styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sattr, false);
-    	}
-
-    }//GEN-LAST:event_jComboBoxFontSizeActionPerformed
-
-    private void jComboBoxFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontTypeActionPerformed
-        
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-	    	int length = jTextPaneText.getSelectedText().length();
-	    	SimpleAttributeSet sas = new SimpleAttributeSet();
-	        StyleConstants.setFontFamily(sas, (String) jComboBoxFontType.getSelectedItem());
-	        styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sas, false);
-    	}
-
-    }//GEN-LAST:event_jComboBoxFontTypeActionPerformed
-
-    private void jTextFieldAnchorWidthActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAnchorWidthActionPerformed
-    	
-    	anchorWidthModified();
-
-    }//GEN-LAST:event_jTextFieldAnchorWidthActionPerformed
-
-	private void anchorWidthModified() {
-		//TODO not working if frame smaller than set anchor
-		if(!jTextFieldAnchorWidth.getText().isEmpty()) {
-	    	try {
-				if(Integer.parseInt(jTextFieldAnchorWidth.getText()) > 0) {
-
-					jTextPaneText.setBounds(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getLocation().getY(), ((int) jTextPaneText.getBounds().getWidth()) - Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getBounds().getHeight());
-					
-				}
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-			}
-		}
-	}
-
-    private void jTextFieldAnchorHeightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldAnchorHeightActionPerformed
-        
-    	anchorHeightModified();
-    	
-    	
-    }//GEN-LAST:event_jTextFieldAnchorHeightActionPerformed
-
-	private void anchorHeightModified() {
-		//TODO not working if frame smaller than set anchor (setting anchor needs a resize of textpane)
-		if(!jTextFieldAnchorHeight.getText().isEmpty()) {
-			try {
-				if(Integer.parseInt(jTextFieldAnchorHeight.getText()) > 0) {
-
-					jTextPaneText.setBounds((int) jTextPaneText.getLocation().getX(), Integer.parseInt(jTextFieldAnchorHeight.getText()),(int) jTextPaneText.getBounds().getWidth(), ((int) jTextPaneText.getBounds().getHeight()) - Integer.parseInt(jTextFieldAnchorHeight.getText()));
-				}
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-			}
-		}
-    	
-    	
-	}
-    
     private void addThemeslide() {
     	Priority priority = null;
     	Theme theme = null;
@@ -491,6 +391,71 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     }
     
+
+    private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBoldActionPerformed
+
+    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
+    		int length = jTextPaneText.getSelectedText().length();
+        	styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, jTextPaneText.getStyle("bold"), false);
+    	}
+    	
+    }//GEN-LAST:event_jToggleButtonBoldActionPerformed
+
+    private void jComboBoxFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontSizeActionPerformed
+
+    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
+    		int length = jTextPaneText.getSelectedText().length();
+        	SimpleAttributeSet sattr = new SimpleAttributeSet();
+            sattr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
+            styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sattr, false);
+    	}
+
+    }//GEN-LAST:event_jComboBoxFontSizeActionPerformed
+
+    private void jComboBoxFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontTypeActionPerformed
+        
+    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
+	    	int length = jTextPaneText.getSelectedText().length();
+	    	SimpleAttributeSet sas = new SimpleAttributeSet();
+	        StyleConstants.setFontFamily(sas, (String) jComboBoxFontType.getSelectedItem());
+	        styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sas, false);
+    	}
+
+    }//GEN-LAST:event_jComboBoxFontTypeActionPerformed
+
+	private void anchorWidthModified() {
+		//TODO not working if frame smaller than set anchor
+		if(!jTextFieldAnchorWidth.getText().isEmpty()) {
+	    	try {
+				if(Integer.parseInt(jTextFieldAnchorWidth.getText()) > 0) {
+
+					jTextPaneText.setBounds(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getLocation().getY(), ((int) jTextPaneText.getBounds().getWidth()) - Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getBounds().getHeight());
+					
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
+		}
+	}
+
+	private void anchorHeightModified() {
+		//TODO not working if frame smaller than set anchor (setting anchor needs a resize of textpane)
+		if(!jTextFieldAnchorHeight.getText().isEmpty()) {
+			try {
+				if(Integer.parseInt(jTextFieldAnchorHeight.getText()) > 0) {
+
+					jTextPaneText.setBounds((int) jTextPaneText.getLocation().getX(), Integer.parseInt(jTextFieldAnchorHeight.getText()),(int) jTextPaneText.getBounds().getWidth(), ((int) jTextPaneText.getBounds().getHeight()) - Integer.parseInt(jTextFieldAnchorHeight.getText()));
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
+			}
+		}
+    	
+    	
+	}
+ 
 
     /**
      * @param args the command line arguments

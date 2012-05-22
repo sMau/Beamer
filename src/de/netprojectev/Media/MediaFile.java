@@ -9,10 +9,9 @@ import de.netprojectev.GUI.Display.DisplayMainFrame;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
 
 /**
+ * abstract datastructure to deal, for now, with the three types of files
  * 
- * Abstrakte Datenstruktur einer Medien Datei.
- * Unterklassen bilden konkrete Medien Dateien wie Bilder, Themenfolien oder Videos.
- *
+ * @author samu
  */
 public abstract class MediaFile implements Serializable {
 
@@ -23,7 +22,11 @@ public abstract class MediaFile implements Serializable {
 	
 	protected transient DisplayMainFrame display;
 	
-	
+	/**
+	 * 
+	 * @param name name in the manager
+	 * @param priority initial priority
+	 */
 	protected MediaFile(String name, Priority priority) {
 
 		this.name = name;
@@ -35,6 +38,10 @@ public abstract class MediaFile implements Serializable {
 
 	public abstract void show();
 	
+	/**
+	 * Generates a formatted information string about the media file, from its attributes and status.
+	 * @return formatted info string
+	 */
 	public String generateInfoString() {
 		
 		String info;
@@ -109,6 +116,14 @@ public abstract class MediaFile implements Serializable {
 
 	public void setPriority(Priority priority) {
 		this.priority = priority;
+	}
+
+	public DisplayMainFrame getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(DisplayMainFrame display) {
+		this.display = display;
 	}
 
 }

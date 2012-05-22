@@ -7,28 +7,22 @@ package de.netprojectev.GUI.Dialogs;
 import de.netprojectev.GUI.Themeslide.ThemeslideCreatorFrame;
 
 import java.awt.FileDialog;
-import java.io.File;
-
-import javax.swing.SwingUtilities;
 
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
 
 /**
- *
- * 
+ * A GUI class dialog to choose between to options of @see MediaFile adding:
+ * Adding a @see Themeslide with the @see ThemeslideCreatorFrame
+ * or adding a Image or Video from hard disk with a filedialog.
+ * @author samu
  */
 public class FileThemeDialog extends javax.swing.JDialog {
 	
+	private static final long serialVersionUID = 731673406169325261L;	
+	
 	private FileDialog fd;
 	
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 731673406169325261L;
-	/**
-     * Creates new form FileThemeDialog
-     */
     public FileThemeDialog(java.awt.Frame parent, boolean modal) {
     	super(parent, modal);
         initComponents();
@@ -91,23 +85,35 @@ public class FileThemeDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void fileAddbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileAddbtnActionPerformed
-    	dispose();
-    	
-    
+    	openFileDialog();
+	
+    }//GEN-LAST:event_fileAddbtnActionPerformed
+
+    private void themeSlideAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themeSlideAddBtnActionPerformed
+    	openThemeslideCreator();
+    }//GEN-LAST:event_themeSlideAddBtnActionPerformed
+
+    /**
+     * Opens a file dialog in multiple selection mode to add files to the @see MediaHandler
+     */
+    private void openFileDialog() {
+		dispose();
 		fd = new FileDialog(this, "Load files", FileDialog.LOAD);
 		fd.setMultipleMode(true);
 		fd.setDirectory(System.getProperty("user.home"));
 		fd.setLocation(Misc.currentMousePosition());
 		fd.setVisible(true);
 		MediaHandler.getInstance().add(Misc.createMediaFromFiles(fd.getFiles()));
-	
-    }//GEN-LAST:event_fileAddbtnActionPerformed
-
-    private void themeSlideAddBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_themeSlideAddBtnActionPerformed
-    	dispose();
+	}
+    
+    /**
+     * Opens the @see ThemeslideCreatorFrame
+     */
+	private void openThemeslideCreator() {
+		dispose();
     	new ThemeslideCreatorFrame().setVisible(true);
-    }//GEN-LAST:event_themeSlideAddBtnActionPerformed
-
+	}
+    
     /**
      * @param args the command line arguments
      */
@@ -161,6 +167,8 @@ public class FileThemeDialog extends javax.swing.JDialog {
     private javax.swing.JButton fileAddbtn;
     private javax.swing.JButton themeSlideAddBtn;
     // End of variables declaration//GEN-END:variables
+    
+    
 	public javax.swing.JButton getFileAddbtn() {
 		return fileAddbtn;
 	}

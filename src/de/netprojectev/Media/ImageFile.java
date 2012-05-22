@@ -8,10 +8,10 @@ import javax.swing.ImageIcon;
 import de.netprojectev.Misc.Constants;
 
 /**
+ * Datastructure to deal with Image files from the hard disk.
  * 
- * Konkrete Implementierung der Datenstruktur MediaFile.
- * Bild Datei.
- *
+ * @author samu
+ * 
  */
 public class ImageFile extends MediaFile {
 
@@ -19,29 +19,35 @@ public class ImageFile extends MediaFile {
 	private String path;
 	private transient ImageIcon preview; //TODO Make imageicons serializable throwin exception if cannot be loaded cause of no image file
 	
-
+	/**
+	 * 
+	 * @param name name in the manager
+	 * @param path path to the file on disk
+	 * @param priority initial priority
+	 */
 	public ImageFile(String name, String path, Priority priority) {
 		super(name, priority);
 		this.path = path;
 		this.priority = Constants.DEFAULT_PRIORITY;
-		this.preview = generatePreview();
+		generatePreview();
 	}
 
-	public ImageIcon generatePreview() {
+	/**
+	 * generates a imageicon for previewing from path attribute of the object.
+	 */
+	public void generatePreview() {
 		if(path != null) {
-			return new ImageIcon(path);
+			this.preview = new ImageIcon(path);
 		} else {
-			return null;
+			this.preview = null;
 		}
 
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
 		System.out.println("Show file: " + path + "   " + new Date());
 		display.getDisplayMainComponent().setImageToDraw(new File(path));
-		
 	}
 
 	public String getPath() {

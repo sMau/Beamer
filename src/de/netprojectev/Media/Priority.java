@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * 
- * Datenstruktur zur Verwaltung der Priorität einer Datei
- * Priorität bedeutet Anzeigedauer.
+ * Datastructure to hold the time to show connected with a identifier (name)
+ * @author samu
  *
  */
 public class Priority implements Serializable {
@@ -14,6 +14,11 @@ public class Priority implements Serializable {
 	private String name;
 	private int minutesToShow;
 
+	/**
+	 * 
+	 * @param name name of the priority
+	 * @param minutesToShow time to show the specific file holding this priority
+	 */
 	public Priority(String name, int minutesToShow) {
 		this.name = name;
 		this.minutesToShow = minutesToShow;

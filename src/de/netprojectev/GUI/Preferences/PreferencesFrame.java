@@ -7,7 +7,7 @@ package de.netprojectev.GUI.Preferences;
 import java.awt.FileDialog;
 import java.io.File;
 
-import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
 import de.netprojectev.Misc.Misc;
@@ -16,15 +16,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- *
+ * 
  * @author samu
  */
 public class PreferencesFrame extends javax.swing.JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5332162076303310401L;
+	
 	private PreferencesHandler preferenceshandler;
 	private Priority selectedPrio;
 	private Theme selectedTheme;
@@ -32,26 +30,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private File selectedImage;
 	
 	private FileDialog fd;
-	
-    public File getSelectedImage() {
-		return selectedImage;
-	}
-
-	public void setSelectedImage(File selectedImage) {
-		this.selectedImage = selectedImage;
-	}
-
-	public javax.swing.JList getjList2() {
-		return jListTheme;
-	}
-
-	public void setjList2(javax.swing.JList jList2) {
-		this.jListTheme = jList2;
-	}
 
 	/**
-     * Creates new form PreferencesFrame
-     */
+	 * 
+	 * @param managerFrame the ManagerFrame it operates with.
+	 */
     public PreferencesFrame(ManagerFrame managerFrame) {
     	
     	this.managerFrame = managerFrame;
@@ -161,12 +144,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jListPrio.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
-                    int viewRow = jListTheme.getSelectedIndex();
-                    if(viewRow >= 0) {
-                        selectedPrio = preferenceshandler.getListOfPriorities().get(viewRow);
-                        jTextFieldPrioName.setText(selectedPrio.getName());
-                        jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
-                    }
+                    listPrioritySelectionChanged();
                 }
             }
         );
@@ -259,13 +237,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jListTheme.getSelectionModel().addListSelectionListener(
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent event) {
-                    int viewRow = jListTheme.getSelectedIndex();
-                    System.out.println(viewRow);
-                    if(viewRow >= 0) {
-                    	selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
-                    	jTextFieldThemeName.setText(selectedTheme.getName());
-                    	jTextFieldThemeBgImg.setText(selectedTheme.getBackgroundImage().getAbsolutePath());
-                    }
+                    listThemeSelectionChanged();
                 }
             }
         );
@@ -275,17 +247,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jLabelThemeBg.setText("Background");
 
-        jTextFieldThemeName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldThemeNameActionPerformed(evt);
-            }
-        });
-
-        jTextFieldThemeBgImg.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldThemeBgImgActionPerformed(evt);
-            }
-        });
 
         btnSaveTheme.setText("Save");
         btnSaveTheme.addActionListener(new java.awt.event.ActionListener() {
@@ -437,14 +398,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	jListTheme.clearSelection();
     }//GEN-LAST:event_btnAddThemeActionPerformed
 
-    private void jTextFieldThemeNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldThemeNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldThemeNameActionPerformed
-
-    private void jTextFieldThemeBgImgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldThemeBgImgActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldThemeBgImgActionPerformed
-
     private void jButtonPrioSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrioSaveActionPerformed
         
     	Boolean alreadyExists = false;
@@ -549,6 +502,27 @@ public class PreferencesFrame extends javax.swing.JFrame {
      	
     }//GEN-LAST:event_btnRemoveThemeActionPerformed
 
+    
+	private void listThemeSelectionChanged() {
+		int viewRow = jListTheme.getSelectedIndex();
+		System.out.println(viewRow);
+		if(viewRow >= 0) {
+			selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
+			jTextFieldThemeName.setText(selectedTheme.getName());
+			jTextFieldThemeBgImg.setText(selectedTheme.getBackgroundImage().getAbsolutePath());
+		}
+	}
+
+	private void listPrioritySelectionChanged() {
+		int viewRow = jListTheme.getSelectedIndex();
+		if(viewRow >= 0) {
+		    selectedPrio = preferenceshandler.getListOfPriorities().get(viewRow);
+		    jTextFieldPrioName.setText(selectedPrio.getName());
+		    jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
+		}
+	}
+
+    
     /**
      * @param args the command line arguments
      */
@@ -640,4 +614,21 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	public void setManagerFrame(ManagerFrame managerFrame) {
 		this.managerFrame = managerFrame;
 	}
+	
+    public File getSelectedImage() {
+		return selectedImage;
+	}
+
+	public void setSelectedImage(File selectedImage) {
+		this.selectedImage = selectedImage;
+	}
+
+	public javax.swing.JList getjList2() {
+		return jListTheme;
+	}
+
+	public void setjList2(javax.swing.JList jList2) {
+		this.jListTheme = jList2;
+	}
+
 }

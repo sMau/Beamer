@@ -1,31 +1,27 @@
 package de.netprojectev.LiveTicker;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 
 import de.netprojectev.GUI.Display.DisplayMainFrame;
-import de.netprojectev.GUI.Main.ManagerFrame;
-import de.netprojectev.GUI.Main.TickerManagerTableModel;
+import de.netprojectev.GUI.Manager.ManagerFrame;
+import de.netprojectev.GUI.Manager.TickerManagerTableModel;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
 import de.netprojectev.Misc.Constants;
 
 /**
  * 
- * Die Klasse LiveTicker dient zur Verwaltung der einzelnen Elemente des LiveTickers.
- * Sie besteht aus beliebig vielen TickerTextElements, deren Text den LiveTicker Text ergeben.
- *
+ * This class manages the elements of the live ticker.
+ * Consisting of a list of LiveTickerElements which contains the text.
+ * @author samu
  */
-public class LiveTicker implements Serializable {
-
-	private static final long serialVersionUID = 6806990368618523192L;
+public class LiveTicker {
 
 	private static LiveTicker instance;
 	
-	private transient ManagerFrame managerFrame;
+	private ManagerFrame managerFrame;
 	
-	private transient DisplayMainFrame display;
-	
-	
+	private DisplayMainFrame display;
+
 	private LinkedList<TickerTextElement> textElements;
 	private int speed;
 	private String completeTickerText;
@@ -53,8 +49,8 @@ public class LiveTicker implements Serializable {
 	}
 	
 	/**
-	 * Fügt ein neues TickerElement der Liste hinzu
-	 * @param element
+	 * Adds a new TickerTextElement to the list.
+	 * @param element the element to add.
 	 */
 	public void add(TickerTextElement element) {
 		if(!textElements.contains(element)) {
@@ -65,6 +61,10 @@ public class LiveTicker implements Serializable {
 	
 	}
 
+	/**
+	 * invokes a update on the data model to refresh the view
+	 * furthermore it invokes the genereteCompleteTickerString method
+	 */
 	private void refreshDataModel() {
 		if(managerFrame != null) {
 			((TickerManagerTableModel) managerFrame.getjTableLiveticker().getModel()).updateModel();
@@ -74,8 +74,8 @@ public class LiveTicker implements Serializable {
 	}
 	
 	/**
-	 * Entfernt die übergebenen Ticker Elemente aus der Liste
-	 * @param elements
+	 * Remove a element from list.
+	 * @param elements the element to remove
 	 */
 	public void remove(TickerTextElement[] elements) {
 		
@@ -87,10 +87,9 @@ public class LiveTicker implements Serializable {
 	}
 	
 	/**
-	 * Das übergebene Element wird editiert.
-	 * Der Text wird verändert.
-	 * @param element
-	 * @param newText
+	 * Editing a existing ticker element.
+	 * @param element the element to edit
+	 * @param newText new text of the element
 	 */
 	public void editElement(TickerTextElement element, String newText) {
 		element.setText(newText);
@@ -98,8 +97,9 @@ public class LiveTicker implements Serializable {
 	}
 	
 	/**
-	 * Generiert den vollständigen Ticker String welcher nachher als Basis für die Anzeige dient.
-	 * Berücksichtigt alle Trennzeichen (+++) sowie ob toShow gesetzt ist oder nicht.
+	 * 
+	 * Generates the complete ticker string connecting all elements to be viewed on display unit.
+	 * It takes care of the seperators and also takes the Boolean toShow into account.
 	 */
 	public void generateCompleteTickerString() {
 		

@@ -6,17 +6,23 @@ import java.awt.Toolkit;
 import java.io.File;
 
 import javax.swing.JComponent;
-
+/**
+ * 
+ * GUI Component to draw images and themeslide background images
+ * @author samu
+ *
+ */
 public class DisplayMainComponent extends JComponent {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3915763660057625809L;
 	private Image image;
 	
 	//TODO Scaling after resizing?
 	
+	/**
+	 * 
+	 * @param file the image file to draw on component
+	 */
 	public void setImageToDraw(File file) {
 		image = Toolkit.getDefaultToolkit().getImage(file.getAbsolutePath());
 		if (image != null) {
@@ -33,6 +39,9 @@ public class DisplayMainComponent extends JComponent {
 		}
 	}
 
+	/**
+	 * drawing the image centered.
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		if (image != null) {

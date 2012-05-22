@@ -19,6 +19,8 @@ BUffered Image and IMage loading with ImageIO
 
 PrioListe
 
+PERFORMANCE FIX on removing (think since serialization)
+
 -Themeslide creation (beta state ready), color would be good to be added
 -Displaying Unit
 	Images
@@ -27,11 +29,24 @@ PrioListe
 -Serialisierung
 -Bugfixing and points above
 -assure clean loading (force all singletons to create instances and so on)
+-new preview creating after resizing window to fit new size
 
 !!!Themeslide size configurable, cause of scaling difficult in display unit
+!!!Check every pointer to file system and make them save for moving files.
+!!!Priority List in preferences on selection happens nothing
 
-
+Live TIcker serialization
 
 Preferences
 
 Anchor font family, font size, font color -> presettings
+
+Refactoring
+-Dialogs, Display, Manager (check the refactoring, no doubled encapsulation)
+
+
+DOKU
+-PreferencesFrame
+-ManagerFrame
+-ThemeslideCreatorFrame
+-Mediahandler package

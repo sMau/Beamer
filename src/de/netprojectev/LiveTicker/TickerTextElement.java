@@ -3,8 +3,8 @@ package de.netprojectev.LiveTicker;
 import java.io.Serializable;
 
 /**
- * 
- * Eine Datenstruktur um ein Textelement sowie den Boolean toShow zu verknüpfen.
+ * Datastructure to hold a text and a toShow flag, to be able to disable a element without deleting.
+ * @author samu
  *
  */
 public class TickerTextElement implements Serializable {

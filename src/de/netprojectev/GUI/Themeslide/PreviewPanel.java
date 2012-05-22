@@ -5,14 +5,13 @@
 package de.netprojectev.GUI.Themeslide;
 
 /**
- *
+ * 
  * @author samu
  */
 public class PreviewPanel extends javax.swing.JPanel {
 
-    /**
-     * Creates new form PreviewPanel
-     */
+	private static final long serialVersionUID = -8875503335937026985L;
+
     public PreviewPanel() {
         initComponents();
     }

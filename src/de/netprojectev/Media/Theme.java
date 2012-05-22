@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 
 /**
  * 
- * Datenstruktur zur Verwaltung eines Themas für Themenfolien.
- *
+ * Datastructure to manage the a theme. Its to be hold by a themeslide, mostly to specifiy the background image.
+ * @author samu
  */
 public class Theme implements Serializable {
 
@@ -16,6 +16,11 @@ public class Theme implements Serializable {
 	private String name;
 	private File backgroundImage;
 
+	/**
+	 * 
+	 * @param name name as identifier for the theme
+	 * @param bgImg background image from the hard disk
+	 */
 	public Theme(String name, File bgImg) {
 		this.name  = name;
 		this.backgroundImage = bgImg;

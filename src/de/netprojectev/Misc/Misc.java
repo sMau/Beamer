@@ -1,10 +1,8 @@
 package de.netprojectev.Misc;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
-import java.awt.Rectangle;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,7 +11,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
-import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.LiveTicker.TickerTextElement;
 import de.netprojectev.Media.ImageFile;
@@ -24,13 +21,17 @@ import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
- * 
- * Hier werden nirgendwo sonst hinpassende globale Schnittstellen angeboten
+ * Class to hold global methods not containing to a specific other class.
+ * @author samu 
  */
 public class Misc {
 	
 	
-	
+	/**
+	 * 
+	 * @param files files to generate media file array from
+	 * @return array of media files.
+	 */
 	public static MediaFile[] createMediaFromFiles(File[] files) {
 		
 		MediaFile[] mediaFiles = new MediaFile[files.length];
@@ -49,7 +50,11 @@ public class Misc {
 		return mediaFiles;
 	}
 	
-	
+	/**
+	 * 
+	 * @param selectedIndices index array identifiying files in the mediahandler
+	 * @return array of specified media files
+	 */
 	public static MediaFile[] indexListToMediaFiles(int[] selectedIndices) {
 		
 		MediaFile[] mediaFiles = new MediaFile[selectedIndices.length];
@@ -63,6 +68,11 @@ public class Misc {
 	}
 	
 	//TODO generic implemenation for these two methodes
+	/**
+	 * 
+	 * @param selectedIndices index array identifiying priorities in the preferences handler
+	 * @return array of specified priorities
+	 */
 	public static Priority[] indexListToPriorities(int[] selectedIndices) {
 		
 		Priority[] priorities = new Priority[selectedIndices.length];
@@ -75,7 +85,13 @@ public class Misc {
 		
 		return priorities;
 	}
+	
 	//second method for generic implementation
+	/**
+	 * 
+	 * @param selectedIndices index array identifiying themes in the preferences handler
+	 * @return array of specified themes
+	 */
 	public static Theme[] indexListToThemes(int[] selectedIndices) {
 		
 		Theme[] themes = new Theme[selectedIndices.length];
@@ -89,6 +105,11 @@ public class Misc {
 		return themes;
 	}
 	
+	/**
+	 * 
+	 * @param selectedIndices index array identifiying ticker text elements in the Liveticker 
+	 * @return array of specified ticker text elements
+	 */
 	public static TickerTextElement[] indexListToTickerElts(int[] selectedIndices) {
 		
 		TickerTextElement[] elements = new TickerTextElement[selectedIndices.length];
@@ -102,11 +123,19 @@ public class Misc {
 		return elements;
 	}
 	
+	/**
+	 * reading current mouse pointer position
+	 * @return current mouse pointer position.
+	 */
 	public static Point currentMousePosition() {
 		PointerInfo info = MouseInfo.getPointerInfo();
 		return info.getLocation();
 	}
 	
+	/**
+	 * Generates font sizes based on stepwidth n, start and end size.
+	 * @return array of possible sizes
+	 */
 	public static String[] generateFontSizes() {
 		int n = 4;
 		int start = 12;
@@ -125,21 +154,24 @@ public class Misc {
 		return sizes;
 	}
 	
-	public synchronized static void saveToFile(Serializable toSave) {
+	/**
+	 * serializing a given object to the save path specified in the constants using the given filename.
+	 * @param toSave a serializable object
+	 * @param filename the filename it should be saved to 
+	 */
+	public synchronized static void saveToFile(Serializable toSave, String filename) {
 		
-		String filename = "undefined";
-		String path = Constants.savePath;
+		String path = Constants.SAVE_PATH;
 		
+		if(filename.isEmpty() || filename == null) {		
+			filename = "undefined.bmr";
+			//TODO Error dialog
+		}
+
 		if(!new File(path).exists()) {
 			new File(path).mkdirs();
 		}
 		
-		if(toSave instanceof MediaHandler) {
-			filename = "mediafiles.brm";
-		} else if(toSave instanceof PreferencesHandler) {
-			filename = "settings.brm";
-		}
-		System.out.println(path + filename);
 		try {
 			FileOutputStream file = new FileOutputStream(path + filename);
 			ObjectOutputStream o = new ObjectOutputStream(file);
@@ -149,30 +181,40 @@ public class Misc {
 			e.printStackTrace();
 			//TODO Error Dialog
 		}
-		
-		
+
 	}
 	
+	/**
+	 * Deserializing a object from hard disk in save path with the given filename.
+	 * @param filename file to load from disk
+	 * @return deserialized object
+	 */
 	public synchronized static Object loadFromFile(String filename) {
 		
 		Object fileToLoad = null;
-		String path = Constants.savePath;
+		String path = Constants.SAVE_PATH;
 		
-		try {
-			FileInputStream file = new FileInputStream(path + filename);
-			ObjectInputStream o = new ObjectInputStream(file);
-			fileToLoad = o.readObject();
-			o.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			//TODO Error Dialog
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			//TODO Error Dialog
-		}
+		if(new File(path + filename).exists()) {
+			try {
+				FileInputStream file = new FileInputStream(path + filename);
+				ObjectInputStream o = new ObjectInputStream(file);
+				fileToLoad = o.readObject();
+				o.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+				//TODO Error Dialog
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+				//TODO Error Dialog
+			}
 
-		return fileToLoad;
+			return fileToLoad;
+		} else {
+			return null;
+		}
+		
+		
 	}
 
 }

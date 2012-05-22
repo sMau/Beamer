@@ -1,4 +1,4 @@
-package de.netprojectev.GUI.Main;
+package de.netprojectev.GUI.Manager;
 
 import java.util.LinkedList;
 
@@ -7,11 +7,14 @@ import javax.swing.table.AbstractTableModel;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.LiveTicker.TickerTextElement;
 
+/**
+ * This is the model for the LiveTicker table in the ManagerFrame.
+ * It connects the LiveTicker to the JTable.
+ * @author samu
+ *
+ */
 public class TickerManagerTableModel extends AbstractTableModel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1436775879502873621L;
 	private LiveTicker liveTicker;
 	private LinkedList<TickerTextElement> textElements;
@@ -78,7 +81,10 @@ public class TickerManagerTableModel extends AbstractTableModel {
 		}
 	}
 	
-	
+	/**
+     * Updating the table View to the current Data Changes on the Model.
+     * Uses invokeLater for clean and thread-save event handling.
+     */
 	public void updateModel() {
     	java.awt.EventQueue.invokeLater(new Runnable() {
 

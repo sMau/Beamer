@@ -9,22 +9,21 @@ import de.netprojectev.LiveTicker.TickerTextElement;
 import de.netprojectev.Misc.Misc;
 
 /**
- *
+ * GUI class dialog, to handle ticker-element adding and editing.
  * @author samu
  */
 public class AddTickerElement extends javax.swing.JFrame {
 
-    /**
-	 * 
-	 */
+
 	private static final long serialVersionUID = -3446932107371644570L;
-	/**
-     * Creates new form AddTickerElement
-     */
     
     private TickerTextElement currentTickerElt;
     private Boolean editMode;
     
+    /**
+     * 
+     * @param tickerElt The element to edit.
+     */
     public AddTickerElement(TickerTextElement tickerElt) {
         this.currentTickerElt = tickerElt;
         initComponents();
@@ -115,7 +114,14 @@ public class AddTickerElement extends javax.swing.JFrame {
 
     private void jButtonAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddTickerEltActionPerformed
         
-    	currentTickerElt.setText(jTextFieldTickerEltText.getText());
+    	editAndAddTickerElement();
+    }//GEN-LAST:event_jButtonAddTickerEltActionPerformed
+
+    /**
+     * Edits a ticker element or adds a new ticker element to the @see LiveTicker
+     */
+	private void editAndAddTickerElement() {
+		currentTickerElt.setText(jTextFieldTickerEltText.getText());
         currentTickerElt.setToShow(jCheckBoxTickerEltShow.isSelected());
     	
     	if(!editMode) {
@@ -123,7 +129,7 @@ public class AddTickerElement extends javax.swing.JFrame {
     	}
 
     	dispose();
-    }//GEN-LAST:event_jButtonAddTickerEltActionPerformed
+	}
 
     /**
      * @param args the command line arguments

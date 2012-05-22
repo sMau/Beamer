@@ -1,26 +1,21 @@
 package de.netprojectev.MediaHandler;
 
-import java.io.Serializable;
 import java.util.LinkedList;
 
-import de.netprojectev.GUI.Main.FileManagerTableModel;
-import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.GUI.Manager.FileManagerTableModel;
+import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
 
-public class MediaHandler implements Serializable {
+public class MediaHandler {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1611629663271180670L;
 
 	private static MediaHandler instance = null;
 
-	private transient DisplayHandler displayHandler;
+	private DisplayHandler displayHandler;
 	
 	private LinkedList<MediaFile> mediaFiles;
 	
-	private transient ManagerFrame managerFrame;
+	private ManagerFrame managerFrame;
 
 	
 	/**

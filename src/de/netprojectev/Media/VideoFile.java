@@ -2,16 +2,12 @@ package de.netprojectev.Media;
 
 import java.util.Date;
 
-import javax.swing.ImageIcon;
-
 import de.netprojectev.Misc.Constants;
 
 /**
+ * Datastructure to deal with video files from hard disk.
  * 
- * Konkrete Implementierung der Datenstruktur MediaFile.
- * Video Datei.
- * Video File hält auch eine Priorität, um Polymorph auf MediaFile arbeiten zu können.
- * Sie wird als "Dummyfile" implementiert und enthält die Video Länge als minutesToShow.
+ * *** incomplete and used at the moment ***
  *
  */
 public class VideoFile extends MediaFile {
@@ -20,6 +16,11 @@ public class VideoFile extends MediaFile {
 	private String path;
 	private int length;
 
+	/**
+	 * 
+	 * @param name name in the manager
+	 * @param path path to the video on the hard disk
+	 */
 	public VideoFile(String name, String path) {
 		
 		super(name, Constants.DEFAULT_PRIORITY); //TODO Implement a Default Video Priority with minutesToShow = video.length

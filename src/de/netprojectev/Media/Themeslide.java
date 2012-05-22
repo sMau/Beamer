@@ -6,11 +6,8 @@ import java.util.Date;
 import javax.swing.JTextPane;
 
 /**
- * Konkrete implementierung der Datenstruktur MediaFile
- * Themenfolien sind keine "echten" Dateien die auf dem Dateisystem gespeichert werden.
- * Sie werden intrinsisch vom Programm verwaltet.
- * Siehe Entwurfsordner für Erklärungen was eine Themenfolie darstellt.
- * 
+ * Datastructure for a themeslide. It holds a theme object and a formatted styled text as JTextPane.
+ * @author samu
  */
 public class Themeslide extends MediaFile {
 
@@ -20,6 +17,14 @@ public class Themeslide extends MediaFile {
 	private Point anchor;
 	private JTextPane text;
 
+	/**
+	 * 
+	 * @param name name in the manager
+	 * @param priority priority initial priority
+	 * @param theme theme object to specifiy background image
+	 * @param text formatted styled text as JTextPane
+	 * @param textPosition left and top margin for moving the textpane in the right position
+	 */
 	public Themeslide(String name,Priority priority, Theme theme, JTextPane text, Point textPosition) {
 		super(name, priority);
 		

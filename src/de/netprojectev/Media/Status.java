@@ -4,8 +4,7 @@ import java.util.Date;
 
 /**
  * 
- * Datenstruktur zur Verwaltung des aktuellen Status einer Medien Datei.
- *
+ * Datastructure to manage current status of a media file.
  */
 public class Status {
 

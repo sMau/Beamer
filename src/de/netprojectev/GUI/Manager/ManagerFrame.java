@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.netprojectev.GUI.Main;
+package de.netprojectev.GUI.Manager;
 
 import java.awt.Image;
 
@@ -15,20 +15,24 @@ import de.netprojectev.GUI.Dialogs.FileThemeDialog;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.Media.ImageFile;
+import de.netprojectev.Media.MediaFile;
+import de.netprojectev.Media.Priority;
+import de.netprojectev.Media.Status;
+import de.netprojectev.Media.Theme;
 import de.netprojectev.Media.Themeslide;
-import de.netprojectev.Media.VideoFile;
+import de.netprojectev.MediaHandler.DisplayDispatcher;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.util.LinkedList;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableColumn;
 
@@ -38,10 +42,10 @@ import javax.swing.table.TableColumn;
  */
 public class ManagerFrame extends javax.swing.JFrame {
 
-    /**
+	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 2853526692923366703L;
+	private static final long serialVersionUID = 7019176172214701606L;
 	private MediaHandler mediaHandler;
 	private LiveTicker liveTicker;
 	private PreferencesHandler preferencesHandler;
@@ -58,9 +62,13 @@ public class ManagerFrame extends javax.swing.JFrame {
         liveTicker.setManagerFrame(this);
         
         preferencesHandler = PreferencesHandler.getInstance();
-                
+        
         initComponents();
         setLocation(Misc.currentMousePosition());
+        
+        
+        
+        loadFromDisk();
         
     }
     
@@ -808,8 +816,10 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private void quit() {
         int exit = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Quit", JOptionPane.YES_NO_OPTION);
         if (exit == JOptionPane.YES_OPTION) {
-    		Misc.saveToFile(mediaHandler);
-    		Misc.saveToFile(preferencesHandler);
+    		
+        	saveToDisk();
+        
+        	
     		System.exit(0);
         }
 		
@@ -968,12 +978,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     	  }
     }//GEN-LAST:event_jTableFileManagerMouseClicked
 
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        System.out.println("closed");
-    }//GEN-LAST:event_formWindowClosed
 
-    
-    
     private ImageIcon scaleIcon(ImageIcon preview) {
     	
     	preview.setImage(preview.getImage().getScaledInstance(Constants.DEFAULT_SCALE_WIDTH, -1,Image.SCALE_DEFAULT));
@@ -984,6 +989,53 @@ public class ManagerFrame extends javax.swing.JFrame {
     public void refreshTimeleftLbl(int timeleft) {
     	
     	lblTimeleft.setText("Timeleft: " + Integer.toString(timeleft));
+    }
+    
+    @SuppressWarnings("unchecked")
+	private Boolean loadFromDisk() {
+    	
+    	LinkedList<MediaFile> tmpMedia = (LinkedList<MediaFile>) Misc.loadFromFile(Constants.FILENAME_MEDIAFILES);
+    	LinkedList<Priority> tmpPriority = (LinkedList<Priority>) Misc.loadFromFile(Constants.FILENAME_PRIORITIES);
+    	LinkedList<Theme> tmpTheme = (LinkedList<Theme>) Misc.loadFromFile(Constants.FILENAME_THEMES);
+    	
+    	if(tmpMedia != null) {
+    		
+    		for(int i = 0; i < tmpMedia.size(); i++) {
+    			tmpMedia.get(i).setStatus(new Status());
+    			tmpMedia.get(i).setDisplay(DisplayDispatcher.getInstance().getDisplayFrame());
+    			if(tmpMedia.get(i) instanceof ImageFile) {
+    				((ImageFile) tmpMedia.get(i)).generatePreview();
+    			}
+    			
+    			mediaHandler.add(tmpMedia.toArray(new MediaFile[0]));
+    		}
+    		
+    	}
+    	
+    	//i = 1, to prevent adding multpile default priorities
+    	if(tmpPriority != null) {
+    		for(int i = 1; i < tmpPriority.size(); i++) {
+    			preferencesHandler.addPriority(tmpPriority.get(i));
+    		}
+    	}
+    	
+    	if(tmpTheme != null) {
+    		for(int i = 0; i < tmpTheme.size(); i++) {
+    			preferencesHandler.addTheme(tmpTheme.get(i));
+    		}
+    	}
+
+    	return true;
+	
+    }
+    
+    
+    private Boolean saveToDisk() {
+    	
+    	Misc.saveToFile(mediaHandler.getMediaFiles(), Constants.FILENAME_MEDIAFILES);
+    	Misc.saveToFile(preferencesHandler.getListOfPriorities(), Constants.FILENAME_PRIORITIES);
+    	Misc.saveToFile(preferencesHandler.getListOfThemes(), Constants.FILENAME_THEMES);
+    	return true;
     }
     
     

@@ -5,14 +5,11 @@
 package de.netprojectev.GUI.Display;
 
 /**
- *
+ * GUI class frame, to store the viewing components, as the live ticker and the image and themeslide showing component.
  * @author samu
  */
 public class DisplayMainFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DisplayMainFrame
-     */
     public DisplayMainFrame() {
         initComponents();
     }
@@ -119,6 +116,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
     private de.netprojectev.GUI.Display.DisplayMainComponent displayMainComponent;
     private de.netprojectev.GUI.Display.TickerComponent tickerComponent;
     // End of variables declaration//GEN-END:variables
+    
 	public de.netprojectev.GUI.Display.TickerComponent getTickerComponent() {
 		return tickerComponent;
 	}

@@ -1,6 +1,6 @@
 package de.netprojectev.Tests;
 
-import de.netprojectev.GUI.Main.ManagerFrame;
+import de.netprojectev.GUI.Manager.ManagerFrame;
 
 public class TestJTable {
 	

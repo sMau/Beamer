@@ -2,13 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.netprojectev.GUI.Main;
+package de.netprojectev.GUI.Manager;
 
 import java.util.LinkedList;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
@@ -18,17 +17,13 @@ import de.netprojectev.Misc.Constants;
 import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
+ * This is the model for the @see JTable in the Filemanager.
+ * It connects the MediaHandler to the JTable.
+ * @author samu
  *
- * 
  */
-
-//TODO Comlumns: Name and Prio, directly editable
-
 public class FileManagerTableModel extends AbstractTableModel {
     
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 122422256133966805L;
 	private MediaHandler mediaHandler;
 	private PreferencesHandler preferencesHandler;
