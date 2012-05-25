@@ -4,9 +4,7 @@
  */
 package de.netprojectev.GUI.Manager;
 
-import java.awt.Dimension;
 import java.awt.FileDialog;
-import java.awt.Image;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -232,7 +230,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         btnDown.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/arrow_down.png"))); // NOI18N
-        btnDown.setToolTipText("Move selected file down in list.");
+        btnDown.setToolTipText("Move selected files down in list.");
         btnDown.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDownActionPerformed(evt);
@@ -258,7 +256,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         btnUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/arrow_up.png"))); // NOI18N
-        btnUp.setToolTipText("Move selected file up in list.");
+        btnUp.setToolTipText("Move selected files up in list.");
         btnUp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpActionPerformed(evt);
@@ -290,7 +288,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         toggleBtnShuffle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/shuffle-icon.png"))); // NOI18N
-        toggleBtnShuffle.setToolTipText("Toggle shuffle");
+        toggleBtnShuffle.setToolTipText("Toggle shuffle.");
         toggleBtnShuffle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 toggleBtnShuffleActionPerformed(evt);
@@ -298,7 +296,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         toogleBtnAuto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/Clockwise-arrow128.png"))); // NOI18N
-        toogleBtnAuto.setToolTipText("Toggle automode");
+        toogleBtnAuto.setToolTipText("Toggle automode.");
         toogleBtnAuto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 toogleBtnAutoActionPerformed(evt);
@@ -306,7 +304,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         lblTimeleft.setText("Timeleft: --:--");
-        lblTimeleft.setToolTipText("Timeleft until next change.");
+        lblTimeleft.setToolTipText("Timeleft until next event.");
 
         javax.swing.GroupLayout btnPanelFileLayout = new javax.swing.GroupLayout(btnPanelFile);
         btnPanelFile.setLayout(btnPanelFileLayout);
@@ -475,7 +473,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
 
         btnRemoveTickerElt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
-        btnRemoveTickerElt.setToolTipText("Delete selected ticker element.");
+        btnRemoveTickerElt.setToolTipText("Delete selected ticker elements.");
         btnRemoveTickerElt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveTickerEltActionPerformed(evt);

@@ -380,7 +380,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/arrow_down.png"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Move selected file down in list."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Move selected files down in list."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDownActionPerformed"/>
@@ -418,7 +418,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/arrow_up.png"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Move selected file up in list."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Move selected files up in list."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUpActionPerformed"/>
@@ -462,7 +462,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/shuffle-icon.png"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Toggle shuffle"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Toggle shuffle."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toggleBtnShuffleActionPerformed"/>
@@ -473,7 +473,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/Clockwise-arrow128.png"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Toggle automode"/>
+                    <Property name="toolTipText" type="java.lang.String" value="Toggle automode."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="toogleBtnAutoActionPerformed"/>
@@ -482,7 +482,7 @@
                 <Component class="javax.swing.JLabel" name="lblTimeleft">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Timeleft: --:--"/>
-                    <Property name="toolTipText" type="java.lang.String" value="Timeleft until next change."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Timeleft until next event."/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -680,7 +680,7 @@
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                       <Image iconType="3" name="/de/netprojectev/GFX/delete_2.png"/>
                     </Property>
-                    <Property name="toolTipText" type="java.lang.String" value="Delete selected ticker element."/>
+                    <Property name="toolTipText" type="java.lang.String" value="Delete selected ticker elements."/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveTickerEltActionPerformed"/>

@@ -58,8 +58,8 @@
         <Container class="javax.swing.JPanel" name="jPanelTabMain">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Main">
-                <Property name="tabTitle" type="java.lang.String" value="Main"/>
+              <JTabbedPaneConstraints tabName="General">
+                <Property name="tabTitle" type="java.lang.String" value="General"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -138,6 +138,7 @@
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Preview width"/>
+                <Property name="toolTipText" type="java.lang.String" value="Set the width of the images for the previewing in the main frame. The height is set automatically."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldPreviewWidth">
@@ -145,6 +146,7 @@
                 <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="Integer.toString(preferenceshandler.getPreviewWidth())" type="code"/>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="Set the width of the images for the previewing in the main frame. The height is set automatically."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel3">
@@ -291,7 +293,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/de/netprojectev/GFX/delete_2.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Delete selected priority"/>
+                <Property name="toolTipText" type="java.lang.String" value="Delete selected priorities."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemovePrioActionPerformed"/>
@@ -439,7 +441,7 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/de/netprojectev/GFX/delete_2.png"/>
                 </Property>
-                <Property name="toolTipText" type="java.lang.String" value="Delete selected theme."/>
+                <Property name="toolTipText" type="java.lang.String" value="Delete selected themes."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRemoveThemeActionPerformed"/>

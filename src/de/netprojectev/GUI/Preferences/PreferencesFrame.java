@@ -109,8 +109,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jLabelTickerSpeed.setText("Ticker Speed");
 
         jLabel1.setText("Preview width");
+        jLabel1.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
 
         jTextFieldPreviewWidth.setText(Integer.toString(preferenceshandler.getPreviewWidth()));
+        jTextFieldPreviewWidth.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
 
         jLabel3.setText("px");
 
@@ -157,7 +159,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTabbedPane1.addTab("Main", jPanelTabMain);
+        jTabbedPane1.addTab("General", jPanelTabMain);
 
         jListPrio.setModel(new PriorityListModel());
         jListPrio.getSelectionModel().addListSelectionListener(
@@ -189,7 +191,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         btnRemovePrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
-        btnRemovePrio.setToolTipText("Delete selected priority");
+        btnRemovePrio.setToolTipText("Delete selected priorities.");
         btnRemovePrio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemovePrioActionPerformed(evt);
@@ -281,7 +283,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         btnRemoveTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
-        btnRemoveTheme.setToolTipText("Delete selected theme.");
+        btnRemoveTheme.setToolTipText("Delete selected themes.");
         btnRemoveTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemoveThemeActionPerformed(evt);

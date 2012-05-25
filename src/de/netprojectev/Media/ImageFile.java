@@ -36,16 +36,23 @@ public class ImageFile extends MediaFile {
 
 	/**
 	 * generates a imageicon for previewing from path attribute of the object.
+	 * The icon is read from hard disk and scaled in a new Thread, so the GUI does not block
 	 */
 	public void generatePreview() {
-		if(path != null) {
-			this.preview = new ImageIcon(path);
-			this.preview = scaleIcon(this.preview);
-		} else {
-			this.corrupted = true;
-			this.preview = null;
-		}
-
+		
+		new Thread() {
+			@Override
+			public void run() {
+				
+				if(path != null) {
+					preview = new ImageIcon(path);
+					preview = scaleIcon(preview);
+				} else {
+					corrupted = true;
+					preview = null;
+				}
+			}
+		}.start();
 	}
 	
 	/**

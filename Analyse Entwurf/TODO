@@ -4,7 +4,6 @@ MUST BE
 WOULD BE NICE
 show file at gui mapping
 set wasShowed after a given time and not immediately, settable via prefs
-Test the restarting method with a real jar
 Themeslide size configurable, cause of scaling difficult in display unit
 Check every pointer to file system and make them save for moving files.
 assure clean loading (force all singletons to create instances and so on)
@@ -12,11 +11,9 @@ Anchor font family, font size, font color -> presettings
 Themeslide creator font color configurable
 Bordering in Themeslidecreator for better orientation
 BUffered Image and IMage loading with ImageIO (Performance and type safety)
-formatting the timeleft lbl to mm:ss
 keylistener v.a. in jtable 
 after themeslide creation suggest to add a ticker elt.
 right click context menus, extending for changeprio and change name, and so on
-Tooltips check agagin
 mouse resizable preview window
 "big" preview window as "popup" own frame
 move up down via drag n drop
