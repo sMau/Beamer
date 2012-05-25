@@ -6,6 +6,7 @@ package de.netprojectev.GUI.Themeslide;
 
 import java.awt.Point;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.SimpleAttributeSet;
@@ -415,17 +416,17 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	if(!jTextFieldThemeSlideName.getText().isEmpty() && jTextFieldThemeSlideName.getText() != null) {
     		name  = jTextFieldThemeSlideName.getText();
     	} else {
-    		//TODO Error dialog
+    		JOptionPane.showMessageDialog(this, "Please enter a name.", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     	if(jComboBoxPriority.getSelectedIndex() >= 0) {
     		priority = PreferencesHandler.getInstance().getListOfPriorities().get(jComboBoxPriority.getSelectedIndex());
     	} else {
-    		//TODO Error dialog
+    		JOptionPane.showMessageDialog(this, "Please select a priority.", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     	if(jComboBoxTheme.getSelectedIndex() >= 0) {
     		theme = PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex());
     	} else {
-    		//TODO Error dialog
+    		JOptionPane.showMessageDialog(this, "Please select a theme.", "Error", JOptionPane.ERROR_MESSAGE);
     	}
     	    	
     	if(name != null && priority != null && theme != null) {
@@ -433,7 +434,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		themeSlides[0] = new Themeslide(name, priority, theme, jTextPaneText, new Point(anchorWidth, anchorHeight));
     		MediaHandler.getInstance().add(themeSlides);
     	} else {
-    		//TODO Error dialog
+    		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
     	}
 
     }
@@ -446,12 +447,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		if(!jTextFieldAnchorWidth.getText().isEmpty()) {
 	    	try {
 				if(Integer.parseInt(jTextFieldAnchorWidth.getText()) > 0) {
-
-					jTextPaneText.setBounds(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getLocation().getY(), ((int) jTextPaneText.getBounds().getWidth()) - Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getBounds().getHeight());
-					
+					jTextPaneText.setBounds(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getLocation().getY(), ((int) jTextPaneText.getBounds().getWidth()) - Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getBounds().getHeight());		
 				}
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
 				//e.printStackTrace();
 			}
 		}
@@ -469,7 +467,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 					jTextPaneText.setBounds((int) jTextPaneText.getLocation().getX(), Integer.parseInt(jTextFieldAnchorHeight.getText()),(int) jTextPaneText.getBounds().getWidth(), ((int) jTextPaneText.getBounds().getHeight()) - Integer.parseInt(jTextFieldAnchorHeight.getText()));
 				}
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
 				//e.printStackTrace();
 			}
 		}

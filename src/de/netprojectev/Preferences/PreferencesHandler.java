@@ -6,8 +6,10 @@ import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.GUI.Preferences.PriorityListModel;
 import de.netprojectev.GUI.Preferences.ThemeListModel;
+import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
+import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
 
 /**
@@ -17,7 +19,7 @@ import de.netprojectev.Misc.Constants;
  */
 public class PreferencesHandler {
 
-	private static PreferencesHandler instance;
+	private static volatile PreferencesHandler instance;
 	
 	private PreferencesFrame preferencesFrame;
 	private ManagerFrame managerFrame;
@@ -25,8 +27,7 @@ public class PreferencesHandler {
 	private LinkedList<Priority> listOfPriorities;
 	private LinkedList<Theme> listOfThemes;
 	
-	private Boolean loadOnStart;
-	private Boolean saveOnExit;
+	private int previewWidth;
 	
 	private int tickerSpeed;
 	
@@ -37,14 +38,12 @@ public class PreferencesHandler {
 		
 		this.listOfThemes = new LinkedList<Theme>();
 		
-		this.loadOnStart = false;
-		this.saveOnExit = false;
-		
 		this.tickerSpeed = Constants.DEFAULT_TICKER_SPEED;
+		this.previewWidth = Constants.DEFAULT_PREVIEW_SCALE_WIDTH;
 		
 	}
 	
-	public static PreferencesHandler getInstance() {
+	public static synchronized PreferencesHandler getInstance() {
 		
 		if(instance == null) {
 			instance = new PreferencesHandler();
@@ -76,11 +75,14 @@ public class PreferencesHandler {
 	
 	/**
 	 * removes the given priorities from handlers list
+	 * prevents the user from deleting the default priority
 	 * @param prios priorities to remove
 	 */
 	public void removePriorities(Priority[] prios) {
 		for (int i = 0; i < prios.length; i++) {
-			listOfPriorities.remove(prios[i]);
+			if(!prios[i].getName().equals("default")) {
+				listOfPriorities.remove(prios[i]);
+			}
 		}
 		refreshPrioListModel();
 	}
@@ -157,22 +159,6 @@ public class PreferencesHandler {
 		this.listOfThemes = listOfThemes;
 	}
 
-	public Boolean getLoadOnStart() {
-		return loadOnStart;
-	}
-
-	public void setLoadOnStart(Boolean loadOnStart) {
-		this.loadOnStart = loadOnStart;
-	}
-
-	public Boolean getSaveOnExit() {
-		return saveOnExit;
-	}
-
-	public void setSaveOnExit(Boolean saveOnExit) {
-		this.saveOnExit = saveOnExit;
-	}
-
 	public int getTickerSpeed() {
 		return tickerSpeed;
 	}
@@ -195,6 +181,19 @@ public class PreferencesHandler {
 
 	public void setManagerFrame(ManagerFrame managerFrame) {
 		this.managerFrame = managerFrame;
+	}
+
+	public int getPreviewWidth() {
+		return previewWidth;
+	}
+
+	public void setPreviewWidth(int previewWidth) {
+		this.previewWidth = previewWidth;
+		for(int i = 0; i < MediaHandler.getInstance().getMediaFiles().size(); i++) {
+			if(MediaHandler.getInstance().getMediaFiles().get(i) instanceof ImageFile) {
+				((ImageFile) MediaHandler.getInstance().getMediaFiles().get(i)).forceRealoadPreview();
+			}
+		}
 	}
 	
 

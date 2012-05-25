@@ -1,11 +1,13 @@
 package de.netprojectev.Media;
 
+import java.awt.Image;
 import java.io.File;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
 
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
  * Datastructure to deal with Image files from the hard disk.
@@ -17,7 +19,7 @@ public class ImageFile extends MediaFile {
 
 	private static final long serialVersionUID = -6684164019970242002L;
 	private String path;
-	private transient ImageIcon preview; //TODO Make imageicons serializable throwin exception if cannot be loaded cause of no image file
+	private transient ImageIcon preview;
 	
 	/**
 	 * 
@@ -38,11 +40,30 @@ public class ImageFile extends MediaFile {
 	public void generatePreview() {
 		if(path != null) {
 			this.preview = new ImageIcon(path);
+			this.preview = scaleIcon(this.preview);
 		} else {
+			this.corrupted = true;
 			this.preview = null;
 		}
 
 	}
+	
+	/**
+	 * used to force a reload of the original image after scaling size was increased
+	 */
+	public void forceRealoadPreview() {
+		generatePreview();
+	}
+	
+	/**
+     * 
+     * @param preview the ImageIcon to scale
+     * @return scaled preview instance of the given ImageIcon
+     */
+	private ImageIcon scaleIcon(ImageIcon preview) {	
+    	preview.setImage(preview.getImage().getScaledInstance(PreferencesHandler.getInstance().getPreviewWidth(), -1,Image.SCALE_SMOOTH));  	
+    	return preview;
+    }
 
 	@Override
 	public void show() {

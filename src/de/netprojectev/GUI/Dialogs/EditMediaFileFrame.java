@@ -5,11 +5,10 @@
 package de.netprojectev.GUI.Dialogs;
 
 import de.netprojectev.GUI.Manager.FileManagerTableModel;
+import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
-
-//TODO Adding of handling setting new priorities.
 
 
 /**
@@ -21,13 +20,15 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1446531265560668639L;
 	private MediaFile selectedMediaFile;
 	private PreferencesHandler preferencesHandler;
+	private ManagerFrame managerFrame;
 	
-    public EditMediaFileFrame(MediaFile selectedMediaFile) {
+    public EditMediaFileFrame(MediaFile selectedMediaFile, ManagerFrame managerFrame) {
     	
     	if(selectedMediaFile != null) {
     		initComponents();
     		setLocation(Misc.currentMousePosition());
     		preferencesHandler = PreferencesHandler.getInstance();
+    		this.managerFrame = managerFrame;
     		this.selectedMediaFile = selectedMediaFile;
             jTextFieldEditFileName.setText(selectedMediaFile.getName()); 
             
@@ -152,12 +153,18 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
      * Editing the selected media file. Changing the name and the priority.
      * In the end a GUI update is called.
      */
-    private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed
+    private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed    	
+    	final int selectedRow = managerFrame.getjTableFileManager().getSelectedRow();    	
     	selectedMediaFile.setName(jTextFieldEditFileName.getText());
-    	selectedMediaFile.setPriority(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()));
-    	
-    	if(preferencesHandler.getManagerFrame() != null) {
-			((FileManagerTableModel) preferencesHandler.getManagerFrame().getjTableFileManager().getModel()).updateModel();
+    	selectedMediaFile.setPriority(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()));   	
+    	if(managerFrame != null) {
+			((FileManagerTableModel) managerFrame.getjTableFileManager().getModel()).updateModel();
+			java.awt.EventQueue.invokeLater(new Runnable() {
+
+	            public void run() {
+	            	managerFrame.getjTableFileManager().setRowSelectionInterval(selectedRow, selectedRow);
+	            }
+	        });
 		}
     	dispose();
     }//GEN-LAST:event_jButtonApplyActionPerformed
@@ -206,7 +213,7 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new EditMediaFileFrame(null).setVisible(true);
+                new EditMediaFileFrame(null, null).setVisible(true);
             }
         });
     }

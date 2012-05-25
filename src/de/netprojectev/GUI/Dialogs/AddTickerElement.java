@@ -4,6 +4,9 @@
  */
 package de.netprojectev.GUI.Dialogs;
 
+import de.netprojectev.GUI.Manager.FileManagerTableModel;
+import de.netprojectev.GUI.Manager.ManagerFrame;
+import de.netprojectev.GUI.Manager.TickerManagerTableModel;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.LiveTicker.TickerTextElement;
 import de.netprojectev.Misc.Misc;
@@ -20,12 +23,15 @@ public class AddTickerElement extends javax.swing.JFrame {
     private TickerTextElement currentTickerElt;
     private Boolean editMode;
     
+    private ManagerFrame managerFrame;
+    
     /**
      * 
      * @param tickerElt The element to edit.
      */
-    public AddTickerElement(TickerTextElement tickerElt) {
+    public AddTickerElement(TickerTextElement tickerElt, ManagerFrame managerFrame) {
         this.currentTickerElt = tickerElt;
+        this.managerFrame = managerFrame;
         initComponents();
         setLocation(Misc.currentMousePosition());
         if(tickerElt == null) { //New Ticker Elt.
@@ -116,14 +122,24 @@ public class AddTickerElement extends javax.swing.JFrame {
      * Edits a ticker element or adds a new ticker element to the @see LiveTicker
      */
     private void jButtonAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddTickerEltActionPerformed
-
+    	final int selectedRow = managerFrame.getjTableLiveticker().getSelectedRow();
     	currentTickerElt.setText(jTextFieldTickerEltText.getText());
         currentTickerElt.setToShow(jCheckBoxTickerEltShow.isSelected());
     	
     	if(!editMode) {
     		LiveTicker.getInstance().add(currentTickerElt);
     	}
+    	if(managerFrame != null) {
+			((TickerManagerTableModel) managerFrame.getjTableLiveticker().getModel()).updateModel();
+			java.awt.EventQueue.invokeLater(new Runnable() {
 
+	            public void run() {
+	            	if(selectedRow >= 0 && selectedRow <= managerFrame.getjTableLiveticker().getRowCount() - 1) {
+	            		managerFrame.getjTableLiveticker().setRowSelectionInterval(selectedRow, selectedRow);
+	            	}
+	            }
+	        });
+		}
     	dispose();    
     }//GEN-LAST:event_jButtonAddTickerEltActionPerformed
 
@@ -166,7 +182,7 @@ public class AddTickerElement extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new AddTickerElement(null).setVisible(true);
+                new AddTickerElement(null, null).setVisible(true);
             }
         });
     }

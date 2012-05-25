@@ -15,7 +15,7 @@ import de.netprojectev.Media.MediaFile;
 public class MediaHandler {
 
 
-	private static MediaHandler instance = null;
+	private static volatile MediaHandler instance = null;
 
 	private DisplayHandler displayHandler;
 	
@@ -29,10 +29,9 @@ public class MediaHandler {
 		displayHandler = DisplayHandler.getInstance();
 		displayHandler.setMediaHandler(this);
 		
-		
 	}
 
-	public static MediaHandler getInstance() {
+	public static synchronized MediaHandler getInstance() {
 
 		if (instance == null) {
 			instance = new MediaHandler();
@@ -69,14 +68,31 @@ public class MediaHandler {
 	 * @param files files to remove
 	 */
 	public void remove(MediaFile[] files) {
-		
-		//TODO prevent curFile from removing
-		//oder ne andere loesung fuer das problem einfallen lassen dass wenn das aktuelle file entfernt wird next und prev nicht funktionieren
+
+		boolean containsCurrentElt = false;
+		MediaFile[] filesWithoutCurrent = files; 
 		
 		for (int i = 0; i < files.length; i++) {
-			mediaFiles.remove(files[i]);
+			if(files[i].getStatus().getIsCurrent()) {
+				containsCurrentElt = true;
+			}
 		}
-		displayHandler.remove(files);
+		
+		if(containsCurrentElt) {
+			int counter = 0;
+			filesWithoutCurrent = new MediaFile[files.length - 1];
+			for(int i = 0; i < files.length; i++) {
+				if(!files[i].getStatus().getIsCurrent()) {
+					filesWithoutCurrent[counter] = files[i];
+					counter++;
+				}
+			}
+		}
+		
+		for (int i = 0; i < files.length; i++) {
+			mediaFiles.remove(filesWithoutCurrent[i]);
+		}
+		displayHandler.remove(filesWithoutCurrent);
 		
 		refreshDataModel();
 	}
@@ -88,18 +104,19 @@ public class MediaHandler {
 	 */
 	public void down(MediaFile[] files) {
 
-		int firstIndex = mediaFiles.indexOf(files[0]) + 1;
-		if(firstIndex > mediaFiles.size() - 1) {
-			firstIndex = mediaFiles.size() - 1;
-		}
-		
+		int firstIndex = mediaFiles.indexOf(files[files.length - 1]) + 1 - (files.length - 1);
 		remove(files);
-		
-		for (int i = files.length -1; i >= 0 ; i--) {
-			mediaFiles.add(firstIndex, files[i]);
-
+		if(firstIndex > mediaFiles.size() - 1) {
+			for(int i = 0; i < files.length; i++) {
+				mediaFiles.addLast(files[i]);
+			}
+			firstIndex = mediaFiles.size() - 1;
+		} else {
+			for (int i = files.length -1; i >= 0 ; i--) {
+				mediaFiles.add(firstIndex, files[i]);
+			}
 		}
-		
+
 		refreshDataModel();
 		displayHandler.down(files);
 		

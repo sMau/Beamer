@@ -15,12 +15,12 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAddP">
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemShowP">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add"/>
+            <Property name="text" type="java.lang.String" value="Show"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAddPActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemShowPActionPerformed"/>
           </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEditP">
@@ -31,6 +31,14 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemEditPActionPerformed"/>
           </Events>
         </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemResetPlayedState">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Reset played state"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemResetPlayedStateActionPerformed"/>
+          </Events>
+        </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="jMenuItemDeleteP">
           <Properties>
             <Property name="text" type="java.lang.String" value="Delete"/>
@@ -39,12 +47,58 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemDeletePActionPerformed"/>
           </Events>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemShowP">
+        <Component class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Show"/>
+            <Property name="opaque" type="boolean" value="true"/>
+          </Properties>
+        </Component>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAddP">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Add"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemShowPActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAddPActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemResetAllPlayedStates">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Reset all played states"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemResetAllPlayedStatesActionPerformed"/>
+          </Events>
+        </MenuItem>
+      </SubComponents>
+    </Container>
+    <Container class="javax.swing.JPopupMenu" name="jPopupMenuTickerTable">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+        <Property name="useNullLayout" type="boolean" value="true"/>
+      </Layout>
+      <SubComponents>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAddTickerEltP">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Add"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAddTickerEltPActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEditTickerEltP">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Edit"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemEditTickerEltPActionPerformed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="jMenuItemRemoveTickerEltP">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Remove"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemRemoveTickerEltPActionPerformed"/>
           </Events>
         </MenuItem>
       </SubComponents>
@@ -91,48 +145,6 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemQuitActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenuEdit">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
-            <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-              <Insets value="[0, 4, 0, 4]"/>
-            </Property>
-          </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEdit">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Edit"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemEditActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemRemove">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Remove"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemRemoveActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemUp">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Up"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemUpActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemDown">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Down"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemDownActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -189,9 +201,6 @@
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBarMainFrame"/>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
-  <Events>
-    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
-  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -252,9 +261,9 @@
                   <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="jScrollPane2" pref="508" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" pref="498" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane4" min="-2" pref="482" max="-2" attributes="0"/>
+                      <Component id="jScrollPane4" pref="474" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -265,11 +274,11 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="232" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="250" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane4" pref="201" max="32767" attributes="0"/>
                           <Component id="jScrollPane2" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="272" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -481,23 +490,28 @@
             <Component class="javax.swing.JSeparator" name="jSeparator3">
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+              <Properties>
+                <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                  <Dimension value="[220, 250]"/>
+                </Property>
+                <Property name="name" type="java.lang.String" value=""/>
+              </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
                 <Component class="javax.swing.JTable" name="jTableFileManager">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                      <Connection code="new FileManagerTableModel()" type="code"/>
+                      <Connection code="new FileManagerTableModel(this)" type="code"/>
                     </Property>
                     <Property name="showHorizontalLines" type="boolean" value="false"/>
                     <Property name="showVerticalLines" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableFileManagerMouseClicked"/>
-                    <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTableFileManagerFocusGained"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(16);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(16);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;&#xa;TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);&#xa;comboBox = new JComboBox();&#xa;for(int i = 0; i &lt; preferencesHandler.getListOfPriorities().size(); i++) {&#xa;        comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());&#xa;}&#xa;prioColumn.setCellEditor(new DefaultCellEditor(comboBox));&#xa;&#xa;&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                int viewRow = jTableFileManager.getSelectedRow();&#xa;                if (viewRow &lt; 0) {&#xa;                    jTextAreaFileInfo.setText(&quot;No file selected&quot;);&#xa;                    jLabelPreview.setIcon(null);&#xa;                    jLabelPreview.setText(&quot;No file selected&quot;);&#xa;                } else {&#xa;                    jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());&#xa;                    jLabelPreview.setText(&quot;&quot;);&#xa;                    jLabelPreview.setIcon(scaleIcon(mediaHandler.getMediaFiles().get(viewRow).getPreview()));&#xa;                }&#xa;            }&#xa;        }&#xa;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(16);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(16);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;&#xa;TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);&#xa;comboBox = new JComboBox();&#xa;for(int i = 0; i &lt; preferencesHandler.getListOfPriorities().size(); i++) {&#xa;        comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());&#xa;}&#xa;prioColumn.setCellEditor(new DefaultCellEditor(comboBox));&#xa;&#xa;&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                onSelectionChangeJtableFile();&#xa;            }&#xa;        }&#xa;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -583,7 +597,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnPanelLiveticker" max="32767" attributes="0"/>
                   <Component id="jSeparator8" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jScrollPane3" alignment="0" pref="996" max="32767" attributes="0"/>
+                  <Component id="jScrollPane3" alignment="0" pref="978" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
@@ -593,7 +607,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator8" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="439" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="528" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -615,7 +629,7 @@
                           <Component id="btnRemoveTickerElt" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jSeparator7" alignment="0" pref="996" max="32767" attributes="0"/>
+                      <Component id="jSeparator7" alignment="0" pref="978" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
@@ -690,6 +704,9 @@
                     <Property name="showHorizontalLines" type="boolean" value="false"/>
                     <Property name="showVerticalLines" type="boolean" value="false"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableLiveTickerMouseClicked"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableLiveticker.getColumnModel().getColumn(0).setMaxWidth(48);&#xa;jTableLiveticker.getColumnModel().getColumn(0).setMinWidth(48);&#xa;jTableLiveticker.getColumnModel().getColumn(0).setResizable(false);"/>
                   </AuxValues>

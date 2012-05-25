@@ -29,12 +29,13 @@ public class FileManagerTableModel extends AbstractTableModel {
 	private PreferencesHandler preferencesHandler;
 	private LinkedList<MediaFile> mediaFiles;
 	private String[] columnNames = {"", "", "Name", "Priority", "Type", "Show At"};
+	private ManagerFrame managerFrame;
 	
-    public FileManagerTableModel() {
+    public FileManagerTableModel(ManagerFrame managerFrame) {
         super();
         mediaHandler = MediaHandler.getInstance();
         mediaFiles = mediaHandler.getMediaFiles();
-        
+        this.managerFrame = managerFrame;
         preferencesHandler = PreferencesHandler.getInstance();
                 
     }
@@ -72,7 +73,7 @@ public class FileManagerTableModel extends AbstractTableModel {
     		type = "undefined";
     	}
     	
-    	//TODO in case 0 und 1 sollten Icons gerendert werden anstatt Textzeichen
+    	
 	    switch (columnIndex) {
 	    case 0:
 	    	if(rowObject.getStatus().getIsCurrent()) {
@@ -110,15 +111,15 @@ public class FileManagerTableModel extends AbstractTableModel {
 			mediaFiles.get(row).setName(val.toString());
 		}
     	if(column == 3) {
-    		
-    		//TODO prevent user from changing prio of current file
-    		if(preferencesHandler.searchForPriority(val.toString()) != null) {
-    			mediaFiles.get(row).setPriority(preferencesHandler.searchForPriority(val.toString()));
-    		} else {
-    			mediaFiles.get(row).setPriority(Constants.DEFAULT_PRIORITY);
+    		if(!mediaFiles.get(row).getStatus().getIsCurrent()) {
+    			if(preferencesHandler.searchForPriority(val.toString()) != null) {
+        			mediaFiles.get(row).setPriority(preferencesHandler.searchForPriority(val.toString()));
+        		} else {
+        			mediaFiles.get(row).setPriority(Constants.DEFAULT_PRIORITY);
+        		}
     		}
-    		
     	}
+    	managerFrame.onSelectionChangeJtableFile();
     }
     
     @Override

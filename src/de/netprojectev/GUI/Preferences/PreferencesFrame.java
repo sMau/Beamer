@@ -6,12 +6,17 @@ package de.netprojectev.GUI.Preferences;
 
 import java.awt.FileDialog;
 import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
+import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
+
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -58,10 +63,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelTabMain = new javax.swing.JPanel();
         jButtonReset = new javax.swing.JButton();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
         jLabelTickerSpeed = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
+        jLabel1 = new javax.swing.JLabel();
+        jTextFieldPreviewWidth = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
         jPanelTabPrio = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListPrio = new javax.swing.JList();
@@ -85,6 +91,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         btnAddTheme = new javax.swing.JButton();
         btnRemoveTheme = new javax.swing.JButton();
         jButtonChooseBgImage = new javax.swing.JButton();
+        jPanelThemeslideCreator = new javax.swing.JPanel();
         jButtonCancelPrefs = new javax.swing.JButton();
         jButtonApplyPrefs = new javax.swing.JButton();
 
@@ -92,15 +99,20 @@ public class PreferencesFrame extends javax.swing.JFrame {
         setTitle("Preferences");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
 
-        jButtonReset.setText("Reset Data");
-
-        jCheckBox1.setText("Load always on start");
-        jCheckBox1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-
-        jCheckBox2.setText("Save always on close");
-        jCheckBox2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonReset.setText("Reset all data");
+        jButtonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonResetActionPerformed(evt);
+            }
+        });
 
         jLabelTickerSpeed.setText("Ticker Speed");
+
+        jLabel1.setText("Preview width");
+
+        jTextFieldPreviewWidth.setText(Integer.toString(preferenceshandler.getPreviewWidth()));
+
+        jLabel3.setText("px");
 
         javax.swing.GroupLayout jPanelTabMainLayout = new javax.swing.GroupLayout(jPanelTabMain);
         jPanelTabMain.setLayout(jPanelTabMainLayout);
@@ -112,29 +124,35 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonReset))
-                    .addComponent(jCheckBox2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jCheckBox1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanelTabMainLayout.createSequentialGroup()
-                        .addComponent(jLabelTickerSpeed)
+                        .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelTickerSpeed)
+                            .addComponent(jLabel1))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 194, Short.MAX_VALUE)))
+                        .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelTabMainLayout.createSequentialGroup()
+                                .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel3)))
+                        .addGap(0, 186, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelTabMainLayout.setVerticalGroup(
             jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCheckBox1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jCheckBox2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(33, 33, 33)
                 .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelTabMainLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabelTickerSpeed)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
                 .addComponent(jButtonReset)
                 .addContainerGap())
         );
@@ -187,24 +205,23 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
                     .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(jPanelTabPrioLayout.createSequentialGroup()
-                                    .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel2)
-                                        .addComponent(jLabelPrioName))
-                                    .addGap(23, 23, 23)
-                                    .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addComponent(jButtonPrioSave))
                             .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                                 .addComponent(btnAddPrio)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnRemovePrio)))
-                        .addGap(0, 137, Short.MAX_VALUE)))
+                                .addComponent(btnRemovePrio))
+                            .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                                .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabelPrioName, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(56, 56, 56)
+                                .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButtonPrioSave))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelTabPrioLayout.setVerticalGroup(
@@ -220,11 +237,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonPrioSave)
-                        .addGap(18, 18, 18)
+                        .addGap(12, 12, 12)
+                        .addComponent(jButtonPrioSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemovePrio, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddPrio, javax.swing.GroupLayout.Alignment.TRAILING)))
@@ -247,7 +264,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jLabelThemeName.setText("Name");
 
         jLabelThemeBg.setText("Background");
-
 
         btnSaveTheme.setText("Save");
         btnSaveTheme.addActionListener(new java.awt.event.ActionListener() {
@@ -296,18 +312,16 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnRemoveTheme))
                             .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btnSaveTheme)
-                                    .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                                        .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabelThemeName)
-                                            .addComponent(jLabelThemeBg))
-                                        .addGap(23, 23, 23)
-                                        .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jTextFieldThemeBgImg)
-                                            .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))))
+                                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelThemeName)
+                                    .addComponent(jLabelThemeBg))
+                                .addGap(23, 23, 23)
+                                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldThemeBgImg))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonChooseBgImage)))
+                                .addComponent(jButtonChooseBgImage))
+                            .addComponent(btnSaveTheme))
                         .addGap(0, 38, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -325,19 +339,32 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addComponent(jLabelThemeBg)
                             .addComponent(jTextFieldThemeBgImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonChooseBgImage))
-                        .addGap(11, 11, 11)
-                        .addComponent(btnSaveTheme)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnSaveTheme, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemoveTheme, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddTheme, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Theme", jPanelTabTheme);
+
+        javax.swing.GroupLayout jPanelThemeslideCreatorLayout = new javax.swing.GroupLayout(jPanelThemeslideCreator);
+        jPanelThemeslideCreator.setLayout(jPanelThemeslideCreatorLayout);
+        jPanelThemeslideCreatorLayout.setHorizontalGroup(
+            jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 528, Short.MAX_VALUE)
+        );
+        jPanelThemeslideCreatorLayout.setVerticalGroup(
+            jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 316, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("Themeslide Creator", jPanelThemeslideCreator);
 
         jButtonCancelPrefs.setText("Cancel");
         jButtonCancelPrefs.addActionListener(new java.awt.event.ActionListener() {
@@ -368,12 +395,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelPrefs)
                     .addComponent(jButtonApplyPrefs))
-                .addGap(0, 14, Short.MAX_VALUE))
+                .addGap(0, 5, Short.MAX_VALUE))
         );
 
         pack();
@@ -422,7 +449,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
         		for(int i = 0; i < preferenceshandler.getListOfPriorities().size(); i++) {
         			
         			if(preferenceshandler.getListOfPriorities().get(i).getName().equals(jTextFieldPrioName.getText())) {
-        				System.out.println("if reached");
         				alreadyExists = true;
         			}
 
@@ -433,13 +459,20 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 	preferenceshandler.addPriority(newPriority);
                 	jListPrio.setSelectedIndex(preferenceshandler.getListOfPriorities().size() - 1);
         		} else {
-        			// TODO Error Dialog
+        			JOptionPane.showMessageDialog(this, "A priority with this name already exists.", "Error", JOptionPane.ERROR_MESSAGE);
         		}
         		
         	}
     	} else { //Editing the selected Priority
-    		selectedPrio.setName(jTextFieldPrioName.getText());
-    		selectedPrio.setMinutesToShow(Integer.parseInt(jTextFieldPrioMin.getText()));
+    		if(!selectedPrio.getName().equals(preferenceshandler.getListOfPriorities().get(0).getName())) {
+    			selectedPrio.setName(jTextFieldPrioName.getText());
+    			try {
+        			if(!jTextFieldPrioMin.getText().isEmpty()) {
+        				selectedPrio.setMinutesToShow(Integer.parseInt(jTextFieldPrioMin.getText()));
+        			}
+    			} catch (NumberFormatException e) {
+    			}
+    		}
     		preferenceshandler.refreshPrioListModel();
     	}
     	
@@ -452,8 +485,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void btnRemovePrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemovePrioActionPerformed
-        int[] selectedIndices = jListPrio.getSelectedIndices();
-    	preferenceshandler.removePriorities(Misc.indexListToPriorities(selectedIndices));
+        
+    	int[] selectedIndices = jListPrio.getSelectedIndices();
+    	if(selectedIndices.length > 0) {
+    		preferenceshandler.removePriorities(Misc.indexListToPriorities(selectedIndices));
+    	}
     	
     }//GEN-LAST:event_btnRemovePrioActionPerformed
 
@@ -462,8 +498,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jButtonApplyPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyPrefsActionPerformed
-        
-    	//TODO die unter main gesetzten booleans speichern
+
+    	try {
+    		if(Integer.parseInt(jTextFieldPreviewWidth.getText()) != preferenceshandler.getPreviewWidth()) {
+    			preferenceshandler.setPreviewWidth(Integer.parseInt(jTextFieldPreviewWidth.getText()));
+    		}
+    	} catch (NumberFormatException e) {
+    		//e.printStackTrace();
+    	}
+        	
+    	
+    	
     	dispose();
     }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
 
@@ -509,16 +554,16 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 	preferenceshandler.addTheme(newTheme);
                 	jListTheme.setSelectedIndex(preferenceshandler.getListOfThemes().size() - 1);
         		} else {
-        			// TODO Error Dialog
-        		}
+        			JOptionPane.showMessageDialog(this, "A theme with this name already exists.", "Error", JOptionPane.ERROR_MESSAGE);        		}
         		
         	}
     	} else { //Editing the selected Theme
+    		//TODO Filtering for image files (maybe better in the filedialog)
     		selectedTheme.setName(jTextFieldThemeName.getText());
     		if(selectedImage.exists()) {
     			selectedTheme.setBackgroundImage(selectedImage);	
     		} else {
-    			//TODO Error Dialog
+    			JOptionPane.showMessageDialog(this, "File cannot be found on the hard disk.", "Error", JOptionPane.ERROR_MESSAGE);
     		}
     		preferenceshandler.refreshThemeListModel();
     	}
@@ -532,16 +577,50 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void btnRemoveThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveThemeActionPerformed
     	
     	int[] selectedIndices = jListTheme.getSelectedIndices(); 	
-     	preferenceshandler.removeThemes(Misc.indexListToThemes(selectedIndices));
-     	
+    	if(selectedIndices.length > 0) {
+    		preferenceshandler.removeThemes(Misc.indexListToThemes(selectedIndices));
+    	}
     }//GEN-LAST:event_btnRemoveThemeActionPerformed
+
+    private void jButtonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonResetActionPerformed
+    	 int exit = JOptionPane.showConfirmDialog(this, "Are you sure you want to reset all data?", "Reset", JOptionPane.YES_NO_OPTION);
+         if (exit == JOptionPane.YES_OPTION) {	
+         	
+     		File[] allFiles = new File(Constants.SAVE_PATH).listFiles();
+     		if(allFiles != null) {
+     			for(int i = 0; i < allFiles.length; i++) {
+     				if(!allFiles[i].isDirectory()) {
+     					allFiles[i].delete();
+     				}
+         		}
+     			 int exit2 = JOptionPane.showConfirmDialog(this, "All data have been reset sucessfully.\nThe program have to be restarted. Do you want to restart now?", "Data reset", JOptionPane.YES_NO_OPTION);
+     			 if(exit2 == JOptionPane.YES_OPTION) {
+     				 try {
+						Misc.restartApplication();
+					} catch (URISyntaxException e) {
+						
+						e.printStackTrace();
+					} catch (IOException e) {
+						
+						e.printStackTrace();
+					}
+     			 }
+     		} else {
+     			JOptionPane.showMessageDialog(this,
+     				    "Error while deleting files.",
+     				    "Error",
+     				    JOptionPane.ERROR_MESSAGE);
+     		}
+     		
+         }
+
+    }//GEN-LAST:event_jButtonResetActionPerformed
 
     /**
      * on selection change, updates the name and background image fields
      */
 	private void listThemeSelectionChanged() {
 		int viewRow = jListTheme.getSelectedIndex();
-		System.out.println(viewRow);
 		if(viewRow >= 0) {
 			selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
 			jTextFieldThemeName.setText(selectedTheme.getName());
@@ -553,7 +632,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	 * on selection change, updates the name and minutes fields
 	 */
 	private void listPrioritySelectionChanged() {
-		int viewRow = jListTheme.getSelectedIndex();
+		int viewRow = jListPrio.getSelectedIndex();
 		if(viewRow >= 0) {
 		    selectedPrio = preferenceshandler.getListOfPriorities().get(viewRow);
 		    jTextFieldPrioName.setText(selectedPrio.getName());
@@ -614,9 +693,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonChooseBgImage;
     private javax.swing.JButton jButtonPrioSave;
     private javax.swing.JButton jButtonReset;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelPrioName;
     private javax.swing.JLabel jLabelThemeBg;
     private javax.swing.JLabel jLabelThemeName;
@@ -626,12 +705,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelTabMain;
     private javax.swing.JPanel jPanelTabPrio;
     private javax.swing.JPanel jPanelTabTheme;
+    private javax.swing.JPanel jPanelThemeslideCreator;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextFieldPreviewWidth;
     private javax.swing.JTextField jTextFieldPrioMin;
     private javax.swing.JTextField jTextFieldPrioName;
     private javax.swing.JTextField jTextFieldThemeBgImg;

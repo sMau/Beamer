@@ -19,6 +19,7 @@ public abstract class MediaFile implements Serializable {
 	protected String name;
 	protected transient Status status;
 	protected Priority priority;
+	protected Boolean corrupted;
 	
 	protected transient DisplayMainFrame display;
 	
@@ -32,6 +33,7 @@ public abstract class MediaFile implements Serializable {
 		this.name = name;
 		this.status = new Status();
 		this.priority = priority;
+		this.corrupted = false;
 		this.display = DisplayDispatcher.getInstance().getDisplayFrame();
 
 	}
@@ -51,49 +53,57 @@ public abstract class MediaFile implements Serializable {
 		String wasShowed;
 		String showAt;
 		
-		if(this instanceof VideoFile) {
-			type = "Video";
-		} else if(this instanceof ImageFile) {
-			type = "Image";
-		} else if(this instanceof Themeslide) {
-			type = "Themeslide";
-		} else {
-			type = "undefined";
-		}
-		
-		if(this.getStatus().getIsCurrent()) {
-			current = "yes";
-		} else {
-			current = "no";
-		}
-		
-		if(this.getStatus().getWasShowed()) {
-			wasShowed = "yes";
-		} else {
-			wasShowed = "no";
-		}
-		
-		if(this.getStatus().getShowAt() != null) {
-			if(this.getStatus().getShowAt().after(new Date())) {
-				showAt = this.getStatus().getShowAt().toString();
+		if(!corrupted) {
+			if(this instanceof VideoFile) {
+				type = "Video";
+			} else if(this instanceof ImageFile) {
+				type = "Image";
+			} else if(this instanceof Themeslide) {
+				type = "Themeslide";
+			} else {
+				type = "undefined";
+			}
+			
+			if(this.getStatus().getIsCurrent()) {
+				current = "yes";
+			} else {
+				current = "no";
+			}
+			
+			if(this.getStatus().getWasShowed()) {
+				wasShowed = "yes";
+			} else {
+				wasShowed = "no";
+			}
+			
+			if(this.getStatus().getShowAt() != null) {
+				if(this.getStatus().getShowAt().after(new Date())) {
+					showAt = this.getStatus().getShowAt().toString();
+				} else {
+					showAt = "-";
+				}
 			} else {
 				showAt = "-";
 			}
+			
+			
+			info =	"Name: " + name + "\n" +
+					"Type: " + type + "\n" +
+					"Priority: " + this.priority.getName() + " / " + this.priority.getMinutesToShow() + " min" + "\n" +
+					"Already showed: " + wasShowed + "\n" +
+					"Current: " + current + "\n" + 
+					"Show at: " + showAt;
+			
 		} else {
-			showAt = "-";
+			info = "The file is corrupted or maybe was moved.";
 		}
-		
-		
-		info =	"Name: " + name + "\n" +
-				"Type: " + type + "\n" +
-				"Priority: " + this.priority.getName() + " / " + this.priority.getMinutesToShow() + " min" + "\n" +
-				"Already showed: " + wasShowed + "\n" +
-				"Current: " + current + "\n" + 
-				"Show at: " + showAt;
-		
 		return info;
 	}
 
+	public void resetPlayedState() {
+		this.status.setWasShowed(false);
+	}
+	
 	public String getName() {
 		return name;
 	}

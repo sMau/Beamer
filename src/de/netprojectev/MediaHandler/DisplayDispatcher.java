@@ -9,7 +9,7 @@ import de.netprojectev.GUI.Display.DisplayMainFrame;
  */
 public class DisplayDispatcher {
 
-	private static DisplayDispatcher instance = null;
+	private static volatile DisplayDispatcher instance = null;
 	
 	private DisplayMainFrame displayFrame;
 	
@@ -17,7 +17,7 @@ public class DisplayDispatcher {
 				
 	}
 	
-	public static DisplayDispatcher getInstance() {
+	public static synchronized DisplayDispatcher getInstance() {
 		
 		if(instance == null) {
 			instance = new DisplayDispatcher();

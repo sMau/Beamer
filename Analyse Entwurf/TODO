@@ -1,44 +1,32 @@
-Tooltips check agagin
-Reselection after basic ops (like up down delete) (propably easy goin in models)
-right click context menus, extending for changeprio and change name, and so on
-move up down via drag n drop
+
+MUST BE
+
+WOULD BE NICE
+show file at gui mapping
+set wasShowed after a given time and not immediately, settable via prefs
+Test the restarting method with a real jar
+Themeslide size configurable, cause of scaling difficult in display unit
+Check every pointer to file system and make them save for moving files.
+assure clean loading (force all singletons to create instances and so on)
+Anchor font family, font size, font color -> presettings
+Themeslide creator font color configurable
+Bordering in Themeslidecreator for better orientation
+BUffered Image and IMage loading with ImageIO (Performance and type safety)
 formatting the timeleft lbl to mm:ss
-autorefreshing infobox and preview box after editing.
-saving and restoring and start and quit
+keylistener v.a. in jtable 
+after themeslide creation suggest to add a ticker elt.
+right click context menus, extending for changeprio and change name, and so on
+Tooltips check agagin
 mouse resizable preview window
 "big" preview window as "popup" own frame
-after themeslide creation suggest to add a ticker elt.
-keylistener v.a. in jtable 
-up down move, change algo that files wont glue together anymore automatically
-FileChoosing "recently" not working -> nullpointer, check if can be excluded
+move up down via drag n drop
+Move to Top move to BOttom methods
+File filter for background image in theme and files: images videos
+reselection after editing
+Filemanger Table model in case 0 und 1 sollten Icons gerendert werden anstatt Textzeichen (playstatus)
+Postioning of dialogs not mousespecific but parent centered
 
-after setting the background image in preferences of theme, resizing fix
-
-Bordering in Themeslidecreator for better orientation
+BUGS
 Anchor in themeslidecreation resets after resizing
-BUffered Image and IMage loading with ImageIO
-
-PrioListe
-
--Themeslide creation (beta state ready), color would be good to be added
--Displaying Unit
-	Images
-	Themeslides
-	LiveTicker
--Serialisierung
--Bugfixing and points above
--assure clean loading (force all singletons to create instances and so on)
--new preview creating after resizing window to fit new size
-
-!!!Themeslide size configurable, cause of scaling difficult in display unit
-!!!Check every pointer to file system and make them save for moving files.
-!!!Priority List in preferences on selection happens nothing
-
-Live TIcker serialization
-
-Preferences
-
-Anchor font family, font size, font color -> presettings
-
-DOKU
--Mediahandler package
+FileChoosing "recently" not working -> nullpointer, check if can be excluded
+after setting the background image in preferences of theme, resizing fix

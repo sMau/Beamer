@@ -11,7 +11,7 @@ import de.netprojectev.Media.Priority;
  */
 public class Constants {
 
-	//public static final Priority DEFAULT_PRIORITY = new Priority("default", 5); //echte Default Priority
+	//public static final Priority DEFAULT_PRIORITY = new Priority("default", 3); //echte Default Priority
 	public static final Priority DEFAULT_PRIORITY = new Priority("default", 1); //for testing
 	public static final int DEFAULT_AUTOMODUSTIMING_5MINUTES = 300000;
 	
@@ -19,7 +19,7 @@ public class Constants {
 	
 	public static final int DEFAULT_TICKER_SPEED = 50;
 	
-	public static final int DEFAULT_SCALE_WIDTH = 640;
+	public static final int DEFAULT_PREVIEW_SCALE_WIDTH = 640;
 	
 	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 	
@@ -31,5 +31,6 @@ public class Constants {
 	public static final String FILENAME_PRIORITIES = "priorities.brm";
 	public static final String FILENAME_THEMES = "themes.brm";
 	public static final String FILENAME_SETTINGS = "settings.brm";
+	public static final String FILENAME_LIVETICKER = "ticker.brm";
 
 }

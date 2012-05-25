@@ -1,14 +1,11 @@
-package de.netprojectev.Tests;
+package de.netprojectev.Main;
 
 import de.netprojectev.GUI.Manager.ManagerFrame;
 
-public class TestJTable {
-	
+public class Starter {
+
 	/**
 	 * @param args
-	 * 
-	 * Test class to start main frame
-	 * 
 	 */
 	public static void main(String[] args) {
 		try {
@@ -18,5 +15,7 @@ public class TestJTable {
             System.out.println(e);
         }
 		new ManagerFrame().setVisible(true);
+
 	}
+
 }

@@ -116,9 +116,31 @@ public class DisplayHandler {
 	 * @param files files to add
 	 */
 	public void add(MediaFile[] files) {
-
-		//TODO if shuffling is enabled, new files also have to be shuffled in an adequat way
 		
+		if(isShufflingEnabled) {
+			LinkedList<MediaFile> tmpListToAdd = new LinkedList<MediaFile>();
+			LinkedList<MediaFile> tmpListToRemove = new LinkedList<MediaFile>();
+			for (int i = 0; i < files.length; i++) {
+				if (!playingFiles.contains(files[i])) {
+					tmpListToAdd.add(files[i]);
+				}
+			}
+			for (int i = 0; i < playingFiles.size(); i++) {
+				if(!playingFiles.get(i).getStatus().getWasShowed()) {
+					tmpListToAdd.add(playingFiles.get(i));
+					tmpListToRemove.add(playingFiles.get(i));
+				}
+			}
+			
+			for(int i = 0; i < tmpListToRemove.size(); i++) {
+				playingFiles.remove(tmpListToRemove.get(i));
+			}
+			
+			Collections.shuffle(tmpListToAdd);
+			for(int i = 0; i < tmpListToAdd.size(); i++) {
+				playingFiles.addFirst((tmpListToAdd.get(i)));
+			}
+		}	
 		for (int i = 0; i < files.length; i++) {
 			if (!playingFiles.contains(files[i])) {
 				playingFiles.add(files[i]);
@@ -248,8 +270,6 @@ public class DisplayHandler {
 	public void startShuffle() {
 		isShufflingEnabled = true;
 		shuffleList();
-		
-		//TODO evtl. currentFile als erstes Elt. der Liste playingfiles setzen
 	}
 	
 	/**
@@ -290,10 +310,11 @@ public class DisplayHandler {
 			
 			refreshTimeLeftTimer.cancel();
 			refreshTimeLeftTimer.purge();
-			
-			automodusTimer = new Timer();
-			refreshTimeLeftTimer = new Timer();
+
 		} 
+		
+		automodusTimer = new Timer();
+		refreshTimeLeftTimer = new Timer();
 		
 		isAutomodeEnabled = true;
 		
@@ -302,7 +323,6 @@ public class DisplayHandler {
 			if(currentMediaFile instanceof ImageFile) {
 				
 				ImageFile currentImageFile = (ImageFile) currentMediaFile;
-				//TODO throwed once a illegal state exc. cause timer were cancelled already before
 				automodusTimer.schedule(new AutomodusTimer(), currentImageFile.getPriority().getMinutesToShow()*1000*60);
 				timeleft = currentImageFile.getPriority().getMinutesToShow()*60;
 				refreshTimeLeftTimer.schedule(new RefreshTimeleftTimer(), 0, 1000);

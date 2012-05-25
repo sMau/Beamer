@@ -10,9 +10,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.LiveTicker.TickerTextElement;
+import de.netprojectev.Main.Starter;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Priority;
@@ -67,7 +72,6 @@ public class Misc {
 		return mediaFiles;
 	}
 	
-	//TODO generic implemenation for these two methodes
 	/**
 	 * 
 	 * @param selectedIndices index array identifiying priorities in the preferences handler
@@ -86,7 +90,6 @@ public class Misc {
 		return priorities;
 	}
 	
-	//second method for generic implementation
 	/**
 	 * 
 	 * @param selectedIndices index array identifiying themes in the preferences handler
@@ -164,8 +167,7 @@ public class Misc {
 		String path = Constants.SAVE_PATH;
 		
 		if(filename.isEmpty() || filename == null) {		
-			filename = "undefined.bmr";
-			//TODO Error dialog
+			JOptionPane.showMessageDialog(null, "Error while saving files.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 		if(!new File(path).exists()) {
@@ -178,8 +180,7 @@ public class Misc {
 			o.writeObject(toSave);
 			o.close();
 		} catch (IOException e) {
-			e.printStackTrace();
-			//TODO Error Dialog
+			JOptionPane.showMessageDialog(null, "Error while saving files.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -203,10 +204,10 @@ public class Misc {
 				
 			} catch (IOException e) {
 				e.printStackTrace();
-				//TODO Error Dialog
+				JOptionPane.showMessageDialog(null, "Error while loading files.", "Error", JOptionPane.ERROR_MESSAGE);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
-				//TODO Error Dialog
+				JOptionPane.showMessageDialog(null, "Error while loading files.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 
 			return fileToLoad;
@@ -216,5 +217,50 @@ public class Misc {
 		
 		
 	}
+	
+	/**
+	 * Converts seconds to a formatted String showing minutes and seconds sperated by ":"
+	 * @param seconds seconds to convert
+	 * @return a formatted string like mm:ss
+	 */
+	public static synchronized String convertFromSecondsToTimeString(int seconds) {
+
+		int minutes = seconds / 60;
+		String minutesString = Integer.toString(minutes);
+		if(minutesString.length() == 1) {
+			minutesString = "0" + minutesString;
+		}
+		
+		int secondsLeft = seconds % 60;
+		String secondsLeftString = Integer.toString(secondsLeft);
+		if(secondsLeftString.length() == 1) {
+			secondsLeftString = "0" + secondsLeftString;
+		}
+		
+		return minutesString + ":" + secondsLeftString;
+	}
+	
+	
+	
+	public static void restartApplication() throws URISyntaxException,
+			IOException {
+		final String javaBin = System.getProperty("java.home") + File.separator
+				+ "bin" + File.separator + "java";
+		final File currentJar = new File(Starter.class.getProtectionDomain()
+				.getCodeSource().getLocation().toURI());
+
+		if (!currentJar.getName().endsWith(".jar"))
+			return;
+
+		final ArrayList<String> command = new ArrayList<String>();
+		command.add(javaBin);
+		command.add("-jar");
+		command.add(currentJar.getPath());
+		final ProcessBuilder builder = new ProcessBuilder(command);
+		builder.start();
+		System.exit(0);
+	}
+	
+
 
 }

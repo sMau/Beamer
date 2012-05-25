@@ -12,6 +12,8 @@ import de.netprojectev.Misc.Constants;
  */
 public class VideoFile extends MediaFile {
 
+	//TODO class not used yet
+	
 	private static final long serialVersionUID = 2281243056699366253L;
 	private String path;
 	private int length;
@@ -23,14 +25,14 @@ public class VideoFile extends MediaFile {
 	 */
 	public VideoFile(String name, String path) {
 		
-		super(name, Constants.DEFAULT_PRIORITY); //TODO Implement a Default Video Priority with minutesToShow = video.length
+		super(name, Constants.DEFAULT_PRIORITY);
 		this.path = path;
 		this.length = generateVideoLength();
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
+		
 		System.out.println("Show file: " + path + "   " + new Date());
 		
 	}
@@ -38,7 +40,7 @@ public class VideoFile extends MediaFile {
 	@Override
 	public String generateInfoString() {
 		
-		//TODO implementing differnt info, cause of video length usw.
+		
 		
 		
 		return super.generateInfoString();
@@ -46,7 +48,7 @@ public class VideoFile extends MediaFile {
 	
 	private int generateVideoLength() {
 		
-		//TODO Video Länge aus Datei auslesen.
+		
 		
 		return 5000;
 	}
