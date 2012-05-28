@@ -1308,7 +1308,6 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JToggleButton toogleBtnAuto;
     // End of variables declaration//GEN-END:variables
 
-    
 	public javax.swing.JTable getjTableFileManager() {
 		return jTableFileManager;
     }
