@@ -1,10 +1,11 @@
 
 MUST BE
-add ticker elt main menu
 
 themeslide info in table with theme instead of "themeslide"
 windows filedialog -> filechooser
 
+
+think about switching from native gui to nimbus(like standard netbeans testing imlementation)
 
 WOULD BE NICE
 
