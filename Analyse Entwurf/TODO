@@ -1,11 +1,10 @@
 
 MUST BE
 
-themeslide info in table with theme instead of "themeslide"
 windows filedialog -> filechooser
 
 
-think about switching from native gui to nimbus(like standard netbeans testing imlementation)
+think about switching from native gui to nimbus(like standard netbeans testing implementation)
 
 WOULD BE NICE
 

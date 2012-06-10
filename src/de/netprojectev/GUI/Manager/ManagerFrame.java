@@ -4,7 +4,6 @@
  */
 package de.netprojectev.GUI.Manager;
 
-import java.awt.FileDialog;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -87,6 +86,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         jMenuItemAddTickerEltP = new javax.swing.JMenuItem();
         jMenuItemEditTickerEltP = new javax.swing.JMenuItem();
         jMenuItemRemoveTickerEltP = new javax.swing.JMenuItem();
+        jFileChooser = new javax.swing.JFileChooser();
         jTabbedPane = new javax.swing.JTabbedPane();
         filemangerPanel = new javax.swing.JPanel();
         btnPanelFile = new javax.swing.JPanel();
@@ -209,6 +209,15 @@ public class ManagerFrame extends javax.swing.JFrame {
             }
         });
         jPopupMenuTickerTable.add(jMenuItemRemoveTickerEltP);
+
+        jFileChooser.setApproveButtonText("Load");
+        jFileChooser.setDialogTitle("Load Files");
+        jFileChooser.setMultiSelectionEnabled(true);
+        jFileChooser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFileChooserActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Beamermanager");
@@ -699,14 +708,13 @@ public class ManagerFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jMenuItemAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddFileActionPerformed
-    	FileDialog fd;
-    	fd = new FileDialog(this, "Load files", FileDialog.LOAD);
-		fd.setMultipleMode(true);
-		fd.setDirectory(System.getProperty("user.home"));
-		fd.setLocation(Misc.currentMousePosition());
-		fd.setVisible(true);
-		MediaHandler.getInstance().add(Misc.createMediaFromFiles(fd.getFiles()));
+    	openFileChooser();
     }//GEN-LAST:event_jMenuItemAddFileActionPerformed
+
+	private void openFileChooser() {
+		//TODO apply filters for image files, and later for videos
+		jFileChooser.showOpenDialog(this);
+	}
 
     /**
      * opening the themeslide creator
@@ -866,26 +874,22 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void jMenuItemAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddTickerEltActionPerformed
     	addTickerElement();
     }//GEN-LAST:event_jMenuItemAddTickerEltActionPerformed
+
+    private void jFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserActionPerformed
+    	MediaHandler.getInstance().add(Misc.createMediaFromFiles(jFileChooser.getSelectedFiles()));
+    }//GEN-LAST:event_jFileChooserActionPerformed
     
     /**
      * opens a dialog to choose between adding a file from disk or a themeslide
      */
 	private void addFileGeneral() {
-		
-		FileDialog fd;
-		
         Object[] options = {"File", "Themeslide", "Cancel"};
 		int n = JOptionPane.showOptionDialog(this,"Choose to add a file or a themeslide.", "Add File / Themeslide", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
 					null,
 					options,
 					options[0]);
 		if(n == JOptionPane.YES_OPTION) {
-			fd = new FileDialog(this, "Load files", FileDialog.LOAD);
-			fd.setMultipleMode(true);
-			fd.setDirectory(System.getProperty("user.home"));
-			fd.setLocation(Misc.currentMousePosition());
-			fd.setVisible(true);
-			MediaHandler.getInstance().add(Misc.createMediaFromFiles(fd.getFiles()));
+			openFileChooser();
 		} else if(n == JOptionPane.NO_OPTION) {
 			new ThemeslideCreatorFrame().setVisible(true);
 		}
@@ -1273,6 +1277,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnSet;
     private javax.swing.JButton btnUp;
     private javax.swing.JPanel filemangerPanel;
+    private javax.swing.JFileChooser jFileChooser;
     private javax.swing.JLabel jLabelPreview;
     private javax.swing.JMenuBar jMenuBarMainFrame;
     private javax.swing.JMenu jMenuFile;

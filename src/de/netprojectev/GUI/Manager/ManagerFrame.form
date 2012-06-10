@@ -103,6 +103,16 @@
         </MenuItem>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JFileChooser" name="jFileChooser">
+      <Properties>
+        <Property name="approveButtonText" type="java.lang.String" value="Load"/>
+        <Property name="dialogTitle" type="java.lang.String" value="Load Files"/>
+        <Property name="multiSelectionEnabled" type="boolean" value="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jFileChooserActionPerformed"/>
+      </Events>
+    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBarMainFrame">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenuFile">
