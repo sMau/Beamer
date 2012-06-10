@@ -562,6 +562,11 @@ public class ManagerFrame extends javax.swing.JFrame {
         jMenuFile.add(jMenuItemAddThemeslide);
 
         jMenuItemAddTickerElt.setText("Add Ticker Element");
+        jMenuItemAddTickerElt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAddTickerEltActionPerformed(evt);
+            }
+        });
         jMenuFile.add(jMenuItemAddTickerElt);
 
         jMenuItemAddCntDwn.setText("Add Countdown");
@@ -857,6 +862,10 @@ public class ManagerFrame extends javax.swing.JFrame {
     	}
     	((FileManagerTableModel) jTableFileManager.getModel()).updateModel();
     }//GEN-LAST:event_jMenuItemResetAllPlayedStatesActionPerformed
+
+    private void jMenuItemAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddTickerEltActionPerformed
+    	addTickerElement();
+    }//GEN-LAST:event_jMenuItemAddTickerEltActionPerformed
     
     /**
      * opens a dialog to choose between adding a file from disk or a themeslide

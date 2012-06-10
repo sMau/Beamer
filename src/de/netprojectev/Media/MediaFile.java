@@ -59,7 +59,8 @@ public abstract class MediaFile implements Serializable {
 			} else if(this instanceof ImageFile) {
 				type = "Image";
 			} else if(this instanceof Themeslide) {
-				type = "Themeslide";
+				
+				type = "Themeslide / " + ((Themeslide) this).getTheme().getName();
 			} else {
 				type = "undefined";
 			}
