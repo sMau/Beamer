@@ -16,7 +16,7 @@ import de.netprojectev.Misc.Constants;
  */
 public class LiveTicker {
 
-	private static volatile LiveTicker instance;
+	private static LiveTicker instance = new LiveTicker();
 	
 	private ManagerFrame managerFrame;
 	
@@ -36,7 +36,7 @@ public class LiveTicker {
 			
 	}
 	
-	public static synchronized LiveTicker getInstance() {
+	public static LiveTicker getInstance() {
 		
 		if(instance == null) {
 			instance = new LiveTicker();

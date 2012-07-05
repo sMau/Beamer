@@ -19,7 +19,7 @@ import de.netprojectev.Misc.Constants;
  */
 public class PreferencesHandler {
 
-	private static volatile PreferencesHandler instance;
+	private static PreferencesHandler instance = new PreferencesHandler();
 	
 	private PreferencesFrame preferencesFrame;
 	private ManagerFrame managerFrame;
@@ -43,7 +43,7 @@ public class PreferencesHandler {
 		
 	}
 	
-	public static synchronized PreferencesHandler getInstance() {
+	public static PreferencesHandler getInstance() {
 		
 		if(instance == null) {
 			instance = new PreferencesHandler();

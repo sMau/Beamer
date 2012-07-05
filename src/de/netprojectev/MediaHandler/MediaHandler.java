@@ -15,7 +15,7 @@ import de.netprojectev.Media.MediaFile;
 public class MediaHandler {
 
 
-	private static volatile MediaHandler instance = null;
+	private static MediaHandler instance = new MediaHandler();
 
 	private DisplayHandler displayHandler;
 	
@@ -31,7 +31,7 @@ public class MediaHandler {
 		
 	}
 
-	public static synchronized MediaHandler getInstance() {
+	public static MediaHandler getInstance() {
 
 		if (instance == null) {
 			instance = new MediaHandler();
@@ -64,37 +64,43 @@ public class MediaHandler {
 
 	
 	/**
-	 * removes the media files from the list and if necessary invokes updates on the GUI and the display handler.	 * @param files files to remove
+	 * removes the media files from the list and if necessary invokes updates on the GUI and the display handler.	 
+	 * Prevents current file from being removed from the list, to avoid problems with synching to the {@link DisplayHandler}.
 	 * @param files files to remove
 	 */
-	public void remove(MediaFile[] files) {
+	public void remove(MediaFile[] files, boolean removeCurrent) {
 
 		boolean containsCurrentElt = false;
-		MediaFile[] filesWithoutCurrent = files; 
+		MediaFile[] filesToRemove = files; 
 		
-		for (int i = 0; i < files.length; i++) {
-			if(files[i].getStatus().getIsCurrent()) {
-				containsCurrentElt = true;
+		if(!removeCurrent) {
+			for (int i = 0; i < files.length; i++) {
+				if(files[i].getStatus().getIsCurrent()) {
+					containsCurrentElt = true;
+				}
 			}
-		}
-		
-		if(containsCurrentElt) {
-			int counter = 0;
-			filesWithoutCurrent = new MediaFile[files.length - 1];
-			for(int i = 0; i < files.length; i++) {
-				if(!files[i].getStatus().getIsCurrent()) {
-					filesWithoutCurrent[counter] = files[i];
-					counter++;
+			
+			if(containsCurrentElt) {
+				int counter = 0;
+				filesToRemove = new MediaFile[files.length - 1];
+				for(int i = 0; i < files.length; i++) {
+					if(!files[i].getStatus().getIsCurrent()) {
+						filesToRemove[counter] = files[i];
+						counter++;
+					}
 				}
 			}
 		}
-		
-		for (int i = 0; i < files.length; i++) {
-			mediaFiles.remove(filesWithoutCurrent[i]);
+
+		if(filesToRemove.length > 0 && filesToRemove != null) {
+			for (int i = 0; i < filesToRemove.length; i++) {
+				mediaFiles.remove(filesToRemove[i]);
+			}
+			displayHandler.remove(filesToRemove);
+			
+			refreshDataModel();
 		}
-		displayHandler.remove(filesWithoutCurrent);
 		
-		refreshDataModel();
 	}
 	
 	/**
@@ -105,7 +111,7 @@ public class MediaHandler {
 	public void down(MediaFile[] files) {
 
 		int firstIndex = mediaFiles.indexOf(files[files.length - 1]) + 1 - (files.length - 1);
-		remove(files);
+		remove(files, true);
 		if(firstIndex > mediaFiles.size() - 1) {
 			for(int i = 0; i < files.length; i++) {
 				mediaFiles.addLast(files[i]);
@@ -123,14 +129,14 @@ public class MediaHandler {
 	}
 	
 	/**
-	 * The files are shrinked to the one with the smalles index and then moved up one step
+	 * The files are shrinked to the one with the smallest index and then moved up one step
 	 * If necessary a update on the GUI and the display handler is called
 	 * @param files files to move up
 	 */
 	public void up(MediaFile[] files) {
 		
 		int firstIndex = mediaFiles.indexOf(files[0]) - 1;
-		remove(files);
+		remove(files, true);
 		
 		if(firstIndex < 0) {
 			firstIndex = 0;

@@ -1,10 +1,9 @@
 
 MUST BE
 
-windows filedialog -> filechooser
-
-
+Performance fix on changing high res images. shows for a sec a blank screen
 think about switching from native gui to nimbus(like standard netbeans testing implementation)
+Adding ticket elements without "window" simply add ticket elt with "showing false" text "new element"
 
 WOULD BE NICE
 
@@ -29,57 +28,9 @@ File filter for background image in theme and files: images videos
 reselection after editing
 Filemanger Table model in case 0 und 1 sollten Icons gerendert werden anstatt Textzeichen (playstatus)
 Postioning of dialogs not mousespecific but parent centered
+enable disable funktion in medien tabelle beamerprog
 
 BUGS
 Anchor in themeslidecreation resets after resizing
-FileChoosing "recently" not working -> nullpointer, check if can be excluded
 after setting the background image in preferences of theme, resizing fix
-
-
-
-move up down when current
-# java.lang.ArrayIndexOutOfBoundsException: 0
-	at de.netprojectev.MediaHandler.MediaHandler.remove(MediaHandler.java:93)
-	at de.netprojectev.MediaHandler.MediaHandler.down(MediaHandler.java:108)
-	at de.netprojectev.GUI.Manager.ManagerFrame.moveFilesDown(ManagerFrame.java:1069)
-	at de.netprojectev.GUI.Manager.ManagerFrame.btnDownActionPerformed(ManagerFrame.java:641)
-	at de.netprojectev.GUI.Manager.ManagerFrame.access$10(ManagerFrame.java:640)
-	at de.netprojectev.GUI.Manager.ManagerFrame$11.actionPerformed(ManagerFrame.java:236)
-	at javax.swing.AbstractButton.fireActionPerformed(AbstractButton.java:2018)
-	at javax.swing.AbstractButton$Handler.actionPerformed(AbstractButton.java:2341)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(DefaultButtonModel.java:402)
-	at javax.swing.DefaultButtonModel.setPressed(DefaultButtonModel.java:259)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(BasicButtonListener.java:252)
-	at java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:289)
-	at java.awt.Component.processMouseEvent(Component.java:6505)
-	at javax.swing.JComponent.processMouseEvent(JComponent.java:3321)
-	at java.awt.Component.processEvent(Component.java:6270)
-	at java.awt.Container.processEvent(Container.java:2229)
-	at java.awt.Component.dispatchEventImpl(Component.java:4861)
-	at java.awt.Container.dispatchEventImpl(Container.java:2287)
-	at java.awt.Component.dispatchEvent(Component.java:4687)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4832)
-	at java.awt.LightweightDispatcher.processMouseEvent(Container.java:4492)
-	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4422)
-	at java.awt.Container.dispatchEventImpl(Container.java:2273)
-	at java.awt.Window.dispatchEventImpl(Window.java:2719)
-	at java.awt.Component.dispatchEvent(Component.java:4687)
-	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:703)
-	at java.awt.EventQueue.access$000(EventQueue.java:102)
-	at java.awt.EventQueue$3.run(EventQueue.java:662)
-	at java.awt.EventQueue$3.run(EventQueue.java:660)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:76)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:87)
-	at java.awt.EventQueue$4.run(EventQueue.java:676)
-	at java.awt.EventQueue$4.run(EventQueue.java:674)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(ProtectionDomain.java:76)
-	at java.awt.EventQueue.dispatchEvent(EventQueue.java:673)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:244)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:163)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:151)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:147)
-	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:139)
-	at java.awt.EventDispatchThread.run(EventDispatchThread.java:97)
 

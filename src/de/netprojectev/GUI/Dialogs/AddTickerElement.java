@@ -4,7 +4,6 @@
  */
 package de.netprojectev.GUI.Dialogs;
 
-import de.netprojectev.GUI.Manager.FileManagerTableModel;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.GUI.Manager.TickerManagerTableModel;
 import de.netprojectev.LiveTicker.LiveTicker;

@@ -3,8 +3,6 @@ package de.netprojectev.Media;
 import java.io.File;
 import java.io.Serializable;
 
-import javax.swing.ImageIcon;
-
 /**
  * 
  * Datastructure to manage the a theme. Its to be hold by a themeslide, mostly to specifiy the background image.

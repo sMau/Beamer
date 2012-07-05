@@ -5,8 +5,20 @@
 package de.netprojectev.GUI.Manager;
 
 
+import java.awt.Toolkit;
+import java.awt.event.WindowEvent;
+import java.util.LinkedList;
+
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.TableColumn;
+
+import com.explodingpixels.macwidgets.IAppWidgetFactory;
 
 import de.netprojectev.GUI.Dialogs.AddTickerElement;
 import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
@@ -25,15 +37,6 @@ import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
-import java.util.LinkedList;
-
-import javax.swing.DefaultCellEditor;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import javax.swing.table.TableColumn;
 
 /**
  * A GUI class which is the first object to be intialized on program start.
@@ -213,11 +216,6 @@ public class ManagerFrame extends javax.swing.JFrame {
         jFileChooser.setApproveButtonText("Load");
         jFileChooser.setDialogTitle("Load Files");
         jFileChooser.setMultiSelectionEnabled(true);
-        jFileChooser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFileChooserActionPerformed(evt);
-            }
-        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Beamermanager");
@@ -713,7 +711,10 @@ public class ManagerFrame extends javax.swing.JFrame {
 
 	private void openFileChooser() {
 		//TODO apply filters for image files, and later for videos
-		jFileChooser.showOpenDialog(this);
+		int returnVal = jFileChooser.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+        	MediaHandler.getInstance().add(Misc.createMediaFromFiles(jFileChooser.getSelectedFiles()));
+        }
 	}
 
     /**
@@ -874,10 +875,6 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void jMenuItemAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddTickerEltActionPerformed
     	addTickerElement();
     }//GEN-LAST:event_jMenuItemAddTickerEltActionPerformed
-
-    private void jFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooserActionPerformed
-    	MediaHandler.getInstance().add(Misc.createMediaFromFiles(jFileChooser.getSelectedFiles()));
-    }//GEN-LAST:event_jFileChooserActionPerformed
     
     /**
      * opens a dialog to choose between adding a file from disk or a themeslide
@@ -1049,7 +1046,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		final int[] selectedRows = jTableFileManager.getSelectedRows();
 		int newSelection = -1;
         if(selectedRows.length > 0) {
-        	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows));
+        	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows), false);
     		int firstSelectedRow = selectedRows[0];
     		if(firstSelectedRow >= jTableFileManager.getRowCount() - 1) {
     			if(jTableFileManager.getRowCount() == 0) {

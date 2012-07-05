@@ -85,7 +85,7 @@ public class MediaHandlerTest {
 	@Test
 	public void testRemove() {
 
-		this.mediaHandler.remove(testFiles3);
+		this.mediaHandler.remove(testFiles3, true);
 
 		assertEquals(1, mediaHandler.getMediaFiles().size());
 		assertEquals(testFile1, mediaHandler.getMediaFiles().getLast());
@@ -95,7 +95,7 @@ public class MediaHandlerTest {
 	@Test
 	public void testRemove2() {
 	
-		this.mediaHandler.remove(testFiles3);
+		this.mediaHandler.remove(testFiles3, true);
 		
 		assertEquals(testFile1, mediaHandler.getMediaFiles().getFirst());
 

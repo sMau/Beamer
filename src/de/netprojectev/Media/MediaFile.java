@@ -3,8 +3,6 @@ package de.netprojectev.Media;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.swing.ImageIcon;
-
 import de.netprojectev.GUI.Display.DisplayMainFrame;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
 

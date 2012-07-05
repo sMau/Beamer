@@ -102,7 +102,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Themeslide Creator");
 
-        jLabel3.setText("Choose Theme");
+        jLabel3.setText("Theme");
 
         jComboBoxTheme.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,7 +136,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         });
 
         jLabel1.setText("Priority");
-
 
         jScrollPane3.setBorder(null);
         jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -183,6 +182,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         });
 
         jToggleButtonBold.setText("<html><body><b>B</b></body></html>");
+        jToggleButtonBold.setToolTipText("");
         jToggleButtonBold.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButtonBoldActionPerformed(evt);
@@ -201,7 +201,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jToggleButtonBold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -212,14 +211,15 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                         .addComponent(jButtonAddAndShow)
                         .addGap(12, 12, 12))
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(69, 69, 69)
                         .addComponent(jComboBoxFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxFontType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabelAnchor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(6, 6, 6)
                         .addComponent(jTextFieldAnchorWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldAnchorHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -262,7 +262,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                     .addComponent(jTextFieldAnchorWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldAnchorHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
@@ -271,22 +271,23 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTextFieldAnchorWidth.getDocument().addDocumentListener(new DocumentListener() {
-        	@Override
+        jTextFieldAnchorWidth.getDocument().addDocumentListener(new DocumentListener() {@Override
             public void insertUpdate(DocumentEvent e) {
                 anchorWidthModified();
+
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
                 anchorWidthModified();
+
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
                 anchorWidthModified();
-            }
-        });
+
+            }});
             jTextFieldAnchorHeight.getDocument().addDocumentListener(new DocumentListener() {@Override
                 public void insertUpdate(DocumentEvent e) {
                     anchorHeightModified();

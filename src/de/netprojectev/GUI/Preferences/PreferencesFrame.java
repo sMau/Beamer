@@ -4,10 +4,14 @@
  */
 package de.netprojectev.GUI.Preferences;
 
-import java.awt.FileDialog;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.Priority;
@@ -15,10 +19,6 @@ import de.netprojectev.Media.Theme;
 import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
-
-import javax.swing.JOptionPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 /**
  * GUI main class of preferences.
@@ -35,7 +35,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private ManagerFrame managerFrame;
 	private File selectedImage;
 	
-	private FileDialog fd;
 
 	/**
 	 * 
@@ -60,10 +59,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelTabMain = new javax.swing.JPanel();
         jButtonReset = new javax.swing.JButton();
-        jLabelTickerSpeed = new javax.swing.JLabel();
         jSlider1 = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldPreviewWidth = new javax.swing.JTextField();
@@ -95,6 +94,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jButtonCancelPrefs = new javax.swing.JButton();
         jButtonApplyPrefs = new javax.swing.JButton();
 
+        jFileChooser1.setApproveButtonText("Open");
+        jFileChooser1.setDialogTitle("Choose background");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Preferences");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
@@ -105,8 +107,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 jButtonResetActionPerformed(evt);
             }
         });
-
-        jLabelTickerSpeed.setText("Ticker Speed");
 
         jLabel1.setText("Preview width");
         jLabel1.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
@@ -128,16 +128,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jButtonReset))
                     .addGroup(jPanelTabMainLayout.createSequentialGroup()
                         .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelTickerSpeed)
-                            .addComponent(jLabel1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelTabMainLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2)
-                                .addComponent(jLabel3)))
-                        .addGap(0, 186, Short.MAX_VALUE)))
+                                .addComponent(jLabel3))
+                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 300, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelTabMainLayout.setVerticalGroup(
@@ -148,13 +146,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addGap(33, 33, 33)
-                .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanelTabMainLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addComponent(jLabelTickerSpeed)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addComponent(jButtonReset)
                 .addContainerGap())
         );
@@ -243,7 +237,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jButtonPrioSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemovePrio, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddPrio, javax.swing.GroupLayout.Alignment.TRAILING)))
@@ -266,6 +260,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jLabelThemeName.setText("Name");
 
         jLabelThemeBg.setText("Background");
+
+        jTextFieldThemeName.setMaximumSize(new java.awt.Dimension(10, 26));
+
+        jTextFieldThemeBgImg.setMaximumSize(new java.awt.Dimension(10, 26));
 
         btnSaveTheme.setText("Save");
         btnSaveTheme.addActionListener(new java.awt.event.ActionListener() {
@@ -318,13 +316,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addComponent(jLabelThemeName)
                                     .addComponent(jLabelThemeBg))
                                 .addGap(23, 23, 23)
-                                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldThemeBgImg))
+                                    .addComponent(jTextFieldThemeBgImg, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonChooseBgImage))
                             .addComponent(btnSaveTheme))
-                        .addGap(0, 38, Short.MAX_VALUE)))
+                        .addGap(49, 49, 49)))
                 .addContainerGap())
         );
         jPanelTabThemeLayout.setVerticalGroup(
@@ -345,7 +343,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(btnSaveTheme, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnRemoveTheme, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnAddTheme, javax.swing.GroupLayout.Alignment.TRAILING)))
@@ -363,7 +361,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         );
         jPanelThemeslideCreatorLayout.setVerticalGroup(
             jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 316, Short.MAX_VALUE)
+            .addGap(0, 318, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Themeslide Creator", jPanelThemeslideCreator);
@@ -519,13 +517,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jButtonChooseBgImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseBgImageActionPerformed
-    	fd = new FileDialog(this, "Load Background", FileDialog.LOAD);
-        fd.setMultipleMode(false);
-        fd.setDirectory(System.getProperty("user.home"));
-        fd.setLocation(Misc.currentMousePosition());
-        fd.setVisible(true);
-    	selectedImage = fd.getFiles()[0];
-		jTextFieldThemeBgImg.setText(selectedImage.getAbsolutePath());
+
+    	//TODO filtering
+    	
+    	int returnVal = jFileChooser1.showOpenDialog(this);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            selectedImage = jFileChooser1.getSelectedFile();
+    		jTextFieldThemeBgImg.setText(selectedImage.getAbsolutePath());
+        } 
     }//GEN-LAST:event_jButtonChooseBgImageActionPerformed
 
     /**
@@ -695,13 +695,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonChooseBgImage;
     private javax.swing.JButton jButtonPrioSave;
     private javax.swing.JButton jButtonReset;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelPrioName;
     private javax.swing.JLabel jLabelThemeBg;
     private javax.swing.JLabel jLabelThemeName;
-    private javax.swing.JLabel jLabelTickerSpeed;
     private javax.swing.JList jListPrio;
     private javax.swing.JList jListTheme;
     private javax.swing.JPanel jPanelTabMain;

@@ -20,7 +20,7 @@ import de.netprojectev.Media.VideoFile;
  */
 public class DisplayHandler {
 
-	private static volatile DisplayHandler instance = null;
+	private static DisplayHandler instance = new DisplayHandler();
 
 	private MediaHandler mediaHandler;
 	private DisplayDispatcher displayDispatcher;
@@ -100,7 +100,7 @@ public class DisplayHandler {
 		
 	}
 
-	public static synchronized DisplayHandler getInstance() {
+	public static DisplayHandler getInstance() {
 		if (instance == null) {
 			instance = new DisplayHandler();
 		}
