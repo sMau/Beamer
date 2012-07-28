@@ -193,7 +193,7 @@ public class DisplayHandler {
 	public void show(MediaFile file) {
 		
 		
-		if(currentMediaFile != null) {
+		if(currentMediaFile != null && currentMediaFile != file) {
 			currentMediaFile.getStatus().setIsCurrent(false);
 		}
 		if(!(currentMediaFile == file) || noFileShowed) {

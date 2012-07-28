@@ -7,7 +7,7 @@ Adding ticket elements without "window" simply add ticket elt with "showing fals
 
 WOULD BE NICE
 
-show file at gui mapp
+show file at gui mapp (and testing)
 shuffling testing after setting file manually
 set wasShowed after a given time and not immediately, settable via prefs
 Themeslide size configurable, cause of scaling difficult in display unit
