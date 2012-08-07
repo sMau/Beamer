@@ -84,11 +84,11 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBoxPriority" min="-2" pref="186" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
                       <Component id="jSeparator1" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
+              <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -115,8 +115,8 @@
                       <Component id="jTextFieldAnchorHeight" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" pref="512" max="32767" attributes="0"/>
-                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonAdd" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -191,71 +191,6 @@
             </Property>
           </Properties>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Container class="de.netprojectev.GUI.Themeslide.PreviewThemeslideComponent" name="previewThemeslideComponent1">
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="1027" max="32767" attributes="0"/>
-                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="1027" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="511" max="32767" attributes="0"/>
-                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane3" alignment="0" pref="511" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Container class="javax.swing.JScrollPane" name="jScrollPane3">
-                  <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="null"/>
-                    </Property>
-                    <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
-                    <Property name="verticalScrollBarPolicy" type="int" value="21"/>
-                    <Property name="opaque" type="boolean" value="false"/>
-                  </Properties>
-                  <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jScrollPane3.getViewport().setOpaque(false);"/>
-                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                  </AuxValues>
-
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-                  <SubComponents>
-                    <Component class="javax.swing.JTextPane" name="jTextPaneText">
-                      <Properties>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="null"/>
-                        </Property>
-                        <Property name="contentType" type="java.lang.String" value="text/html"/>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial" size="48" style="1"/>
-                        </Property>
-                        <Property name="margin" type="java.awt.Insets" editor="org.netbeans.beaninfo.editors.InsetsEditor">
-                          <Insets value="[0, 0, 0, 0]"/>
-                        </Property>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="previewThemeslideComponent1.getSize()" type="code"/>
-                        </Property>
-                        <Property name="opaque" type="boolean" value="false"/>
-                      </Properties>
-                    </Component>
-                  </SubComponents>
-                </Container>
-              </SubComponents>
-            </Container>
-          </SubComponents>
-        </Container>
         <Component class="javax.swing.JComboBox" name="jComboBoxFontSize">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -306,6 +241,42 @@
             <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextFieldAnchorHeight.getDocument().addDocumentListener(new DocumentListener() {@Override&#xa;&#x9;&#x9;&#x9;public void insertUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorHeightModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void removeUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorHeightModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void changedUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorHeightModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}});"/>
           </AuxValues>
         </Component>
+        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel2">
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
+                          <Component id="textPaneThemeslide" min="-2" pref="1037" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
+                          <Component id="textPaneThemeslide" min="-2" pref="520" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="de.netprojectev.GUI.Themeslide.TextPaneThemeslide" name="textPaneThemeslide">
+                  <Properties>
+                    <Property name="contentType" type="java.lang.String" value="text/html"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>

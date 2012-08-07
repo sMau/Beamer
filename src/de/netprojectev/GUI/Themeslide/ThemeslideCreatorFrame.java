@@ -57,12 +57,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         	jComboBoxFontSize.addItem(Constants.FONT_SIZES[i]);
         }
         
-        jComboBoxFontType.setSelectedItem(jTextPaneText.getFont().getFamily());
-        jComboBoxFontSize.setSelectedItem(jTextPaneText.getFont().getSize() + "px");
+        jComboBoxFontType.setSelectedItem(textPaneThemeslide.getFont().getFamily());
+        jComboBoxFontSize.setSelectedItem(textPaneThemeslide.getFont().getSize() + "px");
         
-        styledDoc = jTextPaneText.getStyledDocument();
+        styledDoc = textPaneThemeslide.getStyledDocument();
         
-        style=jTextPaneText.addStyle("bold",null);
+        style=textPaneThemeslide.addStyle("bold",null);
     	StyleConstants.setBold(style,true);
     	
         setLocation(Misc.currentMousePosition());
@@ -88,16 +88,15 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jButtonAddAndShow = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jComboBoxPriority = new javax.swing.JComboBox();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        previewThemeslideComponent1 = new de.netprojectev.GUI.Themeslide.PreviewThemeslideComponent();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextPaneText = new javax.swing.JTextPane();
         jComboBoxFontSize = new javax.swing.JComboBox();
         jComboBoxFontType = new javax.swing.JComboBox();
         jToggleButtonBold = new javax.swing.JToggleButton();
         jLabelAnchor = new javax.swing.JLabel();
         jTextFieldAnchorWidth = new javax.swing.JTextField();
         jTextFieldAnchorHeight = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jPanel2 = new javax.swing.JPanel();
+        textPaneThemeslide = new de.netprojectev.GUI.Themeslide.TextPaneThemeslide();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Themeslide Creator");
@@ -137,38 +136,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Priority");
 
-        jScrollPane3.setBorder(null);
-        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane3.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-        jScrollPane3.setOpaque(false);
-
-        jTextPaneText.setBorder(null);
-        jTextPaneText.setContentType("text/html");
-        jTextPaneText.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
-        jTextPaneText.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jTextPaneText.setMaximumSize(previewThemeslideComponent1.getSize());
-        jTextPaneText.setOpaque(false);
-        jScrollPane3.setViewportView(jTextPaneText);
-
-        javax.swing.GroupLayout previewThemeslideComponent1Layout = new javax.swing.GroupLayout(previewThemeslideComponent1);
-        previewThemeslideComponent1.setLayout(previewThemeslideComponent1Layout);
-        previewThemeslideComponent1Layout.setHorizontalGroup(
-            previewThemeslideComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1027, Short.MAX_VALUE)
-            .addGroup(previewThemeslideComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 1027, Short.MAX_VALUE))
-        );
-        previewThemeslideComponent1Layout.setVerticalGroup(
-            previewThemeslideComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
-            .addGroup(previewThemeslideComponent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 511, Short.MAX_VALUE))
-        );
-
-        jScrollPane3.getViewport().setOpaque(false);
-
-        jScrollPane2.setViewportView(previewThemeslideComponent1);
-
         jComboBoxFontSize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxFontSizeActionPerformed(evt);
@@ -194,6 +161,27 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jTextFieldAnchorWidth.setText("0");
 
         jTextFieldAnchorHeight.setText("0");
+
+        textPaneThemeslide.setContentType("text/html");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 1, Short.MAX_VALUE)
+                .addComponent(textPaneThemeslide, javax.swing.GroupLayout.PREFERRED_SIZE, 1037, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(0, 1, Short.MAX_VALUE)
+                .addComponent(textPaneThemeslide, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
+
+        jScrollPane2.setViewportView(jPanel2);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -236,9 +224,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxPriority, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2)
                     .addComponent(jSeparator1))
                 .addContainerGap())
+            .addComponent(jScrollPane2)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -262,8 +250,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                     .addComponent(jTextFieldAnchorWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldAnchorHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
                     .addComponent(jButtonAdd)
@@ -344,7 +332,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jComboBoxThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeActionPerformed
-    	previewThemeslideComponent1.setThemeBackground(PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
+    	textPaneThemeslide.setThemeBackground(PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
     }//GEN-LAST:event_jComboBoxThemeActionPerformed
 
     /**
@@ -353,9 +341,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      */
     private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBoldActionPerformed
     	//TODO toggling use, to unbold alrady bolded text
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-    		int length = jTextPaneText.getSelectedText().length();
-        	styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, jTextPaneText.getStyle("bold"), false);
+    	if(textPaneThemeslide.getSelectedText() != null && !textPaneThemeslide.getSelectedText().isEmpty()) {
+    		int length = textPaneThemeslide.getSelectedText().length();
+        	styledDoc.setCharacterAttributes(textPaneThemeslide.getSelectionStart(), length, textPaneThemeslide.getStyle("bold"), false);
     	}
     	
     }//GEN-LAST:event_jToggleButtonBoldActionPerformed
@@ -366,11 +354,11 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      */
     private void jComboBoxFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontSizeActionPerformed
 
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-    		int length = jTextPaneText.getSelectedText().length();
+    	if(textPaneThemeslide.getSelectedText() != null && !textPaneThemeslide.getSelectedText().isEmpty()) {
+    		int length = textPaneThemeslide.getSelectedText().length();
         	SimpleAttributeSet sattr = new SimpleAttributeSet();
             sattr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
-            styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sattr, false);
+            styledDoc.setCharacterAttributes(textPaneThemeslide.getSelectionStart(), length, sattr, false);
     	}
 
     }//GEN-LAST:event_jComboBoxFontSizeActionPerformed
@@ -381,11 +369,11 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      */
     private void jComboBoxFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontTypeActionPerformed
         
-    	if(jTextPaneText.getSelectedText() != null && !jTextPaneText.getSelectedText().isEmpty()) {
-	    	int length = jTextPaneText.getSelectedText().length();
+    	if(textPaneThemeslide.getSelectedText() != null && !textPaneThemeslide.getSelectedText().isEmpty()) {
+	    	int length = textPaneThemeslide.getSelectedText().length();
 	    	SimpleAttributeSet sas = new SimpleAttributeSet();
 	        StyleConstants.setFontFamily(sas, (String) jComboBoxFontType.getSelectedItem());
-	        styledDoc.setCharacterAttributes(jTextPaneText.getSelectionStart(), length, sas, false);
+	        styledDoc.setCharacterAttributes(textPaneThemeslide.getSelectionStart(), length, sas, false);
     	}
 
     }//GEN-LAST:event_jComboBoxFontTypeActionPerformed
@@ -432,7 +420,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	    	
     	if(name != null && priority != null && theme != null) {
     		MediaFile[] themeSlides = new MediaFile[1];
-    		themeSlides[0] = new Themeslide(name, priority, theme, jTextPaneText, new Point(anchorWidth, anchorHeight));
+    		themeSlides[0] = new Themeslide(name, priority, theme, textPaneThemeslide, new Point(anchorWidth, anchorHeight));
     		MediaHandler.getInstance().add(themeSlides);
     	} else {
     		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -448,7 +436,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		if(!jTextFieldAnchorWidth.getText().isEmpty()) {
 	    	try {
 				if(Integer.parseInt(jTextFieldAnchorWidth.getText()) > 0) {
-					jTextPaneText.setBounds(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getLocation().getY(), ((int) jTextPaneText.getBounds().getWidth()) - Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) jTextPaneText.getBounds().getHeight());		
+					textPaneThemeslide.setBounds(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) textPaneThemeslide.getLocation().getY(), ((int) textPaneThemeslide.getBounds().getWidth()) - Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) textPaneThemeslide.getBounds().getHeight());		
 				}
 			} catch (NumberFormatException e) {
 				//e.printStackTrace();
@@ -465,7 +453,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			try {
 				if(Integer.parseInt(jTextFieldAnchorHeight.getText()) > 0) {
 
-					jTextPaneText.setBounds((int) jTextPaneText.getLocation().getX(), Integer.parseInt(jTextFieldAnchorHeight.getText()),(int) jTextPaneText.getBounds().getWidth(), ((int) jTextPaneText.getBounds().getHeight()) - Integer.parseInt(jTextFieldAnchorHeight.getText()));
+					textPaneThemeslide.setBounds((int) textPaneThemeslide.getLocation().getX(), Integer.parseInt(jTextFieldAnchorHeight.getText()),(int) textPaneThemeslide.getBounds().getWidth(), ((int) textPaneThemeslide.getBounds().getHeight()) - Integer.parseInt(jTextFieldAnchorHeight.getText()));
 				}
 			} catch (NumberFormatException e) {
 				//e.printStackTrace();
@@ -530,15 +518,14 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelAnchor;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextFieldAnchorHeight;
     private javax.swing.JTextField jTextFieldAnchorWidth;
     private javax.swing.JTextField jTextFieldThemeSlideName;
-    private javax.swing.JTextPane jTextPaneText;
     private javax.swing.JToggleButton jToggleButtonBold;
-    private de.netprojectev.GUI.Themeslide.PreviewThemeslideComponent previewThemeslideComponent1;
+    private de.netprojectev.GUI.Themeslide.TextPaneThemeslide textPaneThemeslide;
     // End of variables declaration//GEN-END:variables
 
 

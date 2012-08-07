@@ -928,7 +928,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void showNext() {
     	final int[] selectedRows = getjTableFileManager().getSelectedRows(); 
 		mediaHandler.getDisplayHandler().showNext();
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
             	for(int i = 0; i < selectedRows.length; i++) {
@@ -945,7 +945,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private void showPrevious() {
     	final int[] selectedRows = getjTableFileManager().getSelectedRows(); 
 		mediaHandler.getDisplayHandler().showPrevious();
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
             	for(int i = 0; i < selectedRows.length; i++) {
@@ -973,7 +973,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		final int[] selectedRows = getjTableFileManager().getSelectedRows();
     	if(selectedRows.length > 0) {
     		mediaHandler.getDisplayHandler().show(Misc.indexListToMediaFiles(selectedRows)[0]);
-    		java.awt.EventQueue.invokeLater(new Runnable() {
+    		SwingUtilities.invokeLater(new Runnable() {
 
                 public void run() {
                 	for(int i = 0; i < selectedRows.length; i++) {
@@ -1004,7 +1004,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     		}
     		
     		final int finalNewSelection = newSelection;
-    		java.awt.EventQueue.invokeLater(new Runnable() {
+    		SwingUtilities.invokeLater(new Runnable() {
 
                 public void run() {
                 	if(finalNewSelection >=0) {
@@ -1025,7 +1025,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     	if(selectedRows.length > 0) {
     		mediaHandler.up(Misc.indexListToMediaFiles(selectedRows));
     		
-    		java.awt.EventQueue.invokeLater(new Runnable() {
+    		SwingUtilities.invokeLater(new Runnable() {
 
                 public void run() {
                 	if(selectedRows[0] == 0) {
@@ -1059,7 +1059,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     		}
     		
     		final int finalNewSelection = newSelection;
-    		java.awt.EventQueue.invokeLater(new Runnable() {
+    		SwingUtilities.invokeLater(new Runnable() {
 
                 public void run() {
                 	if(finalNewSelection >=0) {
@@ -1078,7 +1078,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     	if(selectedRows.length > 0) {
     		mediaHandler.down(Misc.indexListToMediaFiles(selectedRows));
     		
-    		java.awt.EventQueue.invokeLater(new Runnable() {
+    		SwingUtilities.invokeLater(new Runnable() {
 
                 public void run() {
                 	if(selectedRows[selectedRows.length - 1] == getjTableFileManager().getRowCount() - 1) {
@@ -1252,7 +1252,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         /*
          * Create and display the form
          */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
                 new ManagerFrame().setVisible(true);

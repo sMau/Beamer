@@ -1,5 +1,7 @@
 	package de.netprojectev.Main;
 
+import javax.swing.SwingUtilities;
+
 import de.netprojectev.GUI.Manager.ManagerFrame;
 
 public class Starter {
@@ -69,7 +71,7 @@ public class Starter {
 	        java.util.logging.Logger.getLogger(ManagerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	    }
 		
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 
 	        public void run() {
 	            new ManagerFrame().setVisible(true);
