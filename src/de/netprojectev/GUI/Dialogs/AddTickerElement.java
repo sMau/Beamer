@@ -128,7 +128,7 @@ public class AddTickerElement extends javax.swing.JFrame {
     	if(!editMode) {
     		LiveTicker.getInstance().add(currentTickerElt);
     	}
-    	if(managerFrame != null) {
+    	
 			((TickerManagerTableModel) managerFrame.getjTableLiveticker().getModel()).updateModel();
 			java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -136,9 +136,9 @@ public class AddTickerElement extends javax.swing.JFrame {
 	            	if(selectedRow >= 0 && selectedRow <= managerFrame.getjTableLiveticker().getRowCount() - 1) {
 	            		managerFrame.getjTableLiveticker().setRowSelectionInterval(selectedRow, selectedRow);
 	            	}
-	            }
-	        });
-		}
+	           }
+	       });
+		
     	dispose();    
     }//GEN-LAST:event_jButtonAddTickerEltActionPerformed
 

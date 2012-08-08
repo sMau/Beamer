@@ -157,7 +157,7 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
     	final int selectedRow = managerFrame.getjTableFileManager().getSelectedRow();    	
     	selectedMediaFile.setName(jTextFieldEditFileName.getText());
     	selectedMediaFile.setPriority(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()));   	
-    	if(managerFrame != null) {
+    	
 			((FileManagerTableModel) managerFrame.getjTableFileManager().getModel()).updateModel();
 			java.awt.EventQueue.invokeLater(new Runnable() {
 
@@ -165,7 +165,7 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
 	            	managerFrame.getjTableFileManager().setRowSelectionInterval(selectedRow, selectedRow);
 	            }
 	        });
-		}
+		
     	dispose();
     }//GEN-LAST:event_jButtonApplyActionPerformed
 

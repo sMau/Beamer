@@ -1,4 +1,4 @@
-	package de.netprojectev.Main;
+package de.netprojectev.Main;
 
 import javax.swing.SwingUtilities;
 

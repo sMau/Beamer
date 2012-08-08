@@ -55,16 +55,22 @@
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jToggleButtonItalic" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jToggleButtonUnderline" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                           <Component id="jComboBoxFontSize" min="-2" pref="86" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBoxFontType" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabelAnchor" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                          <Component id="jTextFieldAnchorWidth" min="-2" pref="43" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                          <Component id="jButtonColorPicker" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jTextFieldAnchorHeight" min="-2" pref="42" max="-2" attributes="0"/>
+                          <Component id="jLabelAnchor" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextFieldMarginLeft" min="-2" pref="43" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jTextFieldMarginTop" min="-2" pref="42" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -88,7 +94,7 @@
                   </Group>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
               </Group>
-              <Component id="jScrollPane2" alignment="0" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -111,12 +117,15 @@
                       <Component id="jComboBoxFontType" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jToggleButtonBold" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelAnchor" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldAnchorWidth" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldAnchorHeight" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldMarginLeft" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTextFieldMarginTop" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jToggleButtonUnderline" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jToggleButtonItalic" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonColorPicker" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPane2" max="32767" attributes="0"/>
-                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="523" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonCancel" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonAdd" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -214,7 +223,7 @@
         <Component class="javax.swing.JToggleButton" name="jToggleButtonBold">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;b&gt;B&lt;/b&gt;&lt;/body&gt;&lt;/html&gt;"/>
-            <Property name="toolTipText" type="java.lang.String" value=""/>
+            <Property name="toolTipText" type="java.lang.String" value="Toggle bold"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonBoldActionPerformed"/>
@@ -222,61 +231,83 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelAnchor">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Anchor"/>
+            <Property name="text" type="java.lang.String" value="Margin"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldAnchorWidth">
+        <Component class="javax.swing.JTextField" name="jTextFieldMarginLeft">
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextFieldAnchorWidth.getDocument().addDocumentListener(new DocumentListener() {@Override&#xa;&#x9;&#x9;&#x9;public void insertUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorWidthModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void removeUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorWidthModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void changedUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorWidthModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextFieldMarginLeft.getDocument().addDocumentListener(new DocumentListener() {@Override&#xa;&#x9;&#x9;&#x9;public void insertUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;marginLeftModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void removeUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;marginLeftModified();&#x9;&#xa;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void changedUpdate(DocumentEvent e) {&#xa;                                marginLeftModified();&#x9;&#xa;&#xa;&#x9;&#x9;&#x9;}});"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldAnchorHeight">
+        <Component class="javax.swing.JTextField" name="jTextFieldMarginTop">
           <Properties>
             <Property name="text" type="java.lang.String" value="0"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextFieldAnchorHeight.getDocument().addDocumentListener(new DocumentListener() {@Override&#xa;&#x9;&#x9;&#x9;public void insertUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorHeightModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void removeUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorHeightModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void changedUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;anchorHeightModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextFieldMarginTop.getDocument().addDocumentListener(new DocumentListener() {@Override&#xa;&#x9;&#x9;&#x9;public void insertUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;marginTopModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void removeUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;marginTopModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void changedUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;marginTopModified();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}});"/>
           </AuxValues>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="doubleBuffered" type="boolean" value="true"/>
+          </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="jPanel2">
+            <Container class="de.netprojectev.GUI.Themeslide.TextPanePanel" name="textPanePanel1">
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
-                          <Component id="textPaneThemeslide" min="-2" pref="1037" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="textPaneThemeslide" alignment="0" pref="1039" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
-                          <Component id="textPaneThemeslide" min="-2" pref="520" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="textPaneThemeslide" alignment="0" pref="522" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
                 <Component class="de.netprojectev.GUI.Themeslide.TextPaneThemeslide" name="textPaneThemeslide">
                   <Properties>
-                    <Property name="contentType" type="java.lang.String" value="text/html"/>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
                   </Properties>
                 </Component>
               </SubComponents>
             </Container>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JToggleButton" name="jToggleButtonItalic">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;b&gt;&lt;i&gt;I&lt;/i&gt;&lt;/b&gt;&lt;/body&gt;&lt;/html&gt;"/>
+            <Property name="toolTipText" type="java.lang.String" value="Toggle italic"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonItalicActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="jToggleButtonUnderline">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;body&gt;&lt;b&gt;&lt;u&gt;U&lt;/u&gt;&lt;/b&gt;&lt;/body&gt;&lt;/html&gt;"/>
+            <Property name="toolTipText" type="java.lang.String" value="Toggle underline"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jToggleButtonUnderlineActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonColorPicker">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Color"/>
+            <Property name="toolTipText" type="java.lang.String" value="Choose text color"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonColorPickerActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

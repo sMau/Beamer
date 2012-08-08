@@ -166,7 +166,7 @@ public class Misc {
 		
 		String path = Constants.SAVE_PATH;
 		
-		if(filename.isEmpty() || filename == null) {		
+		if(filename.isEmpty()) {		
 			JOptionPane.showMessageDialog(null, "Error while saving files.", "Error", JOptionPane.ERROR_MESSAGE);
 		}
 

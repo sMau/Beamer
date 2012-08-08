@@ -4,6 +4,8 @@
  */
 package de.netprojectev.GUI.Themeslide;
 
+import java.awt.Color;
+import java.awt.Insets;
 import java.awt.Point;
 
 import javax.swing.JOptionPane;
@@ -36,8 +38,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	private StyledDocument styledDoc;
 	private Style style;
 	
-	private int anchorWidth = 0;
-	private int anchorHeight = 0;
+	private int marginLeft = 0;
+	private int marginTop = 0;
+	
+	private Color textColorToSet = Color.BLACK;
 
     public ThemeslideCreatorFrame() {
     	initComponents();
@@ -92,11 +96,14 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jComboBoxFontType = new javax.swing.JComboBox();
         jToggleButtonBold = new javax.swing.JToggleButton();
         jLabelAnchor = new javax.swing.JLabel();
-        jTextFieldAnchorWidth = new javax.swing.JTextField();
-        jTextFieldAnchorHeight = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel2 = new javax.swing.JPanel();
+        jTextFieldMarginLeft = new javax.swing.JTextField();
+        jTextFieldMarginTop = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        textPanePanel1 = new de.netprojectev.GUI.Themeslide.TextPanePanel();
         textPaneThemeslide = new de.netprojectev.GUI.Themeslide.TextPaneThemeslide();
+        jToggleButtonItalic = new javax.swing.JToggleButton();
+        jToggleButtonUnderline = new javax.swing.JToggleButton();
+        jButtonColorPicker = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Themeslide Creator");
@@ -149,39 +156,59 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         });
 
         jToggleButtonBold.setText("<html><body><b>B</b></body></html>");
-        jToggleButtonBold.setToolTipText("");
+        jToggleButtonBold.setToolTipText("Toggle bold");
         jToggleButtonBold.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jToggleButtonBoldActionPerformed(evt);
             }
         });
 
-        jLabelAnchor.setText("Anchor");
+        jLabelAnchor.setText("Margin");
 
-        jTextFieldAnchorWidth.setText("0");
+        jTextFieldMarginLeft.setText("0");
 
-        jTextFieldAnchorHeight.setText("0");
+        jTextFieldMarginTop.setText("0");
 
-        textPaneThemeslide.setContentType("text/html");
+        jScrollPane1.setDoubleBuffered(true);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addComponent(textPaneThemeslide, javax.swing.GroupLayout.PREFERRED_SIZE, 1037, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+        textPaneThemeslide.setDoubleBuffered(true);
+
+        javax.swing.GroupLayout textPanePanel1Layout = new javax.swing.GroupLayout(textPanePanel1);
+        textPanePanel1.setLayout(textPanePanel1Layout);
+        textPanePanel1Layout.setHorizontalGroup(
+            textPanePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(textPaneThemeslide, javax.swing.GroupLayout.DEFAULT_SIZE, 1039, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addComponent(textPaneThemeslide, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 1, Short.MAX_VALUE))
+        textPanePanel1Layout.setVerticalGroup(
+            textPanePanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(textPaneThemeslide, javax.swing.GroupLayout.DEFAULT_SIZE, 522, Short.MAX_VALUE)
         );
 
-        jScrollPane2.setViewportView(jPanel2);
+        jScrollPane1.setViewportView(textPanePanel1);
+
+        jToggleButtonItalic.setText("<html><body><b><i>I</i></b></body></html>");
+        jToggleButtonItalic.setToolTipText("Toggle italic");
+        jToggleButtonItalic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonItalicActionPerformed(evt);
+            }
+        });
+
+        jToggleButtonUnderline.setText("<html><body><b><u>U</u></b></body></html>");
+        jToggleButtonUnderline.setToolTipText("Toggle underline");
+        jToggleButtonUnderline.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButtonUnderlineActionPerformed(evt);
+            }
+        });
+
+        jButtonColorPicker.setText("Color");
+        jButtonColorPicker.setToolTipText("Choose text color");
+        jButtonColorPicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonColorPickerActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -198,18 +225,24 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAddAndShow)
                         .addGap(12, 12, 12))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToggleButtonItalic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToggleButtonUnderline, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)
                         .addComponent(jComboBoxFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxFontType, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabelAnchor)
-                        .addGap(6, 6, 6)
-                        .addComponent(jTextFieldAnchorWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addComponent(jButtonColorPicker)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldAnchorHeight, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(jLabelAnchor)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldMarginLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldMarginTop, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -226,7 +259,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                         .addComponent(jComboBoxPriority, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1))
                 .addContainerGap())
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -247,10 +280,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                     .addComponent(jComboBoxFontType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jToggleButtonBold, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelAnchor)
-                    .addComponent(jTextFieldAnchorWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldAnchorHeight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldMarginLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldMarginTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButtonUnderline, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jToggleButtonItalic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonColorPicker))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancel)
@@ -259,38 +295,38 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTextFieldAnchorWidth.getDocument().addDocumentListener(new DocumentListener() {@Override
+        jTextFieldMarginLeft.getDocument().addDocumentListener(new DocumentListener() {@Override
             public void insertUpdate(DocumentEvent e) {
-                anchorWidthModified();
+                marginLeftModified();
 
             }
 
             @Override
             public void removeUpdate(DocumentEvent e) {
-                anchorWidthModified();
+                marginLeftModified();
 
             }
 
             @Override
             public void changedUpdate(DocumentEvent e) {
-                anchorWidthModified();
+                marginLeftModified();
 
             }});
-            jTextFieldAnchorHeight.getDocument().addDocumentListener(new DocumentListener() {@Override
+            jTextFieldMarginTop.getDocument().addDocumentListener(new DocumentListener() {@Override
                 public void insertUpdate(DocumentEvent e) {
-                    anchorHeightModified();
+                    marginTopModified();
 
                 }
 
                 @Override
                 public void removeUpdate(DocumentEvent e) {
-                    anchorHeightModified();
+                    marginTopModified();
 
                 }
 
                 @Override
                 public void changedUpdate(DocumentEvent e) {
-                    anchorHeightModified();
+                    marginTopModified();
 
                 }});
 
@@ -378,6 +414,19 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jComboBoxFontTypeActionPerformed
 
+    private void jToggleButtonItalicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonItalicActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButtonItalicActionPerformed
+
+    private void jToggleButtonUnderlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonUnderlineActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButtonUnderlineActionPerformed
+
+    private void jButtonColorPickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColorPickerActionPerformed
+    	(new ColorPickerDialog(this, true)).setVisible(true);
+    	
+    }//GEN-LAST:event_jButtonColorPickerActionPerformed
+
     /**
      * handles the adding of the new themeslide to the media handler.
      * checks all data and adds it if everything is fine, else showing an error dialog
@@ -388,15 +437,15 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	String name = null;
     	
     	try {
-			anchorHeight = Integer.parseInt(jTextFieldAnchorHeight.getText());
+			marginTop = Integer.parseInt(jTextFieldMarginTop.getText());
 		} catch (NumberFormatException e) {
-			anchorHeight = 0;
+			marginTop = 0;
 			//e.printStackTrace();
 		}
     	try {
-			anchorWidth = Integer.parseInt(jTextFieldAnchorWidth.getText());
+			marginLeft = Integer.parseInt(jTextFieldMarginLeft.getText());
 		} catch (NumberFormatException e) {
-			anchorWidth = 0;
+			marginLeft = 0;
 			//e.printStackTrace();
 		}
     	
@@ -420,7 +469,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	    	
     	if(name != null && priority != null && theme != null) {
     		MediaFile[] themeSlides = new MediaFile[1];
-    		themeSlides[0] = new Themeslide(name, priority, theme, textPaneThemeslide, new Point(anchorWidth, anchorHeight));
+    		themeSlides[0] = new Themeslide(name, priority, theme, textPaneThemeslide, new Point(marginLeft, marginTop));
     		MediaHandler.getInstance().add(themeSlides);
     	} else {
     		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -429,14 +478,15 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     }
     
     /**
-     * when anchor width textfield changed, this method changes the anchor width of the JTextPane
+     * when margin left textfield changed, this method changes the left margin of the JTextPane
      */
-	private void anchorWidthModified() {
-		//TODO not working if frame smaller than set anchor
-		if(!jTextFieldAnchorWidth.getText().isEmpty()) {
+	private void marginLeftModified() {
+		//TODO show user information about entering a value bigger than 0/TODO not working if frame smaller than set anchor
+		if(!jTextFieldMarginLeft.getText().isEmpty()) {
 	    	try {
-				if(Integer.parseInt(jTextFieldAnchorWidth.getText()) > 0) {
-					textPaneThemeslide.setBounds(Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) textPaneThemeslide.getLocation().getY(), ((int) textPaneThemeslide.getBounds().getWidth()) - Integer.parseInt(jTextFieldAnchorWidth.getText()), (int) textPaneThemeslide.getBounds().getHeight());		
+				if(Integer.parseInt(jTextFieldMarginLeft.getText()) > 0) {
+					Insets oldMargin = textPaneThemeslide.getMargin();
+					textPanePanel1.setMarginOfTextPaneThemslide(new Insets(oldMargin.top, Integer.parseInt(jTextFieldMarginLeft.getText()), oldMargin.bottom, oldMargin.right));
 				}
 			} catch (NumberFormatException e) {
 				//e.printStackTrace();
@@ -445,16 +495,15 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	/**
-	 * when anchor height textfield changed, this method changes the anchor height of the JTextPane
+	 * when margin top textfield changed, this method changes the top margin of the JTextPane
 	 */
-	private void anchorHeightModified() {
-		//TODO not working if frame smaller than set anchor (setting anchor needs a resize of textpane)
-		if(!jTextFieldAnchorHeight.getText().isEmpty()) {
+	private void marginTopModified() {
+		//TODO show user information about entering a value bigger than 0
+		if(!jTextFieldMarginTop.getText().isEmpty()) {
 			try {
-				if(Integer.parseInt(jTextFieldAnchorHeight.getText()) > 0) {
-
-					textPaneThemeslide.setBounds((int) textPaneThemeslide.getLocation().getX(), Integer.parseInt(jTextFieldAnchorHeight.getText()),(int) textPaneThemeslide.getBounds().getWidth(), ((int) textPaneThemeslide.getBounds().getHeight()) - Integer.parseInt(jTextFieldAnchorHeight.getText()));
-				}
+				if(Integer.parseInt(jTextFieldMarginTop.getText()) > 0) {
+					Insets oldMargin = textPaneThemeslide.getMargin();
+					textPanePanel1.setMarginOfTextPaneThemslide(new Insets(Integer.parseInt(jTextFieldMarginTop.getText()), oldMargin.left, oldMargin.bottom, oldMargin.right));				}
 			} catch (NumberFormatException e) {
 				//e.printStackTrace();
 			}
@@ -462,6 +511,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	
     	
 	}
+	
+	
+	
+	
  
 
     /**
@@ -509,6 +562,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonAdd;
     private javax.swing.JButton jButtonAddAndShow;
     private javax.swing.JButton jButtonCancel;
+    private javax.swing.JButton jButtonColorPicker;
     private javax.swing.JComboBox jComboBoxFontSize;
     private javax.swing.JComboBox jComboBoxFontType;
     private javax.swing.JComboBox jComboBoxPriority;
@@ -518,32 +572,43 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelAnchor;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextFieldAnchorHeight;
-    private javax.swing.JTextField jTextFieldAnchorWidth;
+    private javax.swing.JTextField jTextFieldMarginLeft;
+    private javax.swing.JTextField jTextFieldMarginTop;
     private javax.swing.JTextField jTextFieldThemeSlideName;
     private javax.swing.JToggleButton jToggleButtonBold;
+    private javax.swing.JToggleButton jToggleButtonItalic;
+    private javax.swing.JToggleButton jToggleButtonUnderline;
+    private de.netprojectev.GUI.Themeslide.TextPanePanel textPanePanel1;
     private de.netprojectev.GUI.Themeslide.TextPaneThemeslide textPaneThemeslide;
     // End of variables declaration//GEN-END:variables
 
 
 	public int getAnchorHeight() {
-		return anchorHeight;
+		return marginTop;
 	}
 
 	public void setAnchorHeight(int anchorHeight) {
-		this.anchorHeight = anchorHeight;
-		jTextFieldAnchorHeight.setText(Integer.toString(anchorHeight));
+		this.marginTop = anchorHeight;
+		jTextFieldMarginTop.setText(Integer.toString(anchorHeight));
 	}
 
 	public int getAnchorWidth() {
-		return anchorWidth;
+		return marginLeft;
 	}
 
 	public void setAnchorWidth(int anchorWidth) {
-		this.anchorWidth = anchorWidth;
-		jTextFieldAnchorWidth.setText(Integer.toString(anchorWidth));
+		this.marginLeft = anchorWidth;
+		jTextFieldMarginLeft.setText(Integer.toString(anchorWidth));
+	}
+
+	public Color getTextColorToSet() {
+		return textColorToSet;
+	}
+
+	public void setTextColorToSet(Color textColorToSet) {
+		this.textColorToSet = textColorToSet;
+		//TODO perform the appropriate update method to set the color of the selected text.
 	}
 }

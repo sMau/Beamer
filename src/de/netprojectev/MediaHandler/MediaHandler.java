@@ -92,7 +92,7 @@ public class MediaHandler {
 			}
 		}
 
-		if(filesToRemove.length > 0 && filesToRemove != null) {
+		if(filesToRemove.length > 0) {
 			for (int i = 0; i < filesToRemove.length; i++) {
 				mediaFiles.remove(filesToRemove[i]);
 			}
