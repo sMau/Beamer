@@ -20,6 +20,8 @@ public class TextPanePanel extends JPanel {
 	private Insets marginOfTextPaneThemslide = textPane.getMargin();
 	
 	
+	
+	
 	public void updateTextPane(TextPaneThemeslide textPane, int width, int height) {
 		
 		this.textPane = textPane;
@@ -93,6 +95,10 @@ public class TextPanePanel extends JPanel {
 		});
 		
 	}
+	
+	
+
+	
 	
 
 }

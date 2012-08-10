@@ -276,6 +276,9 @@
                   <Properties>
                     <Property name="doubleBuffered" type="boolean" value="true"/>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="textPaneThemeslide.addCaretListener(new CaretListener() {&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void caretUpdate(CaretEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;caretPositionUpdated(e);&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;});"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

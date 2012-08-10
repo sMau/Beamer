@@ -4,6 +4,8 @@
  */
 package de.netprojectev.GUI.Themeslide;
 
+import de.netprojectev.Misc.Misc;
+
 /**
  *
  * @author samu
@@ -19,6 +21,7 @@ public class ColorPickerDialog extends javax.swing.JDialog {
      */
     public ColorPickerDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        setLocation(Misc.currentMousePosition());
         initComponents();
     }
 
@@ -88,7 +91,7 @@ public class ColorPickerDialog extends javax.swing.JDialog {
 
     private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed
         
-    	((ThemeslideCreatorFrame) getParent()).setTextColorToSet(jColorChooser1.getColor());
+    	((ThemeslideCreatorFrame) getParent()).textColorUpdated(jColorChooser1.getColor());
     	dispose();
     }//GEN-LAST:event_jButtonApplyActionPerformed
 

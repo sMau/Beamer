@@ -3,13 +3,16 @@ package de.netprojectev.GUI.Themeslide;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JTextPane;
+
 
 public class TextPaneThemeslide extends JTextPane {
 	/**
@@ -21,7 +24,9 @@ public class TextPaneThemeslide extends JTextPane {
 	private static final long serialVersionUID = 6811486190608541934L;
 	
 	private Image image;
+	private int lastCarretPosition = 0;
 	
+	private ThemeslideCreatorFrame themeSlideCreatorFrame;
 	
 	public TextPaneThemeslide() {
         super();
@@ -30,7 +35,12 @@ public class TextPaneThemeslide extends JTextPane {
         setBackground(new Color(0,0,0,0));
         setContentType("text/html");
         setMargin(new Insets(3, 3, 0, 0));
+        
+        setDoubleBuffered(true);
+
     }
+	
+	
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -38,9 +48,13 @@ public class TextPaneThemeslide extends JTextPane {
     	
         if (image != null) {
 			g.drawImage(image, 0, 0, null);		
-		}
+		}   
         
-        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;  
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+
+        super.paintComponent(g2d);
     }
     
     public void setThemeBackground(File file) {
@@ -75,5 +89,17 @@ public class TextPaneThemeslide extends JTextPane {
     	repaint();
 
     }
-
+    
+    
+	public void saveCurrentCaretPosition() {
+		this.lastCarretPosition = getCaretPosition();
+	}
+	
+	public void restoreLastCaretPosition() {
+		requestFocus();
+		setCaretPosition(this.lastCarretPosition);
+	}
+	
+    
+    
 }

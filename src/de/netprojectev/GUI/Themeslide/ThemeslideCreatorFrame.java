@@ -5,16 +5,35 @@
 package de.netprojectev.GUI.Themeslide;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.Point;
+import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.File;
+import java.util.Iterator;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.FileImageOutputStream;
+import javax.print.attribute.standard.Compression;
+import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
+import javax.swing.JTextPane;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.Element;
+import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.text.StyledEditorKit;
 
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Priority;
@@ -35,14 +54,16 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = -3653577264825548156L;
 	
-	private StyledDocument styledDoc;
-	private Style style;
-	
 	private int marginLeft = 0;
 	private int marginTop = 0;
 	
-	private Color textColorToSet = Color.BLACK;
+	private Boolean evtFromGUIupdateFontSize = false;
+	private Boolean evtFromGUIupdateFontFamily = false;
 
+	private Boolean lastEventCaretPosChanged = false;
+	private int lastEventCaretPos = 0;
+	
+	
     public ThemeslideCreatorFrame() {
     	initComponents();
     	
@@ -64,11 +85,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jComboBoxFontType.setSelectedItem(textPaneThemeslide.getFont().getFamily());
         jComboBoxFontSize.setSelectedItem(textPaneThemeslide.getFont().getSize() + "px");
         
-        styledDoc = textPaneThemeslide.getStyledDocument();
-        
-        style=textPaneThemeslide.addStyle("bold",null);
-    	StyleConstants.setBold(style,true);
-    	
         setLocation(Misc.currentMousePosition());
     }
 
@@ -172,6 +188,14 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jScrollPane1.setDoubleBuffered(true);
 
         textPaneThemeslide.setDoubleBuffered(true);
+        textPaneThemeslide.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                caretPositionUpdated(e);
+
+            }
+
+        });
 
         javax.swing.GroupLayout textPanePanel1Layout = new javax.swing.GroupLayout(textPanePanel1);
         textPanePanel1.setLayout(textPanePanel1Layout);
@@ -375,28 +399,23 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * changing the selected text to bold
      * @param evt
      */
-    private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonBoldActionPerformed
-    	//TODO toggling use, to unbold alrady bolded text
-    	if(textPaneThemeslide.getSelectedText() != null && !textPaneThemeslide.getSelectedText().isEmpty()) {
-    		int length = textPaneThemeslide.getSelectedText().length();
-        	styledDoc.setCharacterAttributes(textPaneThemeslide.getSelectionStart(), length, textPaneThemeslide.getStyle("bold"), false);
-    	}
-    	
-    }//GEN-LAST:event_jToggleButtonBoldActionPerformed
+    private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {                                                   
+    	//TODO Button updates synching
+
+    	new BoldAction().actionPerformed(evt);	
+    }                                                 
 
     /**
      * on selection change, changing the selected text to the new font size
      * @param evt
      */
     private void jComboBoxFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontSizeActionPerformed
-
-    	if(textPaneThemeslide.getSelectedText() != null && !textPaneThemeslide.getSelectedText().isEmpty()) {
-    		int length = textPaneThemeslide.getSelectedText().length();
-        	SimpleAttributeSet sattr = new SimpleAttributeSet();
-            sattr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
-            styledDoc.setCharacterAttributes(textPaneThemeslide.getSelectionStart(), length, sattr, false);
+    	
+    	if(!evtFromGUIupdateFontSize) {    		
+        	new FontSizeAction((String) jComboBoxFontSize.getSelectedItem()).actionPerformed(evt);
     	}
-
+    	evtFromGUIupdateFontSize = false;
+    	
     }//GEN-LAST:event_jComboBoxFontSizeActionPerformed
 
     /**
@@ -404,22 +423,19 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jComboBoxFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontTypeActionPerformed
-        
-    	if(textPaneThemeslide.getSelectedText() != null && !textPaneThemeslide.getSelectedText().isEmpty()) {
-	    	int length = textPaneThemeslide.getSelectedText().length();
-	    	SimpleAttributeSet sas = new SimpleAttributeSet();
-	        StyleConstants.setFontFamily(sas, (String) jComboBoxFontType.getSelectedItem());
-	        styledDoc.setCharacterAttributes(textPaneThemeslide.getSelectionStart(), length, sas, false);
+    	if(!evtFromGUIupdateFontFamily) {
+    		new FontFamilyAction((String) jComboBoxFontType.getSelectedItem()).actionPerformed(evt);
     	}
+    	evtFromGUIupdateFontFamily = false;
 
     }//GEN-LAST:event_jComboBoxFontTypeActionPerformed
 
     private void jToggleButtonItalicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonItalicActionPerformed
-        // TODO add your handling code here:
+    	new ItalicAction().actionPerformed(evt);
     }//GEN-LAST:event_jToggleButtonItalicActionPerformed
 
     private void jToggleButtonUnderlineActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButtonUnderlineActionPerformed
-        // TODO add your handling code here:
+    	new UnderlineAction().actionPerformed(evt);
     }//GEN-LAST:event_jToggleButtonUnderlineActionPerformed
 
     private void jButtonColorPickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColorPickerActionPerformed
@@ -432,6 +448,59 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * checks all data and adds it if everything is fine, else showing an error dialog
      */
     private void addThemeslide() {
+    	
+    	//TODO
+    	/*
+    	 * here last worked on
+    	 * image export to file works proper, but maybe quality can be still improved, look up jpeg compression settings for java
+    	 * furthermore of course have to implement the integration in the application, as save files to a tmp dir, and modify serialization
+    	 * and deserialization to be able to store themeslides
+    	 * 
+    	 * 
+    	 */
+    	
+    	
+    	String fileName = "/home/samu/Desktop/test123.jpg";
+        int w = textPaneThemeslide.getWidth();
+        int h = textPaneThemeslide.getHeight();
+        float quality = 1f;
+        
+        BufferedImage bufImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        Graphics2D tmpG2D = bufImage.createGraphics();
+
+        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        
+        textPaneThemeslide.paint(tmpG2D);
+
+        Iterator<ImageWriter> itereratorImageWriter = ImageIO.getImageWritersByFormatName("jpeg");
+        ImageWriter writer = (ImageWriter) itereratorImageWriter.next();
+        ImageWriteParam writeParams = writer.getDefaultWriteParam();
+        
+        
+        
+        writeParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        writeParams.setProgressiveMode(ImageWriteParam.MODE_DEFAULT);
+        writeParams.setCompressionQuality(quality);
+        
+
+        try {
+            FileImageOutputStream fos = new FileImageOutputStream(new File(fileName));
+            writer.setOutput(fos);
+            IIOImage img = new IIOImage((RenderedImage) bufImage, null, null);
+            writer.write(null, img, writeParams);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        tmpG2D.dispose();
+    	
+
     	Priority priority = null;
     	Theme theme = null;
     	String name = null;
@@ -477,6 +546,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     }
     
+    
+        
+      
+    
     /**
      * when margin left textfield changed, this method changes the left margin of the JTextPane
      */
@@ -512,9 +585,359 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	
 	}
 	
+	/**
+	 * This class handles the event triggerd by bold button, and toggles the bold text-attribute
+	 * 
+	 * @author samu
+	 *
+	 */
+	class BoldAction extends StyledEditorKit.StyledTextAction {
+		
+		
+		
+		private static final long serialVersionUID = 9174670038684056758L;
+
+		public BoldAction() {
+			super("font-bold");
+		}
+
+		public String toString() {
+			return "Bold";
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			
+			JEditorPane editor = getEditor(e);
+			if (editor != null) {
+				textPaneThemeslide.saveCurrentCaretPosition();
+				
+				StyledEditorKit kit = getStyledEditorKit(editor);
+				MutableAttributeSet attr = kit.getInputAttributes();
+				boolean bold = (StyleConstants.isBold(attr)) ? false : true;
+				SimpleAttributeSet sas = new SimpleAttributeSet();
+				StyleConstants.setBold(sas, bold);
+				setCharacterAttributes(editor, sas, false);
+
+				textPaneThemeslide.restoreLastCaretPosition();
+
+			}
+		}
+	}
 	
 	
+	/**
+	 * 
+	 * This class handles the event triggerd by italic button, and toggles the italic text-attribute
+	 * 
+	 * @author samu
+	 *
+	 */
+	class ItalicAction extends StyledEditorKit.StyledTextAction {
+
+		private static final long serialVersionUID = -1428340091100055456L;
+
+		public ItalicAction() {
+			super("font-italic");
+		}
+
+		public String toString() {
+			return "Italic";
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			JEditorPane editor = getEditor(e);
+			if (editor != null) {
+				textPaneThemeslide.saveCurrentCaretPosition();
+				
+				StyledEditorKit kit = getStyledEditorKit(editor);
+				MutableAttributeSet attr = kit.getInputAttributes();
+				boolean italic = (StyleConstants.isItalic(attr)) ? false : true;
+				SimpleAttributeSet sas = new SimpleAttributeSet();
+				StyleConstants.setItalic(sas, italic);
+				setCharacterAttributes(editor, sas, false);
+
+				textPaneThemeslide.restoreLastCaretPosition();
+			}
+		}
+	}
 	
+	/**
+	 * 
+	 * This class handles the event triggerd by underline button, and toggles the underline text-attribute
+	 * 
+	 * @author samu
+	 *
+	 */
+	class UnderlineAction extends StyledEditorKit.StyledTextAction {
+
+		private static final long serialVersionUID = -1428340091100055456L;
+
+		public UnderlineAction() {
+			super("font-underline");
+		}
+
+		public String toString() {
+			return "Underline";
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			JEditorPane editor = getEditor(e);
+			if (editor != null) {
+				textPaneThemeslide.saveCurrentCaretPosition();
+				
+				StyledEditorKit kit = getStyledEditorKit(editor);
+				MutableAttributeSet attr = kit.getInputAttributes();
+				boolean underline = (StyleConstants.isUnderline(attr)) ? false : true;
+				SimpleAttributeSet sas = new SimpleAttributeSet();
+				StyleConstants.setUnderline(sas, underline);
+				setCharacterAttributes(editor, sas, false);
+				
+				textPaneThemeslide.restoreLastCaretPosition();
+			}
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * This class handles the event triggerd by fontfamily combobox, and resets the selected text to the selected font family
+	 * 
+	 * @author samu
+	 *
+	 */
+	class FontFamilyAction extends StyledEditorKit.StyledTextAction {
+
+		
+		//TODO make Font Family, Font Size, Font Color and Margin presettable
+		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 3710617413958842313L;
+		private String selectedFamily;
+
+		
+		public FontFamilyAction(String selectedFamily) {
+			super("Font Family");
+			this.selectedFamily = selectedFamily;
+			
+		}
+		
+		public String toString() {
+			return "Font Family";
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			JTextPane editor = (JTextPane) getEditor(e);			
+			if (editor != null) {
+				textPaneThemeslide.saveCurrentCaretPosition();
+				
+				MutableAttributeSet attr = new SimpleAttributeSet();
+				StyleConstants.setFontFamily(attr, selectedFamily);
+				setCharacterAttributes(editor, attr, false);
+				
+				textPaneThemeslide.restoreLastCaretPosition();
+			}
+			
+		}
+	}
+	
+	/**
+	 * 
+	 * This class handles the event triggerd by fontsize combobox, and resets the selected text to the selected font size
+	 * 
+	 * @author samu
+	 *
+	 */
+	class FontSizeAction extends StyledEditorKit.StyledTextAction {
+		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 5817346150045790333L;
+		
+		private String selectedFontSize;
+		
+		public FontSizeAction(String selectedFontSize) {
+			super("Font Size");
+			this.selectedFontSize = selectedFontSize;
+			
+		}
+		
+		public String toString() {
+			return "Font Size";
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
+			JTextPane editor = (JTextPane) getEditor(e);			
+			if (editor != null) {
+				textPaneThemeslide.saveCurrentCaretPosition();
+				
+				MutableAttributeSet attr = new SimpleAttributeSet();
+	            attr.addAttribute(StyleConstants.Size, selectedFontSize);
+				setCharacterAttributes(editor, attr, false);
+
+				textPaneThemeslide.restoreLastCaretPosition();
+			}
+			
+		}
+		
+	}
+	
+	
+	/**
+	 * 
+	 * This class handles the event triggerd by color picker, and sets the selected text to the selected color
+	 * 
+	 * @author samu
+	 *
+	 */
+	class FontColorAction extends StyledEditorKit.StyledTextAction {
+
+		
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 9005216620313856874L;
+		
+		private Color selectedColor = Color.BLACK;
+		
+		public FontColorAction(Color selectedColor) {
+			super("Font Color");
+			this.selectedColor = selectedColor;
+			
+		}
+		
+		public String toString() {
+			return "Font Color";
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			JTextPane editor = (JTextPane) getEditor(e);			
+			if (editor != null) {
+				textPaneThemeslide.saveCurrentCaretPosition();
+				
+				MutableAttributeSet attr = new SimpleAttributeSet();
+				StyleConstants.setForeground(attr, selectedColor);
+				setCharacterAttributes(editor, attr, false);
+				
+				textPaneThemeslide.restoreLastCaretPosition();
+			}
+
+		}
+
+	}
+	
+	/**
+	 * generates a new FontColor changed event to handle the selection in the Color Picker
+	 * @param textColorToSet
+	 */
+	public void textColorUpdated(Color textColorToSet) {
+		new FontColorAction(textColorToSet).actionPerformed(null);
+	}
+	
+	/**
+	 * This method is called when the Caret Posiotion changes.
+	 * Two cases are managed. The first one is the general one it simply calls the updateGuitoStyleAttr method.
+	 * The second case handles the event if the caret was at its last position and does not changed the position since last event invokation
+	 * Only then a update to the Gui is performend with the styling attributes of the last character in the document.
+	 * 
+	 * @param e CaretEvent
+	 */
+	public void caretPositionUpdated(CaretEvent e) {
+		
+		
+		if(lastEventCaretPos == textPaneThemeslide.getCaretPosition()) {
+			lastEventCaretPosChanged = false;
+		} else {
+			lastEventCaretPosChanged = true;
+		}
+		lastEventCaretPos = textPaneThemeslide.getCaretPosition();
+		
+		
+		AttributeSet attr = textPaneThemeslide.getCharacterAttributes();
+		if(attr != null) {
+
+			if(!(textPaneThemeslide.getCaretPosition() == textPaneThemeslide.getDocument().getEndPosition().getOffset() - 1)){			
+				updateGUItoStyleAttr(attr);
+				
+			} else {
+				if(lastEventCaretPosChanged) {
+					Element elt = textPaneThemeslide.getStyledDocument().getCharacterElement(textPaneThemeslide.getDocument().getEndPosition().getOffset() - 2);
+					attr = elt.getAttributes();	
+					updateGUItoStyleAttr(attr);
+				}
+						
+			}
+			
+		}
+		
+	}
+
+	/**
+	 * This method performs GUI updates to all relevant styling elements represented by the GUI e.g. the "bold button".
+	 * It is invoked on every caret position changed.
+	 * 
+	 * @param attr {@link AttributeSet} which contains the attributes the GUI should sync to
+	 */
+	private void updateGUItoStyleAttr(AttributeSet attr) {
+		
+		//TODO if all text in pane is deleted fall back to the defaults set -> GUI updating
+		
+		if(StyleConstants.isBold(attr)) {
+			jToggleButtonBold.setSelected(true);
+		} else {
+			jToggleButtonBold.setSelected(false);
+		}
+		
+		if(StyleConstants.isUnderline(attr)) {
+			jToggleButtonUnderline.setSelected(true);
+		} else {
+			jToggleButtonUnderline.setSelected(false);
+		}
+		
+		if(StyleConstants.isItalic(attr)) {
+			jToggleButtonItalic.setSelected(true);
+		} else {
+			jToggleButtonItalic.setSelected(false);
+		}
+
+		String[] sizes = Constants.FONT_SIZES;
+		
+		for(int i = 0; i < sizes.length; i++) {
+
+			int currentSize;
+			try {
+				currentSize = Integer.parseInt(sizes[i].substring(0, sizes[i].length() - 2));
+				if(attr.containsAttribute(StyleConstants.FontSize, currentSize)) {
+					evtFromGUIupdateFontSize = true;
+					jComboBoxFontSize.setSelectedItem(sizes[i]);
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		String[] fonts = Constants.FONT_FAMILIES;
+		
+		for(int i = 0; i < fonts.length; i++) {
+			
+			if(attr.containsAttribute(StyleConstants.FontFamily, fonts[i])) {
+				evtFromGUIupdateFontFamily = true;
+				jComboBoxFontType.setSelectedItem(fonts[i]);
+			}
+
+		}
+
+	}
  
 
     /**
@@ -585,30 +1008,4 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 
-	public int getAnchorHeight() {
-		return marginTop;
-	}
-
-	public void setAnchorHeight(int anchorHeight) {
-		this.marginTop = anchorHeight;
-		jTextFieldMarginTop.setText(Integer.toString(anchorHeight));
-	}
-
-	public int getAnchorWidth() {
-		return marginLeft;
-	}
-
-	public void setAnchorWidth(int anchorWidth) {
-		this.marginLeft = anchorWidth;
-		jTextFieldMarginLeft.setText(Integer.toString(anchorWidth));
-	}
-
-	public Color getTextColorToSet() {
-		return textColorToSet;
-	}
-
-	public void setTextColorToSet(Color textColorToSet) {
-		this.textColorToSet = textColorToSet;
-		//TODO perform the appropriate update method to set the color of the selected text.
-	}
 }

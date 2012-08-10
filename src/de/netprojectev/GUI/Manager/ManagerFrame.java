@@ -18,8 +18,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
-import com.explodingpixels.macwidgets.IAppWidgetFactory;
-
 import de.netprojectev.GUI.Dialogs.AddTickerElement;
 import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
