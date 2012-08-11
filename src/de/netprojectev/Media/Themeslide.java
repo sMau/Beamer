@@ -13,8 +13,10 @@ public class Themeslide extends MediaFile {
 
 	private static final long serialVersionUID = -1132804586378123305L;
 	
+	private int hashkey; // -1 means no jpg created yet
+	
 	private Theme theme;
-	private Point anchor;
+	private Point margin;
 	private JTextPane text;
 
 	/**
@@ -29,9 +31,11 @@ public class Themeslide extends MediaFile {
 		super(name, priority);
 		
 		this.theme = theme;
-		this.anchor = textPosition;
+		this.margin = textPosition;
 		this.text = text;
 		this.text.setEditable(false);
+		
+		this.hashkey = -1;
 
 	}
 	
@@ -53,11 +57,11 @@ public class Themeslide extends MediaFile {
 	}
 
 	public Point getTextPosition() {
-		return anchor;
+		return margin;
 	}
 
 	public void setTextPosition(Point textPosition) {
-		this.anchor = textPosition;
+		this.margin = textPosition;
 	}
 
 	public JTextPane getText() {
@@ -66,6 +70,14 @@ public class Themeslide extends MediaFile {
 
 	public void setText(JTextPane text) {
 		this.text = text;
+	}
+
+	public int getHashkey() {
+		return hashkey;
+	}
+
+	public void setHashkey(int hashkey) {
+		this.hashkey = hashkey;
 	}
 
 }

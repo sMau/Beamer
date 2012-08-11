@@ -14,13 +14,14 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Random;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriteParam;
 import javax.imageio.ImageWriter;
 import javax.imageio.stream.FileImageOutputStream;
-import javax.print.attribute.standard.Compression;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
@@ -400,8 +401,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {                                                   
-    	//TODO Button updates synching
-
     	new BoldAction().actionPerformed(evt);	
     }                                                 
 
@@ -449,56 +448,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      */
     private void addThemeslide() {
     	
-    	//TODO
-    	/*
-    	 * here last worked on
-    	 * image export to file works proper, but maybe quality can be still improved, look up jpeg compression settings for java
-    	 * furthermore of course have to implement the integration in the application, as save files to a tmp dir, and modify serialization
-    	 * and deserialization to be able to store themeslides
-    	 * 
-    	 * 
-    	 */
-    	
-    	
-    	String fileName = "/home/samu/Desktop/test123.jpg";
-        int w = textPaneThemeslide.getWidth();
-        int h = textPaneThemeslide.getHeight();
-        float quality = 1f;
-        
-        BufferedImage bufImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        Graphics2D tmpG2D = bufImage.createGraphics();
-
-        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        tmpG2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-        tmpG2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-        tmpG2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-        tmpG2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        
-        textPaneThemeslide.paint(tmpG2D);
-
-        Iterator<ImageWriter> itereratorImageWriter = ImageIO.getImageWritersByFormatName("jpeg");
-        ImageWriter writer = (ImageWriter) itereratorImageWriter.next();
-        ImageWriteParam writeParams = writer.getDefaultWriteParam();
-        
-        
-        
-        writeParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        writeParams.setProgressiveMode(ImageWriteParam.MODE_DEFAULT);
-        writeParams.setCompressionQuality(quality);
-        
-
-        try {
-            FileImageOutputStream fos = new FileImageOutputStream(new File(fileName));
-            writer.setOutput(fos);
-            IIOImage img = new IIOImage((RenderedImage) bufImage, null, null);
-            writer.write(null, img, writeParams);
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
-        tmpG2D.dispose();
     	
 
     	Priority priority = null;
@@ -539,16 +488,103 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	if(name != null && priority != null && theme != null) {
     		MediaFile[] themeSlides = new MediaFile[1];
     		themeSlides[0] = new Themeslide(name, priority, theme, textPaneThemeslide, new Point(marginLeft, marginTop));
+    		generateJPGRepresentation(themeSlides[0]);
     		MediaHandler.getInstance().add(themeSlides);
     	} else {
     		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
     	}
+    	
+    	
 
     }
-    
-    
+
+	private void generateJPGRepresentation(MediaFile themeSlides) {
+		//TODO
+    	/*
+    	 * here last worked on
+    	 * image export to file works proper, but maybe quality can be still improved, look up jpeg compression settings for java
+    	 * furthermore of course have to implement the integration in the application, as save files to a tmp dir,edit thmeslides
+    	 * and modify serialization and deserialization to be able to store themeslides
+    	 * 
+    	 * 
+    	 */
+    	
+    	
+    	String savePath = Constants.SAVE_PATH + "themeslidecache/";
+    	if(!new File(savePath).isDirectory()) {
+    		new File(savePath).mkdir();
+    	}
+    	
+    	int hashKey = generateHash();
+    	((Themeslide) themeSlides).setHashkey(hashKey);
+    	String fileName = hashKey + ".jpg";
+    	
+        int w = textPaneThemeslide.getWidth();
+        int h = textPaneThemeslide.getHeight();
+        float quality = 1f;
         
-      
+        BufferedImage bufImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+        Graphics2D tmpG2D = bufImage.createGraphics();
+
+        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+        tmpG2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        
+        textPaneThemeslide.paint(tmpG2D);
+
+        Iterator<ImageWriter> itereratorImageWriter = ImageIO.getImageWritersByFormatName("jpeg");
+        ImageWriter writer = (ImageWriter) itereratorImageWriter.next();
+        ImageWriteParam writeParams = writer.getDefaultWriteParam();
+        
+        writeParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+        writeParams.setProgressiveMode(ImageWriteParam.MODE_DEFAULT);
+        writeParams.setCompressionQuality(quality);
+
+        try {
+            FileImageOutputStream fos = new FileImageOutputStream(new File(savePath + fileName));
+            writer.setOutput(fos);
+            IIOImage img = new IIOImage((RenderedImage) bufImage, null, null);
+            writer.write(null, img, writeParams);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        tmpG2D.dispose();
+	}
+	
+	/**
+	 * generates a unique int thats used as ID for the jpgs created for each themeslide.
+	 * @return unique integer value used as unique ID
+	 */
+	private int generateHash() {
+		
+		Random hashGen = new Random();
+		Boolean isUnique = false;
+		int hash = -1;
+		
+		LinkedList<MediaFile> allfiles = MediaHandler.getInstance().getMediaFiles();
+		
+		while(!isUnique) {
+			hash = hashGen.nextInt(Integer.MAX_VALUE);
+			isUnique = true;
+			for(int i = 0; i < allfiles.size(); i++) {
+				if(allfiles.get(i) instanceof Themeslide) {
+					if(((Themeslide) allfiles.get(i)).getHashkey() == hash) {
+						isUnique = false;
+					}
+				}
+			}
+		
+		}
+		
+		return hash; 
+		
+	}
+    
     
     /**
      * when margin left textfield changed, this method changes the left margin of the JTextPane
@@ -797,7 +833,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 *
 	 */
 	class FontColorAction extends StyledEditorKit.StyledTextAction {
-
 		
 		/**
 		 * 
