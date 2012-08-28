@@ -447,8 +447,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * checks all data and adds it if everything is fine, else showing an error dialog
      */
     private void addThemeslide() {
-    	
-    	
+
+    	//TODO rewrite data checks, sometimes more than one error dialog pops up whats very annoying
 
     	Priority priority = null;
     	Theme theme = null;
@@ -469,6 +469,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	
     	
     	
+
+    	
     	if(!jTextFieldThemeSlideName.getText().isEmpty() && jTextFieldThemeSlideName.getText() != null) {
     		name  = jTextFieldThemeSlideName.getText();
     	} else {
@@ -486,9 +488,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	}
     	    	
     	if(name != null && priority != null && theme != null) {
+    		
+    		long hashKey = generateHash();
+    		
+    		
     		MediaFile[] themeSlides = new MediaFile[1];
-    		themeSlides[0] = new Themeslide(name, priority, theme, textPaneThemeslide, new Point(marginLeft, marginTop));
-    		generateJPGRepresentation(themeSlides[0]);
+    		themeSlides[0] = new Themeslide(name, priority, theme, hashKey, textPaneThemeslide, new Point(marginLeft, marginTop));
+    		generateJPGRepresentation(themeSlides[0], hashKey);
     		MediaHandler.getInstance().add(themeSlides);
     	} else {
     		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -498,7 +504,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     }
 
-	private void generateJPGRepresentation(MediaFile themeSlides) {
+	private void generateJPGRepresentation(MediaFile themeSlides, long hashKey) {
 		//TODO
     	/*
     	 * here last worked on
@@ -510,14 +516,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	 */
     	
     	
-    	String savePath = Constants.SAVE_PATH + "themeslidecache/";
+    	String savePath = Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE;
     	if(!new File(savePath).isDirectory()) {
     		new File(savePath).mkdir();
     	}
     	
-    	int hashKey = generateHash();
-    	((Themeslide) themeSlides).setHashkey(hashKey);
-    	String fileName = hashKey + ".jpg";
+    	String fileName = Long.toString(hashKey) + ".jpg";
     	
         int w = textPaneThemeslide.getWidth();
         int h = textPaneThemeslide.getHeight();
@@ -560,16 +564,16 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 * generates a unique int thats used as ID for the jpgs created for each themeslide.
 	 * @return unique integer value used as unique ID
 	 */
-	private int generateHash() {
+	private long generateHash() {
 		
 		Random hashGen = new Random();
 		Boolean isUnique = false;
-		int hash = -1;
+		long hash = -1;
 		
 		LinkedList<MediaFile> allfiles = MediaHandler.getInstance().getMediaFiles();
 		
 		while(!isUnique) {
-			hash = hashGen.nextInt(Integer.MAX_VALUE);
+			hash = hashGen.nextLong();
 			isUnique = true;
 			for(int i = 0; i < allfiles.size(); i++) {
 				if(allfiles.get(i) instanceof Themeslide) {
@@ -745,7 +749,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		
 		//TODO make Font Family, Font Size, Font Color and Margin presettable
-		
+		//TODO Bug: Setting font size then font type leads to reset of size, maybe the other way round too
+		//TODO BUg: on deleting the last char the settings size and type of font are resetted
 		/**
 		 * 
 		 */

@@ -26,6 +26,7 @@ public class Constants {
 	public static final String[] FONT_SIZES = Misc.generateFontSizes();
 
 	public static final String SAVE_PATH = System.getProperty("user.home") + "/.beamermanager/";
+	public static final String FOLDER_THEMESLIDE_CACHE = "themeslidecache/";
 	
 	public static final String FILENAME_MEDIAFILES = "mediafiles.brm";
 	public static final String FILENAME_PRIORITIES = "priorities.brm";

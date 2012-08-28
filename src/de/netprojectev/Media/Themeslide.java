@@ -1,9 +1,10 @@
 package de.netprojectev.Media;
 
 import java.awt.Point;
-import java.util.Date;
 
 import javax.swing.JTextPane;
+
+import de.netprojectev.Misc.Constants;
 
 /**
  * Datastructure for a themeslide. It holds a theme object and a formatted styled text as JTextPane.
@@ -13,7 +14,9 @@ public class Themeslide extends MediaFile {
 
 	private static final long serialVersionUID = -1132804586378123305L;
 	
-	private int hashkey; // -1 means no jpg created yet
+	private ImageFile imageFileRepresentation;
+	
+	private long hashkey; // -1 means no jpg created yet
 	
 	private Theme theme;
 	private Point margin;
@@ -27,7 +30,7 @@ public class Themeslide extends MediaFile {
 	 * @param text formatted styled text as JTextPane
 	 * @param textPosition left and top margin for moving the textpane in the right position
 	 */
-	public Themeslide(String name,Priority priority, Theme theme, JTextPane text, Point textPosition) {
+	public Themeslide(String name,Priority priority, Theme theme,long hashKey, JTextPane text, Point textPosition) {
 		super(name, priority);
 		
 		this.theme = theme;
@@ -35,16 +38,16 @@ public class Themeslide extends MediaFile {
 		this.text = text;
 		this.text.setEditable(false);
 		
-		this.hashkey = -1;
+		this.hashkey = hashKey;
+		
+		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".jpg", priority);
 
 	}
 	
 	@Override
 	public void show() {
 				
-		display.getDisplayMainComponent().setImageToDraw(theme.getBackgroundImage());
-		display.getDisplayMainComponent().add(text);
-		System.out.println("Show file: " + name + "   " + new Date());
+		imageFileRepresentation.show();
 
 	}
 
@@ -72,12 +75,8 @@ public class Themeslide extends MediaFile {
 		this.text = text;
 	}
 
-	public int getHashkey() {
+	public long getHashkey() {
 		return hashkey;
-	}
-
-	public void setHashkey(int hashkey) {
-		this.hashkey = hashkey;
 	}
 
 }

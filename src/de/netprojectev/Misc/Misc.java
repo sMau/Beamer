@@ -181,6 +181,7 @@ public class Misc {
 			o.close();
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Error while saving files.", "Error", JOptionPane.ERROR_MESSAGE);
+			System.out.println(e);
 		}
 
 	}

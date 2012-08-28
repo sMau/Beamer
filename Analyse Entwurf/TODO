@@ -31,6 +31,5 @@ Postioning of dialogs not mousespecific but parent centered
 enable disable funktion in medien tabelle beamerprog
 
 BUGS
-Anchor in themeslidecreation resets after resizing
-after setting the background image in preferences of theme, resizing fix
+28.08.12 Themeslidecreator.java - Erst Schriftgröße dann Schriftart gewählt führte zu reset der Größe evtl. auch umgekehrt
 

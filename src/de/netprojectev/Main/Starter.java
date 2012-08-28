@@ -1,8 +1,13 @@
 package de.netprojectev.Main;
 
+import java.io.Console;
+import java.io.File;
+import java.lang.invoke.ConstantCallSite;
+
 import javax.swing.SwingUtilities;
 
 import de.netprojectev.GUI.Manager.ManagerFrame;
+import de.netprojectev.Misc.Constants;
 
 public class Starter {
 
@@ -71,6 +76,8 @@ public class Starter {
 	        java.util.logging.Logger.getLogger(ManagerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 	    }
 		
+		onFirstStart();
+
 		SwingUtilities.invokeLater(new Runnable() {
 
 	        public void run() {
@@ -78,6 +85,24 @@ public class Starter {
 	        }
 	    });
 
+	}
+
+	/**
+	 * checks if this is the first time the program is started on this machine,
+	 * and creates the necessary file structure in the home folder of the user
+	 * if it does not exist already
+	 *
+	 */
+	private static void onFirstStart() {
+		File toTestMain = new File(Constants.SAVE_PATH);
+		File toTestCache = new File(Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE);
+		if(!toTestMain.isDirectory()) {
+			toTestMain.mkdirs();
+		}
+		if(!toTestCache.isDirectory()) {
+			toTestCache.mkdirs();
+		}
+		
 	}
 
 }
