@@ -1,6 +1,7 @@
 package de.netprojectev.Media;
 
 import java.awt.Point;
+import java.io.File;
 
 import javax.swing.JTextPane;
 
@@ -50,6 +51,17 @@ public class Themeslide extends MediaFile {
 		imageFileRepresentation.show();
 
 	}
+	
+	public void createNewImageFileRepresentation() {
+		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".jpg", priority);
+	}
+	
+	public void removeCacheFile() {
+		File fileToDelete = new File(imageFileRepresentation.getPath());
+		if(fileToDelete.exists()) {
+			fileToDelete.delete();
+		}
+	}
 
 	public Theme getTheme() {
 		return theme;
@@ -77,6 +89,10 @@ public class Themeslide extends MediaFile {
 
 	public long getHashkey() {
 		return hashkey;
+	}
+
+	public ImageFile getImageFileRepresentation() {
+		return imageFileRepresentation;
 	}
 
 }

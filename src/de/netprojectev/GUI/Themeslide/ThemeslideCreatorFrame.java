@@ -508,9 +508,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		//TODO
     	/*
     	 * here last worked on
-    	 * image export to file works proper, but maybe quality can be still improved, look up jpeg compression settings for java
-    	 * furthermore of course have to implement the integration in the application, as save files to a tmp dir,edit thmeslides
-    	 * and modify serialization and deserialization to be able to store themeslides
+    	 * Themeslides are serializable now 
+    	 * But have to implement the edit feature
     	 * 
     	 * 
     	 */

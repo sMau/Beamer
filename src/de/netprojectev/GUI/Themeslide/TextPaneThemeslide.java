@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,11 +23,9 @@ public class TextPaneThemeslide extends JTextPane {
 	
 	private static final long serialVersionUID = 6811486190608541934L;
 	
-	private Image image;
-	private int lastCarretPosition = 0;
-	
-	private ThemeslideCreatorFrame themeSlideCreatorFrame;
-	
+	private transient BufferedImage image;
+	private transient int lastCarretPosition = 0;
+		
 	public TextPaneThemeslide() {
         super();
         setOpaque(false);

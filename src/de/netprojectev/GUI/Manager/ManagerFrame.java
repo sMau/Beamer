@@ -1130,6 +1130,9 @@ public class ManagerFrame extends javax.swing.JFrame {
     			tmpMedia.get(i).setDisplay(DisplayDispatcher.getInstance().getDisplayFrame());
     			if(tmpMedia.get(i) instanceof ImageFile) {
     				((ImageFile) tmpMedia.get(i)).generatePreview();
+    			} 
+    			if(tmpMedia.get(i) instanceof Themeslide) {
+    				((Themeslide) tmpMedia.get(i)).createNewImageFileRepresentation();
     			}
     			
     			mediaHandler.add(tmpMedia.toArray(new MediaFile[0]));
@@ -1195,7 +1198,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		    if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
 		    	jLabelPreview.setIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview());
 		    } else if (mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
-		    	jLabelPreview.setText(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getText().getText());
+		    	jLabelPreview.setIcon(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getImageFileRepresentation().getPreview());
 		    }
 		    
 		}

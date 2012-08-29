@@ -1,8 +1,6 @@
 package de.netprojectev.Main;
 
-import java.io.Console;
 import java.io.File;
-import java.lang.invoke.ConstantCallSite;
 
 import javax.swing.SwingUtilities;
 
@@ -40,16 +38,13 @@ public class Starter {
 		try {
 			javax.swing.UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		*/
