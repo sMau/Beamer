@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.JTextPane;
 
+import de.netprojectev.GUI.Themeslide.TextPanePanel;
 import de.netprojectev.Misc.Constants;
 
 /**
@@ -20,8 +21,6 @@ public class Themeslide extends MediaFile {
 	private long hashkey; // -1 means no jpg created yet
 	
 	private Theme theme;
-	private Point margin;
-	private JTextPane text;
 
 	/**
 	 * 
@@ -31,18 +30,14 @@ public class Themeslide extends MediaFile {
 	 * @param text formatted styled text as JTextPane
 	 * @param textPosition left and top margin for moving the textpane in the right position
 	 */
-	public Themeslide(String name,Priority priority, Theme theme,long hashKey, JTextPane text, Point textPosition) {
+	public Themeslide(String name,Priority priority, Theme theme,long hashKey) {
 		super(name, priority);
 		
 		this.theme = theme;
-		this.margin = textPosition;
-		this.text = text;
-		this.text.setEditable(false);
 		
 		this.hashkey = hashKey;
 		
 		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".jpg", priority);
-
 	}
 	
 	@Override
@@ -71,21 +66,6 @@ public class Themeslide extends MediaFile {
 		this.theme = theme;
 	}
 
-	public Point getTextPosition() {
-		return margin;
-	}
-
-	public void setTextPosition(Point textPosition) {
-		this.margin = textPosition;
-	}
-
-	public JTextPane getText() {
-		return text;
-	}
-
-	public void setText(JTextPane text) {
-		this.text = text;
-	}
 
 	public long getHashkey() {
 		return hashkey;
@@ -94,5 +74,7 @@ public class Themeslide extends MediaFile {
 	public ImageFile getImageFileRepresentation() {
 		return imageFileRepresentation;
 	}
+
+	
 
 }

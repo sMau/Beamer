@@ -959,7 +959,14 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private void editFile() {
 		int[] selectedRows = jTableFileManager.getSelectedRows();
     	if(selectedRows.length > 0) {
-    		new EditMediaFileFrame(Misc.indexListToMediaFiles(selectedRows)[0], this).setVisible(true);
+    		
+    		MediaFile fileToEdit = Misc.indexListToMediaFiles(selectedRows)[0];
+    		if(fileToEdit instanceof Themeslide) {
+    			//TODO editing of themeslides
+    		} else {
+    			new EditMediaFileFrame(fileToEdit, this).setVisible(true);
+    		}
+    		
     	}
 	}
 	

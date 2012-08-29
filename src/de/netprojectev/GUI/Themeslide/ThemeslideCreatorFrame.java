@@ -450,6 +450,15 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     	//TODO rewrite data checks, sometimes more than one error dialog pops up whats very annoying
 
+    	
+    	//TODO
+    	/*
+    	 * last worked here, after adding the themeslide its not previewable(?)
+    	 * after closing and starting the program again its previeable
+    	 * 
+    	 * 
+    	 */
+    	
     	Priority priority = null;
     	Theme theme = null;
     	String name = null;
@@ -493,14 +502,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		
     		
     		MediaFile[] themeSlides = new MediaFile[1];
-    		themeSlides[0] = new Themeslide(name, priority, theme, hashKey, textPaneThemeslide, new Point(marginLeft, marginTop));
+    		themeSlides[0] = new Themeslide(name, priority, theme, hashKey);
     		generateJPGRepresentation(themeSlides[0], hashKey);
     		MediaHandler.getInstance().add(themeSlides);
     	} else {
     		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
     	}
-    	
-    	
 
     }
 
@@ -1045,6 +1052,26 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private de.netprojectev.GUI.Themeslide.TextPanePanel textPanePanel1;
     private de.netprojectev.GUI.Themeslide.TextPaneThemeslide textPaneThemeslide;
     // End of variables declaration//GEN-END:variables
+
+
+
+	public void setMarginLeft(int marginLeft) {
+		this.marginLeft = marginLeft;
+		jTextFieldMarginLeft.setText(Integer.toString(marginLeft));
+	}
+
+
+	public void setMarginTop(int marginTop) {
+		this.marginTop = marginTop;
+		jTextFieldMarginTop.setText(Integer.toString(marginTop));
+
+	}
+	
+	public void setTextPanePanel1(de.netprojectev.GUI.Themeslide.TextPanePanel textPanePanel1) {
+		this.textPanePanel1 = textPanePanel1;
+		repaint();
+		
+	}
 
 
 }
