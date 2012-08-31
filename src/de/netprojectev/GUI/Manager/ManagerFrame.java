@@ -1194,6 +1194,9 @@ public class ManagerFrame extends javax.swing.JFrame {
      * it updates the info area and the previewing
      */
 	protected void onSelectionChangeJtableFile() {
+		
+		System.out.println("selction changed");
+		
 		int viewRow = jTableFileManager.getSelectedRow();
 		if (viewRow < 0) {
 		    jTextAreaFileInfo.setText("No file selected");
@@ -1205,6 +1208,9 @@ public class ManagerFrame extends javax.swing.JFrame {
 		    if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
 		    	jLabelPreview.setIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview());
 		    } else if (mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
+		    	System.out.println("not empty themeslide");
+		    	System.out.println(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getImageFileRepresentation().getName());
+		    	System.out.println(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getImageFileRepresentation().getPreview());
 		    	jLabelPreview.setIcon(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getImageFileRepresentation().getPreview());
 		    }
 		    

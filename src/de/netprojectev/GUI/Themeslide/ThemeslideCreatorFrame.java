@@ -45,6 +45,8 @@ import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
+
+//TODO on pressing enter add the current tabspace automatically (like in eclipse)
 /**
  * This is a GUI class to create and design a new Themeslide.
  * It contains a small text editor and the possibilty to select a Theme (background).
@@ -475,11 +477,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			marginLeft = 0;
 			//e.printStackTrace();
 		}
-    	
-    	
-    	
 
-    	
     	if(!jTextFieldThemeSlideName.getText().isEmpty() && jTextFieldThemeSlideName.getText() != null) {
     		name  = jTextFieldThemeSlideName.getText();
     	} else {
@@ -512,16 +510,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     }
 
 	private void generateJPGRepresentation(MediaFile themeSlides, long hashKey) {
-		//TODO
-    	/*
-    	 * here last worked on
-    	 * Themeslides are serializable now 
-    	 * But have to implement the edit feature
-    	 * 
-    	 * 
-    	 */
-    	
-    	
+	
     	String savePath = Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE;
     	if(!new File(savePath).isDirectory()) {
     		new File(savePath).mkdir();
