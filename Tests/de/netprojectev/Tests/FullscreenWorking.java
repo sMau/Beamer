@@ -12,6 +12,8 @@ import javax.swing.JFrame;
 
 public class FullscreenWorking extends JFrame implements ActionListener {
 
+	//http://www.java-forum.org/spiele-multimedia-programmierung/137035-ubuntu-gnome3-panel-always-top.html
+	
 	/**
 	 * 
 	 */
