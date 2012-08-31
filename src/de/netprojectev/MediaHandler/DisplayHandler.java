@@ -289,8 +289,6 @@ public class DisplayHandler {
 	 */
 	public void showFileAt(MediaFile fileToShow, Date date) {
 		
-		
-		//TODO Gedächtnis einbauen dass er dahin zurückspringt im automodus wo er vorher war
 		fileToShow.getStatus().setShowAt(date);
 		Timer tmpTimer = new Timer();
 		tmpTimer.schedule(new ShowFileAtTimer(fileToShow), date);

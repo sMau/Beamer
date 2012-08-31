@@ -962,7 +962,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     		
     		MediaFile fileToEdit = Misc.indexListToMediaFiles(selectedRows)[0];
     		if(fileToEdit instanceof Themeslide) {
-    			//TODO editing of themeslides
+    			//TODO editing of themeslides (later maybe)
     		} else {
     			new EditMediaFileFrame(fileToEdit, this).setVisible(true);
     		}
@@ -1208,9 +1208,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		    if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
 		    	jLabelPreview.setIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview());
 		    } else if (mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
-		    	System.out.println("not empty themeslide");
-		    	System.out.println(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getImageFileRepresentation().getName());
-		    	System.out.println(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getImageFileRepresentation().getPreview());
+	  	
 		    	jLabelPreview.setIcon(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getImageFileRepresentation().getPreview());
 		    }
 		    

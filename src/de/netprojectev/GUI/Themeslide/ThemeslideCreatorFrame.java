@@ -7,7 +7,6 @@ package de.netprojectev.GUI.Themeslide;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Insets;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
@@ -46,7 +45,6 @@ import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
 
-//TODO on pressing enter add the current tabspace automatically (like in eclipse)
 /**
  * This is a GUI class to create and design a new Themeslide.
  * It contains a small text editor and the possibilty to select a Theme (background).
@@ -56,10 +54,7 @@ import de.netprojectev.Preferences.PreferencesHandler;
 public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = -3653577264825548156L;
-	
-	private int marginLeft = 0;
-	private int marginTop = 0;
-	
+
 	private Boolean evtFromGUIupdateFontSize = false;
 	private Boolean evtFromGUIupdateFontFamily = false;
 
@@ -449,60 +444,42 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * checks all data and adds it if everything is fine, else showing an error dialog
      */
     private void addThemeslide() {
-
-    	//TODO rewrite data checks, sometimes more than one error dialog pops up whats very annoying
-
-    	
-    	//TODO
-    	/*
-    	 * last worked here, after adding the themeslide its not previewable(?)
-    	 * after closing and starting the program again its previeable
-    	 * 
-    	 * 
-    	 */
     	
     	Priority priority = null;
     	Theme theme = null;
     	String name = null;
-    	
-    	try {
-			marginTop = Integer.parseInt(jTextFieldMarginTop.getText());
-		} catch (NumberFormatException e) {
-			marginTop = 0;
-			//e.printStackTrace();
-		}
-    	try {
-			marginLeft = Integer.parseInt(jTextFieldMarginLeft.getText());
-		} catch (NumberFormatException e) {
-			marginLeft = 0;
-			//e.printStackTrace();
-		}
 
     	if(!jTextFieldThemeSlideName.getText().isEmpty() && jTextFieldThemeSlideName.getText() != null) {
-    		name  = jTextFieldThemeSlideName.getText();
+    		name = jTextFieldThemeSlideName.getText();
     	} else {
     		JOptionPane.showMessageDialog(this, "Please enter a name.", "Error", JOptionPane.ERROR_MESSAGE);
+    		return;
     	}
     	if(jComboBoxPriority.getSelectedIndex() >= 0) {
     		priority = PreferencesHandler.getInstance().getListOfPriorities().get(jComboBoxPriority.getSelectedIndex());
     	} else {
     		JOptionPane.showMessageDialog(this, "Please select a priority.", "Error", JOptionPane.ERROR_MESSAGE);
+    		return;
     	}
     	if(jComboBoxTheme.getSelectedIndex() >= 0) {
     		theme = PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex());
     	} else {
     		JOptionPane.showMessageDialog(this, "Please select a theme.", "Error", JOptionPane.ERROR_MESSAGE);
+    		return;
     	}
     	    	
     	if(name != null && priority != null && theme != null) {
     		
     		long hashKey = generateHash();
     		
-    		
     		MediaFile[] themeSlides = new MediaFile[1];
     		themeSlides[0] = new Themeslide(name, priority, theme, hashKey);
     		generateJPGRepresentation(themeSlides[0], hashKey);
     		MediaHandler.getInstance().add(themeSlides);
+    		
+    		//TODO check why this fixes the "preview bug" (Themeslides are only previewable after invoking this method once)
+    		((Themeslide) themeSlides[0]).createNewImageFileRepresentation();
+    		
     	} else {
     		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
     	}
@@ -589,7 +566,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * when margin left textfield changed, this method changes the left margin of the JTextPane
      */
 	private void marginLeftModified() {
-		//TODO show user information about entering a value bigger than 0/TODO not working if frame smaller than set anchor
 		if(!jTextFieldMarginLeft.getText().isEmpty()) {
 	    	try {
 				if(Integer.parseInt(jTextFieldMarginLeft.getText()) > 0) {
@@ -606,7 +582,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 * when margin top textfield changed, this method changes the top margin of the JTextPane
 	 */
 	private void marginTopModified() {
-		//TODO show user information about entering a value bigger than 0
 		if(!jTextFieldMarginTop.getText().isEmpty()) {
 			try {
 				if(Integer.parseInt(jTextFieldMarginTop.getText()) > 0) {
@@ -743,7 +718,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	class FontFamilyAction extends StyledEditorKit.StyledTextAction {
 
 		
-		//TODO make Font Family, Font Size, Font Color and Margin presettable
 		//TODO Bug: Setting font size then font type leads to reset of size, maybe the other way round too
 		//TODO BUg: on deleting the last char the settings size and type of font are resetted
 		/**
@@ -923,7 +897,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 */
 	private void updateGUItoStyleAttr(AttributeSet attr) {
 		
-		//TODO if all text in pane is deleted fall back to the defaults set -> GUI updating
+		//TODO if all text in pane is deleted fall back to the defaults set (or change this behaviour, so no fallback) -> GUI updating
 		
 		if(StyleConstants.isBold(attr)) {
 			jToggleButtonBold.setSelected(true);
@@ -955,7 +929,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 					jComboBoxFontSize.setSelectedItem(sizes[i]);
 				}
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -1043,18 +1016,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
 
-
-	public void setMarginLeft(int marginLeft) {
-		this.marginLeft = marginLeft;
-		jTextFieldMarginLeft.setText(Integer.toString(marginLeft));
-	}
-
-
-	public void setMarginTop(int marginTop) {
-		this.marginTop = marginTop;
-		jTextFieldMarginTop.setText(Integer.toString(marginTop));
-
-	}
 	
 	public void setTextPanePanel1(de.netprojectev.GUI.Themeslide.TextPanePanel textPanePanel1) {
 		this.textPanePanel1 = textPanePanel1;

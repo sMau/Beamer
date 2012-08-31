@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import de.netprojectev.GUI.Manager.FileManagerTableModel;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
+import de.netprojectev.Media.Themeslide;
 
 /**
  * Handles all media files currently loaded.
@@ -66,7 +67,9 @@ public class MediaHandler {
 	/**
 	 * removes the media files from the list and if necessary invokes updates on the GUI and the display handler.	 
 	 * Prevents current file from being removed from the list, to avoid problems with synching to the {@link DisplayHandler}.
+	 * Furthermore it cleans up the themeslide cache. JPGs not needed anymore are deleted from the cache.
 	 * @param files files to remove
+	 * @param removeCurrent true if the current element should also be removed if it is in the selection, false if not
 	 */
 	public void remove(MediaFile[] files, boolean removeCurrent) {
 
@@ -94,7 +97,11 @@ public class MediaHandler {
 
 		if(filesToRemove.length > 0) {
 			for (int i = 0; i < filesToRemove.length; i++) {
+
 				mediaFiles.remove(filesToRemove[i]);
+				if(filesToRemove[i] instanceof Themeslide) {
+					((Themeslide) filesToRemove[i]).removeCacheFile();
+				}
 			}
 			displayHandler.remove(filesToRemove);
 			

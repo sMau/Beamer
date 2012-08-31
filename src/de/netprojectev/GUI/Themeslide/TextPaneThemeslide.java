@@ -59,7 +59,6 @@ public class TextPaneThemeslide extends JTextPane {
 		try {
 			image = ImageIO.read(file);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
