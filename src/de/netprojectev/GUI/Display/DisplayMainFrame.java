@@ -55,6 +55,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
      * @param screenNumber the number of the screen to show on
      */
     public void enterFullscreen(int screenNumber) {
+    	
     	if(!fullscreen) {
     		screenNumberDisplayFrame = screenNumber;
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -65,6 +66,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 			// this.setAlwaysOnTop(true);
 			if (screenNumber >= 0 && screenNumber < myDevices.length) {
 				myDevices[screenNumber].setFullScreenWindow(this);
+		    	tickerComponent.refreshStringGeneration();
 			} else {
 				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode.", "Error", JOptionPane.ERROR_MESSAGE);
 			}
@@ -77,6 +79,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
      * lets the display window exiting the fullscreen
      */
     public void exitFullscreen() {
+    	
     	if(fullscreen) {
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
@@ -87,6 +90,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 			// this.setAlwaysOnTop(false);
 			pack();
     		fullscreen = false;
+	    	tickerComponent.refreshStringGeneration();
     	}
     }
 

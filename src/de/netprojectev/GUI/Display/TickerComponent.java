@@ -44,6 +44,13 @@ public class TickerComponent extends JComponent {
 	}
 	
 	/**
+	 * needs to be invoked after resizing the tickerComponent, e.g. after entering the fullscreen
+	 */
+	public void refreshStringGeneration() {
+		generateDrawingStrings();
+	}
+	
+	/**
 	 * generates the two strings needed for a gapless ticker.
 	 */
 	private void generateDrawingStrings() {
