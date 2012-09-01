@@ -26,9 +26,13 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = 863589702184282724L;
 	
 	private Timer liveTickerTimer;
+	private Boolean fullscreen;
+	private int screenNumberDisplayFrame; 
 	
     public DisplayMainFrame() {
         initComponents();
+        fullscreen = false;
+        screenNumberDisplayFrame = 0;
         startLiveTicker(Constants.DEFAULT_TICKER_SPEED);
     }
 
@@ -51,18 +55,39 @@ public class DisplayMainFrame extends javax.swing.JFrame {
      * @param screenNumber the number of the screen to show on
      */
     public void enterFullscreen(int screenNumber) {
-    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-		GraphicsDevice[] myDevices = ge.getScreenDevices();
-		dispose();
-		this.setUndecorated(true);
-		setVisible(true);
-		// this.setAlwaysOnTop(true);
-		if (screenNumber >= 0 && screenNumber < myDevices.length) {
-			myDevices[screenNumber].setFullScreenWindow(this);
-		} else {
-			JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode.", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+    	if(!fullscreen) {
+    		screenNumberDisplayFrame = screenNumber;
+	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsDevice[] myDevices = ge.getScreenDevices();
+			dispose();
+			this.setUndecorated(true);
+			setVisible(true);
+			// this.setAlwaysOnTop(true);
+			if (screenNumber >= 0 && screenNumber < myDevices.length) {
+				myDevices[screenNumber].setFullScreenWindow(this);
+			} else {
+				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode.", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			fullscreen = true;
+    	}
 
+    }
+    
+    /**
+     * lets the display window exiting the fullscreen
+     */
+    public void exitFullscreen() {
+    	if(fullscreen) {
+	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsDevice[] myDevices = ge.getScreenDevices();
+			dispose();
+			this.setUndecorated(false);
+			setVisible(true);
+			myDevices[screenNumberDisplayFrame].setFullScreenWindow(null);
+			// this.setAlwaysOnTop(false);
+			pack();
+    		fullscreen = false;
+    	}
     }
 
 	/**

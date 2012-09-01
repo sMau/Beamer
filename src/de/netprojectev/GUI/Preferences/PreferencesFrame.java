@@ -13,9 +13,11 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import de.netprojectev.GUI.Display.DisplayMainFrame;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
+import de.netprojectev.MediaHandler.DisplayDispatcher;
 import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
@@ -35,6 +37,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private ManagerFrame managerFrame;
 	private File selectedImage;
 	
+	private transient DisplayMainFrame display;
+	
 
 	/**
 	 * 
@@ -46,6 +50,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	this.preferenceshandler = PreferencesHandler.getInstance(); 
     	preferenceshandler.setPreferencesFrame(this);
     	preferenceshandler.setManagerFrame(managerFrame);
+    	this.display = 	DisplayDispatcher.getInstance().getDisplayFrame();
         initComponents();
         setLocation(Misc.currentMousePosition());
     }
@@ -67,6 +72,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextFieldPreviewWidth = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jButtonEnterFullscreen = new javax.swing.JButton();
+        jButtonExitFullscreen = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jTextFieldScreenNumber = new javax.swing.JTextField();
         jPanelTabPrio = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListPrio = new javax.swing.JList();
@@ -116,6 +127,30 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jLabel3.setText("px");
 
+        jButtonEnterFullscreen.setText("Enter");
+        jButtonEnterFullscreen.setToolTipText("This makes the display frame fullscreen");
+        jButtonEnterFullscreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEnterFullscreenActionPerformed(evt);
+            }
+        });
+
+        jButtonExitFullscreen.setText("Exit");
+        jButtonExitFullscreen.setToolTipText("This lets the display frame extiting the fullscreen");
+        jButtonExitFullscreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExitFullscreenActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("fullscreen settings");
+
+        jLabel5.setText("screen number");
+        jLabel5.setToolTipText("Number of the screen the display frame should enter the fullscreen on. To switch screens you first have to exit the current fullscreen.");
+
+        jTextFieldScreenNumber.setText("0");
+        jTextFieldScreenNumber.setToolTipText("Number of the screen the display frame should enter the fullscreen on. To switch screens you first have to exit the current fullscreen.");
+
         javax.swing.GroupLayout jPanelTabMainLayout = new javax.swing.GroupLayout(jPanelTabMain);
         jPanelTabMain.setLayout(jPanelTabMainLayout);
         jPanelTabMainLayout.setHorizontalGroup(
@@ -123,6 +158,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
             .addGroup(jPanelTabMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator3)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonReset))
@@ -134,8 +170,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(2, 2, 2)
                                 .addComponent(jLabel3))
-                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 300, Short.MAX_VALUE)))
+                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4)
+                            .addGroup(jPanelTabMainLayout.createSequentialGroup()
+                                .addComponent(jButtonEnterFullscreen)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonExitFullscreen, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 257, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanelTabMainLayout.setVerticalGroup(
@@ -148,7 +193,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonExitFullscreen)
+                    .addComponent(jButtonEnterFullscreen)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addComponent(jButtonReset)
                 .addContainerGap())
         );
@@ -618,7 +673,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButtonResetActionPerformed
 
-    /**
+    private void jButtonEnterFullscreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEnterFullscreenActionPerformed
+        enterFullscreen();
+    }//GEN-LAST:event_jButtonEnterFullscreenActionPerformed
+
+	private void jButtonExitFullscreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExitFullscreenActionPerformed
+        exitFullscreen();
+    }//GEN-LAST:event_jButtonExitFullscreenActionPerformed
+
+	/**
      * on selection change, updates the name and background image fields
      */
 	private void listThemeSelectionChanged() {
@@ -641,6 +704,27 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		    jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
 		}
 	}
+	/**
+	 * entering the fullscreen
+	 */
+    private void exitFullscreen() {
+		display.exitFullscreen();
+	}
+    
+    /**
+     * exiting the fullscreen
+     */
+    private void enterFullscreen() {
+    	int screenNumber = 0;
+    	try {
+			screenNumber = Integer.parseInt(jTextFieldScreenNumber.getText());
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "Please enter a valid number.", "Error", JOptionPane.INFORMATION_MESSAGE);
+		}
+    	display.enterFullscreen(screenNumber);
+		
+	}
+
 
     
     /**
@@ -693,12 +777,16 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonApplyPrefs;
     private javax.swing.JButton jButtonCancelPrefs;
     private javax.swing.JButton jButtonChooseBgImage;
+    private javax.swing.JButton jButtonEnterFullscreen;
+    private javax.swing.JButton jButtonExitFullscreen;
     private javax.swing.JButton jButtonPrioSave;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelPrioName;
     private javax.swing.JLabel jLabelThemeBg;
     private javax.swing.JLabel jLabelThemeName;
@@ -712,11 +800,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldPreviewWidth;
     private javax.swing.JTextField jTextFieldPrioMin;
     private javax.swing.JTextField jTextFieldPrioName;
+    private javax.swing.JTextField jTextFieldScreenNumber;
     private javax.swing.JTextField jTextFieldThemeBgImg;
     private javax.swing.JTextField jTextFieldThemeName;
     // End of variables declaration//GEN-END:variables
