@@ -55,8 +55,10 @@ public class LiveTicker {
 	public void add(TickerTextElement element) {
 		if(!textElements.contains(element)) {
 			textElements.add(element);
+			if(textElements.size() == 1) {
+				display.startLiveTicker(Constants.DEFAULT_TICKER_SPEED);
+			}
 		}
-		
 		refreshDataModel();
 	
 	}
@@ -74,13 +76,16 @@ public class LiveTicker {
 	}
 	
 	/**
-	 * Remove a element from list.
+	 * Remove a set of elements from list.
 	 * @param elements the element to remove
 	 */
 	public void remove(TickerTextElement[] elements) {
 		
 		for(int i = 0; i < elements.length; i++) {	
 			textElements.remove(elements[i]);	
+		}
+		if(textElements.isEmpty()) {
+			display.stopLiveTicker();
 		}
 		refreshDataModel();
 		

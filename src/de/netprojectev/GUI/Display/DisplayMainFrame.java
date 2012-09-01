@@ -4,10 +4,15 @@
  */
 package de.netprojectev.GUI.Display;
 
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
+
+import de.netprojectev.Misc.Constants;
 
 /**
  * GUI class frame, to store the viewing components, as the live ticker and the image and themeslide showing component.
@@ -15,23 +20,50 @@ import javax.swing.Timer;
  */
 public class DisplayMainFrame extends javax.swing.JFrame {
 
-	private int tickerUpdateInterval = 50;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 863589702184282724L;
+	
+	private Timer liveTickerTimer;
 	
     public DisplayMainFrame() {
         initComponents();
-        startLiveTicker();
+        startLiveTicker(Constants.DEFAULT_TICKER_SPEED);
     }
 
-    private void startLiveTicker() {
-		Timer t = new Timer(tickerUpdateInterval, new ActionListener() {
+    public void startLiveTicker(int tickerUpdateInterval) {
+    	liveTickerTimer = new Timer(tickerUpdateInterval, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				tickerComponent.repaint();
 			}
 
 		});
-		t.start(); 
+    	liveTickerTimer.start(); 
 		
 	}
+    public void stopLiveTicker() {
+    	liveTickerTimer.stop();
+    }
+    
+    /**
+     * Setting the display frame as fullscreen exclusive window
+     * @param screenNumber the number of the screen to show on
+     */
+    public void enterFullscreen(int screenNumber) {
+    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		GraphicsDevice[] myDevices = ge.getScreenDevices();
+		dispose();
+		this.setUndecorated(true);
+		setVisible(true);
+		// this.setAlwaysOnTop(true);
+		if (screenNumber >= 0 && screenNumber < myDevices.length) {
+			myDevices[screenNumber].setFullScreenWindow(this);
+		} else {
+			JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode.", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+
+    }
 
 	/**
      * This method is called from within the constructor to initialize the form.

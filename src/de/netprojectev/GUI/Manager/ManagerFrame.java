@@ -1194,9 +1194,7 @@ public class ManagerFrame extends javax.swing.JFrame {
      * it updates the info area and the previewing
      */
 	protected void onSelectionChangeJtableFile() {
-		
-		System.out.println("selction changed");
-		
+				
 		int viewRow = jTableFileManager.getSelectedRow();
 		if (viewRow < 0) {
 		    jTextAreaFileInfo.setText("No file selected");
