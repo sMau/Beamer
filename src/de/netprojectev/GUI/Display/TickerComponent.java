@@ -31,6 +31,7 @@ public class TickerComponent extends JComponent {
 		posOfString1 = getWidth();
 		posOfString2 = getWidth();
 	}
+	
 	/**
 	 * Set the ticker string to draw on the component.
 	 * A GUI update is invoked automatically after setting the new string.

@@ -35,6 +35,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 
+import de.netprojectev.GUI.Dialogs.ColorPickerDialog;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
@@ -435,8 +436,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jToggleButtonUnderlineActionPerformed
 
     private void jButtonColorPickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColorPickerActionPerformed
-    	(new ColorPickerDialog(this, true)).setVisible(true);
-    	
+    	ColorPickerDialog colorPicker = new ColorPickerDialog(this, true);
+    	colorPicker.setVisible(true);
+    	new FontColorAction(colorPicker.getChoosenColor()).actionPerformed(null);
     }//GEN-LAST:event_jButtonColorPickerActionPerformed
 
     /**
@@ -842,15 +844,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		}
 
 	}
-	
-	/**
-	 * generates a new FontColor changed event to handle the selection in the Color Picker
-	 * @param textColorToSet
-	 */
-	public void textColorUpdated(Color textColorToSet) {
-		new FontColorAction(textColorToSet).actionPerformed(null);
-	}
-	
+
 	/**
 	 * This method is called when the Caret Posiotion changes.
 	 * Two cases are managed. The first one is the general one it simply calls the updateGuitoStyleAttr method.

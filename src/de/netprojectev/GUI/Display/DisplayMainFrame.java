@@ -46,6 +46,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
     	liveTickerTimer.start(); 
 		
 	}
+    
     public void stopLiveTicker() {
     	liveTickerTimer.stop();
     }
@@ -111,7 +112,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
         displayMainComponent.setDoubleBuffered(true);
 
         tickerComponent.setDoubleBuffered(true);
-        tickerComponent.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        tickerComponent.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
 
         javax.swing.GroupLayout tickerComponentLayout = new javax.swing.GroupLayout(tickerComponent);
         tickerComponent.setLayout(tickerComponentLayout);

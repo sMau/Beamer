@@ -57,7 +57,7 @@
           <Properties>
             <Property name="doubleBuffered" type="boolean" value="true"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Arial" size="24" style="1"/>
+              <Font name="Arial" size="36" style="1"/>
             </Property>
           </Properties>
 

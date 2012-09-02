@@ -2,8 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.netprojectev.GUI.Themeslide;
+package de.netprojectev.GUI.Dialogs;
 
+import java.awt.Color;
+
+import de.netprojectev.GUI.Themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.Misc.Misc;
 
 /**
@@ -19,6 +22,9 @@ public class ColorPickerDialog extends javax.swing.JDialog {
 	/**
      * Creates new form ColorPickerDialog
      */
+	
+	private Color choosenColor;
+	
     public ColorPickerDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         setLocation(Misc.currentMousePosition());
@@ -91,7 +97,7 @@ public class ColorPickerDialog extends javax.swing.JDialog {
 
     private void jButtonApplyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyActionPerformed
         
-    	((ThemeslideCreatorFrame) getParent()).textColorUpdated(jColorChooser1.getColor());
+    	choosenColor = jColorChooser1.getColor();
     	dispose();
     }//GEN-LAST:event_jButtonApplyActionPerformed
 
@@ -141,4 +147,8 @@ public class ColorPickerDialog extends javax.swing.JDialog {
     private javax.swing.JButton jButtonCancel;
     private javax.swing.JColorChooser jColorChooser1;
     // End of variables declaration//GEN-END:variables
+
+	public Color getChoosenColor() {
+		return choosenColor;
+	}
 }

@@ -4,6 +4,8 @@
  */
 package de.netprojectev.GUI.Preferences;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -13,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import de.netprojectev.GUI.Dialogs.ColorPickerDialog;
 import de.netprojectev.GUI.Display.DisplayMainFrame;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.Priority;
@@ -52,6 +55,20 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	preferenceshandler.setManagerFrame(managerFrame);
     	this.display = 	DisplayDispatcher.getInstance().getDisplayFrame();
         initComponents();
+        
+        String[] font = Constants.FONT_FAMILIES;
+        for(int i = 0; i < font.length; i++) {
+        	jComboBoxFontTypeTicker.addItem(font[i]);
+        }
+        jComboBoxFontTypeTicker.setSelectedItem(display.getTickerComponent().getFont().getFamily());
+        jComboBoxFontSizeTicker.setSelectedItem(display.getTickerComponent().getFont().getSize());
+        
+
+        Color bg =  new Color(display.getTickerComponent().getForeground().getRed(), display.getTickerComponent().getForeground().getGreen(), display.getTickerComponent().getForeground().getBlue());
+        
+        jButtonTickerColorPicker.setBackground(bg);
+        jButtonTickerColorPicker.setForeground(bg);
+        
         setLocation(Misc.currentMousePosition());
     }
 
@@ -68,16 +85,35 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelTabMain = new javax.swing.JPanel();
         jButtonReset = new javax.swing.JButton();
-        jSlider1 = new javax.swing.JSlider();
         jLabel1 = new javax.swing.JLabel();
         jTextFieldPreviewWidth = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jButtonEnterFullscreen = new javax.swing.JButton();
         jButtonExitFullscreen = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextFieldScreenNumber = new javax.swing.JTextField();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        jLabel7 = new javax.swing.JLabel();
+        jPanelLiveTicker = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        jTextFieldTickerSpeed = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
+        jComboBoxFontSizeTicker = new javax.swing.JComboBox();
+        jComboBoxFontTypeTicker = new javax.swing.JComboBox();
+        jButtonTickerColorPicker = new javax.swing.JButton();
         jPanelTabPrio = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListPrio = new javax.swing.JList();
@@ -102,7 +138,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
         btnRemoveTheme = new javax.swing.JButton();
         jButtonChooseBgImage = new javax.swing.JButton();
         jPanelThemeslideCreator = new javax.swing.JPanel();
-        jButtonCancelPrefs = new javax.swing.JButton();
         jButtonApplyPrefs = new javax.swing.JButton();
 
         jFileChooser1.setApproveButtonText("Open");
@@ -119,13 +154,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Preview width");
+        jLabel1.setText("Preview width in Pixel");
         jLabel1.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
 
         jTextFieldPreviewWidth.setText(Integer.toString(preferenceshandler.getPreviewWidth()));
         jTextFieldPreviewWidth.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
-
-        jLabel3.setText("px");
 
         jButtonEnterFullscreen.setText("Enter");
         jButtonEnterFullscreen.setToolTipText("This makes the display frame fullscreen");
@@ -143,13 +176,19 @@ public class PreferencesFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("fullscreen settings");
+        jLabel4.setText("Fullscreen Settings");
 
-        jLabel5.setText("screen number");
+        jLabel5.setText("Screen Number");
         jLabel5.setToolTipText("Number of the screen the display frame should enter the fullscreen on. To switch screens you first have to exit the current fullscreen.");
 
         jTextFieldScreenNumber.setText("0");
         jTextFieldScreenNumber.setToolTipText("Number of the screen the display frame should enter the fullscreen on. To switch screens you first have to exit the current fullscreen.");
+
+        jLabel6.setText("Reset");
+
+        jLabel3.setText("Previewing");
+
+        jLabel7.setText("(Attention: Be careful with this option, as everything will be deleted)");
 
         javax.swing.GroupLayout jPanelTabMainLayout = new javax.swing.GroupLayout(jPanelTabMain);
         jPanelTabMain.setLayout(jPanelTabMainLayout);
@@ -158,57 +197,197 @@ public class PreferencesFrame extends javax.swing.JFrame {
             .addGroup(jPanelTabMainLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator3)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonReset))
+                    .addGroup(jPanelTabMainLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelTabMainLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelTabMainLayout.createSequentialGroup()
+                                .addComponent(jButtonEnterFullscreen, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButtonExitFullscreen, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelTabMainLayout.createSequentialGroup()
                         .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelTabMainLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)
-                                .addComponent(jLabel3))
-                            .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)
+                                .addComponent(jSeparator3))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator4))
                             .addGroup(jPanelTabMainLayout.createSequentialGroup()
-                                .addComponent(jButtonEnterFullscreen)
+                                .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonExitFullscreen, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 257, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addComponent(jSeparator5))
+                            .addGroup(jPanelTabMainLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jButtonReset)
+                                    .addGroup(jPanelTabMainLayout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 88, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanelTabMainLayout.setVerticalGroup(
             jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonExitFullscreen)
-                    .addComponent(jButtonEnterFullscreen)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
+                    .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 21, Short.MAX_VALUE)
+                .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
+                        .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonEnterFullscreen)
+                            .addComponent(jButtonExitFullscreen))
+                        .addGap(18, 18, 18)
+                        .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonReset)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("General", jPanelTabMain);
+
+        jLabel8.setText("Speed");
+
+        jLabel9.setText("Update Interval in ms");
+
+        jTextFieldTickerSpeed.setText("50");
+
+        jLabel10.setText("(default: 50ms, min: 1ms)");
+
+        jLabel11.setText("Font Attributes");
+
+        jLabel12.setText("Size");
+
+        jLabel13.setText("Type");
+
+        jLabel14.setText("Color");
+
+        jLabel15.setText("Background");
+
+        jComboBoxFontSizeTicker.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "16", "20", "24", "28", "32", "36", "40", "44", "48" }));
+        jComboBoxFontSizeTicker.setSelectedIndex(2);
+        jComboBoxFontSizeTicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFontSizeTickerActionPerformed(evt);
+            }
+        });
+
+        jComboBoxFontTypeTicker.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxFontTypeTicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxFontTypeTickerActionPerformed(evt);
+            }
+        });
+
+        jButtonTickerColorPicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTickerColorPickerActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanelLiveTickerLayout = new javax.swing.GroupLayout(jPanelLiveTicker);
+        jPanelLiveTicker.setLayout(jPanelLiveTickerLayout);
+        jPanelLiveTickerLayout.setHorizontalGroup(
+            jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxFontSizeTicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxFontTypeTicker, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel14)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonTickerColorPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
+                        .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldTickerSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel10)
+                                .addGap(0, 149, Short.MAX_VALUE))
+                            .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator6))
+                            .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
+                                .addComponent(jLabel11)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator7))
+                            .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
+                                .addComponent(jLabel15)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator8)))
+                        .addContainerGap())))
+        );
+        jPanelLiveTickerLayout.setVerticalGroup(
+            jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jTextFieldTickerSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11)
+                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel12)
+                    .addComponent(jComboBoxFontSizeTicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxFontTypeTicker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(jButtonTickerColorPicker, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel15)
+                    .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(146, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Live Ticker", jPanelLiveTicker);
 
         jListPrio.setModel(new PriorityListModel());
         jListPrio.getSelectionModel().addListSelectionListener(
@@ -256,7 +435,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                     .addGroup(jPanelTabPrioLayout.createSequentialGroup()
                         .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelTabPrioLayout.createSequentialGroup()
@@ -359,7 +538,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
                     .addGroup(jPanelTabThemeLayout.createSequentialGroup()
                         .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelTabThemeLayout.createSequentialGroup()
@@ -412,7 +591,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jPanelThemeslideCreator.setLayout(jPanelThemeslideCreatorLayout);
         jPanelThemeslideCreatorLayout.setHorizontalGroup(
             jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 528, Short.MAX_VALUE)
+            .addGap(0, 588, Short.MAX_VALUE)
         );
         jPanelThemeslideCreatorLayout.setVerticalGroup(
             jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,14 +600,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Themeslide Creator", jPanelThemeslideCreator);
 
-        jButtonCancelPrefs.setText("Cancel");
-        jButtonCancelPrefs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCancelPrefsActionPerformed(evt);
-            }
-        });
-
-        jButtonApplyPrefs.setText("Apply");
+        jButtonApplyPrefs.setText("Close");
         jButtonApplyPrefs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonApplyPrefsActionPerformed(evt);
@@ -442,9 +614,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
             .addComponent(jTabbedPane1)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonCancelPrefs)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonApplyPrefs)
+                .addComponent(jButtonApplyPrefs, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -452,20 +622,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonCancelPrefs)
-                    .addComponent(jButtonApplyPrefs))
-                .addGap(0, 5, Short.MAX_VALUE))
+                .addComponent(jButtonApplyPrefs)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void jButtonCancelPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelPrefsActionPerformed
-        dispose();
-    }//GEN-LAST:event_jButtonCancelPrefsActionPerformed
-
     /**
      * preparing the fields to add a new priority and clearing list selection
      * @param evt
@@ -681,6 +845,54 @@ public class PreferencesFrame extends javax.swing.JFrame {
         exitFullscreen();
     }//GEN-LAST:event_jButtonExitFullscreenActionPerformed
 
+    private void jComboBoxFontSizeTickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontSizeTickerActionPerformed
+        tickerFontSizeChanged();
+    }//GEN-LAST:event_jComboBoxFontSizeTickerActionPerformed
+
+	private void jComboBoxFontTypeTickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxFontTypeTickerActionPerformed
+    	tickerFontTypeChanged();
+    }//GEN-LAST:event_jComboBoxFontTypeTickerActionPerformed
+
+	private void jButtonTickerColorPickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTickerColorPickerActionPerformed
+        openColorPicker();
+    }//GEN-LAST:event_jButtonTickerColorPickerActionPerformed
+
+    
+    private void tickerFontTypeChanged() {
+		Font fontToSet = new Font((String) jComboBoxFontTypeTicker.getSelectedItem(), display.getTickerComponent().getFont().getStyle(), display.getTickerComponent().getFont().getSize());
+    	display.getTickerComponent().setFont(fontToSet);
+	}
+
+    private void tickerFontSizeChanged() {
+    	Font fontToSet = new Font(display.getTickerComponent().getFont().getName(), display.getTickerComponent().getFont().getStyle(), Integer.parseInt((String) jComboBoxFontSizeTicker.getSelectedItem()));
+    	display.getTickerComponent().setFont(fontToSet);
+    	
+	}
+	
+	
+    /**
+     * Opens a new {@link ColorPickerDialog} and assigns the correct ticker text color.
+     */
+	private void openColorPicker() {
+		
+		ColorPickerDialog colorPicker = new ColorPickerDialog(this, true);
+		colorPicker.setVisible(true);
+		
+		if(colorPicker != null) {
+			if(colorPicker.getChoosenColor() != null) {
+				Color bg =  new Color(colorPicker.getChoosenColor().getRed(), colorPicker.getChoosenColor().getGreen(), colorPicker.getChoosenColor().getBlue());
+		        
+		        jButtonTickerColorPicker.setBackground(bg);
+		        jButtonTickerColorPicker.setForeground(bg);
+		        
+		        display.getTickerComponent().setForeground(bg);
+				
+			}
+			
+		}
+		
+	}
+
 	/**
      * on selection change, updates the name and background image fields
      */
@@ -704,6 +916,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		    jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
 		}
 	}
+	
 	/**
 	 * entering the fullscreen
 	 */
@@ -775,23 +988,36 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnRemoveTheme;
     private javax.swing.JButton btnSaveTheme;
     private javax.swing.JButton jButtonApplyPrefs;
-    private javax.swing.JButton jButtonCancelPrefs;
     private javax.swing.JButton jButtonChooseBgImage;
     private javax.swing.JButton jButtonEnterFullscreen;
     private javax.swing.JButton jButtonExitFullscreen;
     private javax.swing.JButton jButtonPrioSave;
     private javax.swing.JButton jButtonReset;
+    private javax.swing.JButton jButtonTickerColorPicker;
+    private javax.swing.JComboBox jComboBoxFontSizeTicker;
+    private javax.swing.JComboBox jComboBoxFontTypeTicker;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelPrioName;
     private javax.swing.JLabel jLabelThemeBg;
     private javax.swing.JLabel jLabelThemeName;
     private javax.swing.JList jListPrio;
     private javax.swing.JList jListTheme;
+    private javax.swing.JPanel jPanelLiveTicker;
     private javax.swing.JPanel jPanelTabMain;
     private javax.swing.JPanel jPanelTabPrio;
     private javax.swing.JPanel jPanelTabTheme;
@@ -801,7 +1027,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
-    private javax.swing.JSlider jSlider1;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldPreviewWidth;
     private javax.swing.JTextField jTextFieldPrioMin;
@@ -809,6 +1039,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldScreenNumber;
     private javax.swing.JTextField jTextFieldThemeBgImg;
     private javax.swing.JTextField jTextFieldThemeName;
+    private javax.swing.JTextField jTextFieldTickerSpeed;
     // End of variables declaration//GEN-END:variables
 
 	public javax.swing.JList getjListPrio() {
