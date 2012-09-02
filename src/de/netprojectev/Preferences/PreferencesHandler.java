@@ -60,18 +60,16 @@ public class PreferencesHandler {
 	 * This method updates the properties object, by writing all changes from the preferences frame to it.
 	 */
 	public void updatePropertiesFromPreferencesFrame() {
-		
-		//TODO last worked here, add properties
-		
-		properties.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, value);
-		properties.setProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN, value);
-		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, value);
-		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, value);
-		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, value);
-		properties.setProperty(Constants.PROP_TICKER_FONTCOLOR, value);
-		properties.setProperty(Constants.PROP_TICKER_FONTSIZE, value);
-		properties.setProperty(Constants.PROP_TICKER_FONTTYPE, value);
-		properties.setProperty(Constants.PROP_TICKER_SPEED, value);
+
+		properties.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + preferencesFrame.getPreviewWidth());
+		properties.setProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN, "" + preferencesFrame.getFullscreenNumber());
+		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, preferencesFrame.getThemeslideCreatorFontColor());
+		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, preferencesFrame.getThemeslideCreatorFontSize());
+		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, preferencesFrame.getThemeslideCreatorFontType());
+		properties.setProperty(Constants.PROP_TICKER_FONTCOLOR, preferencesFrame.getTickerFontColor());
+		properties.setProperty(Constants.PROP_TICKER_FONTSIZE, preferencesFrame.getTickerFontSize());
+		properties.setProperty(Constants.PROP_TICKER_FONTTYPE, preferencesFrame.getTickerFontType());
+		properties.setProperty(Constants.PROP_TICKER_SPEED, "" + preferencesFrame.getTickerSpeed());
 
 	}
 	

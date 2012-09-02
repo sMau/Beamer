@@ -43,13 +43,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private File selectedImage;
 	
 	private int previewWidth;
+	private int fullscreenNumber;
 	
 	private int tickerSpeed;
 	private String tickerFontType;
 	private String tickerFontSize;
 	private String tickerFontColor;
 	
-
 	private String themeslideCreatorFontType;
 	private String themeslideCreatorFontSize;
 	private String themeslideCreatorFontColor;
@@ -125,6 +125,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        jSeparator10 = new javax.swing.JSeparator();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanelTabMain = new javax.swing.JPanel();
         jButtonReset = new javax.swing.JButton();
@@ -141,6 +142,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
         jPanelLiveTicker = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
@@ -166,6 +168,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jComboBoxThemeslideFontSize = new javax.swing.JComboBox();
         jComboBoxThemeSlideFontType = new javax.swing.JComboBox();
         jButtonThemeslideDefaultColor = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
+        jSeparator11 = new javax.swing.JSeparator();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jTextFieldMarginLeft = new javax.swing.JTextField();
+        jTextFieldMarginTop = new javax.swing.JTextField();
         jPanelTabTheme = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListTheme = new javax.swing.JList();
@@ -241,6 +249,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jLabel7.setText("(Attention: Be careful with this option, as everything will be deleted)");
 
+        jLabel23.setText("(The height is adjusted automatically)");
+
         javax.swing.GroupLayout jPanelTabMainLayout = new javax.swing.GroupLayout(jPanelTabMain);
         jPanelTabMain.setLayout(jPanelTabMainLayout);
         jPanelTabMainLayout.setHorizontalGroup(
@@ -282,8 +292,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addGroup(jPanelTabMainLayout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 88, Short.MAX_VALUE)))
+                                        .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel23)))
+                                .addGap(0, 63, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanelTabMainLayout.setVerticalGroup(
@@ -296,8 +308,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 21, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel23))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
                         .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -318,7 +331,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addComponent(jButtonReset)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("General", jPanelTabMain);
@@ -435,7 +448,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel15)
                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(146, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         jTextFieldTickerSpeed.getDocument().addDocumentListener(new DocumentListener() {@Override
@@ -484,6 +497,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 }
             });
 
+            jLabel20.setText("Margin");
+
+            jLabel21.setText("Left");
+
+            jLabel22.setText("Top");
+
             javax.swing.GroupLayout jPanelThemeslideCreatorLayout = new javax.swing.GroupLayout(jPanelThemeslideCreator);
             jPanelThemeslideCreator.setLayout(jPanelThemeslideCreatorLayout);
             jPanelThemeslideCreatorLayout.setHorizontalGroup(
@@ -492,24 +511,40 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addContainerGap()
                     .addGroup(jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
-                            .addComponent(jLabel16)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jSeparator9))
-                        .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
                             .addGap(18, 18, 18)
-                            .addComponent(jLabel17)
+                            .addComponent(jLabel21)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBoxThemeslideFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(30, 30, 30)
-                            .addComponent(jLabel18)
+                            .addComponent(jTextFieldMarginLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(31, 31, 31)
+                            .addComponent(jLabel22)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jComboBoxThemeSlideFontType, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(30, 30, 30)
-                            .addComponent(jLabel19)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButtonThemeslideDefaultColor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 91, Short.MAX_VALUE)))
-                    .addContainerGap())
+                            .addComponent(jTextFieldMarginTop, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
+                            .addGroup(jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
+                                    .addComponent(jLabel16)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jSeparator9))
+                                .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jLabel17)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jComboBoxThemeslideFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(30, 30, 30)
+                                    .addComponent(jLabel18)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jComboBoxThemeSlideFontType, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(30, 30, 30)
+                                    .addComponent(jLabel19)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonThemeslideDefaultColor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 134, Short.MAX_VALUE))
+                                .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
+                                    .addComponent(jLabel20)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jSeparator11)))
+                            .addContainerGap())))
             );
             jPanelThemeslideCreatorLayout.setVerticalGroup(
                 jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -526,7 +561,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jComboBoxThemeslideFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jComboBoxThemeSlideFontType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButtonThemeslideDefaultColor, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(252, Short.MAX_VALUE))
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel20)
+                        .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel21)
+                        .addComponent(jLabel22)
+                        .addComponent(jTextFieldMarginLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldMarginTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(176, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("Themeslide Creator", jPanelThemeslideCreator);
@@ -607,7 +652,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addComponent(btnSaveTheme)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btnRemoveTheme)))
-                            .addContainerGap(121, Short.MAX_VALUE))))
+                            .addContainerGap(156, Short.MAX_VALUE))))
             );
             jPanelTabThemeLayout.setVerticalGroup(
                 jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -630,7 +675,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(btnRemoveTheme))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(0, 0, Short.MAX_VALUE))
+                            .addGap(0, 152, Short.MAX_VALUE))
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
                     .addContainerGap())
             );
@@ -706,7 +751,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(0, 0, Short.MAX_VALUE)))
+                            .addGap(0, 226, Short.MAX_VALUE)))
                     .addContainerGap())
             );
             jPanelTabPrioLayout.setVerticalGroup(
@@ -869,6 +914,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	themeslideCreatorFontColor = "" + jButtonThemeslideDefaultColor.getBackground().getRGB();
     	themeslideCreatorFontSize = (String) jComboBoxThemeslideFontSize.getSelectedItem();
     	themeslideCreatorFontType = (String) jComboBoxThemeSlideFontType.getSelectedItem();
+    	
+    	try {
+			fullscreenNumber = Integer.parseInt(jTextFieldScreenNumber.getText());
+		} catch (NumberFormatException e) {}
     	
     	preferencesHandler.updatePropertiesFromPreferencesFrame();
     	dispose();    	
@@ -1182,6 +1231,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1202,6 +1255,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
+    private javax.swing.JSeparator jSeparator11;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -1211,6 +1266,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextFieldMarginLeft;
+    private javax.swing.JTextField jTextFieldMarginTop;
     private javax.swing.JTextField jTextFieldPreviewWidth;
     private javax.swing.JTextField jTextFieldPrioMin;
     private javax.swing.JTextField jTextFieldPrioName;
@@ -1282,6 +1339,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 	public int getPreviewWidth() {
 		return previewWidth;
+	}
+
+	public int getFullscreenNumber() {
+		return fullscreenNumber;
 	}
 
 }
