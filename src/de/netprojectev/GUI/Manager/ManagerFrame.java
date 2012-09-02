@@ -219,9 +219,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         setTitle("Beamermanager");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/de/netprojectev/GFX/icon.png")));
-        setName("managerframe");
+        setName("managerframe"); // NOI18N
 
-        filemangerPanel.setName("filemanagerTab");
+        filemangerPanel.setName("filemanagerTab"); // NOI18N
         filemangerPanel.setNextFocusableComponent(livetickerPanel);
 
         btnAddFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
@@ -373,14 +373,14 @@ public class ManagerFrame extends javax.swing.JFrame {
         );
 
         jScrollPane1.setMinimumSize(new java.awt.Dimension(220, 250));
-        jScrollPane1.setName("");
+        jScrollPane1.setName(""); // NOI18N
 
         jTableFileManager.setModel(new FileManagerTableModel(this));
         jTableFileManager.setShowHorizontalLines(false);
         jTableFileManager.setShowVerticalLines(false);
-        jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(16);
+        jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(20);
         jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);
-        jTableFileManager.getColumnModel().getColumn(0).setMinWidth(16);
+        jTableFileManager.getColumnModel().getColumn(0).setMinWidth(20);
         jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);
         jTableFileManager.getColumnModel().getColumn(0).setResizable(false);
         jTableFileManager.getColumnModel().getColumn(1).setResizable(false);
@@ -445,18 +445,18 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(filemangerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)))
         );
 
         jTabbedPane.addTab("Filemanager", filemangerPanel);
         filemangerPanel.getAccessibleContext().setAccessibleName("filemanagerTab");
         filemangerPanel.getAccessibleContext().setAccessibleParent(jTabbedPane);
 
-        livetickerPanel.setName("livetickerTab");
+        livetickerPanel.setName("livetickerTab"); // NOI18N
         livetickerPanel.setNextFocusableComponent(filemangerPanel);
 
         btnAddTickerElt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
@@ -541,7 +541,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 528, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Liveticker", livetickerPanel);

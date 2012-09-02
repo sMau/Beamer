@@ -215,4 +215,12 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 			de.netprojectev.GUI.Display.DisplayMainComponent displayMainComponent) {
 		this.displayMainComponent = displayMainComponent;
 	}
+
+	public Timer getLiveTickerTimer() {
+		return liveTickerTimer;
+	}
+
+	public void setLiveTickerTimer(Timer liveTickerTimer) {
+		this.liveTickerTimer = liveTickerTimer;
+	}
 }

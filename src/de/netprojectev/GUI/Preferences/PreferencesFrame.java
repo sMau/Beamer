@@ -12,6 +12,8 @@ import java.net.URISyntaxException;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -56,6 +58,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	this.display = 	DisplayDispatcher.getInstance().getDisplayFrame();
         initComponents();
         
+        /*
+         * 
+         * LIVE TICKER TAB
+         */
         String[] font = Constants.FONT_FAMILIES;
         for(int i = 0; i < font.length; i++) {
         	jComboBoxFontTypeTicker.addItem(font[i]);
@@ -69,6 +75,30 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jButtonTickerColorPicker.setBackground(bg);
         jButtonTickerColorPicker.setForeground(bg);
         
+        try {
+			jTextFieldTickerSpeed.setText(Integer.toString(display.getLiveTickerTimer().getDelay()));
+		} catch (Exception e) {
+			jTextFieldTickerSpeed.setText("");
+		}
+        
+        /*
+         * 
+         * THEMESLIDECREATOR TAB
+         */
+        
+        for(int i = 0; i < font.length; i++) {
+        	jComboBoxThemeSlideFontType.addItem(font[i]);
+        }
+        
+        String[] sizes = Constants.FONT_SIZES;
+        
+        for(int i = 0; i < sizes.length; i++) {
+        	jComboBoxThemeslideFontSize.addItem(sizes[i]);
+        }
+        
+        //TODO init of the color button and the correct selection of the comboboxes, when i know where i save the information
+        
+       
         setLocation(Misc.currentMousePosition());
     }
 
@@ -114,17 +144,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jComboBoxFontSizeTicker = new javax.swing.JComboBox();
         jComboBoxFontTypeTicker = new javax.swing.JComboBox();
         jButtonTickerColorPicker = new javax.swing.JButton();
-        jPanelTabPrio = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListPrio = new javax.swing.JList();
-        jLabelPrioName = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextFieldPrioName = new javax.swing.JTextField();
-        jTextFieldPrioMin = new javax.swing.JTextField();
-        jButtonPrioSave = new javax.swing.JButton();
-        jSeparator1 = new javax.swing.JSeparator();
-        btnAddPrio = new javax.swing.JButton();
-        btnRemovePrio = new javax.swing.JButton();
+        jPanelThemeslideCreator = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jSeparator9 = new javax.swing.JSeparator();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jComboBoxThemeslideFontSize = new javax.swing.JComboBox();
+        jComboBoxThemeSlideFontType = new javax.swing.JComboBox();
+        jButtonThemeslideDefaultColor = new javax.swing.JButton();
         jPanelTabTheme = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jListTheme = new javax.swing.JList();
@@ -137,7 +165,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
         btnAddTheme = new javax.swing.JButton();
         btnRemoveTheme = new javax.swing.JButton();
         jButtonChooseBgImage = new javax.swing.JButton();
-        jPanelThemeslideCreator = new javax.swing.JPanel();
+        jPanelTabPrio = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListPrio = new javax.swing.JList();
+        jLabelPrioName = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldPrioName = new javax.swing.JTextField();
+        jTextFieldPrioMin = new javax.swing.JTextField();
+        jButtonPrioSave = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
+        btnAddPrio = new javax.swing.JButton();
+        btnRemovePrio = new javax.swing.JButton();
         jButtonApplyPrefs = new javax.swing.JButton();
 
         jFileChooser1.setApproveButtonText("Open");
@@ -278,7 +316,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jTextFieldTickerSpeed.setText("50");
 
-        jLabel10.setText("(default: 50ms, min: 1ms)");
+        jLabel10.setText("(default: 50ms, min: 1ms, max: 1000)");
 
         jLabel11.setText("Font Attributes");
 
@@ -341,7 +379,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jTextFieldTickerSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
-                                .addGap(0, 149, Short.MAX_VALUE))
+                                .addGap(0, 66, Short.MAX_VALUE))
                             .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -387,247 +425,332 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addContainerGap(146, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Live Ticker", jPanelLiveTicker);
+        jTextFieldTickerSpeed.getDocument().addDocumentListener(new DocumentListener() {@Override
+            public void insertUpdate(DocumentEvent e) {
+                tickerSpeedChanged();
 
-        jListPrio.setModel(new PriorityListModel());
-        jListPrio.getSelectionModel().addListSelectionListener(
-            new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent event) {
-                    listPrioritySelectionChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                tickerSpeedChanged();
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                tickerSpeedChanged();
+
+            }});
+
+            jTabbedPane1.addTab("Live Ticker", jPanelLiveTicker);
+
+            jLabel16.setText("Default Font Attributes");
+
+            jLabel17.setText("Size");
+
+            jLabel18.setText("Type");
+
+            jLabel19.setText("Color");
+
+            jComboBoxThemeslideFontSize.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jComboBoxThemeslideFontSizeActionPerformed(evt);
                 }
-            }
-        );
-        jScrollPane1.setViewportView(jListPrio);
+            });
 
-        jLabelPrioName.setText("Name");
-
-        jLabel2.setText("Minutes");
-
-        jButtonPrioSave.setText("Save");
-        jButtonPrioSave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrioSaveActionPerformed(evt);
-            }
-        });
-
-        btnAddPrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
-        btnAddPrio.setToolTipText("Add new Priority.");
-        btnAddPrio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddPrioActionPerformed(evt);
-            }
-        });
-
-        btnRemovePrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
-        btnRemovePrio.setToolTipText("Delete selected priorities.");
-        btnRemovePrio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemovePrioActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanelTabPrioLayout = new javax.swing.GroupLayout(jPanelTabPrio);
-        jPanelTabPrio.setLayout(jPanelTabPrioLayout);
-        jPanelTabPrioLayout.setHorizontalGroup(
-            jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTabPrioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-                    .addGroup(jPanelTabPrioLayout.createSequentialGroup()
-                        .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelTabPrioLayout.createSequentialGroup()
-                                .addComponent(btnAddPrio)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnRemovePrio))
-                            .addGroup(jPanelTabPrioLayout.createSequentialGroup()
-                                .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabelPrioName, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(56, 56, 56)
-                                .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jButtonPrioSave))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanelTabPrioLayout.setVerticalGroup(
-            jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTabPrioLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTabPrioLayout.createSequentialGroup()
-                        .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelPrioName)
-                            .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addComponent(jButtonPrioSave, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                        .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRemovePrio, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAddPrio, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-        );
-
-        jTabbedPane1.addTab("Priority", jPanelTabPrio);
-
-        jListTheme.setModel(new ThemeListModel());
-        jListTheme.getSelectionModel().addListSelectionListener(
-            new ListSelectionListener() {
-                public void valueChanged(ListSelectionEvent event) {
-                    listThemeSelectionChanged();
+            jComboBoxThemeSlideFontType.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jComboBoxThemeSlideFontTypeActionPerformed(evt);
                 }
-            }
-        );
-        jScrollPane2.setViewportView(jListTheme);
+            });
 
-        jLabelThemeName.setText("Name");
+            jButtonThemeslideDefaultColor.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonThemeslideDefaultColorActionPerformed(evt);
+                }
+            });
 
-        jLabelThemeBg.setText("Background");
+            javax.swing.GroupLayout jPanelThemeslideCreatorLayout = new javax.swing.GroupLayout(jPanelThemeslideCreator);
+            jPanelThemeslideCreator.setLayout(jPanelThemeslideCreatorLayout);
+            jPanelThemeslideCreatorLayout.setHorizontalGroup(
+                jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
+                            .addComponent(jLabel16)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jSeparator9))
+                        .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel17)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jComboBoxThemeslideFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
+                            .addComponent(jLabel18)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jComboBoxThemeSlideFontType, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
+                            .addComponent(jLabel19)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButtonThemeslideDefaultColor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 91, Short.MAX_VALUE)))
+                    .addContainerGap())
+            );
+            jPanelThemeslideCreatorLayout.setVerticalGroup(
+                jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel16))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel17)
+                        .addComponent(jLabel18)
+                        .addComponent(jLabel19)
+                        .addComponent(jComboBoxThemeslideFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxThemeSlideFontType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonThemeslideDefaultColor, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(252, Short.MAX_VALUE))
+            );
 
-        jTextFieldThemeName.setMaximumSize(new java.awt.Dimension(10, 26));
+            jTabbedPane1.addTab("Themeslide Creator", jPanelThemeslideCreator);
 
-        jTextFieldThemeBgImg.setMaximumSize(new java.awt.Dimension(10, 26));
+            jListTheme.setModel(new ThemeListModel());
+            jListTheme.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent event) {
+                        listThemeSelectionChanged();
+                    }
+                }
+            );
+            jScrollPane2.setViewportView(jListTheme);
 
-        btnSaveTheme.setText("Save");
-        btnSaveTheme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSaveThemeActionPerformed(evt);
-            }
-        });
+            jLabelThemeName.setText("Name");
 
-        btnAddTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
-        btnAddTheme.setToolTipText("Add new theme.");
-        btnAddTheme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddThemeActionPerformed(evt);
-            }
-        });
+            jLabelThemeBg.setText("Background");
 
-        btnRemoveTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
-        btnRemoveTheme.setToolTipText("Delete selected themes.");
-        btnRemoveTheme.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoveThemeActionPerformed(evt);
-            }
-        });
+            jTextFieldThemeName.setMaximumSize(new java.awt.Dimension(10, 26));
 
-        jButtonChooseBgImage.setText("Choose");
-        jButtonChooseBgImage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonChooseBgImageActionPerformed(evt);
-            }
-        });
+            jTextFieldThemeBgImg.setMaximumSize(new java.awt.Dimension(10, 26));
 
-        javax.swing.GroupLayout jPanelTabThemeLayout = new javax.swing.GroupLayout(jPanelTabTheme);
-        jPanelTabTheme.setLayout(jPanelTabThemeLayout);
-        jPanelTabThemeLayout.setHorizontalGroup(
-            jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
-                    .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                        .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                                .addComponent(btnAddTheme)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnRemoveTheme))
-                            .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabelThemeName)
-                                    .addComponent(jLabelThemeBg))
-                                .addGap(23, 23, 23)
-                                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldThemeBgImg, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+            btnSaveTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/save.png"))); // NOI18N
+            btnSaveTheme.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnSaveThemeActionPerformed(evt);
+                }
+            });
+
+            btnAddTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+            btnAddTheme.setToolTipText("Add new theme.");
+            btnAddTheme.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnAddThemeActionPerformed(evt);
+                }
+            });
+
+            btnRemoveTheme.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+            btnRemoveTheme.setToolTipText("Delete selected themes.");
+            btnRemoveTheme.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnRemoveThemeActionPerformed(evt);
+                }
+            });
+
+            jButtonChooseBgImage.setText("Choose");
+            jButtonChooseBgImage.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonChooseBgImageActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanelTabThemeLayout = new javax.swing.GroupLayout(jPanelTabTheme);
+            jPanelTabTheme.setLayout(jPanelTabThemeLayout);
+            jPanelTabThemeLayout.setHorizontalGroup(
+                jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelTabThemeLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator2)
+                        .addGroup(jPanelTabThemeLayout.createSequentialGroup()
+                            .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelTabThemeLayout.createSequentialGroup()
+                                    .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabelThemeName)
+                                        .addComponent(jLabelThemeBg))
+                                    .addGap(23, 23, 23)
+                                    .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextFieldThemeBgImg, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)
+                                        .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonChooseBgImage))
+                                .addGroup(jPanelTabThemeLayout.createSequentialGroup()
+                                    .addComponent(btnAddTheme)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnSaveTheme)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnRemoveTheme)))
+                            .addContainerGap(121, Short.MAX_VALUE))))
+            );
+            jPanelTabThemeLayout.setVerticalGroup(
+                jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelTabThemeLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelTabThemeLayout.createSequentialGroup()
+                            .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelThemeName)
+                                .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelThemeBg)
+                                .addComponent(jTextFieldThemeBgImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jButtonChooseBgImage))
-                            .addComponent(btnSaveTheme))
-                        .addGap(49, 49, 49)))
-                .addContainerGap())
-        );
-        jPanelTabThemeLayout.setVerticalGroup(
-            jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelTabThemeLayout.createSequentialGroup()
-                        .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelThemeName)
-                            .addComponent(jTextFieldThemeName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabelThemeBg)
-                            .addComponent(jTextFieldThemeBgImg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonChooseBgImage))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnSaveTheme, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                        .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRemoveTheme, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnAddTheme, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
-                .addContainerGap())
-        );
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(btnSaveTheme)
+                                .addComponent(btnAddTheme)
+                                .addComponent(btnRemoveTheme))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
+                    .addContainerGap())
+            );
 
-        jTabbedPane1.addTab("Theme", jPanelTabTheme);
+            jTabbedPane1.addTab("Theme", jPanelTabTheme);
 
-        javax.swing.GroupLayout jPanelThemeslideCreatorLayout = new javax.swing.GroupLayout(jPanelThemeslideCreator);
-        jPanelThemeslideCreator.setLayout(jPanelThemeslideCreatorLayout);
-        jPanelThemeslideCreatorLayout.setHorizontalGroup(
-            jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 588, Short.MAX_VALUE)
-        );
-        jPanelThemeslideCreatorLayout.setVerticalGroup(
-            jPanelThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 318, Short.MAX_VALUE)
-        );
+            jListPrio.setModel(new PriorityListModel());
+            jListPrio.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent event) {
+                        listPrioritySelectionChanged();
+                    }
+                }
+            );
+            jScrollPane1.setViewportView(jListPrio);
 
-        jTabbedPane1.addTab("Themeslide Creator", jPanelThemeslideCreator);
+            jLabelPrioName.setText("Name");
 
-        jButtonApplyPrefs.setText("Close");
-        jButtonApplyPrefs.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonApplyPrefsActionPerformed(evt);
-            }
-        });
+            jLabel2.setText("Minutes");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonApplyPrefs, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonApplyPrefs)
-                .addGap(0, 12, Short.MAX_VALUE))
-        );
+            jTextFieldPrioMin.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jTextFieldPrioMinActionPerformed(evt);
+                }
+            });
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+            jButtonPrioSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/save.png"))); // NOI18N
+            jButtonPrioSave.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonPrioSaveActionPerformed(evt);
+                }
+            });
+
+            btnAddPrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/plus_2.png"))); // NOI18N
+            btnAddPrio.setToolTipText("Add new Priority.");
+            btnAddPrio.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnAddPrioActionPerformed(evt);
+                }
+            });
+
+            btnRemovePrio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/delete_2.png"))); // NOI18N
+            btnRemovePrio.setToolTipText("Delete selected priorities.");
+            btnRemovePrio.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btnRemovePrioActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanelTabPrioLayout = new javax.swing.GroupLayout(jPanelTabPrio);
+            jPanelTabPrio.setLayout(jPanelTabPrioLayout);
+            jPanelTabPrioLayout.setHorizontalGroup(
+                jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(18, 18, 18)
+                    .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+                        .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                            .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                                    .addComponent(btnAddPrio)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jButtonPrioSave)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(btnRemovePrio, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                                    .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabelPrioName, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addGap(42, 42, 42)
+                                    .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGap(0, 0, Short.MAX_VALUE)))
+                    .addContainerGap())
+            );
+            jPanelTabPrioLayout.setVerticalGroup(
+                jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelTabPrioLayout.createSequentialGroup()
+                            .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabelPrioName)
+                                .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnAddPrio)
+                                .addComponent(btnRemovePrio)
+                                .addComponent(jButtonPrioSave))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 154, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1))
+                    .addContainerGap())
+            );
+
+            jTabbedPane1.addTab("Priority", jPanelTabPrio);
+
+            jButtonApplyPrefs.setText("Close");
+            jButtonApplyPrefs.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonApplyPrefsActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+            getContentPane().setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jTabbedPane1)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonApplyPrefs, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButtonApplyPrefs)
+                    .addGap(0, 12, Short.MAX_VALUE))
+            );
+
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
 
     
     /**
@@ -857,8 +980,35 @@ public class PreferencesFrame extends javax.swing.JFrame {
         openColorPicker();
     }//GEN-LAST:event_jButtonTickerColorPickerActionPerformed
 
+    private void jTextFieldPrioMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrioMinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPrioMinActionPerformed
+
+    private void jButtonThemeslideDefaultColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThemeslideDefaultColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonThemeslideDefaultColorActionPerformed
+
+    private void jComboBoxThemeslideFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeslideFontSizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxThemeslideFontSizeActionPerformed
+
+    private void jComboBoxThemeSlideFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeSlideFontTypeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxThemeSlideFontTypeActionPerformed
+
     
-    private void tickerFontTypeChanged() {
+    private void tickerSpeedChanged() {
+    	int tickerSpeed = -1;
+    	try {
+			tickerSpeed = Integer.parseInt(jTextFieldTickerSpeed.getText());
+		} catch (NumberFormatException e) {	}
+    	System.out.println(tickerSpeed);
+    	if(tickerSpeed > 0 && tickerSpeed < 1001) {
+    		display.getLiveTickerTimer().setDelay(tickerSpeed);
+    	}
+	}
+
+	private void tickerFontTypeChanged() {
 		Font fontToSet = new Font((String) jComboBoxFontTypeTicker.getSelectedItem(), display.getTickerComponent().getFont().getStyle(), display.getTickerComponent().getFont().getSize());
     	display.getTickerComponent().setFont(fontToSet);
 	}
@@ -993,9 +1143,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButtonExitFullscreen;
     private javax.swing.JButton jButtonPrioSave;
     private javax.swing.JButton jButtonReset;
+    private javax.swing.JButton jButtonThemeslideDefaultColor;
     private javax.swing.JButton jButtonTickerColorPicker;
     private javax.swing.JComboBox jComboBoxFontSizeTicker;
     private javax.swing.JComboBox jComboBoxFontTypeTicker;
+    private javax.swing.JComboBox jComboBoxThemeSlideFontType;
+    private javax.swing.JComboBox jComboBoxThemeslideFontSize;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1004,6 +1157,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1032,6 +1189,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextFieldPreviewWidth;
     private javax.swing.JTextField jTextFieldPrioMin;

@@ -205,7 +205,7 @@
     <Property name="iconImage" type="java.awt.Image" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
       <Connection code="Toolkit.getDefaultToolkit().getImage(getClass().getResource(&quot;/de/netprojectev/GFX/icon.png&quot;))" type="code"/>
     </Property>
-    <Property name="name" type="java.lang.String" value="managerframe"/>
+    <Property name="name" type="java.lang.String" value="managerframe" noResource="true"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="menuBar" type="java.lang.String" value="jMenuBarMainFrame"/>
@@ -245,14 +245,14 @@
       <SubComponents>
         <Container class="javax.swing.JPanel" name="filemangerPanel">
           <Properties>
-            <Property name="name" type="java.lang.String" value="filemanagerTab"/>
+            <Property name="name" type="java.lang.String" value="filemanagerTab" noResource="true"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="livetickerPanel"/>
             </Property>
           </Properties>
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="filemanagerTab"/>
-            <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.RADVisualComponent$AccessibleParentEditor">
+            <Property name="AccessibleContext.accessibleParent" type="javax.accessibility.Accessible" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="jTabbedPane"/>
             </Property>
           </AccessibilityProperties>
@@ -284,11 +284,11 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="250" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="252" max="32767" attributes="0"/>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane2" max="32767" attributes="0"/>
-                          <Component id="jScrollPane4" pref="272" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="274" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -504,7 +504,7 @@
                 <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                   <Dimension value="[220, 250]"/>
                 </Property>
-                <Property name="name" type="java.lang.String" value=""/>
+                <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
@@ -521,7 +521,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTableFileManagerMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(16);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(16);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;&#xa;TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);&#xa;comboBox = new JComboBox();&#xa;for(int i = 0; i &lt; preferencesHandler.getListOfPriorities().size(); i++) {&#xa;        comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());&#xa;}&#xa;prioColumn.setCellEditor(new DefaultCellEditor(comboBox));&#xa;&#xa;&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                onSelectionChangeJtableFile();&#xa;            }&#xa;        }&#xa;);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMaxWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setMinWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(1).setMinWidth(20);&#xa;jTableFileManager.getColumnModel().getColumn(0).setResizable(false);&#xa;jTableFileManager.getColumnModel().getColumn(1).setResizable(false);&#xa;&#xa;TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);&#xa;comboBox = new JComboBox();&#xa;for(int i = 0; i &lt; preferencesHandler.getListOfPriorities().size(); i++) {&#xa;        comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());&#xa;}&#xa;prioColumn.setCellEditor(new DefaultCellEditor(comboBox));&#xa;&#xa;&#xa;jTableFileManager.getSelectionModel().addListSelectionListener(&#xa;        new ListSelectionListener() {&#xa;            public void valueChanged(ListSelectionEvent event) {&#xa;                onSelectionChangeJtableFile();&#xa;            }&#xa;        }&#xa;);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -586,7 +586,7 @@
         </Container>
         <Container class="javax.swing.JPanel" name="livetickerPanel">
           <Properties>
-            <Property name="name" type="java.lang.String" value="livetickerTab"/>
+            <Property name="name" type="java.lang.String" value="livetickerTab" noResource="true"/>
             <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
               <ComponentRef name="filemangerPanel"/>
             </Property>
@@ -617,7 +617,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator8" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="528" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="532" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
