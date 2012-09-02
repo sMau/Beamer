@@ -36,11 +36,24 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = -5332162076303310401L;
 	
-	private PreferencesHandler preferenceshandler;
+	private PreferencesHandler preferencesHandler;
 	private Priority selectedPrio;
 	private Theme selectedTheme;
 	private ManagerFrame managerFrame;
 	private File selectedImage;
+	
+	private int previewWidth;
+	
+	private int tickerSpeed;
+	private String tickerFontType;
+	private String tickerFontSize;
+	private String tickerFontColor;
+	
+
+	private String themeslideCreatorFontType;
+	private String themeslideCreatorFontSize;
+	private String themeslideCreatorFontColor;
+	
 	
 	private transient DisplayMainFrame display;
 	
@@ -52,9 +65,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
     public PreferencesFrame(ManagerFrame managerFrame) {
     	
     	this.managerFrame = managerFrame;
-    	this.preferenceshandler = PreferencesHandler.getInstance(); 
-    	preferenceshandler.setPreferencesFrame(this);
-    	preferenceshandler.setManagerFrame(managerFrame);
+    	this.preferencesHandler = PreferencesHandler.getInstance(); 
+    	preferencesHandler.setPreferencesFrame(this);
+    	preferencesHandler.setManagerFrame(managerFrame);
     	this.display = 	DisplayDispatcher.getInstance().getDisplayFrame();
         initComponents();
         
@@ -195,7 +208,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jLabel1.setText("Preview width in Pixel");
         jLabel1.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
 
-        jTextFieldPreviewWidth.setText(Integer.toString(preferenceshandler.getPreviewWidth()));
+        jTextFieldPreviewWidth.setText(Integer.toString(preferencesHandler.getPreviewWidth()));
         jTextFieldPreviewWidth.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
 
         jButtonEnterFullscreen.setText("Enter");
@@ -788,9 +801,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	if(selectedPrio == null) { //Creation of new Priority
     		if(!jTextFieldPrioName.getText().isEmpty() && !jTextFieldPrioMin.getText().isEmpty()) {
         		
-        		for(int i = 0; i < preferenceshandler.getListOfPriorities().size(); i++) {
+        		for(int i = 0; i < preferencesHandler.getListOfPriorities().size(); i++) {
         			
-        			if(preferenceshandler.getListOfPriorities().get(i).getName().equals(jTextFieldPrioName.getText())) {
+        			if(preferencesHandler.getListOfPriorities().get(i).getName().equals(jTextFieldPrioName.getText())) {
         				alreadyExists = true;
         			}
 
@@ -798,15 +811,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
         		
         		if(!alreadyExists) {
         			Priority newPriority = new Priority(jTextFieldPrioName.getText(), Integer.parseInt(jTextFieldPrioMin.getText()));
-                	preferenceshandler.addPriority(newPriority);
-                	jListPrio.setSelectedIndex(preferenceshandler.getListOfPriorities().size() - 1);
+                	preferencesHandler.addPriority(newPriority);
+                	jListPrio.setSelectedIndex(preferencesHandler.getListOfPriorities().size() - 1);
         		} else {
         			JOptionPane.showMessageDialog(this, "A priority with this name already exists.", "Error", JOptionPane.ERROR_MESSAGE);
         		}
         		
         	}
     	} else { //Editing the selected Priority
-    		if(!selectedPrio.getName().equals(preferenceshandler.getListOfPriorities().get(0).getName())) {
+    		if(!selectedPrio.getName().equals(preferencesHandler.getListOfPriorities().get(0).getName())) {
     			selectedPrio.setName(jTextFieldPrioName.getText());
     			try {
         			if(!jTextFieldPrioMin.getText().isEmpty()) {
@@ -815,7 +828,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     			} catch (NumberFormatException e) {
     			}
     		}
-    		preferenceshandler.refreshPrioListModel();
+    		preferencesHandler.refreshPrioListModel();
     	}
     	
     	managerFrame.refreshComboBoxCellEditor();
@@ -830,7 +843,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         
     	int[] selectedIndices = jListPrio.getSelectedIndices();
     	if(selectedIndices.length > 0) {
-    		preferenceshandler.removePriorities(Misc.indexListToPriorities(selectedIndices));
+    		preferencesHandler.removePriorities(Misc.indexListToPriorities(selectedIndices));
     	}
     	
     }//GEN-LAST:event_btnRemovePrioActionPerformed
@@ -842,16 +855,24 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void jButtonApplyPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyPrefsActionPerformed
 
     	try {
-    		if(Integer.parseInt(jTextFieldPreviewWidth.getText()) != preferenceshandler.getPreviewWidth()) {
-    			preferenceshandler.setPreviewWidth(Integer.parseInt(jTextFieldPreviewWidth.getText()));
-    		}
-    	} catch (NumberFormatException e) {
-    		//e.printStackTrace();
+			previewWidth = Integer.parseInt(jTextFieldPreviewWidth.getText());
+		} catch (NumberFormatException e) {
+		}
+    	if(!(tickerSpeed > 0 && tickerSpeed < 1001)) {
+    		tickerSpeed = display.getLiveTickerTimer().getDelay();
     	}
-        	
+
+    	tickerFontColor = "" + display.getTickerComponent().getForeground().getRGB();
+    	tickerFontSize = (String) jComboBoxFontSizeTicker.getSelectedItem();
+    	tickerFontType = (String) jComboBoxFontTypeTicker.getSelectedItem();
     	
+    	themeslideCreatorFontColor = "" + jButtonThemeslideDefaultColor.getBackground().getRGB();
+    	themeslideCreatorFontSize = (String) jComboBoxThemeslideFontSize.getSelectedItem();
+    	themeslideCreatorFontType = (String) jComboBoxThemeSlideFontType.getSelectedItem();
     	
-    	dispose();
+    	preferencesHandler.updatePropertiesFromPreferencesFrame();
+    	dispose();    	
+
     }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
 
     /**
@@ -884,9 +905,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
     		if(!jTextFieldThemeName.getText().isEmpty() && selectedImage.exists()) {
         		
     			
-	        	for(int i = 0; i < preferenceshandler.getListOfThemes().size(); i++) {
+	        	for(int i = 0; i < preferencesHandler.getListOfThemes().size(); i++) {
 	        		
-	        		if(preferenceshandler.getListOfThemes().get(i).getName().equals(jTextFieldThemeName.getText())) {
+	        		if(preferencesHandler.getListOfThemes().get(i).getName().equals(jTextFieldThemeName.getText())) {
 	        			System.out.println("if reached");
 	        			alreadyExists = true;
 	        		}
@@ -895,8 +916,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
         		
         		if(!alreadyExists) {
         			Theme newTheme = new Theme(jTextFieldThemeName.getText(), selectedImage);
-                	preferenceshandler.addTheme(newTheme);
-                	jListTheme.setSelectedIndex(preferenceshandler.getListOfThemes().size() - 1);
+                	preferencesHandler.addTheme(newTheme);
+                	jListTheme.setSelectedIndex(preferencesHandler.getListOfThemes().size() - 1);
         		} else {
         			JOptionPane.showMessageDialog(this, "A theme with this name already exists.", "Error", JOptionPane.ERROR_MESSAGE);        		}
         		
@@ -909,7 +930,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     		} else {
     			JOptionPane.showMessageDialog(this, "File cannot be found on the hard disk.", "Error", JOptionPane.ERROR_MESSAGE);
     		}
-    		preferenceshandler.refreshThemeListModel();
+    		preferencesHandler.refreshThemeListModel();
     	}
     	
     }//GEN-LAST:event_btnSaveThemeActionPerformed
@@ -922,7 +943,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	
     	int[] selectedIndices = jListTheme.getSelectedIndices(); 	
     	if(selectedIndices.length > 0) {
-    		preferenceshandler.removeThemes(Misc.indexListToThemes(selectedIndices));
+    		preferencesHandler.removeThemes(Misc.indexListToThemes(selectedIndices));
     	}
     }//GEN-LAST:event_btnRemoveThemeActionPerformed
 
@@ -998,11 +1019,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
     
     private void tickerSpeedChanged() {
-    	int tickerSpeed = -1;
+    	tickerSpeed = -1;
     	try {
 			tickerSpeed = Integer.parseInt(jTextFieldTickerSpeed.getText());
 		} catch (NumberFormatException e) {	}
-    	System.out.println(tickerSpeed);
     	if(tickerSpeed > 0 && tickerSpeed < 1001) {
     		display.getLiveTickerTimer().setDelay(tickerSpeed);
     	}
@@ -1049,7 +1069,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private void listThemeSelectionChanged() {
 		int viewRow = jListTheme.getSelectedIndex();
 		if(viewRow >= 0) {
-			selectedTheme = preferenceshandler.getListOfThemes().get(viewRow);
+			selectedTheme = preferencesHandler.getListOfThemes().get(viewRow);
 			jTextFieldThemeName.setText(selectedTheme.getName());
 			jTextFieldThemeBgImg.setText(selectedTheme.getBackgroundImage().getAbsolutePath());
 		}
@@ -1061,7 +1081,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private void listPrioritySelectionChanged() {
 		int viewRow = jListPrio.getSelectedIndex();
 		if(viewRow >= 0) {
-		    selectedPrio = preferenceshandler.getListOfPriorities().get(viewRow);
+		    selectedPrio = preferencesHandler.getListOfPriorities().get(viewRow);
 		    jTextFieldPrioName.setText(selectedPrio.getName());
 		    jTextFieldPrioMin.setText(Integer.toString(selectedPrio.getMinutesToShow()));
 		}
@@ -1230,6 +1250,38 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 	public void setjList2(javax.swing.JList jList2) {
 		this.jListTheme = jList2;
+	}
+
+	public int getTickerSpeed() {
+		return tickerSpeed;
+	}
+
+	public String getTickerFontType() {
+		return tickerFontType;
+	}
+
+	public String getTickerFontSize() {
+		return tickerFontSize;
+	}
+
+	public String getTickerFontColor() {
+		return tickerFontColor;
+	}
+
+	public String getThemeslideCreatorFontType() {
+		return themeslideCreatorFontType;
+	}
+
+	public String getThemeslideCreatorFontSize() {
+		return themeslideCreatorFontSize;
+	}
+
+	public String getThemeslideCreatorFontColor() {
+		return themeslideCreatorFontColor;
+	}
+
+	public int getPreviewWidth() {
+		return previewWidth;
 	}
 
 }

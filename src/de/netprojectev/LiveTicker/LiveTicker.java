@@ -114,7 +114,7 @@ public class LiveTicker {
 			
 			if(textElements.get(i).getToShow()) {
 				
-				completeTickerText += textElements.get(i).getText() + Constants.SEPERATOR;
+				completeTickerText += textElements.get(i).getText() + Constants.DEFAULT_SEPERATOR;
 			}
 			
 		}

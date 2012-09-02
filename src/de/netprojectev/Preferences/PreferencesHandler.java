@@ -1,6 +1,7 @@
 package de.netprojectev.Preferences;
 
 import java.util.LinkedList;
+import java.util.Properties;
 
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
@@ -27,6 +28,8 @@ public class PreferencesHandler {
 	private LinkedList<Priority> listOfPriorities;
 	private LinkedList<Theme> listOfThemes;
 	
+	private Properties properties;
+	
 	private int previewWidth;
 	
 	private int tickerSpeed;
@@ -41,6 +44,8 @@ public class PreferencesHandler {
 		this.tickerSpeed = Constants.DEFAULT_TICKER_SPEED;
 		this.previewWidth = Constants.DEFAULT_PREVIEW_SCALE_WIDTH;
 		
+		properties = new Properties();
+		
 	}
 	
 	public static PreferencesHandler getInstance() {
@@ -49,6 +54,25 @@ public class PreferencesHandler {
 			instance = new PreferencesHandler();
 		}
 		return instance;
+	}
+	
+	/**
+	 * This method updates the properties object, by writing all changes from the preferences frame to it.
+	 */
+	public void updatePropertiesFromPreferencesFrame() {
+		
+		//TODO last worked here, add properties
+		
+		properties.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, value);
+		properties.setProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN, value);
+		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, value);
+		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, value);
+		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, value);
+		properties.setProperty(Constants.PROP_TICKER_FONTCOLOR, value);
+		properties.setProperty(Constants.PROP_TICKER_FONTSIZE, value);
+		properties.setProperty(Constants.PROP_TICKER_FONTTYPE, value);
+		properties.setProperty(Constants.PROP_TICKER_SPEED, value);
+
 	}
 	
 	/**
