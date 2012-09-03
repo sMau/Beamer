@@ -1,11 +1,13 @@
 package de.netprojectev.Main;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Misc.Misc;
 
 public class Starter {
 
@@ -86,16 +88,25 @@ public class Starter {
 	 * checks if this is the first time the program is started on this machine,
 	 * and creates the necessary file structure in the home folder of the user
 	 * if it does not exist already
+	 * It also generates a standard properties file, containing the defaults.
 	 *
 	 */
 	private static void onFirstStart() {
 		File toTestMain = new File(Constants.SAVE_PATH);
 		File toTestCache = new File(Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE);
+		File properties = new File(Constants.SAVE_PATH + Constants.FILENAME_PROPERTIES);
 		if(!toTestMain.isDirectory()) {
 			toTestMain.mkdirs();
 		}
 		if(!toTestCache.isDirectory()) {
 			toTestCache.mkdirs();
+		}
+		if(!properties.exists()) {
+			try {
+				Misc.savePropertiesToDisk(Misc.generateDefaultProps());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		
 	}

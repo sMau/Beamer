@@ -5,13 +5,17 @@ import java.awt.Point;
 import java.awt.PointerInfo;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.swing.JOptionPane;
 
@@ -158,11 +162,39 @@ public class Misc {
 	}
 	
 	/**
+	 * Saves the given property object to the in the {@link Constants} specified path.
+	 * 
+	 * @param props the property object to save
+	 * @throws IOException
+	 */
+	public synchronized static void savePropertiesToDisk(Properties props) throws IOException {
+		FileWriter writer = new FileWriter(Constants.SAVE_PATH + Constants.FILENAME_PROPERTIES);
+		props.store(writer, null);
+		writer.close();
+	}
+	
+	/**
+	 * Reads properties from disk using the in the {@link Constants} defined path.
+	 * 
+	 * @return from disk loaded property object
+	 * @throws IOException
+	 */
+	public synchronized static Properties loadPropertiesFromDisk() throws IOException {
+		Properties props = new Properties();
+		FileReader reader = new FileReader(Constants.SAVE_PATH + Constants.FILENAME_PROPERTIES);
+		props.load(reader);
+		reader.close();
+		return props;
+	}
+	
+	
+	/**
 	 * serializing a given object to the save path specified in the constants using the given filename.
 	 * @param toSave a serializable object
 	 * @param filename the filename it should be saved to 
+	 * @throws IOException 
 	 */
-	public synchronized static void saveToFile(Serializable toSave, String filename) {
+	public synchronized static void saveToFile(Serializable toSave, String filename) throws IOException {
 		
 		String path = Constants.SAVE_PATH;
 		
@@ -174,49 +206,37 @@ public class Misc {
 			new File(path).mkdirs();
 		}
 		
-		try {
-			FileOutputStream file = new FileOutputStream(path + filename);
-			ObjectOutputStream o = new ObjectOutputStream(file);
-			o.writeObject(toSave);
-			o.close();
-		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error while saving files.", "Error", JOptionPane.ERROR_MESSAGE);
-			System.out.println(e);
-		}
 
+		FileOutputStream file = new FileOutputStream(path + filename);
+		ObjectOutputStream o = new ObjectOutputStream(file);
+		o.writeObject(toSave);
+		o.close();
 	}
 	
 	/**
 	 * Deserializing a object from hard disk in save path with the given filename.
 	 * @param filename file to load from disk
 	 * @return deserialized object
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public synchronized static Object loadFromFile(String filename) {
+	public synchronized static Object loadFromFile(String filename) throws IOException, ClassNotFoundException {
 		
 		Object fileToLoad = null;
 		String path = Constants.SAVE_PATH;
 		
 		if(new File(path + filename).exists()) {
-			try {
-				FileInputStream file = new FileInputStream(path + filename);
-				ObjectInputStream o = new ObjectInputStream(file);
-				fileToLoad = o.readObject();
-				o.close();
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Error while loading files.", "Error", JOptionPane.ERROR_MESSAGE);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, "Error while loading files.", "Error", JOptionPane.ERROR_MESSAGE);
-			}
+
+			FileInputStream file = new FileInputStream(path + filename);
+			ObjectInputStream o = new ObjectInputStream(file);
+			fileToLoad = o.readObject();
+			o.close();
 
 			return fileToLoad;
 		} else {
 			return null;
 		}
-		
-		
+
 	}
 	
 	/**
@@ -241,10 +261,37 @@ public class Misc {
 		return minutesString + ":" + secondsLeftString;
 	}
 	
+	/**
+	 * Reads the default values from the {@link Constants} and then adds them to the generated default properties object.
+	 *	 
+	 * @return default properties
+	 */
+	public static Properties generateDefaultProps() {
+		
+		Properties defProps = new Properties();
+		
+		defProps.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + Constants.DEFAULT_PREVIEW_SCALE_WIDTH);
+		defProps.setProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN, "" + Constants.DEFAULT_SCREEN_NUMBER_FULLSCREEN);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
+		defProps.setProperty(Constants.PROP_TICKER_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
+		defProps.setProperty(Constants.PROP_TICKER_FONTSIZE, "" + Constants.DEFAULT_TICKER_FONTSIZE);
+		defProps.setProperty(Constants.PROP_TICKER_FONTTYPE, Constants.DEFAULT_TICKER_FONTTYPE);
+		defProps.setProperty(Constants.PROP_TICKER_SPEED, "" + Constants.DEFAULT_TICKER_SPEED);
+
+		return defProps;
+	}
 	
-	
-	public static void restartApplication() throws URISyntaxException,
-			IOException {
+	/**
+	 * Restarts the currently running jar file using the process builder.
+	 * 
+	 * @throws URISyntaxException
+	 * @throws IOException
+	 */
+	public static void restartApplication() throws URISyntaxException, IOException {
 		final String javaBin = System.getProperty("java.home") + File.separator
 				+ "bin" + File.separator + "java";
 		final File currentJar = new File(Starter.class.getProtectionDomain()
@@ -261,6 +308,7 @@ public class Misc {
 		builder.start();
 		System.exit(0);
 	}
+	
 	
 
 

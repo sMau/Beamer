@@ -9,6 +9,7 @@ import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.Properties;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -23,6 +24,7 @@ import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
+import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
@@ -37,6 +39,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = -5332162076303310401L;
 	
 	private PreferencesHandler preferencesHandler;
+	private Properties props;
 	private Priority selectedPrio;
 	private Theme selectedTheme;
 	private ManagerFrame managerFrame;
@@ -54,6 +57,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private String themeslideCreatorFontSize;
 	private String themeslideCreatorFontColor;
 	
+	private int themeslideCreatorMarginLeft;
+	private int themeslideCreatorMarginTop;
+	
 	
 	private transient DisplayMainFrame display;
 	
@@ -69,9 +75,29 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	preferencesHandler.setPreferencesFrame(this);
     	preferencesHandler.setManagerFrame(managerFrame);
     	this.display = 	DisplayDispatcher.getInstance().getDisplayFrame();
+    	
+    	props = preferencesHandler.getProperties();
+    	
         initComponents();
         
-        /*
+        initValues();
+
+        setLocation(Misc.currentMousePosition());
+    }
+
+	private void initValues() {
+		
+		/*
+		 * GENERAL TAB
+		 *	
+		 */
+		
+		System.out.println("Prev scaled Prop: " + props.getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH));
+		jTextFieldPreviewWidth.setText(props.getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH));
+		System.out.println("Screnn number Prop: " + Constants.PROP_SCREEN_NUMBER_FULLSCREEN);
+		jTextFieldScreenNumber.setText(props.getProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN));
+		
+		/*
          * 
          * LIVE TICKER TAB
          */
@@ -79,20 +105,20 @@ public class PreferencesFrame extends javax.swing.JFrame {
         for(int i = 0; i < font.length; i++) {
         	jComboBoxFontTypeTicker.addItem(font[i]);
         }
-        jComboBoxFontTypeTicker.setSelectedItem(display.getTickerComponent().getFont().getFamily());
-        jComboBoxFontSizeTicker.setSelectedItem(display.getTickerComponent().getFont().getSize());
+        jComboBoxFontTypeTicker.setSelectedItem(props.getProperty(Constants.PROP_TICKER_FONTTYPE));
+        jComboBoxFontSizeTicker.setSelectedItem(props.getProperty(Constants.PROP_TICKER_FONTSIZE));
         
 
-        Color bg =  new Color(display.getTickerComponent().getForeground().getRed(), display.getTickerComponent().getForeground().getGreen(), display.getTickerComponent().getForeground().getBlue());
-        
+        Color bg;
+		try {
+			bg = new Color(Integer.parseInt(props.getProperty(Constants.PROP_TICKER_FONTCOLOR)));
+		} catch (NumberFormatException e1) {
+			bg = new Color(Constants.DEFAULT_TICKER_FONTCOLOR);
+		}
         jButtonTickerColorPicker.setBackground(bg);
         jButtonTickerColorPicker.setForeground(bg);
-        
-        try {
-			jTextFieldTickerSpeed.setText(Integer.toString(display.getLiveTickerTimer().getDelay()));
-		} catch (Exception e) {
-			jTextFieldTickerSpeed.setText("");
-		}
+  
+		jTextFieldTickerSpeed.setText(props.getProperty(Constants.PROP_TICKER_SPEED));
         
         /*
          * 
@@ -102,18 +128,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
         for(int i = 0; i < font.length; i++) {
         	jComboBoxThemeSlideFontType.addItem(font[i]);
         }
+        jComboBoxThemeSlideFontType.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
         
         String[] sizes = Constants.FONT_SIZES;
-        
         for(int i = 0; i < sizes.length; i++) {
         	jComboBoxThemeslideFontSize.addItem(sizes[i]);
         }
-        
-        //TODO init of the color button and the correct selection of the comboboxes, when i know where i save the information
-        
-       
-        setLocation(Misc.currentMousePosition());
-    }
+        jComboBoxThemeslideFontSize.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
+
+        jTextFieldMarginLeft.setText(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
+        jTextFieldMarginTop.setText(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
+	}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -216,7 +241,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jLabel1.setText("Preview width in Pixel");
         jLabel1.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
 
-        jTextFieldPreviewWidth.setText(Integer.toString(preferencesHandler.getPreviewWidth()));
+        jTextFieldPreviewWidth.setText(preferencesHandler.getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH));
         jTextFieldPreviewWidth.setToolTipText("Set the width of the images for the previewing in the main frame. The height is set automatically.");
 
         jButtonEnterFullscreen.setText("Enter");
@@ -295,7 +320,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                         .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel23)))
-                                .addGap(0, 63, Short.MAX_VALUE)))
+                                .addGap(0, 97, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanelTabMainLayout.setVerticalGroup(
@@ -310,7 +335,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel23))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 23, Short.MAX_VALUE)
                 .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
                         .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -331,7 +356,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addComponent(jButtonReset)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("General", jPanelTabMain);
@@ -362,7 +387,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
             }
         });
 
-        jComboBoxFontTypeTicker.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxFontTypeTicker.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxFontTypeTickerActionPerformed(evt);
@@ -405,7 +429,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jTextFieldTickerSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
-                                .addGap(0, 66, Short.MAX_VALUE))
+                                .addGap(0, 109, Short.MAX_VALUE))
                             .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -448,7 +472,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel15)
                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         jTextFieldTickerSpeed.getDocument().addDocumentListener(new DocumentListener() {@Override
@@ -571,7 +595,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jLabel22)
                         .addComponent(jTextFieldMarginLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextFieldMarginTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(176, Short.MAX_VALUE))
+                    .addContainerGap(180, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("Themeslide Creator", jPanelThemeslideCreator);
@@ -652,7 +676,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addComponent(btnSaveTheme)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btnRemoveTheme)))
-                            .addContainerGap(156, Short.MAX_VALUE))))
+                            .addContainerGap(164, Short.MAX_VALUE))))
             );
             jPanelTabThemeLayout.setVerticalGroup(
                 jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -751,7 +775,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addGroup(jPanelTabPrioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jTextFieldPrioName, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jTextFieldPrioMin, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(0, 226, Short.MAX_VALUE)))
+                            .addGap(0, 227, Short.MAX_VALUE)))
                     .addContainerGap())
             );
             jPanelTabPrioLayout.setVerticalGroup(
@@ -903,6 +927,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			previewWidth = Integer.parseInt(jTextFieldPreviewWidth.getText());
 		} catch (NumberFormatException e) {
 		}
+    	
     	if(!(tickerSpeed > 0 && tickerSpeed < 1001)) {
     		tickerSpeed = display.getLiveTickerTimer().getDelay();
     	}
@@ -919,7 +944,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			fullscreenNumber = Integer.parseInt(jTextFieldScreenNumber.getText());
 		} catch (NumberFormatException e) {}
     	
+    	try {
+			themeslideCreatorMarginLeft = Integer.parseInt(jTextFieldMarginLeft.getText());
+			themeslideCreatorMarginTop = Integer.parseInt(jTextFieldMarginTop.getText());
+		} catch (NumberFormatException e) {}
+
     	preferencesHandler.updatePropertiesFromPreferencesFrame();
+    	
+    	if(previewWidth != Integer.parseInt(preferencesHandler.getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH))) {
+    		MediaHandler.getInstance().generateNewScaledPreviews();
+    	}
+    	
     	dispose();    	
 
     }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
@@ -1083,9 +1118,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	}
 
     private void tickerFontSizeChanged() {
-    	Font fontToSet = new Font(display.getTickerComponent().getFont().getName(), display.getTickerComponent().getFont().getStyle(), Integer.parseInt((String) jComboBoxFontSizeTicker.getSelectedItem()));
-    	display.getTickerComponent().setFont(fontToSet);
-    	
+    	Font fontToSet;
+		try {
+			fontToSet = new Font(display.getTickerComponent().getFont().getName(), display.getTickerComponent().getFont().getStyle(), Integer.parseInt((String) jComboBoxFontSizeTicker.getSelectedItem()));
+			display.getTickerComponent().setFont(fontToSet);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 	
 	
@@ -1343,6 +1384,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 	public int getFullscreenNumber() {
 		return fullscreenNumber;
+	}
+
+	public int getThemeslideCreatorMarginLeft() {
+		return themeslideCreatorMarginLeft;
+	}
+
+	public int getThemeslideCreatorMarginTop() {
+		return themeslideCreatorMarginTop;
 	}
 
 }

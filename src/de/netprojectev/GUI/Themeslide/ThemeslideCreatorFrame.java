@@ -14,6 +14,7 @@ import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Properties;
 import java.util.Random;
 
 import javax.imageio.IIOImage;
@@ -62,9 +63,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	private Boolean lastEventCaretPosChanged = false;
 	private int lastEventCaretPos = 0;
 	
+	private Properties props;
 	
     public ThemeslideCreatorFrame() {
     	initComponents();
+    	    	
+    	props = PreferencesHandler.getInstance().getProperties();
     	
         for(int i = 0; i < PreferencesHandler.getInstance().getListOfThemes().size(); i++) {
         	jComboBoxTheme.addItem(PreferencesHandler.getInstance().getListOfThemes().get(i).getName());
@@ -76,13 +80,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         for(int i = 0; i < font.length; i++) {
         	jComboBoxFontType.addItem(font[i]);
         }
-
+        jComboBoxFontType.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
+        
         for(int i = 0; i < Constants.FONT_SIZES.length; i++) {
         	jComboBoxFontSize.addItem(Constants.FONT_SIZES[i]);
         }
-        
-        jComboBoxFontType.setSelectedItem(textPaneThemeslide.getFont().getFamily());
-        jComboBoxFontSize.setSelectedItem(textPaneThemeslide.getFont().getSize() + "px");
+        jComboBoxFontSize.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
         
         setLocation(Misc.currentMousePosition());
     }

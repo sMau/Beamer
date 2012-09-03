@@ -7,6 +7,7 @@ package de.netprojectev.GUI.Manager;
 
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import javax.swing.DefaultCellEditor;
@@ -62,7 +63,15 @@ public class ManagerFrame extends javax.swing.JFrame {
         initComponents();
         setLocation(Misc.currentMousePosition());
 
-        loadFromDisk();
+        try {
+			loadFromDisk();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
     }
 
@@ -897,7 +906,12 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private void quit() {
         int exit = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit?", "Quit", JOptionPane.YES_NO_OPTION);
         if (exit == JOptionPane.YES_OPTION) {	
-        	saveToDisk();
+        	try {
+				saveToDisk();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		System.exit(0);
         }
 
@@ -1121,14 +1135,17 @@ public class ManagerFrame extends javax.swing.JFrame {
     /**
      * handles the file loading and to update the current instance of the program to its states.
      * @return true if successful else false
+     * @throws IOException 
+     * @throws ClassNotFoundException 
      */
     @SuppressWarnings("unchecked")
-	private Boolean loadFromDisk() {
+	private Boolean loadFromDisk() throws IOException, ClassNotFoundException {
     	LinkedList<MediaFile> tmpMedia = (LinkedList<MediaFile>) Misc.loadFromFile(Constants.FILENAME_MEDIAFILES);
     	LinkedList<Priority> tmpPriority = (LinkedList<Priority>) Misc.loadFromFile(Constants.FILENAME_PRIORITIES);
     	LinkedList<Theme> tmpTheme = (LinkedList<Theme>) Misc.loadFromFile(Constants.FILENAME_THEMES);
     	LinkedList<TickerTextElement> tmpTickerElements = (LinkedList<TickerTextElement>) Misc.loadFromFile(Constants.FILENAME_LIVETICKER);
-    	Integer tmpPreviewWidth = (Integer) Misc.loadFromFile(Constants.FILENAME_SETTINGS);
+
+    	preferencesHandler.setProperties(Misc.loadPropertiesFromDisk());
     	
     	if(tmpMedia != null) {
     		
@@ -1166,10 +1183,6 @@ public class ManagerFrame extends javax.swing.JFrame {
     		}
     	}
     	
-    	if(tmpPreviewWidth != null) {
-    		preferencesHandler.setPreviewWidth(tmpPreviewWidth);
-    	}
-
     	return true;
 	
     }
@@ -1177,14 +1190,15 @@ public class ManagerFrame extends javax.swing.JFrame {
     /**
      * handles the serialization of the current instance of the program
      * @return true if successful else false 
+     * @throws IOException 
      */
-    private Boolean saveToDisk() {
+    private Boolean saveToDisk() throws IOException {
     	Misc.saveToFile(mediaHandler.getMediaFiles(), Constants.FILENAME_MEDIAFILES);
     	Misc.saveToFile(preferencesHandler.getListOfPriorities(), Constants.FILENAME_PRIORITIES);
     	Misc.saveToFile(preferencesHandler.getListOfThemes(), Constants.FILENAME_THEMES);
     	Misc.saveToFile(liveTicker.getTextElements(), Constants.FILENAME_LIVETICKER);
     	
-    	Misc.saveToFile(preferencesHandler.getPreviewWidth(), Constants.FILENAME_SETTINGS);
+    	Misc.savePropertiesToDisk(preferencesHandler.getProperties());
     	
     	return true;
     }

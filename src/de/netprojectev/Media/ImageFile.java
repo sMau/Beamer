@@ -68,7 +68,7 @@ public class ImageFile extends MediaFile {
      * @return scaled preview instance of the given ImageIcon
      */
 	private ImageIcon scaleIcon(ImageIcon preview) {	
-    	preview.setImage(preview.getImage().getScaledInstance(PreferencesHandler.getInstance().getPreviewWidth(), -1,Image.SCALE_SMOOTH));  	
+    	preview.setImage(preview.getImage().getScaledInstance(Integer.parseInt(PreferencesHandler.getInstance().getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH)), -1,Image.SCALE_SMOOTH));  	
     	return preview;
     }
 

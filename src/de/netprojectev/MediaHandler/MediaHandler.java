@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import de.netprojectev.GUI.Manager.FileManagerTableModel;
 import de.netprojectev.GUI.Manager.ManagerFrame;
+import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
 
@@ -169,6 +170,22 @@ public class MediaHandler {
 			((FileManagerTableModel) managerFrame.getjTableFileManager().getModel()).updateModel();
 		}
 
+	}
+	
+	/**
+	 * forces every {@link ImageFile} and every {@link Themeslide} to generate a new preview.
+	 * Used if changes to the preview scaling property are made
+	 */
+	public void generateNewScaledPreviews() {
+
+		for(int i = 0; i < mediaFiles.size(); i++) {
+			if(mediaFiles.get(i) instanceof ImageFile) {
+				((ImageFile) mediaFiles.get(i)).forceRealoadPreview();
+			}
+			if(mediaFiles.get(i) instanceof Themeslide) {
+				((Themeslide) mediaFiles.get(i)).getImageFileRepresentation().forceRealoadPreview();
+			}
+		}
 	}
 
 

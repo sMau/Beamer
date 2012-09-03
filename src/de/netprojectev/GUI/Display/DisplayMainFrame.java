@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
  * GUI class frame, to store the viewing components, as the live ticker and the image and themeslide showing component.
@@ -33,7 +34,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
         initComponents();
         fullscreen = false;
         screenNumberDisplayFrame = 0;
-        startLiveTicker(Constants.DEFAULT_TICKER_SPEED);
+        startLiveTicker(Integer.parseInt(PreferencesHandler.getInstance().getProperties().getProperty(Constants.PROP_TICKER_SPEED)));
     }
 
     public void startLiveTicker(int tickerUpdateInterval) {

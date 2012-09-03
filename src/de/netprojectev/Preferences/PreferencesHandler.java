@@ -7,11 +7,10 @@ import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.GUI.Preferences.PriorityListModel;
 import de.netprojectev.GUI.Preferences.ThemeListModel;
-import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Theme;
-import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Misc.Misc;
 
 /**
  * Datastructure to hold preferences, priorities and themes.
@@ -30,21 +29,13 @@ public class PreferencesHandler {
 	
 	private Properties properties;
 	
-	private int previewWidth;
-	
-	private int tickerSpeed;
-	
 	private PreferencesHandler() {
-		
+
+		properties = new Properties(Misc.generateDefaultProps());
 		this.listOfPriorities = new LinkedList<Priority>();
 		addPriority(Constants.DEFAULT_PRIORITY);
-		
+
 		this.listOfThemes = new LinkedList<Theme>();
-		
-		this.tickerSpeed = Constants.DEFAULT_TICKER_SPEED;
-		this.previewWidth = Constants.DEFAULT_PREVIEW_SCALE_WIDTH;
-		
-		properties = new Properties();
 		
 	}
 	
@@ -66,6 +57,8 @@ public class PreferencesHandler {
 		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, preferencesFrame.getThemeslideCreatorFontColor());
 		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, preferencesFrame.getThemeslideCreatorFontSize());
 		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, preferencesFrame.getThemeslideCreatorFontType());
+		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + preferencesFrame.getThemeslideCreatorMarginLeft());
+		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + preferencesFrame.getThemeslideCreatorMarginTop());
 		properties.setProperty(Constants.PROP_TICKER_FONTCOLOR, preferencesFrame.getTickerFontColor());
 		properties.setProperty(Constants.PROP_TICKER_FONTSIZE, preferencesFrame.getTickerFontSize());
 		properties.setProperty(Constants.PROP_TICKER_FONTTYPE, preferencesFrame.getTickerFontType());
@@ -137,15 +130,7 @@ public class PreferencesHandler {
 			((ThemeListModel) preferencesFrame.getjList2().getModel()).updateList();
 		}
 	}
-	
-	public Boolean isPriorityUsed(Priority prio) {
-		
-		//UNUSED
-		
-		return false;
-		
-	}
-	
+
 	/**
 	 * 
 	 * @param name priorities name to search for
@@ -181,14 +166,6 @@ public class PreferencesHandler {
 		this.listOfThemes = listOfThemes;
 	}
 
-	public int getTickerSpeed() {
-		return tickerSpeed;
-	}
-
-	public void setTickerSpeed(int tickerSpeed) {
-		this.tickerSpeed = tickerSpeed;
-	}
-
 	public PreferencesFrame getPreferencesFrame() {
 		return preferencesFrame;
 	}
@@ -205,17 +182,12 @@ public class PreferencesHandler {
 		this.managerFrame = managerFrame;
 	}
 
-	public int getPreviewWidth() {
-		return previewWidth;
+	public Properties getProperties() {
+		return properties;
 	}
 
-	public void setPreviewWidth(int previewWidth) {
-		this.previewWidth = previewWidth;
-		for(int i = 0; i < MediaHandler.getInstance().getMediaFiles().size(); i++) {
-			if(MediaHandler.getInstance().getMediaFiles().get(i) instanceof ImageFile) {
-				((ImageFile) MediaHandler.getInstance().getMediaFiles().get(i)).forceRealoadPreview();
-			}
-		}
+	public void setProperties(Properties properties) {
+		this.properties = properties;
 	}
 	
 
