@@ -12,7 +12,10 @@ import de.netprojectev.Misc.Constants;
  */
 public class VideoFile extends MediaFile {
 
-	//TODO class not used yet
+	/*
+	 * Class not used yet, as videos arent supported at the moment
+	 * 
+	 */
 	
 	private static final long serialVersionUID = 2281243056699366253L;
 	private String path;

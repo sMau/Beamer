@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.awt.PointerInfo;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -17,7 +16,6 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Properties;
 import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.SimpleFormatter;
@@ -47,11 +45,11 @@ public class Misc {
 	 * @return array of media files.
 	 */
 	public static MediaFile[] createMediaFromFiles(File[] files) {
+
+		//TODO have to distinguish between videos and images. Maybe using my own ImageFileFilter
 		
 		MediaFile[] mediaFiles = new MediaFile[files.length];
-		
-		//TODO im Moment dumme for schleife; soll in Zukunft automatisch zwischen Video und Bild unterscheiden k�nnen und die entsprechende MedienDatei erzeugen
-		
+
 		for(int i = 0; i < files.length; i++) {
 			
 			if(files[i].exists() && files[i].isFile()) {

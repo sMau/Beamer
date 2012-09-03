@@ -28,6 +28,7 @@ import de.netprojectev.Media.Theme;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Misc.ImageFileFilter;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
@@ -963,8 +964,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
      */
     private void jButtonChooseBgImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseBgImageActionPerformed
 
-    	//TODO filtering
     	
+    	jFileChooser1.setFileFilter(new ImageFileFilter());
     	int returnVal = jFileChooser1.showOpenDialog(this);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -1005,7 +1006,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         		
         	}
     	} else { //Editing the selected Theme
-    		//TODO Filtering for image files (maybe better in the filedialog)
+    		
     		selectedTheme.setName(jTextFieldThemeName.getText());
     		if(selectedImage.exists()) {
     			selectedTheme.setBackgroundImage(selectedImage);	

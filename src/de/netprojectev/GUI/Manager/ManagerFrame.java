@@ -9,6 +9,8 @@ import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
@@ -34,6 +36,7 @@ import de.netprojectev.Media.Themeslide;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Misc.ImageFileFilter;
 import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
@@ -45,6 +48,8 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class ManagerFrame extends javax.swing.JFrame {
 
+	private static final Logger log = Logger.getLogger(ManagerFrame.class.getName());
+	
 	private static final long serialVersionUID = 7019176172214701606L;
 	private MediaHandler mediaHandler;
 	private LiveTicker liveTicker;
@@ -66,11 +71,9 @@ public class ManagerFrame extends javax.swing.JFrame {
         try {
 			loadFromDisk();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log(Level.SEVERE, "Error during loading settings and files.", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log(Level.SEVERE, "Error during loading settings and files.", e);
 		}
         
     }
@@ -717,7 +720,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemAddFileActionPerformed
 
 	private void openFileChooser() {
-		//TODO apply filters for image files, and later for videos
+		jFileChooser.setFileFilter(new ImageFileFilter());
 		int returnVal = jFileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
         	MediaHandler.getInstance().add(Misc.createMediaFromFiles(jFileChooser.getSelectedFiles()));
@@ -909,8 +912,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         	try {
 				saveToDisk();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.log(Level.SEVERE, "Error during saving settings and files.", e);
 			}
     		System.exit(0);
         }
