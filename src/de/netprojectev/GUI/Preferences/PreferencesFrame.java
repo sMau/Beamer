@@ -1130,8 +1130,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			fontToSet = new Font(display.getTickerComponent().getFont().getName(), display.getTickerComponent().getFont().getStyle(), Integer.parseInt((String) jComboBoxFontSizeTicker.getSelectedItem()));
 			display.getTickerComponent().setFont(fontToSet);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log(Level.WARNING, "Error during converting string to integer", e);
 		}
 
 	}
