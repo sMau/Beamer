@@ -1,12 +1,16 @@
 package de.netprojectev.MediaHandler;
 
+import java.io.IOException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Manager.FileManagerTableModel;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
+import de.netprojectev.Misc.Misc;
 
 /**
  * Handles all media files currently loaded.
@@ -15,7 +19,8 @@ import de.netprojectev.Media.Themeslide;
  *
  */
 public class MediaHandler {
-
+	
+	private static final Logger log = Logger.getLogger(MediaHandler.class.getName());
 
 	private static MediaHandler instance = new MediaHandler();
 
@@ -27,6 +32,13 @@ public class MediaHandler {
 
 	private MediaHandler() {
 
+		try {
+			log.addHandler(Misc.getLogFileHandlerAll());
+			log.addHandler(Misc.getLogFileHandlerError());
+		} catch (SecurityException e) {
+		} catch (IOException e) {
+		}
+		
 		mediaFiles = new LinkedList<MediaFile>();
 		displayHandler = DisplayHandler.getInstance();
 		displayHandler.setMediaHandler(this);
@@ -54,7 +66,10 @@ public class MediaHandler {
 		for (int i = 0; i < files.length; i++) {
 
 			if (!mediaFiles.contains(files[i])) {
+				log.log(Level.INFO, "media file added - " + files[i].getName());
 				mediaFiles.add(files[i]);
+			} else {
+				log.log(Level.INFO, "media file already in list - " + files[i].getName());
 			}
 
 		}
@@ -76,6 +91,8 @@ public class MediaHandler {
 
 		boolean containsCurrentElt = false;
 		MediaFile[] filesToRemove = files; 
+		
+		log.log(Level.INFO, "removing files, removing current: " + removeCurrent);
 		
 		if(!removeCurrent) {
 			for (int i = 0; i < files.length; i++) {
@@ -100,6 +117,7 @@ public class MediaHandler {
 			for (int i = 0; i < filesToRemove.length; i++) {
 
 				mediaFiles.remove(filesToRemove[i]);
+				log.log(Level.INFO, "media file removed - " + filesToRemove[i].getName());
 				if(filesToRemove[i] instanceof Themeslide) {
 					((Themeslide) filesToRemove[i]).removeCacheFile();
 				}
@@ -117,17 +135,20 @@ public class MediaHandler {
 	 * @param files files to move down
 	 */
 	public void down(MediaFile[] files) {
-
+		log.log(Level.INFO, "moving selected files down");
+		
 		int firstIndex = mediaFiles.indexOf(files[files.length - 1]) + 1 - (files.length - 1);
 		remove(files, true);
 		if(firstIndex > mediaFiles.size() - 1) {
 			for(int i = 0; i < files.length; i++) {
 				mediaFiles.addLast(files[i]);
+				log.log(Level.INFO, "moving file down: " + files[i].getName());
 			}
 			firstIndex = mediaFiles.size() - 1;
 		} else {
 			for (int i = files.length -1; i >= 0 ; i--) {
 				mediaFiles.add(firstIndex, files[i]);
+				log.log(Level.INFO, "moving file down: " + files[i].getName());
 			}
 		}
 
@@ -142,7 +163,7 @@ public class MediaHandler {
 	 * @param files files to move up
 	 */
 	public void up(MediaFile[] files) {
-		
+		log.log(Level.INFO, "moving selected files up");
 		int firstIndex = mediaFiles.indexOf(files[0]) - 1;
 		remove(files, true);
 		
@@ -153,6 +174,7 @@ public class MediaHandler {
 		for (int i = files.length -1; i >= 0 ; i--) {
 
 			mediaFiles.add(firstIndex, files[i]);
+			log.log(Level.INFO, "moving file up: " + files[i].getName());
 
 		}
 		
@@ -165,7 +187,7 @@ public class MediaHandler {
 	 * updates the model of the jtable to update the view
 	 */
 	public void refreshDataModel() {
-		
+		log.log(Level.INFO, "updating table model");
 		if(managerFrame != null) {
 			((FileManagerTableModel) managerFrame.getjTableFileManager().getModel()).updateModel();
 		}
@@ -178,6 +200,7 @@ public class MediaHandler {
 	 */
 	public void generateNewScaledPreviews() {
 
+		log.log(Level.INFO, "generating new scaled previews");
 		for(int i = 0; i < mediaFiles.size(); i++) {
 			if(mediaFiles.get(i) instanceof ImageFile) {
 				((ImageFile) mediaFiles.get(i)).forceRealoadPreview();

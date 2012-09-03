@@ -55,6 +55,8 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
+	//TODO take default color into account and change the color button, that its representing the selected color as its background
+	
 	private static final long serialVersionUID = -3653577264825548156L;
 
 	private Boolean evtFromGUIupdateFontSize = false;
@@ -86,6 +88,11 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         	jComboBoxFontSize.addItem(Constants.FONT_SIZES[i]);
         }
         jComboBoxFontSize.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
+
+        JTextPane editor = textPaneThemeslide;
+        
+        jComboBoxFontTypeActionPerformed(new ActionEvent(editor, 0, ""));
+        jComboBoxFontSizeActionPerformed(new ActionEvent(editor, 0, ""));
         
         setLocation(Misc.currentMousePosition());
     }
@@ -482,7 +489,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		generateJPGRepresentation(themeSlides[0], hashKey);
     		MediaHandler.getInstance().add(themeSlides);
     		
-    		//TODO check why this fixes the "preview bug" (Themeslides are only previewable after invoking this method once)
     		((Themeslide) themeSlides[0]).createNewImageFileRepresentation();
     		
     	} else {

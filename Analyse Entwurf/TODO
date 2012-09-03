@@ -1,6 +1,4 @@
-NOTES
-02.09.12
-Serializing of the new preferences fields... 
+
 
 
 Features (missing)
@@ -9,9 +7,7 @@ Features (missing)
 Theme also contains the margin and fontsize/type presettings (can contain there are also overall default settings in the settings dialogs)
 Themeslide editing
 Themeslidecreator - on pressing enter add the current tabspace automatically (like in eclipse)
-human readable config files
 Themeslidecreator - Zooming in and out in creation mode
-Logging in the complete program
 Queing for media files (like spotify does)
 "show file at" Gui mapping and testing
 "big" preview window as "popup" own frame (maybe)
@@ -19,7 +15,11 @@ Queing for media files (like spotify does)
 
 Improvements
 
+03.09.12
+add logging in the complete program
+
 31.08.12
+performance improve on building chess pattern in background, maybe use clip or copyarea to do so
 Performance fix on changing high res images. shows for a sec a blank screen
 Adding ticket elements without dialog, instead simply add ticket elt with "showing false" text "new element"
 set "wasShowed" after a given time and not immediately, settable via prefs

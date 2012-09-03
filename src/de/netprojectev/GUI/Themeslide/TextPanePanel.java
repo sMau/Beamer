@@ -46,7 +46,7 @@ public class TextPanePanel extends JPanel {
 	@Override
     protected void paintComponent(Graphics g) {
 		
-		//TODO performance improve on building chess pattern in background, maybe use clip or copyarea to do so
+		
 
 		int x = 0; 
 		int y = 0;

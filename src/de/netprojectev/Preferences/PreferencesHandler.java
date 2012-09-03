@@ -1,5 +1,6 @@
 package de.netprojectev.Preferences;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Properties;
 
@@ -49,8 +50,9 @@ public class PreferencesHandler {
 	
 	/**
 	 * This method updates the properties object, by writing all changes from the preferences frame to it.
+	 * @throws IOException 
 	 */
-	public void updatePropertiesFromPreferencesFrame() {
+	public void updatePropertiesFromPreferencesFrame() throws IOException {
 
 		properties.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + preferencesFrame.getPreviewWidth());
 		properties.setProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN, "" + preferencesFrame.getFullscreenNumber());
@@ -64,6 +66,8 @@ public class PreferencesHandler {
 		properties.setProperty(Constants.PROP_TICKER_FONTTYPE, preferencesFrame.getTickerFontType());
 		properties.setProperty(Constants.PROP_TICKER_SPEED, "" + preferencesFrame.getTickerSpeed());
 
+		Misc.savePropertiesToDisk(properties);
+		
 	}
 	
 	/**
@@ -77,6 +81,7 @@ public class PreferencesHandler {
 		}
 		
 	}
+	
 	/**
 	 * Adds a theme to the list.
 	 * @param theme the theme to add to handlers list

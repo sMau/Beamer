@@ -16,6 +16,11 @@ import java.io.Serializable;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.JOptionPane;
 
@@ -273,7 +278,7 @@ public class Misc {
 		defProps.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + Constants.DEFAULT_PREVIEW_SCALE_WIDTH);
 		defProps.setProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN, "" + Constants.DEFAULT_SCREEN_NUMBER_FULLSCREEN);
 		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE + "pt");
 		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE);
 		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT);
 		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
@@ -284,6 +289,21 @@ public class Misc {
 
 		return defProps;
 	}
+	
+	public static Handler getLogFileHandlerAll() throws SecurityException, IOException {
+		Handler logFileHandler = new FileHandler(Constants.SAVE_PATH + "log.txt", true);
+		logFileHandler.setLevel(Level.ALL);
+		logFileHandler.setFormatter(new SimpleFormatter());
+		return logFileHandler;
+	}
+	
+	public static Handler getLogFileHandlerError() throws SecurityException, IOException {
+		Handler logFileHandler = new FileHandler(Constants.SAVE_PATH + "errorLog.txt", true);
+		logFileHandler.setLevel(Level.SEVERE);
+		logFileHandler.setFormatter(new SimpleFormatter());
+		return logFileHandler;
+	}
+	
 	
 	/**
 	 * Restarts the currently running jar file using the process builder.

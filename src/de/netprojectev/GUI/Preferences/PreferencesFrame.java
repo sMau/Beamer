@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -36,6 +38,8 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class PreferencesFrame extends javax.swing.JFrame {
 
+	private static final Logger log = Logger.getLogger(PreferencesFrame.class.getName());
+	
 	private static final long serialVersionUID = -5332162076303310401L;
 	
 	private PreferencesHandler preferencesHandler;
@@ -69,6 +73,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	 * @param managerFrame the ManagerFrame it operates with.
 	 */
     public PreferencesFrame(ManagerFrame managerFrame) {
+    	
+    	try {
+			log.addHandler(Misc.getLogFileHandlerAll());
+			log.addHandler(Misc.getLogFileHandlerError());
+		} catch (SecurityException e) {
+		} catch (IOException e) {
+		}
+    	
     	
     	this.managerFrame = managerFrame;
     	this.preferencesHandler = PreferencesHandler.getInstance(); 
@@ -503,18 +515,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
             jLabel19.setText("Color");
 
-            jComboBoxThemeslideFontSize.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jComboBoxThemeslideFontSizeActionPerformed(evt);
-                }
-            });
-
-            jComboBoxThemeSlideFontType.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jComboBoxThemeSlideFontTypeActionPerformed(evt);
-                }
-            });
-
             jButtonThemeslideDefaultColor.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     jButtonThemeslideDefaultColorActionPerformed(evt);
@@ -719,12 +719,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
             jLabelPrioName.setText("Name");
 
             jLabel2.setText("Minutes");
-
-            jTextFieldPrioMin.addActionListener(new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    jTextFieldPrioMinActionPerformed(evt);
-                }
-            });
 
             jButtonPrioSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/GFX/save.png"))); // NOI18N
             jButtonPrioSave.addActionListener(new java.awt.event.ActionListener() {
@@ -949,7 +943,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			themeslideCreatorMarginTop = Integer.parseInt(jTextFieldMarginTop.getText());
 		} catch (NumberFormatException e) {}
 
-    	preferencesHandler.updatePropertiesFromPreferencesFrame();
+    	try {
+			preferencesHandler.updatePropertiesFromPreferencesFrame();
+		} catch (IOException e) {
+			log.log(Level.SEVERE, "Error during updating properties", e);
+		}
     	
     	if(previewWidth != Integer.parseInt(preferencesHandler.getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH))) {
     		MediaHandler.getInstance().generateNewScaledPreviews();
@@ -1082,27 +1080,36 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxFontTypeTickerActionPerformed
 
 	private void jButtonTickerColorPickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTickerColorPickerActionPerformed
-        openColorPicker();
+        openColorPickerTicker();
     }//GEN-LAST:event_jButtonTickerColorPickerActionPerformed
 
-    private void jTextFieldPrioMinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPrioMinActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPrioMinActionPerformed
-
     private void jButtonThemeslideDefaultColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonThemeslideDefaultColorActionPerformed
-        // TODO add your handling code here:
+        openColorPickerThemeslideCreator();
     }//GEN-LAST:event_jButtonThemeslideDefaultColorActionPerformed
 
-    private void jComboBoxThemeslideFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeslideFontSizeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxThemeslideFontSizeActionPerformed
-
-    private void jComboBoxThemeSlideFontTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeSlideFontTypeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxThemeSlideFontTypeActionPerformed
-
     
-    private void tickerSpeedChanged() {
+    /**
+     * Opens a new {@link ColorPickerDialog} and assigns the correct ticker text color.
+     */
+    private void openColorPickerThemeslideCreator() {
+
+		ColorPickerDialog colorPicker = new ColorPickerDialog(this, true);
+		colorPicker.setVisible(true);
+		
+		if(colorPicker != null) {
+			if(colorPicker.getChoosenColor() != null) {
+				Color bg =  new Color(colorPicker.getChoosenColor().getRed(), colorPicker.getChoosenColor().getGreen(), colorPicker.getChoosenColor().getBlue());
+		        
+		        jButtonThemeslideDefaultColor.setBackground(bg);
+		        jButtonThemeslideDefaultColor.setForeground(bg);
+				
+			}
+			
+		}
+
+	}
+
+	private void tickerSpeedChanged() {
     	tickerSpeed = -1;
     	try {
 			tickerSpeed = Integer.parseInt(jTextFieldTickerSpeed.getText());
@@ -1133,7 +1140,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     /**
      * Opens a new {@link ColorPickerDialog} and assigns the correct ticker text color.
      */
-	private void openColorPicker() {
+	private void openColorPickerTicker() {
 		
 		ColorPickerDialog colorPicker = new ColorPickerDialog(this, true);
 		colorPicker.setVisible(true);

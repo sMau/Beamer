@@ -19,8 +19,6 @@ public class TextPaneThemeslide extends JTextPane {
 	 * 
 	 */
 	
-	//TODO Performance improve on typing, its a little like a sort of delay after pressing a key
-	
 	private static final long serialVersionUID = 6811486190608541934L;
 	
 	private transient BufferedImage image;

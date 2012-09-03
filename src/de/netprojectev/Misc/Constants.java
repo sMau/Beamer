@@ -1,6 +1,8 @@
 package de.netprojectev.Misc;
 
 import java.awt.GraphicsEnvironment;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 
 import de.netprojectev.Media.Priority;
 
@@ -10,13 +12,6 @@ import de.netprojectev.Media.Priority;
  * @author samu
  */
 public class Constants {
-
-	/*
-	 * Misc
-	 */
-	
-	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-	public static final String[] FONT_SIZES = Misc.generateFontSizes();
 
 	
 	/*
@@ -31,6 +26,13 @@ public class Constants {
 	
 	public static final String SAVE_PATH = System.getProperty("user.home") + "/.beamermanager/";
 	public static final String FOLDER_THEMESLIDE_CACHE = "themeslidecache/";
+	
+	/*
+	 * Misc
+	 */
+	
+	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+	public static final String[] FONT_SIZES = Misc.generateFontSizes();
 	
 	/*
 	 * Defaults

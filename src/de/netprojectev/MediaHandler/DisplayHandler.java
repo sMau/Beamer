@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Display.DisplayMainFrame;
 import de.netprojectev.Media.ImageFile;
@@ -20,6 +21,8 @@ import de.netprojectev.Media.VideoFile;
  */
 public class DisplayHandler {
 
+	private static final Logger log = Logger.getLogger(DisplayHandler.class.getName());
+	
 	private static DisplayHandler instance = new DisplayHandler();
 
 	private MediaHandler mediaHandler;
