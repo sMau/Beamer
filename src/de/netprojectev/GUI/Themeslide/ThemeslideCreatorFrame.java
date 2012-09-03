@@ -89,10 +89,11 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         }
         jComboBoxFontSize.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
 
-        JTextPane editor = textPaneThemeslide;
+        jTextFieldMarginLeft.setText(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
+        jTextFieldMarginTop.setText(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
         
-        jComboBoxFontTypeActionPerformed(new ActionEvent(editor, 0, ""));
-        jComboBoxFontSizeActionPerformed(new ActionEvent(editor, 0, ""));
+        jComboBoxFontTypeActionPerformed(new ActionEvent(textPaneThemeslide, 0, ""));
+        jComboBoxFontSizeActionPerformed(new ActionEvent(textPaneThemeslide, 0, ""));
         
         setLocation(Misc.currentMousePosition());
     }

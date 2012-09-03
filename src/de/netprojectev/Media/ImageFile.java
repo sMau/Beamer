@@ -74,7 +74,6 @@ public class ImageFile extends MediaFile {
 
 	@Override
 	public void show() {
-		System.out.println("Show file: " + path + "   " + new Date());
 		display.getDisplayMainComponent().setImageToDraw(new File(path));
 	}
 

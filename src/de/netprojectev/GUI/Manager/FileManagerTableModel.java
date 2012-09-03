@@ -68,7 +68,7 @@ public class FileManagerTableModel extends AbstractTableModel {
     	} else if(rowObject instanceof ImageFile) {
     		type = "Image";
     	} else if(rowObject instanceof Themeslide) {
-    		type = "Themeslide / " + ((Themeslide) rowObject).getTheme().getName();
+    		type = "Themeslide - " + ((Themeslide) rowObject).getTheme().getName();
     	} else {
     		type = "undefined";
     	}

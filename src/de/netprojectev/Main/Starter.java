@@ -23,7 +23,7 @@ public class Starter {
 			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         }
         catch (Exception e) {
-            System.out.println(e);
+            
         }
 		new ManagerFrame().setVisible(true);*/
 		
@@ -41,13 +41,9 @@ public class Starter {
 			javax.swing.UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
 		} catch (ClassNotFoundException e) {
 			
-			e.printStackTrace();
 		} catch (InstantiationException e) {
-			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			e.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
 		}
 		*/
 		/*

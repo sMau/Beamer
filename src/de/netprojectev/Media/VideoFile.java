@@ -36,7 +36,6 @@ public class VideoFile extends MediaFile {
 	@Override
 	public void show() {
 		
-		System.out.println("Show file: " + path + "   " + new Date());
 		
 	}
 	

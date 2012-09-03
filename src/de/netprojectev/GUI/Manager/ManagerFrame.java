@@ -8,6 +8,7 @@ package de.netprojectev.GUI.Manager;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -33,6 +34,7 @@ import de.netprojectev.Media.Priority;
 import de.netprojectev.Media.Status;
 import de.netprojectev.Media.Theme;
 import de.netprojectev.Media.Themeslide;
+import de.netprojectev.Media.VideoFile;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Constants;
@@ -122,7 +124,20 @@ public class ManagerFrame extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jLabelPreview = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextAreaFileInfo = new javax.swing.JTextArea();
+        jPanelInformation = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabelInfoShowAt = new javax.swing.JLabel();
+        jLabelInfoShowed = new javax.swing.JLabel();
+        jLabelInfoCurrent = new javax.swing.JLabel();
+        jLabelInfoPrio = new javax.swing.JLabel();
+        jLabelInfoType = new javax.swing.JLabel();
+        jLabelInfoName = new javax.swing.JLabel();
         livetickerPanel = new javax.swing.JPanel();
         btnPanelLiveticker = new javax.swing.JPanel();
         btnAddTickerElt = new javax.swing.JButton();
@@ -348,7 +363,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addComponent(btnPrev)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNext)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
                 .addComponent(lblTimeleft)
                 .addGap(18, 18, 18)
                 .addComponent(toogleBtnAuto)
@@ -418,25 +433,102 @@ public class ManagerFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTableFileManager);
 
-        jScrollPane2.setBorder(null);
         jScrollPane2.setViewportBorder(null);
 
+        jLabelPreview.setBackground(new java.awt.Color(255, 255, 255));
         jLabelPreview.setText("no File selected");
         jLabelPreview.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jLabelPreview.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
+        jLabelPreview.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Preview", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
         jScrollPane2.setViewportView(jLabelPreview);
 
-        jScrollPane4.setBorder(null);
-        jScrollPane4.setViewportBorder(null);
+        jLabel1.setFont(jLabel1.getFont().deriveFont(jLabel1.getFont().getStyle() | java.awt.Font.BOLD));
+        jLabel1.setText("Information");
 
-        jTextAreaFileInfo.setBackground(new java.awt.Color(240, 240, 240));
-        jTextAreaFileInfo.setColumns(20);
-        jTextAreaFileInfo.setEditable(false);
-        jTextAreaFileInfo.setRows(5);
-        jTextAreaFileInfo.setText("no File selected");
-        jTextAreaFileInfo.setToolTipText("");
-        jTextAreaFileInfo.setBorder(javax.swing.BorderFactory.createTitledBorder("Info"));
-        jScrollPane4.setViewportView(jTextAreaFileInfo);
+        jLabel2.setText("Name");
+
+        jLabel3.setText("Type");
+
+        jLabel4.setText("Priority");
+
+        jLabel5.setText("Current");
+
+        jLabel6.setText("Showed");
+
+        jLabel7.setText("Show at");
+
+        jLabelInfoShowAt.setText("---");
+
+        jLabelInfoShowed.setText("---");
+
+        jLabelInfoCurrent.setText("---");
+
+        jLabelInfoPrio.setText("---");
+
+        jLabelInfoType.setText("---");
+
+        jLabelInfoName.setText("---");
+
+        javax.swing.GroupLayout jPanelInformationLayout = new javax.swing.GroupLayout(jPanelInformation);
+        jPanelInformation.setLayout(jPanelInformationLayout);
+        jPanelInformationLayout.setHorizontalGroup(
+            jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInformationLayout.createSequentialGroup()
+                .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelInformationLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1))
+                    .addGroup(jPanelInformationLayout.createSequentialGroup()
+                        .addGap(33, 33, 33)
+                        .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5))
+                        .addGap(36, 36, 36)
+                        .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelInfoName)
+                            .addComponent(jLabelInfoType)
+                            .addComponent(jLabelInfoPrio)
+                            .addComponent(jLabelInfoCurrent)
+                            .addComponent(jLabelInfoShowed)
+                            .addComponent(jLabelInfoShowAt))))
+                .addContainerGap(170, Short.MAX_VALUE))
+        );
+        jPanelInformationLayout.setVerticalGroup(
+            jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInformationLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabelInfoName))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabelInfoType))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabelInfoPrio))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabelInfoCurrent))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabelInfoShowed))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelInformationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabelInfoShowAt))
+                .addContainerGap(67, Short.MAX_VALUE))
+        );
+
+        jScrollPane4.setViewportView(jPanelInformation);
 
         javax.swing.GroupLayout filemangerPanelLayout = new javax.swing.GroupLayout(filemangerPanel);
         filemangerPanel.setLayout(filemangerPanelLayout);
@@ -446,9 +538,10 @@ public class ManagerFrame extends javax.swing.JFrame {
             .addComponent(jSeparator3)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(filemangerPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 643, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         filemangerPanelLayout.setVerticalGroup(
             filemangerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -457,11 +550,11 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(filemangerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane4)))
         );
 
         jTabbedPane.addTab("Filemanager", filemangerPanel);
@@ -553,7 +646,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Liveticker", livetickerPanel);
@@ -1213,11 +1306,11 @@ public class ManagerFrame extends javax.swing.JFrame {
 				
 		int viewRow = jTableFileManager.getSelectedRow();
 		if (viewRow < 0) {
-		    jTextAreaFileInfo.setText("No file selected");
+		    writeInformationLabels(false, null);
 		    jLabelPreview.setIcon(null);
 		    jLabelPreview.setText("No file selected");
 		} else {
-		    jTextAreaFileInfo.setText(mediaHandler.getMediaFiles().get(viewRow).generateInfoString());
+		    writeInformationLabels(true, mediaHandler.getMediaFiles().get(viewRow));    
 		    jLabelPreview.setText("");
 		    if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
 		    	jLabelPreview.setIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview());
@@ -1227,6 +1320,74 @@ public class ManagerFrame extends javax.swing.JFrame {
 		    }
 		    
 		}
+	}
+	
+	/**
+	 * Reads the necessary data to fill the information labels and writes the informations.
+	 * 
+	 * @param fileSelected true if a file is selected, false if no file is selected
+	 * @param selectedFile the MediaFile object of the selected file
+	 */
+	private void writeInformationLabels(boolean fileSelected, MediaFile selectedFile) {
+		
+		String type;
+		String current;
+		String wasShowed;
+		String showAt;
+		String prio;
+
+		if (selectedFile instanceof VideoFile) {
+			type = "Video";
+		} else if (selectedFile instanceof ImageFile) {
+			type = "Image";
+		} else if (selectedFile instanceof Themeslide) {
+
+			type = "Themeslide - " + ((Themeslide) selectedFile).getTheme().getName();
+		} else {
+			type = "undefined";
+		}
+
+		if (selectedFile.getStatus().getIsCurrent()) {
+			current = "yes";
+		} else {
+			current = "no";
+		}
+
+		if (selectedFile.getStatus().getWasShowed()) {
+			wasShowed = "yes";
+		} else {
+			wasShowed = "no";
+		}
+
+		if (selectedFile.getStatus().getShowAt() != null) {
+			if (selectedFile.getStatus().getShowAt().after(new Date())) {
+				showAt = selectedFile.getStatus().getShowAt().toString();
+			} else {
+				showAt = "---";
+			}
+		} else {
+			showAt = "---";
+		}
+		
+		prio = selectedFile.getPriority().getName() + " - " + selectedFile.getPriority().getMinutesToShow() + " min";
+		
+		
+		if(fileSelected) {
+			jLabelInfoName.setText(selectedFile.getName());
+			jLabelInfoType.setText(type);
+			jLabelInfoPrio.setText(prio);
+			jLabelInfoCurrent.setText(current);
+			jLabelInfoShowed.setText(wasShowed);
+			jLabelInfoShowAt.setText(showAt);
+		} else {
+			jLabelInfoName.setText("---");
+			jLabelInfoType.setText(type);
+			jLabelInfoPrio.setText("---");
+			jLabelInfoCurrent.setText(current);
+			jLabelInfoShowed.setText(wasShowed);
+			jLabelInfoShowAt.setText(showAt);
+		}
+		
 	}
     
 	/**
@@ -1301,6 +1462,19 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnUp;
     private javax.swing.JPanel filemangerPanel;
     private javax.swing.JFileChooser jFileChooser;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelInfoCurrent;
+    private javax.swing.JLabel jLabelInfoName;
+    private javax.swing.JLabel jLabelInfoPrio;
+    private javax.swing.JLabel jLabelInfoShowAt;
+    private javax.swing.JLabel jLabelInfoShowed;
+    private javax.swing.JLabel jLabelInfoType;
     private javax.swing.JLabel jLabelPreview;
     private javax.swing.JMenuBar jMenuBarMainFrame;
     private javax.swing.JMenu jMenuFile;
@@ -1320,6 +1494,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemResetPlayedState;
     private javax.swing.JMenuItem jMenuItemShowP;
     private javax.swing.JMenu jMenuPrefs;
+    private javax.swing.JPanel jPanelInformation;
     private javax.swing.JPopupMenu jPopupMenuFileTableElement;
     private javax.swing.JPopupMenu jPopupMenuTickerTable;
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItemAuto;
@@ -1338,7 +1513,6 @@ public class ManagerFrame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane;
     private javax.swing.JTable jTableFileManager;
     private javax.swing.JTable jTableLiveticker;
-    private javax.swing.JTextArea jTextAreaFileInfo;
     private javax.swing.JLabel lblTimeleft;
     private javax.swing.JPanel livetickerPanel;
     private javax.swing.JToggleButton toggleBtnShuffle;
