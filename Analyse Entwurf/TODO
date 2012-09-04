@@ -1,4 +1,6 @@
-
+Notes
+04.09.12
+mark as showed after a given time (with a swing timer) (configurable via prefs  /props)
 
 
 Features (missing)
@@ -11,6 +13,8 @@ Themeslidecreator - Zooming in and out in creation mode
 Queing for media files (like spotify does)
 "show file at" Gui mapping and testing
 "big" preview window as "popup" own frame (maybe)
+
+
 
 
 Improvements

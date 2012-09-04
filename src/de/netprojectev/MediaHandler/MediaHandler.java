@@ -1,6 +1,5 @@
 package de.netprojectev.MediaHandler;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,7 +19,7 @@ import de.netprojectev.Misc.Misc;
  */
 public class MediaHandler {
 	
-	private static final Logger log = Logger.getLogger(MediaHandler.class.getName());
+	private static final Logger log = Misc.getLoggerAll(MediaHandler.class.getName());
 
 	private static MediaHandler instance = new MediaHandler();
 
@@ -31,13 +30,6 @@ public class MediaHandler {
 	private ManagerFrame managerFrame;
 
 	private MediaHandler() {
-
-		try {
-			log.addHandler(Misc.getLogFileHandlerAll());
-			log.addHandler(Misc.getLogFileHandlerError());
-		} catch (SecurityException e) {
-		} catch (IOException e) {
-		}
 		
 		mediaFiles = new LinkedList<MediaFile>();
 		displayHandler = DisplayHandler.getInstance();

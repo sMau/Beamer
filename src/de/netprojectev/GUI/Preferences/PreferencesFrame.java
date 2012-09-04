@@ -39,7 +39,7 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class PreferencesFrame extends javax.swing.JFrame {
 
-	private static final Logger log = Logger.getLogger(PreferencesFrame.class.getName());
+	private static final Logger log = Misc.getLoggerAll(PreferencesFrame.class.getName());
 	
 	private static final long serialVersionUID = -5332162076303310401L;
 	
@@ -74,14 +74,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	 * @param managerFrame the ManagerFrame it operates with.
 	 */
     public PreferencesFrame(ManagerFrame managerFrame) {
-    	
-    	try {
-			log.addHandler(Misc.getLogFileHandlerAll());
-			log.addHandler(Misc.getLogFileHandlerError());
-		} catch (SecurityException e) {
-		} catch (IOException e) {
-		}
-    	
     	
     	this.managerFrame = managerFrame;
     	this.preferencesHandler = PreferencesHandler.getInstance(); 

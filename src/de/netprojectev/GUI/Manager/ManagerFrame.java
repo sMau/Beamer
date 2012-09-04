@@ -50,7 +50,7 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class ManagerFrame extends javax.swing.JFrame {
 
-	private static final Logger log = Logger.getLogger(ManagerFrame.class.getName());
+	private static final Logger log = Misc.getLoggerAll(ManagerFrame.class.getName());
 	
 	private static final long serialVersionUID = 7019176172214701606L;
 	private MediaHandler mediaHandler;
@@ -1118,7 +1118,9 @@ public class ManagerFrame extends javax.swing.JFrame {
     		
     		MediaFile fileToEdit = Misc.indexListToMediaFiles(selectedRows)[0];
     		if(fileToEdit instanceof Themeslide) {
-    			//TODO editing of themeslides (later maybe)
+    			/*
+    			 * here should be the code for editing themeslides, not supported yet
+    			 */
     		} else {
     			new EditMediaFileFrame(fileToEdit, this).setVisible(true);
     		}
@@ -1376,50 +1378,50 @@ public class ManagerFrame extends javax.swing.JFrame {
 	 * @param selectedFile the MediaFile object of the selected file
 	 */
 	private void writeInformationLabels(boolean fileSelected, MediaFile selectedFile) {
+
+		if(fileSelected) {
 		
-		String type;
-		String current;
-		String wasShowed;
-		String showAt;
-		String prio;
-
-		if (selectedFile instanceof VideoFile) {
-			type = "Video";
-		} else if (selectedFile instanceof ImageFile) {
-			type = "Image";
-		} else if (selectedFile instanceof Themeslide) {
-
-			type = "Themeslide - " + ((Themeslide) selectedFile).getTheme().getName();
-		} else {
-			type = "undefined";
-		}
-
-		if (selectedFile.getStatus().getIsCurrent()) {
-			current = "yes";
-		} else {
-			current = "no";
-		}
-
-		if (selectedFile.getStatus().getWasShowed()) {
-			wasShowed = "yes";
-		} else {
-			wasShowed = "no";
-		}
-
-		if (selectedFile.getStatus().getShowAt() != null) {
-			if (selectedFile.getStatus().getShowAt().after(new Date())) {
-				showAt = selectedFile.getStatus().getShowAt().toString();
+			String type;
+			String current;
+			String wasShowed;
+			String showAt;
+			String prio;
+			
+			if (selectedFile instanceof VideoFile) {
+				type = "Video";
+			} else if (selectedFile instanceof ImageFile) {
+				type = "Image";
+			} else if (selectedFile instanceof Themeslide) {
+	
+				type = "Themeslide - " + ((Themeslide) selectedFile).getTheme().getName();
+			} else {
+				type = "undefined";
+			}
+	
+			if (selectedFile.getStatus().getIsCurrent()) {
+				current = "yes";
+			} else {
+				current = "no";
+			}
+	
+			if (selectedFile.getStatus().getWasShowed()) {
+				wasShowed = "yes";
+			} else {
+				wasShowed = "no";
+			}
+	
+			if (selectedFile.getStatus().getShowAt() != null) {
+				if (selectedFile.getStatus().getShowAt().after(new Date())) {
+					showAt = selectedFile.getStatus().getShowAt().toString();
+				} else {
+					showAt = "---";
+				}
 			} else {
 				showAt = "---";
 			}
-		} else {
-			showAt = "---";
-		}
-		
-		prio = selectedFile.getPriority().getName() + " - " + selectedFile.getPriority().getMinutesToShow() + " min";
-		
-		
-		if(fileSelected) {
+			
+			prio = selectedFile.getPriority().getName() + " - " + selectedFile.getPriority().getMinutesToShow() + " min";
+
 			jLabelInfoName.setText(selectedFile.getName());
 			jLabelInfoType.setText(type);
 			jLabelInfoPrio.setText(prio);
@@ -1428,11 +1430,11 @@ public class ManagerFrame extends javax.swing.JFrame {
 			jLabelInfoShowAt.setText(showAt);
 		} else {
 			jLabelInfoName.setText("---");
-			jLabelInfoType.setText(type);
+			jLabelInfoType.setText("---");
 			jLabelInfoPrio.setText("---");
-			jLabelInfoCurrent.setText(current);
-			jLabelInfoShowed.setText(wasShowed);
-			jLabelInfoShowAt.setText(showAt);
+			jLabelInfoCurrent.setText("---");
+			jLabelInfoShowed.setText("---");
+			jLabelInfoShowAt.setText("---");
 		}
 		
 	}

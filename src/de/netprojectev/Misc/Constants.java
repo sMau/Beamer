@@ -1,6 +1,8 @@
 package de.netprojectev.Misc;
 
 import java.awt.GraphicsEnvironment;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 
@@ -23,6 +25,7 @@ public class Constants {
 	public static final String FILENAME_THEMES = "themes.brm";
 	public static final String FILENAME_LIVETICKER = "ticker.brm";
 	public static final String FILENAME_PROPERTIES = "properties.txt";
+	public static final String FILENAME_LOGALL = "log_beamer_";
 	
 	public static final String SAVE_PATH = System.getProperty("user.home") + "/.beamermanager/";
 	public static final String FOLDER_THEMESLIDE_CACHE = "themeslidecache/";
@@ -33,6 +36,8 @@ public class Constants {
 	
 	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 	public static final String[] FONT_SIZES = Misc.generateFontSizes();
+		
+	public static final Date TIMESTAMP = new Date(); 
 	
 	/*
 	 * Defaults

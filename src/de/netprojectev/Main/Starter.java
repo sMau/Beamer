@@ -2,6 +2,8 @@ package de.netprojectev.Main;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 
@@ -11,10 +13,14 @@ import de.netprojectev.Misc.Misc;
 
 public class Starter {
 
+	private static final Logger log = Misc.getLoggerAll(Starter.class.getName());
+	
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		
 		
 		/*
 		 * this here is using native LaF. 
@@ -52,7 +58,10 @@ public class Starter {
 		 * 
 		 */
 		
+		
+		
 		try {
+			log.log(Level.INFO, "Starting up...");
 	        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 	            if ("Nimbus".equals(info.getName())) {
 	                javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -60,13 +69,13 @@ public class Starter {
 	            }
 	        }
 	    } catch (ClassNotFoundException ex) {
-	        java.util.logging.Logger.getLogger(ManagerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	       log.log(java.util.logging.Level.SEVERE, null, ex);
 	    } catch (InstantiationException ex) {
-	        java.util.logging.Logger.getLogger(ManagerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    	log.log(java.util.logging.Level.SEVERE, null, ex);
 	    } catch (IllegalAccessException ex) {
-	        java.util.logging.Logger.getLogger(ManagerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    	log.log(java.util.logging.Level.SEVERE, null, ex);
 	    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-	        java.util.logging.Logger.getLogger(ManagerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+	    	log.log(java.util.logging.Level.SEVERE, null, ex);
 	    }
 		
 		onFirstStart();
@@ -88,6 +97,9 @@ public class Starter {
 	 *
 	 */
 	private static void onFirstStart() {
+		
+		log.log(Level.INFO, "first time starting program, setting up files and directories");
+		
 		File toTestMain = new File(Constants.SAVE_PATH);
 		File toTestCache = new File(Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE);
 		File properties = new File(Constants.SAVE_PATH + Constants.FILENAME_PROPERTIES);
@@ -101,7 +113,7 @@ public class Starter {
 			try {
 				Misc.savePropertiesToDisk(Misc.generateDefaultProps());
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.log(Level.SEVERE, null, e);
 			}
 		}
 		

@@ -874,14 +874,17 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		lastEventCaretPos = textPaneThemeslide.getCaretPosition();
 		
 		
-		AttributeSet attr = textPaneThemeslide.getCharacterAttributes();
+		//AttributeSet attr = textPaneThemeslide.getCharacterAttributes();
+		AttributeSet attr = (textPaneThemeslide.getStyledDocument().getCharacterElement(textPaneThemeslide.getCaretPosition() - 1)).getAttributes();
 		if(attr != null) {
 
-			if(!(textPaneThemeslide.getCaretPosition() == textPaneThemeslide.getDocument().getEndPosition().getOffset() - 1)){			
+			if(!(textPaneThemeslide.getCaretPosition() == textPaneThemeslide.getDocument().getEndPosition().getOffset() - 1)){	
+				System.out.println("if");
 				updateGUItoStyleAttr(attr);
 				
 			} else {
 				if(lastEventCaretPosChanged) {
+					System.out.println("else then if");
 					Element elt = textPaneThemeslide.getStyledDocument().getCharacterElement(textPaneThemeslide.getDocument().getEndPosition().getOffset() - 2);
 					attr = elt.getAttributes();	
 					updateGUItoStyleAttr(attr);

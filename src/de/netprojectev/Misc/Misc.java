@@ -13,11 +13,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.logging.FileHandler;
-import java.util.logging.Handler;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import javax.swing.JOptionPane;
@@ -38,6 +40,10 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class Misc {
 	
+	
+	private static boolean loggerFileHandlerCreated = false;
+	
+	private static FileHandler handler;
 	
 	/**
 	 * 
@@ -288,18 +294,44 @@ public class Misc {
 		return defProps;
 	}
 	
-	public static Handler getLogFileHandlerAll() throws SecurityException, IOException {
-		Handler logFileHandler = new FileHandler(Constants.SAVE_PATH + "log.txt", true);
-		logFileHandler.setLevel(Level.ALL);
-		logFileHandler.setFormatter(new SimpleFormatter());
-		return logFileHandler;
+	/**
+	 * generates and returns the appropriate logger object which logs all and errors in a seperate logfile.
+	 * 
+	 * @param className the fully qualified class name of the class the logger is used in
+	 * @return
+	 * @throws SecurityException
+	 * @throws IOException
+	 */
+	public static Logger getLoggerAll(String className) {
+		
+		Logger log = Logger.getLogger(className);
+		try {
+			createLoggerFileHandler();
+		} catch (SecurityException e) {
+		} catch (IOException e) {
+		}
+		log.addHandler(handler);
+		return log;
+		
 	}
 	
-	public static Handler getLogFileHandlerError() throws SecurityException, IOException {
-		Handler logFileHandler = new FileHandler(Constants.SAVE_PATH + "errorLog.txt", true);
-		logFileHandler.setLevel(Level.SEVERE);
-		logFileHandler.setFormatter(new SimpleFormatter());
-		return logFileHandler;
+	/**
+	 * Creates a handler for a logger with the loglevel all
+	 * 
+	 * @return the genereated handler
+	 * @throws SecurityException
+	 * @throws IOException
+	 */
+	private static synchronized void createLoggerFileHandler() throws SecurityException, IOException {
+		
+		if(!loggerFileHandlerCreated) {
+			SimpleDateFormat formater = new SimpleDateFormat("yyyy_MM_dd__kk_mm", Locale.GERMANY);
+			handler = new FileHandler(Constants.SAVE_PATH + Constants.FILENAME_LOGALL + formater.format(Constants.TIMESTAMP),8000000, 1, true);
+			handler.setLevel(Level.ALL);
+			handler.setFormatter(new SimpleFormatter());
+			loggerFileHandlerCreated = true;
+		}
+		
 	}
 	
 	
