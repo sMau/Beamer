@@ -25,6 +25,7 @@ import javax.imageio.stream.FileImageOutputStream;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
@@ -58,12 +59,14 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	//TODO take default color into account and change the color button, that its representing the selected color as its background
 	
 	private static final long serialVersionUID = -3653577264825548156L;
-
+	
 	private Boolean evtFromGUIupdateFontSize = false;
 	private Boolean evtFromGUIupdateFontFamily = false;
 
 	private Boolean lastEventCaretPosChanged = false;
 	private int lastEventCaretPos = 0;
+	
+	private Color selectedColorMain = Color.BLACK;
 	
 	private Properties props;
 	
@@ -449,6 +452,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private void jButtonColorPickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonColorPickerActionPerformed
     	ColorPickerDialog colorPicker = new ColorPickerDialog(this, true);
     	colorPicker.setVisible(true);
+    	selectedColorMain = colorPicker.getChoosenColor();
     	new FontColorAction(colorPicker.getChoosenColor()).actionPerformed(null);
     }//GEN-LAST:event_jButtonColorPickerActionPerformed
 
@@ -631,7 +635,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			
 			JEditorPane editor = getEditor(e);
 			if (editor != null) {
-				textPaneThemeslide.saveCurrentCaretPosition();
 				
 				StyledEditorKit kit = getStyledEditorKit(editor);
 				MutableAttributeSet attr = kit.getInputAttributes();
@@ -639,8 +642,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 				SimpleAttributeSet sas = new SimpleAttributeSet();
 				StyleConstants.setBold(sas, bold);
 				setCharacterAttributes(editor, sas, false);
-
-				textPaneThemeslide.restoreLastCaretPosition();
+				textPaneThemeslide.requestFocus();
 
 			}
 		}
@@ -669,7 +671,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JEditorPane editor = getEditor(e);
 			if (editor != null) {
-				textPaneThemeslide.saveCurrentCaretPosition();
 				
 				StyledEditorKit kit = getStyledEditorKit(editor);
 				MutableAttributeSet attr = kit.getInputAttributes();
@@ -678,7 +679,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 				StyleConstants.setItalic(sas, italic);
 				setCharacterAttributes(editor, sas, false);
 
-				textPaneThemeslide.restoreLastCaretPosition();
+				textPaneThemeslide.requestFocus();
 			}
 		}
 	}
@@ -705,7 +706,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		public void actionPerformed(ActionEvent e) {
 			JEditorPane editor = getEditor(e);
 			if (editor != null) {
-				textPaneThemeslide.saveCurrentCaretPosition();
 				
 				StyledEditorKit kit = getStyledEditorKit(editor);
 				MutableAttributeSet attr = kit.getInputAttributes();
@@ -713,8 +713,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 				SimpleAttributeSet sas = new SimpleAttributeSet();
 				StyleConstants.setUnderline(sas, underline);
 				setCharacterAttributes(editor, sas, false);
-				
-				textPaneThemeslide.restoreLastCaretPosition();
+				textPaneThemeslide.requestFocus();
 			}
 		}
 	}
@@ -754,13 +753,11 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			
 			JTextPane editor = (JTextPane) getEditor(e);			
 			if (editor != null) {
-				textPaneThemeslide.saveCurrentCaretPosition();
 				
 				MutableAttributeSet attr = new SimpleAttributeSet();
 				StyleConstants.setFontFamily(attr, selectedFamily);
 				setCharacterAttributes(editor, attr, false);
-				
-				textPaneThemeslide.restoreLastCaretPosition();
+				textPaneThemeslide.requestFocus();
 			}
 			
 		}
@@ -797,13 +794,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			
 			JTextPane editor = (JTextPane) getEditor(e);			
 			if (editor != null) {
-				textPaneThemeslide.saveCurrentCaretPosition();
 				
 				MutableAttributeSet attr = new SimpleAttributeSet();
 	            attr.addAttribute(StyleConstants.Size, selectedFontSize);
 				setCharacterAttributes(editor, attr, false);
 
-				textPaneThemeslide.restoreLastCaretPosition();
+				textPaneThemeslide.requestFocus();
 			}
 			
 		}
@@ -842,13 +838,11 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 			JTextPane editor = (JTextPane) getEditor(e);			
 			if (editor != null) {
-				textPaneThemeslide.saveCurrentCaretPosition();
 				
 				MutableAttributeSet attr = new SimpleAttributeSet();
 				StyleConstants.setForeground(attr, selectedColor);
 				setCharacterAttributes(editor, attr, false);
-				
-				textPaneThemeslide.restoreLastCaretPosition();
+				textPaneThemeslide.requestFocus();
 			}
 
 		}
@@ -856,15 +850,24 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	/**
-	 * This method is called when the Caret Posiotion changes.
+	 * This method is called when the Caret Position changes.
 	 * Two cases are managed. The first one is the general one it simply calls the updateGuitoStyleAttr method.
 	 * The second case handles the event if the caret was at its last position and does not changed the position since last event invokation
-	 * Only then a update to the Gui is performend with the styling attributes of the last character in the document.
+	 * Only then a update to the Gui is performed with the styling attributes of the last character in the document.
 	 * 
 	 * @param e CaretEvent
 	 */
 	public void caretPositionUpdated(CaretEvent e) {
 		
+		int currentParagraphLength = textPaneThemeslide.getStyledDocument().getParagraphElement(textPaneThemeslide.getCaretPosition()).getDocument().getLength();
+		//TODO 
+		/*
+		 * last worked here, trying to fix the themeslide creator behavior
+		 * at the moment there are false syncs and due to para attr setting, sometimes smaller 
+		 * fonts needs much more space
+		 * Maybe correcting para attr with setAtr(null) to the right times
+		 */
+		System.out.println("Caretupdate, Cur Para Length: " + currentParagraphLength);
 		
 		if(lastEventCaretPos == textPaneThemeslide.getCaretPosition()) {
 			lastEventCaretPosChanged = false;
@@ -872,22 +875,28 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			lastEventCaretPosChanged = true;
 		}
 		lastEventCaretPos = textPaneThemeslide.getCaretPosition();
-		
-		
-		//AttributeSet attr = textPaneThemeslide.getCharacterAttributes();
+
 		AttributeSet attr = (textPaneThemeslide.getStyledDocument().getCharacterElement(textPaneThemeslide.getCaretPosition() - 1)).getAttributes();
 		if(attr != null) {
 
 			if(!(textPaneThemeslide.getCaretPosition() == textPaneThemeslide.getDocument().getEndPosition().getOffset() - 1)){	
 				System.out.println("if");
+				
 				updateGUItoStyleAttr(attr);
 				
 			} else {
 				if(lastEventCaretPosChanged) {
 					System.out.println("else then if");
-					Element elt = textPaneThemeslide.getStyledDocument().getCharacterElement(textPaneThemeslide.getDocument().getEndPosition().getOffset() - 2);
-					attr = elt.getAttributes();	
-					updateGUItoStyleAttr(attr);
+					if(currentParagraphLength == 0) {
+						System.out.println("if para length  = 0 reached");
+					
+						applyAsParagraphAttributes();
+						
+					} else {
+						Element elt = textPaneThemeslide.getStyledDocument().getCharacterElement(textPaneThemeslide.getDocument().getEndPosition().getOffset() - 2);
+						attr = elt.getAttributes();	
+						updateGUItoStyleAttr(attr);
+					}
 				}
 						
 			}
@@ -896,62 +905,88 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		
 	}
 
+	private void applyAsParagraphAttributes() {
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				MutableAttributeSet attr = new SimpleAttributeSet();
+				StyleConstants.setFontFamily(attr, (String) jComboBoxFontType.getSelectedItem());
+				attr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
+				StyleConstants.setForeground(attr, selectedColorMain);
+				StyleConstants.setUnderline(attr, jToggleButtonUnderline.isSelected());
+				StyleConstants.setBold(attr, jToggleButtonBold.isSelected());
+				StyleConstants.setItalic(attr, jToggleButtonItalic.isSelected());
+				textPaneThemeslide.setParagraphAttributes(attr, false);
+				
+			}
+		});
+
+	}
+
 	/**
 	 * This method performs GUI updates to all relevant styling elements represented by the GUI e.g. the "bold button".
 	 * It is invoked on every caret position changed.
 	 * 
 	 * @param attr {@link AttributeSet} which contains the attributes the GUI should sync to
 	 */
-	private void updateGUItoStyleAttr(AttributeSet attr) {
+	private void updateGUItoStyleAttr(final AttributeSet attr) {
 		
 		//TODO if all text in pane is deleted fall back to the defaults set (or change this behaviour, so no fallback) -> GUI updating
 		
-		if(StyleConstants.isBold(attr)) {
-			jToggleButtonBold.setSelected(true);
-		} else {
-			jToggleButtonBold.setSelected(false);
-		}
-		
-		if(StyleConstants.isUnderline(attr)) {
-			jToggleButtonUnderline.setSelected(true);
-		} else {
-			jToggleButtonUnderline.setSelected(false);
-		}
-		
-		if(StyleConstants.isItalic(attr)) {
-			jToggleButtonItalic.setSelected(true);
-		} else {
-			jToggleButtonItalic.setSelected(false);
-		}
-
-		String[] sizes = Constants.FONT_SIZES;
-		
-		for(int i = 0; i < sizes.length; i++) {
-
-			int currentSize;
-			try {
-				currentSize = Integer.parseInt(sizes[i].substring(0, sizes[i].length() - 2));
-				if(attr.containsAttribute(StyleConstants.FontSize, currentSize)) {
-					evtFromGUIupdateFontSize = true;
-					jComboBoxFontSize.setSelectedItem(sizes[i]);
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				if(StyleConstants.isBold(attr)) {
+					jToggleButtonBold.setSelected(true);
+				} else {
+					jToggleButtonBold.setSelected(false);
 				}
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-		String[] fonts = Constants.FONT_FAMILIES;
-		
-		for(int i = 0; i < fonts.length; i++) {
-			
-			if(attr.containsAttribute(StyleConstants.FontFamily, fonts[i])) {
-				evtFromGUIupdateFontFamily = true;
-				jComboBoxFontType.setSelectedItem(fonts[i]);
-			}
+				
+				if(StyleConstants.isUnderline(attr)) {
+					jToggleButtonUnderline.setSelected(true);
+				} else {
+					jToggleButtonUnderline.setSelected(false);
+				}
+				
+				if(StyleConstants.isItalic(attr)) {
+					jToggleButtonItalic.setSelected(true);
+				} else {
+					jToggleButtonItalic.setSelected(false);
+				}
 
-		}
+				String[] sizes = Constants.FONT_SIZES;
+				
+				for(int i = 0; i < sizes.length; i++) {
 
+					int currentSize;
+					try {
+						currentSize = Integer.parseInt(sizes[i].substring(0, sizes[i].length() - 2));
+						if(attr.containsAttribute(StyleConstants.FontSize, currentSize)) {
+							evtFromGUIupdateFontSize = true;
+							jComboBoxFontSize.setSelectedItem(sizes[i]);
+						}
+					} catch (NumberFormatException e) {
+						e.printStackTrace();
+					}
+					
+				}
+				
+				String[] fonts = Constants.FONT_FAMILIES;
+				
+				for(int i = 0; i < fonts.length; i++) {
+					
+					if(attr.containsAttribute(StyleConstants.FontFamily, fonts[i])) {
+						evtFromGUIupdateFontFamily = true;
+						jComboBoxFontType.setSelectedItem(fonts[i]);
+					}
+
+				}
+				
+			}
+		});
+		
 	}
  
 

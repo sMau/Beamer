@@ -22,7 +22,6 @@ public class TextPaneThemeslide extends JTextPane {
 	private static final long serialVersionUID = 6811486190608541934L;
 	
 	private transient BufferedImage image;
-	private transient int lastCarretPosition = 0;
 		
 	public TextPaneThemeslide() {
         super();
@@ -84,17 +83,5 @@ public class TextPaneThemeslide extends JTextPane {
     	repaint();
 
     }
-    
-    
-	public void saveCurrentCaretPosition() {
-		this.lastCarretPosition = getCaretPosition();
-	}
 	
-	public void restoreLastCaretPosition() {
-		requestFocus();
-		setCaretPosition(this.lastCarretPosition);
-	}
-	
-    
-    
 }
