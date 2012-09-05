@@ -225,6 +225,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         btnAddPrio = new javax.swing.JButton();
         btnRemovePrio = new javax.swing.JButton();
+        jPanelTabCountdown = new javax.swing.JPanel();
         jButtonApplyPrefs = new javax.swing.JButton();
 
         jFileChooser1.setApproveButtonText("Open");
@@ -323,7 +324,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                         .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel23)))
-                                .addGap(0, 106, Short.MAX_VALUE)))
+                                .addGap(0, 143, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanelTabMainLayout.setVerticalGroup(
@@ -338,7 +339,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel23))
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addGap(18, 23, Short.MAX_VALUE)
                 .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTabMainLayout.createSequentialGroup()
                         .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -359,7 +360,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addComponent(jButtonReset)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("General", jPanelTabMain);
@@ -432,7 +433,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jTextFieldTickerSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel10)
-                                .addGap(0, 109, Short.MAX_VALUE))
+                                .addGap(0, 155, Short.MAX_VALUE))
                             .addGroup(jPanelLiveTickerLayout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -475,7 +476,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGroup(jPanelLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel15)
                     .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(140, Short.MAX_VALUE))
+                .addContainerGap(146, Short.MAX_VALUE))
         );
 
         jTextFieldTickerSpeed.getDocument().addDocumentListener(new DocumentListener() {@Override
@@ -554,7 +555,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel19)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jButtonThemeslideDefaultColor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 177, Short.MAX_VALUE))
+                                    .addGap(0, 180, Short.MAX_VALUE))
                                 .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
                                     .addComponent(jLabel20)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -586,7 +587,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jLabel22)
                         .addComponent(jTextFieldMarginLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTextFieldMarginTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(176, Short.MAX_VALUE))
+                    .addContainerGap(180, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("Themeslide Creator", jPanelThemeslideCreator);
@@ -667,7 +668,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addComponent(btnSaveTheme)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btnRemoveTheme)))
-                            .addContainerGap(199, Short.MAX_VALUE))))
+                            .addContainerGap(210, Short.MAX_VALUE))))
             );
             jPanelTabThemeLayout.setVerticalGroup(
                 jPanelTabThemeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -789,6 +790,19 @@ public class PreferencesFrame extends javax.swing.JFrame {
             );
 
             jTabbedPane1.addTab("Priority", jPanelTabPrio);
+
+            javax.swing.GroupLayout jPanelTabCountdownLayout = new javax.swing.GroupLayout(jPanelTabCountdown);
+            jPanelTabCountdown.setLayout(jPanelTabCountdownLayout);
+            jPanelTabCountdownLayout.setHorizontalGroup(
+                jPanelTabCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 677, Short.MAX_VALUE)
+            );
+            jPanelTabCountdownLayout.setVerticalGroup(
+                jPanelTabCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(0, 318, Short.MAX_VALUE)
+            );
+
+            jTabbedPane1.addTab("Countdown", jPanelTabCountdown);
 
             jButtonApplyPrefs.setText("Close");
             jButtonApplyPrefs.addActionListener(new java.awt.event.ActionListener() {
@@ -1285,6 +1299,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JList jListPrio;
     private javax.swing.JList jListTheme;
     private javax.swing.JPanel jPanelLiveTicker;
+    private javax.swing.JPanel jPanelTabCountdown;
     private javax.swing.JPanel jPanelTabMain;
     private javax.swing.JPanel jPanelTabPrio;
     private javax.swing.JPanel jPanelTabTheme;

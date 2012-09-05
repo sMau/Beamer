@@ -6,8 +6,6 @@ import java.util.Date;
 
 import javax.swing.Timer;
 
-import org.junit.runner.notification.StoppedByUserException;
-
 import de.netprojectev.GUI.Display.DisplayMainComponent;
 import de.netprojectev.Misc.Misc;
 
