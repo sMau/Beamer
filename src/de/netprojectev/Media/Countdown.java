@@ -8,6 +8,7 @@ import javax.swing.Timer;
 
 import org.junit.runner.notification.StoppedByUserException;
 
+import de.netprojectev.GUI.Display.DisplayMainComponent;
 import de.netprojectev.Misc.Misc;
 
 /**
@@ -17,6 +18,8 @@ import de.netprojectev.Misc.Misc;
  *
  */
 public class Countdown {
+	
+	private DisplayMainComponent displayMainComp;
 	
 	private String timeString;
 	private Timer countdownTimer;
@@ -43,7 +46,7 @@ public class Countdown {
 				
 				secondsToZero--;
 				timeString = Misc.convertFromSecondsToTimeString(secondsToZero);
-				//TODO update the countdown component; repaint(); or set the new string
+				displayMainComp.repaint();
 				if(secondsToZero == 0) {
 					countdownTimer.stop();
 				}
@@ -52,6 +55,22 @@ public class Countdown {
 		});
 		countdownTimer.start(); 
 			
+	}
+
+	public DisplayMainComponent getDisplayMainComp() {
+		return displayMainComp;
+	}
+
+	public void setDisplayMainComp(DisplayMainComponent displayMainComp) {
+		this.displayMainComp = displayMainComp;
+	}
+
+	public String getTimeString() {
+		return timeString;
+	}
+
+	public void setTimeString(String timeString) {
+		this.timeString = timeString;
 	}
 	
 
