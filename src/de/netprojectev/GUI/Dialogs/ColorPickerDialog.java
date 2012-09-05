@@ -6,7 +6,6 @@ package de.netprojectev.GUI.Dialogs;
 
 import java.awt.Color;
 
-import de.netprojectev.GUI.Themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.Misc.Misc;
 
 /**

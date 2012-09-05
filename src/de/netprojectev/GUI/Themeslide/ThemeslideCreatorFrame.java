@@ -853,11 +853,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 * This method is called when the Caret Position changes.
 	 * Two cases are managed. The first one is the general one it simply calls the updateGuitoStyleAttr method.
 	 * The second case handles the event if the caret was at its last position and does not changed the position since last event invokation
-	 * Only then a update to the Gui is performed with the styling attributes of the last character in the document.
+	 * Only then a update to the GUI is performed with the styling attributes of the last character in the document.
 	 * 
 	 * @param e CaretEvent
 	 */
 	public void caretPositionUpdated(CaretEvent e) {
+		
+		//TODO fix focus request after selecting something with keyboard from comboboxes (fires the "requestfocus")
 		
 		int currentParagraphLength = textPaneThemeslide.getStyledDocument().getParagraphElement(textPaneThemeslide.getCaretPosition()).getDocument().getLength();
 		//TODO 
@@ -866,6 +868,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		 * at the moment there are false syncs and due to para attr setting, sometimes smaller 
 		 * fonts needs much more space
 		 * Maybe correcting para attr with setAtr(null) to the right times
+		 * 
+		 * setting the "logicalStyle" of the TextPane could be another solution
 		 */
 		System.out.println("Caretupdate, Cur Para Length: " + currentParagraphLength);
 		
@@ -879,7 +883,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		AttributeSet attr = (textPaneThemeslide.getStyledDocument().getCharacterElement(textPaneThemeslide.getCaretPosition() - 1)).getAttributes();
 		if(attr != null) {
 
-			if(!(textPaneThemeslide.getCaretPosition() == textPaneThemeslide.getDocument().getEndPosition().getOffset() - 1)){	
+			if(!(textPaneThemeslide.getCaretPosition() == textPaneThemeslide.getDocument().getEndPosition().getOffset() - 1)) {	
 				System.out.println("if");
 				
 				updateGUItoStyleAttr(attr);
@@ -906,17 +910,20 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	private void applyAsParagraphAttributes() {
+		
+		final MutableAttributeSet attr = new SimpleAttributeSet();
+		StyleConstants.setFontFamily(attr, (String) jComboBoxFontType.getSelectedItem());
+		attr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
+		StyleConstants.setForeground(attr, selectedColorMain);
+		StyleConstants.setUnderline(attr, jToggleButtonUnderline.isSelected());
+		StyleConstants.setBold(attr, jToggleButtonBold.isSelected());
+		StyleConstants.setItalic(attr, jToggleButtonItalic.isSelected());
+		
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			@Override
 			public void run() {
-				MutableAttributeSet attr = new SimpleAttributeSet();
-				StyleConstants.setFontFamily(attr, (String) jComboBoxFontType.getSelectedItem());
-				attr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
-				StyleConstants.setForeground(attr, selectedColorMain);
-				StyleConstants.setUnderline(attr, jToggleButtonUnderline.isSelected());
-				StyleConstants.setBold(attr, jToggleButtonBold.isSelected());
-				StyleConstants.setItalic(attr, jToggleButtonItalic.isSelected());
+				
 				textPaneThemeslide.setParagraphAttributes(attr, false);
 				
 			}

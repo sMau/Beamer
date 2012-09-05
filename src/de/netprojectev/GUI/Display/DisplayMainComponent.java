@@ -17,7 +17,8 @@ public class DisplayMainComponent extends JComponent {
 	private static final long serialVersionUID = 3915763660057625809L;
 	private Image image;
 	
-	//TODO Scaling after resizing?
+	//TODO improve scaling with progressive bilinear scaling (see filthy rich clients)
+	//TODO set a background for this component ( e.g. many 4s logos) that there isnt any grey space when showing a 4:3 resolution image
 	
 	/**
 	 * 
