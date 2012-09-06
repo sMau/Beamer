@@ -44,23 +44,28 @@ public class Constants {
 	 */
 	
 	public static final Priority DEFAULT_PRIORITY = new Priority("default", 3);
+
 	
-	public static final String DEFAULT_SEPERATOR = " +++ ";
+	protected static final int DEFAULT_PREVIEW_SCALE_WIDTH = 640;
 	
-	public static final int DEFAULT_PREVIEW_SCALE_WIDTH = 640;
+	protected static final int DEFAULT_SCREEN_NUMBER_FULLSCREEN = 1;
 	
-	public static final int DEFAULT_SCREEN_NUMBER_FULLSCREEN = 1;
+	protected static final int DEFAULT_TICKER_SPEED = 50;
+	protected static final String DEFAULT_TICKER_SEPERATOR = " +++ ";
+	protected static final int DEFAULT_TICKER_FONTSIZE = 32;
+	protected static final String DEFAULT_TICKER_FONTTYPE = "Arial";
+	protected static final int DEFAULT_TICKER_FONTCOLOR = -16777216;
 	
-	public static final int DEFAULT_TICKER_SPEED = 50;
-	public static final int DEFAULT_TICKER_FONTSIZE = 32;
-	public static final String DEFAULT_TICKER_FONTTYPE = "Arial";
-	public static final int DEFAULT_TICKER_FONTCOLOR = -16777216;
+	protected static final int DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP = 20;
+	protected static final int DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT = 20;
+	protected static final int DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE = 32;
+	protected static final String DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE = "Arial";
+	protected static final int DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR = -16777216;
 	
-	public static final int DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP = 20;
-	public static final int DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT = 20;
-	public static final int DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE = 32;
-	public static final String DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE = "Arial";
-	public static final int DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR = -16777216;
+	protected static final int DEFAULT_COUNTDOWN_FONTCOLOR = -16777216;
+	protected static final int DEFAULT_COUNTDOWN_FONTSIZE = 32;
+	protected static final String DEFAULT_COUNTDOWN_FONTTYPE = "Arial";
+
 	
 	/*
 	 * Property Keys
@@ -74,6 +79,7 @@ public class Constants {
 	public static final String PROP_TICKER_FONTSIZE = "ticker.fontSize";
 	public static final String PROP_TICKER_FONTTYPE = "ticker.fontType";
 	public static final String PROP_TICKER_FONTCOLOR = "ticker.fontColor";
+	public static final String PROP_TICKER_SEPERATOR = "ticker.seperator";
 	
 	public static final String PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP = "themeslideCreator.defaults.marginTop";
 	public static final String PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT = "themeslideCreator.defaults.marginLeft";
@@ -81,5 +87,8 @@ public class Constants {
 	public static final String PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE = "themeslideCreator.defaults.fontType";
 	public static final String PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR = "themeslideCreator.defaults.fontColor";
 	
+	public static final String PROP_COUNTDOWN_FONTCOLOR = "countdown.fontColor";
+	public static final String PROP_COUNTDOWN_FONTSIZE = "countdown.fontSize";
+	public static final String PROP_COUNTDOWN_FONTTYPE = "countdown.fontType";
 
 }

@@ -1,12 +1,16 @@
 package de.netprojectev.LiveTicker;
 
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Display.DisplayMainFrame;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.GUI.Manager.TickerManagerTableModel;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Misc.Misc;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
  * 
@@ -16,6 +20,8 @@ import de.netprojectev.Misc.Constants;
  */
 public class LiveTicker {
 
+	private static final Logger log = Misc.getLoggerAll(LiveTicker.class.getName());
+	
 	private static LiveTicker instance = new LiveTicker();
 	
 	private ManagerFrame managerFrame;
@@ -30,7 +36,11 @@ public class LiveTicker {
 	private LiveTicker() {
 		
 		this.textElements = new LinkedList<TickerTextElement>();
-		this.speed = Constants.DEFAULT_TICKER_SPEED;
+		try {
+			this.speed = Integer.parseInt(PreferencesHandler.getInstance().getProperties().getProperty(Constants.PROP_TICKER_SPEED));
+		} catch (NumberFormatException e) {
+			log.log(Level.SEVERE, "Error parsing integer to string", e);
+		}
 		this.completeTickerText = "";
 		this.display = DisplayDispatcher.getInstance().getDisplayFrame();
 			
@@ -56,7 +66,7 @@ public class LiveTicker {
 		if(!textElements.contains(element)) {
 			textElements.add(element);
 			if(textElements.size() == 1) {
-				display.startLiveTicker(Constants.DEFAULT_TICKER_SPEED);
+				display.startLiveTicker(this.speed);
 			}
 		}
 		refreshDataModel();
@@ -114,7 +124,7 @@ public class LiveTicker {
 			
 			if(textElements.get(i).getToShow()) {
 				
-				completeTickerText += textElements.get(i).getText() + Constants.DEFAULT_SEPERATOR;
+				completeTickerText += textElements.get(i).getText() + PreferencesHandler.getInstance().getProperties().getProperty(Constants.PROP_TICKER_SEPERATOR);
 			}
 			
 		}

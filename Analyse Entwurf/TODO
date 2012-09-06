@@ -6,7 +6,7 @@ mark as showed after a given time (with a swing timer) (configurable via prefs  
 Features (missing)
 
 31.08.12
-adding a feature to preview liveticker and countdown font directly on beamer (after setting show a piece of text with given paras)
+adding a feature to preview liveticker and countdown font directly on beamer (after setting show a piece of text with given paras) (maybe via interface previewable)
 Theme also contains the margin and fontsize/type presettings (can contain there are also overall default settings in the settings dialogs)
 Themeslide editing
 Themeslidecreator - on pressing enter add the current tabspace automatically (like in eclipse)

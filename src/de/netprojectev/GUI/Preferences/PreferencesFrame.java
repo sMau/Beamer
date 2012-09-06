@@ -62,6 +62,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private String themeslideCreatorFontSize;
 	private String themeslideCreatorFontColor;
 	
+	private String countdownFontType;
+	private String countdownFontSize;
+	private String countdownFontColor;
+	
 	private int themeslideCreatorMarginLeft;
 	private int themeslideCreatorMarginTop;
 	
@@ -92,6 +96,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 	private void initValues() {
 		
+		String[] sizes = Constants.FONT_SIZES;
+		String[] font = Constants.FONT_FAMILIES;
+		
 		/*
 		 * GENERAL TAB
 		 *	
@@ -104,7 +111,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
          * 
          * LIVE TICKER TAB
          */
-        String[] font = Constants.FONT_FAMILIES;
+       
         for(int i = 0; i < font.length; i++) {
         	jComboBoxFontTypeTicker.addItem(font[i]);
         }
@@ -115,12 +122,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
         Color bg;
 		try {
 			bg = new Color(Integer.parseInt(props.getProperty(Constants.PROP_TICKER_FONTCOLOR)));
+	        jButtonTickerColorPicker.setBackground(bg);
+	        jButtonTickerColorPicker.setForeground(bg);
 		} catch (NumberFormatException e1) {
-			bg = new Color(Constants.DEFAULT_TICKER_FONTCOLOR);
+			log.log(Level.SEVERE, "Error parsing from integer to string", e1);
 		}
-        jButtonTickerColorPicker.setBackground(bg);
-        jButtonTickerColorPicker.setForeground(bg);
-  
+
 		jTextFieldTickerSpeed.setText(props.getProperty(Constants.PROP_TICKER_SPEED));
         
         /*
@@ -133,14 +140,54 @@ public class PreferencesFrame extends javax.swing.JFrame {
         }
         jComboBoxThemeSlideFontType.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
         
-        String[] sizes = Constants.FONT_SIZES;
+       
         for(int i = 0; i < sizes.length; i++) {
         	jComboBoxThemeslideFontSize.addItem(sizes[i]);
         }
-        jComboBoxThemeslideFontSize.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
+        if(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE).endsWith("pt")) {
+        	jComboBoxThemeslideFontSize.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
+        } else {
+        	jComboBoxThemeslideFontSize.setSelectedItem(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE) + "pt");
+        }
 
         jTextFieldMarginLeft.setText(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
         jTextFieldMarginTop.setText(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
+        
+
+        Color bg2;
+		try {
+			bg2 = new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR)));
+	        jButtonThemeslideDefaultColor.setBackground(bg2);
+	        jButtonThemeslideDefaultColor.setForeground(bg2);
+		} catch (NumberFormatException e1) {
+			log.log(Level.SEVERE, "Error parsing from integer to string", e1);
+		}
+        
+        /*
+         * COUNTDOWN TAB
+         */
+        for(int i = 0; i < font.length; i++) {
+        	jComboBoxCountdownFontType.addItem(font[i]);
+        }
+        for(int i = 0; i < sizes.length; i++) {
+        	jComboBoxCountdownFontSize.addItem(sizes[i]);
+        }
+        jComboBoxCountdownFontType.setSelectedItem(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE));
+        
+        if(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE).endsWith("pt")) {
+        	jComboBoxCountdownFontSize.setSelectedItem(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE));
+        } else {
+        	jComboBoxThemeslideFontSize.setSelectedItem(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE + "pt"));
+        }
+
+        Color bg3;
+		try {
+			bg3 = new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR)));
+	        jButtonCountdownColor.setBackground(bg3);
+	        jButtonCountdownColor.setForeground(bg3);
+		} catch (NumberFormatException e1) {
+			log.log(Level.SEVERE, "Error parsing from integer to string", e1);
+		}
 	}
 
     /**
@@ -226,6 +273,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
         btnAddPrio = new javax.swing.JButton();
         btnRemovePrio = new javax.swing.JButton();
         jPanelTabCountdown = new javax.swing.JPanel();
+        jLabel24 = new javax.swing.JLabel();
+        jSeparator12 = new javax.swing.JSeparator();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
+        jComboBoxCountdownFontSize = new javax.swing.JComboBox();
+        jComboBoxCountdownFontType = new javax.swing.JComboBox();
+        jButtonCountdownColor = new javax.swing.JButton();
         jButtonApplyPrefs = new javax.swing.JButton();
 
         jFileChooser1.setApproveButtonText("Open");
@@ -546,7 +601,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addGap(18, 18, 18)
                                     .addComponent(jLabel17)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jComboBoxThemeslideFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxThemeslideFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(30, 30, 30)
                                     .addComponent(jLabel18)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -555,7 +610,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addComponent(jLabel19)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(jButtonThemeslideDefaultColor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(0, 180, Short.MAX_VALUE))
+                                    .addGap(0, 162, Short.MAX_VALUE))
                                 .addGroup(jPanelThemeslideCreatorLayout.createSequentialGroup()
                                     .addComponent(jLabel20)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -791,15 +846,63 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
             jTabbedPane1.addTab("Priority", jPanelTabPrio);
 
+            jLabel24.setText("Font Attributes");
+
+            jLabel25.setText("Size");
+
+            jLabel26.setText("Type");
+
+            jLabel27.setText("Color");
+
+            jButtonCountdownColor.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButtonCountdownColorActionPerformed(evt);
+                }
+            });
+
             javax.swing.GroupLayout jPanelTabCountdownLayout = new javax.swing.GroupLayout(jPanelTabCountdown);
             jPanelTabCountdown.setLayout(jPanelTabCountdownLayout);
             jPanelTabCountdownLayout.setHorizontalGroup(
                 jPanelTabCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 677, Short.MAX_VALUE)
+                .addGroup(jPanelTabCountdownLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanelTabCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelTabCountdownLayout.createSequentialGroup()
+                            .addComponent(jLabel24)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jSeparator12))
+                        .addGroup(jPanelTabCountdownLayout.createSequentialGroup()
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel25)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jComboBoxCountdownFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
+                            .addComponent(jLabel26)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jComboBoxCountdownFontType, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(30, 30, 30)
+                            .addComponent(jLabel27)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButtonCountdownColor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 162, Short.MAX_VALUE)))
+                    .addContainerGap())
             );
             jPanelTabCountdownLayout.setVerticalGroup(
                 jPanelTabCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGap(0, 318, Short.MAX_VALUE)
+                .addGroup(jPanelTabCountdownLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanelTabCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jSeparator12, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel24))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanelTabCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel25)
+                        .addComponent(jLabel26)
+                        .addComponent(jLabel27)
+                        .addComponent(jComboBoxCountdownFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jComboBoxCountdownFontType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonCountdownColor, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(252, Short.MAX_VALUE))
             );
 
             jTabbedPane1.addTab("Countdown", jPanelTabCountdown);
@@ -815,7 +918,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonApplyPrefs, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -922,45 +1025,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
      */
     private void jButtonApplyPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonApplyPrefsActionPerformed
 
-    	try {
-			previewWidth = Integer.parseInt(jTextFieldPreviewWidth.getText());
-		} catch (NumberFormatException e) {
-		}
-    	
-    	if(!(tickerSpeed > 0 && tickerSpeed < 1001)) {
-    		tickerSpeed = display.getLiveTickerTimer().getDelay();
-    	}
-
-    	tickerFontColor = "" + display.getTickerComponent().getForeground().getRGB();
-    	tickerFontSize = (String) jComboBoxFontSizeTicker.getSelectedItem();
-    	tickerFontType = (String) jComboBoxFontTypeTicker.getSelectedItem();
-    	
-    	themeslideCreatorFontColor = "" + jButtonThemeslideDefaultColor.getBackground().getRGB();
-    	themeslideCreatorFontSize = (String) jComboBoxThemeslideFontSize.getSelectedItem();
-    	themeslideCreatorFontType = (String) jComboBoxThemeSlideFontType.getSelectedItem();
-    	
-    	try {
-			fullscreenNumber = Integer.parseInt(jTextFieldScreenNumber.getText());
-		} catch (NumberFormatException e) {}
-    	
-    	try {
-			themeslideCreatorMarginLeft = Integer.parseInt(jTextFieldMarginLeft.getText());
-			themeslideCreatorMarginTop = Integer.parseInt(jTextFieldMarginTop.getText());
-		} catch (NumberFormatException e) {}
-
-    	try {
-			preferencesHandler.updatePropertiesFromPreferencesFrame();
-		} catch (IOException e) {
-			log.log(Level.SEVERE, "Error during updating properties", e);
-		}
-    	
-    	if(previewWidth != Integer.parseInt(preferencesHandler.getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH))) {
-    		MediaHandler.getInstance().generateNewScaledPreviews();
-    	}
+    	saveAllProperties();
     	
     	dispose();    	
 
     }//GEN-LAST:event_jButtonApplyPrefsActionPerformed
+
+	
 
     /**
      * opens a file dialog to let the user choose a file from disk as background image for the selected/new theme
@@ -1091,6 +1162,65 @@ public class PreferencesFrame extends javax.swing.JFrame {
         openColorPickerThemeslideCreator();
     }//GEN-LAST:event_jButtonThemeslideDefaultColorActionPerformed
 
+    private void jButtonCountdownColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCountdownColorActionPerformed
+    	openColorPickerCountdown();
+    }//GEN-LAST:event_jButtonCountdownColorActionPerformed
+
+    /**
+     * all values are read from the preferences frame and saved to the properties object.
+     * 
+     */
+    private void saveAllProperties() {
+		try {
+			previewWidth = Integer.parseInt(jTextFieldPreviewWidth.getText());
+		} catch (NumberFormatException e) {
+			log.log(Level.SEVERE, "Error parsing integer to string", e);
+		}
+    	
+    	if(!(tickerSpeed > 0 && tickerSpeed < 1001)) {
+    		tickerSpeed = display.getLiveTickerTimer().getDelay();
+    	}
+
+    	tickerFontColor = "" + display.getTickerComponent().getForeground().getRGB();
+    	tickerFontSize = (String) jComboBoxFontSizeTicker.getSelectedItem();
+    	tickerFontType = (String) jComboBoxFontTypeTicker.getSelectedItem();
+    	
+    	themeslideCreatorFontColor = "" + jButtonThemeslideDefaultColor.getBackground().getRGB();
+    	themeslideCreatorFontSize = (String) jComboBoxThemeslideFontSize.getSelectedItem();
+    	themeslideCreatorFontType = (String) jComboBoxThemeSlideFontType.getSelectedItem();
+    	
+    	countdownFontColor = "" + jButtonCountdownColor.getBackground().getRGB();
+    	countdownFontSize = (String) jComboBoxCountdownFontSize.getSelectedItem();
+    	countdownFontType = (String) jComboBoxCountdownFontType.getSelectedItem();
+    	
+    	try {
+			fullscreenNumber = Integer.parseInt(jTextFieldScreenNumber.getText());
+		} catch (NumberFormatException e) {
+			log.log(Level.SEVERE, "Error parsing integer to string", e);
+		}
+    	
+    	try {
+			themeslideCreatorMarginLeft = Integer.parseInt(jTextFieldMarginLeft.getText());
+			themeslideCreatorMarginTop = Integer.parseInt(jTextFieldMarginTop.getText());
+		} catch (NumberFormatException e) {
+			log.log(Level.SEVERE, "Error parsing integer to string", e);
+		}
+
+    	
+    	
+    	
+    	try {
+			preferencesHandler.updatePropertiesFromPreferencesFrame();
+		} catch (IOException e) {
+			log.log(Level.SEVERE, "Error during updating properties", e);
+		}
+    	
+    	if(previewWidth != Integer.parseInt(preferencesHandler.getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH))) {
+    		MediaHandler.getInstance().generateNewScaledPreviews();
+    	}
+	}
+    
+    
     
     /**
      * Opens a new {@link ColorPickerDialog} and assigns the correct ticker text color.
@@ -1106,6 +1236,27 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		        
 		        jButtonThemeslideDefaultColor.setBackground(bg);
 		        jButtonThemeslideDefaultColor.setForeground(bg);
+				
+			}
+			
+		}
+
+	}
+    
+    /**
+     * Opens a new {@link ColorPickerDialog} and assigns the correct countdown text color.
+     */
+    private void openColorPickerCountdown() {
+
+		ColorPickerDialog colorPicker = new ColorPickerDialog(this, true);
+		colorPicker.setVisible(true);
+		
+		if(colorPicker != null) {
+			if(colorPicker.getChoosenColor() != null) {
+				Color bg =  new Color(colorPicker.getChoosenColor().getRed(), colorPicker.getChoosenColor().getGreen(), colorPicker.getChoosenColor().getBlue());
+		        
+		        jButtonCountdownColor.setBackground(bg);
+		        jButtonCountdownColor.setForeground(bg);
 				
 			}
 			
@@ -1259,12 +1410,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnSaveTheme;
     private javax.swing.JButton jButtonApplyPrefs;
     private javax.swing.JButton jButtonChooseBgImage;
+    private javax.swing.JButton jButtonCountdownColor;
     private javax.swing.JButton jButtonEnterFullscreen;
     private javax.swing.JButton jButtonExitFullscreen;
     private javax.swing.JButton jButtonPrioSave;
     private javax.swing.JButton jButtonReset;
     private javax.swing.JButton jButtonThemeslideDefaultColor;
     private javax.swing.JButton jButtonTickerColorPicker;
+    private javax.swing.JComboBox jComboBoxCountdownFontSize;
+    private javax.swing.JComboBox jComboBoxCountdownFontType;
     private javax.swing.JComboBox jComboBoxFontSizeTicker;
     private javax.swing.JComboBox jComboBoxFontTypeTicker;
     private javax.swing.JComboBox jComboBoxThemeSlideFontType;
@@ -1286,6 +1440,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1309,6 +1467,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
+    private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -1403,6 +1562,18 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 	public int getThemeslideCreatorMarginTop() {
 		return themeslideCreatorMarginTop;
+	}
+
+	public String getCountdownFontType() {
+		return countdownFontType;
+	}
+
+	public String getCountdownFontSize() {
+		return countdownFontSize;
+	}
+
+	public String getCountdownFontColor() {
+		return countdownFontColor;
 	}
 
 }

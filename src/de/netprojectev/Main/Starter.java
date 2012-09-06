@@ -13,7 +13,7 @@ import de.netprojectev.Misc.Misc;
 
 public class Starter {
 
-	private static final Logger log = Misc.getLoggerAll(Starter.class.getName());
+	private static Logger log;
 	
 	/**
 	 * @param args
@@ -58,7 +58,7 @@ public class Starter {
 		 * 
 		 */
 		
-		
+		onFirstStart();
 		
 		try {
 			log.log(Level.INFO, "Starting up...");
@@ -78,7 +78,7 @@ public class Starter {
 	    	log.log(java.util.logging.Level.SEVERE, null, ex);
 	    }
 		
-		onFirstStart();
+		
 
 		SwingUtilities.invokeLater(new Runnable() {
 
@@ -98,7 +98,6 @@ public class Starter {
 	 */
 	private static void onFirstStart() {
 		
-		log.log(Level.INFO, "first time starting program, setting up files and directories");
 		
 		File toTestMain = new File(Constants.SAVE_PATH);
 		File toTestCache = new File(Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE);
@@ -109,6 +108,9 @@ public class Starter {
 		if(!toTestCache.isDirectory()) {
 			toTestCache.mkdirs();
 		}
+		
+		log = Misc.getLoggerAll(Starter.class.getName());
+		log.log(Level.INFO, "first time starting program, setting up files and directories");
 		if(!properties.exists()) {
 			try {
 				Misc.savePropertiesToDisk(Misc.generateDefaultProps());

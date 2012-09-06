@@ -65,6 +65,9 @@ public class PreferencesHandler {
 		properties.setProperty(Constants.PROP_TICKER_FONTSIZE, preferencesFrame.getTickerFontSize());
 		properties.setProperty(Constants.PROP_TICKER_FONTTYPE, preferencesFrame.getTickerFontType());
 		properties.setProperty(Constants.PROP_TICKER_SPEED, "" + preferencesFrame.getTickerSpeed());
+		properties.setProperty(Constants.PROP_COUNTDOWN_FONTCOLOR, preferencesFrame.getCountdownFontColor());
+		properties.setProperty(Constants.PROP_COUNTDOWN_FONTSIZE, preferencesFrame.getCountdownFontSize());
+		properties.setProperty(Constants.PROP_COUNTDOWN_FONTTYPE, "" + preferencesFrame.getCountdownFontType());
 
 		Misc.savePropertiesToDisk(properties);
 		

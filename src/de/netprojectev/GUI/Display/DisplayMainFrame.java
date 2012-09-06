@@ -69,10 +69,14 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 			if (screenNumber >= 0 && screenNumber < myDevices.length) {
 				myDevices[screenNumber].setFullScreenWindow(this);
 		    	tickerComponent.refreshStringGeneration();
+		    	fullscreen = true;
 			} else {
-				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode.", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode. \nCheck the choosen screen.", "Error", JOptionPane.ERROR_MESSAGE);
+				dispose();
+				this.setUndecorated(false);
+				setVisible(true);
+				fullscreen = false;
 			}
-			fullscreen = true;
     	}
 
     }
