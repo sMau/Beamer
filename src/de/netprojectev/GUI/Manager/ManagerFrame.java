@@ -22,6 +22,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
 
+import de.netprojectev.GUI.Dialogs.AddCountdownDialog;
 import de.netprojectev.GUI.Dialogs.AddTickerElement;
 import de.netprojectev.GUI.Dialogs.EditMediaFileFrame;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
@@ -575,7 +576,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout filemangerPanelLayout = new javax.swing.GroupLayout(filemangerPanel);
@@ -693,7 +694,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 637, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Liveticker", livetickerPanel);
@@ -727,6 +728,11 @@ public class ManagerFrame extends javax.swing.JFrame {
         jMenuFile.add(jMenuItemAddTickerElt);
 
         jMenuItemAddCntDwn.setText("Add Countdown");
+        jMenuItemAddCntDwn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAddCntDwnActionPerformed(evt);
+            }
+        });
         jMenuFile.add(jMenuItemAddCntDwn);
 
         jMenuItemQuit.setText("Quit");
@@ -1025,6 +1031,11 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void jMenuItemAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddTickerEltActionPerformed
     	addTickerElement();
     }//GEN-LAST:event_jMenuItemAddTickerEltActionPerformed
+
+    private void jMenuItemAddCntDwnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddCntDwnActionPerformed
+        new AddCountdownDialog(this, true).setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItemAddCntDwnActionPerformed
     
     /**
      * opens a dialog to choose between adding a file from disk or a themeslide

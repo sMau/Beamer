@@ -148,6 +148,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Add Countdown"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemAddCntDwnActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemQuit">
               <Properties>
@@ -617,7 +620,7 @@
                               <Component id="jSeparator9" alignment="1" min="-2" pref="10" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" pref="339" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="343" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -807,7 +810,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator8" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="637" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="641" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

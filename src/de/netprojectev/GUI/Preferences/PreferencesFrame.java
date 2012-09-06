@@ -218,6 +218,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
         jPanelLiveTicker = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
@@ -335,6 +336,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jLabel23.setText("(The height is adjusted automatically)");
 
+        jLabel28.setText("(e.g. with two screens: first screen is 0, second screen is 1)");
+
         javax.swing.GroupLayout jPanelTabMainLayout = new javax.swing.GroupLayout(jPanelTabMain);
         jPanelTabMain.setLayout(jPanelTabMainLayout);
         jPanelTabMainLayout.setHorizontalGroup(
@@ -348,12 +351,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addGroup(jPanelTabMainLayout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel28))
                             .addGroup(jPanelTabMainLayout.createSequentialGroup()
                                 .addComponent(jButtonEnterFullscreen, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButtonExitFullscreen, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(84, Short.MAX_VALUE))
                     .addGroup(jPanelTabMainLayout.createSequentialGroup()
                         .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelTabMainLayout.createSequentialGroup()
@@ -379,7 +384,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                         .addComponent(jTextFieldPreviewWidth, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(jLabel23)))
-                                .addGap(0, 143, Short.MAX_VALUE)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanelTabMainLayout.setVerticalGroup(
@@ -403,7 +408,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTextFieldScreenNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel28))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelTabMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonEnterFullscreen)
@@ -918,7 +924,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
             getContentPane().setLayout(layout);
             layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 689, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonApplyPrefs, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1444,6 +1450,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

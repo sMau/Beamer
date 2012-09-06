@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.swing.Timer;
 
 import de.netprojectev.GUI.Display.DisplayMainComponent;
+import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 
 /**
@@ -15,8 +16,15 @@ import de.netprojectev.Misc.Misc;
  * @author samu
  *
  */
-public class Countdown {
+public class Countdown extends MediaFile{
 	
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8156954767550365161L;
+
 	private DisplayMainComponent displayMainComp;
 	
 	private String timeString;
@@ -24,16 +32,24 @@ public class Countdown {
 	private int secondsToZero;
 
 	
-	public Countdown(int secondsToZero) {
-		
+	public Countdown(String name, int minutesToZero) {
+		super(name, Constants.NO_PRIORITY);
 		timeString = "";
-		this.secondsToZero = secondsToZero;
+		this.secondsToZero = minutesToZero * 60;
 	}
 	
-	public Countdown(Date date) {
-		
+	public Countdown(String name, Date date) {
+		super(name, Constants.NO_PRIORITY);
 		timeString = "";
 		//TODO conversion from the date choosen to seconds (maybe for gui)
+	}
+	
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		//TODO showing the countdown
+		
 	}
 	
 	
@@ -70,7 +86,6 @@ public class Countdown {
 	public void setTimeString(String timeString) {
 		this.timeString = timeString;
 	}
-	
 
 }
 	

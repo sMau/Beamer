@@ -1,10 +1,7 @@
 package de.netprojectev.Misc;
 
 import java.awt.GraphicsEnvironment;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.FileHandler;
-import java.util.logging.Handler;
 
 import de.netprojectev.Media.Priority;
 
@@ -36,7 +33,9 @@ public class Constants {
 	
 	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 	public static final String[] FONT_SIZES = Misc.generateFontSizes();
-		
+	
+	public static final Priority NO_PRIORITY = new Priority("no priority", -1);
+	
 	public static final Date TIMESTAMP = new Date(); 
 	
 	/*
