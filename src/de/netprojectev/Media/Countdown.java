@@ -19,7 +19,7 @@ import de.netprojectev.Misc.Misc;
  *
  */
 public class Countdown extends MediaFile {
-	
+	//TODO very buggy file removing of non countdowns after serial and deserial a countdown
 
 	/**
 	 * 

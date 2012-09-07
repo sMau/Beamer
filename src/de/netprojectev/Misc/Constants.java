@@ -33,6 +33,7 @@ public class Constants {
 	
 	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 	public static final String[] FONT_SIZES = Misc.generateFontSizes();
+	public static final String[] FONT_SIZES_COUNTDOWN = Misc.generateFontSizesCountdown();
 	
 	public static final Priority NO_PRIORITY = new Priority("no priority", -1);
 	

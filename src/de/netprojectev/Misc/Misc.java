@@ -170,6 +170,25 @@ public class Misc {
 		return sizes;
 	}
 	
+	public static String[] generateFontSizesCountdown() {
+		int n = 4;
+		int start = 36;
+		int end = 140;
+		int arraySize = 0;
+		
+		for(int i = start; i < end + 1;  i+= n) {
+			arraySize++;
+		}
+		String[] sizes = new String[arraySize];
+		int index = 0;
+		for(int i = start; i < end + 1; i+=n) {
+			sizes[index] = Integer.toString(i);
+			index++;
+		}
+		return sizes;
+	}
+	
+	
 	/**
 	 * Saves the given property object to the in the {@link Constants} specified path.
 	 * 

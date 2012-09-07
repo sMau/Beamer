@@ -42,6 +42,7 @@ public class DisplayHandler {
 	
 	private Timer refreshTimeLeftTimer;
 	
+	//TODO very buggy file removing of non countdowns after serial and deserial a countdown
 
 	/**
 	 * Inner class to handle auto mode timer

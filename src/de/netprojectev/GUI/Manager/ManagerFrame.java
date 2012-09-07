@@ -1342,6 +1342,8 @@ public class ManagerFrame extends javax.swing.JFrame {
     		}
     	}
     	
+    	DisplayDispatcher.getInstance().getDisplayFrame().getDisplayMainComponent().updateCountdownFont();
+    	
     	return true;
 	
     }

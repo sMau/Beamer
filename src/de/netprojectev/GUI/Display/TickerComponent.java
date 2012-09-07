@@ -26,6 +26,8 @@ public class TickerComponent extends JComponent {
 	
 	//TODO fix the behavior when removing the last element from the list. it proceeds slower in this case instead of showing no string
 
+	//TODO font changing (at least color) when changing color of the countdown -> propably bug
+	
 	public TickerComponent() {
 		super();
 		posOfString1 = getWidth();

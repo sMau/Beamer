@@ -1,15 +1,21 @@
 package de.netprojectev.GUI.Display;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.io.File;
+import java.util.Properties;
 
 import javax.swing.JComponent;
 import javax.swing.SwingWorker;
 
 import de.netprojectev.Media.Countdown;
+import de.netprojectev.Misc.Constants;
+import de.netprojectev.Preferences.PreferencesHandler;
 /**
  * 
  * GUI Component to draw images and themeslide background images
@@ -25,7 +31,9 @@ public class DisplayMainComponent extends JComponent {
 	
 	private Countdown countdown;
 	
-	private DisplayMainComponent instance;
+	private Font countdownFont;
+	
+	private DisplayMainComponent instance; 
 	
 	//TODO improve scaling with progressive bilinear scaling (see filthy rich clients)
 	//TODO set a background for this component ( e.g. many 4s logos) that there isnt any grey space when showing a 4:3 resolution image
@@ -35,6 +43,27 @@ public class DisplayMainComponent extends JComponent {
 	public DisplayMainComponent() {
 		super();
 		this.instance = this;
+
+	}
+	
+	/**
+	 * invoked by the loadFromDisk method in the manager frame
+	 */
+	public void updateCountdownFont() {
+		Properties props = PreferencesHandler.getInstance().getProperties();
+		try {
+			countdownFont = new Font(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE), getFont().getStyle(), Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE)));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setFont(countdownFont);
+		try {
+			setForeground(new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR))));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	/**
@@ -44,7 +73,7 @@ public class DisplayMainComponent extends JComponent {
 	public void setImageToDraw(final File file) {
 	
 		
-		countdownShowing = false;
+		/*countdownShowing = false;
 		image = Toolkit.getDefaultToolkit().getImage(file.getAbsolutePath());
 		if (image != null) {
 			
@@ -57,17 +86,16 @@ public class DisplayMainComponent extends JComponent {
 				image = image.getScaledInstance((int) this.getBounds().getWidth(), -1, Image.SCALE_SMOOTH);
 			}
 			repaint();
-		}
+		}*/
 		
 		//testing with swingworker painting
 		
-		/*new SwingWorker<Void, Void>() {
+		new SwingWorker<Void, Void>() {
 		    @Override
 		    public Void doInBackground() {
 		    	countdownShowing = false;
 				image = Toolkit.getDefaultToolkit().getImage(file.getAbsolutePath());
 				if (image != null) {
-					
 					int imW = image.getWidth(null);
 					int imH = image.getHeight(null);
 					
@@ -85,14 +113,12 @@ public class DisplayMainComponent extends JComponent {
 		    @Override
 		    public void done() {
 		    	if(image != null) {
-		    		System.out.println("image not null");
+		    		
 		    		instance.repaint();
 		    	}
 		    }
-		};
-		*/
-		
-		
+		}.execute();
+
 	}
 	
 	/**
@@ -112,12 +138,18 @@ public class DisplayMainComponent extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		if(countdownShowing) {
-			//TODO respect the preset values of the font
-			setFont(new Font("Arial", this.getFont().getStyle(), 32));
+			Graphics2D tmpG2D = (Graphics2D) g.create();
+	        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+	        tmpG2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
+	        tmpG2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+	        tmpG2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+	        tmpG2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 			String toDraw =	countdown.getTimeString(); 
 			int stringWidth = getFontMetrics(getFont()).stringWidth(toDraw);
 			int stringHeight = getFontMetrics(getFont()).getHeight();
-			g.drawString(toDraw, (getWidth() - stringWidth)/2,(getHeight() - stringHeight)/2);
+			tmpG2D.drawString(toDraw, (getWidth() - stringWidth)/2,(getHeight() - stringHeight)/2);
+			tmpG2D.dispose();
 			
 		} else {
 			if (image != null) {
@@ -125,5 +157,11 @@ public class DisplayMainComponent extends JComponent {
 			}
 		}
 		
+	}
+	public Font getCountdownFont() {
+		return countdownFont;
+	}
+	public void setCountdownFont(Font countdownFont) {
+		this.countdownFont = countdownFont;
 	}
 }

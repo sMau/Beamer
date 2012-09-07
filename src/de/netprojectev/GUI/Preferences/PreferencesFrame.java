@@ -169,16 +169,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
         for(int i = 0; i < font.length; i++) {
         	jComboBoxCountdownFontType.addItem(font[i]);
         }
-        for(int i = 0; i < sizes.length; i++) {
-        	jComboBoxCountdownFontSize.addItem(sizes[i]);
+        String[] sizesWithouPt = Misc.generateFontSizesCountdown();
+        for(int i = 0; i < sizesWithouPt.length; i++) {
+        	
+        	jComboBoxCountdownFontSize.addItem(sizesWithouPt[i]);
         }
         jComboBoxCountdownFontType.setSelectedItem(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE));
-        
-        if(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE).endsWith("pt")) {
-        	jComboBoxCountdownFontSize.setSelectedItem(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE));
-        } else {
-        	jComboBoxThemeslideFontSize.setSelectedItem(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE + "pt"));
-        }
+        jComboBoxCountdownFontSize.setSelectedItem(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE));
 
         Color bg3;
 		try {
@@ -1224,11 +1221,21 @@ public class PreferencesFrame extends javax.swing.JFrame {
     	if(previewWidth != Integer.parseInt(preferencesHandler.getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH))) {
     		MediaHandler.getInstance().generateNewScaledPreviews();
     	}
+    	
+    	
+    	applyPropertiesAsNeeded();
+    		
+    	
 	}
     
     
     
-    /**
+    private void applyPropertiesAsNeeded() {
+		display.getDisplayMainComponent().updateCountdownFont();
+		
+	}
+
+	/**
      * Opens a new {@link ColorPickerDialog} and assigns the correct ticker text color.
      */
     private void openColorPickerThemeslideCreator() {
