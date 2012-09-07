@@ -15,6 +15,8 @@ import de.netprojectev.LiveTicker.TickerTextElement;
  */
 public class TickerManagerTableModel extends AbstractTableModel {
 
+	//TODO on changing the text inside the table directly -> add a autoupdate to the live ticker
+	
 	private static final long serialVersionUID = -1436775879502873621L;
 	private LiveTicker liveTicker;
 	private LinkedList<TickerTextElement> textElements;

@@ -7,6 +7,8 @@ import java.util.Date;
 import javax.swing.Timer;
 
 import de.netprojectev.GUI.Display.DisplayMainComponent;
+import de.netprojectev.MediaHandler.DisplayDispatcher;
+import de.netprojectev.MediaHandler.DisplayHandler;
 import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 
@@ -16,52 +18,70 @@ import de.netprojectev.Misc.Misc;
  * @author samu
  *
  */
-public class Countdown extends MediaFile{
+public class Countdown extends MediaFile {
 	
-
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8156954767550365161L;
 
-	private DisplayMainComponent displayMainComp;
+	private transient DisplayMainComponent displayMainComp;
 	
+	
+	private boolean finished = false;
 	private String timeString;
 	private Timer countdownTimer;
-	private int secondsToZero;
-
+	private long secondsToZero;
+	private Date finishDate;
 	
 	public Countdown(String name, int minutesToZero) {
 		super(name, Constants.NO_PRIORITY);
 		timeString = "";
+		finishDate = null;
 		this.secondsToZero = minutesToZero * 60;
+		this.displayMainComp = DisplayDispatcher.getInstance().getDisplayFrame().getDisplayMainComponent();
 	}
 	
 	public Countdown(String name, Date date) {
 		super(name, Constants.NO_PRIORITY);
 		timeString = "";
-		//TODO conversion from the date choosen to seconds (maybe for gui)
+		this.finishDate = date;
+		this.displayMainComp = DisplayDispatcher.getInstance().getDisplayFrame().getDisplayMainComponent();
+		
 	}
 	
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		//TODO showing the countdown
+		if(!finished) {
+			DisplayHandler.getInstance().setCountdownShowing(true);
+			convertDateToSeconds();
+			displayMainComp.setCountdownToDraw(this);
+			startCountdown();
+		}
 		
 	}
 	
+	private void convertDateToSeconds() {
+		
+		if(finishDate != null) {
+			Date now = new Date();
+			this.secondsToZero = ((finishDate.getTime() - now.getTime()) / 1000);
+		}
+		
+	}
 	
-	public void startCountdown() {
+	private void startCountdown() {
 
 		countdownTimer = new Timer(1000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				secondsToZero--;
-				timeString = Misc.convertFromSecondsToTimeString(secondsToZero);
+				timeString = Misc.convertFromSecondsToTimeString((int) secondsToZero);
 				displayMainComp.repaint();
-				if(secondsToZero == 0) {
+				if(secondsToZero <= 0) {
+					finished = true;
 					countdownTimer.stop();
 				}
 				
@@ -69,6 +89,11 @@ public class Countdown extends MediaFile{
 		});
 		countdownTimer.start(); 
 			
+	}
+	
+	@Override
+	public void setPriority(Priority priority) {
+		this.priority = Constants.NO_PRIORITY;
 	}
 
 	public DisplayMainComponent getDisplayMainComp() {
@@ -85,6 +110,10 @@ public class Countdown extends MediaFile{
 
 	public void setTimeString(String timeString) {
 		this.timeString = timeString;
+	}
+
+	public long getSecondsToZero() {
+		return secondsToZero;
 	}
 
 }

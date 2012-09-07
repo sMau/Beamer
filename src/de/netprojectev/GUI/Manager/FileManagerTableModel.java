@@ -8,6 +8,7 @@ import java.util.LinkedList;
 
 import javax.swing.table.AbstractTableModel;
 
+import de.netprojectev.Media.Countdown;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
@@ -69,6 +70,8 @@ public class FileManagerTableModel extends AbstractTableModel {
     		type = "Image";
     	} else if(rowObject instanceof Themeslide) {
     		type = "Themeslide - " + ((Themeslide) rowObject).getTheme().getName();
+    	} else if(rowObject instanceof Countdown){
+    		type = "Countdown";
     	} else {
     		type = "undefined";
     	}

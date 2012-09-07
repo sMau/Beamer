@@ -41,6 +41,9 @@ public class TickerComponent extends JComponent {
 		this.tickerString = tickerString;
 		if(tickerString != null && tickerString != "") {
 			generateDrawingStrings();
+		} else if(tickerString != null) {
+			toDraw1 = " ";
+			toDraw2 = " ";
 		}
 	}
 	

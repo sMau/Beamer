@@ -29,6 +29,7 @@ import de.netprojectev.GUI.Preferences.PreferencesFrame;
 import de.netprojectev.GUI.Themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.LiveTicker.TickerTextElement;
+import de.netprojectev.Media.Countdown;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Priority;
@@ -1312,6 +1313,9 @@ public class ManagerFrame extends javax.swing.JFrame {
     			} 
     			if(tmpMedia.get(i) instanceof Themeslide) {
     				((Themeslide) tmpMedia.get(i)).createNewImageFileRepresentation();
+    			}
+    			if(tmpMedia.get(i) instanceof Countdown) {
+    				((Countdown) tmpMedia.get(i)).setDisplayMainComp(DisplayDispatcher.getInstance().getDisplayFrame().getDisplayMainComponent());
     			}
     			
     			mediaHandler.add(tmpMedia.toArray(new MediaFile[0]));

@@ -74,7 +74,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 
         jSpinnerTime.setModel(new SpinnerDateModel());
         jSpinnerTime.setEnabled(false);
-        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(jSpinnerTime, "HH:mm");
+        JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(jSpinnerTime, "HH:mm dd/MM");
         jSpinnerTime.setEditor(timeEditor);
         jSpinnerTime.setValue(new Date());
 
@@ -137,14 +137,14 @@ public class AddCountdownDialog extends javax.swing.JDialog {
                                 .addGap(12, 12, 12)
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSpinnerTime, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jSpinnerTime, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 14, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,34 +257,55 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 
     
 
+    /**
+     * adds a countdown
+     * @param evt
+     */
 	private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        addCountdown();
+		addCountdown();
     	dispose();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
+	/**
+	 * adds a countdown and starts it if it was successfully added.
+	 */
 	private void addAndStartCountdown() {
-		addCountdown();
-		//TODO start it, esp. do not start it if it wasnt added
-		//MediaHandler.getInstance().getMediaFiles().getLast().show();
+		MediaFile countdown = addCountdown();
+		if(countdown != null) {
+			countdown.show();
+		}
 	}
 	
-    private void addCountdown() {
+	/**
+	 * Creates a new {@link Countdown} reading the data from the dialogs inputs.
+	 * 
+	 * @return null if no countdown was added, else the media file representing the countdown
+	 */
+    private MediaFile addCountdown() {
 		
     	String name = jTextFieldName.getText();
     	
     	if(name.equals("") || name == null) {
 			JOptionPane.showMessageDialog(this, "Error adding the countdown. \nPlease enter a valid name.", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
+			return null;
     	}
 
     	if(jRadioButtonFinishDate.isSelected()) {
     		
     		SpinnerDateModel dateModel = (SpinnerDateModel) jSpinnerTime.getModel();
     		Date finishDate = dateModel.getDate();
+    		finishDate.setYear(new Date().getYear());
+    		int compare = finishDate.compareTo(new Date());
+    		if(!(compare > 0)) {
+    			JOptionPane.showMessageDialog(this, "Please choose a valid Date.\nThe Date you have choosen is in the past.", "Error", JOptionPane.ERROR_MESSAGE);
+    			return null;
+    		}
+    		
     		MediaHandler mediaHandler = MediaHandler.getInstance();
 			MediaFile[] countdown = new MediaFile[1];
 			countdown[0] = new Countdown(name, finishDate);
 			mediaHandler.add(countdown);
+			return countdown[0];
     		
     	} else if(jRadioButtonTimeInMinutes.isSelected()) {
     		
@@ -294,15 +315,17 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 				MediaFile[] countdown = new MediaFile[1];
 				countdown[0] = new Countdown(name, timeInMinutes);
 				mediaHandler.add(countdown);
-
+				return countdown[0];
 				
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Error adding the countdown. \nPlease enter a valid time.", "Error", JOptionPane.ERROR_MESSAGE);
+				return null;
 			}
     		
     		
     	} else {
     		JOptionPane.showMessageDialog(this, "Error adding the countdown.", "Error", JOptionPane.ERROR_MESSAGE);
+    		return null;
     	}
     	
 		

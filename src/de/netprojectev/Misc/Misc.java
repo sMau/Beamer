@@ -255,6 +255,8 @@ public class Misc {
 	 */
 	public static synchronized String convertFromSecondsToTimeString(int seconds) {
 
+		
+		//TODO add handling for hours, not only minutes and seconds
 		int minutes = seconds / 60;
 		String minutesString = Integer.toString(minutes);
 		if(minutesString.length() == 1) {

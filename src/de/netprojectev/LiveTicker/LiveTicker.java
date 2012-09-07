@@ -128,6 +128,7 @@ public class LiveTicker {
 			}
 			
 		}
+
 		display.getTickerComponent().setTickerString(completeTickerText);
 
 	}

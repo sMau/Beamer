@@ -9,6 +9,7 @@ import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Display.DisplayMainFrame;
+import de.netprojectev.Media.Countdown;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
@@ -35,6 +36,7 @@ public class DisplayHandler {
 	private MediaFile historyFile; //unused siehe showFileAt Methode
 	private Timer automodusTimer;
 	private Boolean noFileShowed;
+	private boolean countdownShowing;
 	
 	private int timeleft;
 	
@@ -92,6 +94,7 @@ public class DisplayHandler {
 		this.playingFiles = new LinkedList<MediaFile>();
 		this.isAutomodeEnabled = false;
 		this.isShufflingEnabled = false;
+		this.countdownShowing = false;
 		this.noFileShowed = true;
 		this.currentMediaFile = null;
 		this.setHistoryFile(null);
@@ -195,6 +198,7 @@ public class DisplayHandler {
 	 */
 	public void show(MediaFile file) {
 		
+		MediaFile tmpCountdown = currentMediaFile;
 		
 		if(currentMediaFile != null && currentMediaFile != file) {
 			currentMediaFile.getStatus().setIsCurrent(false);
@@ -208,6 +212,12 @@ public class DisplayHandler {
 		}
 		
 		if(mediaHandler != null) {
+			if(countdownShowing && tmpCountdown != null) {
+				MediaFile[] count = new MediaFile[1];
+				count[0] = tmpCountdown;
+				mediaHandler.remove(count, true);
+				countdownShowing = false;
+			}
 			mediaHandler.refreshDataModel();
 		}
 		automodusHasChanged();
@@ -304,7 +314,7 @@ public class DisplayHandler {
 	 * furthermore invoked after every current file change to update the timer
 	 */
 	public synchronized void startAutomodus() {
-		
+				
 		if(isAutomodeEnabled) {
 			automodusTimer.cancel();
 			automodusTimer.purge();
@@ -342,6 +352,13 @@ public class DisplayHandler {
 				timeleft = currentVideoFile.getLength();
 				refreshTimeLeftTimer.schedule(new RefreshTimeleftTimer(), 0, 1000);
 				
+			} else if(currentMediaFile instanceof Countdown) {
+				
+				Countdown countdown = (Countdown) currentMediaFile;
+				automodusTimer.schedule(new AutomodusTimer(), ((int) countdown.getSecondsToZero())*1000);
+				timeleft = (int) countdown.getSecondsToZero();
+				refreshTimeLeftTimer.schedule(new RefreshTimeleftTimer(), 0, 1000);
+
 			}
 			
 		}
@@ -422,6 +439,14 @@ public class DisplayHandler {
 
 	public void setMediaHandler(MediaHandler mediaHandler) {
 		this.mediaHandler = mediaHandler;
+	}
+
+	public boolean isCountdownShowing() {
+		return countdownShowing;
+	}
+
+	public void setCountdownShowing(boolean countdownShowing) {
+		this.countdownShowing = countdownShowing;
 	}
 
 }

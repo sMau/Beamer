@@ -101,7 +101,7 @@
                                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jSpinnerTime" min="-2" pref="94" max="-2" attributes="0"/>
+                                  <Component id="jSpinnerTime" min="-2" pref="160" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -111,7 +111,7 @@
                                   <Component id="jTextFieldName" min="-2" pref="140" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace min="0" pref="14" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -161,7 +161,7 @@
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(jSpinnerTime, &quot;HH:mm&quot;);&#xa;jSpinnerTime.setEditor(timeEditor);&#xa;jSpinnerTime.setValue(new Date());"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="JSpinner.DateEditor timeEditor = new JSpinner.DateEditor(jSpinnerTime, &quot;HH:mm dd/MM&quot;);&#xa;jSpinnerTime.setEditor(timeEditor);&#xa;jSpinnerTime.setValue(new Date());"/>
           </AuxValues>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonTimeInMinutes">

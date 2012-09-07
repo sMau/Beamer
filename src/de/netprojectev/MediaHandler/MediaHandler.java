@@ -35,6 +35,7 @@ public class MediaHandler {
 		displayHandler = DisplayHandler.getInstance();
 		displayHandler.setMediaHandler(this);
 		
+		
 	}
 
 	public static MediaHandler getInstance() {
@@ -185,7 +186,7 @@ public class MediaHandler {
 		}
 
 	}
-	
+
 	/**
 	 * forces every {@link ImageFile} and every {@link Themeslide} to generate a new preview.
 	 * Used if changes to the preview scaling property are made
