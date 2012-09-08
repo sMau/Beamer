@@ -1231,7 +1231,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
     
     
     private void applyPropertiesAsNeeded() {
-		display.getDisplayMainComponent().updateCountdownFont();
+		
+    	
 		
 	}
 

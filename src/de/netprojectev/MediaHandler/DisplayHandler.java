@@ -36,7 +36,6 @@ public class DisplayHandler {
 	private MediaFile historyFile; //unused siehe showFileAt Methode
 	private Timer automodusTimer;
 	private Boolean noFileShowed;
-	private boolean countdownShowing;
 	
 	private int timeleft;
 	
@@ -95,7 +94,6 @@ public class DisplayHandler {
 		this.playingFiles = new LinkedList<MediaFile>();
 		this.isAutomodeEnabled = false;
 		this.isShufflingEnabled = false;
-		this.countdownShowing = false;
 		this.noFileShowed = true;
 		this.currentMediaFile = null;
 		this.setHistoryFile(null);
@@ -212,15 +210,7 @@ public class DisplayHandler {
 			noFileShowed = false;
 		}
 		
-		if(mediaHandler != null) {
-			if(countdownShowing && tmpCountdown != null) {
-				MediaFile[] count = new MediaFile[1];
-				count[0] = tmpCountdown;
-				mediaHandler.remove(count, true);
-				countdownShowing = false;
-			}
-			mediaHandler.refreshDataModel();
-		}
+		mediaHandler.refreshDataModel();
 		automodusHasChanged();
 		
 	}
@@ -440,14 +430,6 @@ public class DisplayHandler {
 
 	public void setMediaHandler(MediaHandler mediaHandler) {
 		this.mediaHandler = mediaHandler;
-	}
-
-	public boolean isCountdownShowing() {
-		return countdownShowing;
-	}
-
-	public void setCountdownShowing(boolean countdownShowing) {
-		this.countdownShowing = countdownShowing;
 	}
 
 }

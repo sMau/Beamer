@@ -390,14 +390,18 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCancelActionPerformed
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {                                            
-    	addThemeslide();
-    	dispose();
+    	boolean success = addThemeslide();
+    	if(success) {
+    		dispose();
+    	}
     }                                          
 
     private void jButtonAddAndShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddAndShowActionPerformed
-    	addThemeslide();
-    	MediaHandler.getInstance().getDisplayHandler().show(MediaHandler.getInstance().getMediaFiles().getLast());
-    	dispose();
+    	boolean success = addThemeslide();
+    	if(success) {
+    		MediaHandler.getInstance().getDisplayHandler().show(MediaHandler.getInstance().getMediaFiles().getLast());
+    		dispose();
+    	}
     }//GEN-LAST:event_jButtonAddAndShowActionPerformed
 
     /**
@@ -460,7 +464,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * handles the adding of the new themeslide to the media handler.
      * checks all data and adds it if everything is fine, else showing an error dialog
      */
-    private void addThemeslide() {
+    private boolean addThemeslide() {
     	
     	Priority priority = null;
     	Theme theme = null;
@@ -470,19 +474,19 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		name = jTextFieldThemeSlideName.getText();
     	} else {
     		JOptionPane.showMessageDialog(this, "Please enter a name.", "Error", JOptionPane.ERROR_MESSAGE);
-    		return;
+    		return false;
     	}
     	if(jComboBoxPriority.getSelectedIndex() >= 0) {
     		priority = PreferencesHandler.getInstance().getListOfPriorities().get(jComboBoxPriority.getSelectedIndex());
     	} else {
     		JOptionPane.showMessageDialog(this, "Please select a priority.", "Error", JOptionPane.ERROR_MESSAGE);
-    		return;
+    		return false;
     	}
     	if(jComboBoxTheme.getSelectedIndex() >= 0) {
     		theme = PreferencesHandler.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex());
     	} else {
     		JOptionPane.showMessageDialog(this, "Please select a theme.", "Error", JOptionPane.ERROR_MESSAGE);
-    		return;
+    		return false;
     	}
     	    	
     	if(name != null && priority != null && theme != null) {
@@ -495,9 +499,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		MediaHandler.getInstance().add(themeSlides);
     		
     		((Themeslide) themeSlides[0]).createNewImageFileRepresentation();
-    		
+    		return true;
     	} else {
     		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
+    		return false;
     	}
 
     }
@@ -871,7 +876,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		 * 
 		 * setting the "logicalStyle" of the TextPane could be another solution
 		 */
-		System.out.println("Caretupdate, Cur Para Length: " + currentParagraphLength);
 		
 		if(lastEventCaretPos == textPaneThemeslide.getCaretPosition()) {
 			lastEventCaretPosChanged = false;
@@ -884,15 +888,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		if(attr != null) {
 
 			if(!(textPaneThemeslide.getCaretPosition() == textPaneThemeslide.getDocument().getEndPosition().getOffset() - 1)) {	
-				System.out.println("if");
 				
 				updateGUItoStyleAttr(attr);
 				
 			} else {
 				if(lastEventCaretPosChanged) {
-					System.out.println("else then if");
 					if(currentParagraphLength == 0) {
-						System.out.println("if para length  = 0 reached");
 					
 						applyAsParagraphAttributes();
 						

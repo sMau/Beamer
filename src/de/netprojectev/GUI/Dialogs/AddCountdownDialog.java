@@ -262,8 +262,11 @@ public class AddCountdownDialog extends javax.swing.JDialog {
      * @param evt
      */
 	private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-		addCountdown();
-    	dispose();
+		MediaFile countdown = addCountdown();
+		if(countdown != null) {
+			dispose();
+		}
+
     }//GEN-LAST:event_jButtonAddActionPerformed
 
 	/**
@@ -273,6 +276,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 		MediaFile countdown = addCountdown();
 		if(countdown != null) {
 			countdown.show();
+			dispose();
 		}
 	}
 	

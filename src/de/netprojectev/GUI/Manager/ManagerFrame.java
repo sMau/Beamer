@@ -1341,9 +1341,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     			liveTicker.add(tmpTickerElements.get(i));
     		}
     	}
-    	
-    	DisplayDispatcher.getInstance().getDisplayFrame().getDisplayMainComponent().updateCountdownFont();
-    	
+    	    	
     	return true;
 	
     }

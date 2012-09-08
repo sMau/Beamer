@@ -55,7 +55,6 @@ public class Countdown extends MediaFile {
 	@Override
 	public void show() {
 		if(!finished) {
-			DisplayHandler.getInstance().setCountdownShowing(true);
 			convertDateToSeconds();
 			displayMainComp.setCountdownToDraw(this);
 			startCountdown();

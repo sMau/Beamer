@@ -1,21 +1,16 @@
 package de.netprojectev.GUI.Display;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.io.File;
-import java.util.Properties;
 
 import javax.swing.JComponent;
 import javax.swing.SwingWorker;
 
 import de.netprojectev.Media.Countdown;
-import de.netprojectev.Misc.Constants;
-import de.netprojectev.Preferences.PreferencesHandler;
 /**
  * 
  * GUI Component to draw images and themeslide background images
@@ -31,8 +26,6 @@ public class DisplayMainComponent extends JComponent {
 	
 	private Countdown countdown;
 	
-	private Font countdownFont;
-	
 	private DisplayMainComponent instance; 
 	
 	//TODO improve scaling with progressive bilinear scaling (see filthy rich clients)
@@ -46,26 +39,6 @@ public class DisplayMainComponent extends JComponent {
 
 	}
 	
-	/**
-	 * invoked by the loadFromDisk method in the manager frame
-	 */
-	public void updateCountdownFont() {
-		Properties props = PreferencesHandler.getInstance().getProperties();
-		try {
-			countdownFont = new Font(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE), getFont().getStyle(), Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE)));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setFont(countdownFont);
-		try {
-			setForeground(new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR))));
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 	/**
 	 * 
 	 * @param file the image file to draw on component
@@ -127,7 +100,6 @@ public class DisplayMainComponent extends JComponent {
 	 * @param countdown the countdown object to draw
 	 */
 	public void setCountdownToDraw(Countdown countdown) {
-
 		countdownShowing = true;
 		this.countdown = countdown;
 	}
@@ -138,6 +110,7 @@ public class DisplayMainComponent extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		if(countdownShowing) {
+			//TODO centering isnt correct, cause of baseline point is interesting
 			Graphics2D tmpG2D = (Graphics2D) g.create();
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -158,10 +131,5 @@ public class DisplayMainComponent extends JComponent {
 		}
 		
 	}
-	public Font getCountdownFont() {
-		return countdownFont;
-	}
-	public void setCountdownFont(Font countdownFont) {
-		this.countdownFont = countdownFont;
-	}
+
 }

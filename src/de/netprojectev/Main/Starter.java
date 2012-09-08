@@ -18,44 +18,10 @@ public class Starter {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		
-		
-		
+	public static void main(String[] args) {		
+
 		/*
-		 * this here is using native LaF. 
-		 */
-		/*try {
-			javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e) {
-            
-        }
-		new ManagerFrame().setVisible(true);*/
-		
-		
-		/*
-		 * 
-		 * Using seaglass LaF (seems to be a little buggy, sadly, as its very nice LaF)
-		 * http://code.google.com/p/seaglass/
-		 * 
-		 */
-		
-		
-		/*
-		try {
-			javax.swing.UIManager.setLookAndFeel("com.seaglasslookandfeel.SeaGlassLookAndFeel");
-		} catch (ClassNotFoundException e) {
-			
-		} catch (InstantiationException e) {
-		} catch (IllegalAccessException e) {
-		} catch (UnsupportedLookAndFeelException e) {
-		}
-		*/
-		/*
-		 * 
-		 * using Nibums as LaF
-		 * 
+		 * using Nimbus as LaF
 		 */
 		
 		onFirstStart();
