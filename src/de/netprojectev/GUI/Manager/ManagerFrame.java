@@ -10,6 +10,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +19,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.TableColumn;
@@ -60,6 +62,8 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private PreferencesHandler preferencesHandler;
 	private JComboBox<String> comboBox;
 	
+	private ManagerFrame instance;
+	
     public ManagerFrame() {
         
     	preferencesHandler = PreferencesHandler.getInstance();
@@ -80,6 +84,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		} catch (IOException e) {
 			log.log(Level.SEVERE, "Error during loading settings and files.", e);
 		}
+        instance = this;
         
     }
 
@@ -888,7 +893,34 @@ public class ManagerFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jMenuItemPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPrefsActionPerformed
-		new PreferencesFrame(this).setVisible(true);
+		
+    	//TODO testing generating prefs with a swing worker, to fix the buggy ticker behavior
+    	
+    	new SwingWorker<PreferencesFrame, Void>() {
+		    @Override
+		    public PreferencesFrame doInBackground() {
+		    	return new PreferencesFrame(instance);
+		    }
+
+		    @Override
+		    public void done() {
+		    	try {
+					if(get() != null) {
+						get().setVisible(true);
+					}
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	
+		    }
+		}.execute();
+    	
+    	
+    	
     }//GEN-LAST:event_jMenuItemPrefsActionPerformed
 
     /**
@@ -1291,8 +1323,11 @@ public class ManagerFrame extends javax.swing.JFrame {
 	 * @param timeleft time in seconds left until next event
 	 */
     public void refreshTimeleftLbl(int timeleft) {
-    	
-    	lblTimeleft.setText("Timeleft: " + Misc.convertFromSecondsToTimeString(timeleft));
+    	if(timeleft < 3600) {
+    		lblTimeleft.setText("Timeleft: " + Misc.convertFromSecondsToTimeString(timeleft, false));
+    	} else {
+    		lblTimeleft.setText("Timeleft: " + Misc.convertFromSecondsToTimeString(timeleft, true));
+    	}
     }
     
     /**

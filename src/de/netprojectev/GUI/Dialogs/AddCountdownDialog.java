@@ -12,6 +12,7 @@ import javax.swing.SpinnerDateModel;
 
 import de.netprojectev.Media.Countdown;
 import de.netprojectev.Media.MediaFile;
+import de.netprojectev.MediaHandler.DisplayHandler;
 import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
 
@@ -226,19 +227,20 @@ public class AddCountdownDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButtonTimeInMinutesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonTimeInMinutesActionPerformed
-        
-    	jRadioButtonFinishDate.setSelected(false);
-    	jSpinnerTime.setEnabled(false);
-    	jTextFieldRuntimeInMinutes.setEnabled(true);
-    	
+    	if(!jRadioButtonTimeInMinutes.isSelected()) {
+    		jRadioButtonFinishDate.setSelected(false);
+        	jSpinnerTime.setEnabled(false);
+        	jTextFieldRuntimeInMinutes.setEnabled(true);
+    	}
     	
     }//GEN-LAST:event_jRadioButtonTimeInMinutesActionPerformed
 
     private void jRadioButtonFinishDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonFinishDateActionPerformed
-    	
-    	jRadioButtonTimeInMinutes.setSelected(false);
-    	jTextFieldRuntimeInMinutes.setEnabled(false);
-    	jSpinnerTime.setEnabled(true);
+    	if(!jRadioButtonFinishDate.isSelected()) {
+    		jRadioButtonTimeInMinutes.setSelected(false);
+        	jTextFieldRuntimeInMinutes.setEnabled(false);
+        	jSpinnerTime.setEnabled(true);
+    	}
     	
     }//GEN-LAST:event_jRadioButtonFinishDateActionPerformed
 
@@ -271,7 +273,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 	private void addAndStartCountdown() {
 		MediaFile countdown = addCountdown();
 		if(countdown != null) {
-			countdown.show();
+			DisplayHandler.getInstance().show(countdown);
 			dispose();
 		}
 	}

@@ -19,7 +19,6 @@ import de.netprojectev.Misc.Misc;
  *
  */
 public class Countdown extends MediaFile {
-	//TODO very buggy file removing of non countdowns after serial and deserial a countdown
 
 	/**
 	 * 
@@ -34,9 +33,7 @@ public class Countdown extends MediaFile {
 	private Timer countdownTimer;
 	private long secondsToZero;
 	private Date finishDate;
-	
-	//TODO Bug, countdown current status arent showing up
-	
+		
 	public Countdown(String name, int minutesToZero) {
 		super(name, Constants.NO_PRIORITY);
 		timeString = "";
@@ -62,7 +59,7 @@ public class Countdown extends MediaFile {
 			if(this.secondsToZero > 0) {
 				displayMainComp.setCountdownToDraw(this);
 				startCountdown();
-			} else {
+			} else {				
 				status.setIsCurrent(false);
 				finished = true;
 				started = true;
@@ -87,7 +84,7 @@ public class Countdown extends MediaFile {
 			public void actionPerformed(ActionEvent e) {
 				
 				secondsToZero--;
-				timeString = Misc.convertFromSecondsToTimeString((int) secondsToZero);
+				timeString = Misc.convertFromSecondsToTimeString((int) secondsToZero, true);
 				displayMainComp.repaint();
 				if(secondsToZero <= 0) {
 					finished = true;

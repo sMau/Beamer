@@ -33,18 +33,12 @@ public class LiveTicker {
 	private DisplayMainFrame display;
 
 	private LinkedList<TickerTextElement> textElements;
-	private int speed;
 	private String completeTickerText;
 	
 	
 	private LiveTicker() {
 		
 		this.textElements = new LinkedList<TickerTextElement>();
-		try {
-			this.speed = Integer.parseInt(PreferencesHandler.getInstance().getProperties().getProperty(Constants.PROP_TICKER_SPEED));
-		} catch (NumberFormatException e) {
-			log.log(Level.SEVERE, "Error parsing integer to string", e);
-		}
 		this.completeTickerText = "";
 		this.display = DisplayDispatcher.getInstance().getDisplayFrame();
 			
@@ -70,7 +64,7 @@ public class LiveTicker {
 		if(!textElements.contains(element)) {
 			textElements.add(element);
 			if(textElements.size() == 1) {
-				display.startLiveTicker(this.speed);
+				display.getTickerComponent().startLiveTicker();
 			}
 		}
 		refreshDataModel();
@@ -99,7 +93,7 @@ public class LiveTicker {
 			textElements.remove(elements[i]);	
 		}
 		if(textElements.isEmpty()) {
-			display.stopLiveTicker();
+			display.getTickerComponent().stopLiveTicker();
 		}
 		refreshDataModel();
 		
@@ -144,12 +138,7 @@ public class LiveTicker {
 	public void setTextElements(LinkedList<TickerTextElement> textElements) {
 		this.textElements = textElements;
 	}
-	public int getSpeed() {
-		return speed;
-	}
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
+
 	public String getCompleteTickerText() {
 		return completeTickerText;
 	}

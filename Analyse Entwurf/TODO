@@ -23,6 +23,10 @@ provide countdown with text around
 
 Improvements
 
+10.09.12
+IMprove properties architecture. Espacially using the preferenceshandler class to handle all the write and read ops to the props object.
+Classes which want a property only ask the preferenceHandler instead of handling the props reading ops themselves
+
 03.09.12
 add logging in the complete program
 

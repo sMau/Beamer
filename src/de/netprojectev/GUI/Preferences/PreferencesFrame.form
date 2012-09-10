@@ -387,9 +387,6 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="50"/>
               </Properties>
-              <AuxValues>
-                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTextFieldTickerSpeed.getDocument().addDocumentListener(new DocumentListener() {@Override&#xa;&#x9;&#x9;&#x9;public void insertUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;tickerSpeedChanged();&#xa;&#x9;&#x9;&#x9;&#x9;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void removeUpdate(DocumentEvent e) {&#xa;&#x9;&#x9;&#x9;&#x9;tickerSpeedChanged();&#xa;&#xa;&#x9;&#x9;&#x9;}&#xa;&#xa;&#x9;&#x9;&#x9;@Override&#xa;&#x9;&#x9;&#x9;public void changedUpdate(DocumentEvent e) {&#xa;                                tickerSpeedChanged();&#xa;&#xa;&#x9;&#x9;&#x9;}});"/>
-              </AuxValues>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
@@ -442,9 +439,6 @@
                 </Property>
                 <Property name="selectedIndex" type="int" value="2"/>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxFontSizeTickerActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="jComboBoxFontTypeTicker">
               <Properties>
@@ -452,9 +446,6 @@
                   <StringArray count="0"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxFontTypeTickerActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonTickerColorPicker">
               <Events>

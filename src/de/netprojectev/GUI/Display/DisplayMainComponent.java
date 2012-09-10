@@ -144,7 +144,6 @@ public class DisplayMainComponent extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		if(countdownShowing) {
-			//TODO centering isnt correct, cause of baseline point is interesting
 			Graphics2D tmpG2D = (Graphics2D) g.create();
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
@@ -153,15 +152,13 @@ public class DisplayMainComponent extends JComponent {
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 	        
-
 	        tmpG2D.setFont(countdownFont); 
 	        tmpG2D.setColor(countdownColor);
 	        
 			String toDraw =	countdown.getTimeString(); 
-			int stringWidth = getFontMetrics(getFont()).stringWidth(toDraw);
-			int stringHeight = getFontMetrics(getFont()).getHeight();
+			int stringWidth = tmpG2D.getFontMetrics(countdownFont).stringWidth(toDraw);
 			
-			tmpG2D.drawString(toDraw, (getWidth() - stringWidth)/2,(getHeight() - stringHeight)/2);
+			tmpG2D.drawString(toDraw, getWidth()/2 - stringWidth/2 , getHeight()/2);
 			tmpG2D.dispose();
 			
 		} else {

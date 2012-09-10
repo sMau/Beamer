@@ -44,8 +44,6 @@ public class Starter {
 	    	log.log(java.util.logging.Level.SEVERE, null, ex);
 	    }
 		
-		
-
 		SwingUtilities.invokeLater(new Runnable() {
 
 	        public void run() {

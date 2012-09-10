@@ -26,7 +26,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 	 */
 	private static final long serialVersionUID = 863589702184282724L;
 	
-	private Timer liveTickerTimer;
+	
 	private Boolean fullscreen;
 	private int screenNumberDisplayFrame; 
 	
@@ -34,23 +34,9 @@ public class DisplayMainFrame extends javax.swing.JFrame {
         initComponents();
         fullscreen = false;
         screenNumberDisplayFrame = 0;
-        startLiveTicker(Integer.parseInt(PreferencesHandler.getInstance().getProperties().getProperty(Constants.PROP_TICKER_SPEED)));
     }
 
-    public void startLiveTicker(int tickerUpdateInterval) {
-    	liveTickerTimer = new Timer(tickerUpdateInterval, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				tickerComponent.repaint();
-			}
-
-		});
-    	liveTickerTimer.start(); 
-		
-	}
     
-    public void stopLiveTicker() {
-    	liveTickerTimer.stop();
-    }
     
     /**
      * Setting the display frame as fullscreen exclusive window
@@ -221,11 +207,5 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 		this.displayMainComponent = displayMainComponent;
 	}
 
-	public Timer getLiveTickerTimer() {
-		return liveTickerTimer;
-	}
-
-	public void setLiveTickerTimer(Timer liveTickerTimer) {
-		this.liveTickerTimer = liveTickerTimer;
-	}
+	
 }

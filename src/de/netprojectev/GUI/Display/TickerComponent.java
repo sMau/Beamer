@@ -3,8 +3,14 @@ package de.netprojectev.GUI.Display;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JComponent;
+import javax.swing.Timer;
+
+import de.netprojectev.Misc.Constants;
+import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
  * GUI component to draw the live ticker string.
@@ -21,19 +27,59 @@ public class TickerComponent extends JComponent {
 	
 	private int toDrawStringWidth;
 	
+	private int tickerSpeed;
+	
 	private String toDraw1;
 	private String toDraw2;
 	
+	private Timer liveTickerTimer;
+	
 	//TODO fix the behavior when removing the last element from the list. it proceeds slower in this case instead of showing no string
-
-	//TODO font changing (at least color) when changing color of the countdown -> propably bug
 	
 	public TickerComponent() {
 		super();
 		posOfString1 = getWidth();
 		posOfString2 = getWidth();
+		
+		try {
+			tickerSpeed = Integer.parseInt(PreferencesHandler.getInstance().getProperties().getProperty(Constants.PROP_TICKER_SPEED));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+        startLiveTicker();
+
+		
 	}
 	
+	/**
+	 * creates a new Swing Timer with the given update interval and starts the timer.
+	 * The timer refreshes the ticker component every x milliseconds.
+	 */
+	public void startLiveTicker() {
+
+		liveTickerTimer = new Timer(tickerSpeed, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				repaint(0, 0, getWidth(), getHeight()); //TODO testing repainting only the visible area
+			}
+		});
+    	liveTickerTimer.start();
+    	
+	}
+    
+	/**
+	 * stops the timer
+	 */
+    public void stopLiveTicker() {
+    	liveTickerTimer.stop();
+    }
+	
+    public void updateLiveTickerAttributes() {
+    	
+    	//TODO implement, reading attr from props object
+    }
+    
 	/**
 	 * Set the ticker string to draw on the component.
 	 * A GUI update is invoked automatically after setting the new string.
@@ -46,6 +92,9 @@ public class TickerComponent extends JComponent {
 		} else if(tickerString != null) {
 			toDraw1 = " ";
 			toDraw2 = " ";
+			stopLiveTicker();
+		} else {
+			stopLiveTicker();
 		}
 	}
 	
@@ -57,7 +106,7 @@ public class TickerComponent extends JComponent {
 	}
 	
 	/**
-	 * generates the two strings needed for a gapless ticker.
+	 * generates the two strings needed for a gapless ticker run.
 	 */
 	private void generateDrawingStrings() {
 
@@ -93,14 +142,12 @@ public class TickerComponent extends JComponent {
 			Graphics2D tmpG2D = (Graphics2D) g.create();
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 			
 	        tmpG2D.drawString(toDraw1, posOfString1, 55);
 	        tmpG2D.drawString(toDraw2, posOfString2, 55);
 	        tmpG2D.dispose();
+		} else {
+			stopLiveTicker();
 		}
 	}
 
