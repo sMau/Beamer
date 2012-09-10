@@ -20,7 +20,7 @@ public class TickerComponent extends JComponent {
 	private int posOfString2;
 	
 	private int toDrawStringWidth;
-
+	
 	private String toDraw1;
 	private String toDraw2;
 	
@@ -41,7 +41,7 @@ public class TickerComponent extends JComponent {
 	 */
 	public void setTickerString(String tickerString) {
 		this.tickerString = tickerString;
-		if(tickerString != null && tickerString != "") {
+		if(tickerString != null && !tickerString.equals("")) {
 			generateDrawingStrings();
 		} else if(tickerString != null) {
 			toDraw1 = " ";
@@ -79,7 +79,7 @@ public class TickerComponent extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 
-		if (toDraw1 != null && toDraw2 != null && toDraw1 != "" && toDraw2 != "") {
+		if (toDraw1 != null && toDraw2 != null && !toDraw1.equals("") && !toDraw2.equals("")) {
 			posOfString1--;
 			posOfString2--;
 			//if last char of the string is not visible anymore
@@ -103,4 +103,5 @@ public class TickerComponent extends JComponent {
 	        tmpG2D.dispose();
 		}
 	}
+
 }

@@ -20,7 +20,7 @@ import de.netprojectev.Misc.Misc;
  */
 public class PreferencesHandler {
 
-	private static PreferencesHandler instance = new PreferencesHandler();
+	private static volatile PreferencesHandler instance = new PreferencesHandler();
 	
 	private PreferencesFrame preferencesFrame;
 	private ManagerFrame managerFrame;
@@ -40,7 +40,7 @@ public class PreferencesHandler {
 		
 	}
 	
-	public static PreferencesHandler getInstance() {
+	public synchronized static PreferencesHandler getInstance() {
 		
 		if(instance == null) {
 			instance = new PreferencesHandler();
@@ -67,8 +67,8 @@ public class PreferencesHandler {
 		properties.setProperty(Constants.PROP_TICKER_SPEED, "" + preferencesFrame.getTickerSpeed());
 		properties.setProperty(Constants.PROP_COUNTDOWN_FONTCOLOR, preferencesFrame.getCountdownFontColor());
 		properties.setProperty(Constants.PROP_COUNTDOWN_FONTSIZE, preferencesFrame.getCountdownFontSize());
-		properties.setProperty(Constants.PROP_COUNTDOWN_FONTTYPE, "" + preferencesFrame.getCountdownFontType());
-
+		properties.setProperty(Constants.PROP_COUNTDOWN_FONTTYPE, preferencesFrame.getCountdownFontType());
+		
 		Misc.savePropertiesToDisk(properties);
 		
 	}

@@ -20,6 +20,10 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class LiveTicker {
 
+	//TODO restarting ticker after changing font color or size or somethin like that, because its buggy afterwarsd sometimes
+	
+	//TODO Bug, when opening the prefs live ticker gets corruptes drawing the strings overlapping
+	
 	private static final Logger log = Misc.getLoggerAll(LiveTicker.class.getName());
 	
 	private static LiveTicker instance = new LiveTicker();

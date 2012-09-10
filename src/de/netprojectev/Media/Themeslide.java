@@ -1,11 +1,7 @@
 package de.netprojectev.Media;
 
-import java.awt.Point;
 import java.io.File;
 
-import javax.swing.JTextPane;
-
-import de.netprojectev.GUI.Themeslide.TextPanePanel;
 import de.netprojectev.Misc.Constants;
 
 /**

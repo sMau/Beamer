@@ -24,7 +24,7 @@ public class DisplayHandler {
 
 	private static final Logger log = Logger.getLogger(DisplayHandler.class.getName());
 	
-	private static DisplayHandler instance = new DisplayHandler();
+	private static volatile DisplayHandler instance = new DisplayHandler();
 
 	private MediaHandler mediaHandler;
 	private DisplayDispatcher displayDispatcher;
@@ -35,13 +35,11 @@ public class DisplayHandler {
 	private MediaFile currentMediaFile; // null wenn kein Medium gezeigt wird.
 	private MediaFile historyFile; //unused siehe showFileAt Methode
 	private Timer automodusTimer;
-	private Boolean noFileShowed;
+	private boolean noFileShowed;
 	
 	private int timeleft;
 	
 	private Timer refreshTimeLeftTimer;
-	
-	//TODO very buggy file removing of non countdowns after serial and deserial a countdown
 
 	/**
 	 * Inner class to handle auto mode timer
@@ -196,8 +194,6 @@ public class DisplayHandler {
 	 * @param file
 	 */
 	public void show(MediaFile file) {
-		
-		MediaFile tmpCountdown = currentMediaFile;
 		
 		if(currentMediaFile != null && currentMediaFile != file) {
 			currentMediaFile.getStatus().setIsCurrent(false);

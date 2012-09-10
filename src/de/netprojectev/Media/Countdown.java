@@ -6,9 +6,9 @@ import java.util.Date;
 
 import javax.swing.Timer;
 
+
 import de.netprojectev.GUI.Display.DisplayMainComponent;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
-import de.netprojectev.MediaHandler.DisplayHandler;
 import de.netprojectev.Misc.Constants;
 import de.netprojectev.Misc.Misc;
 
@@ -28,12 +28,14 @@ public class Countdown extends MediaFile {
 
 	private transient DisplayMainComponent displayMainComp;
 	
-	
+	private boolean started = false;
 	private boolean finished = false;
 	private String timeString;
 	private Timer countdownTimer;
 	private long secondsToZero;
 	private Date finishDate;
+	
+	//TODO Bug, countdown current status arent showing up
 	
 	public Countdown(String name, int minutesToZero) {
 		super(name, Constants.NO_PRIORITY);
@@ -55,9 +57,17 @@ public class Countdown extends MediaFile {
 	@Override
 	public void show() {
 		if(!finished) {
+			started = true;
 			convertDateToSeconds();
-			displayMainComp.setCountdownToDraw(this);
-			startCountdown();
+			if(this.secondsToZero > 0) {
+				displayMainComp.setCountdownToDraw(this);
+				startCountdown();
+			} else {
+				status.setIsCurrent(false);
+				finished = true;
+				started = true;
+			}
+			
 		}
 		
 	}
@@ -81,6 +91,7 @@ public class Countdown extends MediaFile {
 				displayMainComp.repaint();
 				if(secondsToZero <= 0) {
 					finished = true;
+					status.setIsCurrent(false);
 					countdownTimer.stop();
 				}
 				
@@ -113,6 +124,18 @@ public class Countdown extends MediaFile {
 
 	public long getSecondsToZero() {
 		return secondsToZero;
+	}
+
+	public boolean isStarted() {
+		return started;
+	}
+
+	public void setStarted(boolean started) {
+		this.started = started;
+	}
+
+	public boolean isFinished() {
+		return finished;
 	}
 
 }

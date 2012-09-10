@@ -1,16 +1,21 @@
 package de.netprojectev.GUI.Display;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.io.File;
+import java.util.Properties;
 
 import javax.swing.JComponent;
 import javax.swing.SwingWorker;
 
 import de.netprojectev.Media.Countdown;
+import de.netprojectev.Misc.Constants;
+import de.netprojectev.Preferences.PreferencesHandler;
 /**
  * 
  * GUI Component to draw images and themeslide background images
@@ -25,7 +30,9 @@ public class DisplayMainComponent extends JComponent {
 	private boolean countdownShowing = false;
 	
 	private Countdown countdown;
-	
+	private Font countdownFont;
+	private Color countdownColor;
+		
 	private DisplayMainComponent instance; 
 	
 	//TODO improve scaling with progressive bilinear scaling (see filthy rich clients)
@@ -36,6 +43,33 @@ public class DisplayMainComponent extends JComponent {
 	public DisplayMainComponent() {
 		super();
 		this.instance = this;
+		
+		/*
+		 * TODO
+		 * at the moment simply waiting until properties are available, but this is only a workaround.
+		 */
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(3000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				updateCountdownFont();
+				
+			}
+		}).start();
+		
+	}
+
+	public void updateCountdownFont() {
+
+		Properties props = PreferencesHandler.getInstance().getProperties();
+		countdownFont = new Font(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE)));
+		countdownColor = new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR)));
 
 	}
 	
@@ -118,9 +152,15 @@ public class DisplayMainComponent extends JComponent {
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+	        
+
+	        tmpG2D.setFont(countdownFont); 
+	        tmpG2D.setColor(countdownColor);
+	        
 			String toDraw =	countdown.getTimeString(); 
 			int stringWidth = getFontMetrics(getFont()).stringWidth(toDraw);
 			int stringHeight = getFontMetrics(getFont()).getHeight();
+			
 			tmpG2D.drawString(toDraw, (getWidth() - stringWidth)/2,(getHeight() - stringHeight)/2);
 			tmpG2D.dispose();
 			

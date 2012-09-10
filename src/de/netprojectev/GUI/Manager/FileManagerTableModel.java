@@ -25,6 +25,8 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class FileManagerTableModel extends AbstractTableModel {
     
+	//TODO sometimes (i think after deserialiazation) the prios arent selectable in the table. after adding a new one the old ones were present again too
+	
 	private static final long serialVersionUID = 122422256133966805L;
 	private MediaHandler mediaHandler;
 	private PreferencesHandler preferencesHandler;

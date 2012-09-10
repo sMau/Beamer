@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Manager.FileManagerTableModel;
 import de.netprojectev.GUI.Manager.ManagerFrame;
+import de.netprojectev.Media.Countdown;
 import de.netprojectev.Media.ImageFile;
 import de.netprojectev.Media.MediaFile;
 import de.netprojectev.Media.Themeslide;
@@ -28,9 +29,12 @@ public class MediaHandler {
 	private LinkedList<MediaFile> mediaFiles;
 	
 	private ManagerFrame managerFrame;
+	
+	private int countdownCounter;
 
 	private MediaHandler() {
 		
+		countdownCounter = 0;
 		mediaFiles = new LinkedList<MediaFile>();
 		displayHandler = DisplayHandler.getInstance();
 		displayHandler.setMediaHandler(this);
@@ -61,6 +65,9 @@ public class MediaHandler {
 			if (!mediaFiles.contains(files[i])) {
 				log.log(Level.INFO, "media file added - " + files[i].getName());
 				mediaFiles.add(files[i]);
+				if(files[i] instanceof Countdown) {
+					countdownCounter++;
+				}
 			} else {
 				log.log(Level.INFO, "media file already in list - " + files[i].getName());
 			}
@@ -181,6 +188,7 @@ public class MediaHandler {
 	 */
 	public void refreshDataModel() {
 		log.log(Level.INFO, "updating table model");
+		checkForUnuseableCountdowns();
 		if(managerFrame != null) {
 			((FileManagerTableModel) managerFrame.getjTableFileManager().getModel()).updateModel();
 		}
@@ -205,6 +213,35 @@ public class MediaHandler {
 	}
 
 
+	private void checkForUnuseableCountdowns() {
+		if(countdownCounter > 0) {
+			MediaFile[] files = new MediaFile[1];
+			for(int i = 0; i < mediaFiles.size(); i++) {
+				if(mediaFiles.get(i) instanceof Countdown) {
+					Countdown countdown = (Countdown) mediaFiles.get(i);
+					if(countdown.getStatus() != null && countdown.getStatus().getIsCurrent() != null) {
+						if(!countdown.getStatus().getIsCurrent()) {
+							if(countdown.isStarted() || countdown.isFinished()) {
+								files[0] = countdown;
+								remove(files, false);
+								countdownCounter--;
+							}
+							
+						}
+					}
+
+				}
+			}
+			
+		}
+
+	}
+	
+	public void increaseCountdownCounter() {
+		countdownCounter++;
+	}
+	
+	
 	public LinkedList<MediaFile> getMediaFiles() {
 		return this.mediaFiles;
 	}
@@ -227,6 +264,5 @@ public class MediaHandler {
 	public void setDisplayHandler(DisplayHandler displayHandler) {
 		this.displayHandler = displayHandler;
 	}
-	
 
 }

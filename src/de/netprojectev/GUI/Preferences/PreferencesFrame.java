@@ -156,7 +156,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         Color bg2;
 		try {
-			bg2 = new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR)));
+			bg2 = new Color(Integer.parseInt(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR)));
 	        jButtonThemeslideDefaultColor.setBackground(bg2);
 	        jButtonThemeslideDefaultColor.setForeground(bg2);
 		} catch (NumberFormatException e1) {
@@ -1231,9 +1231,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
     
     
     private void applyPropertiesAsNeeded() {
-		
-    	
-		
+
+    	DisplayDispatcher.getInstance().getDisplayFrame().getDisplayMainComponent().updateCountdownFont();
 	}
 
 	/**

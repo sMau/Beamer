@@ -61,14 +61,15 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private JComboBox<String> comboBox;
 	
     public ManagerFrame() {
-        mediaHandler = MediaHandler.getInstance();
+        
+    	preferencesHandler = PreferencesHandler.getInstance();
+    	
+    	mediaHandler = MediaHandler.getInstance();
         mediaHandler.setManagerFrame(this);
         
         liveTicker = LiveTicker.getInstance();
         liveTicker.setManagerFrame(this);
-        
-        preferencesHandler = PreferencesHandler.getInstance();
-        
+
         initComponents();
         setLocation(Misc.currentMousePosition());
 
@@ -1098,7 +1099,9 @@ public class ManagerFrame extends javax.swing.JFrame {
 
             public void run() {
             	for(int i = 0; i < selectedRows.length; i++) {
-            		getjTableFileManager().addRowSelectionInterval(selectedRows[i], selectedRows[i]);
+            		if(getjTableFileManager().getRowCount() > selectedRows[i]) {
+            			getjTableFileManager().addRowSelectionInterval(selectedRows[i], selectedRows[i]);
+            		}
             	}
             }
         });
@@ -1115,7 +1118,9 @@ public class ManagerFrame extends javax.swing.JFrame {
 
             public void run() {
             	for(int i = 0; i < selectedRows.length; i++) {
-            		getjTableFileManager().addRowSelectionInterval(selectedRows[i], selectedRows[i]);
+            		if(getjTableFileManager().getRowCount() > selectedRows[i]) {
+            			getjTableFileManager().addRowSelectionInterval(selectedRows[i], selectedRows[i]);
+            		}
             	}
             }
         });
@@ -1152,7 +1157,9 @@ public class ManagerFrame extends javax.swing.JFrame {
 
                 public void run() {
                 	for(int i = 0; i < selectedRows.length; i++) {
-                		getjTableFileManager().addRowSelectionInterval(selectedRows[i], selectedRows[i]);
+                		if(getjTableFileManager().getRowCount() > selectedRows[i]) {
+                			getjTableFileManager().addRowSelectionInterval(selectedRows[i], selectedRows[i]);
+                		}
                 	}
                 }
             });
@@ -1316,6 +1323,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     			}
     			if(tmpMedia.get(i) instanceof Countdown) {
     				((Countdown) tmpMedia.get(i)).setDisplayMainComp(DisplayDispatcher.getInstance().getDisplayFrame().getDisplayMainComponent());
+    				mediaHandler.increaseCountdownCounter();
     			}
     			
     			mediaHandler.add(tmpMedia.toArray(new MediaFile[0]));

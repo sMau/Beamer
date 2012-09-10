@@ -1,7 +1,5 @@
 package de.netprojectev.Media;
 
-import java.util.Date;
-
 import de.netprojectev.Misc.Constants;
 
 /**
