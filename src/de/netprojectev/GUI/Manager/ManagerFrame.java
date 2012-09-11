@@ -1096,6 +1096,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         if (exit == JOptionPane.YES_OPTION) {	
         	try {
 				saveToDisk();
+				ImageFile.threadPool.shutdownNow();
 			} catch (IOException e) {
 				log.log(Level.SEVERE, "Error during saving settings and files.", e);
 			}
@@ -1351,7 +1352,8 @@ public class ManagerFrame extends javax.swing.JFrame {
     			tmpMedia.get(i).setStatus(new Status());
     			tmpMedia.get(i).setDisplay(DisplayDispatcher.getInstance().getDisplayFrame());
     			if(tmpMedia.get(i) instanceof ImageFile) {
-    				((ImageFile) tmpMedia.get(i)).generatePreview();
+    				((ImageFile) tmpMedia.get(i)).createNewImageInstances();
+    				
     			} 
     			if(tmpMedia.get(i) instanceof Themeslide) {
     				((Themeslide) tmpMedia.get(i)).createNewImageFileRepresentation();

@@ -49,8 +49,9 @@ public class TickerComponent extends JComponent {
 	
 	public TickerComponent() {
 		super();
-		toDraw1 = "";
-		toDraw2 = "";
+		toDraw1 = " ";
+		toDraw2 = " ";
+		tickerString = " ";
 		posOfString1 = getWidth();
 		posOfString2 = getWidth();
 		

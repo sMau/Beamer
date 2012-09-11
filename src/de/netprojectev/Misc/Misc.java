@@ -1,8 +1,11 @@
 package de.netprojectev.Misc;
 
+import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,6 +26,8 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 import javax.swing.JOptionPane;
+
+import org.jdesktop.swingx.util.GraphicsUtilities;
 
 import de.netprojectev.LiveTicker.LiveTicker;
 import de.netprojectev.LiveTicker.TickerTextElement;
@@ -382,6 +387,37 @@ public class Misc {
 			loggerFileHandlerCreated = true;
 		}
 		
+	}
+	
+	/**
+	 * This method scales a given {@link BufferedImage} and returns the scaled instance of it.
+	 * This method is written in optimizing performance without big losings in quality.
+	 * Especially downscaling is very highly optimized due to the use of {@link GraphicsUtilities} 
+	 * 
+	 * @param imageToScale the {@link BufferedImage} that should be scaled
+	 * @param newWidth the new width
+	 * @param newHeight the new height
+	 * @return
+	 */
+	public static BufferedImage getScaledImageInstanceFast(BufferedImage imageToScale, int newWidth, int newHeight) {
+		
+		BufferedImage scaledImage = null;
+		
+		int oldWidth = imageToScale.getWidth();
+		int oldHeight = imageToScale.getHeight();
+		
+		if(oldWidth > newWidth && oldHeight > newHeight) {
+			scaledImage = GraphicsUtilities.createThumbnail(imageToScale, newWidth, newHeight);
+		} else {
+			
+			scaledImage = GraphicsUtilities.createCompatibleImage(newWidth, newHeight);
+			Graphics2D g2 = scaledImage.createGraphics();
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+			g2.drawImage(imageToScale, 0, 0, newWidth, newHeight, null);
+			g2.dispose();
+		}
+		
+		return scaledImage;
 	}
 	
 	

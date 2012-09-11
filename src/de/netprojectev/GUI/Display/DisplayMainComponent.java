@@ -6,12 +6,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.awt.Toolkit;
-import java.io.File;
 import java.util.Properties;
 
 import javax.swing.JComponent;
-import javax.swing.SwingWorker;
 
 import de.netprojectev.Media.Countdown;
 import de.netprojectev.Misc.Constants;
@@ -33,21 +30,11 @@ public class DisplayMainComponent extends JComponent {
 	private Font countdownFont;
 	private Color countdownColor;
 		
-	private DisplayMainComponent instance; 
-	
-	//TODO improve scaling with progressive bilinear scaling (see filthy rich clients)
 	//TODO set a background for this component ( e.g. many 4s logos) that there isnt any grey space when showing a 4:3 resolution image
-	
-	//TODO performance improve to this component here, furthermore add swingworker as handler for this task
-	
+
 	public DisplayMainComponent() {
 		super();
-		this.instance = this;
-		
-		/*
-		 * TODO
-		 * at the moment simply waiting until properties are available, but this is only a workaround.
-		 */
+
 		new Thread(new Runnable() {
 			
 			@Override
@@ -77,54 +64,11 @@ public class DisplayMainComponent extends JComponent {
 	 * 
 	 * @param file the image file to draw on component
 	 */
-	public void setImageToDraw(final File file) {
-	
+	public void setImageToDraw(final Image compImage) {
 		
-		/*countdownShowing = false;
-		image = Toolkit.getDefaultToolkit().getImage(file.getAbsolutePath());
-		if (image != null) {
-			
-			int imW = image.getWidth(null);
-			int imH = image.getHeight(null);
-			
-			if(getWidth()/getHeight() <= imW/imH) {
-				image = image.getScaledInstance(-1, (int) this.getBounds().getHeight(), Image.SCALE_SMOOTH);
-			} else {
-				image = image.getScaledInstance((int) this.getBounds().getWidth(), -1, Image.SCALE_SMOOTH);
-			}
-			repaint();
-		}*/
-		
-		//testing with swingworker painting
-		
-		new SwingWorker<Void, Void>() {
-		    @Override
-		    public Void doInBackground() {
-		    	countdownShowing = false;
-				image = Toolkit.getDefaultToolkit().getImage(file.getAbsolutePath());
-				if (image != null) {
-					int imW = image.getWidth(null);
-					int imH = image.getHeight(null);
-					
-					if(getWidth()/getHeight() <= imW/imH) {
-						image = image.getScaledInstance(-1, (int) instance.getBounds().getHeight(), Image.SCALE_SMOOTH);
-					} else {
-						image = image.getScaledInstance((int) instance.getBounds().getWidth(), -1, Image.SCALE_SMOOTH);
-					}
-				
-				}
-
-				return null;
-		    }
-
-		    @Override
-		    public void done() {
-		    	if(image != null) {
-		    		
-		    		instance.repaint();
-		    	}
-		    }
-		}.execute();
+		countdownShowing = false;
+		this.image = compImage;
+		repaint(0,0,getWidth(), getHeight());
 
 	}
 	
@@ -146,19 +90,11 @@ public class DisplayMainComponent extends JComponent {
 		if(countdownShowing) {
 			Graphics2D tmpG2D = (Graphics2D) g.create();
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-	        tmpG2D.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-	        
+	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);	        
 	        tmpG2D.setFont(countdownFont); 
 	        tmpG2D.setColor(countdownColor);
-	        
-			String toDraw =	countdown.getTimeString(); 
-			int stringWidth = tmpG2D.getFontMetrics(countdownFont).stringWidth(toDraw);
 			
-			tmpG2D.drawString(toDraw, getWidth()/2 - stringWidth/2 , getHeight()/2);
+			tmpG2D.drawString(countdown.getTimeString(), getWidth()/2 - tmpG2D.getFontMetrics(countdownFont).stringWidth(countdown.getTimeString())/2 , getHeight()/2);
 			tmpG2D.dispose();
 			
 		} else {

@@ -14,7 +14,7 @@ public class Themeslide extends MediaFile {
 	
 	private ImageFile imageFileRepresentation;
 	
-	private long hashkey; // -1 means no jpg created yet
+	private long hashkey; // -1 means no png created yet
 	
 	private Theme theme;
 
@@ -33,7 +33,7 @@ public class Themeslide extends MediaFile {
 		
 		this.hashkey = hashKey;
 		
-		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".jpg", priority);
+		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".png", priority);
 	}
 	
 	@Override
@@ -44,7 +44,7 @@ public class Themeslide extends MediaFile {
 	}
 	
 	public void createNewImageFileRepresentation() {
-		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".jpg", priority);
+		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".png", priority);
 	}
 	
 	public void removeCacheFile() {

@@ -495,7 +495,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		
     		MediaFile[] themeSlides = new MediaFile[1];
     		themeSlides[0] = new Themeslide(name, priority, theme, hashKey);
-    		generateJPGRepresentation(themeSlides[0], hashKey);
+    		generatePNGRepresentation(themeSlides[0], hashKey);
     		MediaHandler.getInstance().add(themeSlides);
     		
     		((Themeslide) themeSlides[0]).createNewImageFileRepresentation();
@@ -507,18 +507,17 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     }
 
-	private void generateJPGRepresentation(MediaFile themeSlides, long hashKey) {
+	private void generatePNGRepresentation(MediaFile themeSlides, long hashKey) {
 	
     	String savePath = Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE;
     	if(!new File(savePath).isDirectory()) {
     		new File(savePath).mkdir();
     	}
     	
-    	String fileName = Long.toString(hashKey) + ".jpg";
+    	String fileName = Long.toString(hashKey) + ".png";
     	
         int w = textPaneThemeslide.getWidth();
         int h = textPaneThemeslide.getHeight();
-        float quality = 1f;
         
         BufferedImage bufImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
         Graphics2D tmpG2D = bufImage.createGraphics();
@@ -532,13 +531,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         
         textPaneThemeslide.paint(tmpG2D);
 
-        Iterator<ImageWriter> itereratorImageWriter = ImageIO.getImageWritersByFormatName("jpeg");
+        Iterator<ImageWriter> itereratorImageWriter = ImageIO.getImageWritersByFormatName("png");
         ImageWriter writer = (ImageWriter) itereratorImageWriter.next();
         ImageWriteParam writeParams = writer.getDefaultWriteParam();
-        
-        writeParams.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        writeParams.setProgressiveMode(ImageWriteParam.MODE_DEFAULT);
-        writeParams.setCompressionQuality(quality);
 
         try {
             FileImageOutputStream fos = new FileImageOutputStream(new File(savePath + fileName));

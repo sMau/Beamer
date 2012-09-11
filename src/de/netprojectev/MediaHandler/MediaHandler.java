@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import de.netprojectev.GUI.Display.DisplayMainComponent;
 import de.netprojectev.GUI.Manager.FileManagerTableModel;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.Countdown;
@@ -201,7 +202,24 @@ public class MediaHandler {
 	 */
 	public void generateNewScaledPreviews() {
 
-		log.log(Level.INFO, "generating new scaled previews");
+		log.log(Level.INFO, "generating new scaled previews, because scaling changed");
+		for(int i = 0; i < mediaFiles.size(); i++) {
+			if(mediaFiles.get(i) instanceof ImageFile) {
+				((ImageFile) mediaFiles.get(i)).forceRealodDisplayImage();
+			}
+			if(mediaFiles.get(i) instanceof Themeslide) {
+				((Themeslide) mediaFiles.get(i)).getImageFileRepresentation().forceRealodDisplayImage();
+			}
+		}
+	}
+	
+	/**
+	 * forces all {@link ImageFile} objects in the media handlers list to generate a new scaled instance for displaying.
+	 * this is useful after resizing the {@link DisplayMainComponent}.
+	 */
+	public void generateNewDisplayImages() {
+		
+		log.log(Level.INFO, "generating new display image, because scaling changed");
 		for(int i = 0; i < mediaFiles.size(); i++) {
 			if(mediaFiles.get(i) instanceof ImageFile) {
 				((ImageFile) mediaFiles.get(i)).forceRealoadPreview();
@@ -210,6 +228,8 @@ public class MediaHandler {
 				((Themeslide) mediaFiles.get(i)).getImageFileRepresentation().forceRealoadPreview();
 			}
 		}
+		
+		
 	}
 
 

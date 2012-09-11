@@ -6,14 +6,10 @@ package de.netprojectev.GUI.Display;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
-import javax.swing.Timer;
 
-import de.netprojectev.Misc.Constants;
-import de.netprojectev.Preferences.PreferencesHandler;
+import de.netprojectev.MediaHandler.MediaHandler;
 
 /**
  * GUI class frame, to store the viewing components, as the live ticker and the image and themeslide showing component.
@@ -56,6 +52,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 				myDevices[screenNumber].setFullScreenWindow(this);
 		    	//tickerComponent.refreshStringGeneration();
 		    	fullscreen = true;
+		    	MediaHandler.getInstance().generateNewDisplayImages();
 			} else {
 				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode. \nCheck the choosen screen.", "Error", JOptionPane.ERROR_MESSAGE);
 				dispose();
@@ -82,6 +79,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 			// this.setAlwaysOnTop(false);
 			pack();
     		fullscreen = false;
+    		MediaHandler.getInstance().generateNewDisplayImages();
 	    	//tickerComponent.refreshStringGeneration();
     	}
     }
