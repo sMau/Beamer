@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -1197,6 +1195,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void applyPropertiesAsNeeded() {
 
     	DisplayDispatcher.getInstance().getDisplayFrame().getDisplayMainComponent().updateCountdownFont();
+    	DisplayDispatcher.getInstance().getDisplayFrame().getTickerComponent().restartTicker();
 	}
 
 	/**

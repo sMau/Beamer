@@ -11,8 +11,6 @@ public class TestDisplay {
 		
 		DisplayMainFrame disp = new DisplayMainFrame();
 		disp.setVisible(true);
-		disp.getTickerComponent().setTickerString("TEEEEEEEEEEEEEEEEEEEEEST +++ TEEEEEEEEEEEEEEEEEST2");
-		
 
 	}
 

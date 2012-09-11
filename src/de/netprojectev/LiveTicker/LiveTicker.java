@@ -1,7 +1,6 @@
 package de.netprojectev.LiveTicker;
 
 import java.util.LinkedList;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Display.DisplayMainFrame;
@@ -19,10 +18,6 @@ import de.netprojectev.Preferences.PreferencesHandler;
  * @author samu
  */
 public class LiveTicker {
-
-	//TODO restarting ticker after changing font color or size or somethin like that, because its buggy afterwarsd sometimes
-	
-	//TODO Bug, when opening the prefs live ticker gets corruptes drawing the strings overlapping
 	
 	private static final Logger log = Misc.getLoggerAll(LiveTicker.class.getName());
 	
@@ -64,7 +59,7 @@ public class LiveTicker {
 		if(!textElements.contains(element)) {
 			textElements.add(element);
 			if(textElements.size() == 1) {
-				display.getTickerComponent().startLiveTicker();
+				display.getTickerComponent().initLiveTickerAndStart();
 			}
 		}
 		refreshDataModel();
@@ -92,9 +87,7 @@ public class LiveTicker {
 		for(int i = 0; i < elements.length; i++) {	
 			textElements.remove(elements[i]);	
 		}
-		if(textElements.isEmpty()) {
-			display.getTickerComponent().stopLiveTicker();
-		}
+
 		refreshDataModel();
 		
 	}
@@ -128,7 +121,6 @@ public class LiveTicker {
 		}
 
 		display.getTickerComponent().setTickerString(completeTickerText);
-
 	}
 
 	

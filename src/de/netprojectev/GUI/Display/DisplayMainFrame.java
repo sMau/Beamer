@@ -54,7 +54,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 			// this.setAlwaysOnTop(true);
 			if (screenNumber >= 0 && screenNumber < myDevices.length) {
 				myDevices[screenNumber].setFullScreenWindow(this);
-		    	tickerComponent.refreshStringGeneration();
+		    	//tickerComponent.refreshStringGeneration();
 		    	fullscreen = true;
 			} else {
 				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode. \nCheck the choosen screen.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -82,7 +82,7 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 			// this.setAlwaysOnTop(false);
 			pack();
     		fullscreen = false;
-	    	tickerComponent.refreshStringGeneration();
+	    	//tickerComponent.refreshStringGeneration();
     	}
     }
 
