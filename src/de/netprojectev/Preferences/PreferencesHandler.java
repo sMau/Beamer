@@ -3,6 +3,8 @@ package de.netprojectev.Preferences;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.GUI.Preferences.PreferencesFrame;
@@ -20,6 +22,8 @@ import de.netprojectev.Misc.Misc;
  */
 public class PreferencesHandler {
 
+	private static final Logger log = Misc.getLoggerAll(PreferencesHandler.class.getName());
+	
 	private static volatile PreferencesHandler instance = new PreferencesHandler();
 	
 	private PreferencesFrame preferencesFrame;
@@ -40,7 +44,7 @@ public class PreferencesHandler {
 		
 	}
 	
-	public synchronized static PreferencesHandler getInstance() {
+	public static PreferencesHandler getInstance() {
 		
 		if(instance == null) {
 			instance = new PreferencesHandler();
@@ -69,6 +73,8 @@ public class PreferencesHandler {
 		properties.setProperty(Constants.PROP_COUNTDOWN_FONTSIZE, preferencesFrame.getCountdownFontSize());
 		properties.setProperty(Constants.PROP_COUNTDOWN_FONTTYPE, preferencesFrame.getCountdownFontType());
 		
+		log.log(Level.INFO, "properties successfully updated");
+		
 		Misc.savePropertiesToDisk(properties);
 		
 	}
@@ -79,6 +85,7 @@ public class PreferencesHandler {
 	 */
 	public void addPriority(Priority prio) {
 		if(!listOfPriorities.contains(prio)) {
+			log.log(Level.INFO, "adding priority " + prio.getName());
 			listOfPriorities.add(prio);
 			refreshPrioListModel();
 		}
@@ -91,6 +98,7 @@ public class PreferencesHandler {
 	 */
 	public void addTheme(Theme theme) {
 		if(!listOfThemes.contains(theme)) {
+			log.log(Level.INFO, "adding theme " + theme.getName());
 			listOfThemes.add(theme);
 			refreshThemeListModel();
 		}
@@ -104,6 +112,7 @@ public class PreferencesHandler {
 	public void removePriorities(Priority[] prios) {
 		for (int i = 0; i < prios.length; i++) {
 			if(!prios[i].getName().equals("default")) {
+				log.log(Level.INFO, "removing priority " + prios[i].getName());
 				listOfPriorities.remove(prios[i]);
 			}
 		}
@@ -116,6 +125,7 @@ public class PreferencesHandler {
 	 */
 	public void removeThemes(Theme[] themes) {
 		for (int i = 0; i < themes.length; i++) {
+			log.log(Level.INFO, "removing theme " + themes[i].getName());
 			listOfThemes.remove(themes[i]);
 		}
 		refreshThemeListModel();

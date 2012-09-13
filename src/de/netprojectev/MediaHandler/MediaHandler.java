@@ -23,24 +23,21 @@ public class MediaHandler {
 	
 	private static final Logger log = Misc.getLoggerAll(MediaHandler.class.getName());
 
-	private static MediaHandler instance = new MediaHandler();
-
-	private DisplayHandler displayHandler;
+	private volatile static MediaHandler instance = new MediaHandler();
 	
+	private DisplayHandler displayHandler;	
 	private LinkedList<MediaFile> mediaFiles;
-	
 	private ManagerFrame managerFrame;
-	
 	private int countdownCounter;
 
+	
 	private MediaHandler() {
 		
 		countdownCounter = 0;
 		mediaFiles = new LinkedList<MediaFile>();
 		displayHandler = DisplayHandler.getInstance();
 		displayHandler.setMediaHandler(this);
-		
-		
+
 	}
 
 	public static MediaHandler getInstance() {
@@ -64,13 +61,13 @@ public class MediaHandler {
 		for (int i = 0; i < files.length; i++) {
 
 			if (!mediaFiles.contains(files[i])) {
-				log.log(Level.INFO, "media file added - " + files[i].getName());
+				log.log(Level.INFO, "media file added " + files[i].getName());
 				mediaFiles.add(files[i]);
 				if(files[i] instanceof Countdown) {
 					countdownCounter++;
 				}
 			} else {
-				log.log(Level.INFO, "media file already in list - " + files[i].getName());
+				log.log(Level.INFO, "media file already in list " + files[i].getName());
 			}
 
 		}
@@ -136,20 +133,19 @@ public class MediaHandler {
 	 * @param files files to move down
 	 */
 	public void down(MediaFile[] files) {
-		log.log(Level.INFO, "moving selected files down");
-		
+
 		int firstIndex = mediaFiles.indexOf(files[files.length - 1]) + 1 - (files.length - 1);
 		remove(files, true);
 		if(firstIndex > mediaFiles.size() - 1) {
 			for(int i = 0; i < files.length; i++) {
 				mediaFiles.addLast(files[i]);
-				log.log(Level.INFO, "moving file down: " + files[i].getName());
+				log.log(Level.INFO, "moving file down " + files[i].getName());
 			}
 			firstIndex = mediaFiles.size() - 1;
 		} else {
 			for (int i = files.length -1; i >= 0 ; i--) {
 				mediaFiles.add(firstIndex, files[i]);
-				log.log(Level.INFO, "moving file down: " + files[i].getName());
+				log.log(Level.INFO, "moving file down " + files[i].getName());
 			}
 		}
 
@@ -164,7 +160,6 @@ public class MediaHandler {
 	 * @param files files to move up
 	 */
 	public void up(MediaFile[] files) {
-		log.log(Level.INFO, "moving selected files up");
 		int firstIndex = mediaFiles.indexOf(files[0]) - 1;
 		remove(files, true);
 		
@@ -175,7 +170,7 @@ public class MediaHandler {
 		for (int i = files.length -1; i >= 0 ; i--) {
 
 			mediaFiles.add(firstIndex, files[i]);
-			log.log(Level.INFO, "moving file up: " + files[i].getName());
+			log.log(Level.INFO, "moving file up " + files[i].getName());
 
 		}
 		
@@ -188,7 +183,6 @@ public class MediaHandler {
 	 * updates the model of the jtable to update the view
 	 */
 	public void refreshDataModel() {
-		log.log(Level.INFO, "updating table model");
 		checkForUnuseableCountdowns();
 		if(managerFrame != null) {
 			((FileManagerTableModel) managerFrame.getjTableFileManager().getModel()).updateModel();
@@ -202,7 +196,7 @@ public class MediaHandler {
 	 */
 	public void generateNewScaledPreviews() {
 
-		log.log(Level.INFO, "generating new scaled previews, because scaling changed");
+		log.log(Level.INFO, "generating new scaled previews, because scaling attributes changed");
 		for(int i = 0; i < mediaFiles.size(); i++) {
 			if(mediaFiles.get(i) instanceof ImageFile) {
 				((ImageFile) mediaFiles.get(i)).forceRealodDisplayImage();
@@ -219,7 +213,7 @@ public class MediaHandler {
 	 */
 	public void generateNewDisplayImages() {
 		
-		log.log(Level.INFO, "generating new display image, because scaling changed");
+		log.log(Level.INFO, "generating new display image, because scaling attributes changed");
 		for(int i = 0; i < mediaFiles.size(); i++) {
 			if(mediaFiles.get(i) instanceof ImageFile) {
 				((ImageFile) mediaFiles.get(i)).forceRealoadPreview();
@@ -233,7 +227,11 @@ public class MediaHandler {
 	}
 
 
+	/**
+	 * checks the media files for unuseable countdowns. That means for countdowns that were already started once or ran out.
+	 */
 	private void checkForUnuseableCountdowns() {
+		log.log(Level.INFO, "removing unuseable countdowns");
 		if(countdownCounter > 0) {
 			MediaFile[] files = new MediaFile[1];
 			for(int i = 0; i < mediaFiles.size(); i++) {

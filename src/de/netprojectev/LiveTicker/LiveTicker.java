@@ -1,6 +1,7 @@
 package de.netprojectev.LiveTicker;
 
 import java.util.LinkedList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Display.DisplayMainFrame;
@@ -21,15 +22,12 @@ public class LiveTicker {
 	
 	private static final Logger log = Misc.getLoggerAll(LiveTicker.class.getName());
 	
-	private static LiveTicker instance = new LiveTicker();
+	private volatile static LiveTicker instance = new LiveTicker();
 	
 	private ManagerFrame managerFrame;
-	
 	private DisplayMainFrame display;
-
 	private LinkedList<TickerTextElement> textElements;
 	private String completeTickerText;
-	
 	
 	private LiveTicker() {
 		
@@ -47,16 +45,13 @@ public class LiveTicker {
 		return instance;
 	}
 	
-	public static void reset() {
-		instance = new LiveTicker();
-	}
-	
 	/**
 	 * Adds a new TickerTextElement to the list.
 	 * @param element the element to add.
 	 */
 	public void add(TickerTextElement element) {
 		if(!textElements.contains(element)) {
+			log.log(Level.INFO, "adding element to live ticker " + element.getText());
 			textElements.add(element);
 			if(textElements.size() == 1) {
 				display.getTickerComponent().initLiveTickerAndStart();
@@ -85,6 +80,7 @@ public class LiveTicker {
 	public void remove(TickerTextElement[] elements) {
 		
 		for(int i = 0; i < elements.length; i++) {	
+			log.log(Level.INFO, "removing element from live ticker " + elements[i].getText());
 			textElements.remove(elements[i]);	
 		}
 
@@ -119,7 +115,7 @@ public class LiveTicker {
 			}
 			
 		}
-
+		log.log(Level.INFO, "new complete ticker string generated");
 		display.getTickerComponent().setTickerString(completeTickerText);
 	}
 

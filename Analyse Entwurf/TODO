@@ -1,3 +1,15 @@
+Cleaning up and optimizing Progress (Docu, Logging, Perf.Improvements and Todo tasks in code)
+	package Media
+	package MediaHandler
+	package Misc
+	package LiveTicker
+	package Main
+	package Preferences
+	
+	
+	
+Make a clean startup, löst bestimmt manche abhängigkeiten usw und ermöglicht ladebalken und so
+
 Notes
 04.09.12
 mark as showed after a given time (with a swing timer) (configurable via prefs  /props)

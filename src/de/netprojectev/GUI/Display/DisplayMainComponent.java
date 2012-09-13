@@ -64,7 +64,7 @@ public class DisplayMainComponent extends JComponent {
 	 * 
 	 * @param file the image file to draw on component
 	 */
-	public void setImageToDraw(final Image compImage) {
+	public void drawImage(final Image compImage) {
 		
 		countdownShowing = false;
 		this.image = compImage;
@@ -77,7 +77,7 @@ public class DisplayMainComponent extends JComponent {
 	 * 
 	 * @param countdown the countdown object to draw
 	 */
-	public void setCountdownToDraw(Countdown countdown) {
+	public void drawCountdown(Countdown countdown) {
 		countdownShowing = true;
 		this.countdown = countdown;
 	}

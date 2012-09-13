@@ -7,13 +7,14 @@ import de.netprojectev.GUI.Display.DisplayMainFrame;
 import de.netprojectev.MediaHandler.DisplayDispatcher;
 
 /**
- * abstract datastructure to deal, for now, with the three types of files
+ * abstract datastructure to deal, to deal with different media in an extension of this class
  * 
  * @author samu
  */
 public abstract class MediaFile implements Serializable {
 
 	private static final long serialVersionUID = -5495642573722802422L;
+	
 	protected String name;
 	protected transient Status status;
 	protected Priority priority;
@@ -36,10 +37,13 @@ public abstract class MediaFile implements Serializable {
 
 	}
 
+	/**
+	 * show the media in the {@link DisplayMainFrame}
+	 */
 	public abstract void show();
 	
 	/**
-	 * Generates a formatted information string about the media file, from its attributes and status.
+	 * Generates a formatted information string about the media file, about its attributes and current state.
 	 * @return formatted info string
 	 */
 	public String generateInfoString() {

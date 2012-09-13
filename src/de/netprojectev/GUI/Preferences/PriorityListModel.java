@@ -1,6 +1,7 @@
 package de.netprojectev.GUI.Preferences;
 
 import javax.swing.AbstractListModel;
+import javax.swing.SwingUtilities;
 
 import de.netprojectev.Preferences.PreferencesHandler;
 
@@ -39,7 +40,7 @@ public class PriorityListModel extends AbstractListModel<Object> {
      * Uses invokeLater for clean and thread-save event handling.
      */
 	public void updateList() {
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
             public void run() {
             	fireContentsChanged(this, 0, preferencesHandler.getListOfPriorities().size());
             }

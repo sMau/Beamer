@@ -23,7 +23,6 @@ public class LiveTickerTest {
 	@Before
 	public void setUp() throws Exception {
 		
-		LiveTicker.reset();
 		ticker = LiveTicker.getInstance();
 		
 		elements1 = new TickerTextElement[2];

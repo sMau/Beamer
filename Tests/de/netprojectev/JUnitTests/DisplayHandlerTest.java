@@ -34,7 +34,7 @@ public class DisplayHandlerTest {
 	@Before
 	public void setUp() {
 		
-		DisplayHandler.reset();
+	
 		displayHandler = DisplayHandler.getInstance();
 		testFiles = new MediaFile[3];
 		testFiles2 = new MediaFile[1];

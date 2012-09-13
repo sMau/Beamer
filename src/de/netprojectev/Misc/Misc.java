@@ -47,7 +47,6 @@ public class Misc {
 	
 	
 	private static boolean loggerFileHandlerCreated = false;
-	
 	private static FileHandler handler;
 	
 	/**
@@ -75,7 +74,7 @@ public class Misc {
 	
 	/**
 	 * 
-	 * @param selectedIndices index array identifiying files in the mediahandler
+	 * @param selectedIndices index array identifiying files in the {@link MediaHandler}
 	 * @return array of specified media files
 	 */
 	public static MediaFile[] indexListToMediaFiles(int[] selectedIndices) {
@@ -200,7 +199,7 @@ public class Misc {
 	 * @param props the property object to save
 	 * @throws IOException
 	 */
-	public synchronized static void savePropertiesToDisk(Properties props) throws IOException {
+	public static void savePropertiesToDisk(Properties props) throws IOException {
 		FileWriter writer = new FileWriter(Constants.SAVE_PATH + Constants.FILENAME_PROPERTIES);
 		props.store(writer, null);
 		writer.close();
@@ -212,7 +211,7 @@ public class Misc {
 	 * @return from disk loaded property object
 	 * @throws IOException
 	 */
-	public synchronized static Properties loadPropertiesFromDisk() throws IOException {
+	public static Properties loadPropertiesFromDisk() throws IOException {
 		Properties props = new Properties();
 		FileReader reader = new FileReader(Constants.SAVE_PATH + Constants.FILENAME_PROPERTIES);
 		props.load(reader);
@@ -227,7 +226,7 @@ public class Misc {
 	 * @param filename the filename it should be saved to 
 	 * @throws IOException 
 	 */
-	public synchronized static void saveToFile(Serializable toSave, String filename) throws IOException {
+	public static void saveToFile(Serializable toSave, String filename) throws IOException {
 		
 		String path = Constants.SAVE_PATH;
 		
@@ -253,7 +252,7 @@ public class Misc {
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 */
-	public synchronized static Object loadFromFile(String filename) throws IOException, ClassNotFoundException {
+	public static Object loadFromFile(String filename) throws IOException, ClassNotFoundException {
 		
 		Object fileToLoad = null;
 		String path = Constants.SAVE_PATH;
@@ -377,7 +376,7 @@ public class Misc {
 	 * @throws SecurityException
 	 * @throws IOException
 	 */
-	private static synchronized void createLoggerFileHandler() throws SecurityException, IOException {
+	private static void createLoggerFileHandler() throws SecurityException, IOException {
 		
 		if(!loggerFileHandlerCreated) {
 			SimpleDateFormat formater = new SimpleDateFormat("yyyy_MM_dd__kk_mm", Locale.GERMANY);
@@ -397,11 +396,11 @@ public class Misc {
 	 * @param imageToScale the {@link BufferedImage} that should be scaled
 	 * @param newWidth the new width
 	 * @param newHeight the new height
-	 * @return
+	 * @return the scaled image instance as {@link BufferedImage} in compatible mode
 	 */
 	public static BufferedImage getScaledImageInstanceFast(BufferedImage imageToScale, int newWidth, int newHeight) {
 		
-		BufferedImage scaledImage = null;
+		BufferedImage scaledImage;
 		
 		int oldWidth = imageToScale.getWidth();
 		int oldHeight = imageToScale.getHeight();
@@ -409,7 +408,6 @@ public class Misc {
 		if(oldWidth > newWidth && oldHeight > newHeight) {
 			scaledImage = GraphicsUtilities.createThumbnail(imageToScale, newWidth, newHeight);
 		} else {
-			
 			scaledImage = GraphicsUtilities.createCompatibleImage(newWidth, newHeight);
 			Graphics2D g2 = scaledImage.createGraphics();
 			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);

@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.netprojectev.GUI.Display.DisplayMainFrame;
@@ -103,6 +104,11 @@ public class DisplayHandler {
 		
 	}
 
+	/**
+	 * This method ensures theres only one instance of {@link DisplayHandler}
+	 * 
+	 * @return a the display handler instance
+	 */
 	public static DisplayHandler getInstance() {
 		if (instance == null) {
 			instance = new DisplayHandler();
@@ -110,12 +116,8 @@ public class DisplayHandler {
 		return instance;
 	}
 
-	public static void reset() {
-		instance = new DisplayHandler();
-	}
-	
 	/**
-	 * Adds given files to the filelist. Used for synching with media handler
+	 * Adds given files to the filelist. Used for syncing with media handler
 	 * @param files files to add
 	 */
 	public void add(MediaFile[] files) {
@@ -268,6 +270,7 @@ public class DisplayHandler {
 	 * sets the shuffling mode to enabled and invokes the shuffling method
 	 */
 	public void startShuffle() {
+		log.log(Level.INFO, "starting shuffle mode");
 		isShufflingEnabled = true;
 		shuffleList();
 	}
@@ -277,6 +280,7 @@ public class DisplayHandler {
 	 */
 	@SuppressWarnings("unchecked")
 	public void stopShuffle() {
+		log.log(Level.INFO, "stoping shuffle mode");
 		isShufflingEnabled = false;
 		playingFiles = (LinkedList<MediaFile>) MediaHandler.getInstance().getMediaFiles().clone();
 		
@@ -302,6 +306,8 @@ public class DisplayHandler {
 	 */
 	public synchronized void startAutomodus() {
 				
+		log.log(Level.INFO, "starting new automodus timer");
+	
 		if(isAutomodeEnabled) {
 			automodusTimer.cancel();
 			automodusTimer.purge();
@@ -356,6 +362,7 @@ public class DisplayHandler {
 	 * sets auto mode to disabled and tidies up the timers
 	 */
 	public synchronized void stopAutomodus() {
+		log.log(Level.INFO, "stoping automodus");
 		isAutomodeEnabled = false;
 		automodusTimer.cancel();
 		automodusTimer.purge();

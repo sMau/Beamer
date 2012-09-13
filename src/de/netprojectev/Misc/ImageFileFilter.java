@@ -4,6 +4,11 @@ import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
 
+/**
+ * This class is an imagefile filter that only accept the standard java supported image formats
+ * @author samu
+ *
+ */
 public class ImageFileFilter extends FileFilter {
 
 	@Override

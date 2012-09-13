@@ -8,8 +8,8 @@ import de.netprojectev.GUI.Display.DisplayMainFrame;
  *
  */
 public class DisplayDispatcher {
-
-	private static DisplayDispatcher instance = new DisplayDispatcher();
+	
+	private volatile static DisplayDispatcher instance = new DisplayDispatcher();
 	
 	private DisplayMainFrame displayFrame;
 	
@@ -17,6 +17,11 @@ public class DisplayDispatcher {
 				
 	}
 	
+	/**
+	 * This method ensures theres only one instance of {@link DisplayDispatcher}
+	 * 
+	 * @return the {@link DisplayDispatcher} instance
+	 */
 	public static DisplayDispatcher getInstance() {
 		
 		if(instance == null) {
