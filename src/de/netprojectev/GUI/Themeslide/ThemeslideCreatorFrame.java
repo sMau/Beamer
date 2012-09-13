@@ -837,7 +837,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			JTextPane editor = (JTextPane) getEditor(e);			
-			if (editor != null) {
+			if (editor != null && selectedColor != null) {
 				
 				MutableAttributeSet attr = new SimpleAttributeSet();
 				StyleConstants.setForeground(attr, selectedColor);

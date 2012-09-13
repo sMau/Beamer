@@ -4,6 +4,8 @@
  */
 package de.netprojectev.GUI.Dialogs;
 
+import javax.swing.SwingUtilities;
+
 import de.netprojectev.GUI.Manager.FileManagerTableModel;
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.Media.MediaFile;
@@ -159,7 +161,7 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
     	selectedMediaFile.setPriority(preferencesHandler.getListOfPriorities().get(jComboBoxPriority.getSelectedIndex()));   	
     	
 			((FileManagerTableModel) managerFrame.getjTableFileManager().getModel()).updateModel();
-			java.awt.EventQueue.invokeLater(new Runnable() {
+			SwingUtilities.invokeLater(new Runnable() {
 
 	            public void run() {
 	            	managerFrame.getjTableFileManager().setRowSelectionInterval(selectedRow, selectedRow);

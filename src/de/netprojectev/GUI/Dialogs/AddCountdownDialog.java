@@ -17,7 +17,7 @@ import de.netprojectev.MediaHandler.MediaHandler;
 import de.netprojectev.Misc.Misc;
 
 /**
- *
+ * Dialog to add a {@link Countdown}
  * @author samu
  */
 public class AddCountdownDialog extends javax.swing.JDialog {
@@ -245,7 +245,6 @@ public class AddCountdownDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jRadioButtonFinishDateActionPerformed
 
     private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
-    	
     	dispose();
     }//GEN-LAST:event_jButtonCancelActionPerformed
 

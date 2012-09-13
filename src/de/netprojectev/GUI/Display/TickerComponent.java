@@ -8,11 +8,14 @@ import java.awt.RenderingHints;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 
 /**
@@ -21,6 +24,8 @@ import de.netprojectev.Preferences.PreferencesHandler;
  *
  */
 public class TickerComponent extends JComponent {
+
+	private static final Logger log = Misc.getLoggerAll(TickerComponent.class.getName());
 
 	private static final long serialVersionUID = 4472552567124740434L;
 	
@@ -122,16 +127,17 @@ public class TickerComponent extends JComponent {
 		}
 		liveTickerTimer = new Timer();
 		liveTickerTimer.schedule(new TickerTimerTask(), 0, tickerSpeed);
-    	
+    	log.log(Level.INFO, "Live Ticker started");
 	}
     
 
 	
 	/**
-	 * stops the timer
+	 * stops the live ticker timer
 	 */
     private void stopLiveTicker() {
     	if(liveTickerTimer != null) {
+    		log.log(Level.INFO, "Live Ticker stoped");
     		liveTickerTimer.cancel();
         	liveTickerTimer.purge();
     	}
@@ -142,15 +148,14 @@ public class TickerComponent extends JComponent {
      * the speed, font size,type and color attributes are affected.
      */
     private void updateLiveTickerAttributes() {
-    	
+		log.log(Level.INFO, "updateing live ticker attributes");
     	Properties props = PreferencesHandler.getInstance().getProperties();
     	try {
 			tickerSpeed = Integer.parseInt(props.getProperty(Constants.PROP_TICKER_SPEED));
 			tickerFont = new Font(props.getProperty(Constants.PROP_TICKER_FONTTYPE), Font.PLAIN, Integer.parseInt(props.getProperty(Constants.PROP_TICKER_FONTSIZE)));
 			tickerColor = new Color(Integer.parseInt(props.getProperty(Constants.PROP_TICKER_FONTCOLOR))); 
     	} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.log(Level.INFO, "Number format exeception", e);
 		}
     }
     
@@ -173,7 +178,7 @@ public class TickerComponent extends JComponent {
 	 * generates the two strings needed for a gapless ticker run.
 	 */
 	private void generateDrawingStrings() {
-		
+		log.log(Level.INFO, "generating new drawing strings");
 		int tickerStringWidth = getFontMetrics(tickerFont).stringWidth(tickerString);
 			
 		toDraw1 = tickerString;

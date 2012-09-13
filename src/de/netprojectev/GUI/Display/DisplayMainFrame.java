@@ -6,10 +6,13 @@ package de.netprojectev.GUI.Display;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
 import de.netprojectev.MediaHandler.MediaHandler;
+import de.netprojectev.Misc.Misc;
 
 /**
  * GUI class frame, to store the viewing components, as the live ticker and the image and themeslide showing component.
@@ -21,9 +24,10 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 863589702184282724L;
+	private static final Logger log = Misc.getLoggerAll(DisplayMainFrame.class.getName());
+
 	
-	
-	private Boolean fullscreen;
+	private boolean fullscreen;
 	private int screenNumberDisplayFrame; 
 	
     public DisplayMainFrame() {
@@ -41,19 +45,20 @@ public class DisplayMainFrame extends javax.swing.JFrame {
     public void enterFullscreen(int screenNumber) {
     	
     	if(!fullscreen) {
+    		log.log(Level.INFO, "entering fullscreen mode");
     		screenNumberDisplayFrame = screenNumber;
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
 			this.setUndecorated(true);
 			setVisible(true);
-			// this.setAlwaysOnTop(true);
 			if (screenNumber >= 0 && screenNumber < myDevices.length) {
 				myDevices[screenNumber].setFullScreenWindow(this);
-		    	//tickerComponent.refreshStringGeneration();
 		    	fullscreen = true;
+		    	log.log(Level.INFO, "entering fullscreen mode successful");
 		    	MediaHandler.getInstance().generateNewDisplayImages();
 			} else {
+				log.log(Level.SEVERE, "error entering fullscreen mode");
 				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode. \nCheck the choosen screen.", "Error", JOptionPane.ERROR_MESSAGE);
 				dispose();
 				this.setUndecorated(false);
@@ -70,17 +75,16 @@ public class DisplayMainFrame extends javax.swing.JFrame {
     public void exitFullscreen() {
     	
     	if(fullscreen) {
+    		log.log(Level.INFO, "exiting fullscreen mode");
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
 			this.setUndecorated(false);
 			setVisible(true);
 			myDevices[screenNumberDisplayFrame].setFullScreenWindow(null);
-			// this.setAlwaysOnTop(false);
 			pack();
     		fullscreen = false;
     		MediaHandler.getInstance().generateNewDisplayImages();
-	    	//tickerComponent.refreshStringGeneration();
     	}
     }
 

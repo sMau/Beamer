@@ -885,7 +885,12 @@ public class ManagerFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jMenuItemAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddThemeslideActionPerformed
-    	new ThemeslideCreatorFrame().setVisible(true);
+
+    	if(PreferencesHandler.getInstance().getListOfThemes().isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Please first add at least one Theme before creating a Themeslide.\nGo Preferences -> Preferences -> Theme", "Themeslide Creator", JOptionPane.ERROR_MESSAGE);
+		} else {
+			new ThemeslideCreatorFrame().setVisible(true);
+		}
     }//GEN-LAST:event_jMenuItemAddThemeslideActionPerformed
     
     /**
@@ -1083,7 +1088,11 @@ public class ManagerFrame extends javax.swing.JFrame {
 		if(n == JOptionPane.YES_OPTION) {
 			openFileChooser();
 		} else if(n == JOptionPane.NO_OPTION) {
-			new ThemeslideCreatorFrame().setVisible(true);
+			if(PreferencesHandler.getInstance().getListOfThemes().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Please first add at least one Theme before creating a Themeslide.\nGo Preferences -> Preferences -> Theme", "Themeslide Creator", JOptionPane.ERROR_MESSAGE);
+			} else {
+				new ThemeslideCreatorFrame().setVisible(true);
+			}
 		}
 	}
 

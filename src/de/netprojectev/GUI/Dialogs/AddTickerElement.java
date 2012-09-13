@@ -4,6 +4,8 @@
  */
 package de.netprojectev.GUI.Dialogs;
 
+import javax.swing.SwingUtilities;
+
 import de.netprojectev.GUI.Manager.ManagerFrame;
 import de.netprojectev.GUI.Manager.TickerManagerTableModel;
 import de.netprojectev.LiveTicker.LiveTicker;
@@ -130,14 +132,13 @@ public class AddTickerElement extends javax.swing.JFrame {
     	}
     	
 			((TickerManagerTableModel) managerFrame.getjTableLiveticker().getModel()).updateModel();
-			java.awt.EventQueue.invokeLater(new Runnable() {
-
-	            public void run() {
-	            	if(selectedRow >= 0 && selectedRow <= managerFrame.getjTableLiveticker().getRowCount() - 1) {
-	            		managerFrame.getjTableLiveticker().setRowSelectionInterval(selectedRow, selectedRow);
-	            	}
-	           }
-	       });
+			if(selectedRow >= 0 && selectedRow <= managerFrame.getjTableLiveticker().getRowCount() - 1) {
+				SwingUtilities.invokeLater(new Runnable() {
+		            public void run() {
+		            		managerFrame.getjTableLiveticker().setRowSelectionInterval(selectedRow, selectedRow);
+		           }
+		       });
+			}
 		
     	dispose();    
     }//GEN-LAST:event_jButtonAddTickerEltActionPerformed

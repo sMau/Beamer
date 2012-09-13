@@ -7,11 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 
 import de.netprojectev.Media.Countdown;
 import de.netprojectev.Misc.Constants;
+import de.netprojectev.Misc.Misc;
 import de.netprojectev.Preferences.PreferencesHandler;
 /**
  * 
@@ -21,6 +24,8 @@ import de.netprojectev.Preferences.PreferencesHandler;
  */
 public class DisplayMainComponent extends JComponent {
 	
+	private static final Logger log = Misc.getLoggerAll(DisplayMainComponent.class.getName());
+
 	private static final long serialVersionUID = 3915763660057625809L;
 	private Image image;
 	
@@ -42,8 +47,7 @@ public class DisplayMainComponent extends JComponent {
 				try {
 					Thread.sleep(3000);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.log(Level.SEVERE, "interupt exception", e);
 				}
 				updateCountdownFont();
 				
@@ -52,16 +56,20 @@ public class DisplayMainComponent extends JComponent {
 		
 	}
 
+	/**
+	 * updates the countdown font family, size and color via reading it from the properties
+	 */
 	public void updateCountdownFont() {
 
 		Properties props = PreferencesHandler.getInstance().getProperties();
 		countdownFont = new Font(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE)));
 		countdownColor = new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR)));
+		log.log(Level.INFO, "countdown font attributes updated");
 
 	}
 	
 	/**
-	 * 
+	 * Tell this to draw the given image.
 	 * @param file the image file to draw on component
 	 */
 	public void drawImage(final Image compImage) {

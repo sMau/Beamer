@@ -6,6 +6,9 @@ Cleaning up and optimizing Progress (Docu, Logging, Perf.Improvements and Todo t
 	package Main
 	package Preferences
 	
+	package Dialogs
+	package Display
+	
 	
 	
 Make a clean startup, löst bestimmt manche abhängigkeiten usw und ermöglicht ladebalken und so
