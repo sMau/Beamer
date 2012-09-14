@@ -55,8 +55,6 @@ import de.netprojectev.Preferences.PreferencesHandler;
  *
  */
 public class ThemeslideCreatorFrame extends javax.swing.JFrame {
-
-	//TODO take default color into account and change the color button, that its representing the selected color as its background
 	
 	private static final long serialVersionUID = -3653577264825548156L;
 	
@@ -66,14 +64,16 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	private Boolean lastEventCaretPosChanged = false;
 	private int lastEventCaretPos = 0;
 	
-	private Color selectedColorMain = Color.BLACK;
+	private Color selectedColorMain;
 	
 	private Properties props;
 	
     public ThemeslideCreatorFrame() {
+    	
+    	
     	initComponents();
-    	    	
-    	props = PreferencesHandler.getInstance().getProperties();
+    	
+        props = PreferencesHandler.getInstance().getProperties();
     	
         for(int i = 0; i < PreferencesHandler.getInstance().getListOfThemes().size(); i++) {
         	jComboBoxTheme.addItem(PreferencesHandler.getInstance().getListOfThemes().get(i).getName());
@@ -98,6 +98,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jComboBoxFontTypeActionPerformed(new ActionEvent(textPaneThemeslide, 0, ""));
         jComboBoxFontSizeActionPerformed(new ActionEvent(textPaneThemeslide, 0, ""));
         
+    	selectedColorMain = new Color(Integer.parseInt(props.getProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR)));
+    	System.out.println(selectedColorMain);
+        jButtonColorPicker.setBackground(new Color(selectedColorMain.getRGB()));
+        jButtonColorPicker.setForeground(new Color(selectedColorMain.getRGB()));
+        new FontColorAction(new Color(selectedColorMain.getRGB())).actionPerformed(null);
+        applyAsParagraphAttributes();
         setLocation(Misc.currentMousePosition());
     }
 
@@ -457,7 +463,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	ColorPickerDialog colorPicker = new ColorPickerDialog(this, true);
     	colorPicker.setVisible(true);
     	selectedColorMain = colorPicker.getChoosenColor();
-    	new FontColorAction(colorPicker.getChoosenColor()).actionPerformed(null);
+        jButtonColorPicker.setBackground(selectedColorMain);
+        jButtonColorPicker.setForeground(selectedColorMain);
+    	new FontColorAction(selectedColorMain).actionPerformed(null);
     }//GEN-LAST:event_jButtonColorPickerActionPerformed
 
     /**
@@ -730,7 +738,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		
 		//TODO Bug: Setting font size then font type leads to reset of size, maybe the other way round too
-		//TODO BUg: on deleting the last char the settings size and type of font are resetted
 		/**
 		 * 
 		 */
@@ -821,7 +828,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		 */
 		private static final long serialVersionUID = 9005216620313856874L;
 		
-		private Color selectedColor = Color.BLACK;
+		private Color selectedColor = selectedColorMain;
 		
 		public FontColorAction(Color selectedColor) {
 			super("Font Color");
@@ -906,11 +913,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	private void applyAsParagraphAttributes() {
-		
 		final MutableAttributeSet attr = new SimpleAttributeSet();
 		StyleConstants.setFontFamily(attr, (String) jComboBoxFontType.getSelectedItem());
 		attr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
-		StyleConstants.setForeground(attr, selectedColorMain);
+		StyleConstants.setForeground(attr, new Color(selectedColorMain.getRGB()));
 		StyleConstants.setUnderline(attr, jToggleButtonUnderline.isSelected());
 		StyleConstants.setBold(attr, jToggleButtonBold.isSelected());
 		StyleConstants.setItalic(attr, jToggleButtonItalic.isSelected());
@@ -934,9 +940,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 * @param attr {@link AttributeSet} which contains the attributes the GUI should sync to
 	 */
 	private void updateGUItoStyleAttr(final AttributeSet attr) {
-		
-		//TODO if all text in pane is deleted fall back to the defaults set (or change this behaviour, so no fallback) -> GUI updating
-		
+				
 		SwingUtilities.invokeLater(new Runnable() {
 			
 			@Override

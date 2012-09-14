@@ -6,10 +6,18 @@ package de.netprojectev.GUI.Manager;
 
 
 import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.dnd.DnDConstants;
+import java.awt.dnd.DropTarget;
+import java.awt.dnd.DropTargetDropEvent;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -414,6 +422,12 @@ public class ManagerFrame extends javax.swing.JFrame {
 
         jScrollPane1.setMinimumSize(new java.awt.Dimension(220, 250));
         jScrollPane1.setName(""); // NOI18N
+        jScrollPane1.setDropTarget(new DropTarget(){
+            @Override
+            public synchronized void drop(DropTargetDropEvent dtde) {
+                handleDropEvent(dtde);
+            }
+        });
 
         jTableFileManager.setModel(new FileManagerTableModel(this));
         jTableFileManager.setShowHorizontalLines(false);
@@ -583,7 +597,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE))
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout filemangerPanelLayout = new javax.swing.GroupLayout(filemangerPanel);
@@ -701,7 +715,7 @@ public class ManagerFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE))
         );
 
         jTabbedPane.addTab("Liveticker", livetickerPanel);
@@ -792,7 +806,7 @@ public class ManagerFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane)
+                .addComponent(jTabbedPane, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
                 .addGap(0, 0, 0))
         );
 
@@ -1313,6 +1327,43 @@ public class ManagerFrame extends javax.swing.JFrame {
                 }
             });
     	}
+	}
+	
+	/**
+	 * Adds the droped files to the media manger, but first filters for image files
+	 * 
+	 * @param dtde the drop event that should be handled
+	 */
+	private void handleDropEvent(DropTargetDropEvent dtde) {
+		
+		//TODO last worked here: add directory support, also for the file chooser then
+		
+		dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+        Transferable t = dtde.getTransferable();
+        @SuppressWarnings("unchecked")
+        ImageFileFilter filter = new ImageFileFilter();
+		List fileList = null;
+		try {
+			fileList = (List)t.getTransferData(DataFlavor.javaFileListFlavor);
+		} catch (UnsupportedFlavorException e) {
+			log.log(Level.SEVERE, "Error during drag and drop", e);
+		} catch (IOException e) {
+			log.log(Level.SEVERE, "Error during drag and drop", e);
+		}
+        if(fileList != null) {
+        	for(int i = 0; i < fileList.size(); i++) {
+            	if(!filter.accept((File) fileList.get(i))) {
+            		fileList.remove(i);
+            	}
+            }
+            File[] filesToAdd = new File[fileList.size()];
+            for(int i = 0; i < filesToAdd.length; i++) {
+            	filesToAdd[i] = (File) fileList.get(i);
+            }
+            MediaHandler.getInstance().add(Misc.createMediaFromFiles(filesToAdd));
+        }
+        
+
 	}
     
     /**

@@ -28,11 +28,21 @@ public class Themeslide extends MediaFile {
 	 * @param text formatted styled text as JTextPane
 	 * @param textPosition left and top margin for moving the textpane in the right position
 	 */
-	public Themeslide(String name,Priority priority, Theme theme,long hashKey) {
+	public Themeslide(final String name,final Priority priority, Theme theme,long hashKey) {
 		super(name, priority);
 		this.theme = theme;
 		this.hashkey = hashKey;
-		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".png", priority);
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(1000); //Wait until png is written to disk before reading image
+				} catch (InterruptedException e) {
+					log.log(Level.INFO, "interrupt exception", e);
+				} 
+				Themeslide.this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".png", priority);
+			}
+		}).start();
 	}
 	
 	@Override
@@ -48,6 +58,7 @@ public class Themeslide extends MediaFile {
 	public void createNewImageFileRepresentation() {
 		log.log(Level.INFO, "creating new image file object for themeslide " + name);
 		this.imageFileRepresentation = new ImageFile(name, Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE + hashkey + ".png", priority);
+		
 	}
 	
 	/**

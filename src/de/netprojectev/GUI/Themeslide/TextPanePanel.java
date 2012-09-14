@@ -18,10 +18,7 @@ public class TextPanePanel extends JPanel {
 	
 	private TextPaneThemeslide textPane = new TextPaneThemeslide();
 	private Insets marginOfTextPaneThemslide = textPane.getMargin();
-	
-	
-	
-	
+
 	public void updateTextPane(TextPaneThemeslide textPane, int width, int height) {
 		
 		this.textPane = textPane;

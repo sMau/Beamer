@@ -235,7 +235,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jTabbedPane" max="32767" attributes="0"/>
+              <Component id="jTabbedPane" pref="751" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="0" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -509,6 +509,9 @@
                 </Property>
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jScrollPane1.setDropTarget(new DropTarget(){&#xa;            @Override&#xa;            public synchronized void drop(DropTargetDropEvent dtde) {&#xa;                handleDropEvent(dtde);&#xa;            }&#xa;        });"/>
+              </AuxValues>
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
@@ -620,7 +623,7 @@
                               <Component id="jSeparator9" alignment="1" min="-2" pref="10" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="jScrollPane4" pref="343" max="32767" attributes="0"/>
+                          <Component id="jScrollPane4" pref="351" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -810,7 +813,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jSeparator8" min="-2" pref="10" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane3" pref="641" max="32767" attributes="0"/>
+                      <Component id="jScrollPane3" pref="649" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

@@ -41,13 +41,19 @@ class ImageGenerationTask implements Runnable {
 	
 	@Override
 	public void run() {
-		if(preview && displayImage) {
-			imageFile.generateDisplayImage();
-			imageFile.generatePreview();
-		} else if(preview && !displayImage) {
-			imageFile.generatePreview();
-		} else if(!preview && displayImage) {
-			imageFile.generateDisplayImage();
+		BufferedImage loadedImage;
+		try {
+			loadedImage = imageFile.loadImageFileFromDisk();
+			if(preview && displayImage) {	
+				imageFile.generateDisplayImage(loadedImage);
+				imageFile.generatePreview(loadedImage);
+			} else if(preview && !displayImage) {
+				imageFile.generatePreview(loadedImage);
+			} else if(!preview && displayImage) {
+				imageFile.generateDisplayImage(loadedImage);
+			}
+		} catch (IOException e) {
+			Misc.getLoggerAll(ImageFile.class.getName()).log(Level.SEVERE, "IOException during image object generation", e);
 		}
 		
 	}
@@ -63,11 +69,10 @@ public class ImageFile extends MediaFile {
 	/*
 	 * fix the outof memory exception things when importing huge amount of images at one time
 	 */
-	public static ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(Constants.NUMBER_OF_WORKER_THREADS);
+	public static ThreadPoolExecutor threadPool = (ThreadPoolExecutor) Executors.newFixedThreadPool(4);
 	
 	private String path;
 	private transient ImageIcon preview;
-	private transient BufferedImage loadedImage = null;
 	
 	private transient BufferedImage displayImage;
 	
@@ -87,29 +92,28 @@ public class ImageFile extends MediaFile {
 	/**
 	 * generates a imageicon for previewing from path attribute of the object.
 	 * The icon is read from hard disk and scaled in a new Thread, so the GUI does not block
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	protected void generatePreview() {
+	protected void generatePreview(BufferedImage loadedImage) throws FileNotFoundException, IOException {
 		log.log(Level.INFO, "generating new thumbnail for " + name);
-		loadImageFileFromDisk();		
 		int widthToScaleTo = Integer.parseInt(PreferencesHandler.getInstance().getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH));
 		preview = new ImageIcon(Misc.getScaledImageInstanceFast(loadedImage, widthToScaleTo , (int) (widthToScaleTo * loadedImage.getHeight(null))/loadedImage.getWidth(null)));
+		loadedImage = null;
 	}
 
 	/**
 	 * loads the image from disk, if not already loaded before
+	 * 
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	protected void loadImageFileFromDisk() {
-		
-		if(loadedImage == null && path != null) {
+	protected BufferedImage loadImageFileFromDisk() throws FileNotFoundException, IOException {
+		if(path != null) {
 			log.log(Level.INFO, "loading image from hard disk " + name);
-			try {
-				loadedImage = GraphicsUtilities.loadCompatibleImage(new BufferedInputStream(new FileInputStream(path)));
-			} catch (FileNotFoundException e) {
-				log.log(Level.SEVERE, "imagefile could not be found on hard disk", e);
-			} catch (IOException e) {
-				log.log(Level.SEVERE, "error reading imagefile from hard disk", e);
-			}
+			return GraphicsUtilities.loadCompatibleImage(new BufferedInputStream(new FileInputStream(path)));
 		}
+		return null;
 	} 
 		
 	
@@ -124,17 +128,17 @@ public class ImageFile extends MediaFile {
 	 * This method never should be called directly. It is only invoked from a worker thread doing these things in background.
 	 * generates the scaled image object representation of the image file on the hard disk.
 	 * it respects the current width and height of the {@link DisplayMainComponent}.
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 */
-	protected void generateDisplayImage() {
+	protected void generateDisplayImage(BufferedImage loadedImage) throws FileNotFoundException, IOException {
 		log.log(Level.INFO, "generating new display image object for " + name);
 		DisplayMainComponent displayMainComp = display.getDisplayMainComponent();
-		loadImageFileFromDisk();
 
-		if (loadedImage != null) {
-			int imW = loadedImage.getWidth(null);
-			int imH = loadedImage.getHeight(null);
-			displayImage = Misc.getScaledImageInstanceFast(loadedImage, (int) (displayMainComp.getHeight() * imW/imH), (int) displayMainComp.getHeight());
-		}
+		int imW = loadedImage.getWidth(null);
+		int imH = loadedImage.getHeight(null);
+		displayImage = Misc.getScaledImageInstanceFast(loadedImage, (int) (displayMainComp.getHeight() * imW/imH), (int) displayMainComp.getHeight());
+		loadedImage = null;
 		
 	}
 	
