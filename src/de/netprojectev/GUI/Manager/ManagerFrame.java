@@ -1337,7 +1337,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private void handleDropEvent(DropTargetDropEvent dtde) {
 		
 		//TODO last worked here: add directory support, also for the file chooser then
-		
+		// methods in misc for helping already implmented
 		dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
         Transferable t = dtde.getTransferable();
         @SuppressWarnings("unchecked")

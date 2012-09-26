@@ -418,7 +418,48 @@ public class Misc {
 		return scaledImage;
 	}
 	
+	/**
+	 * 
+	 * @param dir directory where search for image files should be started
+	 * @return a {@link File} array of all image files in this and all subdirectories
+	 */
+	public static File[] searchForAllImageFiles(File dir) {
+		ArrayList<File> allFiles = searchFile(dir);
+		ArrayList<File> imageFiles = new ArrayList<File>();
+		ImageFileFilter filter = new ImageFileFilter();
+		
+		for(int i = 0; i < allFiles.size(); i++) {
+			if(filter.accept(allFiles.get(i))) {
+				imageFiles.add(allFiles.get(i));
+			}
+			
+		}
+		return imageFiles.toArray(new File[imageFiles.size()]);	
+	}
 	
+	
+	/**
+	 * Lists recursively all files in a directory.
+	 * 
+	 * @param dir directory the search should start at
+	 * @return a complete list of all files in this and all subdirectories, excluded are the directories themselves
+	 */
+	private static ArrayList<File> searchFile(File dir) {
+
+		File[] files = dir.listFiles();
+		ArrayList<File> imageFiles = new ArrayList<File> ();
+		if (files != null) {
+			for (int i = 0; i < files.length; i++) {
+				if (!files[i].isDirectory()) { 
+					imageFiles.add(files[i]);
+				} else {
+					imageFiles.addAll(searchFile(files[i])); 
+				}
+			}
+		}
+		return imageFiles;
+	}
+
 	/**
 	 * Restarts the currently running jar file using the process builder.
 	 * 
