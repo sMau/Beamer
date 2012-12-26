@@ -455,8 +455,14 @@ public class ManagerFrame extends javax.swing.JFrame {
         );
         jTableFileManager.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableFileManagerMouseClicked(evt);
+                if(evt.getClickCount() == 2) {
+                	showFile();
+                } else {
+                	jTableFileManagerMouseClicked(evt);
+                }
+            	
             }
+            
         });
         jScrollPane1.setViewportView(jTableFileManager);
 

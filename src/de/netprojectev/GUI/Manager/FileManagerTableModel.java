@@ -103,7 +103,7 @@ public class FileManagerTableModel extends AbstractTableModel {
     }
     
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 2 || columnIndex == 3) {
+		if (columnIndex == 3) {
 			return true;
 		} else {
 			return false;
