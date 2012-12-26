@@ -17,28 +17,29 @@ public class ImageFileFilter extends FileFilter {
 		if(f.isDirectory()) {
 		    return true;
 		}
-		if(f.getName().endsWith(".jpg")) {
+		String fileName = f.getName().toLowerCase();;
+		if(fileName.endsWith(".jpg")) {
 			return true;
 		}
-		if(f.getName().endsWith(".jpeg")) {
+		if(fileName.endsWith(".jpeg")) {
 			return true;
 		}
-		if(f.getName().endsWith(".tiff")) {
+		if(fileName.endsWith(".tiff")) {
 			return true;
 		}
-		if(f.getName().endsWith(".tif")) {
+		if(fileName.endsWith(".tif")) {
 			return true;
 		}
-		if(f.getName().endsWith(".gif")) {
+		if(fileName.endsWith(".gif")) {
 			return true;
 		}
-		if(f.getName().endsWith("png")) {
+		if(fileName.endsWith("png")) {
 			return true;
 		}
-		if(f.getName().endsWith(".bmp")) {
+		if(fileName.endsWith(".bmp")) {
 			return true;
 		}
-		if(f.getName().endsWith(".WBMP")) {
+		if(fileName.endsWith(".wbmp")) {
 			return true;
 		}
 

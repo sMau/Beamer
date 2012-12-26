@@ -1346,11 +1346,10 @@ public class ManagerFrame extends javax.swing.JFrame {
 		// methods in misc for helping already implmented
 		dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
         Transferable t = dtde.getTransferable();
-        @SuppressWarnings("unchecked")
         ImageFileFilter filter = new ImageFileFilter();
-		List fileList = null;
+		List<?> fileList = null;
 		try {
-			fileList = (List)t.getTransferData(DataFlavor.javaFileListFlavor);
+			fileList = (List<?>)t.getTransferData(DataFlavor.javaFileListFlavor);
 		} catch (UnsupportedFlavorException e) {
 			log.log(Level.SEVERE, "Error during drag and drop", e);
 		} catch (IOException e) {
