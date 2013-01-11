@@ -1,3 +1,15 @@
+07.01.13
+Netzwerkschnittstelle
+Multiuserbetrieb mit "Login"
+Teilnehmer Beamer Interaktion (über Webpage) kleiner bereich wo diese posts auf dfem beamer angezeigt werden (vll wie liveticker)
+Android App
+
+entwürfe in leiste (schnellzugrtiff) bereits erstellte folien werden da gesammelt (z.b. alle oder via haken einstellbar)
+Layouts anstatt freiem design bneim folien erstellen
+optimal wäre layouts selbst erstellen (ähnlich wie bei powerpoint sind layouts zu verstehen)
+
+
+
 Cleaning up and optimizing Progress (Docu, Logging, Perf.Improvements and Todo tasks in code)
 	package Media
 	package MediaHandler
