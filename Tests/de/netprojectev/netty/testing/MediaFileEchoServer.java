@@ -13,6 +13,8 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.group.ChannelGroup;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import org.jboss.netty.handler.codec.serialization.ClassResolver;
+import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 
 import de.netprojectev.media.VideoFile;
@@ -33,7 +35,7 @@ public class MediaFileEchoServer {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectDecoder(), new MediaFileEchoServerHandler());
+				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new MediaFileEchoServerHandler());
 			}
 		});
 		bootstrap.setOption("child.tcpNoDelay", true);
