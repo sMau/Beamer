@@ -51,7 +51,7 @@ public class Client {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectEncoder(), new ObjectDecoder(ClassResolvers.weakCachingResolver(null)));
+				return Channels.pipeline(new ObjectEncoder(), new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new ClientMessageHandler());
 			}
 		});
 		
@@ -74,5 +74,9 @@ public class Client {
 	
 	public void sendMessageToServer(Message msgToSend) {
 		channelToServer.write(msgToSend);
+	}
+
+	public String getAlias() {
+		return alias;
 	}
 }

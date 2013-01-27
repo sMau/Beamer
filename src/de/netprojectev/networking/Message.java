@@ -9,21 +9,21 @@ public final class Message implements Serializable {
 	 */
 	private static final long serialVersionUID = 5081391059509425751L;
 	
-	private final byte command;
+	private final Enum<OpCode> opCode;
 	private final Serializable data;
 	
-	public Message(byte command) {
-		this.command = command;
+	public Message(Enum<OpCode> command) {
+		this.opCode = command;
 		this.data = null;
 	}
 	
-	public Message(byte command, Serializable data) {
-		this.command = command;
+	public Message(Enum<OpCode> command, Serializable data) {
+		this.opCode = command;
 		this.data = data;
 	}
 	
-	public byte getCommand() {
-		return command;
+	public Enum<OpCode> getOpCode() {
+		return opCode;
 	}
 	public Serializable getData() {
 		return data;

@@ -8,7 +8,7 @@ import javax.swing.SwingUtilities;
 
 import de.netprojectev.gui.manager.FileManagerTableModel;
 import de.netprojectev.gui.manager.ManagerFrame;
-import de.netprojectev.media.MediaFile;
+import de.netprojectev.media.server.ServerMediaFile;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.preferences.PreferencesHandler;
 
@@ -20,11 +20,11 @@ import de.netprojectev.preferences.PreferencesHandler;
 public class EditMediaFileFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1446531265560668639L;
-	private MediaFile selectedMediaFile;
+	private ServerMediaFile selectedMediaFile;
 	private PreferencesHandler preferencesHandler;
 	private ManagerFrame managerFrame;
 	
-    public EditMediaFileFrame(MediaFile selectedMediaFile, ManagerFrame managerFrame) {
+    public EditMediaFileFrame(ServerMediaFile selectedMediaFile, ManagerFrame managerFrame) {
     	
     	if(selectedMediaFile != null) {
     		initComponents();

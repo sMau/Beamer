@@ -11,10 +11,7 @@ public class SimpleServerClientTest {
 		Client cl1 = new Client("localhost", 9999, "cl1");
 		Thread.sleep(1000);
 		Client cl2 = new Client("localhost", 9999, "cl2");
-		
-		
-		
-		
+
 	}
 	
 }

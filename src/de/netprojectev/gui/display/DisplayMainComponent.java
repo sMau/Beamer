@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 
-import de.netprojectev.media.Countdown;
+import de.netprojectev.media.server.Countdown;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.preferences.PreferencesHandler;

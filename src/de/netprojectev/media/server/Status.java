@@ -1,4 +1,4 @@
-package de.netprojectev.media;
+package de.netprojectev.media.server;
 
 import java.util.Date;
 

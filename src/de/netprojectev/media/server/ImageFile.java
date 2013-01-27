@@ -1,4 +1,4 @@
-package de.netprojectev.media;
+package de.netprojectev.media.server;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -60,7 +60,7 @@ class ImageGenerationTask implements Runnable {
 
 }
 
-public class ImageFile extends MediaFile {
+public class ImageFile extends ServerMediaFile {
 
 	private static final long serialVersionUID = -6684164019970242002L;
 	

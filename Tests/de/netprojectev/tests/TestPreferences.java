@@ -2,7 +2,7 @@ package de.netprojectev.tests;
 
 import de.netprojectev.gui.manager.ManagerFrame;
 import de.netprojectev.gui.preferences.PreferencesFrame;
-import de.netprojectev.media.Priority;
+import de.netprojectev.media.server.Priority;
 import de.netprojectev.preferences.PreferencesHandler;
 
 public class TestPreferences {

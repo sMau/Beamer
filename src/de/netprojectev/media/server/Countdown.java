@@ -1,4 +1,4 @@
-package de.netprojectev.media;
+package de.netprojectev.media.server;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +20,7 @@ import de.netprojectev.misc.Misc;
  * @author samu
  *
  */
-public class Countdown extends MediaFile {
+public class Countdown extends ServerMediaFile {
 
 	private static final long serialVersionUID = 8156954767550365161L;
 

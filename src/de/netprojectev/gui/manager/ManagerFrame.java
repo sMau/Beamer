@@ -39,14 +39,14 @@ import de.netprojectev.gui.preferences.PreferencesFrame;
 import de.netprojectev.gui.themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.liveticker.LiveTicker;
 import de.netprojectev.liveticker.TickerTextElement;
-import de.netprojectev.media.Countdown;
-import de.netprojectev.media.ImageFile;
-import de.netprojectev.media.MediaFile;
-import de.netprojectev.media.Priority;
-import de.netprojectev.media.Status;
-import de.netprojectev.media.Theme;
-import de.netprojectev.media.Themeslide;
-import de.netprojectev.media.VideoFile;
+import de.netprojectev.media.server.Countdown;
+import de.netprojectev.media.server.ImageFile;
+import de.netprojectev.media.server.ServerMediaFile;
+import de.netprojectev.media.server.Priority;
+import de.netprojectev.media.server.Status;
+import de.netprojectev.media.server.Theme;
+import de.netprojectev.media.server.Themeslide;
+import de.netprojectev.media.server.VideoFile;
 import de.netprojectev.mediahandler.DisplayDispatcher;
 import de.netprojectev.mediahandler.MediaHandler;
 import de.netprojectev.misc.Constants;
@@ -1195,7 +1195,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		int[] selectedRows = jTableFileManager.getSelectedRows();
     	if(selectedRows.length > 0) {
     		
-    		MediaFile fileToEdit = Misc.indexListToMediaFiles(selectedRows)[0];
+    		ServerMediaFile fileToEdit = Misc.indexListToMediaFiles(selectedRows)[0];
     		if(fileToEdit instanceof Themeslide) {
     			/*
     			 * here should be the code for editing themeslides, not supported yet
@@ -1404,7 +1404,7 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
 	private Boolean loadFromDisk() throws IOException, ClassNotFoundException {
-    	LinkedList<MediaFile> tmpMedia = (LinkedList<MediaFile>) Misc.loadFromFile(Constants.FILENAME_MEDIAFILES);
+    	LinkedList<ServerMediaFile> tmpMedia = (LinkedList<ServerMediaFile>) Misc.loadFromFile(Constants.FILENAME_MEDIAFILES);
     	LinkedList<Priority> tmpPriority = (LinkedList<Priority>) Misc.loadFromFile(Constants.FILENAME_PRIORITIES);
     	LinkedList<Theme> tmpTheme = (LinkedList<Theme>) Misc.loadFromFile(Constants.FILENAME_THEMES);
     	LinkedList<TickerTextElement> tmpTickerElements = (LinkedList<TickerTextElement>) Misc.loadFromFile(Constants.FILENAME_LIVETICKER);
@@ -1428,7 +1428,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     				mediaHandler.increaseCountdownCounter();
     			}
     			
-    			mediaHandler.add(tmpMedia.toArray(new MediaFile[0]));
+    			mediaHandler.add(tmpMedia.toArray(new ServerMediaFile[0]));
     		}
     		
     	}
@@ -1502,7 +1502,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 	 * @param fileSelected true if a file is selected, false if no file is selected
 	 * @param selectedFile the MediaFile object of the selected file
 	 */
-	private void writeInformationLabels(boolean fileSelected, MediaFile selectedFile) {
+	private void writeInformationLabels(boolean fileSelected, ServerMediaFile selectedFile) {
 
 		if(fileSelected) {
 		

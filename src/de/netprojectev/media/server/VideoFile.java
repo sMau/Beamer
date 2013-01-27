@@ -1,4 +1,4 @@
-package de.netprojectev.media;
+package de.netprojectev.media.server;
 
 import de.netprojectev.misc.Constants;
 
@@ -8,7 +8,7 @@ import de.netprojectev.misc.Constants;
  * *** incomplete and used at the moment ***
  *
  */
-public class VideoFile extends MediaFile {
+public class VideoFile extends ServerMediaFile {
 
 	/*
 	 * Class not used yet, as videos arent supported at the moment

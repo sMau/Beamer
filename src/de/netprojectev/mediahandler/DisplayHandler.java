@@ -10,11 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.netprojectev.gui.display.DisplayMainFrame;
-import de.netprojectev.media.Countdown;
-import de.netprojectev.media.ImageFile;
-import de.netprojectev.media.MediaFile;
-import de.netprojectev.media.Themeslide;
-import de.netprojectev.media.VideoFile;
+import de.netprojectev.media.server.Countdown;
+import de.netprojectev.media.server.ImageFile;
+import de.netprojectev.media.server.ServerMediaFile;
+import de.netprojectev.media.server.Themeslide;
+import de.netprojectev.media.server.VideoFile;
 
 /**
  * The display handler contains the same files as the mediahandler. The order of the files can differ concerning the shuffle mode.
@@ -30,11 +30,11 @@ public class DisplayHandler {
 	private MediaHandler mediaHandler;
 	private DisplayDispatcher displayDispatcher;
 	
-	private LinkedList<MediaFile> playingFiles;
+	private LinkedList<ServerMediaFile> playingFiles;
 	private Boolean isAutomodeEnabled;
 	private Boolean isShufflingEnabled;
-	private MediaFile currentMediaFile; // null wenn kein Medium gezeigt wird.
-	private MediaFile historyFile; //unused siehe showFileAt Methode
+	private ServerMediaFile currentMediaFile; // null wenn kein Medium gezeigt wird.
+	private ServerMediaFile historyFile; //unused siehe showFileAt Methode
 	private Timer automodusTimer;
 	private boolean noFileShowed;
 	
@@ -75,9 +75,9 @@ public class DisplayHandler {
 	 */
 	class ShowFileAtTimer extends TimerTask {
 		
-		private MediaFile fileToShow;
+		private ServerMediaFile fileToShow;
 		
-		protected ShowFileAtTimer(MediaFile fileToShow) {
+		protected ShowFileAtTimer(ServerMediaFile fileToShow) {
 			this.fileToShow = fileToShow;
 		}
 		
@@ -90,7 +90,7 @@ public class DisplayHandler {
 	
 	private DisplayHandler() {
 
-		this.playingFiles = new LinkedList<MediaFile>();
+		this.playingFiles = new LinkedList<ServerMediaFile>();
 		this.isAutomodeEnabled = false;
 		this.isShufflingEnabled = false;
 		this.noFileShowed = true;
@@ -120,11 +120,11 @@ public class DisplayHandler {
 	 * Adds given files to the filelist. Used for syncing with media handler
 	 * @param files files to add
 	 */
-	public void add(MediaFile[] files) {
+	public void add(ServerMediaFile[] files) {
 		
 		if(isShufflingEnabled) {
-			LinkedList<MediaFile> tmpListToAdd = new LinkedList<MediaFile>();
-			LinkedList<MediaFile> tmpListToRemove = new LinkedList<MediaFile>();
+			LinkedList<ServerMediaFile> tmpListToAdd = new LinkedList<ServerMediaFile>();
+			LinkedList<ServerMediaFile> tmpListToRemove = new LinkedList<ServerMediaFile>();
 			for (int i = 0; i < files.length; i++) {
 				if (!playingFiles.contains(files[i])) {
 					tmpListToAdd.add(files[i]);
@@ -159,7 +159,7 @@ public class DisplayHandler {
 	 * Removes given files to the filelist. Used for synching with media handler
 	 * @param files files to remove
 	 */
-	public void remove(MediaFile[] files) {
+	public void remove(ServerMediaFile[] files) {
 		
 		for (int i = 0; i < files.length; i++) {
 			playingFiles.remove(files[i]);
@@ -171,7 +171,7 @@ public class DisplayHandler {
 	 * Moves given files down. Used for synching with media handler, only invoked when shuffling disabled
 	 * @param files to move down
 	 */
-	public void down(MediaFile[] files) {
+	public void down(ServerMediaFile[] files) {
 		
 		if(!isShufflingEnabled) {
 			playingFiles = mediaHandler.getMediaFiles();
@@ -183,7 +183,7 @@ public class DisplayHandler {
 	 * Moves given files up. Used for synching with media handler, only invoked when shuffling disabled
 	 * @param files files to move up
 	 */
-	public void up(MediaFile[] files) {
+	public void up(ServerMediaFile[] files) {
 		
 		if(!isShufflingEnabled) {
 			playingFiles = mediaHandler.getMediaFiles();
@@ -195,7 +195,7 @@ public class DisplayHandler {
 	 * invokes the show method of the given file and updates the auto mode timer if necessary and the status of involved files
 	 * @param file
 	 */
-	public void show(MediaFile file) {
+	public void show(ServerMediaFile file) {
 		
 		if(currentMediaFile != null && currentMediaFile != file) {
 			currentMediaFile.getStatus().setIsCurrent(false);
@@ -223,14 +223,14 @@ public class DisplayHandler {
 		int indexOfOldCurrent = playingFiles.indexOf(currentMediaFile);
 		
 		if(indexOfOldCurrent >= 0) {
-			ListIterator<MediaFile> iterator = playingFiles.listIterator(indexOfOldCurrent + 1);
+			ListIterator<ServerMediaFile> iterator = playingFiles.listIterator(indexOfOldCurrent + 1);
 			if(iterator.hasNext()) {
-				MediaFile nextFile = iterator.next();
+				ServerMediaFile nextFile = iterator.next();
 				show(nextFile);
 				currentMediaFile = nextFile;
 				
 			} else if(currentMediaFile != playingFiles.getFirst()) {
-				MediaFile nextFile = playingFiles.getFirst();
+				ServerMediaFile nextFile = playingFiles.getFirst();
 				show(nextFile);
 				currentMediaFile = nextFile;
 			
@@ -249,14 +249,14 @@ public class DisplayHandler {
 		int indexOfOldCurrent = playingFiles.indexOf(currentMediaFile);
 		
 		if(indexOfOldCurrent >= 0) {
-			ListIterator<MediaFile> iterator = playingFiles.listIterator(indexOfOldCurrent);
+			ListIterator<ServerMediaFile> iterator = playingFiles.listIterator(indexOfOldCurrent);
 			if(iterator.hasPrevious()) {
-				MediaFile previousFile = iterator.previous();
+				ServerMediaFile previousFile = iterator.previous();
 				show(previousFile);
 				currentMediaFile = previousFile;
 			
 			} else if(currentMediaFile != playingFiles.getLast()) {
-				MediaFile previousFile = playingFiles.getLast();
+				ServerMediaFile previousFile = playingFiles.getLast();
 				show(previousFile);
 				currentMediaFile = previousFile;
 				
@@ -282,7 +282,7 @@ public class DisplayHandler {
 	public void stopShuffle() {
 		log.log(Level.INFO, "stoping shuffle mode");
 		isShufflingEnabled = false;
-		playingFiles = (LinkedList<MediaFile>) MediaHandler.getInstance().getMediaFiles().clone();
+		playingFiles = (LinkedList<ServerMediaFile>) MediaHandler.getInstance().getMediaFiles().clone();
 		
 	}
 	
@@ -291,7 +291,7 @@ public class DisplayHandler {
 	 * @param fileToShow file to show
 	 * @param date show at
 	 */
-	public void showFileAt(MediaFile fileToShow, Date date) {
+	public void showFileAt(ServerMediaFile fileToShow, Date date) {
 		
 		fileToShow.getStatus().setShowAt(date);
 		Timer tmpTimer = new Timer();
@@ -403,27 +403,27 @@ public class DisplayHandler {
 		this.isShufflingEnabled = isShufflingEnabled;
 	}
 	
-	public LinkedList<MediaFile> getPlayingFiles() {
+	public LinkedList<ServerMediaFile> getPlayingFiles() {
 		return this.playingFiles;
 	}
 
-	public void setPlayingFiles(LinkedList<MediaFile> playingFiles) {
+	public void setPlayingFiles(LinkedList<ServerMediaFile> playingFiles) {
 		this.playingFiles = playingFiles;
 	}
 
-	public MediaFile getCurrentMediaFile() {
+	public ServerMediaFile getCurrentMediaFile() {
 		return currentMediaFile;
 	}
 
-	public void setCurrentMediaFile(MediaFile currentMediaFile) {
+	public void setCurrentMediaFile(ServerMediaFile currentMediaFile) {
 		this.currentMediaFile = currentMediaFile;
 	}
 
-	public MediaFile getHistoryFile() {
+	public ServerMediaFile getHistoryFile() {
 		return historyFile;
 	}
 
-	public void setHistoryFile(MediaFile historyFile) {
+	public void setHistoryFile(ServerMediaFile historyFile) {
 		this.historyFile = historyFile;
 	}
 

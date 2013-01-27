@@ -5,24 +5,24 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.netprojectev.media.MediaFile;
-import de.netprojectev.media.VideoFile;
+import de.netprojectev.media.server.ServerMediaFile;
+import de.netprojectev.media.server.VideoFile;
 import de.netprojectev.mediahandler.MediaHandler;
 
 public class MediaHandlerTest {
 
 	MediaHandler mediaHandler;
-	MediaFile[] testFiles;
-	MediaFile[] testFiles2;
-	MediaFile[] testFiles3;
-	MediaFile[] testFiles4;
-	MediaFile[] testFiles5;
-	MediaFile testFile0;
-	MediaFile testFile1;
-	MediaFile testFile2;
-	MediaFile testFile3;
-	MediaFile testFile4;
-	MediaFile testFile5;
+	ServerMediaFile[] testFiles;
+	ServerMediaFile[] testFiles2;
+	ServerMediaFile[] testFiles3;
+	ServerMediaFile[] testFiles4;
+	ServerMediaFile[] testFiles5;
+	ServerMediaFile testFile0;
+	ServerMediaFile testFile1;
+	ServerMediaFile testFile2;
+	ServerMediaFile testFile3;
+	ServerMediaFile testFile4;
+	ServerMediaFile testFile5;
 
 	@Before
 	public void setUp() {
@@ -30,11 +30,11 @@ public class MediaHandlerTest {
 		MediaHandler.reset();
 		
 		mediaHandler = MediaHandler.getInstance();
-		testFiles = new MediaFile[3];
-		testFiles2 = new MediaFile[1];
-		testFiles3 = new MediaFile[2];
-		testFiles4 = new MediaFile[3];
-		testFiles5 = new MediaFile[2];
+		testFiles = new ServerMediaFile[3];
+		testFiles2 = new ServerMediaFile[1];
+		testFiles3 = new ServerMediaFile[2];
+		testFiles4 = new ServerMediaFile[3];
+		testFiles5 = new ServerMediaFile[2];
 
 		testFile0 = new VideoFile("0", "0");
 		testFile1 = new VideoFile("1", "1");

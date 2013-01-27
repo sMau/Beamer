@@ -1,4 +1,4 @@
-package de.netprojectev.media;
+package de.netprojectev.media.server;
 
 import java.io.File;
 import java.util.logging.Level;
@@ -11,7 +11,7 @@ import de.netprojectev.misc.Misc;
  * Datastructure for a themeslide. It holds a theme object and a formatted styled text as JTextPane.
  * @author samu
  */
-public class Themeslide extends MediaFile {
+public class Themeslide extends ServerMediaFile {
 
 	private static final long serialVersionUID = -1132804586378123305L;
 	private static final Logger log = Misc.getLoggerAll(Themeslide.class.getName());

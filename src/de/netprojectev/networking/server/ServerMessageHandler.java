@@ -10,10 +10,11 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 
 import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
 
-public class ServerHandler extends SimpleChannelHandler {
+public class ServerMessageHandler extends SimpleChannelHandler {
 	
-	private static final Logger LOG = Misc.getLoggerAll(ServerHandler.class.getName());
+	private static final Logger LOG = Misc.getLoggerAll(ServerMessageHandler.class.getName());
 	
 	@Override
 	public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e) {
@@ -24,7 +25,7 @@ public class ServerHandler extends SimpleChannelHandler {
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
 	
-		Server.getAllclients().write(new Message((byte) -1));
+		e.getChannel().write(new Message(OpCode.CONNECTION_ACK));
 
 	}
 

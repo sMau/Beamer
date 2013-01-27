@@ -3,7 +3,7 @@ package de.netprojectev.misc;
 import java.awt.GraphicsEnvironment;
 import java.util.Date;
 
-import de.netprojectev.media.Priority;
+import de.netprojectev.media.server.Priority;
 
 /**
  * 

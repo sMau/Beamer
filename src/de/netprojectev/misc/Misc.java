@@ -32,10 +32,10 @@ import org.jdesktop.swingx.util.GraphicsUtilities;
 import de.netprojectev.liveticker.LiveTicker;
 import de.netprojectev.liveticker.TickerTextElement;
 import de.netprojectev.main.Starter;
-import de.netprojectev.media.ImageFile;
-import de.netprojectev.media.MediaFile;
-import de.netprojectev.media.Priority;
-import de.netprojectev.media.Theme;
+import de.netprojectev.media.server.ImageFile;
+import de.netprojectev.media.server.ServerMediaFile;
+import de.netprojectev.media.server.Priority;
+import de.netprojectev.media.server.Theme;
 import de.netprojectev.mediahandler.MediaHandler;
 import de.netprojectev.preferences.PreferencesHandler;
 
@@ -54,11 +54,11 @@ public class Misc {
 	 * @param files files to generate media file array from
 	 * @return array of media files.
 	 */
-	public static MediaFile[] createMediaFromFiles(File[] files) {
+	public static ServerMediaFile[] createMediaFromFiles(File[] files) {
 
 		//TODO have to distinguish between videos and images. Maybe using my own ImageFileFilter
 		
-		MediaFile[] mediaFiles = new MediaFile[files.length];
+		ServerMediaFile[] mediaFiles = new ServerMediaFile[files.length];
 
 		for(int i = 0; i < files.length; i++) {
 			
@@ -77,9 +77,9 @@ public class Misc {
 	 * @param selectedIndices index array identifiying files in the {@link MediaHandler}
 	 * @return array of specified media files
 	 */
-	public static MediaFile[] indexListToMediaFiles(int[] selectedIndices) {
+	public static ServerMediaFile[] indexListToMediaFiles(int[] selectedIndices) {
 		
-		MediaFile[] mediaFiles = new MediaFile[selectedIndices.length];
+		ServerMediaFile[] mediaFiles = new ServerMediaFile[selectedIndices.length];
 		
 		for(int i = 0; i < selectedIndices.length; i++) {
 			

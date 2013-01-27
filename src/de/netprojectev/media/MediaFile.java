@@ -1,46 +1,34 @@
 package de.netprojectev.media;
 
-import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
-import de.netprojectev.gui.display.DisplayMainFrame;
-import de.netprojectev.mediahandler.DisplayDispatcher;
+import de.netprojectev.media.server.ImageFile;
+import de.netprojectev.media.server.Priority;
+import de.netprojectev.media.server.Status;
+import de.netprojectev.media.server.Themeslide;
+import de.netprojectev.media.server.VideoFile;
 
-/**
- * abstract datastructure to deal, to deal with different media in an extension of this class
- * 
- * @author samu
- */
-public abstract class MediaFile implements Serializable {
-
-	private static final long serialVersionUID = -5495642573722802422L;
+public abstract class MediaFile {
 	
+	private final UUID id;
 	protected String name;
 	protected transient Status status;
 	protected Priority priority;
 	protected Boolean corrupted;
-	
-	protected transient DisplayMainFrame display;
-	
+		
 	/**
 	 * 
 	 * @param name name in the manager
 	 * @param priority initial priority
 	 */
-	protected MediaFile(String name, Priority priority) {
-
+	protected MediaFile(String name, Priority priority, UUID id) {
+		this.id = id;
 		this.name = name;
 		this.status = new Status();
 		this.priority = priority;
 		this.corrupted = false;
-		this.display = DisplayDispatcher.getInstance().getDisplayFrame();
-
 	}
-
-	/**
-	 * show the media in the {@link DisplayMainFrame}
-	 */
-	public abstract void show();
 	
 	/**
 	 * Generates a formatted information string about the media file, about its attributes and current state.
@@ -102,6 +90,19 @@ public abstract class MediaFile implements Serializable {
 		}
 		return info;
 	}
+	
+	@Override
+	public boolean equals(Object other){
+	    if (other == null || this == null) {
+	    	return false;
+	    } else if(other == this){
+	    	return true;
+	    } else if(other instanceof MediaFile) {
+	    	return ((MediaFile) other).getId().equals(this.getId());
+	    } else {
+	    	return false;
+	    }
+	}
 
 	public void resetPlayedState() {
 		this.status.setWasShowed(false);
@@ -131,12 +132,8 @@ public abstract class MediaFile implements Serializable {
 		this.priority = priority;
 	}
 
-	public DisplayMainFrame getDisplay() {
-		return display;
+	public UUID getId() {
+		return id;
 	}
-
-	public void setDisplay(DisplayMainFrame display) {
-		this.display = display;
-	}
-
+	
 }

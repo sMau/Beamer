@@ -38,10 +38,10 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 
 import de.netprojectev.gui.dialogs.ColorPickerDialog;
-import de.netprojectev.media.MediaFile;
-import de.netprojectev.media.Priority;
-import de.netprojectev.media.Theme;
-import de.netprojectev.media.Themeslide;
+import de.netprojectev.media.server.ServerMediaFile;
+import de.netprojectev.media.server.Priority;
+import de.netprojectev.media.server.Theme;
+import de.netprojectev.media.server.Themeslide;
 import de.netprojectev.mediahandler.MediaHandler;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
@@ -501,7 +501,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		
     		long hashKey = generateHash();
     		
-    		MediaFile[] themeSlides = new MediaFile[1];
+    		ServerMediaFile[] themeSlides = new ServerMediaFile[1];
     		themeSlides[0] = new Themeslide(name, priority, theme, hashKey);
     		generatePNGRepresentation(themeSlides[0], hashKey);
     		MediaHandler.getInstance().add(themeSlides);
@@ -515,7 +515,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
     }
 
-	private void generatePNGRepresentation(MediaFile themeSlides, long hashKey) {
+	private void generatePNGRepresentation(ServerMediaFile themeSlides, long hashKey) {
 	
     	String savePath = Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE;
     	if(!new File(savePath).isDirectory()) {
@@ -566,7 +566,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		Boolean isUnique = false;
 		long hash = -1;
 		
-		LinkedList<MediaFile> allfiles = MediaHandler.getInstance().getMediaFiles();
+		LinkedList<ServerMediaFile> allfiles = MediaHandler.getInstance().getMediaFiles();
 		
 		while(!isUnique) {
 			hash = hashGen.nextLong();

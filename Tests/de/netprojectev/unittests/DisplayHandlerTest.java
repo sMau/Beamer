@@ -9,8 +9,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import de.netprojectev.gui.manager.ManagerFrame;
-import de.netprojectev.media.MediaFile;
-import de.netprojectev.media.VideoFile;
+import de.netprojectev.media.server.ServerMediaFile;
+import de.netprojectev.media.server.VideoFile;
 import de.netprojectev.mediahandler.DisplayHandler;
 import de.netprojectev.mediahandler.MediaHandler;
 import de.netprojectev.misc.Constants;
@@ -19,28 +19,28 @@ public class DisplayHandlerTest {
 
 	
 	DisplayHandler displayHandler;
-	MediaFile[] testFiles;
-	MediaFile[] testFiles2;
-	MediaFile[] testFiles3;
-	MediaFile[] testFiles4;
-	MediaFile[] testFiles5;
-	MediaFile testFile0;
-	MediaFile testFile1;
-	MediaFile testFile2;
-	MediaFile testFile3;
-	MediaFile testFile4;
-	MediaFile testFile5;
+	ServerMediaFile[] testFiles;
+	ServerMediaFile[] testFiles2;
+	ServerMediaFile[] testFiles3;
+	ServerMediaFile[] testFiles4;
+	ServerMediaFile[] testFiles5;
+	ServerMediaFile testFile0;
+	ServerMediaFile testFile1;
+	ServerMediaFile testFile2;
+	ServerMediaFile testFile3;
+	ServerMediaFile testFile4;
+	ServerMediaFile testFile5;
 	
 	@Before
 	public void setUp() {
 		
 	
 		displayHandler = DisplayHandler.getInstance();
-		testFiles = new MediaFile[3];
-		testFiles2 = new MediaFile[1];
-		testFiles3 = new MediaFile[2];
-		testFiles4 = new MediaFile[3];
-		testFiles5 = new MediaFile[2];
+		testFiles = new ServerMediaFile[3];
+		testFiles2 = new ServerMediaFile[1];
+		testFiles3 = new ServerMediaFile[2];
+		testFiles4 = new ServerMediaFile[3];
+		testFiles5 = new ServerMediaFile[2];
 
 		testFile0 = new VideoFile("0", "0");
 		testFile1 = new VideoFile("1", "1");
@@ -77,8 +77,8 @@ public class DisplayHandlerTest {
 		
 		displayHandler.add(testFiles4);
 		
-		MediaFile[] tmp =  new MediaFile[6];
-		tmp = displayHandler.getPlayingFiles().toArray(new MediaFile[0]);
+		ServerMediaFile[] tmp =  new ServerMediaFile[6];
+		tmp = displayHandler.getPlayingFiles().toArray(new ServerMediaFile[0]);
 		
 		displayHandler.startShuffle();
 		assertEquals(true, displayHandler.getIsShufflingEnabled());
@@ -90,7 +90,7 @@ public class DisplayHandlerTest {
 		 * !!!!!
 		 * Schlägt vielleicht bei einem von tausend mal fehl, da der shuffle das original liefert
 		 */
-		assertFalse(tmp.equals( displayHandler.getPlayingFiles().toArray(new MediaFile[0])));
+		assertFalse(tmp.equals( displayHandler.getPlayingFiles().toArray(new ServerMediaFile[0])));
 		
 	}
 	
@@ -99,15 +99,15 @@ public class DisplayHandlerTest {
 	public void testStopShuffle() {
 		
 		displayHandler.add(testFiles4);
-		MediaFile[] tmp =  new MediaFile[6];
-		tmp = displayHandler.getPlayingFiles().toArray(new MediaFile[0]);
+		ServerMediaFile[] tmp =  new ServerMediaFile[6];
+		tmp = displayHandler.getPlayingFiles().toArray(new ServerMediaFile[0]);
 		MediaHandler.getInstance().add(tmp);
 		displayHandler.startShuffle();
 		assertEquals(true, displayHandler.getIsShufflingEnabled());
 		displayHandler.stopShuffle();
 		assertEquals(false, displayHandler.getIsShufflingEnabled());
 		assertEquals(6, displayHandler.getPlayingFiles().size());
-		assertArrayEquals(tmp, displayHandler.getPlayingFiles().toArray(new MediaFile[0]));
+		assertArrayEquals(tmp, displayHandler.getPlayingFiles().toArray(new ServerMediaFile[0]));
 
 	}	
 	
@@ -232,7 +232,7 @@ public class DisplayHandlerTest {
 		
 		displayHandler.add(testFiles4);
 		
-		LinkedList<MediaFile> tmp = displayHandler.getPlayingFiles();
+		LinkedList<ServerMediaFile> tmp = displayHandler.getPlayingFiles();
 		
 		displayHandler.up(testFiles5);
 		
@@ -274,7 +274,7 @@ public class DisplayHandlerTest {
 		
 		displayHandler.add(testFiles4);
 		
-		LinkedList<MediaFile> tmp = displayHandler.getPlayingFiles();
+		LinkedList<ServerMediaFile> tmp = displayHandler.getPlayingFiles();
 		
 		displayHandler.down(testFiles5);
 		

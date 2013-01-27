@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
-import de.netprojectev.media.Countdown;
-import de.netprojectev.media.MediaFile;
+import de.netprojectev.media.server.Countdown;
+import de.netprojectev.media.server.ServerMediaFile;
 import de.netprojectev.mediahandler.DisplayHandler;
 import de.netprojectev.mediahandler.MediaHandler;
 import de.netprojectev.misc.Misc;
@@ -391,7 +391,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 	 * @param evt
 	 */
 	private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButtonAddActionPerformed
-		MediaFile countdown = addCountdown();
+		ServerMediaFile countdown = addCountdown();
 		if (countdown != null) {
 			dispose();
 		}
@@ -402,7 +402,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 	 * adds a countdown and starts it if it was successfully added.
 	 */
 	private void addAndStartCountdown() {
-		MediaFile countdown = addCountdown();
+		ServerMediaFile countdown = addCountdown();
 		if (countdown != null) {
 			DisplayHandler.getInstance().show(countdown);
 			dispose();
@@ -416,7 +416,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 	 *         the countdown
 	 */
 	@SuppressWarnings("deprecation")
-	private MediaFile addCountdown() {
+	private ServerMediaFile addCountdown() {
 
 		String name = jTextFieldName.getText();
 
@@ -444,7 +444,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 			}
 
 			MediaHandler mediaHandler = MediaHandler.getInstance();
-			MediaFile[] countdown = new MediaFile[1];
+			ServerMediaFile[] countdown = new ServerMediaFile[1];
 			countdown[0] = new Countdown(name, finishDate);
 			mediaHandler.add(countdown);
 			return countdown[0];
@@ -455,7 +455,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 				int timeInMinutes = Integer.parseInt(jTextFieldRuntimeInMinutes
 						.getText());
 				MediaHandler mediaHandler = MediaHandler.getInstance();
-				MediaFile[] countdown = new MediaFile[1];
+				ServerMediaFile[] countdown = new ServerMediaFile[1];
 				countdown[0] = new Countdown(name, timeInMinutes);
 				mediaHandler.add(countdown);
 				return countdown[0];

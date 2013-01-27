@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 import de.netprojectev.gui.display.DisplayMainComponent;
 import de.netprojectev.gui.manager.FileManagerTableModel;
 import de.netprojectev.gui.manager.ManagerFrame;
-import de.netprojectev.media.Countdown;
-import de.netprojectev.media.ImageFile;
-import de.netprojectev.media.MediaFile;
-import de.netprojectev.media.Themeslide;
+import de.netprojectev.media.server.Countdown;
+import de.netprojectev.media.server.ImageFile;
+import de.netprojectev.media.server.ServerMediaFile;
+import de.netprojectev.media.server.Themeslide;
 import de.netprojectev.misc.Misc;
 
 /**
@@ -26,7 +26,7 @@ public class MediaHandler {
 	private volatile static MediaHandler instance = new MediaHandler();
 	
 	private DisplayHandler displayHandler;	
-	private LinkedList<MediaFile> mediaFiles;
+	private LinkedList<ServerMediaFile> mediaFiles;
 	private ManagerFrame managerFrame;
 	private int countdownCounter;
 
@@ -34,7 +34,7 @@ public class MediaHandler {
 	private MediaHandler() {
 		
 		countdownCounter = 0;
-		mediaFiles = new LinkedList<MediaFile>();
+		mediaFiles = new LinkedList<ServerMediaFile>();
 		displayHandler = DisplayHandler.getInstance();
 		displayHandler.setMediaHandler(this);
 
@@ -56,7 +56,7 @@ public class MediaHandler {
 	 * Adds the media files to list and if necessary invokes updates on the GUI and the display handler.
 	 * @param files files to add
 	 */
-	public void add(MediaFile[] files) {
+	public void add(ServerMediaFile[] files) {
 
 		for (int i = 0; i < files.length; i++) {
 
@@ -85,10 +85,10 @@ public class MediaHandler {
 	 * @param files files to remove
 	 * @param removeCurrent true if the current element should also be removed if it is in the selection, false if not
 	 */
-	public void remove(MediaFile[] files, boolean removeCurrent) {
+	public void remove(ServerMediaFile[] files, boolean removeCurrent) {
 
 		boolean containsCurrentElt = false;
-		MediaFile[] filesToRemove = files; 
+		ServerMediaFile[] filesToRemove = files; 
 		
 		log.log(Level.INFO, "removing files, removing current: " + removeCurrent);
 		
@@ -101,7 +101,7 @@ public class MediaHandler {
 			
 			if(containsCurrentElt) {
 				int counter = 0;
-				filesToRemove = new MediaFile[files.length - 1];
+				filesToRemove = new ServerMediaFile[files.length - 1];
 				for(int i = 0; i < files.length; i++) {
 					if(!files[i].getStatus().getIsCurrent()) {
 						filesToRemove[counter] = files[i];
@@ -132,7 +132,7 @@ public class MediaHandler {
 	 * If necessary a update on the GUI and the display handler is called
 	 * @param files files to move down
 	 */
-	public void down(MediaFile[] files) {
+	public void down(ServerMediaFile[] files) {
 
 		int firstIndex = mediaFiles.indexOf(files[files.length - 1]) + 1 - (files.length - 1);
 		remove(files, true);
@@ -159,7 +159,7 @@ public class MediaHandler {
 	 * If necessary a update on the GUI and the display handler is called
 	 * @param files files to move up
 	 */
-	public void up(MediaFile[] files) {
+	public void up(ServerMediaFile[] files) {
 		int firstIndex = mediaFiles.indexOf(files[0]) - 1;
 		remove(files, true);
 		
@@ -233,7 +233,7 @@ public class MediaHandler {
 	private void checkForUnuseableCountdowns() {
 		log.log(Level.INFO, "removing unuseable countdowns");
 		if(countdownCounter > 0) {
-			MediaFile[] files = new MediaFile[1];
+			ServerMediaFile[] files = new ServerMediaFile[1];
 			for(int i = 0; i < mediaFiles.size(); i++) {
 				if(mediaFiles.get(i) instanceof Countdown) {
 					Countdown countdown = (Countdown) mediaFiles.get(i);
@@ -260,10 +260,10 @@ public class MediaHandler {
 	}
 	
 	
-	public LinkedList<MediaFile> getMediaFiles() {
+	public LinkedList<ServerMediaFile> getMediaFiles() {
 		return this.mediaFiles;
 	}
-	public void setMediaFiles(LinkedList<MediaFile> mediaFiles) {
+	public void setMediaFiles(LinkedList<ServerMediaFile> mediaFiles) {
 		this.mediaFiles = mediaFiles;
 	}
 

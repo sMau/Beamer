@@ -1,7 +1,7 @@
 package de.netprojectev.tests;
 
-import de.netprojectev.media.ImageFile;
-import de.netprojectev.media.MediaFile;
+import de.netprojectev.media.server.ImageFile;
+import de.netprojectev.media.server.ServerMediaFile;
 import de.netprojectev.mediahandler.DisplayHandler;
 import de.netprojectev.misc.Constants;
 
@@ -17,11 +17,11 @@ public class TestAutomodus2 {
 		 */
 		DisplayHandler displayHandler = DisplayHandler.getInstance();
 		
-		MediaFile[] testFiles = new MediaFile[4];
-		MediaFile testFile0 = new ImageFile("0", "0", Constants.DEFAULT_PRIORITY);
-		MediaFile testFile1 = new ImageFile("1", "1", Constants.DEFAULT_PRIORITY);
-		MediaFile testFile2 = new ImageFile("2", "2", Constants.DEFAULT_PRIORITY);
-		MediaFile testFile3 = new ImageFile("3", "3", Constants.DEFAULT_PRIORITY);
+		ServerMediaFile[] testFiles = new ServerMediaFile[4];
+		ServerMediaFile testFile0 = new ImageFile("0", "0", Constants.DEFAULT_PRIORITY);
+		ServerMediaFile testFile1 = new ImageFile("1", "1", Constants.DEFAULT_PRIORITY);
+		ServerMediaFile testFile2 = new ImageFile("2", "2", Constants.DEFAULT_PRIORITY);
+		ServerMediaFile testFile3 = new ImageFile("3", "3", Constants.DEFAULT_PRIORITY);
 		testFiles[0] = testFile0;
 		testFiles[1] = testFile1;
 		testFiles[2] = testFile2;

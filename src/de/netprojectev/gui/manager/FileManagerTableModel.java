@@ -8,11 +8,11 @@ import java.util.LinkedList;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.netprojectev.media.Countdown;
-import de.netprojectev.media.ImageFile;
-import de.netprojectev.media.MediaFile;
-import de.netprojectev.media.Themeslide;
-import de.netprojectev.media.VideoFile;
+import de.netprojectev.media.server.Countdown;
+import de.netprojectev.media.server.ImageFile;
+import de.netprojectev.media.server.ServerMediaFile;
+import de.netprojectev.media.server.Themeslide;
+import de.netprojectev.media.server.VideoFile;
 import de.netprojectev.mediahandler.MediaHandler;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.preferences.PreferencesHandler;
@@ -30,7 +30,7 @@ public class FileManagerTableModel extends AbstractTableModel {
 	private static final long serialVersionUID = 122422256133966805L;
 	private MediaHandler mediaHandler;
 	private PreferencesHandler preferencesHandler;
-	private LinkedList<MediaFile> mediaFiles;
+	private LinkedList<ServerMediaFile> mediaFiles;
 	private String[] columnNames = {"", "", "Name", "Priority", "Type", "Show At"};
 	private ManagerFrame managerFrame;
 	
@@ -62,7 +62,7 @@ public class FileManagerTableModel extends AbstractTableModel {
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
     	
-    	MediaFile rowObject = mediaFiles.get(rowIndex);
+    	ServerMediaFile rowObject = mediaFiles.get(rowIndex);
     	
     	String type = "";
     	

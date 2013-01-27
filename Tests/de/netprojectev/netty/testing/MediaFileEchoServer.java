@@ -17,7 +17,7 @@ import org.jboss.netty.handler.codec.serialization.ClassResolver;
 import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 
-import de.netprojectev.media.VideoFile;
+import de.netprojectev.media.server.VideoFile;
 import de.netprojectev.netty.examples.SimpleExampleServerHandler;
 import de.netprojectev.netty.examples.TimeEncoder;
 
