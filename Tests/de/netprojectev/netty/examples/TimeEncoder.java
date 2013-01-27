@@ -7,15 +7,16 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
-public class TimeEncoder extends SimpleChannelHandler {
+import de.netprojectev.netty.testing2.CommandMessage;
 
+public class TimeEncoder extends SimpleChannelHandler {
+	
 	@Override
 	public void writeRequested(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-		UnixTime time = (UnixTime) e.getMessage();
-		 ChannelBuffer buf = ChannelBuffers.buffer(4);
-         buf.writeInt(time.getValue());
-         
-         Channels.write(ctx, e.getFuture(), buf);
+		CommandMessage msg = (CommandMessage) e.getMessage();
+		
+		System.out.println(msg.getCommand());
+		
 	}
 	
 }

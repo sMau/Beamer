@@ -4,18 +4,22 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelFuture;
+import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
-import de.netprojectev.netty.examples.SimpleExampleClientHandler;
-import de.netprojectev.netty.examples.TimeDecoder;
+import de.netprojectev.media.VideoFile;
 
 public class MediaFileEchoClient {
+
+	private static Channel clientChannel;
+	private static ChannelFactory factory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 
 	/**
 	 * @param args
@@ -23,7 +27,6 @@ public class MediaFileEchoClient {
 	public static void main(String[] args) {
 		String host = "localhost";
 		int port = 8080;
-		ChannelFactory factory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 		ClientBootstrap bootstrap = new ClientBootstrap(factory);
 
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
@@ -35,14 +38,62 @@ public class MediaFileEchoClient {
 		});
 		
 		ChannelFuture future = bootstrap.connect(new InetSocketAddress(host, port));
-		/*future.awaitUninterruptibly();
+		future.awaitUninterruptibly();
 		if (!future.isSuccess()) {
 			future.getCause().printStackTrace();
+			System.exit(0);
+		} else {
+			System.out.println("client connected successfully");
+			clientChannel = future.getChannel();
 		}
-		future.getChannel().getCloseFuture().awaitUninterruptibly();
-        factory.releaseExternalResources();*/
+		
+		try {
+			sendSomeMessages();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
+	}
+	
+	
+	private static void sendSomeMessages() throws InterruptedException {
+		VideoFile vid1 = new VideoFile("client1 vid1", "/home");
+		VideoFile vid2 = new VideoFile("client1 vid2", "/home");
+		VideoFile vid3 = new VideoFile("client1 vid3", "/home");
+		VideoFile vid4 = new VideoFile("client1 vid4", "/home");
+		
+		
+		Thread.sleep(3000);
+		
+		clientChannel.write(vid1);
+		Thread.sleep(2000);
+		clientChannel.write(vid2);
+		Thread.sleep(2000);
+		clientChannel.write(vid3);
+		Thread.sleep(2000);
+		ChannelFuture futureOfWrite = clientChannel.write(vid4);
+		futureOfWrite.addListener(new ChannelFutureListener() {
+			
+			@Override
+			public void operationComplete(ChannelFuture future) throws Exception {
+				if(future.isSuccess()) {
+					closeConnection();
+				} else {
+					System.out.println(future.getCause());
+					closeConnection();
+				}
+			}
+		});
+		
+	}
+
+
+	public static void closeConnection() {
+		System.out.println("closing connection");
+		clientChannel.getCloseFuture().awaitUninterruptibly();
+        factory.releaseExternalResources();
 	}
 
 }

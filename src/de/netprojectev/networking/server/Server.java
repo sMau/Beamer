@@ -1,78 +1,57 @@
 package de.netprojectev.networking.server;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.InetSocketAddress;
+import java.util.concurrent.Executors;
 
-import de.netprojectev.networking.Messages;
+import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.Channel;
+import org.jboss.netty.channel.ChannelFactory;
+import org.jboss.netty.channel.ChannelPipeline;
+import org.jboss.netty.channel.ChannelPipelineFactory;
+import org.jboss.netty.channel.Channels;
+import org.jboss.netty.channel.group.ChannelGroup;
+import org.jboss.netty.channel.group.DefaultChannelGroup;
+import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import org.jboss.netty.handler.codec.serialization.ClassResolvers;
+import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
+import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
-public class Server implements Runnable {
 
-	private final ServerSocket server;
-	private CommandQueue commandQueue;
+public class Server {
+
+	private final int port;
+	private static final ChannelGroup allClients = new DefaultChannelGroup("beamer-clients");
 	
-	public Server(int listeningPort) throws IOException {
-		server = new ServerSocket(listeningPort);
-		commandQueue = new CommandQueue();
+	public Server(int port) {
+		this.port = port;
+		
+		bind();
 	}
 
-	private void initListening() throws IOException {
 
-		while (server.isBound()) {
-			Socket connection = server.accept();
-			new Thread(new ConnectionHandler(connection)).start();
-		}
-
-	}
-
-	@Override
-	public void run() {
-		try {
-			initListening();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-}
-
-final class ConnectionHandler implements Runnable {
-
-	private Socket connection;
-
-	protected ConnectionHandler(Socket connection) {
-		this.connection = connection;
-	}
-
-	@Override
-	public void run() {
-		DataInputStream in = null;
-		Byte readByte = null;
-		try {
-			in = new DataInputStream(connection.getInputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		while (!connection.isClosed()) {
-
-			try {
-				readByte = in.readByte();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	private void bind() {
+		ChannelFactory factory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
+		ServerBootstrap bootstrap = new ServerBootstrap(factory);
+		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+			
+			@Override
+			public ChannelPipeline getPipeline() throws Exception {
+				return Channels.pipeline(new ObjectEncoder(), new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new ServerHandler());
+			
 			}
-
-			switch (readByte) {
-			case Messages.ADD_MEDIA_FILE:
-				System.out.println("ADDING MEDIA FILE");
-				break;
-			default:
-				System.out.println("Read unknown byte message");
-			}
-		}
+		});
+		
+		bootstrap.setOption("child.tcpNoDelay", true);
+		bootstrap.setOption("child.keepAlive", true);
+	
+		Channel channel = bootstrap.bind(new InetSocketAddress(port));
+		
 	}
+
+
+	public static ChannelGroup getAllclients() {
+		return allClients;
+	}
+	
 
 }
