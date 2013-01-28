@@ -29,15 +29,15 @@ import javax.swing.JOptionPane;
 
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
-import de.netprojectev.liveticker.LiveTicker;
-import de.netprojectev.liveticker.TickerTextElement;
+import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.main.Starter;
-import de.netprojectev.media.server.ImageFile;
-import de.netprojectev.media.server.ServerMediaFile;
-import de.netprojectev.media.server.Priority;
-import de.netprojectev.media.server.Theme;
-import de.netprojectev.mediahandler.MediaHandler;
-import de.netprojectev.preferences.PreferencesHandler;
+import de.netprojectev.server.datastructures.liveticker.LiveTicker;
+import de.netprojectev.server.datastructures.liveticker.TickerTextElement;
+import de.netprojectev.server.datastructures.media.ImageFile;
+import de.netprojectev.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.server.model.MediaHandler;
+import de.netprojectev.server.model.PreferencesModel;
 
 /**
  * Class to hold global methods not containing to a specific other class.
@@ -100,7 +100,7 @@ public class Misc {
 		
 		for(int i = 0; i < selectedIndices.length; i++) {
 			
-			priorities[i] = PreferencesHandler.getInstance().getListOfPriorities().get(selectedIndices[i]);
+			priorities[i] = PreferencesModel.getInstance().getListOfPriorities().get(selectedIndices[i]);
 			
 		}
 		
@@ -118,7 +118,7 @@ public class Misc {
 		
 		for(int i = 0; i < selectedIndices.length; i++) {
 			
-			themes[i] = PreferencesHandler.getInstance().getListOfThemes().get(selectedIndices[i]);
+			themes[i] = PreferencesModel.getInstance().getListOfThemes().get(selectedIndices[i]);
 			
 		}
 		
@@ -130,13 +130,13 @@ public class Misc {
 	 * @param selectedIndices index array identifiying ticker text elements in the Liveticker 
 	 * @return array of specified ticker text elements
 	 */
-	public static TickerTextElement[] indexListToTickerElts(int[] selectedIndices) {
+	public static TickerTextElement[] indexListToTickerElts(LiveTicker liveTicker, int[] selectedIndices) {
 		
 		TickerTextElement[] elements = new TickerTextElement[selectedIndices.length];
 		
 		for(int i = 0; i < selectedIndices.length; i++) {
 			
-			elements[i] = LiveTicker.getInstance().getTextElements().get(selectedIndices[i]);
+			elements[i] = liveTicker.getTextElements().get(selectedIndices[i]);
 			
 		}
 		

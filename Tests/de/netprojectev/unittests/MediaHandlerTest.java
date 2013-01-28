@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.netprojectev.media.server.ServerMediaFile;
-import de.netprojectev.media.server.VideoFile;
-import de.netprojectev.mediahandler.MediaHandler;
+import de.netprojectev.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.server.datastructures.media.VideoFile;
+import de.netprojectev.server.model.MediaHandler;
 
 public class MediaHandlerTest {
 

@@ -6,7 +6,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ DisplayHandlerTest.class, MediaHandlerTest.class, LiveTickerTest.class})
+@SuiteClasses({ DisplayHandlerTest.class, MediaHandlerTest.class})
 public class AllTests {
 
 	

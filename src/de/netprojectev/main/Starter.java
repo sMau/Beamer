@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import javax.swing.SwingUtilities;
 
-import de.netprojectev.gui.manager.ManagerFrame;
+import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
 

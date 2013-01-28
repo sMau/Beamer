@@ -14,7 +14,7 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
-import de.netprojectev.media.server.VideoFile;
+import de.netprojectev.server.datastructures.media.VideoFile;
 
 public class MediaFileEchoClient {
 

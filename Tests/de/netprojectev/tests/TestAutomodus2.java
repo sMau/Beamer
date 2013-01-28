@@ -1,9 +1,9 @@
 package de.netprojectev.tests;
 
-import de.netprojectev.media.server.ImageFile;
-import de.netprojectev.media.server.ServerMediaFile;
-import de.netprojectev.mediahandler.DisplayHandler;
 import de.netprojectev.misc.Constants;
+import de.netprojectev.server.datastructures.media.ImageFile;
+import de.netprojectev.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.server.model.DisplayMediaModel;
 
 public class TestAutomodus2 {
 	
@@ -15,7 +15,7 @@ public class TestAutomodus2 {
 		/*
 		 * Automodus Test
 		 */
-		DisplayHandler displayHandler = DisplayHandler.getInstance();
+		DisplayMediaModel displayHandler = DisplayMediaModel.getInstance();
 		
 		ServerMediaFile[] testFiles = new ServerMediaFile[4];
 		ServerMediaFile testFile0 = new ImageFile("0", "0", Constants.DEFAULT_PRIORITY);

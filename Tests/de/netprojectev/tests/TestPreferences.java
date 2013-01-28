@@ -1,9 +1,9 @@
 package de.netprojectev.tests;
 
-import de.netprojectev.gui.manager.ManagerFrame;
-import de.netprojectev.gui.preferences.PreferencesFrame;
-import de.netprojectev.media.server.Priority;
-import de.netprojectev.preferences.PreferencesHandler;
+import de.netprojectev.client.gui.manager.ManagerFrame;
+import de.netprojectev.client.gui.preferences.PreferencesFrame;
+import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.server.model.PreferencesModel;
 
 public class TestPreferences {
 
@@ -12,7 +12,7 @@ public class TestPreferences {
 	 */
 	public static void main(String[] args) {
 		
-		PreferencesHandler handler = PreferencesHandler.getInstance();
+		PreferencesModel handler = PreferencesModel.getInstance();
 		handler.addPriority(new Priority("test1", 1));
 		handler.addPriority(new Priority("test2", 5));
 		handler.addPriority(new Priority("test3", 10));

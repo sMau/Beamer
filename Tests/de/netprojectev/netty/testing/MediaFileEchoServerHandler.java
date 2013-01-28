@@ -5,8 +5,8 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
-import de.netprojectev.media.server.ServerMediaFile;
-import de.netprojectev.media.server.Status;
+import de.netprojectev.datastructures.media.Status;
+import de.netprojectev.server.datastructures.media.ServerMediaFile;
 
 public class MediaFileEchoServerHandler extends SimpleChannelHandler {
 	

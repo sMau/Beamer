@@ -8,17 +8,17 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import de.netprojectev.gui.manager.ManagerFrame;
-import de.netprojectev.media.server.ServerMediaFile;
-import de.netprojectev.media.server.VideoFile;
-import de.netprojectev.mediahandler.DisplayHandler;
-import de.netprojectev.mediahandler.MediaHandler;
+import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.misc.Constants;
+import de.netprojectev.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.server.datastructures.media.VideoFile;
+import de.netprojectev.server.model.DisplayMediaModel;
+import de.netprojectev.server.model.MediaHandler;
 
 public class DisplayHandlerTest {
 
 	
-	DisplayHandler displayHandler;
+	DisplayMediaModel displayHandler;
 	ServerMediaFile[] testFiles;
 	ServerMediaFile[] testFiles2;
 	ServerMediaFile[] testFiles3;
@@ -35,7 +35,7 @@ public class DisplayHandlerTest {
 	public void setUp() {
 		
 	
-		displayHandler = DisplayHandler.getInstance();
+		displayHandler = DisplayMediaModel.getInstance();
 		testFiles = new ServerMediaFile[3];
 		testFiles2 = new ServerMediaFile[1];
 		testFiles3 = new ServerMediaFile[2];
