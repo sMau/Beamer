@@ -405,7 +405,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private void jButtonAddAndShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddAndShowActionPerformed
     	boolean success = addThemeslide();
     	if(success) {
-    		MediaHandler.getInstance().getDisplayHandler().show(MediaHandler.getInstance().getMediaFiles().getLast());
+    		MediaHandler.getInstance().getDisplayMediaModel().show(MediaHandler.getInstance().getMediaFiles().getLast());
     		dispose();
     	}
     }//GEN-LAST:event_jButtonAddAndShowActionPerformed

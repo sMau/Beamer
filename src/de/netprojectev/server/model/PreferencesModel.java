@@ -23,9 +23,7 @@ import de.netprojectev.misc.Misc;
 public class PreferencesModel {
 
 	private static final Logger log = Misc.getLoggerAll(PreferencesModel.class.getName());
-	
-	private static volatile PreferencesModel instance = new PreferencesModel();
-	
+		
 	private PreferencesFrame preferencesFrame;
 	private ManagerFrame managerFrame;
 	
@@ -34,7 +32,7 @@ public class PreferencesModel {
 	
 	private Properties properties;
 	
-	private PreferencesModel() {
+	public PreferencesModel() {
 
 		properties = new Properties(Misc.generateDefaultProps());
 		this.listOfPriorities = new LinkedList<Priority>();
@@ -43,15 +41,7 @@ public class PreferencesModel {
 		this.listOfThemes = new LinkedList<Theme>();
 		
 	}
-	
-	public static PreferencesModel getInstance() {
-		
-		if(instance == null) {
-			instance = new PreferencesModel();
-		}
-		return instance;
-	}
-	
+
 	/**
 	 * This method updates the properties object, by writing all changes from the preferences frame to it.
 	 * @throws IOException 

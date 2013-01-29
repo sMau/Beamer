@@ -43,7 +43,6 @@ import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.liveticker.LiveTicker;
 import de.netprojectev.server.datastructures.liveticker.TickerTextElement;
 import de.netprojectev.server.datastructures.media.Countdown;
 import de.netprojectev.server.datastructures.media.ImageFile;
@@ -64,23 +63,17 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private static final Logger log = Misc.getLoggerAll(ManagerFrame.class.getName());
 	
 	private static final long serialVersionUID = 7019176172214701606L;
-	private MediaHandler mediaHandler;
-	private LiveTicker liveTicker;
-	private PreferencesModel preferencesHandler;
+
 	private JComboBox<String> comboBox;
 	
-	private ManagerFrame instance;
+	private final FileManagerTableModel model;
 	
     public ManagerFrame() {
         
-    	preferencesHandler = PreferencesModel.getInstance();
-    	
-    	mediaHandler = MediaHandler.getInstance();
-        mediaHandler.setManagerFrame(this);
-        
-        // TODO client structure for ticker liveTicker = LiveTicker.getInstance();
+        // TODO client structure for ticker and media liveTicker = LiveTicker.getInstance();
         // liveTicker.setManagerFrame(this);
 
+    	model = new FileManagerTableModel(this);
         initComponents();
         setLocation(Misc.currentMousePosition());
 
@@ -91,7 +84,6 @@ public class ManagerFrame extends javax.swing.JFrame {
 		} catch (IOException e) {
 			log.log(Level.SEVERE, "Error during loading settings and files.", e);
 		}
-        instance = this;
         
     }
 
@@ -428,7 +420,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             }
         });
 
-        jTableFileManager.setModel(new FileManagerTableModel(this));
+        jTableFileManager.setModel(model);
         jTableFileManager.setShowHorizontalLines(false);
         jTableFileManager.setShowVerticalLines(false);
         jTableFileManager.getColumnModel().getColumn(0).setMaxWidth(20);
@@ -440,8 +432,8 @@ public class ManagerFrame extends javax.swing.JFrame {
 
         TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);
         comboBox = new JComboBox();
-        for(int i = 0; i < preferencesHandler.getListOfPriorities().size(); i++) {
-            comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());
+        for(int i = 0; i < model.getPreferencesHandler().getListOfPriorities().size(); i++) {
+            comboBox.addItem(model.getPreferencesHandler().getListOfPriorities().get(i).getName());
         }
         prioColumn.setCellEditor(new DefaultCellEditor(comboBox));
 
@@ -923,7 +915,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     	new SwingWorker<PreferencesFrame, Void>() {
 		    @Override
 		    public PreferencesFrame doInBackground() {
-		    	return new PreferencesFrame(instance);
+		    	return new PreferencesFrame(ManagerFrame.this);
 		    }
 
 		    @Override
@@ -954,10 +946,10 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     private void jRadioButtonMenuItemShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemShuffleActionPerformed
     	if(jRadioButtonMenuItemShuffle.isSelected()) {
-    		mediaHandler.getDisplayHandler().startShuffle();
+    		model.getMediaHandler().getDisplayMediaModel().startShuffle();
     		toggleBtnShuffle.setSelected(true);
     	} else {
-    		mediaHandler.getDisplayHandler().stopShuffle();
+    		model.getMediaHandler().getDisplayMediaModel().stopShuffle();
     		toggleBtnShuffle.setSelected(false);
     	}
     }//GEN-LAST:event_jRadioButtonMenuItemShuffleActionPerformed
@@ -969,10 +961,10 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     private void jRadioButtonMenuItemAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemAutoActionPerformed
     	if(jRadioButtonMenuItemAuto.isSelected()) {
-    		mediaHandler.getDisplayHandler().startAutomodus();
+    		model.getMediaHandler().getDisplayMediaModel().startAutomodus();
     		toogleBtnAuto.setSelected(true);
     	} else {
-    		mediaHandler.getDisplayHandler().startAutomodus();
+    		model.getMediaHandler().getDisplayMediaModel().startAutomodus();
     		toogleBtnAuto.setSelected(false);
     	}
 
@@ -985,10 +977,10 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     private void toogleBtnAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toogleBtnAutoActionPerformed
     	if(toogleBtnAuto.isSelected()) {
-    		mediaHandler.getDisplayHandler().startAutomodus();   		
+    		model.getMediaHandler().getDisplayMediaModel().startAutomodus();   		
     		jRadioButtonMenuItemAuto.setSelected(true);
     	} else {
-    		mediaHandler.getDisplayHandler().stopAutomodus();
+    		model.getMediaHandler().getDisplayMediaModel().stopAutomodus();
     		lblTimeleft.setText("Timeleft: --:--");
     		jRadioButtonMenuItemAuto.setSelected(false);
     	}
@@ -1002,10 +994,10 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     private void toggleBtnShuffleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_toggleBtnShuffleActionPerformed
     	if(toggleBtnShuffle.isSelected()) {
-    		mediaHandler.getDisplayHandler().startShuffle();
+    		model.getMediaHandler().getDisplayMediaModel().startShuffle();
     		jRadioButtonMenuItemShuffle.setSelected(true);
     	} else {
-    		mediaHandler.getDisplayHandler().stopShuffle();
+    		model.getMediaHandler().getDisplayMediaModel().stopShuffle();
     		jRadioButtonMenuItemShuffle.setSelected(false);
     	}
 
@@ -1073,15 +1065,15 @@ public class ManagerFrame extends javax.swing.JFrame {
     	int[] selectedRows = jTableFileManager.getSelectedRows();
     	if(selectedRows.length > 0) {
     		for(int i = 0; i < selectedRows.length; i++) {
-    			mediaHandler.getMediaFiles().get(selectedRows[i]).resetPlayedState();
+    			model.getMediaHandler().getMediaFiles().get(selectedRows[i]).resetPlayedState();
     		}
     		((FileManagerTableModel) jTableFileManager.getModel()).updateModel();
     	}
     }//GEN-LAST:event_jMenuItemResetPlayedStateActionPerformed
 
     private void jMenuItemResetAllPlayedStatesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemResetAllPlayedStatesActionPerformed
-    	for(int i = 0; i < mediaHandler.getMediaFiles().size(); i++) {
-    		mediaHandler.getMediaFiles().get(i).resetPlayedState();
+    	for(int i = 0; i < model.getMediaHandler().getMediaFiles().size(); i++) {
+    		model.getMediaHandler().getMediaFiles().get(i).resetPlayedState();
     	}
     	((FileManagerTableModel) jTableFileManager.getModel()).updateModel();
     }//GEN-LAST:event_jMenuItemResetAllPlayedStatesActionPerformed
@@ -1145,7 +1137,7 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     private void editTicketElement() {
 		if(jTableLiveticker.getSelectedRow() >= 0) {
-    		new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow()), this).setVisible(true);
+    		// TODO new AddTickerElement(liveTicker.getTextElements().get(jTableLiveticker.getSelectedRow()), this).setVisible(true);
     	}
 	}
     
@@ -1155,7 +1147,7 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     private void showNext() {
     	final int[] selectedRows = getjTableFileManager().getSelectedRows(); 
-		mediaHandler.getDisplayHandler().showNext();
+    	model.getMediaHandler().getDisplayMediaModel().showNext();
 		SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -1174,7 +1166,7 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
 	private void showPrevious() {
     	final int[] selectedRows = getjTableFileManager().getSelectedRows(); 
-		mediaHandler.getDisplayHandler().showPrevious();
+    	model.getMediaHandler().getDisplayMediaModel().showPrevious();
 		SwingUtilities.invokeLater(new Runnable() {
 
             public void run() {
@@ -1213,7 +1205,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private void showFile() {
 		final int[] selectedRows = getjTableFileManager().getSelectedRows();
     	if(selectedRows.length > 0) {
-    		mediaHandler.getDisplayHandler().show(Misc.indexListToMediaFiles(selectedRows)[0]);
+    		model.getMediaHandler().getDisplayMediaModel().show(Misc.indexListToMediaFiles(selectedRows)[0]);
     		SwingUtilities.invokeLater(new Runnable() {
 
                 public void run() {
@@ -1267,7 +1259,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     private void moveFilesUp() {
 		final int[] selectedRows = jTableFileManager.getSelectedRows();	
     	if(selectedRows.length > 0) {
-    		mediaHandler.up(Misc.indexListToMediaFiles(selectedRows));
+    		model.getMediaHandler().up(Misc.indexListToMediaFiles(selectedRows));
     		
     		SwingUtilities.invokeLater(new Runnable() {
 
@@ -1290,7 +1282,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		final int[] selectedRows = jTableFileManager.getSelectedRows();
 		int newSelection = -1;
         if(selectedRows.length > 0) {
-        	mediaHandler.remove(Misc.indexListToMediaFiles(selectedRows), false);
+        	model.getMediaHandler().remove(Misc.indexListToMediaFiles(selectedRows), false);
     		int firstSelectedRow = selectedRows[0];
     		if(firstSelectedRow >= jTableFileManager.getRowCount() - 1) {
     			if(jTableFileManager.getRowCount() == 0) {
@@ -1320,7 +1312,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 	private void moveFilesDown() {
 		final int[] selectedRows = jTableFileManager.getSelectedRows();
     	if(selectedRows.length > 0) {
-    		mediaHandler.down(Misc.indexListToMediaFiles(selectedRows));
+    		model.getMediaHandler().down(Misc.indexListToMediaFiles(selectedRows));
     		
     		SwingUtilities.invokeLater(new Runnable() {
 
@@ -1378,8 +1370,8 @@ public class ManagerFrame extends javax.swing.JFrame {
 	public void refreshComboBoxCellEditor() {
 		TableColumn prioColumn = jTableFileManager.getColumnModel().getColumn(3);
         comboBox = new JComboBox();
-        for(int i = 0; i < preferencesHandler.getListOfPriorities().size(); i++) {
-            comboBox.addItem(preferencesHandler.getListOfPriorities().get(i).getName());
+        for(int i = 0; i < model.getPreferencesHandler().getListOfPriorities().size(); i++) {
+            comboBox.addItem(model.getPreferencesHandler().getListOfPriorities().get(i).getName());
         }
         prioColumn.setCellEditor(new DefaultCellEditor(comboBox));
 	}
@@ -1409,7 +1401,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     	LinkedList<Theme> tmpTheme = (LinkedList<Theme>) Misc.loadFromFile(Constants.FILENAME_THEMES);
     	LinkedList<TickerTextElement> tmpTickerElements = (LinkedList<TickerTextElement>) Misc.loadFromFile(Constants.FILENAME_LIVETICKER);
 
-    	preferencesHandler.setProperties(Misc.loadPropertiesFromDisk());
+    	model.getPreferencesHandler().setProperties(Misc.loadPropertiesFromDisk());
     	
     	if(tmpMedia != null) {
     		//TODO check the deserialization
@@ -1422,10 +1414,10 @@ public class ManagerFrame extends javax.swing.JFrame {
     				((Themeslide) tmpMedia.get(i)).createNewImageFileRepresentation();
     			}
     			if(tmpMedia.get(i) instanceof Countdown) {
-    				mediaHandler.increaseCountdownCounter();
+    				model.getMediaHandler().increaseCountdownCounter();
     			}
     			
-    			mediaHandler.add(tmpMedia.toArray(new ServerMediaFile[0]));
+    			model.getMediaHandler().add(tmpMedia.toArray(new ServerMediaFile[0]));
     		}
     		
     	}
@@ -1433,13 +1425,13 @@ public class ManagerFrame extends javax.swing.JFrame {
     	//i = 1, to prevent adding multiple default priorities
     	if(tmpPriority != null) {
     		for(int i = 1; i < tmpPriority.size(); i++) {
-    			preferencesHandler.addPriority(tmpPriority.get(i));
+    			model.getPreferencesHandler().addPriority(tmpPriority.get(i));
     		}
     	}
     	
     	if(tmpTheme != null) {
     		for(int i = 0; i < tmpTheme.size(); i++) {
-    			preferencesHandler.addTheme(tmpTheme.get(i));
+    			model.getPreferencesHandler().addTheme(tmpTheme.get(i));
     		}
     	}
     	
@@ -1460,12 +1452,12 @@ public class ManagerFrame extends javax.swing.JFrame {
      * @throws IOException 
      */
     private Boolean saveToDisk() throws IOException {
-    	Misc.saveToFile(mediaHandler.getMediaFiles(), Constants.FILENAME_MEDIAFILES);
-    	Misc.saveToFile(preferencesHandler.getListOfPriorities(), Constants.FILENAME_PRIORITIES);
-    	Misc.saveToFile(preferencesHandler.getListOfThemes(), Constants.FILENAME_THEMES);
-    	Misc.saveToFile(liveTicker.getTextElements(), Constants.FILENAME_LIVETICKER);
+    	Misc.saveToFile(model.getMediaHandler().getMediaFiles(), Constants.FILENAME_MEDIAFILES);
+    	Misc.saveToFile(model.getPreferencesHandler().getListOfPriorities(), Constants.FILENAME_PRIORITIES);
+    	Misc.saveToFile(model.getPreferencesHandler().getListOfThemes(), Constants.FILENAME_THEMES);
+    	// TODO Misc.saveToFile(liveTicker.getTextElements(), Constants.FILENAME_LIVETICKER);
     	
-    	Misc.savePropertiesToDisk(preferencesHandler.getProperties());
+    	Misc.savePropertiesToDisk(model.getPreferencesHandler().getProperties());
     	
     	return true;
     }
@@ -1482,13 +1474,13 @@ public class ManagerFrame extends javax.swing.JFrame {
 		    jLabelPreview.setIcon(null);
 		    jLabelPreview.setText("No file selected");
 		} else {
-		    writeInformationLabels(true, mediaHandler.getMediaFiles().get(viewRow));    
+		    writeInformationLabels(true, model.getMediaHandler().getMediaFiles().get(viewRow));    
 		    jLabelPreview.setText("");
-		    if(mediaHandler.getMediaFiles().get(viewRow) instanceof ImageFile) {
-		    	jLabelPreview.setIcon(((ImageFile) mediaHandler.getMediaFiles().get(viewRow)).getPreview());
-		    } else if (mediaHandler.getMediaFiles().get(viewRow) instanceof Themeslide) {
+		    if(model.getMediaHandler().getMediaFiles().get(viewRow) instanceof ImageFile) {
+		    	jLabelPreview.setIcon(((ImageFile) model.getMediaHandler().getMediaFiles().get(viewRow)).getPreview());
+		    } else if (model.getMediaHandler().getMediaFiles().get(viewRow) instanceof Themeslide) {
 	  	
-		    	jLabelPreview.setIcon(((Themeslide) mediaHandler.getMediaFiles().get(viewRow)).getImageFileRepresentation().getPreview());
+		    	jLabelPreview.setIcon(((Themeslide) model.getMediaHandler().getMediaFiles().get(viewRow)).getImageFileRepresentation().getPreview());
 		    }
 		    
 		}

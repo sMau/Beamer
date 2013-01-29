@@ -25,8 +25,6 @@ public class DisplayMediaModel {
 
 	private static final Logger log = Logger.getLogger(DisplayMediaModel.class.getName());
 	
-	private static volatile DisplayMediaModel instance = new DisplayMediaModel();
-
 	private MediaHandler mediaHandler;
 	
 	private LinkedList<ServerMediaFile> playingFiles;
@@ -87,7 +85,7 @@ public class DisplayMediaModel {
 		}
 	}
 	
-	private DisplayMediaModel() {
+	public DisplayMediaModel() {
 
 		this.playingFiles = new LinkedList<ServerMediaFile>();
 		this.isAutomodeEnabled = false;
@@ -99,18 +97,6 @@ public class DisplayMediaModel {
 		this.automodusTimer = new Timer();
 		this.refreshTimeLeftTimer = new Timer();
 		
-	}
-
-	/**
-	 * This method ensures theres only one instance of {@link DisplayMediaModel}
-	 * 
-	 * @return a the display handler instance
-	 */
-	public static DisplayMediaModel getInstance() {
-		if (instance == null) {
-			instance = new DisplayMediaModel();
-		}
-		return instance;
 	}
 
 	/**

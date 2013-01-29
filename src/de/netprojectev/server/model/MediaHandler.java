@@ -22,35 +22,22 @@ import de.netprojectev.server.gui.display.DisplayMainComponent;
 public class MediaHandler {
 	
 	private static final Logger log = Misc.getLoggerAll(MediaHandler.class.getName());
-
-	private volatile static MediaHandler instance = new MediaHandler();
 	
-	private DisplayMediaModel displayHandler;	
+	private final DisplayMediaModel displayHandler;	
 	private LinkedList<ServerMediaFile> mediaFiles;
 	private ManagerFrame managerFrame;
 	private int countdownCounter;
 
 	
-	private MediaHandler() {
+	private MediaHandler(DisplayMediaModel displayMediaModel) {
 		
 		countdownCounter = 0;
 		mediaFiles = new LinkedList<ServerMediaFile>();
-		displayHandler = DisplayMediaModel.getInstance();
+		this.displayHandler = displayMediaModel;
 		displayHandler.setMediaHandler(this);
 
 	}
 
-	public static MediaHandler getInstance() {
-
-		if (instance == null) {
-			instance = new MediaHandler();
-		}
-		return instance;
-	}
-
-	public static void reset() {
-		instance = new MediaHandler();
-	}
 
 	/**
 	 * Adds the media files to list and if necessary invokes updates on the GUI and the display handler.
@@ -275,12 +262,9 @@ public class MediaHandler {
 		this.managerFrame = managerFrame;
 	}
 
-	public DisplayMediaModel getDisplayHandler() {
+	public DisplayMediaModel getDisplayMediaModel() {
 		return displayHandler;
 	}
 
-	public void setDisplayHandler(DisplayMediaModel displayHandler) {
-		this.displayHandler = displayHandler;
-	}
 
 }

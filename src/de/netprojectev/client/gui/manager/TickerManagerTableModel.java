@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import javax.swing.table.AbstractTableModel;
 
-import de.netprojectev.server.datastructures.liveticker.LiveTicker;
 import de.netprojectev.server.datastructures.liveticker.TickerTextElement;
 
 /**

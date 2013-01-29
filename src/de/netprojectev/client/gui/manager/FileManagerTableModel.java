@@ -160,5 +160,13 @@ public class FileManagerTableModel extends AbstractTableModel {
         });
     	
     }
+
+	public MediaHandler getMediaHandler() {
+		return mediaHandler;
+	}
+
+	public PreferencesModel getPreferencesHandler() {
+		return preferencesHandler;
+	}
     
 }
