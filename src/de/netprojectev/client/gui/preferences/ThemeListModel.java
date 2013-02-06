@@ -3,7 +3,7 @@ package de.netprojectev.client.gui.preferences;
 import javax.swing.AbstractListModel;
 import javax.swing.SwingUtilities;
 
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 
 /**
@@ -19,11 +19,11 @@ public class ThemeListModel extends AbstractListModel<Object> {
 	 */
 	private static final long serialVersionUID = 7235749567262695917L;
 
-	private PreferencesModel preferencesHandler;
+	private PreferencesModelOld preferencesHandler;
 	
 	public ThemeListModel() {
 		super();
-		this.preferencesHandler = PreferencesModel.getInstance();
+		this.preferencesHandler = PreferencesModelOld.getInstance();
 		
 	}
 	

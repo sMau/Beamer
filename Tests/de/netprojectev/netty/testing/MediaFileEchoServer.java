@@ -19,7 +19,7 @@ import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 
 import de.netprojectev.netty.examples.SimpleExampleServerHandler;
 import de.netprojectev.netty.examples.TimeEncoder;
-import de.netprojectev.server.datastructures.media.VideoFile;
+import de.netprojectev.old.server.datastructures.media.VideoFile;
 
 public class MediaFileEchoServer {
 

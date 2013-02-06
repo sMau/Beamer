@@ -3,9 +3,9 @@ package de.netprojectev.datastructures.media;
 import java.util.Date;
 import java.util.UUID;
 
-import de.netprojectev.server.datastructures.media.ImageFile;
-import de.netprojectev.server.datastructures.media.Themeslide;
-import de.netprojectev.server.datastructures.media.VideoFile;
+import de.netprojectev.old.server.datastructures.media.ImageFile;
+import de.netprojectev.old.server.datastructures.media.Themeslide;
+import de.netprojectev.old.server.datastructures.media.VideoFile;
 
 public abstract class MediaFile {
 	

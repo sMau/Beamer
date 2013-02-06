@@ -9,13 +9,13 @@ import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
 
 import de.netprojectev.misc.Constants;
-import de.netprojectev.server.datastructures.media.Countdown;
-import de.netprojectev.server.datastructures.media.ImageFile;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.Themeslide;
-import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.model.MediaHandler;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.datastructures.media.Countdown;
+import de.netprojectev.old.server.datastructures.media.ImageFile;
+import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.server.datastructures.media.Themeslide;
+import de.netprojectev.old.server.datastructures.media.VideoFile;
+import de.netprojectev.old.server.model.MediaHandlerOld;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 /**
  * This is the model for the @see JTable in the Filemanager.
@@ -28,18 +28,18 @@ public class FileManagerTableModel extends AbstractTableModel {
 	//TODO sometimes (i think after deserialiazation) the prios arent selectable in the table. after adding a new one the old ones were present again too
 	
 	private static final long serialVersionUID = 122422256133966805L;
-	private MediaHandler mediaHandler;
-	private PreferencesModel preferencesHandler;
+	private MediaHandlerOld mediaHandler;
+	private PreferencesModelOld preferencesHandler;
 	private LinkedList<ServerMediaFile> mediaFiles;
 	private String[] columnNames = {"", "", "Name", "Priority", "Type", "Show At"};
 	private ManagerFrame managerFrame;
 	
     public FileManagerTableModel(ManagerFrame managerFrame) {
         super();
-        mediaHandler = MediaHandler.getInstance();
+        mediaHandler = MediaHandlerOld.getInstance();
         mediaFiles = mediaHandler.getMediaFiles();
         this.managerFrame = managerFrame;
-        preferencesHandler = PreferencesModel.getInstance();
+        preferencesHandler = PreferencesModelOld.getInstance();
                 
     }
 
@@ -161,11 +161,11 @@ public class FileManagerTableModel extends AbstractTableModel {
     	
     }
 
-	public MediaHandler getMediaHandler() {
+	public MediaHandlerOld getMediaHandler() {
 		return mediaHandler;
 	}
 
-	public PreferencesModel getPreferencesHandler() {
+	public PreferencesModelOld getPreferencesHandler() {
 		return preferencesHandler;
 	}
     

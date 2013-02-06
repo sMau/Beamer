@@ -1,4 +1,4 @@
-package de.netprojectev.server.datastructures.liveticker;
+package de.netprojectev.old.server.datastructures.liveticker;
 
 import java.io.Serializable;
 

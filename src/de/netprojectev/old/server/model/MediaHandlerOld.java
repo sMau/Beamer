@@ -1,4 +1,4 @@
-package de.netprojectev.server.model;
+package de.netprojectev.old.server.model;
 
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -7,11 +7,11 @@ import java.util.logging.Logger;
 import de.netprojectev.client.gui.manager.FileManagerTableModel;
 import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.media.Countdown;
-import de.netprojectev.server.datastructures.media.ImageFile;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.Themeslide;
-import de.netprojectev.server.gui.display.DisplayMainComponent;
+import de.netprojectev.old.server.datastructures.media.Countdown;
+import de.netprojectev.old.server.datastructures.media.ImageFile;
+import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.server.datastructures.media.Themeslide;
+import de.netprojectev.old.server.gui.display.DisplayMainComponent;
 
 /**
  * Handles all media files currently loaded.
@@ -19,17 +19,17 @@ import de.netprojectev.server.gui.display.DisplayMainComponent;
  * @author samu
  *
  */
-public class MediaHandler {
+public class MediaHandlerOld {
 	
-	private static final Logger log = Misc.getLoggerAll(MediaHandler.class.getName());
+	private static final Logger log = Misc.getLoggerAll(MediaHandlerOld.class.getName());
 	
-	private final DisplayMediaModel displayHandler;	
+	private final DisplayMediaModelOld displayHandler;	
 	private LinkedList<ServerMediaFile> mediaFiles;
 	private ManagerFrame managerFrame;
 	private int countdownCounter;
 
 	
-	private MediaHandler(DisplayMediaModel displayMediaModel) {
+	private MediaHandlerOld(DisplayMediaModelOld displayMediaModel) {
 		
 		countdownCounter = 0;
 		mediaFiles = new LinkedList<ServerMediaFile>();
@@ -67,7 +67,7 @@ public class MediaHandler {
 	
 	/**
 	 * removes the media files from the list and if necessary invokes updates on the GUI and the display handler.	 
-	 * Prevents current file from being removed from the list, to avoid problems with synching to the {@link DisplayMediaModel}.
+	 * Prevents current file from being removed from the list, to avoid problems with synching to the {@link DisplayMediaModelOld}.
 	 * Furthermore it cleans up the themeslide cache. JPGs not needed anymore are deleted from the cache.
 	 * @param files files to remove
 	 * @param removeCurrent true if the current element should also be removed if it is in the selection, false if not
@@ -262,7 +262,7 @@ public class MediaHandler {
 		this.managerFrame = managerFrame;
 	}
 
-	public DisplayMediaModel getDisplayMediaModel() {
+	public DisplayMediaModelOld getDisplayMediaModel() {
 		return displayHandler;
 	}
 

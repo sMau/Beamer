@@ -4,8 +4,8 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
+import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
@@ -16,7 +16,10 @@ import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
-import de.netprojectev.server.networking.ServerMessageHandler;
+import de.netprojectev.old.server.gui.display.DisplayController;
+import de.netprojectev.server.model.ServerMediaModel;
+import de.netprojectev.server.networking.MessageHandler;
+import de.netprojectev.server.networking.MessageProxy;
 
 public class ServerInit {
 	
@@ -29,13 +32,16 @@ public class ServerInit {
 	}
 	
 	private void bindListeningSocket() {
+				
+		final MessageProxy proxy = new MessageProxy();
+
 		ChannelFactory factory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 		ServerBootstrap bootstrap = new ServerBootstrap(factory);
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectEncoder(), new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new ServerMessageHandler());
+				return Channels.pipeline(new ObjectEncoder(), new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new MessageHandler(proxy));
 			
 			}
 		});

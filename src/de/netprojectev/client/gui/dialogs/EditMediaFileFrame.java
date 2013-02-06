@@ -9,8 +9,8 @@ import javax.swing.SwingUtilities;
 import de.netprojectev.client.gui.manager.FileManagerTableModel;
 import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 
 /**
@@ -21,7 +21,7 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = 1446531265560668639L;
 	private ServerMediaFile selectedMediaFile;
-	private PreferencesModel preferencesHandler;
+	private PreferencesModelOld preferencesHandler;
 	private ManagerFrame managerFrame;
 	
     public EditMediaFileFrame(ServerMediaFile selectedMediaFile, ManagerFrame managerFrame) {
@@ -29,7 +29,7 @@ public class EditMediaFileFrame extends javax.swing.JFrame {
     	if(selectedMediaFile != null) {
     		initComponents();
     		setLocation(Misc.currentMousePosition());
-    		preferencesHandler = PreferencesModel.getInstance();
+    		preferencesHandler = PreferencesModelOld.getInstance();
     		this.managerFrame = managerFrame;
     		this.selectedMediaFile = selectedMediaFile;
             jTextFieldEditFileName.setText(selectedMediaFile.getName()); 

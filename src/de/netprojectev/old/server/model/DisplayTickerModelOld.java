@@ -1,22 +1,22 @@
-package de.netprojectev.server.model;
+package de.netprojectev.old.server.model;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.controller.DisplayController;
-import de.netprojectev.server.datastructures.liveticker.LiveTicker;
-import de.netprojectev.server.datastructures.liveticker.TickerTextElement;
+import de.netprojectev.old.server.datastructures.liveticker.LiveTicker;
+import de.netprojectev.old.server.datastructures.liveticker.TickerTextElement;
+import de.netprojectev.old.server.gui.display.DisplayController;
 
-public class DisplayTickerModel {
+public class DisplayTickerModelOld {
 	
-	private static final Logger LOG = Misc.getLoggerAll(DisplayTickerModel.class.getName());
+	private static final Logger LOG = Misc.getLoggerAll(DisplayTickerModelOld.class.getName());
 	
 	private final LiveTicker liveTicker;
 	private final DisplayController controller;
 	
-	public DisplayTickerModel(DisplayController displayController) {
+	public DisplayTickerModelOld(DisplayController displayController) {
 		this.liveTicker = new LiveTicker();
 		this.controller = displayController;
 	}
@@ -35,7 +35,7 @@ public class DisplayTickerModel {
 			
 			if(liveTicker.getTextElements().get(i).getToShow()) {
 				
-				liveTicker.setCompleteTickerText(liveTicker.getCompleteTickerText() + liveTicker.getTextElements().get(i).getText() + PreferencesModel.getInstance().getProperties().getProperty(Constants.PROP_TICKER_SEPERATOR));
+				liveTicker.setCompleteTickerText(liveTicker.getCompleteTickerText() + liveTicker.getTextElements().get(i).getText() + PreferencesModelOld.getInstance().getProperties().getProperty(Constants.PROP_TICKER_SEPERATOR));
 			}
 			
 		}

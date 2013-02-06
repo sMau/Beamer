@@ -42,10 +42,10 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.Themeslide;
-import de.netprojectev.server.model.MediaHandler;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.server.datastructures.media.Themeslide;
+import de.netprojectev.old.server.model.MediaHandlerOld;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 
 /**
@@ -73,13 +73,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	
     	initComponents();
     	
-        props = PreferencesModel.getInstance().getProperties();
+        props = PreferencesModelOld.getInstance().getProperties();
     	
-        for(int i = 0; i < PreferencesModel.getInstance().getListOfThemes().size(); i++) {
-        	jComboBoxTheme.addItem(PreferencesModel.getInstance().getListOfThemes().get(i).getName());
+        for(int i = 0; i < PreferencesModelOld.getInstance().getListOfThemes().size(); i++) {
+        	jComboBoxTheme.addItem(PreferencesModelOld.getInstance().getListOfThemes().get(i).getName());
         }
-        for(int i = 0; i < PreferencesModel.getInstance().getListOfPriorities().size(); i++) {
-        	jComboBoxPriority.addItem(PreferencesModel.getInstance().getListOfPriorities().get(i).getName());
+        for(int i = 0; i < PreferencesModelOld.getInstance().getListOfPriorities().size(); i++) {
+        	jComboBoxPriority.addItem(PreferencesModelOld.getInstance().getListOfPriorities().get(i).getName());
         }
         String[] font = Constants.FONT_FAMILIES;
         for(int i = 0; i < font.length; i++) {
@@ -405,7 +405,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private void jButtonAddAndShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddAndShowActionPerformed
     	boolean success = addThemeslide();
     	if(success) {
-    		MediaHandler.getInstance().getDisplayMediaModel().show(MediaHandler.getInstance().getMediaFiles().getLast());
+    		MediaHandlerOld.getInstance().getDisplayMediaModel().show(MediaHandlerOld.getInstance().getMediaFiles().getLast());
     		dispose();
     	}
     }//GEN-LAST:event_jButtonAddAndShowActionPerformed
@@ -415,7 +415,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
      * @param evt
      */
     private void jComboBoxThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxThemeActionPerformed
-    	textPaneThemeslide.setThemeBackground(PreferencesModel.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
+    	textPaneThemeslide.setThemeBackground(PreferencesModelOld.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
     }//GEN-LAST:event_jComboBoxThemeActionPerformed
 
     /**
@@ -485,13 +485,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		return false;
     	}
     	if(jComboBoxPriority.getSelectedIndex() >= 0) {
-    		priority = PreferencesModel.getInstance().getListOfPriorities().get(jComboBoxPriority.getSelectedIndex());
+    		priority = PreferencesModelOld.getInstance().getListOfPriorities().get(jComboBoxPriority.getSelectedIndex());
     	} else {
     		JOptionPane.showMessageDialog(this, "Please select a priority.", "Error", JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
     	if(jComboBoxTheme.getSelectedIndex() >= 0) {
-    		theme = PreferencesModel.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex());
+    		theme = PreferencesModelOld.getInstance().getListOfThemes().get(jComboBoxTheme.getSelectedIndex());
     	} else {
     		JOptionPane.showMessageDialog(this, "Please select a theme.", "Error", JOptionPane.ERROR_MESSAGE);
     		return false;
@@ -502,7 +502,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		ServerMediaFile[] themeSlides = new ServerMediaFile[1];
     		themeSlides[0] = new Themeslide(name, priority, theme);
     		generatePNGRepresentation(themeSlides[0]);
-    		MediaHandler.getInstance().add(themeSlides);
+    		MediaHandlerOld.getInstance().add(themeSlides);
     		
     		((Themeslide) themeSlides[0]).createNewImageFileRepresentation();
     		return true;

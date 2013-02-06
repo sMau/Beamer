@@ -3,7 +3,7 @@ package de.netprojectev.client.gui.preferences;
 import javax.swing.AbstractListModel;
 import javax.swing.SwingUtilities;
 
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 
 /**
@@ -16,11 +16,11 @@ public class PriorityListModel extends AbstractListModel<Object> {
 
 	private static final long serialVersionUID = 1178949757753878018L;
 	
-	private PreferencesModel preferencesHandler;
+	private PreferencesModelOld preferencesHandler;
 	
 	public PriorityListModel() {
 		super();
-		this.preferencesHandler = PreferencesModel.getInstance();
+		this.preferencesHandler = PreferencesModelOld.getInstance();
 		
 	}
 	

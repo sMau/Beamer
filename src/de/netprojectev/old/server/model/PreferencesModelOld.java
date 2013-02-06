@@ -1,4 +1,4 @@
-package de.netprojectev.server.model;
+package de.netprojectev.old.server.model;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -20,9 +20,9 @@ import de.netprojectev.misc.Misc;
  * @author samu
  *
  */
-public class PreferencesModel {
+public class PreferencesModelOld {
 
-	private static final Logger log = Misc.getLoggerAll(PreferencesModel.class.getName());
+	private static final Logger log = Misc.getLoggerAll(PreferencesModelOld.class.getName());
 		
 	private PreferencesFrame preferencesFrame;
 	private ManagerFrame managerFrame;
@@ -32,7 +32,7 @@ public class PreferencesModel {
 	
 	private Properties properties;
 	
-	public PreferencesModel() {
+	public PreferencesModelOld() {
 
 		properties = new Properties(Misc.generateDefaultProps());
 		this.listOfPriorities = new LinkedList<Priority>();

@@ -1,4 +1,4 @@
-package de.netprojectev.server.datastructures.media;
+package de.netprojectev.old.server.datastructures.media;
 
 import java.io.File;
 import java.util.logging.Level;

@@ -1,28 +1,29 @@
-package de.netprojectev.server.controller;
+package de.netprojectev.old.server.gui.display;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JOptionPane;
-
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.media.Countdown;
-import de.netprojectev.server.datastructures.media.ImageFile;
-import de.netprojectev.server.datastructures.media.Themeslide;
-import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.gui.display.DisplayMainFrame;
-import de.netprojectev.server.model.DisplayTickerModel;
+import de.netprojectev.old.server.datastructures.media.Countdown;
+import de.netprojectev.old.server.datastructures.media.ImageFile;
+import de.netprojectev.old.server.datastructures.media.Themeslide;
+import de.netprojectev.old.server.datastructures.media.VideoFile;
+import de.netprojectev.old.server.model.DisplayTickerModelOld;
+import de.netprojectev.server.gui.DisplayFrame;
+import de.netprojectev.server.model.ServerMediaModel;
+import de.netprojectev.server.model.TickerModel;
 
 public class DisplayController {
 	
 	private static final Logger LOG = Misc.getLoggerAll(DisplayController.class.getName());
 	
-	private final DisplayMainFrame display;
-	private final DisplayTickerModel tickerModel;
+	private final DisplayFrame display;
+
 	
 	public DisplayController() {
-		this.display = new DisplayMainFrame();
-		this.tickerModel = new DisplayTickerModel(this);
+		this.display = new DisplayFrame(null);
+
+
 	}
 	
 	public void showCountdown(Countdown countdown) throws IllegalStateException {

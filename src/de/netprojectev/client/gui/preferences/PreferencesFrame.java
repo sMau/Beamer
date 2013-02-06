@@ -25,9 +25,9 @@ import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.gui.display.DisplayMainFrame;
-import de.netprojectev.server.model.MediaHandler;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.model.MediaHandlerOld;
+import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.server.gui.DisplayFrame;
 
 /**
  * GUI main class of preferences.
@@ -40,7 +40,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	
 	private static final long serialVersionUID = -5332162076303310401L;
 	
-	private PreferencesModel preferencesHandler;
+	private PreferencesModelOld preferencesHandler;
 	private Properties props;
 	private Priority selectedPrio;
 	private Theme selectedTheme;
@@ -73,7 +73,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     public PreferencesFrame(ManagerFrame managerFrame) {
     	
     	this.managerFrame = managerFrame;
-    	this.preferencesHandler = PreferencesModel.getInstance(); 
+    	this.preferencesHandler = PreferencesModelOld.getInstance(); 
     	preferencesHandler.setPreferencesFrame(this);
     	preferencesHandler.setManagerFrame(managerFrame);
     	
@@ -1175,7 +1175,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		}
     	
     	if(previewWidth != Integer.parseInt(preferencesHandler.getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH))) {
-    		MediaHandler.getInstance().generateNewScaledPreviews();
+    		MediaHandlerOld.getInstance().generateNewScaledPreviews();
     	}
     	
     	

@@ -1,4 +1,4 @@
-package de.netprojectev.server.gui.display;
+package de.netprojectev.old.server.gui.display;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,8 +14,8 @@ import javax.swing.JComponent;
 
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.media.Countdown;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.datastructures.media.Countdown;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 /**
  * 
  * GUI Component to draw images and themeslide background images
@@ -61,7 +61,7 @@ public class DisplayMainComponent extends JComponent {
 	 */
 	public void updateCountdownFont() {
 
-		Properties props = PreferencesModel.getInstance().getProperties();
+		Properties props = PreferencesModelOld.getInstance().getProperties();
 		countdownFont = new Font(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE)));
 		countdownColor = new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR)));
 		log.log(Level.INFO, "countdown font attributes updated");

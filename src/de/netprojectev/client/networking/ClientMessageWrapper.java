@@ -2,7 +2,7 @@ package de.netprojectev.client.networking;
 
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
 
 public class ClientMessageWrapper {
 

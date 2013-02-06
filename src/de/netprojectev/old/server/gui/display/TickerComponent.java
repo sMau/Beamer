@@ -1,4 +1,4 @@
-package de.netprojectev.server.gui.display;
+package de.netprojectev.old.server.gui.display;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 /**
  * GUI component to draw the live ticker string.
@@ -144,12 +144,12 @@ public class TickerComponent extends JComponent {
     }
 	
     /**
-     * updates the live ticker attributes via reading them from the properties object from the {@link PreferencesModel}
+     * updates the live ticker attributes via reading them from the properties object from the {@link PreferencesModelOld}
      * the speed, font size,type and color attributes are affected.
      */
     private void updateLiveTickerAttributes() {
 		log.log(Level.INFO, "updateing live ticker attributes");
-    	Properties props = PreferencesModel.getInstance().getProperties();
+    	Properties props = PreferencesModelOld.getInstance().getProperties();
     	try {
 			tickerSpeed = Integer.parseInt(props.getProperty(Constants.PROP_TICKER_SPEED));
 			tickerFont = new Font(props.getProperty(Constants.PROP_TICKER_FONTTYPE), Font.PLAIN, Integer.parseInt(props.getProperty(Constants.PROP_TICKER_FONTSIZE)));

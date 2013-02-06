@@ -9,8 +9,8 @@ import javax.swing.SwingUtilities;
 import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.client.gui.manager.TickerManagerTableModel;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.liveticker.LiveTicker;
-import de.netprojectev.server.datastructures.liveticker.TickerTextElement;
+import de.netprojectev.old.server.datastructures.liveticker.LiveTicker;
+import de.netprojectev.old.server.datastructures.liveticker.TickerTextElement;
 
 /**
  * GUI class dialog, to handle ticker-element adding and editing.

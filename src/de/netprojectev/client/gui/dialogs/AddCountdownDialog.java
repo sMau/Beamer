@@ -11,10 +11,10 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.media.Countdown;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.model.DisplayMediaModel;
-import de.netprojectev.server.model.MediaHandler;
+import de.netprojectev.old.server.datastructures.media.Countdown;
+import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.server.model.DisplayMediaModelOld;
+import de.netprojectev.old.server.model.MediaHandlerOld;
 
 /**
  * Dialog to add a {@link Countdown}
@@ -404,7 +404,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 	private void addAndStartCountdown() {
 		ServerMediaFile countdown = addCountdown();
 		if (countdown != null) {
-			DisplayMediaModel.getInstance().show(countdown);
+			DisplayMediaModelOld.getInstance().show(countdown);
 			dispose();
 		}
 	}
@@ -443,7 +443,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 				return null;
 			}
 
-			MediaHandler mediaHandler = MediaHandler.getInstance();
+			MediaHandlerOld mediaHandler = MediaHandlerOld.getInstance();
 			ServerMediaFile[] countdown = new ServerMediaFile[1];
 			countdown[0] = new Countdown(name, finishDate);
 			mediaHandler.add(countdown);
@@ -454,7 +454,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 			try {
 				int timeInMinutes = Integer.parseInt(jTextFieldRuntimeInMinutes
 						.getText());
-				MediaHandler mediaHandler = MediaHandler.getInstance();
+				MediaHandlerOld mediaHandler = MediaHandlerOld.getInstance();
 				ServerMediaFile[] countdown = new ServerMediaFile[1];
 				countdown[0] = new Countdown(name, timeInMinutes);
 				mediaHandler.add(countdown);

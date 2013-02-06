@@ -1,4 +1,4 @@
-package de.netprojectev.server.datastructures.media;
+package de.netprojectev.old.server.datastructures.media;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +11,7 @@ import javax.swing.Timer;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.gui.display.DisplayMainComponent;
+import de.netprojectev.old.server.gui.display.DisplayMainComponent;
 
 /**
  * Datastructure to hold the necessary information of a countdown.

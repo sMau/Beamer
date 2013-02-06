@@ -1,4 +1,4 @@
-package de.netprojectev.server.datastructures.liveticker;
+package de.netprojectev.old.server.datastructures.liveticker;
 
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -8,7 +8,7 @@ import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.client.gui.manager.TickerManagerTableModel;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 /**
  * 

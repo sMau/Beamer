@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.netprojectev.server.gui.display;
+package de.netprojectev.server.gui;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -12,27 +12,30 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.controller.DisplayController;
-import de.netprojectev.server.model.MediaHandler;
+import de.netprojectev.old.server.gui.display.DisplayMainComponent;
+import de.netprojectev.old.server.gui.display.TickerComponent;
+import de.netprojectev.old.server.model.MediaHandlerOld;
+import de.netprojectev.server.networking.MessageProxy;
 
 /**
  * GUI class frame, to store the viewing components, as the live ticker and the image and themeslide showing component.
  * @author samu
  */
-public class DisplayMainFrame extends javax.swing.JFrame {
+public class DisplayFrame extends javax.swing.JFrame {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 863589702184282724L;
-	private static final Logger log = Misc.getLoggerAll(DisplayMainFrame.class.getName());
+	private static final Logger log = Misc.getLoggerAll(DisplayFrame.class.getName());
 
-	
+	private final MessageProxy proxy;
 	private boolean fullscreen;
 	private int screenNumberDisplayFrame; 
 	
-    public DisplayMainFrame() {
-        initComponents();
+    public DisplayFrame(MessageProxy proxy) {
+        this.proxy = proxy;
+    	initComponents();
         fullscreen = false;
         screenNumberDisplayFrame = 0;
     }
@@ -57,7 +60,8 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 				myDevices[screenNumber].setFullScreenWindow(this);
 		    	fullscreen = true;
 		    	log.log(Level.INFO, "entering fullscreen mode successful");
-		    	MediaHandler.getInstance().generateNewDisplayImages();
+		    	//TODO handle fullscreen change, because the resolution of images have to change
+		    	// MediaHandlerOld.getInstance().generateNewDisplayImages();
 			} else {
 				log.log(Level.SEVERE, "error entering fullscreen mode");
 				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode. \nCheck the choosen screen.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -85,7 +89,8 @@ public class DisplayMainFrame extends javax.swing.JFrame {
 			myDevices[screenNumberDisplayFrame].setFullScreenWindow(null);
 			pack();
     		fullscreen = false;
-    		MediaHandler.getInstance().generateNewDisplayImages();
+    		//TODO handle fullscreen change, because the resolution of images have to change
+    		//MediaHandlerOld.getInstance().generateNewDisplayImages();
     	}
     }
 
@@ -98,8 +103,8 @@ public class DisplayMainFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        displayMainComponent = new de.netprojectev.server.gui.display.DisplayMainComponent();
-        tickerComponent = new de.netprojectev.server.gui.display.TickerComponent();
+        displayMainComponent = new de.netprojectev.old.server.gui.display.DisplayMainComponent();
+        tickerComponent = new de.netprojectev.old.server.gui.display.TickerComponent();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -167,13 +172,13 @@ public class DisplayMainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DisplayMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DisplayMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DisplayMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DisplayMainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -183,30 +188,30 @@ public class DisplayMainFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
             public void run() {
-                new DisplayMainFrame().setVisible(true);
+                //new DisplayMainFrame().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private de.netprojectev.server.gui.display.DisplayMainComponent displayMainComponent;
-    private de.netprojectev.server.gui.display.TickerComponent tickerComponent;
+    private de.netprojectev.old.server.gui.display.DisplayMainComponent displayMainComponent;
+    private de.netprojectev.old.server.gui.display.TickerComponent tickerComponent;
     // End of variables declaration//GEN-END:variables
     
-	public de.netprojectev.server.gui.display.TickerComponent getTickerComponent() {
+	public de.netprojectev.old.server.gui.display.TickerComponent getTickerComponent() {
 		return tickerComponent;
 	}
 
 	public void setTickerComponent(
-			de.netprojectev.server.gui.display.TickerComponent tickerComponent) {
+			de.netprojectev.old.server.gui.display.TickerComponent tickerComponent) {
 		this.tickerComponent = tickerComponent;
 	}
 
-	public de.netprojectev.server.gui.display.DisplayMainComponent getDisplayMainComponent() {
+	public de.netprojectev.old.server.gui.display.DisplayMainComponent getDisplayMainComponent() {
 		return displayMainComponent;
 	}
 
 	public void setDisplayMainComponent(
-			de.netprojectev.server.gui.display.DisplayMainComponent displayMainComponent) {
+			de.netprojectev.old.server.gui.display.DisplayMainComponent displayMainComponent) {
 		this.displayMainComponent = displayMainComponent;
 	}
 

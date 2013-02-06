@@ -43,14 +43,14 @@ import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.liveticker.TickerTextElement;
-import de.netprojectev.server.datastructures.media.Countdown;
-import de.netprojectev.server.datastructures.media.ImageFile;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.Themeslide;
-import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.model.MediaHandler;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.datastructures.liveticker.TickerTextElement;
+import de.netprojectev.old.server.datastructures.media.Countdown;
+import de.netprojectev.old.server.datastructures.media.ImageFile;
+import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.server.datastructures.media.Themeslide;
+import de.netprojectev.old.server.datastructures.media.VideoFile;
+import de.netprojectev.old.server.model.MediaHandlerOld;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 /**
  * A GUI class which is the first object to be intialized on program start.
@@ -887,7 +887,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		jFileChooser.setFileFilter(new ImageFileFilter());
 		int returnVal = jFileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
-        	MediaHandler.getInstance().add(Misc.createMediaFromFiles(jFileChooser.getSelectedFiles()));
+        	MediaHandlerOld.getInstance().add(Misc.createMediaFromFiles(jFileChooser.getSelectedFiles()));
         }
 	}
 
@@ -897,7 +897,7 @@ public class ManagerFrame extends javax.swing.JFrame {
      */
     private void jMenuItemAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAddThemeslideActionPerformed
 
-    	if(PreferencesModel.getInstance().getListOfThemes().isEmpty()) {
+    	if(PreferencesModelOld.getInstance().getListOfThemes().isEmpty()) {
 			JOptionPane.showMessageDialog(this, "Please first add at least one Theme before creating a Themeslide.\nGo Preferences -> Preferences -> Theme", "Themeslide Creator", JOptionPane.ERROR_MESSAGE);
 		} else {
 			new ThemeslideCreatorFrame().setVisible(true);
@@ -1099,7 +1099,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		if(n == JOptionPane.YES_OPTION) {
 			openFileChooser();
 		} else if(n == JOptionPane.NO_OPTION) {
-			if(PreferencesModel.getInstance().getListOfThemes().isEmpty()) {
+			if(PreferencesModelOld.getInstance().getListOfThemes().isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Please first add at least one Theme before creating a Themeslide.\nGo Preferences -> Preferences -> Theme", "Themeslide Creator", JOptionPane.ERROR_MESSAGE);
 			} else {
 				new ThemeslideCreatorFrame().setVisible(true);
@@ -1357,7 +1357,7 @@ public class ManagerFrame extends javax.swing.JFrame {
             for(int i = 0; i < filesToAdd.length; i++) {
             	filesToAdd[i] = (File) fileList.get(i);
             }
-            MediaHandler.getInstance().add(Misc.createMediaFromFiles(filesToAdd));
+            MediaHandlerOld.getInstance().add(Misc.createMediaFromFiles(filesToAdd));
         }
         
 

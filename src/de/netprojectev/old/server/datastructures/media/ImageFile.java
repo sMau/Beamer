@@ -1,4 +1,4 @@
-package de.netprojectev.server.datastructures.media;
+package de.netprojectev.old.server.datastructures.media;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -17,8 +17,8 @@ import org.jdesktop.swingx.util.GraphicsUtilities;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.gui.display.DisplayMainComponent;
-import de.netprojectev.server.model.PreferencesModel;
+import de.netprojectev.old.server.gui.display.DisplayMainComponent;
+import de.netprojectev.old.server.model.PreferencesModelOld;
 
 /**
  * Datastructure to deal with Image files from the hard disk.
@@ -98,7 +98,7 @@ public class ImageFile extends ServerMediaFile {
 	 */
 	protected void generatePreview(BufferedImage loadedImage) throws FileNotFoundException, IOException {
 		log.log(Level.INFO, "generating new thumbnail for " + name);
-		int widthToScaleTo = Integer.parseInt(PreferencesModel.getInstance().getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH));
+		int widthToScaleTo = Integer.parseInt(PreferencesModelOld.getInstance().getProperties().getProperty(Constants.PROP_PREVIEW_SCALE_WIDTH));
 		preview = new ImageIcon(Misc.getScaledImageInstanceFast(loadedImage, widthToScaleTo , (int) (widthToScaleTo * loadedImage.getHeight(null))/loadedImage.getWidth(null)));
 		loadedImage = null;
 	}

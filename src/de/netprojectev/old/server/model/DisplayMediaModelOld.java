@@ -1,4 +1,4 @@
-package de.netprojectev.server.model;
+package de.netprojectev.old.server.model;
 
 import java.util.Collections;
 import java.util.Date;
@@ -9,23 +9,23 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.netprojectev.server.datastructures.media.Countdown;
-import de.netprojectev.server.datastructures.media.ImageFile;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.Themeslide;
-import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.gui.display.DisplayMainFrame;
+import de.netprojectev.old.server.datastructures.media.Countdown;
+import de.netprojectev.old.server.datastructures.media.ImageFile;
+import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.server.datastructures.media.Themeslide;
+import de.netprojectev.old.server.datastructures.media.VideoFile;
+import de.netprojectev.server.gui.DisplayFrame;
 
 /**
  * The display handler contains the same files as the mediahandler. The order of the files can differ concerning the shuffle mode.
  * Furthermore auto mode and shuffling is realized within this class. Methods like next and previous act on the files of display handler.
  * @author samu
  */
-public class DisplayMediaModel {
+public class DisplayMediaModelOld {
 
-	private static final Logger log = Logger.getLogger(DisplayMediaModel.class.getName());
+	private static final Logger log = Logger.getLogger(DisplayMediaModelOld.class.getName());
 	
-	private MediaHandler mediaHandler;
+	private MediaHandlerOld mediaHandler;
 	
 	private LinkedList<ServerMediaFile> playingFiles;
 	private Boolean isAutomodeEnabled;
@@ -85,7 +85,7 @@ public class DisplayMediaModel {
 		}
 	}
 	
-	public DisplayMediaModel() {
+	public DisplayMediaModelOld() {
 
 		this.playingFiles = new LinkedList<ServerMediaFile>();
 		this.isAutomodeEnabled = false;
@@ -276,7 +276,7 @@ public class DisplayMediaModel {
 	public void stopShuffle() {
 		log.log(Level.INFO, "stoping shuffle mode");
 		isShufflingEnabled = false;
-		playingFiles = (LinkedList<ServerMediaFile>) MediaHandler.getInstance().getMediaFiles().clone();
+		playingFiles = (LinkedList<ServerMediaFile>) MediaHandlerOld.getInstance().getMediaFiles().clone();
 		
 	}
 	
@@ -421,11 +421,11 @@ public class DisplayMediaModel {
 		this.historyFile = historyFile;
 	}
 
-	public MediaHandler getMediaHandler() {
+	public MediaHandlerOld getMediaHandler() {
 		return mediaHandler;
 	}
 
-	public void setMediaHandler(MediaHandler mediaHandler) {
+	public void setMediaHandler(MediaHandlerOld mediaHandler) {
 		this.mediaHandler = mediaHandler;
 	}
 
