@@ -17,8 +17,8 @@ import org.jdesktop.swingx.util.GraphicsUtilities;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.gui.display.DisplayMainComponent;
 import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.server.gui.DisplayMainComponent;
 
 /**
  * Datastructure to deal with Image files from the hard disk.

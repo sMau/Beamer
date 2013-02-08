@@ -10,8 +10,8 @@ import de.netprojectev.old.server.datastructures.media.Themeslide;
 import de.netprojectev.old.server.datastructures.media.VideoFile;
 import de.netprojectev.old.server.model.DisplayTickerModelOld;
 import de.netprojectev.server.gui.DisplayFrame;
-import de.netprojectev.server.model.ServerMediaModel;
-import de.netprojectev.server.model.TickerModel;
+import de.netprojectev.server.model.MediaModelServer;
+import de.netprojectev.server.model.TickerModelServer;
 
 public class DisplayController {
 	

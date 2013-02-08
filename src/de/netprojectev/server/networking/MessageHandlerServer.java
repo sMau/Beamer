@@ -10,13 +10,13 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 
 import de.netprojectev.misc.Misc;
 
-public class MessageHandler extends SimpleChannelHandler {
+public class MessageHandlerServer extends SimpleChannelHandler {
 	
-	private static final Logger LOG = Misc.getLoggerAll(MessageHandler.class.getName());
+	private static final Logger LOG = Misc.getLoggerAll(MessageHandlerServer.class.getName());
 	
-	private final MessageProxy proxy;
+	private final MessageProxyServer proxy;
 	
-	public MessageHandler(MessageProxy proxy) {
+	public MessageHandlerServer(MessageProxyServer proxy) {
 		super();
 		this.proxy = proxy;
 	}

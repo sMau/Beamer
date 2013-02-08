@@ -1,4 +1,4 @@
-package de.netprojectev.old.server.gui.display;
+package de.netprojectev.server.gui;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -52,7 +52,7 @@ public class TickerComponent extends JComponent {
 		}
 	}
 	
-	public TickerComponent() {
+	protected TickerComponent() {
 		super();
 		toDraw1 = " ";
 		toDraw2 = " ";
@@ -67,7 +67,7 @@ public class TickerComponent extends JComponent {
 	 * encapsulates the starting updating of attributes and the new string generation.
 	 * to guarantee the invocation in the appropriated order.
 	 */
-	public void restartTicker() {
+	protected void restartTicker() {
 		updateLiveTickerAttributes();
 		generateDrawingStrings();
 		startLiveTicker();
@@ -77,7 +77,7 @@ public class TickerComponent extends JComponent {
 	 * encapsulates the start method of the Live Ticker to guarentee
 	 * the attributes of the font to be initialized.
 	 */
-	public void initLiveTickerAndStart() {
+	protected void initLiveTickerAndStart() {
 		updateLiveTickerAttributes();
 		startLiveTicker();
 	}
@@ -164,7 +164,7 @@ public class TickerComponent extends JComponent {
 	 * A GUI update is invoked automatically after setting the new string.
 	 * @param tickerString
 	 */
-	public void setTickerString(String tickerString) {
+    protected void setTickerString(String tickerString) {
 		this.tickerString = tickerString;
 		if(tickerString != null && !tickerString.equals("")) {
 			generateDrawingStrings();

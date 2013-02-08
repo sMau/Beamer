@@ -11,7 +11,7 @@ import de.netprojectev.old.server.datastructures.media.Countdown;
 import de.netprojectev.old.server.datastructures.media.ImageFile;
 import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.old.server.datastructures.media.Themeslide;
-import de.netprojectev.old.server.gui.display.DisplayMainComponent;
+import de.netprojectev.server.gui.DisplayMainComponent;
 
 /**
  * Handles all media files currently loaded.

@@ -6,16 +6,16 @@ import java.util.UUID;
 
 import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.old.server.gui.display.DisplayController;
-import de.netprojectev.server.networking.MessageProxy;
+import de.netprojectev.server.networking.MessageProxyServer;
 
-public class ServerMediaModel {
+public class MediaModelServer {
 	
-	private final MessageProxy proxy;
+	private final MessageProxyServer proxy;
 	private HashMap<UUID, ServerMediaFile> allMediaFiles;
 	private LinkedList<ServerMediaFile> mediaQueue;
 	private ServerMediaFile currentFile;
 	
-	public ServerMediaModel(MessageProxy proxy) {
+	public MediaModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
 		
 	}

@@ -11,11 +11,14 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.gui.display.DisplayMainComponent;
-import de.netprojectev.old.server.gui.display.TickerComponent;
+import de.netprojectev.old.server.datastructures.media.Countdown;
+import de.netprojectev.old.server.datastructures.media.ImageFile;
+import de.netprojectev.old.server.datastructures.media.Themeslide;
+import de.netprojectev.old.server.datastructures.media.VideoFile;
 import de.netprojectev.old.server.model.MediaHandlerOld;
-import de.netprojectev.server.networking.MessageProxy;
+import de.netprojectev.server.networking.MessageProxyServer;
 
 /**
  * GUI class frame, to store the viewing components, as the live ticker and the image and themeslide showing component.
@@ -29,17 +32,48 @@ public class DisplayFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = 863589702184282724L;
 	private static final Logger log = Misc.getLoggerAll(DisplayFrame.class.getName());
 
-	private final MessageProxy proxy;
+	private final MessageProxyServer proxy;
 	private boolean fullscreen;
 	private int screenNumberDisplayFrame; 
 	
-    public DisplayFrame(MessageProxy proxy) {
+    public DisplayFrame(MessageProxyServer proxy) {
         this.proxy = proxy;
     	initComponents();
         fullscreen = false;
         screenNumberDisplayFrame = 0;
     }
 
+    public void showImageFile(ImageFile image) {
+    	// TODO
+    }
+    
+    public void showVideoFile(VideoFile video) {
+    	// TODO
+    }
+    
+    public void showThemeslide(Themeslide themeslide) {
+    	// TODO
+    }
+    
+    public void showCountdown(Countdown countdown) {
+    	// TODO
+    }
+    
+    public void startLiveTicker() {
+    	// TODO
+    }
+    
+    public void updateLiveTIcker(String tickerText) {
+    	// TODO
+    }
+    
+    public void stopLiveTicker() {
+    	// TODO
+    }
+    
+    public void clearDisplay() {
+    	// TODO
+    }
     
     
     /**
@@ -103,8 +137,8 @@ public class DisplayFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        displayMainComponent = new de.netprojectev.old.server.gui.display.DisplayMainComponent();
-        tickerComponent = new de.netprojectev.old.server.gui.display.TickerComponent();
+        displayMainComponent = new de.netprojectev.server.gui.DisplayMainComponent();
+        tickerComponent = new de.netprojectev.server.gui.TickerComponent();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -193,27 +227,8 @@ public class DisplayFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private de.netprojectev.old.server.gui.display.DisplayMainComponent displayMainComponent;
-    private de.netprojectev.old.server.gui.display.TickerComponent tickerComponent;
+    private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
+    private de.netprojectev.server.gui.TickerComponent tickerComponent;
     // End of variables declaration//GEN-END:variables
-    
-	public de.netprojectev.old.server.gui.display.TickerComponent getTickerComponent() {
-		return tickerComponent;
-	}
-
-	public void setTickerComponent(
-			de.netprojectev.old.server.gui.display.TickerComponent tickerComponent) {
-		this.tickerComponent = tickerComponent;
-	}
-
-	public de.netprojectev.old.server.gui.display.DisplayMainComponent getDisplayMainComponent() {
-		return displayMainComponent;
-	}
-
-	public void setDisplayMainComponent(
-			de.netprojectev.old.server.gui.display.DisplayMainComponent displayMainComponent) {
-		this.displayMainComponent = displayMainComponent;
-	}
-
 	
 }

@@ -11,7 +11,7 @@ import javax.swing.Timer;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.gui.display.DisplayMainComponent;
+import de.netprojectev.server.gui.DisplayMainComponent;
 
 /**
  * Datastructure to hold the necessary information of a countdown.

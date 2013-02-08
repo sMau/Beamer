@@ -6,16 +6,16 @@ import java.util.UUID;
 import de.netprojectev.old.server.gui.display.DisplayController;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.gui.DisplayFrame;
-import de.netprojectev.server.networking.MessageHandler;
-import de.netprojectev.server.networking.MessageProxy;
+import de.netprojectev.server.networking.MessageHandlerServer;
+import de.netprojectev.server.networking.MessageProxyServer;
 
-public class TickerModel {
+public class TickerModelServer {
 	
-	private final MessageProxy proxy;
+	private final MessageProxyServer proxy;
 	private HashMap<UUID, TickerElement> elements;
 	private String completeTickerText;
 	
-	public TickerModel(MessageProxy proxy) {
+	public TickerModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
 		completeTickerText = "";
 		
