@@ -60,10 +60,11 @@ public class DisplayMainComponent extends JComponent {
 	 * updates the countdown font family, size and color via reading it from the properties
 	 */
 	protected void updateCountdownFont() {
-		Properties props = PreferencesModelOld.getInstance().getProperties();
+		/*Properties props = PreferencesModelOld.getInstance().getProperties();
 		countdownFont = new Font(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE)));
 		countdownColor = new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR)));
-		log.log(Level.INFO, "countdown font attributes updated");
+		log.log(Level.INFO, "countdown font attributes updated");*/
+		//TODO
 	}
 	
 	/**

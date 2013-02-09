@@ -148,7 +148,7 @@ public class TickerComponent extends JComponent {
      * the speed, font size,type and color attributes are affected.
      */
     private void updateLiveTickerAttributes() {
-		log.log(Level.INFO, "updateing live ticker attributes");
+		/*log.log(Level.INFO, "updateing live ticker attributes");
     	Properties props = PreferencesModelOld.getInstance().getProperties();
     	try {
 			tickerSpeed = Integer.parseInt(props.getProperty(Constants.PROP_TICKER_SPEED));
@@ -156,7 +156,8 @@ public class TickerComponent extends JComponent {
 			tickerColor = new Color(Integer.parseInt(props.getProperty(Constants.PROP_TICKER_FONTCOLOR))); 
     	} catch (NumberFormatException e) {
 			log.log(Level.INFO, "Number format exeception", e);
-		}
+		}*/
+    	//TODO
     }
     
 	/**
