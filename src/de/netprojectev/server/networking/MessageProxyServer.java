@@ -12,6 +12,7 @@ import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.TickerModelServer;
 
 public class MessageProxyServer {
+	
 	private final HashMap<String, Channel> clients;
 	private final MediaModelServer mediaModel;
 	private final TickerModelServer tickerModel;
@@ -57,9 +58,6 @@ public class MessageProxyServer {
 	private void showMediaFile(UUID id) {
 		// TODO Auto-generated method stub
 	}
-	private void queue(UUID id) {
-		// TODO Auto-generated method stub
-	}
 	private void enableAutoModus() {
 		// TODO Auto-generated method stub
 	}
@@ -72,6 +70,46 @@ public class MessageProxyServer {
 	}
 	private void stopLiveTicker() {
 		// TODO Auto-generated method stub
+	}
+
+	public boolean isAutomodeEnabled() {
+		return automodeEnabled;
+	}
+
+	public void setAutomodeEnabled(boolean automodeEnabled) {
+		this.automodeEnabled = automodeEnabled;
+	}
+
+	public boolean isShufflemodeEnabled() {
+		return shufflemodeEnabled;
+	}
+
+	public void setShufflemodeEnabled(boolean shufflemodeEnabled) {
+		this.shufflemodeEnabled = shufflemodeEnabled;
+	}
+
+	public Timer getAutoModusTimer() {
+		return autoModusTimer;
+	}
+
+	public void setAutoModusTimer(Timer autoModusTimer) {
+		this.autoModusTimer = autoModusTimer;
+	}
+
+	public HashMap<String, Channel> getClients() {
+		return clients;
+	}
+
+	public MediaModelServer getMediaModel() {
+		return mediaModel;
+	}
+
+	public TickerModelServer getTickerModel() {
+		return tickerModel;
+	}
+
+	public DisplayFrame getFrame() {
+		return frame;
 	}
 
 }

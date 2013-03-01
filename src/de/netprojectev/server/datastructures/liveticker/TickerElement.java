@@ -9,7 +9,24 @@ public class TickerElement {
 	private boolean show;
 	
 	public TickerElement(String text) {
-		
+		id = UUID.randomUUID();
+		this.text = text;
+		this.show = true;
 	}
-	//TODO
+
+	public boolean isShow() {
+		return show;
+	}
+
+	public void setShow(boolean show) {
+		this.show = show;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public String getText() {
+		return text;
+	}
 }

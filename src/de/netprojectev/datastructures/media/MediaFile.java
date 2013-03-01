@@ -1,92 +1,33 @@
 package de.netprojectev.datastructures.media;
 
-import java.util.Date;
 import java.util.UUID;
 
-import de.netprojectev.old.server.datastructures.media.ImageFile;
-import de.netprojectev.old.server.datastructures.media.Themeslide;
-import de.netprojectev.old.server.datastructures.media.VideoFile;
 
 public abstract class MediaFile {
-	
+
 	private final UUID id;
 	protected String name;
-	protected transient Status status;
 	protected Priority priority;
-	protected Boolean corrupted;
-		
-	/**
-	 * 
-	 * @param name name in the manager
-	 * @param priority initial priority
-	 */
+	protected boolean current;
+	protected int showCount;
+	
 	protected MediaFile(String name, Priority priority, UUID id) {
 		this.id = id;
-		this.name = name;
-		this.status = new Status();
 		this.priority = priority;
-		this.corrupted = false;
+		this.name = name;
 	}
 	
-	/**
-	 * Generates a formatted information string about the media file, about its attributes and current state.
-	 * @return formatted info string
-	 */
-	public String generateInfoString() {
-		
-		String info;
-		
-		String type;
-		String current;
-		String wasShowed;
-		String showAt;
-		
-		if(!corrupted) {
-			if(this instanceof VideoFile) {
-				type = "Video";
-			} else if(this instanceof ImageFile) {
-				type = "Image";
-			} else if(this instanceof Themeslide) {
-				
-				type = "Themeslide / " + ((Themeslide) this).getTheme().getName();
-			} else {
-				type = "undefined";
-			}
-			
-			if(this.getStatus().getIsCurrent()) {
-				current = "yes";
-			} else {
-				current = "no";
-			}
-			
-			if(this.getStatus().getWasShowed()) {
-				wasShowed = "yes";
-			} else {
-				wasShowed = "no";
-			}
-			
-			if(this.getStatus().getShowAt() != null) {
-				if(this.getStatus().getShowAt().after(new Date())) {
-					showAt = this.getStatus().getShowAt().toString();
-				} else {
-					showAt = "-";
-				}
-			} else {
-				showAt = "-";
-			}
-			
-			
-			info =	"Name: " + name + "\n" +
-					"Type: " + type + "\n" +
-					"Priority: " + this.priority.getName() + " / " + this.priority.getMinutesToShow() + " min" + "\n" +
-					"Already showed: " + wasShowed + "\n" +
-					"Current: " + current + "\n" + 
-					"Show at: " + showAt;
-			
-		} else {
-			info = "The file is corrupted or maybe was moved.";
-		}
-		return info;
+	protected MediaFile(String name, UUID id) {
+		this.id = id;
+		this.name = name;
+		//TODO add default priority
+	}
+	
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString();
 	}
 	
 	@Override
@@ -102,36 +43,8 @@ public abstract class MediaFile {
 	    }
 	}
 
-	public void resetPlayedState() {
-		this.status.setWasShowed(false);
-	}
-	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Status getStatus() {
-		return status;
-	}
-
-	public void setStatus(Status status) {
-		this.status = status;
-	}
-
-	public Priority getPriority() {
-		return priority;
-	}
-
-	public void setPriority(Priority priority) {
-		this.priority = priority;
-	}
-
 	public UUID getId() {
 		return id;
 	}
-	
+
 }

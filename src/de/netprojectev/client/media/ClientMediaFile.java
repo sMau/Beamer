@@ -2,8 +2,8 @@ package de.netprojectev.client.media;
 
 import java.util.UUID;
 
-import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.old.datastructures.media.MediaFile;
 
 public class ClientMediaFile extends MediaFile {
 

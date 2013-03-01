@@ -39,13 +39,13 @@ import javax.swing.text.StyledEditorKit;
 
 import de.netprojectev.client.gui.dialogs.ColorPickerDialog;
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.old.server.datastructures.media.Themeslide;
 import de.netprojectev.old.server.model.MediaHandlerOld;
 import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.server.datastructures.media.Theme;
 
 
 /**

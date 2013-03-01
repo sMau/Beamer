@@ -3,19 +3,26 @@ package de.netprojectev.networking;
 import java.io.Serializable;
 import java.util.UUID;
 
-public abstract class Message implements Serializable {
+public class Message implements Serializable {
 
 	/**
-	 * 
+	 * Class to encapsulate messages transfered via network.
 	 */
 	private static final long serialVersionUID = 5081391059509425751L;
 	
 	private final Enum<OpCode> opCode;
 	private final UUID id;
+	private Serializable data;
 	
-	protected Message(Enum<OpCode> opCode, UUID id) {
+	public Message(Enum<OpCode> opCode, UUID id) {
 		this.id = id;
 		this.opCode = opCode;
+	}
+	
+	public Message(Enum<OpCode> opCode, UUID id, Serializable data) {
+		this.id = id;
+		this.opCode = opCode;
+		this.data = data;
 	}
 
 	public Enum<OpCode> getOpCode() {
@@ -24,6 +31,10 @@ public abstract class Message implements Serializable {
 
 	public UUID getId() {
 		return id;
+	}
+
+	public Object getData() {
+		return data;
 	}
 	
 }

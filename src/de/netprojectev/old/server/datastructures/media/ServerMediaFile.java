@@ -6,6 +6,8 @@ import java.util.UUID;
 import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.datastructures.media.Priority;
 
+
+
 /**
  * abstract datastructure to deal, to deal with different media in an extension of this class
  * 

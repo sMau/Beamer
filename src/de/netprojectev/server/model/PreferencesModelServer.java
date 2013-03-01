@@ -7,7 +7,7 @@ import java.util.UUID;
 import javax.swing.ImageIcon;
 
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.server.datastructures.media.Theme;
 
 public class PreferencesModelServer {
 	

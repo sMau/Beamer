@@ -21,12 +21,12 @@ import javax.swing.event.ListSelectionListener;
 import de.netprojectev.client.gui.dialogs.ColorPickerDialog;
 import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.old.server.model.MediaHandlerOld;
 import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.server.datastructures.media.Theme;
 import de.netprojectev.server.gui.DisplayFrame;
 
 /**

@@ -14,5 +14,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/netty-3.6.2.Final.jar" sourcepath="lib/netty-3.6.2.Final-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/log4j-core-2.0-beta4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

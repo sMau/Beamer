@@ -3,10 +3,7 @@ package de.netprojectev.server.model;
 import java.util.HashMap;
 import java.util.UUID;
 
-import de.netprojectev.old.server.gui.display.DisplayController;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
-import de.netprojectev.server.gui.DisplayFrame;
-import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class TickerModelServer {
@@ -19,6 +16,16 @@ public class TickerModelServer {
 		this.proxy = proxy;
 		completeTickerText = "";
 		
+	}
+	
+	public UUID addTickerElement(TickerElement e) {
+		
+		return null;
+	}
+	
+	public boolean removeTickerElement(UUID id) {
+		
+		return true;
 	}
 	
 	public String generateCompleteTickerText() {

@@ -11,13 +11,11 @@ import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
-import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.old.server.datastructures.media.Countdown;
 import de.netprojectev.old.server.datastructures.media.ImageFile;
 import de.netprojectev.old.server.datastructures.media.Themeslide;
 import de.netprojectev.old.server.datastructures.media.VideoFile;
-import de.netprojectev.old.server.model.MediaHandlerOld;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 /**

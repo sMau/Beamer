@@ -1,7 +1,9 @@
-package de.netprojectev.datastructures.media;
+package de.netprojectev.server.datastructures.media;
 
-import java.io.File;
 import java.io.Serializable;
+import java.util.UUID;
+
+import javax.swing.ImageIcon;
 
 /**
  * 
@@ -11,15 +13,17 @@ import java.io.Serializable;
 public class Theme implements Serializable {
 
 	private static final long serialVersionUID = 5562694101580970506L;
+	private UUID id;
 	private String name;
-	private File backgroundImage;
+	private ImageIcon backgroundImage;
 
 	/**
 	 * 
 	 * @param name name as identifier for the theme
 	 * @param bgImg background image from the hard disk
 	 */
-	public Theme(String name, File bgImg) {
+	public Theme(String name, ImageIcon bgImg) {
+		this.id = UUID.randomUUID();
 		this.name  = name;
 		this.backgroundImage = bgImg;
 	}
@@ -32,12 +36,11 @@ public class Theme implements Serializable {
 		this.name = name;
 	}
 
-	public File getBackgroundImage() {
+	public ImageIcon getBackgroundImage() {
 		return backgroundImage;
 	}
 
-	public void setBackgroundImage(File backgroundImage) {
-		this.backgroundImage = backgroundImage;
+	public UUID getId() {
+		return id;
 	}
-
 }

@@ -38,11 +38,10 @@ import de.netprojectev.client.gui.dialogs.EditMediaFileFrame;
 import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.gui.themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Status;
-import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.old.datastructures.media.Status;
 import de.netprojectev.old.server.datastructures.liveticker.TickerTextElement;
 import de.netprojectev.old.server.datastructures.media.Countdown;
 import de.netprojectev.old.server.datastructures.media.ImageFile;
@@ -51,6 +50,7 @@ import de.netprojectev.old.server.datastructures.media.Themeslide;
 import de.netprojectev.old.server.datastructures.media.VideoFile;
 import de.netprojectev.old.server.model.MediaHandlerOld;
 import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.server.datastructures.media.Theme;
 
 /**
  * A GUI class which is the first object to be intialized on program start.

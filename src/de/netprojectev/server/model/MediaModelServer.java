@@ -5,7 +5,6 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.old.server.gui.display.DisplayController;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class MediaModelServer {
@@ -17,7 +16,6 @@ public class MediaModelServer {
 	
 	public MediaModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
-		
 	}
 	
 	public void addMediaFile(ServerMediaFile file) {

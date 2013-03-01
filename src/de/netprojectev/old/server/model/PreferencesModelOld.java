@@ -11,9 +11,9 @@ import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.gui.preferences.PriorityListModel;
 import de.netprojectev.client.gui.preferences.ThemeListModel;
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.server.datastructures.media.Theme;
 
 /**
  * Datastructure to hold preferences, priorities and themes.

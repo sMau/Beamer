@@ -30,14 +30,14 @@ import javax.swing.JOptionPane;
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
-import de.netprojectev.main.Starter;
+import de.netprojectev.old.main.Starter;
 import de.netprojectev.old.server.datastructures.liveticker.LiveTicker;
 import de.netprojectev.old.server.datastructures.liveticker.TickerTextElement;
 import de.netprojectev.old.server.datastructures.media.ImageFile;
 import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.old.server.model.MediaHandlerOld;
 import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.server.datastructures.media.Theme;
 
 /**
  * Class to hold global methods not containing to a specific other class.

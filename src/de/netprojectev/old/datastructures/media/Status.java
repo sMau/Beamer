@@ -1,4 +1,4 @@
-package de.netprojectev.datastructures.media;
+package de.netprojectev.old.datastructures.media;
 
 import java.util.Date;
 
