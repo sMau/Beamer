@@ -7,8 +7,11 @@ import java.util.UUID;
 import org.jboss.netty.channel.Channel;
 
 import de.netprojectev.networking.Message;
+import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.server.gui.DisplayFrame;
+import de.netprojectev.server.model.MediaDoesNotExsistException;
+import de.netprojectev.server.model.MediaListsEmptyException;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.TickerModelServer;
 
@@ -30,7 +33,7 @@ public class MessageProxyServer {
 		
 	}
 	
-	public void receiveMessage(Message msg) {
+	public void receiveMessage(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException {
 		switch (msg.getOpCode()) {
 		case ADD_MEDIA_FILE:
 			addMediaFile(msg);
@@ -42,7 +45,16 @@ public class MessageProxyServer {
 			showMediaFile(msg);
 			break;
 		case SHOW_NEXT_MEDIA_FILE:
-			showNextMediaFile(msg);
+			showNextMediaFile();
+			break;
+		case QUEUE_MEDIA_FILE:
+			queueMediaFile(msg);
+			break;
+		case ADD_LIVE_TICKER_ELEMENT:
+			addLiveTickerElement(msg);
+			break;
+		case REMOVE_LIVE_TICKER_ELEMENT:
+			removeLiveTickerElement(msg);
 			break;
 		default:
 			unkownMessageReceived(msg);
@@ -50,14 +62,38 @@ public class MessageProxyServer {
 		}
 	}
 	
-	private void showNextMediaFile(Message msg) {
+	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
+		UUID eltToRemove = (UUID) msg.getData();
+		tickerModel.removeTickerElement(eltToRemove);
+		//TODO implement the display part
 		
+	}
+
+	private void addLiveTickerElement(Message msg) {
+		TickerElement eltToAdd = (TickerElement) msg.getData();
+		tickerModel.addTickerElement(eltToAdd);
+		//TODO implement the display part
+		
+	}
+
+	private void queueMediaFile(Message msg) throws MediaDoesNotExsistException {
+		UUID toQueue = (UUID) msg.getData();
+		mediaModel.queue(toQueue);
+		
+	}
+
+	private void showNextMediaFile() throws MediaDoesNotExsistException, MediaListsEmptyException {
+		ServerMediaFile fileToShow = mediaModel.getNext();
+		//TODO implement the display part
 		
 		
 	}
 
-	private void showMediaFile(Message msg) {
-		// TODO Auto-generated method stub
+	private void showMediaFile(Message msg) throws MediaDoesNotExsistException {
+		UUID toShow = (UUID) msg.getData();
+		ServerMediaFile fileToShow = mediaModel.getMediaFileById(toShow);
+		//TODO implement the display part
+		
 		
 	}
 
@@ -66,9 +102,9 @@ public class MessageProxyServer {
 		
 	}
 
-	private void removeMediaFile(Message msg) {
-		// TODO Auto-generated method stub
-		
+	private void removeMediaFile(Message msg) throws MediaDoesNotExsistException {
+		UUID toRemove = (UUID) msg.getData();
+		mediaModel.removeMediaFile(toRemove);
 	}
 
 	private void addMediaFile(Message msg) {
@@ -94,22 +130,10 @@ public class MessageProxyServer {
 		// TODO Auto-generated method stub
 	}
 
-	private void showNext() {
-		// TODO Auto-generated method stub
-	}
-	private void showPrevious() {
-		// TODO Auto-generated method stub
-		}
-	private void showMediaFile(UUID id) {
-		// TODO Auto-generated method stub
-	}
 	private void enableAutoModus() {
 		// TODO Auto-generated method stub
 	}
 	
-	private void enableShuffleModus() {
-		// TODO Auto-generated method stub
-	}
 	private void startLiveTicker() {
 		// TODO Auto-generated method stub
 	}
