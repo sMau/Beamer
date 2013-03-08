@@ -15,17 +15,22 @@ public class TickerModelServer {
 	public TickerModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
 		completeTickerText = "";
-		
+		elements = new HashMap<>();
 	}
 	
 	public UUID addTickerElement(TickerElement e) {
-		
-		return null;
+		elements.put(e.getId(), e);
+		return e.getId();
 	}
 	
-	public boolean removeTickerElement(UUID id) {
-		
-		return true;
+	public void removeTickerElement(UUID id) throws MediaDoesNotExsistException {
+		checkIfElementExists(id);
+		elements.remove(id);
+	}
+	
+	public TickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
+		checkIfElementExists(id);
+		return elements.get(id);
 	}
 	
 	public String generateCompleteTickerText() {
@@ -33,6 +38,12 @@ public class TickerModelServer {
 		//TODO
 		
 		return "";
+	}
+	
+	private void checkIfElementExists(UUID id) throws MediaDoesNotExsistException {
+		if(elements.get(id) == null) {
+			throw new MediaDoesNotExsistException("Ticker element does not exist. Query id: " + id);
+		}
 	}
 
 }
