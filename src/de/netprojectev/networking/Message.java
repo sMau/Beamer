@@ -10,22 +10,22 @@ public class Message implements Serializable {
 	 */
 	private static final long serialVersionUID = 5081391059509425751L;
 	
-	private final Enum<OpCode> opCode;
+	private final OpCode opCode;
 	private final UUID id;
 	private Serializable data;
 	
-	public Message(Enum<OpCode> opCode, UUID id) {
+	public Message(OpCode opCode, UUID id) {
 		this.id = id;
 		this.opCode = opCode;
 	}
 	
-	public Message(Enum<OpCode> opCode, UUID id, Serializable data) {
+	public Message(OpCode opCode, UUID id, Serializable data) {
 		this.id = id;
 		this.opCode = opCode;
 		this.data = data;
 	}
 
-	public Enum<OpCode> getOpCode() {
+	public OpCode getOpCode() {
 		return opCode;
 	}
 

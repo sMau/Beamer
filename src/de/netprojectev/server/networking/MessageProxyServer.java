@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.jboss.netty.channel.Channel;
 
 import de.netprojectev.networking.Message;
+import de.netprojectev.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.server.gui.DisplayFrame;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.TickerModelServer;
@@ -30,9 +31,53 @@ public class MessageProxyServer {
 	}
 	
 	public void receiveMessage(Message msg) {
-		// TODO Auto-generated method stub
+		switch (msg.getOpCode()) {
+		case ADD_MEDIA_FILE:
+			addMediaFile(msg);
+			break;
+		case REMOVE_MEDIA_FILE:
+			removeMediaFile(msg);
+			break;
+		case SHOW_MEDIA_FILE:
+			showMediaFile(msg);
+			break;
+		case SHOW_NEXT_MEDIA_FILE:
+			showNextMediaFile(msg);
+			break;
+		default:
+			unkownMessageReceived(msg);
+			break;
+		}
 	}
 	
+	private void showNextMediaFile(Message msg) {
+		
+		
+		
+	}
+
+	private void showMediaFile(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void unkownMessageReceived(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void removeMediaFile(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void addMediaFile(Message msg) {
+		ServerMediaFile fileToAdd = (ServerMediaFile) msg.getData();
+		mediaModel.addMediaFile(fileToAdd);
+	}
+	
+	
+
 	public void sendMessage(String alias, Message msg) {
 		// TODO Auto-generated method stub
 	}

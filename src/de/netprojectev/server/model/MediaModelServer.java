@@ -24,7 +24,6 @@ public class MediaModelServer {
 		mediaStandardList = new LinkedList<>();
 		mediaPrivateQueue = new LinkedList<>();
 		rand = new Random();
-		
 	}
 	
 	public UUID addMediaFile(ServerMediaFile file) {
