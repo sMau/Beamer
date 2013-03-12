@@ -74,6 +74,7 @@ public class Client {
 	
 	public void sendMessageToServer(Message msgToSend) {
 		channelToServer.write(msgToSend);
+		LOG.log(Level.INFO, "Sending message to server: " + msgToSend);
 	}
 
 	public String getAlias() {

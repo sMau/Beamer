@@ -1,5 +1,6 @@
 package de.netprojectev.server.networking;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jboss.netty.channel.ChannelHandlerContext;
@@ -9,6 +10,7 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
 import de.netprojectev.misc.Misc;
+import de.netprojectev.networking.Message;
 
 public class MessageHandlerServer extends SimpleChannelHandler {
 	
@@ -23,8 +25,10 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-		// TODO Auto-generated method stub
-		super.messageReceived(ctx, e);
+		Message received = (Message) e.getMessage();
+		proxy.receiveMessage(received);
+		LOG.log(Level.INFO, "Message received " + received);
+		//super.messageReceived(ctx, e);
 	}
 	
 	@Override
@@ -41,13 +45,15 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 	
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
-		// TODO Auto-generated method stub
+		//TODO
 	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
 		
 		// TODO Auto-generated method stub
+		
+		LOG.log(Level.WARNING, "Exception caught ", e.getCause());
 		e.getChannel().close();
 	}
 }

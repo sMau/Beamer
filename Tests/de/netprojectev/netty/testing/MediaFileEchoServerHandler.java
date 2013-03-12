@@ -13,8 +13,6 @@ public class MediaFileEchoServerHandler extends SimpleChannelHandler {
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		ServerMediaFile media = (ServerMediaFile) e.getMessage();
-		media.setStatus(new Status());
-		System.out.println(media.generateInfoString());
 		e.getChannel().close();
 	}
 	

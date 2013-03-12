@@ -4,6 +4,10 @@ import java.io.File;
 
 public class VideoFile extends ServerMediaFile {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2033435655791192980L;
 	private File videoFile;
 	private int duration;
 	

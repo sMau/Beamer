@@ -4,6 +4,10 @@ import java.util.UUID;
 
 public class Themeslide extends ServerMediaFile {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -14234502199126341L;
 	private ImageFile imageRepresantation;
 	private UUID themeId;
 	

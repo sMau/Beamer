@@ -1,4 +1,4 @@
-package de.netprojectev.tests;
+package de.netprojectev.examplessc;
 
 class Arbeiter implements Runnable{
  

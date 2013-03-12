@@ -14,13 +14,13 @@ public class Message implements Serializable {
 	private final UUID id;
 	private Serializable data;
 	
-	public Message(OpCode opCode, UUID id) {
-		this.id = id;
+	public Message(OpCode opCode) {
+		this.id = UUID.randomUUID();
 		this.opCode = opCode;
 	}
 	
-	public Message(OpCode opCode, UUID id, Serializable data) {
-		this.id = id;
+	public Message(OpCode opCode, Serializable data) {
+		this.id = UUID.randomUUID();
 		this.opCode = opCode;
 		this.data = data;
 	}
@@ -35,6 +35,11 @@ public class Message implements Serializable {
 
 	public Object getData() {
 		return data;
+	}
+	
+	@Override
+	public String toString() {
+		return "Message: " + id + "; OpCode: " + opCode + "; Data: " + data;
 	}
 	
 }

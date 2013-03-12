@@ -1,4 +1,4 @@
-package de.netprojectev.tests;
+package de.netprojectev.examplessc;
 
 import java.util.Map;
 import java.util.concurrent.ExecutorService;

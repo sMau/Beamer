@@ -15,7 +15,6 @@ public class MediaModelServer {
 	private HashMap<UUID, ServerMediaFile> allMediaFiles;
 	private LinkedList<UUID> mediaStandardList;
 	private LinkedList<UUID> mediaPrivateQueue;
-	private ServerMediaFile currentFile;
 	private Random rand;
 	
 	public MediaModelServer(MessageProxyServer proxy) {

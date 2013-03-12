@@ -1,4 +1,4 @@
-package de.netprojectev.tests;
+package de.netprojectev.examplessc;
 
 import de.netprojectev.client.gui.manager.ManagerFrame;
 

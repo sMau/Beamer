@@ -9,6 +9,7 @@ import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.group.ChannelGroup;
+import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.serialization.ClassResolvers;
@@ -20,25 +21,27 @@ import de.netprojectev.server.networking.MessageProxyServer;
 
 public class ServerInit {
 	
-	private final int port;
 	private static final ChannelGroup allClients = new DefaultChannelGroup("beamer-clients");
+	
+	private final int port;
+	private final MessageProxyServer proxy;
+	private ChannelFactory factory;
 
 	public ServerInit(int port) {
 		this.port = port;
+		proxy = new MessageProxyServer();
 		bindListeningSocket();
 	}
 	
 	private void bindListeningSocket() {
-				
-		final MessageProxyServer proxy = new MessageProxyServer();
-
-		ChannelFactory factory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
+		
+		factory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 		ServerBootstrap bootstrap = new ServerBootstrap(factory);
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectEncoder(), new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new MessageHandlerServer(proxy));
+				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new MessageHandlerServer(proxy), new ObjectEncoder());
 			
 			}
 		});
@@ -65,6 +68,16 @@ public class ServerInit {
 			}
 		}
 		new ServerInit(port);
+	}
+
+	public void releaseNetworkRessources() {
+		ChannelGroupFuture future = allClients.close();
+		future.awaitUninterruptibly();
+		factory.releaseExternalResources();
+	}
+	
+	public MessageProxyServer getProxy() {
+		return proxy;
 	}
 
 }
