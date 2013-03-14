@@ -1,14 +1,9 @@
-package de.netprojectev.old.server.gui.display;
+package de.netprojectev.old;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.datastructures.media.Countdown;
-import de.netprojectev.old.server.datastructures.media.ImageFile;
-import de.netprojectev.old.server.datastructures.media.Themeslide;
-import de.netprojectev.old.server.datastructures.media.VideoFile;
-import de.netprojectev.old.server.model.DisplayTickerModelOld;
 import de.netprojectev.server.gui.DisplayFrame;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.TickerModelServer;

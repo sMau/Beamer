@@ -1,4 +1,4 @@
-package de.netprojectev.old.server.model;
+package de.netprojectev.old;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -7,7 +7,6 @@ import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.old.server.datastructures.liveticker.LiveTicker;
 import de.netprojectev.old.server.datastructures.liveticker.TickerTextElement;
-import de.netprojectev.old.server.gui.display.DisplayController;
 
 public class DisplayTickerModelOld {
 	

@@ -41,10 +41,10 @@ import de.netprojectev.client.gui.dialogs.ColorPickerDialog;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.old.server.datastructures.media.Themeslide;
-import de.netprojectev.old.server.model.MediaHandlerOld;
-import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.old.MediaHandlerOld;
+import de.netprojectev.old.PreferencesModelOld;
+import de.netprojectev.old.ServerMediaFile;
+import de.netprojectev.old.Themeslide;
 import de.netprojectev.server.datastructures.media.Theme;
 
 

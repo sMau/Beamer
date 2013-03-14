@@ -1,4 +1,4 @@
-package de.netprojectev.old.server.datastructures.media;
+package de.netprojectev.old;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
@@ -17,7 +17,6 @@ import org.jdesktop.swingx.util.GraphicsUtilities;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.model.PreferencesModelOld;
 import de.netprojectev.server.gui.DisplayMainComponent;
 
 /**

@@ -1,4 +1,4 @@
-package de.netprojectev.old.server.datastructures.media;
+package de.netprojectev.old;
 
 import java.io.Serializable;
 import java.util.UUID;

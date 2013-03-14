@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.old.PreferencesModelOld;
 
 /**
  * GUI component to draw the live ticker string.

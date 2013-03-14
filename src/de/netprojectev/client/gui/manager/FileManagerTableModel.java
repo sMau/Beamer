@@ -9,13 +9,13 @@ import java.util.LinkedList;
 import javax.swing.table.AbstractTableModel;
 
 import de.netprojectev.misc.Constants;
-import de.netprojectev.old.server.datastructures.media.Countdown;
-import de.netprojectev.old.server.datastructures.media.ImageFile;
-import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.old.server.datastructures.media.Themeslide;
-import de.netprojectev.old.server.datastructures.media.VideoFile;
-import de.netprojectev.old.server.model.MediaHandlerOld;
-import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.old.Countdown;
+import de.netprojectev.old.ImageFile;
+import de.netprojectev.old.MediaHandlerOld;
+import de.netprojectev.old.PreferencesModelOld;
+import de.netprojectev.old.ServerMediaFile;
+import de.netprojectev.old.Themeslide;
+import de.netprojectev.old.VideoFile;
 
 /**
  * This is the model for the @see JTable in the Filemanager.

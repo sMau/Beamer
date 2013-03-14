@@ -1,4 +1,4 @@
-package de.netprojectev.old.server.model;
+package de.netprojectev.old;
 
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -7,10 +7,6 @@ import java.util.logging.Logger;
 import de.netprojectev.client.gui.manager.FileManagerTableModel;
 import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.datastructures.media.Countdown;
-import de.netprojectev.old.server.datastructures.media.ImageFile;
-import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.old.server.datastructures.media.Themeslide;
 import de.netprojectev.server.gui.DisplayMainComponent;
 
 /**

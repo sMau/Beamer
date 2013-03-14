@@ -14,8 +14,8 @@ import javax.swing.JComponent;
 
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.datastructures.media.Countdown;
-import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.old.Countdown;
+import de.netprojectev.old.PreferencesModelOld;
 /**
  * 
  * GUI Component to draw images and themeslide background images

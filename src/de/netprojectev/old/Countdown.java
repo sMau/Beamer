@@ -1,4 +1,4 @@
-package de.netprojectev.old.server.datastructures.media;
+package de.netprojectev.old;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

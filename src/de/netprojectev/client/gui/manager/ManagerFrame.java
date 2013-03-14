@@ -41,15 +41,15 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.old.Countdown;
+import de.netprojectev.old.ImageFile;
+import de.netprojectev.old.MediaHandlerOld;
+import de.netprojectev.old.PreferencesModelOld;
+import de.netprojectev.old.ServerMediaFile;
+import de.netprojectev.old.Themeslide;
+import de.netprojectev.old.VideoFile;
 import de.netprojectev.old.datastructures.media.Status;
 import de.netprojectev.old.server.datastructures.liveticker.TickerTextElement;
-import de.netprojectev.old.server.datastructures.media.Countdown;
-import de.netprojectev.old.server.datastructures.media.ImageFile;
-import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.old.server.datastructures.media.Themeslide;
-import de.netprojectev.old.server.datastructures.media.VideoFile;
-import de.netprojectev.old.server.model.MediaHandlerOld;
-import de.netprojectev.old.server.model.PreferencesModelOld;
 import de.netprojectev.server.datastructures.media.Theme;
 
 /**

@@ -1,5 +1,6 @@
 package de.netprojectev.netty.testing;
 
+import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
@@ -14,7 +15,7 @@ import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
-import de.netprojectev.old.server.datastructures.media.VideoFile;
+import de.netprojectev.server.datastructures.media.VideoFile;
 
 public class MediaFileEchoClient {
 
@@ -59,10 +60,10 @@ public class MediaFileEchoClient {
 	
 	
 	private static void sendSomeMessages() throws InterruptedException {
-		VideoFile vid1 = new VideoFile("client1 vid1", "/home");
-		VideoFile vid2 = new VideoFile("client1 vid2", "/home");
-		VideoFile vid3 = new VideoFile("client1 vid3", "/home");
-		VideoFile vid4 = new VideoFile("client1 vid4", "/home");
+		VideoFile vid1 = new VideoFile("client1 vid1", new File("/home"));
+		VideoFile vid2 = new VideoFile("client1 vid2", new File("/home"));
+		VideoFile vid3 = new VideoFile("client1 vid3", new File("/home"));
+		VideoFile vid4 = new VideoFile("client1 vid4", new File("/home"));
 		
 		
 		Thread.sleep(3000);

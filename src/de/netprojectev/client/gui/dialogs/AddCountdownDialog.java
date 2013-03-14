@@ -11,10 +11,10 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.datastructures.media.Countdown;
-import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.old.server.model.DisplayMediaModelOld;
-import de.netprojectev.old.server.model.MediaHandlerOld;
+import de.netprojectev.old.Countdown;
+import de.netprojectev.old.DisplayMediaModelOld;
+import de.netprojectev.old.MediaHandlerOld;
+import de.netprojectev.old.ServerMediaFile;
 
 /**
  * Dialog to add a {@link Countdown}

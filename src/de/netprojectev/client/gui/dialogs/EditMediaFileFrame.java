@@ -9,8 +9,8 @@ import javax.swing.SwingUtilities;
 import de.netprojectev.client.gui.manager.FileManagerTableModel;
 import de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.old.PreferencesModelOld;
+import de.netprojectev.old.ServerMediaFile;
 
 
 /**

@@ -12,10 +12,10 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.server.datastructures.media.Countdown;
-import de.netprojectev.old.server.datastructures.media.ImageFile;
-import de.netprojectev.old.server.datastructures.media.Themeslide;
-import de.netprojectev.old.server.datastructures.media.VideoFile;
+import de.netprojectev.old.Countdown;
+import de.netprojectev.old.ImageFile;
+import de.netprojectev.old.Themeslide;
+import de.netprojectev.server.datastructures.media.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 /**

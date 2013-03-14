@@ -1,4 +1,4 @@
-package de.netprojectev.old.server.model;
+package de.netprojectev.old;
 
 import java.util.Collections;
 import java.util.Date;
@@ -9,11 +9,6 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.netprojectev.old.server.datastructures.media.Countdown;
-import de.netprojectev.old.server.datastructures.media.ImageFile;
-import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.old.server.datastructures.media.Themeslide;
-import de.netprojectev.old.server.datastructures.media.VideoFile;
 import de.netprojectev.server.gui.DisplayFrame;
 
 /**

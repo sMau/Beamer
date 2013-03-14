@@ -3,7 +3,7 @@ package de.netprojectev.client.gui.preferences;
 import javax.swing.AbstractListModel;
 import javax.swing.SwingUtilities;
 
-import de.netprojectev.old.server.model.PreferencesModelOld;
+import de.netprojectev.old.PreferencesModelOld;
 
 
 /**

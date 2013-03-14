@@ -3,7 +3,7 @@ package de.netprojectev.client.networking;
 import de.netprojectev.client.Client;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.old.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.old.ServerMediaFile;
 
 public class ClientMessageWrapper {
 
