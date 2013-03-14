@@ -1,30 +1,35 @@
 package de.netprojectev.server.networking;
 
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jboss.netty.channel.Channel;
+import org.jboss.netty.channel.group.DefaultChannelGroup;
 
+import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.Message;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.server.datastructures.media.Theme;
+import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.server.exceptions.MediaListsEmptyException;
+import de.netprojectev.server.exceptions.UnkownMessageException;
 import de.netprojectev.server.gui.DisplayFrame;
-import de.netprojectev.server.model.MediaDoesNotExsistException;
-import de.netprojectev.server.model.MediaListsEmptyException;
 import de.netprojectev.server.model.MediaModelServer;
+import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
 
 public class MessageProxyServer {
 	
 	private static final Logger LOG = Misc.getLoggerAll(MessageProxyServer.class.getName());
 	
-	private final HashMap<String, Channel> clients;
+	private final DefaultChannelGroup allClients;
 	private final MediaModelServer mediaModel;
 	private final TickerModelServer tickerModel;
+	private final PreferencesModelServer prefsModel;
 	private final DisplayFrame frame;
 	private boolean automodeEnabled;
 	private boolean shufflemodeEnabled;
@@ -32,9 +37,10 @@ public class MessageProxyServer {
 	private Timer autoModusTimer;
 	
 	public MessageProxyServer() {
-		this.clients = new HashMap<>();
+		this.allClients = new DefaultChannelGroup("beamer-clients");
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
+		this.prefsModel = new PreferencesModelServer(this);
 		this.frame = new DisplayFrame(this); 
 	}
 	
@@ -61,26 +67,63 @@ public class MessageProxyServer {
 		case REMOVE_LIVE_TICKER_ELEMENT:
 			removeLiveTickerElement(msg);
 			break;
+		case ADD_THEME:
+			addTheme(msg);
+			break;
+		case ADD_PRIORITY:
+			addPriority(msg);
+			break;
+		case REMOVE_THEME:
+			removeTheme(msg);
+			break;
+		case REMOVE_PRIORITY:
+			removePriority(msg);
+			break;
+		case TOGGLE_LIVE_TICKER_START:
+			toggleLiveTickerStart();
+			break;
+		case TOGGLE_AUTO_MODE:
+			toggleAutoMode();
+			break;
+		case TOGGLE_FULLSCREEN:
+			toggleFullScreen();
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 	}
 	
-	public void sendMessage(String alias, Message msg) {
-		// TODO Auto-generated method stub
-	}
-	
 	public void broadcastMessage(Message msg) {
-		// TODO Auto-generated method stub
+		allClients.write(msg);
 	}
 	
-	public void clientConnected(String alias, Channel chan) {
-		// TODO Auto-generated method stub
+	public void clientConnected(Channel chan) {
+		allClients.add(chan);
 	}
 	
-	public void clientDisconnected(String alias) {
-		// TODO Auto-generated method stub
+	public void clientDisconnected(Channel chan) {
+		allClients.remove(chan);
+	}
+	
+	private void removePriority(Message msg) {
+		UUID prioToRemove = (UUID) msg.getData();
+		prefsModel.removePriority(prioToRemove);
+	}
+
+	private void removeTheme(Message msg) {
+		UUID themeToRemove = (UUID) msg.getData();
+		prefsModel.removeTheme(themeToRemove);
+	}
+
+	private void addPriority(Message msg) {
+		Priority prioToAdd = (Priority) msg.getData();
+		prefsModel.addPriority(prioToAdd);
+	}
+
+	private void addTheme(Message msg) {
+		Theme themeToAdd = (Theme) msg.getData();
+		prefsModel.addTheme(themeToAdd);
 	}
 	
 	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
@@ -138,18 +181,21 @@ public class MessageProxyServer {
 		mediaModel.addMediaFile(fileToAdd);
 		LOG.log(Level.INFO, "Adding media file " + fileToAdd);
 	}
-
-	private void enableAutoModus() {
-		// TODO Auto-generated method stub
-	}
 	
-	private void startLiveTicker() {
+	private void toggleFullScreen() {
 		// TODO Auto-generated method stub
-	}
-	private void stopLiveTicker() {
-		// TODO Auto-generated method stub
+		
 	}
 
+	private void toggleAutoMode() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void toggleLiveTickerStart() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	public boolean isAutomodeEnabled() {
 		return automodeEnabled;
@@ -175,8 +221,8 @@ public class MessageProxyServer {
 		this.autoModusTimer = autoModusTimer;
 	}
 
-	public HashMap<String, Channel> getClients() {
-		return clients;
+	public DefaultChannelGroup getAllClients() {
+		return allClients;
 	}
 
 	public MediaModelServer getMediaModel() {
@@ -193,6 +239,10 @@ public class MessageProxyServer {
 
 	public ServerMediaFile getCurrentFile() {
 		return currentFile;
+	}
+
+	public PreferencesModelServer getPrefsModel() {
+		return prefsModel;
 	}
 
 }

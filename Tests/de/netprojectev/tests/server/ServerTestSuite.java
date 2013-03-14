@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ServerMediaModelTest.class, ServerTickerModelTest.class, ServerMessageProxyTest.class, ServerHandlerTest.class })
+@SuiteClasses({ ServerMediaModelTest.class, ServerTickerModelTest.class, 
+	ServerMessageProxyTest.class, ServerHandlerTest.class, PreferencesModelServerTest.class })
 public class ServerTestSuite {
 
 }

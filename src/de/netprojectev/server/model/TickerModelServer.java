@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
+import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class TickerModelServer {

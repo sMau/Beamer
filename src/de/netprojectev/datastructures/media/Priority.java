@@ -1,6 +1,7 @@
 package de.netprojectev.datastructures.media;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 public class Priority implements Serializable {
 
 	private static final long serialVersionUID = 4619160913893672095L;
+	private final UUID id;
 	private String name;
 	private int minutesToShow;
 
@@ -20,6 +22,7 @@ public class Priority implements Serializable {
 	 * @param minutesToShow time to show the specific file holding this priority
 	 */
 	public Priority(String name, int minutesToShow) {
+		this.id = UUID.randomUUID();
 		this.name = name;
 		this.minutesToShow = minutesToShow;
 	}
@@ -40,4 +43,7 @@ public class Priority implements Serializable {
 		this.minutesToShow = minutesToShow;
 	}
 
+	public UUID getId() {
+		return id;
+	}
 }

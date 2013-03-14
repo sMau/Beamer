@@ -1,4 +1,4 @@
-package de.netprojectev.server.model;
+package de.netprojectev.server.exceptions;
 
 public class MediaListsEmptyException extends Exception {
 

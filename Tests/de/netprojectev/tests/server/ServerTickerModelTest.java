@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
-import de.netprojectev.server.model.MediaDoesNotExsistException;
+import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.model.TickerModelServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 

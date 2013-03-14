@@ -4,57 +4,71 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.UUID;
 
-import javax.swing.ImageIcon;
-
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.server.datastructures.media.Theme;
+import de.netprojectev.server.exceptions.PriorityDoesNotExistException;
+import de.netprojectev.server.exceptions.PropertyDoesNotExistException;
+import de.netprojectev.server.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.server.networking.MessageProxyServer;
 
 public class PreferencesModelServer {
 	
 	private static Properties props = new Properties();
-	private static HashMap<UUID, Priority> prios = new HashMap<>();
-	private static HashMap<UUID, Theme> themes = new HashMap<>();
+	private final MessageProxyServer proxy;
+	private HashMap<UUID, Priority> prios;
+	private HashMap<UUID, Theme> themes;
 	
-	private PreferencesModelServer() {
-		
+	public PreferencesModelServer(MessageProxyServer proxy) {
+		this.proxy = proxy;
+		prios = new HashMap<>();
+		themes = new HashMap<>();
 	}
 	
-	public static String getPropertyByKey(String key) {
-		// TODO
-		return null;
+	public static String getPropertyByKey(String key) throws PropertyDoesNotExistException {
+		if(props.getProperty(key) == null) {
+			throw new PropertyDoesNotExistException("Property does not exist. Key: " + key);
+		} else {
+			return props.getProperty(key);
+		}
 	}
 	
 	public static void setProperty(String key, String value) {
-		// TODO
+		props.setProperty(key, value);
+	}
+	
+	public UUID addPriority(Priority priority) {
+		prios.put(priority.getId(), priority);
+		return priority.getId();
+	}
+	
+	public UUID addTheme(Theme theme) {
+		themes.put(theme.getId(), theme);
+		return theme.getId();
+	}
+	
+	public void removePriority(UUID id) {
+		prios.remove(id);
+	}
+	
+	public void removeTheme(UUID id) {
+		themes.remove(id);
+	}
+	
+	public Priority getPriorityById(UUID id) throws PriorityDoesNotExistException {
+		if(prios.get(id) == null) {
+			throw new PriorityDoesNotExistException("Priority does not exist. ID: " + id);
+		} else {
+			return prios.get(id);
+		}
+	}
+	
+	public Theme getThemeById(UUID id) throws ThemeDoesNotExistException{
+		if(themes.get(id) == null) {
+			throw new ThemeDoesNotExistException("Theme does not exist. ID: " + id);
+		} else {
+			return themes.get(id);
+		}
 		
-	}
-	
-	public static Priority addPriority(String name, int duration) {
-		// TODO
-		return null;
-	}
-	
-	public static Theme addTheme(String name, ImageIcon background) {
-		// TODO
-		return null;
-	}
-	
-	public static void removePriority(UUID id) {
-		// TODO
-	}
-	
-	public static void removeTheme(UUID id) {
-		// TODO
-	}
-	
-	public static Priority getPriorityById(UUID id) {
-		// TODO
-		return null;
-	}
-	
-	public static Priority getThemeById(UUID id) {
-		// TODO
-		return null;
 	}
 
 }

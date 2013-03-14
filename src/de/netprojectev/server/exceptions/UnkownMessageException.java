@@ -1,4 +1,4 @@
-package de.netprojectev.server.networking;
+package de.netprojectev.server.exceptions;
 
 public class UnkownMessageException extends Exception {
 

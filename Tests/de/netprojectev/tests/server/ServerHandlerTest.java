@@ -8,35 +8,42 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.netprojectev.client.networking.Client;
+import de.netprojectev.client.Client;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.server.ServerInit;
+import de.netprojectev.server.Server;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.model.MediaDoesNotExsistException;
+import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
 
 public class ServerHandlerTest {
 
-	private ServerInit serverInit;
+	private Server serverInit;
 	private Client client;
 	private ServerMediaFile media1 = new VideoFile("Vid1", new File("/home/samu"));
 	private ServerMediaFile media2 = new VideoFile("Vid2", new File("/home/samu"));
 	private TickerElement elt123 = new TickerElement("Test123");
 	private TickerElement elt456 = new TickerElement("Test456");
+	private String clientName1 = "Samutest1";
+	private String clientName2 = "Samutest2";
+	private String clientName3 = "Samutest3";
 	
 	@Before
 	public void setUp() throws InterruptedException {
 		
-		serverInit = new ServerInit(11111);
+		serverInit = new Server(11111);
 		Thread.sleep(50);
-		client = new Client("127.0.0.1", 11111, "Samutest");
+		
+		assertTrue(serverInit.getProxy().getAllClients().size() == 0);
+		
+		client = new Client("127.0.0.1", 11111, clientName1);
 		Thread.sleep(50);
 	}
 	
 	@After
 	public void tearDown() throws InterruptedException {
+		Thread.sleep(50);
 		serverInit.releaseNetworkRessources();
 		Thread.sleep(50);
 	}
@@ -80,6 +87,96 @@ public class ServerHandlerTest {
 		
 		Thread.sleep(50);
 		assertEquals(serverInit.getProxy().getTickerModel().getElementByID(elt456.getId()), elt456);
+		
+	}
+	
+	@Test
+	public void testAuth1() {
+		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
+	}
+	
+	@Test
+	public void testAuth2() throws InterruptedException {
+		
+		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
+		
+		new Client("127.0.0.1", 11111, clientName2);
+		Thread.sleep(50);
+		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
+		
+		new Client("127.0.0.1", 11111, clientName3);
+		Thread.sleep(50);
+		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
+		
+	}
+	
+	@Test
+	public void testAuth3() throws InterruptedException {
+		
+		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
+		
+		Client client2 = new Client("127.0.0.1", 11111, clientName2);
+		Thread.sleep(50);
+		
+		client2.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
+		
+		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
+		
+		Client client3 = new Client("127.0.0.1", 11111, clientName3);
+		Thread.sleep(50);
+		
+		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
+		
+		client3.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
+		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
+		client3.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media1));
+		
+		Thread.sleep(50);
+
+		client.sendMessageToServer(new Message(OpCode.REMOVE_MEDIA_FILE, media2.getId()));
+		
+		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
+
+	}
+	
+	@Test
+	public void testDisc1() throws InterruptedException {
+		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
+		
+		Client client2 = new Client("127.0.0.1", 11111, clientName2);
+		Thread.sleep(50);
+		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
+		
+		new Client("127.0.0.1", 11111, clientName3);
+		Thread.sleep(50);
+		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
+		
+		client2.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
+		client2.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
+		
+		client2.disconnect();
+		Thread.sleep(50);
+		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
+		
+		client.sendMessageToServer(new Message(OpCode.REMOVE_MEDIA_FILE, media2.getId()));
+		
+		client.disconnect();
+		Thread.sleep(50);
+		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
+	}
+	
+	
+	@Test
+	public void testBroadcast1() throws InterruptedException {
+		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
+		Client client2 = new Client("127.0.0.1", 11111, clientName2);
+		Client client3 = new Client("127.0.0.1", 11111, clientName3);
+		Thread.sleep(50);
+		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
+		
+		serverInit.getProxy().broadcastMessage(new Message(OpCode.CONNECTION_ACK));
+		
+		//TODO add the asserts after client implemenatation
 		
 	}
 	

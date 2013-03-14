@@ -1,4 +1,4 @@
-package de.netprojectev.client.networking;
+package de.netprojectev.client;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
@@ -17,8 +17,11 @@ import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
+import de.netprojectev.client.networking.ClientMessageHandler;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
 
 public class Client {
 	
@@ -30,6 +33,7 @@ public class Client {
 	private final int port;
 	
 	private Channel channelToServer;
+	private ChannelFactory factory;
 	
 	public Client(String host, int port, String alias) {
 		this.alias = alias;
@@ -45,13 +49,13 @@ public class Client {
 	}
 	
 	private boolean connect() {
-		ChannelFactory factory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
+		factory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 		ClientBootstrap bootstrap = new ClientBootstrap(factory);
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectEncoder(), new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new ClientMessageHandler());
+				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new ClientMessageHandler(), new ObjectEncoder());
 			}
 		});
 		
@@ -63,6 +67,8 @@ public class Client {
 		if(connectFuture.isSuccess()) {
 			channelToServer = connectFuture.getChannel();
 			LOG.log(Level.INFO, "Client successfully connected to " + host + ":" + port);
+			// TODO use awaitUnint. with timeout and react
+			sendMessageToServer(new Message(OpCode.LOGIN_REQUEST, new LoginData(alias, ""))).awaitUninterruptibly();
 			return true;
 		} else {
 			LOG.log(Level.WARNING, "Connection failed. Reason: " + connectFuture.getCause());
@@ -72,9 +78,16 @@ public class Client {
 		}
 	}
 	
-	public void sendMessageToServer(Message msgToSend) {
-		channelToServer.write(msgToSend);
+	public void disconnect() {
+		sendMessageToServer(new Message(OpCode.DISCONNECT)).awaitUninterruptibly();
+		channelToServer.close().awaitUninterruptibly();
+		factory.releaseExternalResources();
+	}
+	
+	public ChannelFuture sendMessageToServer(Message msgToSend) {
 		LOG.log(Level.INFO, "Sending message to server: " + msgToSend);
+		return channelToServer.write(msgToSend);
+		
 	}
 
 	public String getAlias() {

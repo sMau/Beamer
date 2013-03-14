@@ -4,6 +4,7 @@ import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
@@ -16,18 +17,17 @@ import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
+import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 
-public class ServerInit {
-	
-	private static final ChannelGroup allClients = new DefaultChannelGroup("beamer-clients");
-	
+public class Server {
+		
 	private final int port;
 	private final MessageProxyServer proxy;
 	private ChannelFactory factory;
 
-	public ServerInit(int port) {
+	public Server(int port) {
 		this.port = port;
 		proxy = new MessageProxyServer();
 		bindListeningSocket();
@@ -41,7 +41,7 @@ public class ServerInit {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new MessageHandlerServer(proxy), new ObjectEncoder());
+				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new AuthHandlerServer(proxy), new MessageHandlerServer(proxy), new ObjectEncoder());
 			
 			}
 		});
@@ -52,12 +52,6 @@ public class ServerInit {
 		bootstrap.bind(new InetSocketAddress(port));
 	}
 	
-	public static ChannelGroup getAllclients() {
-		return allClients;
-	}
-	
-	
-	
 	public static void main(String[] args) {
 		int port = 9999;
 		if(args.length == 1) {
@@ -67,12 +61,11 @@ public class ServerInit {
 			
 			}
 		}
-		new ServerInit(port);
+		new Server(port);
 	}
 
 	public void releaseNetworkRessources() {
-		ChannelGroupFuture future = allClients.close();
-		future.awaitUninterruptibly();
+		proxy.getAllClients().close().awaitUninterruptibly();
 		factory.releaseExternalResources();
 	}
 	

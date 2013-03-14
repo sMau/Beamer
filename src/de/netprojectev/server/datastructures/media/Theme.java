@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 public class Theme implements Serializable {
 
 	private static final long serialVersionUID = 5562694101580970506L;
-	private UUID id;
+	private final UUID id;
 	private String name;
 	private ImageIcon backgroundImage;
 

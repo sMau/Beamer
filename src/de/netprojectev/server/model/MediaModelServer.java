@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.UUID;
 
 import de.netprojectev.server.datastructures.media.ServerMediaFile;
+import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.server.exceptions.MediaListsEmptyException;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class MediaModelServer {

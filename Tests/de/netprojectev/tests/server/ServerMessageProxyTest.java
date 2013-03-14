@@ -14,10 +14,10 @@ import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.model.MediaDoesNotExsistException;
-import de.netprojectev.server.model.MediaListsEmptyException;
+import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.server.exceptions.MediaListsEmptyException;
+import de.netprojectev.server.exceptions.UnkownMessageException;
 import de.netprojectev.server.networking.MessageProxyServer;
-import de.netprojectev.server.networking.UnkownMessageException;
 
 public class ServerMessageProxyTest {
 	

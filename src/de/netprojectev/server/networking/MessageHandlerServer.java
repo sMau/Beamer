@@ -4,13 +4,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
 import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
 
 public class MessageHandlerServer extends SimpleChannelHandler {
 	
@@ -26,7 +26,11 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		Message received = (Message) e.getMessage();
-		proxy.receiveMessage(received);
+		if(received.getOpCode().equals(OpCode.DISCONNECT)) {
+			proxy.clientDisconnected(e.getChannel());
+		} else {
+			proxy.receiveMessage(received);
+		}
 		LOG.log(Level.INFO, "Message received " + received);
 		//super.messageReceived(ctx, e);
 	}
@@ -37,17 +41,6 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 		super.writeRequested(ctx, e);
 	}
 	
-
-	@Override
-	public void channelOpen(ChannelHandlerContext ctx, ChannelStateEvent e) {
-		// TODO Auto-generated method stub
-	}
-	
-	@Override
-	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) {
-		//TODO
-	}
-
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
 		

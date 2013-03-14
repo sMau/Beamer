@@ -1,6 +1,6 @@
 package de.netprojectev.netty.test;
 
-import de.netprojectev.client.networking.Client;
+import de.netprojectev.client.Client;
 
 public class SimpleServerClientTest {
 
