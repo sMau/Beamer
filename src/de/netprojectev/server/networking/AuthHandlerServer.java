@@ -13,6 +13,8 @@ import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.server.model.PreferencesModelServer;
 
 public class AuthHandlerServer extends SimpleChannelHandler {
 
@@ -35,13 +37,19 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 		Message received = (Message) e.getMessage();
 		LOG.log(Level.INFO, "message received");
 		if(chanConnected && received.getOpCode().equals(OpCode.LOGIN_REQUEST)) {
-			//TODO verfiy login data
 			
 			LoginData login = (LoginData) received.getData();
-			proxy.clientConnected(e.getChannel());
-			authSuccessful = true;
-			ctx.getPipeline().remove(this);
-			LOG.log(Level.INFO, "login successful");
+			
+			if(login.getKey().equals(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_PW))) {
+				proxy.clientConnected(e.getChannel());
+				authSuccessful = true;
+				ctx.getPipeline().remove(this);
+				LOG.log(Level.INFO, "login successful");
+			} else {
+				//TODO access denied
+			}
+			
+			
 		} else if(chanConnected && authSuccessful) {
 			super.messageReceived(ctx, e);
 		} else {

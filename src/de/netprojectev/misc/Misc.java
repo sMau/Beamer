@@ -123,8 +123,13 @@ public class Misc {
 	 * @param props the property object to save
 	 * @throws IOException
 	 */
-	public static void savePropertiesToDisk(Properties props) throws IOException {
-		FileWriter writer = new FileWriter(Constants.SAVE_PATH + Constants.FILENAME_PROPERTIES);
+	public static void savePropertiesToDisk(Properties props, String savePath, String filename) throws IOException {
+		
+		if(!new File(savePath).exists()) {
+			new File(savePath).mkdirs();
+		}
+		
+		FileWriter writer = new FileWriter(savePath + filename);
 		props.store(writer, null);
 		writer.close();
 	}
@@ -135,9 +140,9 @@ public class Misc {
 	 * @return from disk loaded property object
 	 * @throws IOException
 	 */
-	public static Properties loadPropertiesFromDisk() throws IOException {
+	public static Properties loadPropertiesFromDisk(String savePath, String filename) throws IOException {
 		Properties props = new Properties();
-		FileReader reader = new FileReader(Constants.SAVE_PATH + Constants.FILENAME_PROPERTIES);
+		FileReader reader = new FileReader(savePath + filename);
 		props.load(reader);
 		reader.close();
 		return props;
@@ -150,20 +155,14 @@ public class Misc {
 	 * @param filename the filename it should be saved to 
 	 * @throws IOException 
 	 */
-	public static void saveToFile(Serializable toSave, String filename) throws IOException {
-		
-		String path = Constants.SAVE_PATH;
-		
-		if(filename.isEmpty()) {		
-			JOptionPane.showMessageDialog(null, "Error while saving files.", "Error", JOptionPane.ERROR_MESSAGE);
-		}
+	public static void saveToFile(Serializable toSave, String savePath, String filename) throws IOException {
 
-		if(!new File(path).exists()) {
-			new File(path).mkdirs();
+		if(!new File(savePath).exists()) {
+			new File(savePath).mkdirs();
 		}
 		
 
-		FileOutputStream file = new FileOutputStream(path + filename);
+		FileOutputStream file = new FileOutputStream(savePath + filename);
 		ObjectOutputStream o = new ObjectOutputStream(file);
 		o.writeObject(toSave);
 		o.close();
@@ -176,10 +175,9 @@ public class Misc {
 	 * @throws IOException 
 	 * @throws ClassNotFoundException 
 	 */
-	public static Object loadFromFile(String filename) throws IOException, ClassNotFoundException {
+	public static Object loadFromFile(String filename, String path) throws IOException, ClassNotFoundException {
 		
 		Object fileToLoad = null;
-		String path = Constants.SAVE_PATH;
 		
 		if(new File(path + filename).exists()) {
 

@@ -1,10 +1,13 @@
 package de.netprojectev.server.model;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.UUID;
 
 import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.misc.Misc;
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.media.Theme;
 import de.netprojectev.server.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.server.exceptions.PropertyDoesNotExistException;
@@ -13,7 +16,7 @@ import de.netprojectev.server.networking.MessageProxyServer;
 
 public class PreferencesModelServer {
 	
-	private static Properties props = new Properties();
+	private static Properties props;
 	private final MessageProxyServer proxy;
 	private HashMap<UUID, Priority> prios;
 	private HashMap<UUID, Theme> themes;
@@ -22,6 +25,12 @@ public class PreferencesModelServer {
 		this.proxy = proxy;
 		prios = new HashMap<>();
 		themes = new HashMap<>();
+		try {
+			loadProperties();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static String getPropertyByKey(String key) throws PropertyDoesNotExistException {
@@ -69,6 +78,24 @@ public class PreferencesModelServer {
 			return themes.get(id);
 		}
 		
+	}
+	
+	public static void saveProperties() throws IOException {
+		Misc.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
+	}
+	
+	public static void loadProperties() throws IOException {
+		props = new Properties(generateDefaultsProperties());
+		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
+		props.putAll(propsLoaded);
+	}
+	
+	private static Properties generateDefaultsProperties() {
+		Properties defaults = new Properties();
+		
+		defaults.setProperty(ConstantsServer.PROP_SERVER_PW, ConstantsServer.DEFAULT_SERVER_PW);
+			
+		return defaults;
 	}
 
 }

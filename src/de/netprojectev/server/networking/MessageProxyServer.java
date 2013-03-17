@@ -6,6 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.jboss.netty.channel.Channel;
+import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 
 import de.netprojectev.datastructures.media.Priority;
@@ -94,8 +95,8 @@ public class MessageProxyServer {
 		}
 	}
 	
-	public void broadcastMessage(Message msg) {
-		allClients.write(msg);
+	public ChannelGroupFuture broadcastMessage(Message msg) {
+		return allClients.write(msg);
 	}
 	
 	public void clientConnected(Channel chan) {

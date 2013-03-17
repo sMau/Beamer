@@ -44,7 +44,7 @@ public class ServerHandlerTest {
 	@After
 	public void tearDown() throws InterruptedException {
 		Thread.sleep(50);
-		serverInit.releaseNetworkRessources();
+		serverInit.shutdownServer();
 		Thread.sleep(50);
 	}
 	

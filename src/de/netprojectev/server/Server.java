@@ -1,22 +1,22 @@
 package de.netprojectev.server;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
-import org.jboss.netty.channel.group.ChannelGroup;
-import org.jboss.netty.channel.group.ChannelGroupFuture;
-import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
+import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
+import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
@@ -64,9 +64,16 @@ public class Server {
 		new Server(port);
 	}
 
-	public void releaseNetworkRessources() {
+	public void shutdownServer() {
+		proxy.broadcastMessage(new Message(OpCode.SERVER_SHUTDOWN)).awaitUninterruptibly();
 		proxy.getAllClients().close().awaitUninterruptibly();
 		factory.releaseExternalResources();
+		try {
+			PreferencesModelServer.saveProperties();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public MessageProxyServer getProxy() {
