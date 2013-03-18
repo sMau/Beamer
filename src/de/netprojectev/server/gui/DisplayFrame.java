@@ -6,11 +6,12 @@ package de.netprojectev.server.gui;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 
+import org.apache.logging.log4j.Logger;
+
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.old.Countdown;
 import de.netprojectev.old.ImageFile;
@@ -28,7 +29,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 863589702184282724L;
-	private static final Logger log = Misc.getLoggerAll(DisplayFrame.class.getName());
+	private static final Logger log = LoggerBuilder.createLogger(DisplayFrame.class);
 
 	private final MessageProxyServer proxy;
 	private boolean fullscreen;
@@ -81,7 +82,7 @@ public class DisplayFrame extends javax.swing.JFrame {
     public void enterFullscreen(int screenNumber) {
     	
     	if(!fullscreen) {
-    		log.log(Level.INFO, "entering fullscreen mode");
+    		//log.log(Level.INFO, "entering fullscreen mode");
     		screenNumberDisplayFrame = screenNumber;
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
@@ -91,11 +92,11 @@ public class DisplayFrame extends javax.swing.JFrame {
 			if (screenNumber >= 0 && screenNumber < myDevices.length) {
 				myDevices[screenNumber].setFullScreenWindow(this);
 		    	fullscreen = true;
-		    	log.log(Level.INFO, "entering fullscreen mode successful");
+		    	//log.log(Level.INFO, "entering fullscreen mode successful");
 		    	//TODO handle fullscreen change, because the resolution of images have to change
 		    	// MediaHandlerOld.getInstance().generateNewDisplayImages();
 			} else {
-				log.log(Level.SEVERE, "error entering fullscreen mode");
+				//log.log(Level.SEVERE, "error entering fullscreen mode");
 				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode. \nCheck the choosen screen.", "Error", JOptionPane.ERROR_MESSAGE);
 				dispose();
 				this.setUndecorated(false);
@@ -112,7 +113,7 @@ public class DisplayFrame extends javax.swing.JFrame {
     public void exitFullscreen() {
     	
     	if(fullscreen) {
-    		log.log(Level.INFO, "exiting fullscreen mode");
+    		//log.log(Level.INFO, "exiting fullscreen mode");
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();

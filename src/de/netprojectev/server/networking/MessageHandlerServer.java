@@ -1,20 +1,18 @@
 package de.netprojectev.server.networking;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
-import de.netprojectev.misc.Misc;
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 
 public class MessageHandlerServer extends SimpleChannelHandler {
 	
-	private static final Logger LOG = Misc.getLoggerAll(MessageHandlerServer.class.getName());
+	private static final Logger log = LoggerBuilder.createLogger(MessageHandlerServer.class); 
 	
 	private final MessageProxyServer proxy;
 	
@@ -31,8 +29,8 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 		} else {
 			proxy.receiveMessage(received);
 		}
-		LOG.log(Level.INFO, "Message received " + received);
-		//super.messageReceived(ctx, e);
+		log.debug("Message received: " + received);
+		
 	}
 	
 	@Override
@@ -43,10 +41,9 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+		log.warn("Exception caught in MessageHandler", e.getCause());
 		
-		// TODO Auto-generated method stub
-		
-		LOG.log(Level.WARNING, "Exception caught ", e.getCause());
+		//TODO check if closing is the correct behavior
 		e.getChannel().close();
 	}
 }

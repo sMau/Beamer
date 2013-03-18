@@ -2,14 +2,14 @@ package de.netprojectev.server.networking;
 
 import java.util.Timer;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 
 import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.Message;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
@@ -25,7 +25,7 @@ import de.netprojectev.server.model.TickerModelServer;
 
 public class MessageProxyServer {
 	
-	private static final Logger LOG = Misc.getLoggerAll(MessageProxyServer.class.getName());
+	private static final Logger log = LoggerBuilder.createLogger(MessageProxyServer.class);
 	
 	private final DefaultChannelGroup allClients;
 	private final MediaModelServer mediaModel;
@@ -130,15 +130,15 @@ public class MessageProxyServer {
 	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
 		UUID eltToRemove = (UUID) msg.getData();
 		tickerModel.removeTickerElement(eltToRemove);
-		LOG.log(Level.INFO, "Removing ticker element " + eltToRemove);
-		//TODO implement the display part
 		
+		log.debug("Removing ticker element " + eltToRemove);
+
 	}
 
 	private void addLiveTickerElement(Message msg) {
 		TickerElement eltToAdd = (TickerElement) msg.getData();
 		tickerModel.addTickerElement(eltToAdd);
-		LOG.log(Level.INFO, "Adding ticker element " + eltToAdd);
+		log.debug("Adding ticker element " + eltToAdd);
 		//TODO implement the display part
 		
 	}
@@ -146,15 +146,15 @@ public class MessageProxyServer {
 	private void queueMediaFile(Message msg) throws MediaDoesNotExsistException {
 		UUID toQueue = (UUID) msg.getData();
 		mediaModel.queue(toQueue);
-		LOG.log(Level.INFO, "Queueing media file " + toQueue);
+		log.debug( "Queueing media file " + toQueue);
+		
 	}
 
 	private void showNextMediaFile() throws MediaDoesNotExsistException, MediaListsEmptyException {
 		ServerMediaFile fileToShow = mediaModel.getNext();
 		currentFile = fileToShow;
-		LOG.log(Level.INFO, "Showing next media file " + fileToShow);
+		log.debug("Showing next media file " + fileToShow);
 		//TODO implement the display part
-		
 		
 	}
 
@@ -162,7 +162,8 @@ public class MessageProxyServer {
 		UUID toShow = (UUID) msg.getData();
 		ServerMediaFile fileToShow = mediaModel.getMediaFileById(toShow);
 		currentFile = fileToShow;
-		LOG.log(Level.INFO, "Showing media file " + fileToShow);
+		log.debug("Showing media file " + fileToShow);
+		
 		//TODO implement the display part
 
 	}
@@ -174,13 +175,15 @@ public class MessageProxyServer {
 	private void removeMediaFile(Message msg) throws MediaDoesNotExsistException {
 		UUID toRemove = (UUID) msg.getData();
 		mediaModel.removeMediaFile(toRemove);
-		LOG.log(Level.INFO, "Removing media file " + toRemove);
+		log.debug("Removing media file " + toRemove);
+		
 	}
 
 	private void addMediaFile(Message msg) {
 		ServerMediaFile fileToAdd = (ServerMediaFile) msg.getData();
 		mediaModel.addMediaFile(fileToAdd);
-		LOG.log(Level.INFO, "Adding media file " + fileToAdd);
+		log.debug( "Adding media file " + fileToAdd);
+		
 	}
 	
 	private void toggleFullScreen() {

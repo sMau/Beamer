@@ -2,9 +2,8 @@ package de.netprojectev.client;
 
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
+import org.apache.logging.log4j.Logger;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
@@ -18,14 +17,14 @@ import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
 import de.netprojectev.client.networking.ClientMessageHandler;
-import de.netprojectev.misc.Misc;
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 
 public class Client {
 	
-	private static final Logger LOG = Misc.getLoggerAll(Client.class.getName());
+	private static final Logger log = LoggerBuilder.createLogger(Client.class);
 	
 	private final String alias;
 	
@@ -66,12 +65,13 @@ public class Client {
 		connectFuture.awaitUninterruptibly(5000);
 		if(connectFuture.isSuccess()) {
 			channelToServer = connectFuture.getChannel();
-			LOG.log(Level.INFO, "Client successfully connected to " + host + ":" + port);
+			log.info("Client successfully connected to " + host + ":" + port);
+			
 			// TODO use awaitUnint. with timeout and react
 			sendMessageToServer(new Message(OpCode.LOGIN_REQUEST, new LoginData(alias, ""))).awaitUninterruptibly();
 			return true;
 		} else {
-			LOG.log(Level.WARNING, "Connection failed. Reason: " + connectFuture.getCause());
+			log.warn("Connection failed. Reason: ", connectFuture.getCause());
 			connectFuture.getChannel().getCloseFuture().awaitUninterruptibly();
 			factory.releaseExternalResources();
 			return false;
@@ -85,7 +85,7 @@ public class Client {
 	}
 	
 	public ChannelFuture sendMessageToServer(Message msgToSend) {
-		LOG.log(Level.INFO, "Sending message to server: " + msgToSend);
+		log.debug("Sending message to server: " + msgToSend);
 		return channelToServer.write(msgToSend);
 		
 	}

@@ -3,6 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="Tests"/>
 	<classpathentry kind="src" path="Analyse Entwurf"/>
+	<classpathentry kind="src" path="Configs"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/swing-layout-1.0.3.jar"/>
 	<classpathentry kind="lib" path="lib/AbsoluteLayout.jar"/>
@@ -14,6 +15,15 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/netty-3.6.2.Final.jar" sourcepath="lib/netty-3.6.2.Final-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/log4j-core-2.0-beta4.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-api-2.0-beta4.jar" sourcepath="lib/log4j-api-2.0-beta4-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Beamer/lib/log4j-api-2.0-beta4-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/log4j-core-2.0-beta4.jar" sourcepath="lib/log4j-core-2.0-beta4-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Beamer/lib/log4j-core-2.0-beta4-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

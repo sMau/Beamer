@@ -6,16 +6,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 
-import de.netprojectev.misc.Constants;
-import de.netprojectev.misc.Misc;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
+
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.old.Countdown;
-import de.netprojectev.old.PreferencesModelOld;
 /**
  * 
  * GUI Component to draw images and themeslide background images
@@ -24,7 +22,7 @@ import de.netprojectev.old.PreferencesModelOld;
  */
 public class DisplayMainComponent extends JComponent {
 	
-	private static final Logger log = Misc.getLoggerAll(DisplayMainComponent.class.getName());
+	private static final Logger log = LoggerBuilder.createLogger(DisplayMainComponent.class);
 
 	private static final long serialVersionUID = 3915763660057625809L;
 	private Image image;
@@ -47,7 +45,7 @@ public class DisplayMainComponent extends JComponent {
 				try {
 					Thread.sleep(3000);
 				} catch (InterruptedException e) {
-					log.log(Level.SEVERE, "interupt exception", e);
+					//log.log(Level.SEVERE, "interupt exception", e);
 				}
 				updateCountdownFont();
 				

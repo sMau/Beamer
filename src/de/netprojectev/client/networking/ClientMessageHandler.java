@@ -1,19 +1,17 @@
 package de.netprojectev.client.networking;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
-import de.netprojectev.misc.Misc;
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 
 public class ClientMessageHandler extends SimpleChannelHandler {
 
-	private static final Logger LOG = Misc.getLoggerAll(ClientMessageHandler.class.getName());
+	private static final Logger log = LoggerBuilder.createLogger(ClientMessageHandler.class);
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
@@ -24,7 +22,7 @@ public class ClientMessageHandler extends SimpleChannelHandler {
 	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
-		LOG.log(Level.WARNING, "Exception caught", e.getCause());
+		log.warn("Exception caught", e.getCause());
 	}
 	
 }

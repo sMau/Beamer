@@ -8,13 +8,14 @@ import java.awt.RenderingHints;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
+import org.apache.logging.log4j.Logger;
+
 import de.netprojectev.misc.Constants;
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.old.PreferencesModelOld;
 
@@ -25,7 +26,7 @@ import de.netprojectev.old.PreferencesModelOld;
  */
 public class TickerComponent extends JComponent {
 
-	private static final Logger log = Misc.getLoggerAll(TickerComponent.class.getName());
+	private static final Logger log = LoggerBuilder.createLogger(TickerComponent.class);
 
 	private static final long serialVersionUID = 4472552567124740434L;
 	
@@ -127,7 +128,7 @@ public class TickerComponent extends JComponent {
 		}
 		liveTickerTimer = new Timer();
 		liveTickerTimer.schedule(new TickerTimerTask(), 0, tickerSpeed);
-    	log.log(Level.INFO, "Live Ticker started");
+    	//log.log(Level.INFO, "Live Ticker started");
 	}
     
 
@@ -137,7 +138,7 @@ public class TickerComponent extends JComponent {
 	 */
     private void stopLiveTicker() {
     	if(liveTickerTimer != null) {
-    		log.log(Level.INFO, "Live Ticker stoped");
+    		//log.log(Level.INFO, "Live Ticker stoped");
     		liveTickerTimer.cancel();
         	liveTickerTimer.purge();
     	}
@@ -179,7 +180,7 @@ public class TickerComponent extends JComponent {
 	 * generates the two strings needed for a gapless ticker run.
 	 */
 	private void generateDrawingStrings() {
-		log.log(Level.INFO, "generating new drawing strings");
+		//log.log(Level.INFO, "generating new drawing strings");
 		int tickerStringWidth = getFontMetrics(tickerFont).stringWidth(tickerString);
 			
 		toDraw1 = tickerString;

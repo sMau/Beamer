@@ -12,7 +12,7 @@ import de.netprojectev.server.exceptions.MediaListsEmptyException;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class MediaModelServer {
-	
+		
 	private final MessageProxyServer proxy;
 	private HashMap<UUID, ServerMediaFile> allMediaFiles;
 	private LinkedList<UUID> mediaStandardList;

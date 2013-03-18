@@ -1,6 +1,6 @@
 package de.netprojectev.tests.server;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.UUID;
 
@@ -12,7 +12,6 @@ import org.junit.Test;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.server.datastructures.media.Theme;
 import de.netprojectev.server.exceptions.PriorityDoesNotExistException;
-import de.netprojectev.server.exceptions.PropertyDoesNotExistException;
 import de.netprojectev.server.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.networking.MessageProxyServer;
@@ -95,18 +94,13 @@ public class PreferencesModelServerTest {
 	}
 	
 	@Test
-	public void testSetGetProperty1() throws PropertyDoesNotExistException {
+	public void testSetGetProperty1() {
 		PreferencesModelServer.setProperty(k1, v1);
 		PreferencesModelServer.setProperty(k2, v2);
 		assertEquals(v1, PreferencesModelServer.getPropertyByKey(k1));
 		assertEquals(v2, PreferencesModelServer.getPropertyByKey(k2));
 		PreferencesModelServer.setProperty(k1, v2);
 		assertEquals(v2, PreferencesModelServer.getPropertyByKey(k1));
-	}
-	
-	@Test(expected=PropertyDoesNotExistException.class)
-	public void testGetProperty1() throws PropertyDoesNotExistException {
-		PreferencesModelServer.getPropertyByKey("ewoigniwe");
 	}
 
 }

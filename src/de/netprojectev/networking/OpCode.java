@@ -28,7 +28,7 @@ public enum OpCode {
 	
 	LOGIN_REQUEST,
 	DISCONNECT,
-	
+	LOGIN_DENIED,
 	
 	
 	/*

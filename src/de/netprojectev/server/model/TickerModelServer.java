@@ -3,6 +3,7 @@ package de.netprojectev.server.model;
 import java.util.HashMap;
 import java.util.UUID;
 
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.networking.MessageProxyServer;
@@ -36,9 +37,15 @@ public class TickerModelServer {
 	
 	public String generateCompleteTickerText() {
 		
-		//TODO
+		String completeString = "";
 		
-		return "";
+		for(UUID id : elements.keySet()) {
+			if(elements.get(id).isShow()) {
+				completeString += elements.get(id).getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR);
+			}
+		}
+		
+		return completeString;
 	}
 	
 	private void checkIfElementExists(UUID id) throws MediaDoesNotExsistException {

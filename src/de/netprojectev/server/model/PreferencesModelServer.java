@@ -10,7 +10,6 @@ import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.media.Theme;
 import de.netprojectev.server.exceptions.PriorityDoesNotExistException;
-import de.netprojectev.server.exceptions.PropertyDoesNotExistException;
 import de.netprojectev.server.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.server.networking.MessageProxyServer;
 
@@ -33,12 +32,10 @@ public class PreferencesModelServer {
 		}
 	}
 	
-	public static String getPropertyByKey(String key) throws PropertyDoesNotExistException {
-		if(props.getProperty(key) == null) {
-			throw new PropertyDoesNotExistException("Property does not exist. Key: " + key);
-		} else {
-			return props.getProperty(key);
-		}
+	public static String getPropertyByKey(String key) {
+
+		return props.getProperty(key);
+		
 	}
 	
 	public static void setProperty(String key, String value) {
@@ -94,7 +91,8 @@ public class PreferencesModelServer {
 		Properties defaults = new Properties();
 		
 		defaults.setProperty(ConstantsServer.PROP_SERVER_PW, ConstantsServer.DEFAULT_SERVER_PW);
-			
+		defaults.setProperty(ConstantsServer.PROP_TICKER_SEPERATOR, ConstantsServer.DEFAULT_TICKER_SEPERATOR);
+		
 		return defaults;
 	}
 

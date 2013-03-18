@@ -7,8 +7,10 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 
@@ -103,5 +105,19 @@ public class ServerTickerModelTest {
 		
 		assertEquals(elt456, tickerModel.getElementByID(test456));
 		
+	}
+	
+	@Test
+	public void testGenerateCompleteTickerString() {
+		tickerModel.addTickerElement(elt123);
+		tickerModel.addTickerElement(elt456);
+		tickerModel.addTickerElement(elt789);
+		
+		String actual = tickerModel.generateCompleteTickerText();
+
+		assertTrue(actual.contains(elt123.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR)));
+		assertTrue(actual.contains(elt456.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR)));
+		assertTrue(actual.contains(elt789.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR)));
+
 	}
 }

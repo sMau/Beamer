@@ -13,8 +13,10 @@ public class ConstantsServer {
 	public static final String FOLDER_THEMESLIDE_CACHE = "themeslidecache/";
 	
 	public static final String DEFAULT_SERVER_PW = "";
-
+	public static final String DEFAULT_TICKER_SEPERATOR = " +++ ";
+	
+	
 	public static final String PROP_SERVER_PW = "server.general.password";
-
+	public static final String PROP_TICKER_SEPERATOR = "server.ticker.seperator";
 	
 }
