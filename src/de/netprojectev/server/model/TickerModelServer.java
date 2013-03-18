@@ -3,13 +3,18 @@ package de.netprojectev.server.model;
 import java.util.HashMap;
 import java.util.UUID;
 
+import org.apache.logging.log4j.Logger;
+
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class TickerModelServer {
-	
+
+	private static final Logger log = LoggerBuilder.createLogger(TickerModelServer.class);
+
 	private final MessageProxyServer proxy;
 	private HashMap<UUID, TickerElement> elements;
 	private String completeTickerText;
@@ -21,17 +26,20 @@ public class TickerModelServer {
 	}
 	
 	public UUID addTickerElement(TickerElement e) {
+		log.debug("Adding ticker element: " + e);
 		elements.put(e.getId(), e);
 		return e.getId();
 	}
 	
 	public void removeTickerElement(UUID id) throws MediaDoesNotExsistException {
+		log.debug("Removing ticker element: " + id);
 		checkIfElementExists(id);
 		elements.remove(id);
 	}
 	
 	public TickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
 		checkIfElementExists(id);
+		log.debug("Getting ticker element: " + id);
 		return elements.get(id);
 	}
 	
@@ -44,7 +52,7 @@ public class TickerModelServer {
 				completeString += elements.get(id).getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR);
 			}
 		}
-		
+		log.debug("Generating complete ticker string: " + completeString);
 		return completeString;
 	}
 	

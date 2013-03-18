@@ -6,13 +6,19 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.UUID;
 
+import org.apache.logging.log4j.Logger;
+
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.datastructures.media.ServerMediaFile;
 import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.exceptions.MediaListsEmptyException;
+import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class MediaModelServer {
 		
+	private static final Logger log = LoggerBuilder.createLogger(MediaModelServer.class);
+	
 	private final MessageProxyServer proxy;
 	private HashMap<UUID, ServerMediaFile> allMediaFiles;
 	private LinkedList<UUID> mediaStandardList;
@@ -25,11 +31,13 @@ public class MediaModelServer {
 		mediaStandardList = new LinkedList<>();
 		mediaPrivateQueue = new LinkedList<>();
 		rand = new Random();
+		log.debug("Media model successfully created");
 	}
 	
 	public UUID addMediaFile(ServerMediaFile file) {
 		allMediaFiles.put(file.getId(), file);
 		addMediaFileAtRandomPosition(file);
+		log.debug("Media file added: " + file);
 		return file.getId();
 	}
 
@@ -46,11 +54,13 @@ public class MediaModelServer {
 	
 	public ServerMediaFile getMediaFileById(UUID id) throws MediaDoesNotExsistException {
 		testIfMediaFileExists(id);
+		log.debug("Getting media file: " + id);
 		return allMediaFiles.get(id);
 	}
 	
 	public void removeMediaFile(UUID id) throws MediaDoesNotExsistException {
 		testIfMediaFileExists(id);
+		log.debug("Removing media file: " + id);
 		allMediaFiles.remove(id);
 		mediaPrivateQueue.remove(id);
 		mediaStandardList.remove(id);
@@ -58,6 +68,7 @@ public class MediaModelServer {
 	
 	public void queue(UUID id) throws MediaDoesNotExsistException {
 		testIfMediaFileExists(id);
+		log.debug("Queuing media file: " + id);
 		mediaPrivateQueue.addLast(id);
 	}
 	
@@ -65,6 +76,7 @@ public class MediaModelServer {
 		if(allMediaFiles.isEmpty()) {
 			throw new MediaListsEmptyException("No media files present.");
 		}
+		log.debug("Getting next media file");
 		if(!mediaPrivateQueue.isEmpty()) {
 			return getMediaFileById(mediaPrivateQueue.poll());
 		} else {

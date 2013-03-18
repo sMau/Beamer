@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
+import org.apache.logging.log4j.Logger;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
@@ -14,6 +15,7 @@ import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.model.PreferencesModelServer;
@@ -23,6 +25,8 @@ import de.netprojectev.server.networking.MessageProxyServer;
 
 public class Server {
 		
+	private static final Logger log = LoggerBuilder.createLogger(Server.class);
+	
 	private final int port;
 	private final MessageProxyServer proxy;
 	private ChannelFactory factory;
@@ -50,6 +54,7 @@ public class Server {
 		bootstrap.setOption("child.keepAlive", true);
 	
 		bootstrap.bind(new InetSocketAddress(port));
+		log.info("Binding listening socket to port: " + port);
 	}
 	
 	public static void main(String[] args) {
@@ -65,15 +70,16 @@ public class Server {
 	}
 
 	public void shutdownServer() {
+		log.info("Starting server shutdown, informing clients.");
 		proxy.broadcastMessage(new Message(OpCode.SERVER_SHUTDOWN)).awaitUninterruptibly();
 		proxy.getAllClients().close().awaitUninterruptibly();
 		factory.releaseExternalResources();
 		try {
 			PreferencesModelServer.saveProperties();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during saving properties.", e);
 		}
+		log.info("Server shutdown complete.");
 	}
 	
 	public MessageProxyServer getProxy() {

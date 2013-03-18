@@ -10,7 +10,6 @@ import org.jboss.netty.channel.group.DefaultChannelGroup;
 
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.Message;
 import de.netprojectev.server.datastructures.liveticker.TickerElement;
 import de.netprojectev.server.datastructures.media.ServerMediaFile;
@@ -96,14 +95,17 @@ public class MessageProxyServer {
 	}
 	
 	public ChannelGroupFuture broadcastMessage(Message msg) {
+		log.debug("Broadcasting message: " + msg);
 		return allClients.write(msg);
 	}
 	
 	public void clientConnected(Channel chan) {
+		log.info("Client connected.");
 		allClients.add(chan);
 	}
 	
 	public void clientDisconnected(Channel chan) {
+		log.info("Client disconnected.");
 		allClients.remove(chan);
 	}
 	
@@ -130,30 +132,23 @@ public class MessageProxyServer {
 	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
 		UUID eltToRemove = (UUID) msg.getData();
 		tickerModel.removeTickerElement(eltToRemove);
-		
-		log.debug("Removing ticker element " + eltToRemove);
-
 	}
 
 	private void addLiveTickerElement(Message msg) {
 		TickerElement eltToAdd = (TickerElement) msg.getData();
 		tickerModel.addTickerElement(eltToAdd);
-		log.debug("Adding ticker element " + eltToAdd);
 		//TODO implement the display part
 		
 	}
 
 	private void queueMediaFile(Message msg) throws MediaDoesNotExsistException {
 		UUID toQueue = (UUID) msg.getData();
-		mediaModel.queue(toQueue);
-		log.debug( "Queueing media file " + toQueue);
-		
+		mediaModel.queue(toQueue);		
 	}
 
 	private void showNextMediaFile() throws MediaDoesNotExsistException, MediaListsEmptyException {
 		ServerMediaFile fileToShow = mediaModel.getNext();
 		currentFile = fileToShow;
-		log.debug("Showing next media file " + fileToShow);
 		//TODO implement the display part
 		
 	}
@@ -162,7 +157,6 @@ public class MessageProxyServer {
 		UUID toShow = (UUID) msg.getData();
 		ServerMediaFile fileToShow = mediaModel.getMediaFileById(toShow);
 		currentFile = fileToShow;
-		log.debug("Showing media file " + fileToShow);
 		
 		//TODO implement the display part
 
@@ -175,14 +169,12 @@ public class MessageProxyServer {
 	private void removeMediaFile(Message msg) throws MediaDoesNotExsistException {
 		UUID toRemove = (UUID) msg.getData();
 		mediaModel.removeMediaFile(toRemove);
-		log.debug("Removing media file " + toRemove);
 		
 	}
 
 	private void addMediaFile(Message msg) {
 		ServerMediaFile fileToAdd = (ServerMediaFile) msg.getData();
 		mediaModel.addMediaFile(fileToAdd);
-		log.debug( "Adding media file " + fileToAdd);
 		
 	}
 	
