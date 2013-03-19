@@ -45,16 +45,19 @@ public class MediaModelClient {
 	
 	public ClientMediaFile getMediaFileById(UUID id) throws MediaDoesNotExsistException {
 		checkIfMediaExists(id);
+		log.debug("Getting media file: " + id);
 		return allMedia.get(id);
 	}
 	
 	public void queueMediaFile(UUID id) throws MediaDoesNotExsistException {
 		checkIfMediaExists(id);
+		log.debug("Queueing media file: " + id);
 		customQueue.addLast(id);
 	}
 	
 	public void dequeueFirstMediaFile() {
 		if(!customQueue.isEmpty()) {
+			log.debug("Dequeueing first.");
 			customQueue.removeFirst();
 		}
 	}
