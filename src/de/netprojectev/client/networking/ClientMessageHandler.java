@@ -11,8 +11,16 @@ import de.netprojectev.networking.Message;
 
 public class ClientMessageHandler extends SimpleChannelHandler {
 
+	
 	private static final Logger log = LoggerBuilder.createLogger(ClientMessageHandler.class);
 
+	private final ClientMessageProxy proxy;
+	
+	public ClientMessageHandler(ClientMessageProxy proxy) {
+		this.proxy = proxy;
+	}
+	
+	
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		

@@ -5,7 +5,6 @@ import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelPipeline;
@@ -17,6 +16,7 @@ import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
 import de.netprojectev.client.networking.ClientMessageHandler;
+import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
@@ -26,35 +26,31 @@ public class Client {
 	
 	private static final Logger log = LoggerBuilder.createLogger(Client.class);
 	
-	private final String alias;
+	private LoginData login;
 	
+	private final ClientMessageProxy proxy;
 	private final String host;
 	private final int port;
 	
-	private Channel channelToServer;
 	private ChannelFactory factory;
 	
-	public Client(String host, int port, String alias) {
-		this.alias = alias;
+	public Client(String host, int port, LoginData login) {
+		this.login = login;
 		this.host = host;
 		this.port = port;
 		
-		boolean successfulConnected = connect();
-		
-		if(!successfulConnected) {
-			//TODO			
-		}
+		this.proxy = new ClientMessageProxy();
 		
 	}
 	
-	private boolean connect() {
+	public boolean connect() {
 		factory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 		ClientBootstrap bootstrap = new ClientBootstrap(factory);
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new ClientMessageHandler(), new ObjectEncoder());
+				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new ClientMessageHandler(proxy), new ObjectEncoder());
 			}
 		});
 		
@@ -64,11 +60,12 @@ public class Client {
 		ChannelFuture connectFuture = bootstrap.connect(new InetSocketAddress(host, port));
 		connectFuture.awaitUninterruptibly(5000);
 		if(connectFuture.isSuccess()) {
-			channelToServer = connectFuture.getChannel();
+			proxy.setChannelToServer(connectFuture.getChannel());
 			log.info("Client successfully connected to " + host + ":" + port);
 			
 			// TODO use awaitUnint. with timeout and react
-			sendMessageToServer(new Message(OpCode.LOGIN_REQUEST, new LoginData(alias, ""))).awaitUninterruptibly();
+			proxy.sendMessageToServer(new Message(OpCode.LOGIN_REQUEST, login)).awaitUninterruptibly();
+			log.info("Login request sent to server");
 			return true;
 		} else {
 			log.warn("Connection failed. Reason: ", connectFuture.getCause());
@@ -78,19 +75,16 @@ public class Client {
 		}
 	}
 	
-	public void disconnect() {
-		sendMessageToServer(new Message(OpCode.DISCONNECT)).awaitUninterruptibly();
-		channelToServer.close().awaitUninterruptibly();
-		factory.releaseExternalResources();
+	public void sendMessageToServer(Message msgToSend) {
+		proxy.sendMessageToServer(msgToSend);
 	}
 	
-	public ChannelFuture sendMessageToServer(Message msgToSend) {
-		log.debug("Sending message to server: " + msgToSend);
-		return channelToServer.write(msgToSend);
-		
+	public void disconnect() {
+		log.info("Client disconnecting");
+		proxy.sendMessageToServer(new Message(OpCode.DISCONNECT)).awaitUninterruptibly();
+		proxy.getChannelToServer().close().awaitUninterruptibly();
+		factory.releaseExternalResources();
+		log.info("Disconnecting complete");
 	}
 
-	public String getAlias() {
-		return alias;
-	}
 }

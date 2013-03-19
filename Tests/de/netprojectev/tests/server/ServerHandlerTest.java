@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.netprojectev.client.Client;
+import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.Server;
@@ -28,6 +29,7 @@ public class ServerHandlerTest {
 	private String clientName1 = "Samutest1";
 	private String clientName2 = "Samutest2";
 	private String clientName3 = "Samutest3";
+	private String serverPw = "";
 	
 	@Before
 	public void setUp() throws InterruptedException {
@@ -37,7 +39,8 @@ public class ServerHandlerTest {
 		
 		assertTrue(serverInit.getProxy().getAllClients().size() == 0);
 		
-		client = new Client("127.0.0.1", 11111, clientName1);
+		client = new Client("127.0.0.1", 11111, new LoginData(clientName1, serverPw));
+		client.connect();
 		Thread.sleep(50);
 	}
 	
@@ -100,11 +103,11 @@ public class ServerHandlerTest {
 		
 		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
 		
-		new Client("127.0.0.1", 11111, clientName2);
+		new Client("127.0.0.1", 11111, new LoginData(clientName2, serverPw)).connect();
 		Thread.sleep(50);
 		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
 		
-		new Client("127.0.0.1", 11111, clientName3);
+		new Client("127.0.0.1", 11111, new LoginData(clientName3, serverPw)).connect();
 		Thread.sleep(50);
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
 		
@@ -115,14 +118,16 @@ public class ServerHandlerTest {
 		
 		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
 		
-		Client client2 = new Client("127.0.0.1", 11111, clientName2);
+		Client client2 = new Client("127.0.0.1", 11111, new LoginData(clientName2, serverPw));
+		client2.connect();
 		Thread.sleep(50);
 		
 		client2.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
 		
 		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
 		
-		Client client3 = new Client("127.0.0.1", 11111, clientName3);
+		Client client3 = new Client("127.0.0.1", 11111, new LoginData(clientName3, serverPw));
+		client3.connect();
 		Thread.sleep(50);
 		
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
@@ -143,11 +148,12 @@ public class ServerHandlerTest {
 	public void testDisc1() throws InterruptedException {
 		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
 		
-		Client client2 = new Client("127.0.0.1", 11111, clientName2);
+		Client client2 = new Client("127.0.0.1", 11111, new LoginData(clientName2, serverPw));
+		client2.connect();
 		Thread.sleep(50);
 		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
 		
-		new Client("127.0.0.1", 11111, clientName3);
+		new Client("127.0.0.1", 11111, new LoginData(clientName3, serverPw)).connect();
 		Thread.sleep(50);
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
 		
@@ -169,8 +175,11 @@ public class ServerHandlerTest {
 	@Test
 	public void testBroadcast1() throws InterruptedException {
 		assertTrue(serverInit.getProxy().getAllClients().size() == 1);
-		Client client2 = new Client("127.0.0.1", 11111, clientName2);
-		Client client3 = new Client("127.0.0.1", 11111, clientName3);
+		Client client2 = new Client("127.0.0.1", 11111, new LoginData(clientName2, serverPw));
+		client2.connect();
+		Client client3 = new Client("127.0.0.1", 11111, new LoginData(clientName3, serverPw));
+		client3.connect();
+		
 		Thread.sleep(50);
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
 		
