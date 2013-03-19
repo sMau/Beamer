@@ -9,14 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.netprojectev.client.Client;
+import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.Server;
-import de.netprojectev.server.datastructures.liveticker.TickerElement;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.ServerTickerElement;
+import de.netprojectev.server.datastructures.VideoFile;
 
 public class ServerHandlerTest {
 
@@ -24,8 +24,8 @@ public class ServerHandlerTest {
 	private Client client;
 	private ServerMediaFile media1 = new VideoFile("Vid1", new File("/home/samu"));
 	private ServerMediaFile media2 = new VideoFile("Vid2", new File("/home/samu"));
-	private TickerElement elt123 = new TickerElement("Test123");
-	private TickerElement elt456 = new TickerElement("Test456");
+	private ServerTickerElement elt123 = new ServerTickerElement("Test123");
+	private ServerTickerElement elt456 = new ServerTickerElement("Test456");
 	private String clientName1 = "Samutest1";
 	private String clientName2 = "Samutest2";
 	private String clientName3 = "Samutest3";
@@ -54,9 +54,9 @@ public class ServerHandlerTest {
 	@Test
 	public void testMessageReceivedHandler1() throws InterruptedException {
 		
-		client.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media1));
-		client.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
-		client.sendMessageToServer(new Message(OpCode.SHOW_MEDIA_FILE, media1.getId()));
+		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media1));
+		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
+		client.getProxy().sendMessageToServer(new Message(OpCode.SHOW_MEDIA_FILE, media1.getId()));
 		Thread.sleep(50);
 		assertEquals(serverInit.getProxy().getCurrentFile(), media1);
 	}
@@ -64,8 +64,8 @@ public class ServerHandlerTest {
 	@Test
 	public void testMessageReceivedHandler2() throws InterruptedException, MediaDoesNotExsistException {
 		
-		client.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
-		client.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt456));
+		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
+		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt456));
 		Thread.sleep(50);
 		assertEquals(serverInit.getProxy().getTickerModel().getElementByID(elt123.getId()), elt123);
 		assertEquals(serverInit.getProxy().getTickerModel().getElementByID(elt456.getId()), elt456);
@@ -74,19 +74,19 @@ public class ServerHandlerTest {
 	@Test
 	public void testMessageReceivedHandler3() throws InterruptedException, MediaDoesNotExsistException {
 		
-		client.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media1));
-		client.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
+		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media1));
+		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
 		Thread.sleep(50);
-		client.sendMessageToServer(new Message(OpCode.REMOVE_MEDIA_FILE, media1.getId()));
-		client.sendMessageToServer(new Message(OpCode.SHOW_NEXT_MEDIA_FILE));
+		client.getProxy().sendMessageToServer(new Message(OpCode.REMOVE_MEDIA_FILE, media1.getId()));
+		client.getProxy().sendMessageToServer(new Message(OpCode.SHOW_NEXT_MEDIA_FILE));
 		Thread.sleep(50);
 		assertEquals(serverInit.getProxy().getCurrentFile(), media2);
 		
 		
-		client.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
-		client.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt456));
+		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
+		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt456));
 		Thread.sleep(50);
-		client.sendMessageToServer(new Message(OpCode.REMOVE_LIVE_TICKER_ELEMENT, elt123.getId()));
+		client.getProxy().sendMessageToServer(new Message(OpCode.REMOVE_LIVE_TICKER_ELEMENT, elt123.getId()));
 		
 		Thread.sleep(50);
 		assertEquals(serverInit.getProxy().getTickerModel().getElementByID(elt456.getId()), elt456);
@@ -122,7 +122,7 @@ public class ServerHandlerTest {
 		client2.connect();
 		Thread.sleep(50);
 		
-		client2.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
+		client2.getProxy().sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
 		
 		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
 		
@@ -132,13 +132,13 @@ public class ServerHandlerTest {
 		
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
 		
-		client3.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
+		client3.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
-		client3.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media1));
+		client3.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media1));
 		
 		Thread.sleep(50);
 
-		client.sendMessageToServer(new Message(OpCode.REMOVE_MEDIA_FILE, media2.getId()));
+		client.getProxy().sendMessageToServer(new Message(OpCode.REMOVE_MEDIA_FILE, media2.getId()));
 		
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
 
@@ -157,14 +157,14 @@ public class ServerHandlerTest {
 		Thread.sleep(50);
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
 		
-		client2.sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
-		client2.sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
+		client2.getProxy().sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
+		client2.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
 		
 		client2.disconnect();
 		Thread.sleep(50);
 		assertTrue(serverInit.getProxy().getAllClients().size() == 2);
 		
-		client.sendMessageToServer(new Message(OpCode.REMOVE_MEDIA_FILE, media2.getId()));
+		client.getProxy().sendMessageToServer(new Message(OpCode.REMOVE_MEDIA_FILE, media2.getId()));
 		
 		client.disconnect();
 		Thread.sleep(50);

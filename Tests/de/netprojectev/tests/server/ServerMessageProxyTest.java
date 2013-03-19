@@ -9,14 +9,14 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.MediaListsEmptyException;
+import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.server.datastructures.liveticker.TickerElement;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.server.exceptions.MediaListsEmptyException;
-import de.netprojectev.server.exceptions.UnkownMessageException;
+import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.ServerTickerElement;
+import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class ServerMessageProxyTest {
@@ -50,8 +50,8 @@ public class ServerMessageProxyTest {
 	@Test
 	public void testReceiveMessage2() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException {
 		
-		TickerElement elt1 = new TickerElement("test12");
-		TickerElement elt2 = new TickerElement("test34");
+		ServerTickerElement elt1 = new ServerTickerElement("test12");
+		ServerTickerElement elt2 = new ServerTickerElement("test34");
 		
 		proxy.receiveMessage(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt1));
 		assertEquals(elt1, proxy.getTickerModel().getElementByID(elt1.getId()));

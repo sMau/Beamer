@@ -1,11 +1,9 @@
-package de.netprojectev.server.datastructures.liveticker;
+package de.netprojectev.server.datastructures;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-import de.netprojectev.datastructures.media.MediaFile;
-
-public class TickerElement implements Serializable {
+public class ServerTickerElement implements Serializable {
 	
 	/**
 	 * 
@@ -15,7 +13,7 @@ public class TickerElement implements Serializable {
 	private String text;
 	private boolean show;
 	
-	public TickerElement(String text) {
+	public ServerTickerElement(String text) {
 		id = UUID.randomUUID();
 		this.text = text;
 		this.show = true;
@@ -43,8 +41,8 @@ public class TickerElement implements Serializable {
 	    	return false;
 	    } else if(other == this){
 	    	return true;
-	    } else if(other instanceof TickerElement) {
-	    	return ((TickerElement) other).getId().equals(this.getId());
+	    } else if(other instanceof ServerTickerElement) {
+	    	return ((ServerTickerElement) other).getId().equals(this.getId());
 	    } else {
 	    	return false;
 	    }

@@ -50,7 +50,7 @@ import de.netprojectev.old.Themeslide;
 import de.netprojectev.old.VideoFile;
 import de.netprojectev.old.datastructures.media.Status;
 import de.netprojectev.old.server.datastructures.liveticker.TickerTextElement;
-import de.netprojectev.server.datastructures.media.Theme;
+import de.netprojectev.server.datastructures.Theme;
 
 /**
  * A GUI class which is the first object to be intialized on program start.

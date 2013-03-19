@@ -23,36 +23,13 @@ import org.jdesktop.swingx.util.GraphicsUtilities;
 
 import de.netprojectev.netty.testing2.Starter;
 import de.netprojectev.old.ImageFile;
-import de.netprojectev.old.ServerMediaFile;
+import de.netprojectev.server.datastructures.ServerMediaFile;
 
 /**
  * Class to hold global methods not containing to a specific other class.
  * @author samu 
  */
 public class Misc {
-	
-	/**
-	 * 
-	 * @param files files to generate media file array from
-	 * @return array of media files.
-	 */
-	public static ServerMediaFile[] createMediaFromFiles(File[] files) {
-
-		//TODO have to distinguish between videos and images. Maybe using my own ImageFileFilter
-		
-		ServerMediaFile[] mediaFiles = new ServerMediaFile[files.length];
-
-		for(int i = 0; i < files.length; i++) {
-			
-			if(files[i].exists() && files[i].isFile()) {
-				mediaFiles[i] = new ImageFile(files[i].getName(), files[i].getAbsolutePath(), Constants.DEFAULT_PRIORITY);
-				
-			}
-			
-		}
-		
-		return mediaFiles;
-	}
 	
 	
 	/**

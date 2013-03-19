@@ -9,14 +9,14 @@ import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 
 import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.MediaListsEmptyException;
+import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
-import de.netprojectev.server.datastructures.liveticker.TickerElement;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.Theme;
-import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.server.exceptions.MediaListsEmptyException;
-import de.netprojectev.server.exceptions.UnkownMessageException;
+import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.Theme;
+import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.gui.DisplayFrame;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.PreferencesModelServer;
@@ -135,7 +135,7 @@ public class MessageProxyServer {
 	}
 
 	private void addLiveTickerElement(Message msg) {
-		TickerElement eltToAdd = (TickerElement) msg.getData();
+		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData();
 		tickerModel.addTickerElement(eltToAdd);
 		//TODO implement the display part
 		

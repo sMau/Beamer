@@ -7,9 +7,9 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.ConstantsServer;
-import de.netprojectev.server.datastructures.liveticker.TickerElement;
-import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
 import de.netprojectev.server.networking.MessageProxyServer;
@@ -19,18 +19,18 @@ public class ServerTickerModelTest {
 	private MessageProxyServer proxy;
 	private TickerModelServer tickerModel;
 	
-	private TickerElement elt123;
-	private TickerElement elt456;
-	private TickerElement elt789;
+	private ServerTickerElement elt123;
+	private ServerTickerElement elt456;
+	private ServerTickerElement elt789;
 
 	@Before
 	public void setUp() {
 		proxy = new MessageProxyServer();
 		tickerModel = proxy.getTickerModel();
 		
-		elt123 = new TickerElement("Test123");
-		elt456 = new TickerElement("Test456");
-		elt789 = new TickerElement("Test789");
+		elt123 = new ServerTickerElement("Test123");
+		elt456 = new ServerTickerElement("Test456");
+		elt789 = new ServerTickerElement("Test789");
 	}
 
 	@Test

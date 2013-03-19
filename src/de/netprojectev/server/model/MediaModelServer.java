@@ -8,10 +8,10 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.server.exceptions.MediaListsEmptyException;
+import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 
@@ -20,9 +20,9 @@ public class MediaModelServer {
 	private static final Logger log = LoggerBuilder.createLogger(MediaModelServer.class);
 	
 	private final MessageProxyServer proxy;
-	private HashMap<UUID, ServerMediaFile> allMediaFiles;
-	private LinkedList<UUID> mediaStandardList;
-	private LinkedList<UUID> mediaPrivateQueue;
+	private final HashMap<UUID, ServerMediaFile> allMediaFiles;
+	private final LinkedList<UUID> mediaStandardList;
+	private final LinkedList<UUID> mediaPrivateQueue;
 	private Random rand;
 	
 	public MediaModelServer(MessageProxyServer proxy) {
@@ -62,8 +62,14 @@ public class MediaModelServer {
 		testIfMediaFileExists(id);
 		log.debug("Removing media file: " + id);
 		allMediaFiles.remove(id);
-		mediaPrivateQueue.remove(id);
-		mediaStandardList.remove(id);
+		
+		while(mediaPrivateQueue.contains(id)) {
+			mediaPrivateQueue.remove(id);
+		}
+		while(mediaStandardList.contains(id)) {
+			mediaStandardList.remove(id);
+		}
+
 	}
 	
 	public void queue(UUID id) throws MediaDoesNotExsistException {

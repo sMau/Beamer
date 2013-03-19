@@ -1,4 +1,4 @@
-package de.netprojectev.server.datastructures.media;
+package de.netprojectev.server.datastructures;
 
 public class Countdown extends ServerMediaFile {
 

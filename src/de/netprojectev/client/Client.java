@@ -74,17 +74,17 @@ public class Client {
 			return false;
 		}
 	}
-	
-	public void sendMessageToServer(Message msgToSend) {
-		proxy.sendMessageToServer(msgToSend);
-	}
-	
+
 	public void disconnect() {
 		log.info("Client disconnecting");
 		proxy.sendMessageToServer(new Message(OpCode.DISCONNECT)).awaitUninterruptibly();
 		proxy.getChannelToServer().close().awaitUninterruptibly();
 		factory.releaseExternalResources();
 		log.info("Disconnecting complete");
+	}
+
+	public ClientMessageProxy getProxy() {
+		return proxy;
 	}
 
 }

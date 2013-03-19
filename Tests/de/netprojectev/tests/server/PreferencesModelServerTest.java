@@ -10,9 +10,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.server.datastructures.media.Theme;
-import de.netprojectev.server.exceptions.PriorityDoesNotExistException;
-import de.netprojectev.server.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.exceptions.PriorityDoesNotExistException;
+import de.netprojectev.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.server.datastructures.Theme;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 

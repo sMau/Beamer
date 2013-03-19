@@ -26,7 +26,7 @@ import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.old.MediaHandlerOld;
 import de.netprojectev.old.PreferencesModelOld;
-import de.netprojectev.server.datastructures.media.Theme;
+import de.netprojectev.server.datastructures.Theme;
 import de.netprojectev.server.gui.DisplayFrame;
 
 /**

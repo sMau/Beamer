@@ -45,7 +45,7 @@ import de.netprojectev.old.MediaHandlerOld;
 import de.netprojectev.old.PreferencesModelOld;
 import de.netprojectev.old.ServerMediaFile;
 import de.netprojectev.old.Themeslide;
-import de.netprojectev.server.datastructures.media.Theme;
+import de.netprojectev.server.datastructures.Theme;
 
 
 /**

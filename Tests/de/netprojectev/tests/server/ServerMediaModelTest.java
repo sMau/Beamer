@@ -8,10 +8,10 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.netprojectev.server.datastructures.media.ServerMediaFile;
-import de.netprojectev.server.datastructures.media.VideoFile;
-import de.netprojectev.server.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.server.exceptions.MediaListsEmptyException;
+import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.MediaListsEmptyException;
+import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 

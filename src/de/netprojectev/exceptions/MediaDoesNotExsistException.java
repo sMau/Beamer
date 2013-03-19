@@ -1,4 +1,4 @@
-package de.netprojectev.server.exceptions;
+package de.netprojectev.exceptions;
 
 public class MediaDoesNotExsistException extends Exception {
 

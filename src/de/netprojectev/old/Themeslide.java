@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.media.Theme;
+import de.netprojectev.server.datastructures.Theme;
 
 /**
  * Datastructure for a themeslide. It holds a theme object and a formatted styled text as JTextPane.

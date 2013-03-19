@@ -5,13 +5,10 @@ import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
-import de.netprojectev.old.ServerMediaFile;
-
 public class MediaFileEchoServerHandler extends SimpleChannelHandler {
 	
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-		ServerMediaFile media = (ServerMediaFile) e.getMessage();
 		e.getChannel().close();
 	}
 	

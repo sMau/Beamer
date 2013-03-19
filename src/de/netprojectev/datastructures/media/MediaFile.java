@@ -52,4 +52,36 @@ public abstract class MediaFile implements Serializable {
 		return id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Priority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Priority priority) {
+		this.priority = priority;
+	}
+
+	public boolean isCurrent() {
+		return current;
+	}
+
+	public void setCurrent(boolean current) {
+		this.current = current;
+	}
+
+	public int getShowCount() {
+		return showCount;
+	}
+
+	public void setShowCount(int showCount) {
+		this.showCount = showCount;
+	}
+
 }

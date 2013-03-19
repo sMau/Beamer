@@ -8,12 +8,12 @@ import java.util.UUID;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.exceptions.PriorityDoesNotExistException;
+import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
-import de.netprojectev.server.datastructures.media.Theme;
-import de.netprojectev.server.exceptions.PriorityDoesNotExistException;
-import de.netprojectev.server.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.server.datastructures.Theme;
 import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 

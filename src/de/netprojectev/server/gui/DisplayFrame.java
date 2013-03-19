@@ -16,7 +16,7 @@ import de.netprojectev.misc.Misc;
 import de.netprojectev.old.Countdown;
 import de.netprojectev.old.ImageFile;
 import de.netprojectev.old.Themeslide;
-import de.netprojectev.server.datastructures.media.VideoFile;
+import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 /**

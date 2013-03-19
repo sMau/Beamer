@@ -3,7 +3,7 @@ package de.netprojectev.old;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.LiveTicker;
 import de.netprojectev.misc.TickerTextElement;
-import de.netprojectev.server.datastructures.media.Theme;
+import de.netprojectev.server.datastructures.Theme;
 
 public class MiscOld {
 	/**
