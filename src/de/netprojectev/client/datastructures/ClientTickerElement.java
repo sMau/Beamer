@@ -1,11 +1,16 @@
 package de.netprojectev.client.datastructures;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import de.netprojectev.server.datastructures.ServerTickerElement;
 
-public class ClientTickerElement {
+public class ClientTickerElement implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7318943668603033104L;
 	private final UUID id;
 	private String text;
 	private boolean show;

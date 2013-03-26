@@ -20,12 +20,11 @@ public class ClientMessageHandler extends SimpleChannelHandler {
 		this.proxy = proxy;
 	}
 	
-	
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-		
 		Message msg = (Message) e.getMessage();
-		super.messageReceived(ctx, e);
+		proxy.receiveMessage(msg);
+		// super.messageReceived(ctx, e);
 	}
 	
 	@Override
