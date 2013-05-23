@@ -8,10 +8,12 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.networking.LoginData;
 import de.netprojectev.server.datastructures.VideoFile;
 
 public class ClientMediaModelTest {
@@ -27,7 +29,9 @@ public class ClientMediaModelTest {
 	
 	@Before
 	public void setUp() {
-		mediaModel = new ClientMessageProxy().getMediaModel();
+		Client client = new Client("", 0, new LoginData("", ""));
+		
+		mediaModel = client.getProxy().getMediaModel();
 	}
 	
 	@Test

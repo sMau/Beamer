@@ -3,6 +3,8 @@ package de.netprojectev.datastructures.media;
 import java.io.Serializable;
 import java.util.UUID;
 
+import de.netprojectev.client.datastructures.ClientMediaFile;
+
 
 public abstract class MediaFile implements Serializable {
 
@@ -72,16 +74,21 @@ public abstract class MediaFile implements Serializable {
 		return current;
 	}
 
-	public void setCurrent(boolean current) {
+	public MediaFile setCurrent(boolean current) {
 		this.current = current;
+		return this;
 	}
 
 	public int getShowCount() {
 		return showCount;
 	}
 
-	public void setShowCount(int showCount) {
-		this.showCount = showCount;
+	public MediaFile increaseShowCount() {
+		
+		showCount++;
+		
+		return this;
 	}
+	
 
 }

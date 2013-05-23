@@ -40,7 +40,6 @@ public class ClientMessageProxyTest {
 		client = new Client("127.0.0.1", 11111, new LoginData("test", ""));
 	}
 	
-	
 	@Test
 	public void testReceiveMessage1() throws UnkownMessageException, MediaDoesNotExsistException {
 		client.getProxy().receiveMessage(new Message(OpCode.ADD_MEDIA_FILE_ACK, clmedia1));

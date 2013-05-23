@@ -7,10 +7,12 @@ import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.networking.LoginData;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 
 public class ClientTickerModelTest {
@@ -25,7 +27,9 @@ public class ClientTickerModelTest {
 	@Before
 	public void setUp() {
 		
-		tickerModel = new ClientMessageProxy().getTickerModel();
+		Client client = new Client("", 0, new LoginData("", ""));
+		
+		tickerModel = client.getProxy().getTickerModel();
 		
 	}
 	

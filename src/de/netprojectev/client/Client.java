@@ -32,6 +32,8 @@ public class Client {
 	private final String host;
 	private final int port;
 	
+	private boolean loginSuccess;
+	
 	private ChannelFactory factory;
 	
 	public Client(String host, int port, LoginData login) {
@@ -39,7 +41,7 @@ public class Client {
 		this.host = host;
 		this.port = port;
 		
-		this.proxy = new ClientMessageProxy();
+		this.proxy = new ClientMessageProxy(this);
 		
 	}
 	
@@ -81,6 +83,10 @@ public class Client {
 		proxy.getChannelToServer().close().awaitUninterruptibly();
 		factory.releaseExternalResources();
 		log.info("Disconnecting complete");
+	}
+
+	public void loginSuccess() {
+		loginSuccess = true;
 	}
 
 	public ClientMessageProxy getProxy() {

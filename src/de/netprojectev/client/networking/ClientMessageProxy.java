@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 
+import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.model.MediaModelClient;
@@ -20,16 +21,19 @@ public class ClientMessageProxy {
 	
 	private static final Logger log = LoggerBuilder.createLogger(ClientMessageProxy.class);
 	
+	private final Client client;
+	
 	private final MediaModelClient mediaModel;
 	private final TickerModelClient tickerModel;
 	private final PreferencesModelClient prefs;
 	
 	private Channel channelToServer;
 
-	public ClientMessageProxy() {
+	public ClientMessageProxy(Client client) {
 		mediaModel = new MediaModelClient(this);
 		tickerModel = new TickerModelClient(this);
 		prefs = new PreferencesModelClient(this);
+		this.client = client;
 	}
 	
 	
@@ -104,39 +108,36 @@ public class ClientMessageProxy {
 		
 	}
 
-	private void showingNextMediaFile(Message msg) {
-		// TODO Auto-generated method stub
-		
+	private void showingNextMediaFile(Message msg) throws MediaDoesNotExsistException {
+		UUID fileShowing = (UUID) msg.getData();
+		showMediaFile(fileShowing);
 	}
 
 
 	private void autoModeToggled(Message msg) {
-		// TODO Auto-generated method stub
-		
+		prefs.toggleAutomode();
 	}
 
 
 	private void fullscreenToggled(Message msg) {
-		// TODO Auto-generated method stub
-		
+		prefs.toggleFullscreen();
 	}
 
 
 	private void liveTickerStartToggled(Message msg) {
-		// TODO Auto-generated method stub
-		
+		prefs.toggleLiveTickerRunning();
 	}
 
 
-	private void mediaFileShowing(Message msg) {
-		// TODO Auto-generated method stub
-		
+	private void mediaFileShowing(Message msg) throws MediaDoesNotExsistException {
+		UUID fileShowing = (UUID) msg.getData();
+		showMediaFile(fileShowing);		
 	}
 
 
-	private void mediaFileQueued(Message msg) {
-		// TODO Auto-generated method stub
-		
+	private void mediaFileQueued(Message msg) throws MediaDoesNotExsistException {
+		UUID toQueue = (UUID) msg.getData();
+		mediaModel.queueMediaFile(toQueue);
 	}
 
 
@@ -147,7 +148,7 @@ public class ClientMessageProxy {
 
 
 	private void connectionSuccessful(Message msg) {
-		// TODO Auto-generated method stub
+		client.loginSuccess();
 		
 	}
 
@@ -209,6 +210,11 @@ public class ClientMessageProxy {
 	private void mediaFileAdded(Message msg) {
 		ClientMediaFile toAdd = (ClientMediaFile) msg.getData();
 		mediaModel.addMediaFile(toAdd);		
+	}
+	
+	private void showMediaFile(UUID id) throws MediaDoesNotExsistException {
+		mediaModel.getMediaFileById(id).setCurrent(true).increaseShowCount();
+		
 	}
 
 
