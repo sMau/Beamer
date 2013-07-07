@@ -32,6 +32,13 @@ public class MediaModelClient {
 		return fileToAdd.getId();
 	}
 	
+	public UUID replaceMediaFile(ClientMediaFile replace) throws MediaDoesNotExsistException {
+		if(allMedia.get(replace.getId()) == null) {
+			throw new MediaDoesNotExsistException("The media file to replace has no mapping yet.");
+		}
+		return addMediaFile(replace);
+	}
+	
 	public void removeMediaFile(UUID toRemove) throws MediaDoesNotExsistException {
 		checkIfMediaExists(toRemove);
 		log.debug("Removing media file: " + toRemove);

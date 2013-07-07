@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import de.netprojectev.client.gui.manager.ManagerFrame;
+import old.de.netprojectev.client.gui.manager.ManagerFrame;
+
 
 public class ButtonColoring extends JFrame {
 

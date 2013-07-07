@@ -1,6 +1,6 @@
 package de.netprojectev.examplessc;
 
-import de.netprojectev.client.gui.manager.ManagerFrame;
+import old.de.netprojectev.client.gui.manager.ManagerFrame;
 
 public class TestJTable {
 	

@@ -9,13 +9,13 @@ import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 
 import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.server.datastructures.ServerMediaFile;
-import de.netprojectev.server.datastructures.Theme;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.gui.DisplayFrame;
 import de.netprojectev.server.model.MediaModelServer;

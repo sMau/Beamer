@@ -93,4 +93,10 @@ public class Client {
 		return proxy;
 	}
 
+	public void loginDenied(String reason) {
+		//TODO
+		
+	}
+	
+
 }

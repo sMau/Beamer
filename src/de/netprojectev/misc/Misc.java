@@ -1,5 +1,7 @@
 package de.netprojectev.misc;
 
+import de.netprojectev.client.StarterClient;
+import de.netprojectev.client.gui.main.LoginDialog;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -19,10 +21,11 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import old.de.netprojectev.ImageFile;
+
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
-import de.netprojectev.netty.testing2.Starter;
-import de.netprojectev.old.ImageFile;
+
 import de.netprojectev.server.datastructures.ServerMediaFile;
 
 /**
@@ -318,7 +321,7 @@ public class Misc {
 	public static void restartApplication() throws URISyntaxException, IOException {
 		final String javaBin = System.getProperty("java.home") + File.separator
 				+ "bin" + File.separator + "java";
-		final File currentJar = new File(Starter.class.getProtectionDomain()
+		final File currentJar = new File(StarterClient.class.getProtectionDomain()
 				.getCodeSource().getLocation().toURI());
 
 		if (!currentJar.getName().endsWith(".jar"))

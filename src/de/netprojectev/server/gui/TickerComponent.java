@@ -12,12 +12,13 @@ import java.util.TimerTask;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
+import old.de.netprojectev.PreferencesModelOld;
+
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.PreferencesModelOld;
 
 /**
  * GUI component to draw the live ticker string.

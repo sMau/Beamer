@@ -12,6 +12,8 @@ import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.TickerModelClient;
+import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.misc.LoggerBuilder;
@@ -142,8 +144,7 @@ public class ClientMessageProxy {
 
 
 	private void loginDenied(Message msg) {
-		// TODO Auto-generated method stub
-		
+		client.loginDenied((String) msg.getData());
 	}
 
 
@@ -152,30 +153,46 @@ public class ClientMessageProxy {
 		
 	}
 
-
 	private void mediaFileEdited(Message msg) {
-		// TODO Auto-generated method stub
-		
+		ClientMediaFile media = (ClientMediaFile) msg.getData();
+		try {
+			mediaModel.replaceMediaFile(media);
+		} catch (MediaDoesNotExsistException e) {
+			// TODO reload data from server to get in sync again
+			log.error("Error replacing mediaFile", e);
+		}
 	}
-
 
 	private void liveTickerElementEdited(Message msg) {
-		// TODO Auto-generated method stub
-		
+		ClientTickerElement e = (ClientTickerElement) msg.getData();
+		try {
+			tickerModel.replaceTickerElement(e);
+		} catch (MediaDoesNotExsistException e1) {
+			// TODO reload data from server to get in sync again
+			log.error("Error replacing tickerElement", e);
+		}
 	}
-
 
 	private void themeRemoved(Message msg) {
-		// TODO Auto-generated method stub
-		
+		UUID toRemove = (UUID) msg.getData();
+		prefs.themeRemoved(toRemove);
 	}
-
 
 	private void priorityRemoved(Message msg) {
-		// TODO Auto-generated method stub
-		
+		UUID toRemove = (UUID) msg.getData();
+		prefs.prioRemoved(toRemove);
+	}
+	
+	private void themeAdded(Message msg) {
+		Theme toAdd = (Theme) msg.getData();
+		prefs.themeAdded(toAdd);
 	}
 
+
+	private void priorityAdded(Message msg) {
+		Priority toAdd = (Priority) msg.getData();
+		prefs.prioAdded(toAdd);
+	}
 
 	private void mediaFileRemoved(Message msg) throws MediaDoesNotExsistException {
 		UUID toRemove = (UUID) msg.getData();
@@ -187,19 +204,6 @@ public class ClientMessageProxy {
 		UUID toRemove = (UUID) msg.getData();
 		tickerModel.removeTickerElement(toRemove);
 	}
-
-
-	private void themeAdded(Message msg) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	private void priorityAdded(Message msg) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	private void liveTickerElementAdded(Message msg) {
 		ClientTickerElement toAdd = (ClientTickerElement) msg.getData();

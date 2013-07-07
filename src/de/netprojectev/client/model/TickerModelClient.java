@@ -27,6 +27,13 @@ public class TickerModelClient {
 		return e.getId();
 	}
 	
+	public UUID replaceTickerElement(ClientTickerElement e) throws MediaDoesNotExsistException {
+		if(elements.get(e.getId()) == null) {
+			throw new MediaDoesNotExsistException("The media file to replace has no mapping yet.");
+		}
+		return addTickerElement(e);
+	}
+	
 	public void removeTickerElement(UUID id) throws MediaDoesNotExsistException {
 		log.debug("Removing ticker element: " + id);
 		checkIfElementExists(id);

@@ -9,11 +9,12 @@ import java.awt.RenderingHints;
 
 import javax.swing.JComponent;
 
+import old.de.netprojectev.Countdown;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.old.Countdown;
 /**
  * 
  * GUI Component to draw images and themeslide background images

@@ -9,13 +9,14 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JOptionPane;
 
+import old.de.netprojectev.Countdown;
+import old.de.netprojectev.ImageFile;
+import old.de.netprojectev.Themeslide;
+
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.old.Countdown;
-import de.netprojectev.old.ImageFile;
-import de.netprojectev.old.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
 

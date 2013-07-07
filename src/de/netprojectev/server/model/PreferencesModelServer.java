@@ -8,13 +8,12 @@ import java.util.UUID;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
-import de.netprojectev.server.datastructures.Theme;
-import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class PreferencesModelServer {
@@ -79,7 +78,7 @@ public class PreferencesModelServer {
 		}
 	}
 	
-	public Theme getThemeById(UUID id) throws ThemeDoesNotExistException{
+	public Theme getThemeById(UUID id) throws ThemeDoesNotExistException {
 		if(themes.get(id) == null) {
 			throw new ThemeDoesNotExistException("Theme does not exist. ID: " + id);
 		} else {
