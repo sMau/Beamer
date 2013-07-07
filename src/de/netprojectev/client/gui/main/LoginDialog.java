@@ -65,6 +65,13 @@ public class LoginDialog extends javax.swing.JDialog {
         String ip = tfServerIP.getText();
         String pw = tfServerPW.getText();
         (new Client(ip, 9999, new LoginData(alias, pw))).connect();
+        
+        //TODO last worked here!!!!!
+        /*
+         * last made the login dialog its possible to login now with the gui
+         * Next Step: open the mainframe after login dialog and program the mainframe -> media lists queue etc
+         */
+        
     }
     
     /**
