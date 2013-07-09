@@ -1,6 +1,9 @@
 package de.netprojectev.client.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -17,17 +20,24 @@ public class MediaModelClient {
 	
 	private final ClientMessageProxy proxy;
 	private final HashMap<UUID, ClientMediaFile> allMedia;
+	private final ArrayList<UUID> allMediaList;
 	private final LinkedList<UUID> customQueue;
 	
 	public MediaModelClient(ClientMessageProxy proxy) {
 		this.proxy = proxy;
 		this.allMedia = new HashMap<>();
+		this.allMediaList = new ArrayList<>();
 		this.customQueue = new LinkedList<>();
 	}
 	
 	
 	public UUID addMediaFile(ClientMediaFile fileToAdd) {
 		allMedia.put(fileToAdd.getId(), fileToAdd);
+		
+		if(!allMediaList.contains(fileToAdd.getId())) {
+			allMediaList.add(fileToAdd.getId());
+		}
+		
 		log.debug("Adding media file: " + fileToAdd);
 		return fileToAdd.getId();
 	}
@@ -48,6 +58,7 @@ public class MediaModelClient {
 		}
 		
 		allMedia.remove(toRemove);
+		allMediaList.remove(toRemove);
 	}
 	
 	public ClientMediaFile getMediaFileById(UUID id) throws MediaDoesNotExsistException {
@@ -73,6 +84,18 @@ public class MediaModelClient {
 		if(allMedia.get(id) == null) {
 			throw new MediaDoesNotExsistException("The requested media does not exist. ID: " + id);
 		}
+	}
+	
+	public ClientMediaFile getValueAt(int position) {
+		
+		//TODO last worked here, last made the tablemodel for all media of the client work basically (see the first test to the gui)
+		/*
+		 * next to do: do the same for the liveticker and the customqueue
+		 * maybe add already some buttons to test the ability of adding new files via the server
+		 * 
+		 */
+		
+		return allMedia.get(allMediaList.get(position));
 	}
 
 

@@ -3,8 +3,6 @@ package de.netprojectev.datastructures.media;
 import java.io.Serializable;
 import java.util.UUID;
 
-import de.netprojectev.client.datastructures.ClientMediaFile;
-
 
 public abstract class MediaFile implements Serializable {
 
@@ -27,7 +25,7 @@ public abstract class MediaFile implements Serializable {
 	protected MediaFile(String name, UUID id) {
 		this.id = id;
 		this.name = name;
-		//TODO add default priority
+		this.priority = new Priority("default", 10); //TODO add real default priority via prefs and so on
 	}
 	
 	

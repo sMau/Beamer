@@ -58,7 +58,7 @@ public class Server {
 	}
 	
 	public static void main(String[] args) {
-		int port = 9999;
+		int port = 11111;
 		if(args.length == 1) {
 			try {
 				port = Integer.parseInt(args[0]);

@@ -4,16 +4,24 @@
  */
 package de.netprojectev.client.gui.main;
 
+import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.client.model.TickerModelClient;
+
 /**
  *
  * @author samu
  */
 public class MainClientGUIWindow extends javax.swing.JFrame {
-
+	
+	private final MediaModelClient mediaModel;
+	private final TickerModelClient tickerModel;
+	
     /**
      * Creates new form MainClientGUIWindow
      */
-    public MainClientGUIWindow() {
+    public MainClientGUIWindow(MediaModelClient mediaModel, TickerModelClient tickerModel) {
+    	this.mediaModel = mediaModel;
+    	this.tickerModel = tickerModel;
         initComponents();
     }
 
@@ -26,19 +34,69 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabbedPaneContainer = new javax.swing.JTabbedPane();
+        jpAllMedia = new javax.swing.JPanel();
+        jspMediaTableContainer = new javax.swing.JScrollPane();
+        jtAllMedia = new javax.swing.JTable();
+        jpCustomQueue = new javax.swing.JPanel();
+        jpLiveTicker = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Beamer Client");
+
+        jtAllMedia.setModel(new AllMediaTableModel(mediaModel));
+        jspMediaTableContainer.setViewportView(jtAllMedia);
+
+        javax.swing.GroupLayout jpAllMediaLayout = new javax.swing.GroupLayout(jpAllMedia);
+        jpAllMedia.setLayout(jpAllMediaLayout);
+        jpAllMediaLayout.setHorizontalGroup(
+            jpAllMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jspMediaTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE)
+        );
+        jpAllMediaLayout.setVerticalGroup(
+            jpAllMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpAllMediaLayout.createSequentialGroup()
+                .addComponent(jspMediaTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        tabbedPaneContainer.addTab("Media", jpAllMedia);
+
+        javax.swing.GroupLayout jpCustomQueueLayout = new javax.swing.GroupLayout(jpCustomQueue);
+        jpCustomQueue.setLayout(jpCustomQueueLayout);
+        jpCustomQueueLayout.setHorizontalGroup(
+            jpCustomQueueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 853, Short.MAX_VALUE)
+        );
+        jpCustomQueueLayout.setVerticalGroup(
+            jpCustomQueueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 536, Short.MAX_VALUE)
+        );
+
+        tabbedPaneContainer.addTab("Queue", jpCustomQueue);
+
+        javax.swing.GroupLayout jpLiveTickerLayout = new javax.swing.GroupLayout(jpLiveTicker);
+        jpLiveTicker.setLayout(jpLiveTickerLayout);
+        jpLiveTickerLayout.setHorizontalGroup(
+            jpLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 853, Short.MAX_VALUE)
+        );
+        jpLiveTickerLayout.setVerticalGroup(
+            jpLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 536, Short.MAX_VALUE)
+        );
+
+        tabbedPaneContainer.addTab("Ticker", jpLiveTicker);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(tabbedPaneContainer)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+            .addComponent(tabbedPaneContainer)
         );
 
         pack();
@@ -74,11 +132,16 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainClientGUIWindow().setVisible(true);
+                new MainClientGUIWindow(null, null).setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel jpAllMedia;
+    private javax.swing.JPanel jpCustomQueue;
+    private javax.swing.JPanel jpLiveTicker;
+    private javax.swing.JScrollPane jspMediaTableContainer;
+    private javax.swing.JTable jtAllMedia;
+    private javax.swing.JTabbedPane tabbedPaneContainer;
     // End of variables declaration//GEN-END:variables
 }

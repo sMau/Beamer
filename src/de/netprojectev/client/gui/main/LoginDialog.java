@@ -60,15 +60,14 @@ public class LoginDialog extends javax.swing.JDialog {
 
     private void loginButtonClicked() {
     	//TODO check for correctness in entered texts
-    	//TODO respect a port selection
+
         String alias = tfAlias.getText();
         String ip = tfServerIP.getText();
+        String port = tfPort.getText();
         String pw = tfServerPW.getText();
-        (new Client(ip, 9999, new LoginData(alias, pw))).connect();
-        
-        //TODO last worked here!!!!!
+        (new Client(ip, Integer.parseInt(port), new LoginData(alias, pw))).connect();
+
         /*
-         * last made the login dialog its possible to login now with the gui
          * Next Step: open the mainframe after login dialog and program the mainframe -> media lists queue etc
          */
         
@@ -91,6 +90,8 @@ public class LoginDialog extends javax.swing.JDialog {
         tfServerPW = new javax.swing.JTextField();
         lblServerIP = new javax.swing.JLabel();
         tfServerIP = new javax.swing.JTextField();
+        tfPort = new javax.swing.JTextField();
+        lblPort = new javax.swing.JLabel();
 
         setTitle("Login");
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -117,7 +118,22 @@ public class LoginDialog extends javax.swing.JDialog {
 
         lblServerPW.setText("Server Password");
 
+        tfAlias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfAliasActionPerformed(evt);
+            }
+        });
+
         lblServerIP.setText("Server IP");
+
+        tfPort.setText("11111");
+        tfPort.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tfPortActionPerformed(evt);
+            }
+        });
+
+        lblPort.setText("Port");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,21 +143,25 @@ public class LoginDialog extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 225, Short.MAX_VALUE)
+                        .addGap(0, 244, Short.MAX_VALUE)
                         .addComponent(okButton, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblAlias)
                             .addComponent(lblServerPW)
-                            .addComponent(lblServerIP))
+                            .addComponent(lblServerIP)
+                            .addComponent(lblPort))
                         .addGap(25, 25, 25)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfAlias)
                             .addComponent(tfServerPW)
-                            .addComponent(tfServerIP))))
+                            .addComponent(tfServerIP)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(tfPort, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cancelButton)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cancelButton, okButton});
@@ -153,15 +173,19 @@ public class LoginDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblServerIP)
                     .addComponent(tfServerIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblAlias)
-                    .addComponent(tfAlias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                    .addComponent(tfPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPort))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblServerPW)
-                    .addComponent(tfServerPW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                    .addComponent(tfAlias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblAlias))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfServerPW, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblServerPW))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelButton)
                     .addComponent(okButton))
@@ -188,6 +212,14 @@ public class LoginDialog extends javax.swing.JDialog {
     private void closeDialog(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_closeDialog
         doClose(RET_CANCEL);
     }//GEN-LAST:event_closeDialog
+
+    private void tfPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfPortActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfPortActionPerformed
+
+    private void tfAliasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tfAliasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tfAliasActionPerformed
     
     private void doClose(int retStatus) {
         returnStatus = retStatus;
@@ -239,10 +271,12 @@ public class LoginDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
     private javax.swing.JLabel lblAlias;
+    private javax.swing.JLabel lblPort;
     private javax.swing.JLabel lblServerIP;
     private javax.swing.JLabel lblServerPW;
     private javax.swing.JButton okButton;
     private javax.swing.JTextField tfAlias;
+    private javax.swing.JTextField tfPort;
     private javax.swing.JTextField tfServerIP;
     private javax.swing.JTextField tfServerPW;
     // End of variables declaration//GEN-END:variables

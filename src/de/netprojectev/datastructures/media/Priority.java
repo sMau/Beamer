@@ -46,4 +46,9 @@ public class Priority implements Serializable {
 	public UUID getId() {
 		return id;
 	}
+	
+	@Override
+	public String toString() {
+		return name + " - " + minutesToShow;
+	}
 }

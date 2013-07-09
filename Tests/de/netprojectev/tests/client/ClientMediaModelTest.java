@@ -21,11 +21,11 @@ public class ClientMediaModelTest {
 	
 	private MediaModelClient mediaModel;
 	
+	
 	private ClientMediaFile m1 = new ClientMediaFile(new VideoFile("Vid1", new File("/home/samu")));
 	private ClientMediaFile m2 = new ClientMediaFile(new VideoFile("Vid2", new File("/home/samu")));
 	private ClientMediaFile m3 = new ClientMediaFile(new VideoFile("Vid3", new File("/home/samu")));
 	private ClientMediaFile m4 = new ClientMediaFile(new VideoFile("Vid4", new File("/home/samu")));
-	
 	
 	@Before
 	public void setUp() {
