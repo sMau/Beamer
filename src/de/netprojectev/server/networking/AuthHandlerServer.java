@@ -33,7 +33,7 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		Message received = (Message) e.getMessage();
-		if(chanConnected && received.getOpCode().equals(OpCode.LOGIN_REQUEST)) {
+		if(chanConnected && received.getOpCode().equals(OpCode.CTS_LOGIN_REQUEST)) {
 			
 			LoginData login = (LoginData) received.getData();
 			
@@ -67,7 +67,7 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 
 	private void denyAccessToClient(MessageEvent e) {
 		log.warn("Login request denied");
-		e.getChannel().write(new Message(OpCode.LOGIN_DENIED)).awaitUninterruptibly();
+		e.getChannel().write(new Message(OpCode.STC_LOGIN_DENIED)).awaitUninterruptibly();
 		e.getChannel().close().awaitUninterruptibly();
 	}
 }

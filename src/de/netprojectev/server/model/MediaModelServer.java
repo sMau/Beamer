@@ -12,7 +12,6 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.datastructures.ServerMediaFile;
-import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class MediaModelServer {

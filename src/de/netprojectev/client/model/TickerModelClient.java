@@ -1,11 +1,13 @@
 package de.netprojectev.client.model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientTickerElement;
+import de.netprojectev.client.gui.tablemodels.TickerTableModel.UpdateTickerDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.misc.LoggerBuilder;
@@ -14,16 +16,24 @@ public class TickerModelClient {
 	private static final Logger log = LoggerBuilder.createLogger(TickerModelClient.class);
 
 	private final ClientMessageProxy proxy;
-	private HashMap<UUID, ClientTickerElement> elements;
+	private final HashMap<UUID, ClientTickerElement> elements;
+	private final ArrayList<UUID> allElementsList;
+	
+	private UpdateTickerDataListener tickerDataListener;
 	
 	public TickerModelClient(ClientMessageProxy proxy) {
 		this.proxy = proxy;
-		elements = new HashMap<>();
+		this.elements = new HashMap<>();
+		this.allElementsList = new ArrayList<>();
 	}
 	
 	public UUID addTickerElement(ClientTickerElement e) {
 		log.debug("Adding ticker element: " + e);
 		elements.put(e.getId(), e);
+		if(!allElementsList.contains(e.getId())) {
+			allElementsList.add(e.getId());
+		}
+		updateTickerTable();
 		return e.getId();
 	}
 	
@@ -38,6 +48,16 @@ public class TickerModelClient {
 		log.debug("Removing ticker element: " + id);
 		checkIfElementExists(id);
 		elements.remove(id);
+		allElementsList.remove(id);
+		
+		updateTickerTable();
+	}
+
+	private void updateTickerTable() {
+		
+		if(tickerDataListener != null) {
+			tickerDataListener.update();
+		}
 	}
 	
 	public ClientTickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
@@ -46,9 +66,25 @@ public class TickerModelClient {
 		return elements.get(id);
 	}
 	
+	public ClientTickerElement getValueAt(int row) {
+		return elements.get(allElementsList.get(row));
+	}
+	
 	private void checkIfElementExists(UUID id) throws MediaDoesNotExsistException {
 		if(elements.get(id) == null) {
 			throw new MediaDoesNotExsistException("Ticker element does not exist. Query id: " + id);
 		}
+	}
+
+	public HashMap<UUID, ClientTickerElement> getElements() {
+		return elements;
+	}
+
+	public ArrayList<UUID> getAllElementsList() {
+		return allElementsList;
+	}
+
+	public void setTickerDateListener(UpdateTickerDataListener tickerDateListener) {
+		this.tickerDataListener = tickerDateListener;
 	}
 }

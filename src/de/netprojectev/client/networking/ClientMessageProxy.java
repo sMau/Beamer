@@ -1,6 +1,9 @@
 package de.netprojectev.client.networking;
 
+import java.io.File;
 import java.util.UUID;
+
+import javax.swing.ImageIcon;
 
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.Channel;
@@ -18,6 +21,8 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
+import de.netprojectev.server.datastructures.ImageFile;
 
 public class ClientMessageProxy {
 	
@@ -38,68 +43,80 @@ public class ClientMessageProxy {
 		this.client = client;
 	}
 	
-	
+	//TODO mark this as private at the moment only public for testing
 	public ChannelFuture sendMessageToServer(Message msgToSend) {
 		log.debug("Sending message to server: " + msgToSend);
 		return channelToServer.write(msgToSend);
+	}
+	
+	public void sendAddFile(File file) {
+		String name = file.getName();
+		ImageIcon image = new ImageIcon(file.getAbsolutePath());
+		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, new ImageFile(name, image)));
+	}
+	
+	public void sendAddFiles(File[] files) {
+		for(int i = 0; i < files.length; i++) {
+			sendAddFile(files[i]);
+		}
 	}
 
 
 	public void receiveMessage(Message msg) throws UnkownMessageException, MediaDoesNotExsistException {
 		log.debug("Receiving message: " + msg.toString());
 		switch (msg.getOpCode()) {
-		case ADD_MEDIA_FILE_ACK:
+		case STC_ADD_MEDIA_FILE_ACK:
 			mediaFileAdded(msg);
 			break;
-		case ADD_LIVE_TICKER_ELEMENT_ACK:
+		case STC_ADD_LIVE_TICKER_ELEMENT_ACK:
 			liveTickerElementAdded(msg);
 			break;
-		case ADD_PRIORITY_ACK:
+		case STC_ADD_PRIORITY_ACK:
 			priorityAdded(msg);
 			break;
-		case ADD_THEME_ACK:
+		case STC_ADD_THEME_ACK:
 			themeAdded(msg);
 			break;
-		case REMOVE_LIVE_TICKER_ELEMENT_ACK:
+		case STC_REMOVE_LIVE_TICKER_ELEMENT_ACK:
 			liveTickerElementRemoved(msg);
 			break;
-		case REMOVE_MEDIA_FILE_ACK:
+		case STC_REMOVE_MEDIA_FILE_ACK:
 			mediaFileRemoved(msg);
 			break;
-		case REMOVE_PRIORITY_ACK:
+		case STC_REMOVE_PRIORITY_ACK:
 			priorityRemoved(msg);
 			break;
-		case REMOVE_THEME_ACK:
+		case STC_REMOVE_THEME_ACK:
 			themeRemoved(msg);
 			break;
-		case EDIT_LIVE_TICKER_ELEMENT_ACK:
+		case STC_EDIT_LIVE_TICKER_ELEMENT_ACK:
 			liveTickerElementEdited(msg);
 			break;
-		case EDIT_MEDIA_FILE_ACK:
+		case STC_EDIT_MEDIA_FILE_ACK:
 			mediaFileEdited(msg);
 			break;
-		case CONNECTION_ACK:
+		case STC_CONNECTION_ACK:
 			connectionSuccessful(msg);
 			break;
-		case LOGIN_DENIED:
+		case STC_LOGIN_DENIED:
 			loginDenied(msg);
 			break;
-		case QUEUE_MEDIA_FILE_ACK:
+		case STC_QUEUE_MEDIA_FILE_ACK:
 			mediaFileQueued(msg);
 			break;
-		case SHOW_MEDIA_FILE_ACK:
+		case STC_SHOW_MEDIA_FILE_ACK:
 			mediaFileShowing(msg);
 			break;
-		case SHOW_NEXT_MEDIA_FILE_ACK:
+		case STC_SHOW_NEXT_MEDIA_FILE_ACK:
 			showingNextMediaFile(msg);
 			break;
-		case TOGGLE_AUTO_MODE_ACK:
+		case STC_TOGGLE_AUTO_MODE_ACK:
 			autoModeToggled(msg);
 			break;
-		case TOGGLE_FULLSCREEN_ACK:
+		case STC_TOGGLE_FULLSCREEN_ACK:
 			fullscreenToggled(msg);
 			break;
-		case TOGGLE_LIVE_TICKER_START_ACK:
+		case STC_TOGGLE_LIVE_TICKER_START_ACK:
 			liveTickerStartToggled(msg);
 			break;
 		default:

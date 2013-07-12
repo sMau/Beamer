@@ -2,19 +2,20 @@ package de.netprojectev.client.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.client.gui.tablemodels.AllMediaTableModel.UpdateAllMediaDataListener;
+import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel.UpdateCustomQueueDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.misc.LoggerBuilder;
 
 public class MediaModelClient {
+
 
 	private static final Logger log = LoggerBuilder.createLogger(MediaModelClient.class);
 	
@@ -22,6 +23,9 @@ public class MediaModelClient {
 	private final HashMap<UUID, ClientMediaFile> allMedia;
 	private final ArrayList<UUID> allMediaList;
 	private final LinkedList<UUID> customQueue;
+	
+	private UpdateAllMediaDataListener allMediaListener;
+	private UpdateCustomQueueDataListener customQueueListener;
 	
 	public MediaModelClient(ClientMessageProxy proxy) {
 		this.proxy = proxy;
@@ -39,7 +43,16 @@ public class MediaModelClient {
 		}
 		
 		log.debug("Adding media file: " + fileToAdd);
+		updateAllMediaTable();
 		return fileToAdd.getId();
+	}
+
+
+	private void updateAllMediaTable() {
+		if(allMediaListener != null) {
+			log.debug("Update All media table invoked");
+			allMediaListener.update();
+		}
 	}
 	
 	public UUID replaceMediaFile(ClientMediaFile replace) throws MediaDoesNotExsistException {
@@ -59,6 +72,8 @@ public class MediaModelClient {
 		
 		allMedia.remove(toRemove);
 		allMediaList.remove(toRemove);
+		
+		updateAllMediaTable();
 	}
 	
 	public ClientMediaFile getMediaFileById(UUID id) throws MediaDoesNotExsistException {
@@ -71,12 +86,25 @@ public class MediaModelClient {
 		checkIfMediaExists(id);
 		log.debug("Queueing media file: " + id);
 		customQueue.addLast(id);
+		
+		updateCustomQueueTable();
+	}
+
+
+	private void updateCustomQueueTable() {
+		
+		if(customQueueListener != null) {
+			customQueueListener.update();
+		}
+		
 	}
 	
 	public void dequeueFirstMediaFile() {
 		if(!customQueue.isEmpty()) {
 			log.debug("Dequeueing first.");
 			customQueue.removeFirst();
+			
+			updateCustomQueueTable();
 		}
 	}
 	
@@ -87,14 +115,6 @@ public class MediaModelClient {
 	}
 	
 	public ClientMediaFile getValueAt(int position) {
-		
-		//TODO last worked here, last made the tablemodel for all media of the client work basically (see the first test to the gui)
-		/*
-		 * next to do: do the same for the liveticker and the customqueue
-		 * maybe add already some buttons to test the ability of adding new files via the server
-		 * 
-		 */
-		
 		return allMedia.get(allMediaList.get(position));
 	}
 
@@ -107,6 +127,16 @@ public class MediaModelClient {
 	public LinkedList<UUID> getCustomQueue() {
 		return customQueue;
 	}
-	
-	
+
+
+	public void setListener(UpdateAllMediaDataListener listener) {
+		this.allMediaListener = listener;
+	}
+
+
+	public void setCustomQueueListener(UpdateCustomQueueDataListener customQueueListener) {
+		this.customQueueListener = customQueueListener;
+	}
+
 }
+ 

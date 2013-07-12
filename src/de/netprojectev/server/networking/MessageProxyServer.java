@@ -8,6 +8,7 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 
+import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
@@ -15,6 +16,7 @@ import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.gui.DisplayFrame;
@@ -46,46 +48,46 @@ public class MessageProxyServer {
 	
 	public void receiveMessage(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException {
 		switch (msg.getOpCode()) {
-		case ADD_MEDIA_FILE:
+		case CTS_ADD_MEDIA_FILE:
 			addMediaFile(msg);
 			break;
-		case REMOVE_MEDIA_FILE:
+		case CTS_REMOVE_MEDIA_FILE:
 			removeMediaFile(msg);
 			break;
-		case SHOW_MEDIA_FILE:
+		case CTS_SHOW_MEDIA_FILE:
 			showMediaFile(msg);
 			break;
-		case SHOW_NEXT_MEDIA_FILE:
+		case CTS_SHOW_NEXT_MEDIA_FILE:
 			showNextMediaFile();
 			break;
-		case QUEUE_MEDIA_FILE:
+		case CTS_QUEUE_MEDIA_FILE:
 			queueMediaFile(msg);
 			break;
-		case ADD_LIVE_TICKER_ELEMENT:
+		case CTS_ADD_LIVE_TICKER_ELEMENT:
 			addLiveTickerElement(msg);
 			break;
-		case REMOVE_LIVE_TICKER_ELEMENT:
+		case CTS_REMOVE_LIVE_TICKER_ELEMENT:
 			removeLiveTickerElement(msg);
 			break;
-		case ADD_THEME:
+		case CTS_ADD_THEME:
 			addTheme(msg);
 			break;
-		case ADD_PRIORITY:
+		case CTS_ADD_PRIORITY:
 			addPriority(msg);
 			break;
-		case REMOVE_THEME:
+		case CTS_REMOVE_THEME:
 			removeTheme(msg);
 			break;
-		case REMOVE_PRIORITY:
+		case CTS_REMOVE_PRIORITY:
 			removePriority(msg);
 			break;
-		case TOGGLE_LIVE_TICKER_START:
+		case CTS_TOGGLE_LIVE_TICKER_START:
 			toggleLiveTickerStart();
 			break;
-		case TOGGLE_AUTO_MODE:
+		case CTS_TOGGLE_AUTO_MODE:
 			toggleAutoMode();
 			break;
-		case TOGGLE_FULLSCREEN:
+		case CTS_TOGGLE_FULLSCREEN:
 			toggleFullScreen();
 			break;
 		default:
@@ -176,6 +178,7 @@ public class MessageProxyServer {
 		ServerMediaFile fileToAdd = (ServerMediaFile) msg.getData();
 		mediaModel.addMediaFile(fileToAdd);
 		
+		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(fileToAdd)));
 	}
 	
 	private void toggleFullScreen() {

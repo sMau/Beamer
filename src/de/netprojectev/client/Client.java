@@ -45,14 +45,16 @@ public class Client {
 		
 	}
 	
-	public boolean connect() {
+	public ClientMessageProxy connect() {
 		factory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 		ClientBootstrap bootstrap = new ClientBootstrap(factory);
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new ClientMessageHandler(proxy), new ObjectEncoder());
+				
+				//TODO maybe adjust the size to somethin useful, also in the server class
+				return Channels.pipeline(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)), new ClientMessageHandler(proxy), new ObjectEncoder());
 			}
 		});
 		
@@ -66,20 +68,21 @@ public class Client {
 			log.info("Client successfully connected to " + host + ":" + port);
 			
 			// TODO use awaitUnint. with timeout and react
-			proxy.sendMessageToServer(new Message(OpCode.LOGIN_REQUEST, login)).awaitUninterruptibly();
+			proxy.sendMessageToServer(new Message(OpCode.CTS_LOGIN_REQUEST, login)).awaitUninterruptibly();
 			log.info("Login request sent to server");
-			return true;
+			
 		} else {
 			log.warn("Connection failed. Reason: ", connectFuture.getCause());
 			connectFuture.getChannel().getCloseFuture().awaitUninterruptibly();
 			factory.releaseExternalResources();
-			return false;
+			
 		}
+		return proxy;
 	}
 
 	public void disconnect() {
 		log.info("Client disconnecting");
-		proxy.sendMessageToServer(new Message(OpCode.DISCONNECT)).awaitUninterruptibly();
+		proxy.sendMessageToServer(new Message(OpCode.CTS_DISCONNECT)).awaitUninterruptibly();
 		proxy.getChannelToServer().close().awaitUninterruptibly();
 		factory.releaseExternalResources();
 		log.info("Disconnecting complete");
@@ -96,6 +99,10 @@ public class Client {
 	public void loginDenied(String reason) {
 		//TODO
 		
+	}
+
+	public boolean isLoginSuccess() {
+		return loginSuccess;
 	}
 	
 

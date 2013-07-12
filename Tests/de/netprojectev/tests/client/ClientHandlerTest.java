@@ -34,10 +34,10 @@ public class ClientHandlerTest {
 	
 	@Test
 	public void testReceiveMessage() {
-		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media1));
-		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_MEDIA_FILE, media2));
-		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt123));
-		client.getProxy().sendMessageToServer(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT, elt456));
+		client.getProxy().sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1));
+		client.getProxy().sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2));
+		client.getProxy().sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt123));
+		client.getProxy().sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt456));
 		//TODO
 	}
 	

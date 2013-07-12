@@ -1,7 +1,6 @@
-package de.netprojectev.client.gui.main;
+package de.netprojectev.client.gui.tablemodels;
 
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.AbstractTableModel;
 
 import org.apache.logging.log4j.Logger;
 
@@ -9,7 +8,16 @@ import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.misc.LoggerBuilder;
 
-public class AllMediaTableModel implements TableModel {
+public class AllMediaTableModel extends AbstractTableModel {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1263313149575878071L;
+
+	public interface UpdateAllMediaDataListener {
+		public void update();
+	}
 
 	private static final Logger log = LoggerBuilder.createLogger(AllMediaTableModel.class);
 
@@ -18,6 +26,29 @@ public class AllMediaTableModel implements TableModel {
 
 	public AllMediaTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
+		this.mediaModel.setListener(new UpdateAllMediaDataListener() {
+
+			@Override
+			public void update() {
+				updateTableData();
+
+			}
+
+		});
+	}
+
+	/**
+	 * Updating the table View to the current Data Changes on the Model. Uses
+	 * invokeLater for clean and thread-save event handling.
+	 */
+	private void updateTableData() {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+
+			public void run() {
+				fireTableDataChanged();
+			}
+		});
+
 	}
 
 	@Override
@@ -64,24 +95,6 @@ public class AllMediaTableModel implements TableModel {
 			}
 
 		}
-
-	}
-
-	@Override
-	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
 
 	}
 

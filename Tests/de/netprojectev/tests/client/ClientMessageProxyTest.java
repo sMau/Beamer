@@ -42,9 +42,9 @@ public class ClientMessageProxyTest {
 	
 	@Test
 	public void testReceiveMessage1() throws UnkownMessageException, MediaDoesNotExsistException {
-		client.getProxy().receiveMessage(new Message(OpCode.ADD_MEDIA_FILE_ACK, clmedia1));
+		client.getProxy().receiveMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, clmedia1));
 		assertEquals(clmedia1, client.getProxy().getMediaModel().getMediaFileById(media1.getId()));
-		client.getProxy().receiveMessage(new Message(OpCode.ADD_MEDIA_FILE_ACK, clmedia2));
+		client.getProxy().receiveMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, clmedia2));
 		assertEquals(clmedia1, client.getProxy().getMediaModel().getMediaFileById(media1.getId()));
 		assertEquals(clmedia2, client.getProxy().getMediaModel().getMediaFileById(media2.getId()));
 	}
@@ -52,9 +52,9 @@ public class ClientMessageProxyTest {
 	@Test
 	public void testReceiveMessage2() throws UnkownMessageException, MediaDoesNotExsistException {
 		
-		client.getProxy().receiveMessage(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT_ACK, clelt1));
+		client.getProxy().receiveMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, clelt1));
 		assertEquals(clelt1, client.getProxy().getTickerModel().getElementByID(elt123.getId()));
-		client.getProxy().receiveMessage(new Message(OpCode.ADD_LIVE_TICKER_ELEMENT_ACK, clelt2));
+		client.getProxy().receiveMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, clelt2));
 		assertEquals(clelt1, client.getProxy().getTickerModel().getElementByID(elt123.getId()));
 		assertEquals(clelt2, client.getProxy().getTickerModel().getElementByID(elt456.getId()));
 	}

@@ -19,12 +19,13 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 	public MessageHandlerServer(MessageProxyServer proxy) {
 		super();
 		this.proxy = proxy;
+		
 	}
 
 	@Override
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		Message received = (Message) e.getMessage();
-		if(received.getOpCode().equals(OpCode.DISCONNECT)) {
+		if(received.getOpCode().equals(OpCode.CTS_DISCONNECT)) {
 			proxy.clientDisconnected(e.getChannel());
 		} else {
 			proxy.receiveMessage(received);

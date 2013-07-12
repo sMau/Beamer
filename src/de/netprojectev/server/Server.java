@@ -45,7 +45,7 @@ public class Server {
 			
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
-				return Channels.pipeline(new ObjectDecoder(ClassResolvers.weakCachingResolver(null)), new AuthHandlerServer(proxy), new MessageHandlerServer(proxy), new ObjectEncoder());
+				return Channels.pipeline(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)), new AuthHandlerServer(proxy), new MessageHandlerServer(proxy), new ObjectEncoder());
 			
 			}
 		});
@@ -71,7 +71,7 @@ public class Server {
 
 	public void shutdownServer() {
 		log.info("Starting server shutdown, informing clients.");
-		proxy.broadcastMessage(new Message(OpCode.SERVER_SHUTDOWN)).awaitUninterruptibly();
+		proxy.broadcastMessage(new Message(OpCode.STC_SERVER_SHUTDOWN)).awaitUninterruptibly();
 		proxy.getAllClients().close().awaitUninterruptibly();
 		factory.releaseExternalResources();
 		try {

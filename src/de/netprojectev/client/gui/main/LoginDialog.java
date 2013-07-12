@@ -14,6 +14,9 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import de.netprojectev.client.Client;
+import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.client.model.TickerModelClient;
+import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.networking.LoginData;
 
 /**
@@ -23,6 +26,10 @@ import de.netprojectev.networking.LoginData;
 public class LoginDialog extends javax.swing.JDialog {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6295330451527398449L;
+	/**
      * A return status code - returned if Cancel button has been pressed
      */
     public static final int RET_CANCEL = 0;
@@ -60,16 +67,45 @@ public class LoginDialog extends javax.swing.JDialog {
 
     private void loginButtonClicked() {
     	//TODO check for correctness in entered texts
-
+    	//TODO show progress dialog while login add a timeout and react appropriate to login dnied
+    	
         String alias = tfAlias.getText();
         String ip = tfServerIP.getText();
         String port = tfPort.getText();
         String pw = tfServerPW.getText();
-        (new Client(ip, Integer.parseInt(port), new LoginData(alias, pw))).connect();
+        final Client client = new Client(ip, Integer.parseInt(port), new LoginData(alias, pw));
+        
+        final ClientMessageProxy proxy = client.connect();
+		
+		final MediaModelClient mediaModel = proxy.getMediaModel();
+		final TickerModelClient tickerModel = proxy.getTickerModel();
 
-        /*
-         * Next Step: open the mainframe after login dialog and program the mainframe -> media lists queue etc
-         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+            	 MainClientGUIWindow mainGUI = new MainClientGUIWindow(mediaModel, tickerModel, proxy);
+            	 
+            	 mainGUI.setVisible(true);
+            }
+        });
         
     }
     

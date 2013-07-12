@@ -10,7 +10,6 @@ import org.junit.Test;
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.model.TickerModelClient;
-import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.server.datastructures.ServerTickerElement;
