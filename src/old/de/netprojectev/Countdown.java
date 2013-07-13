@@ -11,6 +11,7 @@ import javax.swing.Timer;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.gui.DisplayMainComponent;
 
 /**

@@ -10,7 +10,6 @@ import old.de.netprojectev.client.gui.manager.ManagerFrame;
 import old.de.netprojectev.client.gui.preferences.PreferencesFrame;
 import old.de.netprojectev.client.gui.preferences.PriorityListModel;
 import old.de.netprojectev.client.gui.preferences.ThemeListModel;
-
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;

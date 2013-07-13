@@ -23,6 +23,8 @@ import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.ImageFile;
+import de.netprojectev.server.datastructures.ServerTickerElement;
+import de.netprojectev.server.datastructures.Themeslide;
 
 public class ClientMessageProxy {
 	
@@ -36,6 +38,12 @@ public class ClientMessageProxy {
 	
 	private Channel channelToServer;
 
+	//TODO last worked on liveticker adding via network -> should work now without problems.
+	/*
+	 * next to todo is make the other buttons work, so queuing and so, then map them to menus and add some icons
+	 * and netowrking all sync 
+	 */
+	
 	public ClientMessageProxy(Client client) {
 		mediaModel = new MediaModelClient(this);
 		tickerModel = new TickerModelClient(this);
@@ -49,16 +57,53 @@ public class ClientMessageProxy {
 		return channelToServer.write(msgToSend);
 	}
 	
-	public void sendAddFile(File file) {
+	public void sendAddImageFile(File file) {
 		String name = file.getName();
 		ImageIcon image = new ImageIcon(file.getAbsolutePath());
 		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, new ImageFile(name, image)));
 	}
 	
-	public void sendAddFiles(File[] files) {
+	public void sendAddImageFiles(File[] files) {
 		for(int i = 0; i < files.length; i++) {
-			sendAddFile(files[i]);
+			sendAddImageFile(files[i]);
 		}
+	}
+	
+	public void sendAddTickerElement(String text) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, new ServerTickerElement(text)));
+	}
+	
+	public void sendAddThemeSlide(Themeslide themeslide) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, themeslide));
+	}
+	
+	public void sendRemoveSelectedMedia(int[] selectedRowsAllMedia) {
+		for(int i = 0; i < selectedRowsAllMedia.length; i++) {
+			sendRemoveSelectedMediaSingel(selectedRowsAllMedia[i]);
+		}
+	}
+	
+	public void sendRemoveSelectedMediaSingel(int row) {
+		sendMessageToServer(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, mediaModel.getValueAt(row).getId()));
+	}
+
+	public void sendDequeueSelectedMedia(int[] selectedRowsCustomQueue) {
+		for(int i = 0; i < selectedRowsCustomQueue.length; i++) {
+			sendDequeueSelectedMediaSingle(selectedRowsCustomQueue[i]);
+		}
+	}
+	
+	public void sendDequeueSelectedMediaSingle(int row) {
+		sendMessageToServer(new Message(OpCode.CTS_DEQUEUE_MEDIAFILE, mediaModel.getCustomQueue().get(row)));
+	}
+
+	public void sendRemoveSelectedTickerElements(int[] selectedRowsLiveTicker) {
+		for(int i = 0; i < selectedRowsLiveTicker.length; i++) {
+			sendRemoveSelectedTickerElement(selectedRowsLiveTicker[i]);
+		}
+	}
+	public void sendRemoveSelectedTickerElement(int row) {
+		sendMessageToServer(new Message(OpCode.CTS_REMOVE_LIVE_TICKER_ELEMENT, tickerModel.getValueAt(row).getId()));
 	}
 
 
@@ -266,5 +311,6 @@ public class ClientMessageProxy {
 	public PreferencesModelClient getPrefs() {
 		return prefs;
 	}
+
 	
 }

@@ -1,7 +1,5 @@
 package de.netprojectev.misc;
 
-import de.netprojectev.client.StarterClient;
-import de.netprojectev.client.gui.main.LoginDialog;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -21,12 +19,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import old.de.netprojectev.ImageFile;
-
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
-
-import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.client.StarterClient;
 
 /**
  * Class to hold global methods not containing to a specific other class.

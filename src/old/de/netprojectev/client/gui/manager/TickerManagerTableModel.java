@@ -4,8 +4,6 @@ import java.util.LinkedList;
 
 import javax.swing.table.AbstractTableModel;
 
-import old.de.netprojectev.server.datastructures.liveticker.TickerTextElement;
-
 
 /**
  * This is the model for the LiveTicker table in the ManagerFrame.

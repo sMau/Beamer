@@ -11,7 +11,6 @@ import javax.swing.JComponent;
 
 import old.de.netprojectev.Countdown;
 
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.misc.LoggerBuilder;

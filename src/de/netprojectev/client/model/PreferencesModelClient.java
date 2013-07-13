@@ -16,6 +16,7 @@ public class PreferencesModelClient {
 
 	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
 	
+	
 	private final ClientMessageProxy proxy;
 	private final HashMap<UUID, Theme> themes;
 	private final HashMap<UUID, Priority> prios;
@@ -26,6 +27,7 @@ public class PreferencesModelClient {
 	
 	
 	public PreferencesModelClient(ClientMessageProxy proxy) {
+
 		this.proxy = proxy;
 		this.themes = new HashMap<>();
 		this.prios = new HashMap<>();

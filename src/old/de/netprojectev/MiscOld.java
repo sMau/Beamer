@@ -2,8 +2,7 @@ package old.de.netprojectev;
 
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
-import de.netprojectev.misc.LiveTicker;
-import de.netprojectev.misc.TickerTextElement;
+import de.netprojectev.server.datastructures.ServerMediaFile;
 
 public class MiscOld {
 	/**

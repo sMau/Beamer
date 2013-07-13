@@ -15,6 +15,7 @@ import de.netprojectev.misc.LoggerBuilder;
 public class TickerModelClient {
 	private static final Logger log = LoggerBuilder.createLogger(TickerModelClient.class);
 
+	
 	private final ClientMessageProxy proxy;
 	private final HashMap<UUID, ClientTickerElement> elements;
 	private final ArrayList<UUID> allElementsList;
@@ -22,6 +23,7 @@ public class TickerModelClient {
 	private UpdateTickerDataListener tickerDataListener;
 	
 	public TickerModelClient(ClientMessageProxy proxy) {
+		
 		this.proxy = proxy;
 		this.elements = new HashMap<>();
 		this.allElementsList = new ArrayList<>();

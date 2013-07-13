@@ -9,6 +9,7 @@ import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
@@ -134,18 +135,22 @@ public class MessageProxyServer {
 	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
 		UUID eltToRemove = (UUID) msg.getData();
 		tickerModel.removeTickerElement(eltToRemove);
+		
+		broadcastMessage(new Message(OpCode.STC_REMOVE_LIVE_TICKER_ELEMENT_ACK, eltToRemove));
 	}
 
 	private void addLiveTickerElement(Message msg) {
 		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData();
 		tickerModel.addTickerElement(eltToAdd);
 		//TODO implement the display part
-		
+		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(eltToAdd)));
 	}
 
 	private void queueMediaFile(Message msg) throws MediaDoesNotExsistException {
 		UUID toQueue = (UUID) msg.getData();
 		mediaModel.queue(toQueue);		
+		
+		broadcastMessage(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, toQueue));
 	}
 
 	private void showNextMediaFile() throws MediaDoesNotExsistException, MediaListsEmptyException {
@@ -172,6 +177,7 @@ public class MessageProxyServer {
 		UUID toRemove = (UUID) msg.getData();
 		mediaModel.removeMediaFile(toRemove);
 		
+		broadcastMessage(new Message(OpCode.STC_REMOVE_MEDIA_FILE_ACK, toRemove));
 	}
 
 	private void addMediaFile(Message msg) {

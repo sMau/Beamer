@@ -13,9 +13,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Properties;
-import java.util.Random;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -39,14 +37,13 @@ import javax.swing.text.StyledEditorKit;
 
 import old.de.netprojectev.MediaHandlerOld;
 import old.de.netprojectev.PreferencesModelOld;
-import old.de.netprojectev.ServerMediaFile;
 import old.de.netprojectev.Themeslide;
 import old.de.netprojectev.client.gui.dialogs.ColorPickerDialog;
-
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.server.datastructures.ServerMediaFile;
 
 
 /**

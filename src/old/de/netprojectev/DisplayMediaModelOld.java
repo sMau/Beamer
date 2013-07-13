@@ -9,7 +9,8 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.netprojectev.server.gui.DisplayFrame;
+import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.VideoFile;
 
 /**
  * The display handler contains the same files as the mediahandler. The order of the files can differ concerning the shuffle mode.

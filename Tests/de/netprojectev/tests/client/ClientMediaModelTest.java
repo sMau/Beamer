@@ -1,6 +1,6 @@
 package de.netprojectev.tests.client;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.util.UUID;
@@ -11,7 +11,6 @@ import org.junit.Test;
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.model.MediaModelClient;
-import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.server.datastructures.VideoFile;

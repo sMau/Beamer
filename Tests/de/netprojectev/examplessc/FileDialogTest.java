@@ -1,8 +1,12 @@
 package de.netprojectev.examplessc;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.FileDialog;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 /** @see http://stackoverflow.com/questions/2914733 */
 public class FileDialogTest {

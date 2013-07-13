@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.netprojectev.client.Client;
-import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;

@@ -4,13 +4,7 @@
  */
 package old.de.netprojectev.client.gui.dialogs;
 
-import javax.swing.SwingUtilities;
-
 import old.de.netprojectev.client.gui.manager.ManagerFrame;
-import old.de.netprojectev.client.gui.manager.TickerManagerTableModel;
-import old.de.netprojectev.server.datastructures.liveticker.LiveTicker;
-import old.de.netprojectev.server.datastructures.liveticker.TickerTextElement;
-
 import de.netprojectev.misc.Misc;
 
 /**

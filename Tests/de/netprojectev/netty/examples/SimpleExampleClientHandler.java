@@ -1,7 +1,5 @@
 package de.netprojectev.netty.examples;
 
-import java.util.Date;
-
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 import org.jboss.netty.channel.ChannelHandlerContext;

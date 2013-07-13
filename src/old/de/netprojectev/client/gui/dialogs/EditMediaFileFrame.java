@@ -7,11 +7,10 @@ package old.de.netprojectev.client.gui.dialogs;
 import javax.swing.SwingUtilities;
 
 import old.de.netprojectev.PreferencesModelOld;
-import old.de.netprojectev.ServerMediaFile;
 import old.de.netprojectev.client.gui.manager.FileManagerTableModel;
 import old.de.netprojectev.client.gui.manager.ManagerFrame;
-
 import de.netprojectev.misc.Misc;
+import de.netprojectev.server.datastructures.ServerMediaFile;
 
 
 /**

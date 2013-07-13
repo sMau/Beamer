@@ -12,11 +12,10 @@ import old.de.netprojectev.Countdown;
 import old.de.netprojectev.ImageFile;
 import old.de.netprojectev.MediaHandlerOld;
 import old.de.netprojectev.PreferencesModelOld;
-import old.de.netprojectev.ServerMediaFile;
 import old.de.netprojectev.Themeslide;
-import old.de.netprojectev.VideoFile;
-
 import de.netprojectev.misc.Constants;
+import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.VideoFile;
 
 /**
  * This is the model for the @see JTable in the Filemanager.

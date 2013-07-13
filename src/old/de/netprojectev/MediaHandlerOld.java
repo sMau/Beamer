@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 
 import old.de.netprojectev.client.gui.manager.FileManagerTableModel;
 import old.de.netprojectev.client.gui.manager.ManagerFrame;
-
 import de.netprojectev.misc.Misc;
+import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.gui.DisplayMainComponent;
 
 /**

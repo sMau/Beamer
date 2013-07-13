@@ -73,7 +73,8 @@ public class LoginDialog extends javax.swing.JDialog {
         String ip = tfServerIP.getText();
         String port = tfPort.getText();
         String pw = tfServerPW.getText();
-        final Client client = new Client(ip, Integer.parseInt(port), new LoginData(alias, pw));
+        Client client = new Client(ip, Integer.parseInt(port), new LoginData(alias, pw));
+	
         
         final ClientMessageProxy proxy = client.connect();
 		

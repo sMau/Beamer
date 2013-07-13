@@ -4,9 +4,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.netprojectev.misc.Misc;
+import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.gui.DisplayFrame;
-import de.netprojectev.server.model.MediaModelServer;
-import de.netprojectev.server.model.TickerModelServer;
 
 public class DisplayController {
 	

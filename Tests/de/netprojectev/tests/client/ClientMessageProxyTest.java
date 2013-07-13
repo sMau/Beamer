@@ -1,13 +1,11 @@
 package de.netprojectev.tests.client;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import com.sun.jmx.remote.internal.ClientListenerInfo;
 
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;

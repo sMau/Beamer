@@ -18,6 +18,7 @@ public class ClientGUITest {
 	/**
 	 * @param args
 	 * @throws MediaDoesNotExsistException
+	 * @throws InstancePolicyLeakedException 
 	 */
 	public static void main(String[] args) throws MediaDoesNotExsistException {
 		

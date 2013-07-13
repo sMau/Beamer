@@ -3,9 +3,6 @@ package old.de.netprojectev;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import old.de.netprojectev.server.datastructures.liveticker.LiveTicker;
-import old.de.netprojectev.server.datastructures.liveticker.TickerTextElement;
-
 import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
 
