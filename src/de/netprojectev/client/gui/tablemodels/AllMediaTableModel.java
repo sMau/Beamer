@@ -22,7 +22,7 @@ public class AllMediaTableModel extends AbstractTableModel {
 	private static final Logger log = LoggerBuilder.createLogger(AllMediaTableModel.class);
 
 	private final MediaModelClient mediaModel;
-	private final String[] columns = { "Name", "Priority", "Type" };
+	private final String[] columns = { "Queue", "Name", "Priority", "Type" };
 
 	public AllMediaTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
@@ -73,8 +73,11 @@ public class AllMediaTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		if(columnIndex == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -85,10 +88,12 @@ public class AllMediaTableModel extends AbstractTableModel {
 		} else {
 			switch (columnIndex) {
 			case 0:
-				return media.getName();
+				return "queue";
 			case 1:
-				return media.getPriority().toString();
+				return media.getName();
 			case 2:
+				return media.getPriority().toString();
+			case 3:
 				return media.getType();
 			default:
 				return "error loading data";

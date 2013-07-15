@@ -80,6 +80,9 @@
                       <Connection code="new AllMediaTableModel(mediaModel)" type="code"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtAllMedia.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer());&#xa;jtAllMedia.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int row) {&#xa;        queueButtonClicked(row);&#xa;    }&#xa;}));"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -120,6 +123,9 @@
                       <Connection code="new CustomQueueTableModel(mediaModel)" type="code"/>
                     </Property>
                   </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtCustomQueue.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer());&#xa;jtCustomQueue.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int row) {&#xa;        deQueueButtonClicked(row);&#xa;    }&#xa;}));"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>

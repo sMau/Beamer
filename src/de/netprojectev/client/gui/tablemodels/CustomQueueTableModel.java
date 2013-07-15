@@ -1,6 +1,5 @@
 package de.netprojectev.client.gui.tablemodels;
 
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
@@ -19,7 +18,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 	}
 	
 	private final MediaModelClient mediaModel;
-	private final String[] columns = { "Name", "Priority", "Type" };
+	private final String[] columns = { "Dequeue", "Name", "Priority", "Type" };
 	
 	public CustomQueueTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
@@ -68,8 +67,11 @@ public class CustomQueueTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-		return false;
+		if(columnIndex == 0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
@@ -86,34 +88,18 @@ public class CustomQueueTableModel extends AbstractTableModel {
 		} else {
 			switch (columnIndex) {
 			case 0:
-				return media.getName();
+				return "dequeue";
 			case 1:
-				return media.getPriority().toString();
+				return media.getName();
 			case 2:
+				return media.getPriority().toString();
+			case 3:
 				return media.getType();
 			default:
 				return "error loading data";
 			}
 
 		}
-	}
-
-	@Override
-	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void addTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void removeTableModelListener(TableModelListener l) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

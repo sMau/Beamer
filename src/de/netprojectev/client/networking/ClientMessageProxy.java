@@ -79,24 +79,34 @@ public class ClientMessageProxy {
 	
 	public void sendRemoveSelectedMedia(int[] selectedRowsAllMedia) {
 		for(int i = 0; i < selectedRowsAllMedia.length; i++) {
-			sendRemoveSelectedMediaSingel(selectedRowsAllMedia[i]);
+			sendRemoveSelectedMedia(selectedRowsAllMedia[i]);
 		}
 	}
 	
-	public void sendRemoveSelectedMediaSingel(int row) {
+	public void sendRemoveSelectedMedia(int row) {
 		sendMessageToServer(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, mediaModel.getValueAt(row).getId()));
 	}
 
 	public void sendDequeueSelectedMedia(int[] selectedRowsCustomQueue) {
 		for(int i = 0; i < selectedRowsCustomQueue.length; i++) {
-			sendDequeueSelectedMediaSingle(selectedRowsCustomQueue[i]);
+			sendDequeueSelectedMedia(selectedRowsCustomQueue[i]);
 		}
 	}
 	
-	public void sendDequeueSelectedMediaSingle(int row) {
+	public void sendDequeueSelectedMedia(int row) {
 		sendMessageToServer(new Message(OpCode.CTS_DEQUEUE_MEDIAFILE, mediaModel.getCustomQueue().get(row)));
 	}
-
+	
+	public void sendQueueSelectedMedia(int[] selectedRows) {
+		for(int i = 0; i < selectedRows.length; i++) {
+			sendQueueSelectedMedia(selectedRows[i]);
+		}
+	}
+	
+	public void sendQueueSelectedMedia(int selectedRow) {
+		sendMessageToServer(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, mediaModel.getValueAt(selectedRow).getId()));
+	}
+	
 	public void sendRemoveSelectedTickerElements(int[] selectedRowsLiveTicker) {
 		for(int i = 0; i < selectedRowsLiveTicker.length; i++) {
 			sendRemoveSelectedTickerElement(selectedRowsLiveTicker[i]);
@@ -105,7 +115,6 @@ public class ClientMessageProxy {
 	public void sendRemoveSelectedTickerElement(int row) {
 		sendMessageToServer(new Message(OpCode.CTS_REMOVE_LIVE_TICKER_ELEMENT, tickerModel.getValueAt(row).getId()));
 	}
-
 
 	public void receiveMessage(Message msg) throws UnkownMessageException, MediaDoesNotExsistException {
 		log.debug("Receiving message: " + msg.toString());
