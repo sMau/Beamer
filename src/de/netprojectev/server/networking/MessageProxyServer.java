@@ -14,8 +14,10 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
+import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.ServerMediaFile;
@@ -46,8 +48,8 @@ public class MessageProxyServer {
 		this.prefsModel = new PreferencesModelServer(this);
 		this.frame = new DisplayFrame(this); 
 	}
-	
-	public void receiveMessage(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException {
+	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
+	public void receiveMessage(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_MEDIA_FILE:
 			addMediaFile(msg);
@@ -91,12 +93,15 @@ public class MessageProxyServer {
 		case CTS_TOGGLE_FULLSCREEN:
 			toggleFullScreen();
 			break;
+		case CTS_DEQUEUE_MEDIAFILE:
+			dequeueMediaFile(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 	}
-	
+
 	public ChannelGroupFuture broadcastMessage(Message msg) {
 		log.debug("Broadcasting message: " + msg);
 		return allClients.write(msg);
@@ -110,6 +115,14 @@ public class MessageProxyServer {
 	public void clientDisconnected(Channel chan) {
 		log.info("Client disconnected.");
 		allClients.remove(chan);
+	}
+	
+	private void dequeueMediaFile(Message msg) throws MediaDoesNotExsistException, OutOfSyncException {
+		DequeueData mediaToDequeue = (DequeueData) msg.getData();
+		mediaModel.dequeue(mediaToDequeue.getId(), mediaToDequeue.getRow());
+		
+		broadcastMessage(new Message(OpCode.STC_DEQUEUE_MEDIAFILE_ACK, mediaToDequeue));
+
 	}
 	
 	private void removePriority(Message msg) {

@@ -18,8 +18,10 @@ import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.ImageFile;
@@ -38,10 +40,9 @@ public class ClientMessageProxy {
 	
 	private Channel channelToServer;
 
-	//TODO last worked on liveticker adding via network -> should work now without problems.
+	//TODO last made queuing work,
 	/*
-	 * next to todo is make the other buttons work, so queuing and so, then map them to menus and add some icons
-	 * and netowrking all sync 
+	 * next make dequeing work, and map to context menus, make all sync work and so on
 	 */
 	
 	public ClientMessageProxy(Client client) {
@@ -94,7 +95,7 @@ public class ClientMessageProxy {
 	}
 	
 	public void sendDequeueSelectedMedia(int row) {
-		sendMessageToServer(new Message(OpCode.CTS_DEQUEUE_MEDIAFILE, mediaModel.getCustomQueue().get(row)));
+		sendMessageToServer(new Message(OpCode.CTS_DEQUEUE_MEDIAFILE, new DequeueData(row, mediaModel.getCustomQueue().get(row))));
 	}
 	
 	public void sendQueueSelectedMedia(int[] selectedRows) {
@@ -112,11 +113,12 @@ public class ClientMessageProxy {
 			sendRemoveSelectedTickerElement(selectedRowsLiveTicker[i]);
 		}
 	}
+	
 	public void sendRemoveSelectedTickerElement(int row) {
 		sendMessageToServer(new Message(OpCode.CTS_REMOVE_LIVE_TICKER_ELEMENT, tickerModel.getValueAt(row).getId()));
 	}
 
-	public void receiveMessage(Message msg) throws UnkownMessageException, MediaDoesNotExsistException {
+	public void receiveMessage(Message msg) throws UnkownMessageException, MediaDoesNotExsistException, OutOfSyncException {
 		log.debug("Receiving message: " + msg.toString());
 		switch (msg.getOpCode()) {
 		case STC_ADD_MEDIA_FILE_ACK:
@@ -158,6 +160,9 @@ public class ClientMessageProxy {
 		case STC_QUEUE_MEDIA_FILE_ACK:
 			mediaFileQueued(msg);
 			break;
+		case STC_DEQUEUE_MEDIAFILE_ACK:
+			mediaFileDequeued(msg);
+			break;
 		case STC_SHOW_MEDIA_FILE_ACK:
 			mediaFileShowing(msg);
 			break;
@@ -178,6 +183,12 @@ public class ClientMessageProxy {
 			break;
 		}
 		
+		
+	}
+
+	private void mediaFileDequeued(Message msg) throws MediaDoesNotExsistException, OutOfSyncException {
+		DequeueData toDequeue = (DequeueData) msg.getData();
+		mediaModel.dequeueMediaFile(toDequeue.getRow(), toDequeue.getId());
 		
 	}
 

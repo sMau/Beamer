@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
+import de.netprojectev.exceptions.MediaNotInQueueException;
+import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.networking.MessageProxyServer;
@@ -75,6 +77,20 @@ public class MediaModelServer {
 		testIfMediaFileExists(id);
 		log.debug("Queuing media file: " + id);
 		mediaPrivateQueue.addLast(id);
+	}
+	
+	public void dequeue(UUID id, int row) throws MediaDoesNotExsistException, OutOfSyncException {
+		testIfMediaFileExists(id);
+		if(!mediaPrivateQueue.contains(id)) {
+			throw new MediaNotInQueueException("Media not in private queue.");
+		}
+		
+		if(mediaPrivateQueue.get(row).equals(id)) {
+			mediaPrivateQueue.remove(row);
+		} else {
+			throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
+		}
+		
 	}
 	
 	public ServerMediaFile getNext() throws MediaDoesNotExsistException, MediaListsEmptyException {

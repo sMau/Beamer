@@ -12,6 +12,8 @@ import de.netprojectev.client.gui.tablemodels.AllMediaTableModel.UpdateAllMediaD
 import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel.UpdateCustomQueueDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.MediaNotInQueueException;
+import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.misc.LoggerBuilder;
 
 public class MediaModelClient {
@@ -44,6 +46,7 @@ public class MediaModelClient {
 		
 		log.debug("Adding media file: " + fileToAdd);
 		updateAllMediaTable();
+		updateCustomQueueTable();
 		return fileToAdd.getId();
 	}
 
@@ -74,11 +77,11 @@ public class MediaModelClient {
 		allMediaList.remove(toRemove);
 		
 		updateAllMediaTable();
+		updateCustomQueueTable();
 	}
 	
 	public ClientMediaFile getMediaFileById(UUID id) throws MediaDoesNotExsistException {
 		checkIfMediaExists(id);
-		log.debug("Getting media file: " + id);
 		return allMedia.get(id);
 	}
 	
@@ -90,6 +93,18 @@ public class MediaModelClient {
 		updateCustomQueueTable();
 	}
 
+	public void dequeueMediaFile(int row, UUID id) throws MediaDoesNotExsistException, OutOfSyncException {
+		checkIfMediaExists(id);
+		if(!customQueue.contains(id)) {
+			throw new MediaNotInQueueException("Media not in private queue.");
+		}
+		if(customQueue.get(row).equals(id)) {
+			customQueue.remove(row);
+			updateCustomQueueTable();
+		} else {
+			throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
+		}
+	}
 
 	private void updateCustomQueueTable() {
 		
