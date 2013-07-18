@@ -1,6 +1,8 @@
 package de.netprojectev.client.networking;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import javax.swing.ImageIcon;
@@ -79,7 +81,8 @@ public class ClientMessageProxy {
 	}
 	
 	public void sendRemoveSelectedMedia(int[] selectedRowsAllMedia) {
-		for(int i = 0; i < selectedRowsAllMedia.length; i++) {
+		Arrays.sort(selectedRowsAllMedia);
+		for(int i = selectedRowsAllMedia.length - 1; i >= 0; i--) {
 			sendRemoveSelectedMedia(selectedRowsAllMedia[i]);
 		}
 	}
@@ -89,7 +92,8 @@ public class ClientMessageProxy {
 	}
 
 	public void sendDequeueSelectedMedia(int[] selectedRowsCustomQueue) {
-		for(int i = 0; i < selectedRowsCustomQueue.length; i++) {
+		Arrays.sort(selectedRowsCustomQueue);
+		for(int i = selectedRowsCustomQueue.length - 1; i >= 0; i--) {
 			sendDequeueSelectedMedia(selectedRowsCustomQueue[i]);
 		}
 	}
@@ -108,8 +112,9 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, mediaModel.getValueAt(selectedRow).getId()));
 	}
 	
-	public void sendRemoveSelectedTickerElements(int[] selectedRowsLiveTicker) {
-		for(int i = 0; i < selectedRowsLiveTicker.length; i++) {
+	public void sendRemoveSelectedTickerElements(int[] selectedRowsLiveTicker) {		
+		Arrays.sort(selectedRowsLiveTicker);
+		for(int i = selectedRowsLiveTicker.length - 1; i >= 0; i--) {
 			sendRemoveSelectedTickerElement(selectedRowsLiveTicker[i]);
 		}
 	}

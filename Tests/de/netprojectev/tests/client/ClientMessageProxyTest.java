@@ -11,6 +11,7 @@ import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
@@ -39,7 +40,7 @@ public class ClientMessageProxyTest {
 	}
 	
 	@Test
-	public void testReceiveMessage1() throws UnkownMessageException, MediaDoesNotExsistException {
+	public void testReceiveMessage1() throws UnkownMessageException, MediaDoesNotExsistException, OutOfSyncException {
 		client.getProxy().receiveMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, clmedia1));
 		assertEquals(clmedia1, client.getProxy().getMediaModel().getMediaFileById(media1.getId()));
 		client.getProxy().receiveMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, clmedia2));
@@ -48,7 +49,7 @@ public class ClientMessageProxyTest {
 	}
 	
 	@Test
-	public void testReceiveMessage2() throws UnkownMessageException, MediaDoesNotExsistException {
+	public void testReceiveMessage2() throws UnkownMessageException, MediaDoesNotExsistException, OutOfSyncException {
 		
 		client.getProxy().receiveMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, clelt1));
 		assertEquals(clelt1, client.getProxy().getTickerModel().getElementByID(elt123.getId()));

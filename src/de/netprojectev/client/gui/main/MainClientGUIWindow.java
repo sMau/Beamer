@@ -6,10 +6,10 @@ package de.netprojectev.client.gui.main;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.gui.main.CreateTickerElementDialog.DialogClosedListener;
 import de.netprojectev.client.gui.tablemodels.AllMediaTableModel;
 import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel;
@@ -201,7 +201,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
                     .addComponent(jbAddTickerElement)
                     .addComponent(jbRemoveFromList)
                     .addComponent(jbEdit))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -237,7 +237,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_jbAddFileActionPerformed
 
 	private void jbAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbAddThemeslideActionPerformed
-		// TODO add your handling code here:
+		JOptionPane.showMessageDialog(this, "Themeslide Creator Placeholder");
+		//TODO add the themeslidecreator
 	}// GEN-LAST:event_jbAddThemeslideActionPerformed
 
 	private void jbAddTickerElementActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbAddTickerElementActionPerformed

@@ -204,7 +204,7 @@
                       <Component id="jbRemoveFromList" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="61" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
