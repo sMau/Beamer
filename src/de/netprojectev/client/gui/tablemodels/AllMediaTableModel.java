@@ -1,5 +1,6 @@
 package de.netprojectev.client.gui.tablemodels;
 
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import org.apache.logging.log4j.Logger;
@@ -42,10 +43,12 @@ public class AllMediaTableModel extends AbstractTableModel {
 	 * invokeLater for clean and thread-save event handling.
 	 */
 	private void updateTableData() {
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		
+		SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
 				fireTableDataChanged();
+
 			}
 		});
 
@@ -53,6 +56,7 @@ public class AllMediaTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
+		
 		return mediaModel.getAllMedia().size();
 	}
 

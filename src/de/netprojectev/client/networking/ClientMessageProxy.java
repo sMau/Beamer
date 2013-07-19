@@ -2,7 +2,6 @@ package de.netprojectev.client.networking;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.UUID;
 
 import javax.swing.ImageIcon;
@@ -42,9 +41,11 @@ public class ClientMessageProxy {
 	
 	private Channel channelToServer;
 
-	//TODO last made queuing work,
+	//TODO last worked here
+	
 	/*
-	 * next make dequeing work, and map to context menus, make all sync work and so on
+	 * last made dequeuing work, but removing / dequeue media sometimes raises exception in getValueAt Method
+	 * and map to context menus, make all sync work and so on
 	 */
 	
 	public ClientMessageProxy(Client client) {
@@ -282,6 +283,7 @@ public class ClientMessageProxy {
 	}
 
 	private void mediaFileRemoved(Message msg) throws MediaDoesNotExsistException {
+
 		UUID toRemove = (UUID) msg.getData();
 		mediaModel.removeMediaFile(toRemove);
 	}

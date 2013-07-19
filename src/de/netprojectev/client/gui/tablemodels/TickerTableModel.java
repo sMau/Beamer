@@ -1,6 +1,6 @@
 package de.netprojectev.client.gui.tablemodels;
 
-import javax.swing.event.TableModelListener;
+import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import de.netprojectev.client.datastructures.ClientTickerElement;
@@ -37,7 +37,7 @@ public class TickerTableModel extends AbstractTableModel {
 	 * invokeLater for clean and thread-save event handling.
 	 */
 	private void updateTableData() {
-		java.awt.EventQueue.invokeLater(new Runnable() {
+		SwingUtilities.invokeLater(new Runnable() {
 
 			public void run() {
 				fireTableDataChanged();

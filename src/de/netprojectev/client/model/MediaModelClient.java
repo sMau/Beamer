@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.UUID;
 
+import javax.swing.SwingUtilities;
+
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
@@ -65,17 +67,31 @@ public class MediaModelClient {
 		return addMediaFile(replace);
 	}
 	
-	public void removeMediaFile(UUID toRemove) throws MediaDoesNotExsistException {
-		checkIfMediaExists(toRemove);
-		log.debug("Removing media file: " + toRemove);
+	public void removeMediaFile(final UUID toRemove) throws MediaDoesNotExsistException {
 		
-		while(customQueue.contains(toRemove)) {
-			customQueue.remove(toRemove);
-		}
-		
-		allMedia.remove(toRemove);
-		allMediaList.remove(toRemove);
-		
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				
+				try {
+					checkIfMediaExists(toRemove);
+				} catch (MediaDoesNotExsistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				log.debug("Removing media file: " + toRemove);
+				
+				while(customQueue.contains(toRemove)) {
+					customQueue.remove(toRemove);
+				}
+				
+				allMedia.remove(toRemove);
+				allMediaList.remove(toRemove);
+				
+			}
+		});
+
 		updateAllMediaTable();
 		updateCustomQueueTable();
 	}
@@ -93,17 +109,39 @@ public class MediaModelClient {
 		updateCustomQueueTable();
 	}
 
-	public void dequeueMediaFile(int row, UUID id) throws MediaDoesNotExsistException, OutOfSyncException {
-		checkIfMediaExists(id);
-		if(!customQueue.contains(id)) {
-			throw new MediaNotInQueueException("Media not in private queue.");
-		}
-		if(customQueue.get(row).equals(id)) {
-			customQueue.remove(row);
-			updateCustomQueueTable();
-		} else {
-			throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
-		}
+	public void dequeueMediaFile(final int row, final UUID id) throws MediaDoesNotExsistException, OutOfSyncException {
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					checkIfMediaExists(id);
+				} catch (MediaDoesNotExsistException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if(!customQueue.contains(id)) {
+					try {
+						throw new MediaNotInQueueException("Media not in private queue.");
+					} catch (MediaNotInQueueException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				if(customQueue.get(row).equals(id)) {
+					customQueue.remove(row);
+				} else {
+					try {
+						throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
+					} catch (OutOfSyncException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		updateCustomQueueTable();
 	}
 
 	private void updateCustomQueueTable() {
@@ -137,7 +175,7 @@ public class MediaModelClient {
 	public HashMap<UUID, ClientMediaFile> getAllMedia() {
 		return allMedia;
 	}
-
+	
 
 	public LinkedList<UUID> getCustomQueue() {
 		return customQueue;

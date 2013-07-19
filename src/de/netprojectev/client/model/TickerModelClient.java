@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import javax.swing.SwingUtilities;
+
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientTickerElement;
@@ -46,12 +48,24 @@ public class TickerModelClient {
 		return addTickerElement(e);
 	}
 	
-	public void removeTickerElement(UUID id) throws MediaDoesNotExsistException {
-		log.debug("Removing ticker element: " + id);
-		checkIfElementExists(id);
-		elements.remove(id);
-		allElementsList.remove(id);
+	public void removeTickerElement(final UUID id) throws MediaDoesNotExsistException {
 		
+		SwingUtilities.invokeLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				log.debug("Removing ticker element: " + id);
+				try {
+					checkIfElementExists(id);
+				} catch (MediaDoesNotExsistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				elements.remove(id);
+				allElementsList.remove(id);
+			}
+		});
+
 		updateTickerTable();
 	}
 
