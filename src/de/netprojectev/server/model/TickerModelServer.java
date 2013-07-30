@@ -16,7 +16,7 @@ public class TickerModelServer {
 	private static final Logger log = LoggerBuilder.createLogger(TickerModelServer.class);
 
 	private final MessageProxyServer proxy;
-	private HashMap<UUID, ServerTickerElement> elements;
+	private final HashMap<UUID, ServerTickerElement> elements;
 	private String completeTickerText;
 	
 	public TickerModelServer(MessageProxyServer proxy) {
@@ -60,6 +60,10 @@ public class TickerModelServer {
 		if(elements.get(id) == null) {
 			throw new MediaDoesNotExsistException("Ticker element does not exist. Query id: " + id);
 		}
+	}
+
+	public HashMap<UUID, ServerTickerElement> getElements() {
+		return elements;
 	}
 
 }

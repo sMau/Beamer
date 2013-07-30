@@ -40,6 +40,7 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 			if(login.getKey().equals(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_PW))) {
 				proxy.clientConnected(e.getChannel());
 				authSuccessful = true;
+				e.getChannel().write(new Message(OpCode.STC_CONNECTION_ACK));
 				ctx.getPipeline().remove(this);
 				log.info("Client connected successfully. Alias: " + login.getAlias());
 			} else {

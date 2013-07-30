@@ -1,7 +1,10 @@
 package de.netprojectev.server.networking;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.Channel;
@@ -49,7 +52,7 @@ public class MessageProxyServer {
 		this.frame = new DisplayFrame(this); 
 	}
 	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
-	public void receiveMessage(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
+	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_MEDIA_FILE:
 			addMediaFile(msg);
@@ -96,11 +99,15 @@ public class MessageProxyServer {
 		case CTS_DEQUEUE_MEDIAFILE:
 			dequeueMediaFile(msg);
 			break;
+		case CTS_REQUEST_FULL_SYNC:
+			fullSyncRequested(msg, channel);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 	}
+
 
 	public ChannelGroupFuture broadcastMessage(Message msg) {
 		log.debug("Broadcasting message: " + msg);
@@ -110,6 +117,8 @@ public class MessageProxyServer {
 	public void clientConnected(Channel chan) {
 		log.info("Client connected.");
 		allClients.add(chan);
+		
+		
 	}
 	
 	public void clientDisconnected(Channel chan) {
@@ -123,6 +132,25 @@ public class MessageProxyServer {
 		
 		broadcastMessage(new Message(OpCode.STC_DEQUEUE_MEDIAFILE_ACK, mediaToDequeue));
 
+	}
+	
+	private void fullSyncRequested(Message msg, Channel channel) {
+		HashMap<UUID, ServerMediaFile> allMedia = mediaModel.getAllMediaFiles();
+		LinkedList<UUID> customQueue = mediaModel.getMediaPrivateQueue();
+		HashMap<UUID, ServerTickerElement> tickerElements = tickerModel.getElements();
+		channel.write(new Message(OpCode.STC_FULL_SYNC_START));
+		for(UUID id : allMedia.keySet()) {
+			channel.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
+		}
+		
+		for(UUID id : customQueue) {
+			channel.write(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
+		}
+		
+		for(UUID id : tickerElements.keySet()) {
+			channel.write(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(tickerElements.get(id))));
+		}
+		channel.write(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
 	
 	private void removePriority(Message msg) {

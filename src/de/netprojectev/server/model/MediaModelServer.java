@@ -118,5 +118,13 @@ public class MediaModelServer {
 			throw new MediaDoesNotExsistException("The requested media file does not exist. Query id: " + id);
 		}
 	}
+
+	public HashMap<UUID, ServerMediaFile> getAllMediaFiles() {
+		return allMediaFiles;
+	}
+
+	public LinkedList<UUID> getMediaPrivateQueue() {
+		return mediaPrivateQueue;
+	}
 	
 }

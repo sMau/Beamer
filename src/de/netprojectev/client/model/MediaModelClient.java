@@ -3,6 +3,7 @@ package de.netprojectev.client.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.swing.SwingUtilities;
@@ -41,7 +42,7 @@ public class MediaModelClient {
 	
 	public UUID addMediaFile(ClientMediaFile fileToAdd) {
 		allMedia.put(fileToAdd.getId(), fileToAdd);
-		
+
 		if(!allMediaList.contains(fileToAdd.getId())) {
 			allMediaList.add(fileToAdd.getId());
 		}

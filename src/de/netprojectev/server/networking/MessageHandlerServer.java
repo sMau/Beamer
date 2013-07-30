@@ -28,7 +28,7 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 		if(received.getOpCode().equals(OpCode.CTS_DISCONNECT)) {
 			proxy.clientDisconnected(e.getChannel());
 		} else {
-			proxy.receiveMessage(received);
+			proxy.receiveMessage(received, e.getChannel());
 		}
 		log.debug("Message received: " + received);
 		

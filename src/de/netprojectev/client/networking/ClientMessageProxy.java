@@ -44,8 +44,8 @@ public class ClientMessageProxy {
 	//TODO last worked here
 	
 	/*
-	 * last made dequeuing work, but removing / dequeue media sometimes raises exception in getValueAt Method
-	 * and map to context menus, make all sync work and so on
+	 * 
+	 *  map to context menus, make all sync work and so on
 	 */
 	
 	public ClientMessageProxy(Client client) {
@@ -59,6 +59,10 @@ public class ClientMessageProxy {
 	public ChannelFuture sendMessageToServer(Message msgToSend) {
 		log.debug("Sending message to server: " + msgToSend);
 		return channelToServer.write(msgToSend);
+	}
+	
+	public void sendRequestFullSync() {
+		sendMessageToServer(new Message(OpCode.CTS_REQUEST_FULL_SYNC));
 	}
 	
 	public void sendAddImageFile(File file) {
@@ -184,11 +188,27 @@ public class ClientMessageProxy {
 		case STC_TOGGLE_LIVE_TICKER_START_ACK:
 			liveTickerStartToggled(msg);
 			break;
+		case STC_FULL_SYNC_START:
+			fullSyncStart();
+			break;
+		case STC_FULL_SYNC_STOP:
+			fullSyncStop();
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 		
+		
+	}
+
+	private void fullSyncStop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void fullSyncStart() {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -238,7 +258,7 @@ public class ClientMessageProxy {
 
 	private void connectionSuccessful(Message msg) {
 		client.loginSuccess();
-		
+		sendRequestFullSync();
 	}
 
 	private void mediaFileEdited(Message msg) {
