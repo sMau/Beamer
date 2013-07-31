@@ -51,7 +51,6 @@ public class MediaFileEchoClient {
 		try {
 			sendSomeMessages();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

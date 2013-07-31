@@ -185,9 +185,7 @@ public class ServerHandlerTest {
 		assertTrue(serverInit.getProxy().getAllClients().size() == 3);
 		
 		serverInit.getProxy().broadcastMessage(new Message(OpCode.STC_CONNECTION_ACK));
-		
-		//TODO add the asserts after client implemenatation
-		
+				
 	}
 	
 }

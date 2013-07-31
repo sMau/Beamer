@@ -37,7 +37,6 @@ public class ClientHandlerTest {
 		client.getProxy().sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2));
 		client.getProxy().sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt123));
 		client.getProxy().sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt456));
-		//TODO
 	}
 	
 	

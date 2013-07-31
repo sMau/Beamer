@@ -40,13 +40,6 @@ public class ClientMessageProxy {
 	private final PreferencesModelClient prefs;
 	
 	private Channel channelToServer;
-
-	//TODO last worked here
-	
-	/*
-	 * 
-	 *  map to context menus, make all sync work and so on
-	 */
 	
 	public ClientMessageProxy(Client client) {
 		mediaModel = new MediaModelClient(this);

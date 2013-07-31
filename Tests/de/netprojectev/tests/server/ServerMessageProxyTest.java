@@ -36,11 +36,11 @@ public class ServerMessageProxyTest {
 	@Test
 	public void testReceiveMessage1() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
 		
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1));
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1), null);
 		assertEquals(media1, proxy.getMediaModel().getNext());
 		assertEquals(media1, proxy.getMediaModel().getNext());
 		
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2));
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2), null);
 		
 		ServerMediaFile next = proxy.getMediaModel().getNext();
 		
@@ -54,10 +54,10 @@ public class ServerMessageProxyTest {
 		ServerTickerElement elt1 = new ServerTickerElement("test12");
 		ServerTickerElement elt2 = new ServerTickerElement("test34");
 		
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt1));
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt1), null);
 		assertEquals(elt1, proxy.getTickerModel().getElementByID(elt1.getId()));
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt1));
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt2));
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt1), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, elt2), null);
 		assertEquals(elt1, proxy.getTickerModel().getElementByID(elt1.getId()));
 		assertEquals(elt2, proxy.getTickerModel().getElementByID(elt2.getId()));
 		
@@ -65,63 +65,63 @@ public class ServerMessageProxyTest {
 	
 	@Test
 	public void testReceiveMessage3() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1));
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2));
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2), null);
 		ServerMediaFile next = proxy.getMediaModel().getNext();
 		assertTrue(next.equals(media1) || next.equals(media2));
 		assertNull(proxy.getCurrentFile());
-		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE), null);
 		assertTrue(proxy.getCurrentFile().equals(media1) || proxy.getCurrentFile().equals(media2));
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media3));
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media4));
-		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media1.getId()));
-		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media2.getId()));
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media3), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media4), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media1.getId()), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media2.getId()), null);
 		assertTrue(proxy.getCurrentFile().equals(media1) || proxy.getCurrentFile().equals(media2));
-		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE), null);
 		assertTrue(proxy.getCurrentFile().equals(media3) || proxy.getCurrentFile().equals(media4));
 	}
 	
 	@Test
 	public void testReceiveMessage4() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1));
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2));
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2), null);
 		
 		ServerMediaFile next = proxy.getMediaModel().getNext();
 		assertTrue(next.equals(media1) || next.equals(media2));
 
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media3));
-		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media4));
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media3), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media4), null);
 		
 		assertNull(proxy.getCurrentFile());
 		
-		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media1.getId()));
-		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media2.getId()));
-		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media3.getId()));
+		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media1.getId()), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media2.getId()), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media3.getId()), null);
 
-		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE), null);
 		assertEquals(media1, proxy.getCurrentFile());
-		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE), null);
 		assertEquals(media2, proxy.getCurrentFile());
-		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE), null);
 		assertEquals(media3, proxy.getCurrentFile());		
 		
-		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media3.getId()));
-		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media1.getId()));
-		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media4.getId()));
+		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media3.getId()), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media1.getId()), null);
+		proxy.receiveMessage(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, media4.getId()), null);
 		
-		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE), null);
 		assertEquals(media2, proxy.getCurrentFile());
 	}
 	
 	
 	@Test(expected=MediaDoesNotExsistException.class)
 	public void testReceiveMessage5() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
-		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media1.getId()));
+		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media1.getId()), null);
 	}
 	
 	@Test(expected=MediaListsEmptyException.class)
 	public void testReceiveMessage6() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
-		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE), null);
 	}
 	
 

@@ -7,6 +7,7 @@ package de.netprojectev.client.gui.main;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.Logger;
 
@@ -26,6 +27,38 @@ import de.netprojectev.misc.LoggerBuilder;
  */
 public class MainClientGUIWindow extends javax.swing.JFrame {
 
+	//TODO last worked here, created popup menus and a menu bar
+	/*
+	 * next is to link all actions to the menu items. 
+	 * Next provide a select and the automode and the next/previous buttons and actions on the server
+	 * so in general to change the current file, the sync between all clients with the timer and so on.
+	 */
+	
+	//and example of jtable with popupmenu
+/*
+ *     private void jTableLiveTickerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLiveTickerMouseClicked
+    	
+    	boolean isRowAlreadySelected = false;
+    	if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
+    		
+    	    int dataRow = jTableLiveticker.rowAtPoint(evt.getPoint());
+    	    for(int i = 0; i < jTableLiveticker.getSelectedRows().length; i++) {
+    	    	if(jTableLiveticker.getSelectedRows()[i] == dataRow) {
+    	    		isRowAlreadySelected = true;
+    	    	}
+    	    }
+    	    if(!isRowAlreadySelected) {
+    	    	jTableLiveticker.changeSelection(dataRow, 0, false, false);
+    	    }
+    	    if (dataRow >= 0) {
+    	    	jPopupMenuTickerTable.show(evt.getComponent(), evt.getX(), evt.getY());
+    	    }
+    	  }
+
+    }//GEN-LAST:event_jTableLiveTickerMouseClicked
+ 
+ 
+	*/
 	/**
 	 * 
 	 */
@@ -56,6 +89,11 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jpmAllTables = new javax.swing.JPopupMenu();
+        jmipopAddFile = new javax.swing.JMenuItem();
+        jmipopAddThemeslide = new javax.swing.JMenuItem();
+        jmipopAddTickerElt = new javax.swing.JMenuItem();
+        jmipopRemove = new javax.swing.JMenuItem();
         tabbedPaneContainer = new javax.swing.JTabbedPane();
         jpAllMedia = new javax.swing.JPanel();
         jspMediaTableContainer = new javax.swing.JScrollPane();
@@ -72,6 +110,52 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         jbAddTickerElement = new javax.swing.JButton();
         jbEdit = new javax.swing.JButton();
         jbRemoveFromList = new javax.swing.JButton();
+        jmbMain = new javax.swing.JMenuBar();
+        jmFile = new javax.swing.JMenu();
+        jmiAddFile = new javax.swing.JMenuItem();
+        jmiAddThemeslide = new javax.swing.JMenuItem();
+        jmiAddTickerElt = new javax.swing.JMenuItem();
+        jmiAddCntDown = new javax.swing.JMenuItem();
+        jmiRemove = new javax.swing.JMenuItem();
+        jmiExit = new javax.swing.JMenuItem();
+        jmPrefs = new javax.swing.JMenu();
+        jmiAddPrio = new javax.swing.JMenuItem();
+        jmiAddTheme = new javax.swing.JMenuItem();
+        jmirbAutomode = new javax.swing.JRadioButtonMenuItem();
+        jmiPrefs = new javax.swing.JMenuItem();
+
+        jmipopAddFile.setText("Add File");
+        jmipopAddFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmipopAddFileActionPerformed(evt);
+            }
+        });
+        jpmAllTables.add(jmipopAddFile);
+
+        jmipopAddThemeslide.setText("Add Themeslide");
+        jmipopAddThemeslide.setToolTipText("");
+        jmipopAddThemeslide.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmipopAddThemeslideActionPerformed(evt);
+            }
+        });
+        jpmAllTables.add(jmipopAddThemeslide);
+
+        jmipopAddTickerElt.setText("Add Tickerelement");
+        jmipopAddTickerElt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmipopAddTickerEltActionPerformed(evt);
+            }
+        });
+        jpmAllTables.add(jmipopAddTickerElt);
+
+        jmipopRemove.setText("Remove");
+        jmipopRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmipopRemoveActionPerformed(evt);
+            }
+        });
+        jpmAllTables.add(jmipopRemove);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Beamer Client");
@@ -204,6 +288,97 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jmFile.setText("File");
+
+        jmiAddFile.setText("Add File");
+        jmiAddFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAddFileActionPerformed(evt);
+            }
+        });
+        jmFile.add(jmiAddFile);
+
+        jmiAddThemeslide.setText("Add Themeslide");
+        jmiAddThemeslide.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAddThemeslideActionPerformed(evt);
+            }
+        });
+        jmFile.add(jmiAddThemeslide);
+
+        jmiAddTickerElt.setText("Add Tickerelement");
+        jmiAddTickerElt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAddTickerEltActionPerformed(evt);
+            }
+        });
+        jmFile.add(jmiAddTickerElt);
+
+        jmiAddCntDown.setText("Add Countdown");
+        jmiAddCntDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAddCntDownActionPerformed(evt);
+            }
+        });
+        jmFile.add(jmiAddCntDown);
+
+        jmiRemove.setText("Remove");
+        jmiRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiRemoveActionPerformed(evt);
+            }
+        });
+        jmFile.add(jmiRemove);
+
+        jmiExit.setText("Exit");
+        jmiExit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiExitActionPerformed(evt);
+            }
+        });
+        jmFile.add(jmiExit);
+
+        jmbMain.add(jmFile);
+
+        jmPrefs.setText("Preferences");
+
+        jmiAddPrio.setText("Add Priority");
+        jmiAddPrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAddPrioActionPerformed(evt);
+            }
+        });
+        jmPrefs.add(jmiAddPrio);
+
+        jmiAddTheme.setText("Add Theme");
+        jmiAddTheme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiAddThemeActionPerformed(evt);
+            }
+        });
+        jmPrefs.add(jmiAddTheme);
+
+        jmirbAutomode.setSelected(true);
+        jmirbAutomode.setText("Automode");
+        jmirbAutomode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmirbAutomodeActionPerformed(evt);
+            }
+        });
+        jmPrefs.add(jmirbAutomode);
+
+        jmiPrefs.setText("Preferences");
+        jmiPrefs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPrefsActionPerformed(evt);
+            }
+        });
+        jmPrefs.add(jmiPrefs);
+
+        jmbMain.add(jmPrefs);
+
+        setJMenuBar(jmbMain);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,6 +396,62 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jmiAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiAddFileActionPerformed
+
+    private void jmiAddPrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddPrioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiAddPrioActionPerformed
+
+    private void jmipopAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopAddFileActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmipopAddFileActionPerformed
+
+    private void jmipopAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopAddThemeslideActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmipopAddThemeslideActionPerformed
+
+    private void jmipopAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopAddTickerEltActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmipopAddTickerEltActionPerformed
+
+    private void jmipopRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopRemoveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmipopRemoveActionPerformed
+
+    private void jmiAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddThemeslideActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiAddThemeslideActionPerformed
+
+    private void jmiAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddTickerEltActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiAddTickerEltActionPerformed
+
+    private void jmiAddCntDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddCntDownActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiAddCntDownActionPerformed
+
+    private void jmiRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRemoveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiRemoveActionPerformed
+
+    private void jmiAddThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddThemeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiAddThemeActionPerformed
+
+    private void jmiPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrefsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiPrefsActionPerformed
+
+    private void jmirbAutomodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmirbAutomodeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmirbAutomodeActionPerformed
+
+    private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jmiExitActionPerformed
 
 	private void jbAddFileActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbAddFileActionPerformed
 		JFileChooser fileChooser = new JFileChooser();
@@ -336,10 +567,28 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     private javax.swing.JButton jbAddTickerElement;
     private javax.swing.JButton jbEdit;
     private javax.swing.JButton jbRemoveFromList;
+    private javax.swing.JMenu jmFile;
+    private javax.swing.JMenu jmPrefs;
+    private javax.swing.JMenuBar jmbMain;
+    private javax.swing.JMenuItem jmiAddCntDown;
+    private javax.swing.JMenuItem jmiAddFile;
+    private javax.swing.JMenuItem jmiAddPrio;
+    private javax.swing.JMenuItem jmiAddTheme;
+    private javax.swing.JMenuItem jmiAddThemeslide;
+    private javax.swing.JMenuItem jmiAddTickerElt;
+    private javax.swing.JMenuItem jmiExit;
+    private javax.swing.JMenuItem jmiPrefs;
+    private javax.swing.JMenuItem jmiRemove;
+    private javax.swing.JMenuItem jmipopAddFile;
+    private javax.swing.JMenuItem jmipopAddThemeslide;
+    private javax.swing.JMenuItem jmipopAddTickerElt;
+    private javax.swing.JMenuItem jmipopRemove;
+    private javax.swing.JRadioButtonMenuItem jmirbAutomode;
     private javax.swing.JPanel jpAllMedia;
     private javax.swing.JPanel jpButtonContainer;
     private javax.swing.JPanel jpCustomQueue;
     private javax.swing.JPanel jpLiveTicker;
+    private javax.swing.JPopupMenu jpmAllTables;
     private javax.swing.JScrollPane jspMediaTableContainer;
     private javax.swing.JScrollPane jspQueueTableContainer;
     private javax.swing.JScrollPane jspTickerTableContainer;
