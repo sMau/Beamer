@@ -3,7 +3,6 @@ package de.netprojectev.client.model;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.swing.SwingUtilities;
@@ -11,9 +10,11 @@ import javax.swing.SwingUtilities;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.client.gui.main.MainClientGUIWindow.UpdateCurrentFileListener;
 import de.netprojectev.client.gui.tablemodels.AllMediaTableModel.UpdateAllMediaDataListener;
 import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel.UpdateCustomQueueDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaNotInQueueException;
 import de.netprojectev.exceptions.OutOfSyncException;
@@ -29,8 +30,11 @@ public class MediaModelClient {
 	private final ArrayList<UUID> allMediaList;
 	private final LinkedList<UUID> customQueue;
 	
+	private MediaFile currentMediaFile;
+	
 	private UpdateAllMediaDataListener allMediaListener;
 	private UpdateCustomQueueDataListener customQueueListener;
+	private UpdateCurrentFileListener updateCurrentFileListener;
 	
 	public MediaModelClient(ClientMessageProxy proxy) {
 		this.proxy = proxy;
@@ -190,6 +194,27 @@ public class MediaModelClient {
 
 	public void setCustomQueueListener(UpdateCustomQueueDataListener customQueueListener) {
 		this.customQueueListener = customQueueListener;
+	}
+
+
+	public void setAsCurrent(UUID fileShowing) throws MediaDoesNotExsistException {
+		if(currentMediaFile != null) {
+			currentMediaFile.setCurrent(false);
+		}
+		currentMediaFile = getMediaFileById(fileShowing).setCurrent(true).increaseShowCount();
+		updateCurrentFileListener.update();
+		updateAllMediaTable();
+		updateCustomQueueTable();
+	}
+
+
+	public MediaFile getCurrentMediaFile() {
+		return currentMediaFile;
+	}
+
+
+	public void setUpdateCurrentFileListener(UpdateCurrentFileListener updateCurrentFileListener) {
+		this.updateCurrentFileListener = updateCurrentFileListener;
 	}
 
 }

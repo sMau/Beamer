@@ -102,7 +102,7 @@ public class LoginDialog extends javax.swing.JDialog {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	 MainClientGUIWindow mainGUI = new MainClientGUIWindow(mediaModel, tickerModel, proxy);
+            	 MainClientGUIWindow mainGUI = new MainClientGUIWindow(proxy);
             	 
             	 mainGUI.setVisible(true);
             }

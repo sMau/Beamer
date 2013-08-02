@@ -3,6 +3,7 @@ package de.netprojectev.server.networking;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
@@ -39,9 +40,25 @@ public class MessageProxyServer {
 	private final PreferencesModelServer prefsModel;
 	private final DisplayFrame frame;
 	private boolean automodeEnabled;
-	private boolean shufflemodeEnabled;
 	private ServerMediaFile currentFile;
 	private Timer autoModusTimer;
+	
+	private class AutomodeTimerTask extends TimerTask {
+
+		@Override
+		public void run() {
+			try {
+				showNextMediaFile();
+			} catch (MediaDoesNotExsistException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (MediaListsEmptyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 	
 	public MessageProxyServer() {
 		this.allClients = new DefaultChannelGroup("beamer-clients");
@@ -86,14 +103,23 @@ public class MessageProxyServer {
 		case CTS_REMOVE_PRIORITY:
 			removePriority(msg);
 			break;
-		case CTS_TOGGLE_LIVE_TICKER_START:
-			toggleLiveTickerStart();
+		case CTS_ENABLE_LIVE_TICKER:
+			enableLiveTicker();
 			break;
-		case CTS_TOGGLE_AUTO_MODE:
-			toggleAutoMode();
+		case CTS_DISABLE_LIVE_TICKER:
+			disableLiveTicker();
 			break;
-		case CTS_TOGGLE_FULLSCREEN:
-			toggleFullScreen();
+		case CTS_ENABLE_AUTO_MODE:
+			enableAutoMode();
+			break;
+		case CTS_DISABLE_AUTO_MODE:
+			disableAutoMode();
+			break;
+		case CTS_ENABLE_FULLSCREEN:
+			enableFullScreen();
+			break;
+		case CTS_DISABLE_FULLSCREEN:
+			disableFullScreen();
 			break;
 		case CTS_DEQUEUE_MEDIAFILE:
 			dequeueMediaFile(msg);
@@ -196,6 +222,10 @@ public class MessageProxyServer {
 	private void showNextMediaFile() throws MediaDoesNotExsistException, MediaListsEmptyException {
 		ServerMediaFile fileToShow = mediaModel.getNext();
 		currentFile = fileToShow;
+		
+		updateAutoModeTimer();
+		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, fileToShow.getId()));
+		
 		//TODO implement the display part
 		
 	}
@@ -204,6 +234,9 @@ public class MessageProxyServer {
 		UUID toShow = (UUID) msg.getData();
 		ServerMediaFile fileToShow = mediaModel.getMediaFileById(toShow);
 		currentFile = fileToShow;
+		
+		updateAutoModeTimer();
+		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow));
 		
 		//TODO implement the display part
 
@@ -227,17 +260,42 @@ public class MessageProxyServer {
 		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(fileToAdd)));
 	}
 	
-	private void toggleFullScreen() {
+	private void enableFullScreen() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	private void disableFullScreen() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	private void toggleAutoMode() {
+	private void enableAutoMode() {
+		updateAutoModeTimer();
+		broadcastMessage(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
+	}
+	private void updateAutoModeTimer() {
+		if(autoModusTimer != null) {
+			autoModusTimer.cancel();
+			autoModusTimer.purge();			
+		}
+		autoModusTimer = new Timer();
+		autoModusTimer.schedule(new AutomodeTimerTask(), currentFile.getPriority().getTimeToShowInMilliseconds());
+	}
+	
+	private void disableAutoMode() {
+		autoModusTimer.cancel();
+		autoModusTimer.purge();
+		autoModusTimer = null;
+		broadcastMessage(new Message(OpCode.STC_DISABLE_AUTO_MODE_ACK));
+	}
+
+	private void enableLiveTicker() {
 		// TODO Auto-generated method stub
 		
 	}
-
-	private void toggleLiveTickerStart() {
+	
+	private void disableLiveTicker() {
 		// TODO Auto-generated method stub
 		
 	}
@@ -248,14 +306,6 @@ public class MessageProxyServer {
 
 	public void setAutomodeEnabled(boolean automodeEnabled) {
 		this.automodeEnabled = automodeEnabled;
-	}
-
-	public boolean isShufflemodeEnabled() {
-		return shufflemodeEnabled;
-	}
-
-	public void setShufflemodeEnabled(boolean shufflemodeEnabled) {
-		this.shufflemodeEnabled = shufflemodeEnabled;
 	}
 
 	public Timer getAutoModusTimer() {

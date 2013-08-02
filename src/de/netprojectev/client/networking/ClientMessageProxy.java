@@ -62,6 +62,14 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_REQUEST_FULL_SYNC));
 	}
 	
+	public void sendShowMediaFile(int row) {
+		sendMessageToServer(new Message(OpCode.CTS_SHOW_MEDIA_FILE, mediaModel.getValueAt(row).getId()));
+	}
+	
+	public void sendShowNextMediaFile() {
+		sendMessageToServer(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+	}
+	
 	public void sendAddImageFile(File file) {
 		String name = file.getName();
 		ImageIcon image = new ImageIcon(file.getAbsolutePath());
@@ -173,17 +181,23 @@ public class ClientMessageProxy {
 		case STC_SHOW_MEDIA_FILE_ACK:
 			mediaFileShowing(msg);
 			break;
-		case STC_SHOW_NEXT_MEDIA_FILE_ACK:
-			showingNextMediaFile(msg);
+		case STC_ENABLE_AUTO_MODE_ACK:
+			autoModeEnabled(msg);
 			break;
-		case STC_TOGGLE_AUTO_MODE_ACK:
-			autoModeToggled(msg);
+		case STC_DISABLE_AUTO_MODE_ACK:
+			autoModeDisabled(msg);
 			break;
-		case STC_TOGGLE_FULLSCREEN_ACK:
-			fullscreenToggled(msg);
+		case STC_ENABLE_FULLSCREEN_ACK:
+			fullscreenEnabled(msg);
 			break;
-		case STC_TOGGLE_LIVE_TICKER_START_ACK:
-			liveTickerStartToggled(msg);
+		case STC_DISABLE_FULLSCREEN_ACK:
+			fullscreenDisabled(msg);
+			break;
+		case STC_ENABLE_LIVE_TICKER_ACK:
+			liveTickerEnabled(msg);
+			break;
+		case STC_DISABLE_LIVE_TICKER_ACK:
+			liveTickerDisabled(msg);
 			break;
 		case STC_FULL_SYNC_START:
 			fullSyncStart();
@@ -197,6 +211,34 @@ public class ClientMessageProxy {
 		}
 		
 		
+	}
+
+	private void liveTickerDisabled(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void liveTickerEnabled(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void fullscreenDisabled(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void fullscreenEnabled(Message msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void autoModeDisabled(Message msg) {
+		prefs.disableAutomode();
+	}
+
+	private void autoModeEnabled(Message msg) {
+		prefs.enableAutomode();
 	}
 
 	private void fullSyncStop() {
@@ -215,30 +257,10 @@ public class ClientMessageProxy {
 		
 	}
 
-	private void showingNextMediaFile(Message msg) throws MediaDoesNotExsistException {
-		UUID fileShowing = (UUID) msg.getData();
-		showMediaFile(fileShowing);
-	}
-
-
-	private void autoModeToggled(Message msg) {
-		prefs.toggleAutomode();
-	}
-
-
-	private void fullscreenToggled(Message msg) {
-		prefs.toggleFullscreen();
-	}
-
-
-	private void liveTickerStartToggled(Message msg) {
-		prefs.toggleLiveTickerRunning();
-	}
-
 
 	private void mediaFileShowing(Message msg) throws MediaDoesNotExsistException {
 		UUID fileShowing = (UUID) msg.getData();
-		showMediaFile(fileShowing);		
+		mediaModel.setAsCurrent(fileShowing);
 	}
 
 
@@ -322,12 +344,6 @@ public class ClientMessageProxy {
 		mediaModel.addMediaFile(toAdd);		
 	}
 	
-	private void showMediaFile(UUID id) throws MediaDoesNotExsistException {
-		mediaModel.getMediaFileById(id).setCurrent(true).increaseShowCount();
-		
-	}
-
-
 	private void unkownMessageReceived(Message msg) throws UnkownMessageException {
 		throw new UnkownMessageException("A unkown message was received: " + msg.toString());
 	}
@@ -354,6 +370,14 @@ public class ClientMessageProxy {
 
 	public PreferencesModelClient getPrefs() {
 		return prefs;
+	}
+
+	public void sendAutoModeToggle(boolean selected) {
+		if(selected) {
+			sendMessageToServer(new Message(OpCode.CTS_ENABLE_AUTO_MODE));
+		} else {
+			sendMessageToServer(new Message(OpCode.CTS_DISABLE_AUTO_MODE));
+		}
 	}
 
 	

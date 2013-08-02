@@ -23,7 +23,7 @@ public class AllMediaTableModel extends AbstractTableModel {
 	private static final Logger log = LoggerBuilder.createLogger(AllMediaTableModel.class);
 
 	private final MediaModelClient mediaModel;
-	private final String[] columns = { "Queue", "Name", "Priority", "Type" };
+	private final String[] columns = { "Queue", "Cur", "#Show", "Name", "Priority", "Type" };
 
 	public AllMediaTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
@@ -94,10 +94,14 @@ public class AllMediaTableModel extends AbstractTableModel {
 			case 0:
 				return "queue";
 			case 1:
-				return media.getName();
+				return media.isCurrent();
 			case 2:
-				return media.getPriority().toString();
+				return media.getShowCount();
 			case 3:
+				return media.getName();
+			case 4:
+				return media.getPriority().toString();
+			case 5:
 				return media.getType();
 			default:
 				return "error loading data";

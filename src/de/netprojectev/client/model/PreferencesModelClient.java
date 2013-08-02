@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.client.gui.main.MainClientGUIWindow.UpdateAutoModeStateListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
@@ -20,6 +21,8 @@ public class PreferencesModelClient {
 	private final ClientMessageProxy proxy;
 	private final HashMap<UUID, Theme> themes;
 	private final HashMap<UUID, Priority> prios;
+	
+	private UpdateAutoModeStateListener autoModeStateListener;
 	
 	private boolean automode;
 	private boolean fullscreen;
@@ -73,8 +76,15 @@ public class PreferencesModelClient {
 		
 	}
 	
-	public void toggleAutomode() {
-		automode = !automode;
+	public void enableAutomode() {
+		automode = true;
+		autoModeStateListener.update();
+		log.debug("automode toggled, new value value: " + automode);
+	}
+	
+	public void disableAutomode() {
+		automode = false;
+		autoModeStateListener.update();
 		log.debug("automode toggled, new value value: " + automode);
 	}
 	
@@ -90,6 +100,13 @@ public class PreferencesModelClient {
 
 	}
 	
+	//TODO last worked here, started with editing of the gui for previewing and editing files/liveticker elts.
+	/*
+	 * next make preview work -> sending the images via network receiving the preview icon from the server
+	 * make editing name priority enabled state and reseting showcount work
+	 * then adding prios and themes, then themeslidecreator
+	 */
+	
 	public boolean isAutomode() {
 		return automode;
 	}
@@ -100,6 +117,10 @@ public class PreferencesModelClient {
 
 	public boolean isLiveTickerRunning() {
 		return liveTickerRunning;
+	}
+
+	public void setAutoModeStateListener(UpdateAutoModeStateListener autoModeStateListener) {
+		this.autoModeStateListener = autoModeStateListener;
 	}
 	
 }

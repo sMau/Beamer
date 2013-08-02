@@ -25,7 +25,7 @@ public abstract class MediaFile implements Serializable {
 	protected MediaFile(String name, UUID id) {
 		this.id = id;
 		this.name = name;
-		this.priority = new Priority("default", 10); //TODO add real default priority via prefs and so on
+		this.priority = new Priority("default", 1); //TODO add real default priority via prefs and so on
 	}
 	
 	

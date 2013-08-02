@@ -4,12 +4,16 @@
  */
 package de.netprojectev.client.gui.main;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import org.apache.logging.log4j.Logger;
 
@@ -18,6 +22,7 @@ import de.netprojectev.client.gui.tablemodels.AllMediaTableModel;
 import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel;
 import de.netprojectev.client.gui.tablemodels.TickerTableModel;
 import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.misc.ImageFileFilter;
@@ -30,38 +35,14 @@ import de.netprojectev.misc.Misc;
  */
 public class MainClientGUIWindow extends javax.swing.JFrame {
 
-	//TODO last worked here, created popup menus and a menu bar
-	/*
-	 * next is to link all actions to the menu items. 
-	 * Next provide a select and the automode and the next/previous buttons and actions on the server
-	 * so in general to change the current file, the sync between all clients with the timer and so on.
-	 */
-	
-	//and example of jtable with popupmenu
-/*
- *     private void jTableLiveTickerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableLiveTickerMouseClicked
-    	
-    	boolean isRowAlreadySelected = false;
-    	if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
-    		
-    	    int dataRow = jTableLiveticker.rowAtPoint(evt.getPoint());
-    	    for(int i = 0; i < jTableLiveticker.getSelectedRows().length; i++) {
-    	    	if(jTableLiveticker.getSelectedRows()[i] == dataRow) {
-    	    		isRowAlreadySelected = true;
-    	    	}
-    	    }
-    	    if(!isRowAlreadySelected) {
-    	    	jTableLiveticker.changeSelection(dataRow, 0, false, false);
-    	    }
-    	    if (dataRow >= 0) {
-    	    	jPopupMenuTickerTable.show(evt.getComponent(), evt.getX(), evt.getY());
-    	    }
-    	  }
+	public interface UpdateAutoModeStateListener {
+		public void update();
+	}
 
-    }//GEN-LAST:event_jTableLiveTickerMouseClicked
- 
- 
-	*/
+	public interface UpdateCurrentFileListener {
+		public void update();
+	}
+
 	/**
 	 * 
 	 */
@@ -71,13 +52,45 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	private final ClientMessageProxy proxy;
 	private final MediaModelClient mediaModel;
 	private final TickerModelClient tickerModel;
+	private final PreferencesModelClient prefs;
+
+	private Timer refreshTimeLeftTimer;
 
 	/**
 	 * Creates new form MainClientGUIWindow
 	 */
-	public MainClientGUIWindow(MediaModelClient mediaModel, TickerModelClient tickerModel, ClientMessageProxy proxy) {
-		this.mediaModel = mediaModel;
-		this.tickerModel = tickerModel;
+	public MainClientGUIWindow(ClientMessageProxy proxy) {
+		this.mediaModel = proxy.getMediaModel();
+
+		this.mediaModel.setUpdateCurrentFileListener(new UpdateCurrentFileListener() {
+
+			@Override
+			public void update() {
+				if (prefs.isAutomode()) {
+					startRefreshTimeLeftTimer();
+				} else {
+					disableRefreshTimeLeftTimer();
+				}
+			}
+		});
+
+		this.tickerModel = proxy.getTickerModel();
+		this.prefs = proxy.getPrefs();
+
+		this.prefs.setAutoModeStateListener(new UpdateAutoModeStateListener() {
+
+			@Override
+			public void update() {
+				jmirbAutomode.setSelected(prefs.isAutomode());
+				if (!prefs.isAutomode()) {
+					disableRefreshTimeLeftTimer();
+				} else {
+					startRefreshTimeLeftTimer();
+				}
+			}
+
+		});
+
 		this.proxy = proxy;
 		initComponents();
 	}
@@ -89,6 +102,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
+	// <editor-fold defaultstate="collapsed"
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -97,10 +111,14 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         jmipopAddThemeslide = new javax.swing.JMenuItem();
         jmipopQueue = new javax.swing.JMenuItem();
         jmipopRemove = new javax.swing.JMenuItem();
+        jmipopShow = new javax.swing.JMenuItem();
+        jmipopShowNext = new javax.swing.JMenuItem();
         jpmQueueTable = new javax.swing.JPopupMenu();
         jmipopDequeue = new javax.swing.JMenuItem();
+        jmipopShowNextInQueue = new javax.swing.JMenuItem();
         jpmTickerTable = new javax.swing.JPopupMenu();
         jmipopAddElement = new javax.swing.JMenuItem();
+        jmiPopToggleActivated = new javax.swing.JMenuItem();
         jmipopRemoveElement = new javax.swing.JMenuItem();
         tabbedPaneContainer = new javax.swing.JTabbedPane();
         jpAllMedia = new javax.swing.JPanel();
@@ -118,6 +136,26 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         jbAddTickerElement = new javax.swing.JButton();
         jbEdit = new javax.swing.JButton();
         jbRemoveFromList = new javax.swing.JButton();
+        jbShowSelected = new javax.swing.JButton();
+        jbShowNext = new javax.swing.JButton();
+        jlAutomodeTimeleft = new javax.swing.JLabel();
+        jpPreviewAndEditor = new javax.swing.JPanel();
+        jspPreview = new javax.swing.JScrollPane();
+        jlPreview = new javax.swing.JLabel();
+        jspEditor = new javax.swing.JScrollPane();
+        jpEditor = new javax.swing.JPanel();
+        jbUpdateFileData = new javax.swing.JButton();
+        jbResetFileData = new javax.swing.JButton();
+        jlFileName = new javax.swing.JLabel();
+        jtfFileName = new javax.swing.JTextField();
+        jlPriority = new javax.swing.JLabel();
+        jcbPriorityChange = new javax.swing.JComboBox();
+        jlShowcount = new javax.swing.JLabel();
+        jlShowcountNumber = new javax.swing.JLabel();
+        jlCurrent = new javax.swing.JLabel();
+        jlCurrentYesNo = new javax.swing.JLabel();
+        jchbEnabled = new javax.swing.JCheckBox();
+        jbResetShowcount = new javax.swing.JButton();
         jmbMain = new javax.swing.JMenuBar();
         jmFile = new javax.swing.JMenu();
         jmiAddFile = new javax.swing.JMenuItem();
@@ -165,6 +203,22 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         });
         jpmAllTables.add(jmipopRemove);
 
+        jmipopShow.setText("Show");
+        jmipopShow.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmipopShowActionPerformed(evt);
+            }
+        });
+        jpmAllTables.add(jmipopShow);
+
+        jmipopShowNext.setText("Show Next");
+        jmipopShowNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmipopShowNextActionPerformed(evt);
+            }
+        });
+        jpmAllTables.add(jmipopShowNext);
+
         jmipopDequeue.setLabel("Dequeue");
         jmipopDequeue.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -173,6 +227,14 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         });
         jpmQueueTable.add(jmipopDequeue);
 
+        jmipopShowNextInQueue.setText("Show Next");
+        jmipopShowNextInQueue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmipopShowNextInQueueActionPerformed(evt);
+            }
+        });
+        jpmQueueTable.add(jmipopShowNextInQueue);
+
         jmipopAddElement.setText("Add Element");
         jmipopAddElement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,6 +242,14 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
             }
         });
         jpmTickerTable.add(jmipopAddElement);
+
+        jmiPopToggleActivated.setText("Toggle Activated");
+        jmiPopToggleActivated.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jmiPopToggleActivatedActionPerformed(evt);
+            }
+        });
+        jpmTickerTable.add(jmiPopToggleActivated);
 
         jmipopRemoveElement.setText("Remove");
         jmipopRemoveElement.addActionListener(new java.awt.event.ActionListener() {
@@ -191,6 +261,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Beamer Client");
+
+        tabbedPaneContainer.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabbedPaneContainerStateChanged(evt);
+            }
+        });
 
         jtAllMedia.setModel(new AllMediaTableModel(mediaModel));
         jtAllMedia.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer());
@@ -210,12 +286,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         jpAllMedia.setLayout(jpAllMediaLayout);
         jpAllMediaLayout.setHorizontalGroup(
             jpAllMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspMediaTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE)
+            .addComponent(jspMediaTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 1240, Short.MAX_VALUE)
         );
         jpAllMediaLayout.setVerticalGroup(
             jpAllMediaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpAllMediaLayout.createSequentialGroup()
-                .addComponent(jspMediaTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
+                .addComponent(jspMediaTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 373, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -239,11 +315,11 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         jpCustomQueue.setLayout(jpCustomQueueLayout);
         jpCustomQueueLayout.setHorizontalGroup(
             jpCustomQueueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspQueueTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE)
+            .addComponent(jspQueueTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 1240, Short.MAX_VALUE)
         );
         jpCustomQueueLayout.setVerticalGroup(
             jpCustomQueueLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspQueueTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+            .addComponent(jspQueueTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
 
         tabbedPaneContainer.addTab("Queue", jpCustomQueue);
@@ -260,11 +336,11 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         jpLiveTicker.setLayout(jpLiveTickerLayout);
         jpLiveTickerLayout.setHorizontalGroup(
             jpLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspTickerTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 853, Short.MAX_VALUE)
+            .addComponent(jspTickerTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 1240, Short.MAX_VALUE)
         );
         jpLiveTickerLayout.setVerticalGroup(
             jpLiveTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jspTickerTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)
+            .addComponent(jspTickerTableContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
         );
 
         tabbedPaneContainer.addTab("Ticker", jpLiveTicker);
@@ -305,6 +381,22 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
             }
         });
 
+        jbShowSelected.setText("Show");
+        jbShowSelected.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbShowSelectedActionPerformed(evt);
+            }
+        });
+
+        jbShowNext.setText("Show Next");
+        jbShowNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbShowNextActionPerformed(evt);
+            }
+        });
+
+        jlAutomodeTimeleft.setText("Timeleft: --:--");
+
         javax.swing.GroupLayout jpButtonContainerLayout = new javax.swing.GroupLayout(jpButtonContainer);
         jpButtonContainer.setLayout(jpButtonContainerLayout);
         jpButtonContainerLayout.setHorizontalGroup(
@@ -320,6 +412,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
                 .addComponent(jbEdit)
                 .addGap(18, 18, 18)
                 .addComponent(jbRemoveFromList)
+                .addGap(18, 18, 18)
+                .addComponent(jbShowSelected)
+                .addGap(18, 18, 18)
+                .addComponent(jbShowNext)
+                .addGap(18, 18, 18)
+                .addComponent(jlAutomodeTimeleft)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpButtonContainerLayout.setVerticalGroup(
@@ -331,8 +429,151 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
                     .addComponent(jbAddThemeslide)
                     .addComponent(jbAddTickerElement)
                     .addComponent(jbRemoveFromList)
-                    .addComponent(jbEdit))
+                    .addComponent(jbEdit)
+                    .addComponent(jbShowSelected)
+                    .addComponent(jbShowNext)
+                    .addComponent(jlAutomodeTimeleft))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jspPreview.setBorder(javax.swing.BorderFactory.createTitledBorder("Preview"));
+        jspPreview.setViewportView(jlPreview);
+
+        jspEditor.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(""), "Editor"));
+
+        jpEditor.setPreferredSize(new java.awt.Dimension(521, 320));
+        jpEditor.setRequestFocusEnabled(false);
+
+        jbUpdateFileData.setText("Update");
+        jbUpdateFileData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateFileDataActionPerformed(evt);
+            }
+        });
+
+        jbResetFileData.setLabel("Reset to Server");
+        jbResetFileData.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbResetFileDataActionPerformed(evt);
+            }
+        });
+
+        jlFileName.setText("Filename");
+
+        jlPriority.setText("Priority");
+
+        jcbPriorityChange.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbPriorityChangeActionPerformed(evt);
+            }
+        });
+
+        jlShowcount.setText("Showcount");
+
+        jlShowcountNumber.setText("0");
+
+        jlCurrent.setText("Current");
+
+        jlCurrentYesNo.setText("No");
+
+        jchbEnabled.setSelected(true);
+        jchbEnabled.setText("Enabled");
+        jchbEnabled.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jchbEnabledActionPerformed(evt);
+            }
+        });
+
+        jbResetShowcount.setText("Reset");
+        jbResetShowcount.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbResetShowcountActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpEditorLayout = new javax.swing.GroupLayout(jpEditor);
+        jpEditor.setLayout(jpEditorLayout);
+        jpEditorLayout.setHorizontalGroup(
+            jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpEditorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbUpdateFileData)
+                .addGap(18, 18, 18)
+                .addComponent(jbResetFileData)
+                .addGap(29, 29, 29))
+            .addGroup(jpEditorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpEditorLayout.createSequentialGroup()
+                        .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlFileName)
+                            .addComponent(jlPriority))
+                        .addGap(31, 31, 31)
+                        .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jcbPriorityChange, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpEditorLayout.createSequentialGroup()
+                                .addComponent(jtfFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jchbEnabled))))
+                    .addGroup(jpEditorLayout.createSequentialGroup()
+                        .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlShowcount)
+                            .addComponent(jlCurrent))
+                        .addGap(18, 18, 18)
+                        .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlCurrentYesNo)
+                            .addGroup(jpEditorLayout.createSequentialGroup()
+                                .addComponent(jlShowcountNumber)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbResetShowcount)))))
+                .addContainerGap(125, Short.MAX_VALUE))
+        );
+        jpEditorLayout.setVerticalGroup(
+            jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpEditorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlFileName)
+                    .addComponent(jtfFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jchbEnabled))
+                .addGap(18, 18, 18)
+                .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlPriority)
+                    .addComponent(jcbPriorityChange, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlShowcount)
+                    .addComponent(jlShowcountNumber)
+                    .addComponent(jbResetShowcount))
+                .addGap(18, 18, 18)
+                .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCurrent)
+                    .addComponent(jlCurrentYesNo))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 129, Short.MAX_VALUE)
+                .addGroup(jpEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbUpdateFileData)
+                    .addComponent(jbResetFileData))
+                .addGap(19, 19, 19))
+        );
+
+        jspEditor.setViewportView(jpEditor);
+
+        javax.swing.GroupLayout jpPreviewAndEditorLayout = new javax.swing.GroupLayout(jpPreviewAndEditor);
+        jpPreviewAndEditor.setLayout(jpPreviewAndEditorLayout);
+        jpPreviewAndEditorLayout.setHorizontalGroup(
+            jpPreviewAndEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPreviewAndEditorLayout.createSequentialGroup()
+                .addComponent(jspPreview)
+                .addGap(18, 18, 18)
+                .addComponent(jspEditor, javax.swing.GroupLayout.PREFERRED_SIZE, 553, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jpPreviewAndEditorLayout.setVerticalGroup(
+            jpPreviewAndEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPreviewAndEditorLayout.createSequentialGroup()
+                .addGroup(jpPreviewAndEditorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jspEditor)
+                    .addComponent(jspPreview, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jmFile.setText("File");
@@ -405,7 +646,6 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         });
         jmPrefs.add(jmiAddTheme);
 
-        jmirbAutomode.setSelected(true);
         jmirbAutomode.setText("Automode");
         jmirbAutomode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -432,154 +672,235 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(tabbedPaneContainer)
             .addComponent(jpButtonContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jpPreviewAndEditor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jpButtonContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(tabbedPaneContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tabbedPaneContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jpPreviewAndEditor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jmiAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddFileActionPerformed
-        addFile();
-    }//GEN-LAST:event_jmiAddFileActionPerformed
-
-    private void jmiAddPrioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddPrioActionPerformed
+    private void jcbPriorityChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPriorityChangeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jmiAddPrioActionPerformed
+    }//GEN-LAST:event_jcbPriorityChangeActionPerformed
 
-    private void jmipopAddFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopAddFileActionPerformed
-    	addFile();
-    }//GEN-LAST:event_jmipopAddFileActionPerformed
-
-    private void jmipopAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopAddThemeslideActionPerformed
-        addThemeslide();
-    }//GEN-LAST:event_jmipopAddThemeslideActionPerformed
-
-    private void jmipopRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopRemoveActionPerformed
-        remove();
-    }//GEN-LAST:event_jmipopRemoveActionPerformed
-
-    private void jmiAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddThemeslideActionPerformed
-    	addThemeslide();
-    }//GEN-LAST:event_jmiAddThemeslideActionPerformed
-
-    private void jmiAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddTickerEltActionPerformed
-        addTickerElement();
-    }//GEN-LAST:event_jmiAddTickerEltActionPerformed
-
-    private void jmiAddCntDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddCntDownActionPerformed
+    private void jbUpdateFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateFileDataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jmiAddCntDownActionPerformed
+    }//GEN-LAST:event_jbUpdateFileDataActionPerformed
 
-    private void jmiRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiRemoveActionPerformed
-        remove();
-    }//GEN-LAST:event_jmiRemoveActionPerformed
-
-    private void jmiAddThemeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiAddThemeActionPerformed
+    private void jbResetFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbResetFileDataActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jmiAddThemeActionPerformed
+    }//GEN-LAST:event_jbResetFileDataActionPerformed
 
-    private void jmiPrefsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiPrefsActionPerformed
+    private void jchbEnabledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchbEnabledActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jmiPrefsActionPerformed
+    }//GEN-LAST:event_jchbEnabledActionPerformed
 
-    private void jmirbAutomodeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmirbAutomodeActionPerformed
+    private void jbResetShowcountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbResetShowcountActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jmirbAutomodeActionPerformed
+    }//GEN-LAST:event_jbResetShowcountActionPerformed
 
-    private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmiExitActionPerformed
-        quit();
-    }//GEN-LAST:event_jmiExitActionPerformed
+	private void jmiAddFileActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddFileActionPerformed
+		addFile();
+	}// GEN-LAST:event_jmiAddFileActionPerformed
+
+	private void jmiAddPrioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddPrioActionPerformed
+		// TODO add your handling code here:
+	}// GEN-LAST:event_jmiAddPrioActionPerformed
+
+	private void jmipopAddFileActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopAddFileActionPerformed
+		addFile();
+	}// GEN-LAST:event_jmipopAddFileActionPerformed
+
+	private void jmipopAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopAddThemeslideActionPerformed
+		addThemeslide();
+	}// GEN-LAST:event_jmipopAddThemeslideActionPerformed
+
+	private void jmipopRemoveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopRemoveActionPerformed
+		remove();
+	}// GEN-LAST:event_jmipopRemoveActionPerformed
+
+	private void jmiAddThemeslideActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddThemeslideActionPerformed
+		addThemeslide();
+	}// GEN-LAST:event_jmiAddThemeslideActionPerformed
+
+	private void jmiAddTickerEltActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddTickerEltActionPerformed
+		addTickerElement();
+	}// GEN-LAST:event_jmiAddTickerEltActionPerformed
+
+	private void jmiAddCntDownActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddCntDownActionPerformed
+		// TODO add your handling code here:
+	}// GEN-LAST:event_jmiAddCntDownActionPerformed
+
+	private void jmiRemoveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiRemoveActionPerformed
+		remove();
+	}// GEN-LAST:event_jmiRemoveActionPerformed
+
+	private void jmiAddThemeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddThemeActionPerformed
+		// TODO add your handling code here:
+	}// GEN-LAST:event_jmiAddThemeActionPerformed
+
+	private void jmiPrefsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiPrefsActionPerformed
+		// TODO add your handling code here:
+	}// GEN-LAST:event_jmiPrefsActionPerformed
+
+	private void jmirbAutomodeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmirbAutomodeActionPerformed
+		proxy.sendAutoModeToggle(jmirbAutomode.isSelected());
+	}// GEN-LAST:event_jmirbAutomodeActionPerformed
+
+	private void jmiExitActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiExitActionPerformed
+		quit();
+	}// GEN-LAST:event_jmiExitActionPerformed
 
 	private void quit() {
 		Misc.quit(this, proxy);
 	}
 
-    private void jtAllMediaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtAllMediaMouseClicked
-    	
-    	boolean isRowAlreadySelected = false;
-    	if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
-    		
-    	    int dataRow = jtAllMedia.rowAtPoint(evt.getPoint());
-    	    for(int i = 0; i < jtAllMedia.getSelectedRows().length; i++) {
-    	    	if(jtAllMedia.getSelectedRows()[i] == dataRow) {
-    	    		isRowAlreadySelected = true;
-    	    	}
-    	    }
-    	    if(!isRowAlreadySelected) {
-    	    	jtAllMedia.changeSelection(dataRow, 0, false, false);
-    	    }
-    	    if (dataRow >= 0) {
-    	    	jpmAllTables.show(evt.getComponent(), evt.getX(), evt.getY());
-    	    }
-    	  }
-    }//GEN-LAST:event_jtAllMediaMouseClicked
+	private void jtAllMediaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jtAllMediaMouseClicked
 
-    private void jtCustomQueueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtCustomQueueMouseClicked
-    	boolean isRowAlreadySelected = false;
-    	if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
-    		
-    	    int dataRow = jtCustomQueue.rowAtPoint(evt.getPoint());
-    	    for(int i = 0; i < jtCustomQueue.getSelectedRows().length; i++) {
-    	    	if(jtCustomQueue.getSelectedRows()[i] == dataRow) {
-    	    		isRowAlreadySelected = true;
-    	    	}
-    	    }
-    	    if(!isRowAlreadySelected) {
-    	    	jtCustomQueue.changeSelection(dataRow, 0, false, false);
-    	    }
-    	    if (dataRow >= 0) {
-    	    	jpmQueueTable.show(evt.getComponent(), evt.getX(), evt.getY());
-    	    }
-    	  }
-    }//GEN-LAST:event_jtCustomQueueMouseClicked
+		boolean isRowAlreadySelected = false;
+		if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
 
-    private void jtLiveTickerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtLiveTickerMouseClicked
-    	boolean isRowAlreadySelected = false;
-    	if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
-    		
-    	    int dataRow = jtLiveTicker.rowAtPoint(evt.getPoint());
-    	    for(int i = 0; i < jtLiveTicker.getSelectedRows().length; i++) {
-    	    	if(jtLiveTicker.getSelectedRows()[i] == dataRow) {
-    	    		isRowAlreadySelected = true;
-    	    	}
-    	    }
-    	    if(!isRowAlreadySelected) {
-    	    	jtLiveTicker.changeSelection(dataRow, 0, false, false);
-    	    }
-    	    if (dataRow >= 0) {
-    	    	jpmTickerTable.show(evt.getComponent(), evt.getX(), evt.getY());
-    	    }
-    	  }
-    }//GEN-LAST:event_jtLiveTickerMouseClicked
+			int dataRow = jtAllMedia.rowAtPoint(evt.getPoint());
+			for (int i = 0; i < jtAllMedia.getSelectedRows().length; i++) {
+				if (jtAllMedia.getSelectedRows()[i] == dataRow) {
+					isRowAlreadySelected = true;
+				}
+			}
+			if (!isRowAlreadySelected) {
+				jtAllMedia.changeSelection(dataRow, 0, false, false);
+			}
+			if (dataRow >= 0) {
+				jpmAllTables.show(evt.getComponent(), evt.getX(), evt.getY());
+			}
+		}
+	}// GEN-LAST:event_jtAllMediaMouseClicked
 
-    private void jmipopDequeueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopDequeueActionPerformed
-        int[] selRows = jtCustomQueue.getSelectedRows();
-        for(int i = 0; i < selRows.length; i++) {
-        	dequeue(selRows[i]);
-        }
-    	
-    }//GEN-LAST:event_jmipopDequeueActionPerformed
+	private void jtCustomQueueMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jtCustomQueueMouseClicked
+		boolean isRowAlreadySelected = false;
+		if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
 
-    private void jmipopAddElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopAddElementActionPerformed
-        addTickerElement();
-    }//GEN-LAST:event_jmipopAddElementActionPerformed
+			int dataRow = jtCustomQueue.rowAtPoint(evt.getPoint());
+			for (int i = 0; i < jtCustomQueue.getSelectedRows().length; i++) {
+				if (jtCustomQueue.getSelectedRows()[i] == dataRow) {
+					isRowAlreadySelected = true;
+				}
+			}
+			if (!isRowAlreadySelected) {
+				jtCustomQueue.changeSelection(dataRow, 0, false, false);
+			}
+			if (dataRow >= 0) {
+				jpmQueueTable.show(evt.getComponent(), evt.getX(), evt.getY());
+			}
+		}
+	}// GEN-LAST:event_jtCustomQueueMouseClicked
 
-    private void jmipopRemoveElementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopRemoveElementActionPerformed
-        remove();
-    }//GEN-LAST:event_jmipopRemoveElementActionPerformed
+	private void jtLiveTickerMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jtLiveTickerMouseClicked
+		boolean isRowAlreadySelected = false;
+		if ((SwingUtilities.isRightMouseButton(evt) || evt.isPopupTrigger()) && evt.getClickCount() == 1) {
 
-    private void jmipopQueueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmipopQueueActionPerformed
-    	int[] selRows = jtAllMedia.getSelectedRows();
-        for(int i = 0; i < selRows.length; i++) {
-        	queue(selRows[i]);
-        }
-    }//GEN-LAST:event_jmipopQueueActionPerformed
+			int dataRow = jtLiveTicker.rowAtPoint(evt.getPoint());
+			for (int i = 0; i < jtLiveTicker.getSelectedRows().length; i++) {
+				if (jtLiveTicker.getSelectedRows()[i] == dataRow) {
+					isRowAlreadySelected = true;
+				}
+			}
+			if (!isRowAlreadySelected) {
+				jtLiveTicker.changeSelection(dataRow, 0, false, false);
+			}
+			if (dataRow >= 0) {
+				jpmTickerTable.show(evt.getComponent(), evt.getX(), evt.getY());
+			}
+		}
+	}// GEN-LAST:event_jtLiveTickerMouseClicked
+
+	private void jmipopDequeueActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopDequeueActionPerformed
+		int[] selRows = jtCustomQueue.getSelectedRows();
+		for (int i = 0; i < selRows.length; i++) {
+			dequeue(selRows[i]);
+		}
+
+	}// GEN-LAST:event_jmipopDequeueActionPerformed
+
+	private void jmipopAddElementActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopAddElementActionPerformed
+		addTickerElement();
+	}// GEN-LAST:event_jmipopAddElementActionPerformed
+
+	private void jmipopRemoveElementActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopRemoveElementActionPerformed
+		remove();
+	}// GEN-LAST:event_jmipopRemoveElementActionPerformed
+
+	private void jmipopQueueActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopQueueActionPerformed
+		int[] selRows = jtAllMedia.getSelectedRows();
+		for (int i = 0; i < selRows.length; i++) {
+			queue(selRows[i]);
+		}
+	}// GEN-LAST:event_jmipopQueueActionPerformed
+
+	private void jbShowSelectedActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbShowSelectedActionPerformed
+		showSelected();
+
+	}// GEN-LAST:event_jbShowSelectedActionPerformed
+
+	private void showSelected() {
+		if (jtAllMedia.getSelectedRow() >= 0) {
+			proxy.sendShowMediaFile(jtAllMedia.getSelectedRow());
+		}
+	}
+
+	private void jbShowNextActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbShowNextActionPerformed
+		showNext();
+	}// GEN-LAST:event_jbShowNextActionPerformed
+
+	private void showNext() {
+		proxy.sendShowNextMediaFile();
+	}
+
+	private void jmipopShowActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopShowActionPerformed
+		showSelected();
+	}// GEN-LAST:event_jmipopShowActionPerformed
+
+	private void jmipopShowNextActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopShowNextActionPerformed
+		showNext();
+	}// GEN-LAST:event_jmipopShowNextActionPerformed
+
+	private void jmipopShowNextInQueueActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopShowNextInQueueActionPerformed
+		showNext();
+	}// GEN-LAST:event_jmipopShowNextInQueueActionPerformed
+
+	private void jmiPopToggleActivatedActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiPopToggleActivatedActionPerformed
+		// TODO add your handling code here:
+	}// GEN-LAST:event_jmiPopToggleActivatedActionPerformed
+
+	private void tabbedPaneContainerStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_tabbedPaneContainerStateChanged
+		JTabbedPane sourceTabbedPane = (JTabbedPane) evt.getSource();
+		int index = sourceTabbedPane.getSelectedIndex();
+		switch (index) {
+		case 0:
+			jbShowSelected.setEnabled(true);
+			break;
+		case 1:
+			jbShowSelected.setEnabled(false);
+			break;
+		case 2:
+			jbShowSelected.setEnabled(false);
+			break;
+		default:
+			log.error("Invalid tab selection");
+			jbShowSelected.setEnabled(true);
+			break;
+		}
+	}// GEN-LAST:event_tabbedPaneContainerStateChanged
 
 	private void jbAddFileActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbAddFileActionPerformed
 		addFile();
@@ -605,7 +926,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
 	private void addThemeslide() {
 		JOptionPane.showMessageDialog(this, "Themeslide Creator Placeholder");
-		//TODO add the themeslidecreator
+		// TODO add the themeslidecreator
 	}
 
 	private void jbAddTickerElementActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbAddTickerElementActionPerformed
@@ -614,10 +935,10 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
 	private void addTickerElement() {
 		new CreateTickerElementDialog(this, true, new DialogClosedListener() {
-			
+
 			@Override
 			public void dialogClosed(int result, String text) {
-				if(result == 1) {
+				if (result == 1) {
 					proxy.sendAddTickerElement(text);
 				}
 			}
@@ -634,7 +955,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
 	private void remove() {
 		int selectedTab = tabbedPaneContainer.getSelectedIndex();
-		
+
 		switch (selectedTab) {
 		case 0:
 			int[] selectedRowsAllMedia = jtAllMedia.getSelectedRows();
@@ -655,29 +976,60 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		}
 	}
 
-	/**
-	 * changing programs standard behaviour if user clicks the "x" on the main frame
-	 * therefore it invokes the quit method 
-	 */
-    @Override
-    protected void processWindowEvent(WindowEvent e) {
+	private void disableRefreshTimeLeftTimer() {
+		jlAutomodeTimeleft.setText("Timeleft: --:--");
+		if (refreshTimeLeftTimer != null) {
+			refreshTimeLeftTimer.stop();
+			refreshTimeLeftTimer = null;
 
-        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
-            quit();  
-        } else {
-        	super.processWindowEvent(e);
-        }
-    }
-	
+		}
+	}
+
+	private void startRefreshTimeLeftTimer() {
+
+		if (refreshTimeLeftTimer != null) {
+			refreshTimeLeftTimer.stop();
+		}
+		refreshTimeLeftTimer = new Timer(1000, new ActionListener() {
+
+			int secondsCount = mediaModel.getCurrentMediaFile().getPriority().getMinutesToShow() * 60;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				secondsCount--;
+				if (secondsCount > 3600) {
+					jlAutomodeTimeleft.setText("Timeleft:" + Misc.convertFromSecondsToTimeString(secondsCount, true));
+				} else {
+					jlAutomodeTimeleft.setText("Timeleft:" + Misc.convertFromSecondsToTimeString(secondsCount, false));
+				}
+
+			}
+		});
+		refreshTimeLeftTimer.start();
+	}
+
+	/**
+	 * changing programs standard behaviour if user clicks the "x" on the main
+	 * frame therefore it invokes the quit method
+	 */
+	@Override
+	protected void processWindowEvent(WindowEvent e) {
+
+		if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+			quit();
+		} else {
+			super.processWindowEvent(e);
+		}
+	}
+
 	private void queue(int row) {
 		proxy.sendQueueSelectedMedia(row);
 	}
-	
+
 	protected void dequeue(int row) {
 		proxy.sendDequeueSelectedMedia(row);
 	}
 
-	
 	/**
 	 * @param args
 	 *            the command line arguments
@@ -713,17 +1065,47 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new MainClientGUIWindow(null, null, null).setVisible(true);
+				new MainClientGUIWindow(null).setVisible(true);
 			}
 		});
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelPreview;
+    private javax.swing.JLabel jLabelPreview1;
+    private javax.swing.JLabel jLabelPreview2;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JButton jbAddFile;
     private javax.swing.JButton jbAddThemeslide;
     private javax.swing.JButton jbAddTickerElement;
     private javax.swing.JButton jbEdit;
     private javax.swing.JButton jbRemoveFromList;
+    private javax.swing.JButton jbResetFileData;
+    private javax.swing.JButton jbResetShowcount;
+    private javax.swing.JButton jbShowNext;
+    private javax.swing.JButton jbShowSelected;
+    private javax.swing.JButton jbUpdateFileData;
+    private javax.swing.JComboBox jcbPriorityChange;
+    private javax.swing.JCheckBox jchbEnabled;
+    private javax.swing.JLabel jlAutomodeTimeleft;
+    private javax.swing.JLabel jlCurrent;
+    private javax.swing.JLabel jlCurrentYesNo;
+    private javax.swing.JLabel jlFileName;
+    private javax.swing.JLabel jlPreview;
+    private javax.swing.JLabel jlPriority;
+    private javax.swing.JLabel jlShowcount;
+    private javax.swing.JLabel jlShowcountNumber;
     private javax.swing.JMenu jmFile;
     private javax.swing.JMenu jmPrefs;
     private javax.swing.JMenuBar jmbMain;
@@ -734,6 +1116,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmiAddThemeslide;
     private javax.swing.JMenuItem jmiAddTickerElt;
     private javax.swing.JMenuItem jmiExit;
+    private javax.swing.JMenuItem jmiPopToggleActivated;
     private javax.swing.JMenuItem jmiPrefs;
     private javax.swing.JMenuItem jmiRemove;
     private javax.swing.JMenuItem jmipopAddElement;
@@ -743,20 +1126,28 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmipopQueue;
     private javax.swing.JMenuItem jmipopRemove;
     private javax.swing.JMenuItem jmipopRemoveElement;
+    private javax.swing.JMenuItem jmipopShow;
+    private javax.swing.JMenuItem jmipopShowNext;
+    private javax.swing.JMenuItem jmipopShowNextInQueue;
     private javax.swing.JRadioButtonMenuItem jmirbAutomode;
     private javax.swing.JPanel jpAllMedia;
     private javax.swing.JPanel jpButtonContainer;
     private javax.swing.JPanel jpCustomQueue;
+    private javax.swing.JPanel jpEditor;
     private javax.swing.JPanel jpLiveTicker;
+    private javax.swing.JPanel jpPreviewAndEditor;
     private javax.swing.JPopupMenu jpmAllTables;
     private javax.swing.JPopupMenu jpmQueueTable;
     private javax.swing.JPopupMenu jpmTickerTable;
+    private javax.swing.JScrollPane jspEditor;
     private javax.swing.JScrollPane jspMediaTableContainer;
+    private javax.swing.JScrollPane jspPreview;
     private javax.swing.JScrollPane jspQueueTableContainer;
     private javax.swing.JScrollPane jspTickerTableContainer;
     private javax.swing.JTable jtAllMedia;
     private javax.swing.JTable jtCustomQueue;
     private javax.swing.JTable jtLiveTicker;
+    private javax.swing.JTextField jtfFileName;
     private javax.swing.JTabbedPane tabbedPaneContainer;
     // End of variables declaration//GEN-END:variables
 }

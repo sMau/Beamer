@@ -47,6 +47,10 @@ public class Priority implements Serializable {
 		return id;
 	}
 	
+	public long getTimeToShowInMilliseconds() {
+		return minutesToShow*60*1000;
+	}
+	
 	@Override
 	public String toString() {
 		return name + " - " + minutesToShow;
