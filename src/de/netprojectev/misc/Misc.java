@@ -1,5 +1,6 @@
 package de.netprojectev.misc;
 
+import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.MouseInfo;
 import java.awt.Point;
@@ -19,9 +20,13 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import javax.swing.JOptionPane;
+
+import org.apache.logging.log4j.Logger;
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
 import de.netprojectev.client.StarterClient;
+import de.netprojectev.client.networking.ClientMessageProxy;
 
 /**
  * Class to hold global methods not containing to a specific other class.
@@ -29,6 +34,28 @@ import de.netprojectev.client.StarterClient;
  */
 public class Misc {
 	
+	private static final Logger log = LoggerBuilder.createLogger(Misc.class);
+
+	
+	/**
+	 * handling the programs termination
+	 * showing up a confirmation dialog and invokes the serialization
+	 */
+	public static void quit(final Component parent, final ClientMessageProxy proxy) {
+        int exit = JOptionPane.showConfirmDialog(parent, "Are you sure you want to exit?", "Quit", JOptionPane.YES_NO_OPTION);
+        if (exit == JOptionPane.YES_OPTION) {	
+        	proxy.sendDisconnectRequest();
+        	/*try {
+				saveToDisk();
+				ImageFile.threadPool.shutdownNow();
+			} catch (IOException e) {
+				log.error("Error during saving settings and files.", e);
+			}*/
+        	
+    		System.exit(0);
+        }
+
+	}
 	
 	/**
 	 * reading current mouse pointer position

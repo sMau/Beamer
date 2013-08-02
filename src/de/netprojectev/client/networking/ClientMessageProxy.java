@@ -54,6 +54,10 @@ public class ClientMessageProxy {
 		return channelToServer.write(msgToSend);
 	}
 	
+	public void sendDisconnectRequest() {
+		client.disconnect();
+	}
+	
 	public void sendRequestFullSync() {
 		sendMessageToServer(new Message(OpCode.CTS_REQUEST_FULL_SYNC));
 	}
