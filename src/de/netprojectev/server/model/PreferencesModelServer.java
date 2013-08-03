@@ -29,6 +29,7 @@ public class PreferencesModelServer {
 		this.proxy = proxy;
 		prios = new HashMap<>();
 		themes = new HashMap<>();
+		props = new Properties(Misc.generateServerDefaultProps());
 		try {
 			loadProperties();
 		} catch (IOException e) {
@@ -90,23 +91,15 @@ public class PreferencesModelServer {
 	
 	public static void saveProperties() throws IOException {
 		log.info("Saving properties");
-		Misc.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
+		Misc.savePropertiesToDisk(props, ConstantsServer.SERVER_SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
 	}
 	
 	public static void loadProperties() throws IOException {
 		log.info("Loading properties");
-		props = new Properties(generateDefaultsProperties());
-		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
+		props = new Properties(Misc.generateServerDefaultProps());
+		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SERVER_SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
 		props.putAll(propsLoaded);
 	}
 	
-	private static Properties generateDefaultsProperties() {
-		Properties defaults = new Properties();
-		
-		defaults.setProperty(ConstantsServer.PROP_SERVER_PW, ConstantsServer.DEFAULT_SERVER_PW);
-		defaults.setProperty(ConstantsServer.PROP_TICKER_SEPERATOR, ConstantsServer.DEFAULT_TICKER_SEPERATOR);
-		
-		return defaults;
-	}
 
 }

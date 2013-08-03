@@ -55,4 +55,18 @@ public class Priority implements Serializable {
 	public String toString() {
 		return name + " - " + minutesToShow;
 	}
+	
+	@Override
+	public boolean equals(Object other){
+	    if (other == null || this == null) {
+	    	return false;
+	    } else if(other == this){
+	    	return true;
+	    } else if(other instanceof Priority) {
+	    	return ((Priority) other).getId().equals(this.getId());
+	    } else {
+	    	return false;
+	    }
+	}
+
 }

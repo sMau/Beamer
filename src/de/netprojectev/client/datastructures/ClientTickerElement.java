@@ -24,7 +24,7 @@ public class ClientTickerElement implements Serializable {
 	public ClientTickerElement(ServerTickerElement serverElt) {
 		this.id = serverElt.getId();
 		this.text = serverElt.getText();
-		this.show = true;
+		this.show = serverElt.isShow();
 	}
 
 	public String getText() {

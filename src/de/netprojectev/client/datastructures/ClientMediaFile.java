@@ -33,36 +33,27 @@ public class ClientMediaFile extends MediaFile {
 	public ClientMediaFile(ServerMediaFile serverMediaFile) throws FileNotFoundException, IOException {
 		super(serverMediaFile.getName(), serverMediaFile.getPriority(), serverMediaFile.getId());
 		// TODO maybe make previews possible for the others too
+		
+		int widthToScaleTo = 640; // TODO receive this from the props
+		
 		if (serverMediaFile instanceof Countdown) {
 			type = MediaType.Countdown;
 			preview = null;
 		} else if (serverMediaFile instanceof ImageFile) {
 			type = MediaType.Image;
-			preview = generatePreview(((ImageFile) serverMediaFile).getImage());
+			preview = Misc.getScaledImageIcon(((ImageFile) serverMediaFile).getImage(), widthToScaleTo);
 		} else if (serverMediaFile instanceof VideoFile) {
 			type = MediaType.Video;
 			preview = null;
 		} else if (serverMediaFile instanceof Themeslide) {
 			type = MediaType.Themeslide;
-			preview = generatePreview(((Themeslide) serverMediaFile).getImageRepresantation().getImage());
+			preview = Misc.getScaledImageIcon(((Themeslide) serverMediaFile).getImageRepresantation().getImage(), widthToScaleTo);
+			
 		} else {
 			type = MediaType.Unknown;
 			preview = null;
 		}
 
-	}
-
-	private ImageIcon generatePreview(ImageIcon original) throws FileNotFoundException, IOException {
-		BufferedImage bi = new BufferedImage(original.getIconWidth(), original.getIconHeight(), BufferedImage.TYPE_INT_RGB);
-		Graphics g = bi.createGraphics();
-		original.paintIcon(null, g, 0, 0);
-		g.dispose();
-		
-		int widthToScaleTo = 640; // TODO receive this from the props
-		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(bi, widthToScaleTo , (int) (widthToScaleTo * bi.getHeight(null))/bi.getWidth(null)));
-		bi = null;
-		
-		return scaled;
 	}
 	
 	public ClientMediaFile copy() {

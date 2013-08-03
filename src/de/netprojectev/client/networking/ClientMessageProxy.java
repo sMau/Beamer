@@ -82,6 +82,22 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_LIVE_TICKER_ELEMENT, eltToEdit));
 	}
 	
+	public void sendAddTheme(Theme themeToAdd) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEME, themeToAdd));
+	}
+	
+	public void sendAddPriority(Priority prioToAdd) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_PRIORITY, prioToAdd));
+	}
+	
+	public void sendRemoveTheme(UUID toRemove) {
+		sendMessageToServer(new Message(OpCode.CTS_REMOVE_THEME, toRemove));
+	}
+	
+	public void sendRemovePriority(UUID toRemove) {
+		sendMessageToServer(new Message(OpCode.CTS_REMOVE_PRIORITY, toRemove));
+	}
+	
 	public void sendAddImageFile(File file) throws IOException {
 		String name = file.getName();
 		BufferedImage image = ImageIO.read(file);

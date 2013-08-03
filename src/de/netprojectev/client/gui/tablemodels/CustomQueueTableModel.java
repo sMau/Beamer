@@ -46,6 +46,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 		});
 
 	}
+	
 	@Override
 	public int getRowCount() {
 		return mediaModel.getCustomQueue().size();

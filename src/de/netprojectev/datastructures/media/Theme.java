@@ -43,4 +43,22 @@ public class Theme implements Serializable {
 	public UUID getId() {
 		return id;
 	}
+	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	@Override
+	public boolean equals(Object other){
+	    if (other == null || this == null) {
+	    	return false;
+	    } else if(other == this){
+	    	return true;
+	    } else if(other instanceof Theme) {
+	    	return ((Theme) other).getId().equals(this.getId());
+	    } else {
+	    	return false;
+	    }
+	}
 }

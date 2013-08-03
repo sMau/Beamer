@@ -116,9 +116,9 @@ public class ServerTickerModelTest {
 		
 		String actual = tickerModel.generateCompleteTickerText();
 
-		assertTrue(actual.contains(elt123.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR)));
-		assertTrue(actual.contains(elt456.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR)));
-		assertTrue(actual.contains(elt789.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR)));
+		assertTrue(actual.contains(elt123.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_TICKER_SEPERATOR)));
+		assertTrue(actual.contains(elt456.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_TICKER_SEPERATOR)));
+		assertTrue(actual.contains(elt789.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_TICKER_SEPERATOR)));
 
 	}
 }

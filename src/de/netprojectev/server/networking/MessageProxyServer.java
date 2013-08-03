@@ -183,6 +183,8 @@ public class MessageProxyServer {
 	}
 	
 	private void fullSyncRequested(Message msg, Channel channel) throws FileNotFoundException, IOException {
+		
+		//TODO include all props, themes and prios and so on
 		HashMap<UUID, ServerMediaFile> allMedia = mediaModel.getAllMediaFiles();
 		LinkedList<UUID> customQueue = mediaModel.getMediaPrivateQueue();
 		HashMap<UUID, ServerTickerElement> tickerElements = tickerModel.getElements();
@@ -204,21 +206,25 @@ public class MessageProxyServer {
 	private void removePriority(Message msg) {
 		UUID prioToRemove = (UUID) msg.getData();
 		prefsModel.removePriority(prioToRemove);
+		broadcastMessage(new Message(OpCode.STC_REMOVE_PRIORITY_ACK, prioToRemove));
 	}
 
 	private void removeTheme(Message msg) {
 		UUID themeToRemove = (UUID) msg.getData();
 		prefsModel.removeTheme(themeToRemove);
+		broadcastMessage(new Message(OpCode.STC_REMOVE_THEME_ACK, themeToRemove));
 	}
 
 	private void addPriority(Message msg) {
 		Priority prioToAdd = (Priority) msg.getData();
 		prefsModel.addPriority(prioToAdd);
+		broadcastMessage(new Message(OpCode.STC_ADD_PRIORITY_ACK, prioToAdd));
 	}
 
 	private void addTheme(Message msg) {
 		Theme themeToAdd = (Theme) msg.getData();
 		prefsModel.addTheme(themeToAdd);
+		broadcastMessage(new Message(OpCode.STC_ADD_THEME_ACK, themeToAdd));
 	}
 	
 	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException {

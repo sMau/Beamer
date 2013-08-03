@@ -21,6 +21,9 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.gui.main.CreateTickerElementDialog.DialogClosedListener;
+import de.netprojectev.client.gui.preferences.AddPriorityDialog;
+import de.netprojectev.client.gui.preferences.AddThemeDialog;
+import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.gui.tablemodels.AllMediaTableModel;
 import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel;
 import de.netprojectev.client.gui.tablemodels.TickerTableModel;
@@ -529,12 +532,6 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
         jlPriority.setText("Priority");
 
-        jcbPriorityChange.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jcbPriorityChangeActionPerformed(evt);
-            }
-        });
-
         jlShowcount.setText("Showcount");
 
         jlShowcountNumber.setText("0");
@@ -545,11 +542,6 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
         jchbEnabled.setSelected(true);
         jchbEnabled.setText("Enabled");
-        jchbEnabled.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jchbEnabledActionPerformed(evt);
-            }
-        });
 
         jbResetShowcount.setText("Reset");
         jbResetShowcount.addActionListener(new java.awt.event.ActionListener() {
@@ -757,10 +749,6 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jcbPriorityChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbPriorityChangeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jcbPriorityChangeActionPerformed
-
     private void jbUpdateFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateFileDataActionPerformed
     	String text = jtfFileName.getText();
     	
@@ -794,10 +782,6 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_jbResetFileDataActionPerformed
 
-    private void jchbEnabledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchbEnabledActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jchbEnabledActionPerformed
-
     private void jbResetShowcountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbResetShowcountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jbResetShowcountActionPerformed
@@ -807,7 +791,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_jmiAddFileActionPerformed
 
 	private void jmiAddPrioActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddPrioActionPerformed
-		// TODO add your handling code here:
+		new AddPriorityDialog(this, true, proxy).setVisible(true);
 	}// GEN-LAST:event_jmiAddPrioActionPerformed
 
 	private void jmipopAddFileActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmipopAddFileActionPerformed
@@ -839,11 +823,11 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_jmiRemoveActionPerformed
 
 	private void jmiAddThemeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddThemeActionPerformed
-		// TODO add your handling code here:
+		new AddThemeDialog(this, true, proxy).setVisible(true);
 	}// GEN-LAST:event_jmiAddThemeActionPerformed
 
 	private void jmiPrefsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiPrefsActionPerformed
-		// TODO add your handling code here:
+		new PreferencesFrame(proxy).setVisible(true);
 	}// GEN-LAST:event_jmiPrefsActionPerformed
 
 	private void jmirbAutomodeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmirbAutomodeActionPerformed

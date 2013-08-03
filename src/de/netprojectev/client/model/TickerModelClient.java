@@ -8,8 +8,6 @@ import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.Logger;
 
-import com.sun.corba.se.impl.orbutil.closure.Constant;
-
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.gui.tablemodels.TickerTableModel.UpdateTickerDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
@@ -95,17 +93,19 @@ public class TickerModelClient {
 		}
 	}
 	
-	public String completeTickerText() {
+	public String completeTickerText() throws MediaDoesNotExsistException {
 		String text = "";
 		
-		for(int i = 0; i < allElementsList.size(); i++) {
-			if(i < allElementsList.size() - 1) {
-				text += allElementsList.get(i) + Constants.DEFAULT_TICKER_SEPERATOR;
-			} else {
-				text += allElementsList.get(i);
+		for(int i = 0; i < allElementsList.size() - 1; i++) {
+			if(getElementByID(allElementsList.get(i)).isShow()) {
+				text += getElementByID(allElementsList.get(i)).getText() + PreferencesModelClient.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR);
 			}
-				
 		}
+		
+		if(text.length() > PreferencesModelClient.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR).length()) {
+			text = text.substring(0, text.length() - PreferencesModelClient.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR).length());
+		}
+	
 		return text;
 	}
 
