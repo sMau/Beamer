@@ -1,5 +1,7 @@
 package de.netprojectev.server.networking;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Timer;
@@ -68,7 +70,7 @@ public class MessageProxyServer {
 		this.frame = new DisplayFrame(this); 
 	}
 	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
-	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
+	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_MEDIA_FILE:
 			addMediaFile(msg);
@@ -78,6 +80,9 @@ public class MessageProxyServer {
 			break;
 		case CTS_SHOW_MEDIA_FILE:
 			showMediaFile(msg);
+			break;
+		case CTS_EDIT_MEDIA_FILE:
+			editMediaFile(msg);
 			break;
 		case CTS_SHOW_NEXT_MEDIA_FILE:
 			showNextMediaFile();
@@ -134,6 +139,14 @@ public class MessageProxyServer {
 	}
 
 
+	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException {
+		ClientMediaFile editedFile = (ClientMediaFile) msg.getData();
+		ServerMediaFile correlatedServerFile = mediaModel.getMediaFileById(editedFile.getId());		
+		correlatedServerFile.setName(editedFile.getName());
+		correlatedServerFile.setPriority(editedFile.getPriority()); //TODO check if this is working with objects, else change to id based prios
+		broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(correlatedServerFile)));
+	}
+	
 	public ChannelGroupFuture broadcastMessage(Message msg) {
 		log.debug("Broadcasting message: " + msg);
 		return allClients.write(msg);
@@ -159,7 +172,7 @@ public class MessageProxyServer {
 
 	}
 	
-	private void fullSyncRequested(Message msg, Channel channel) {
+	private void fullSyncRequested(Message msg, Channel channel) throws FileNotFoundException, IOException {
 		HashMap<UUID, ServerMediaFile> allMedia = mediaModel.getAllMediaFiles();
 		LinkedList<UUID> customQueue = mediaModel.getMediaPrivateQueue();
 		HashMap<UUID, ServerTickerElement> tickerElements = tickerModel.getElements();
@@ -220,12 +233,18 @@ public class MessageProxyServer {
 	}
 
 	private void showNextMediaFile() throws MediaDoesNotExsistException, MediaListsEmptyException {
+		boolean fileFromPrivateQueue = false;
+		if(!mediaModel.getMediaPrivateQueue().isEmpty()) {
+			fileFromPrivateQueue = true;
+		}
 		ServerMediaFile fileToShow = mediaModel.getNext();
 		currentFile = fileToShow;
 		
 		updateAutoModeTimer();
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, fileToShow.getId()));
-		
+		if(fileFromPrivateQueue) {
+			broadcastMessage(new Message(OpCode.STC_DEQUEUE_MEDIAFILE_ACK, new DequeueData(0, fileToShow.getId())));
+		}
 		//TODO implement the display part
 		
 	}
@@ -253,7 +272,7 @@ public class MessageProxyServer {
 		broadcastMessage(new Message(OpCode.STC_REMOVE_MEDIA_FILE_ACK, toRemove));
 	}
 
-	private void addMediaFile(Message msg) {
+	private void addMediaFile(Message msg) throws FileNotFoundException, IOException {
 		ServerMediaFile fileToAdd = (ServerMediaFile) msg.getData();
 		mediaModel.addMediaFile(fileToAdd);
 		

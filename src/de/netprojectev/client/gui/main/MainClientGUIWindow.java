@@ -7,6 +7,7 @@ package de.netprojectev.client.gui.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -17,6 +18,8 @@ import javax.swing.Timer;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.gui.main.CreateTickerElementDialog.DialogClosedListener;
 import de.netprojectev.client.gui.tablemodels.AllMediaTableModel;
 import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel;
@@ -25,9 +28,12 @@ import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  * 
@@ -54,6 +60,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	private final TickerModelClient tickerModel;
 	private final PreferencesModelClient prefs;
 
+	private ClientMediaFile currentSelected;
+	
 	private Timer refreshTimeLeftTimer;
 
 	/**
@@ -93,6 +101,64 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
 		this.proxy = proxy;
 		initComponents();
+		
+		jtAllMedia.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				try {
+					updatePreviewLable();
+				} catch (MediaDoesNotExsistException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					updateEditorLable();
+				} catch (MediaDoesNotExsistException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+
+		});
+		
+		jtCustomQueue.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				try {
+					updatePreviewLable();
+				} catch (MediaDoesNotExsistException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					updateEditorLable();
+				} catch (MediaDoesNotExsistException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
+		
+		jtLiveTicker.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				try {
+					updatePreviewLable();
+				} catch (MediaDoesNotExsistException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					updateEditorLable();
+				} catch (MediaDoesNotExsistException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 
 	/**
@@ -695,11 +761,20 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jcbPriorityChangeActionPerformed
 
     private void jbUpdateFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateFileDataActionPerformed
-        // TODO add your handling code here:
+    	String newFilename = jtfFileName.getText();
+    	//TODO get Prio, server sided change to prio uuid not the prio object
+    	ClientMediaFile copyToSend = currentSelected.copy();
+    	copyToSend.setName(newFilename);
+    	proxy.sendEditMediaFile(copyToSend);
     }//GEN-LAST:event_jbUpdateFileDataActionPerformed
 
     private void jbResetFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbResetFileDataActionPerformed
-        // TODO add your handling code here:
+        try {
+			updateEditorLable();
+		} catch (MediaDoesNotExsistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }//GEN-LAST:event_jbResetFileDataActionPerformed
 
     private void jchbEnabledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchbEnabledActionPerformed
@@ -916,7 +991,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		int returnVal = fileChooser.showOpenDialog(this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			proxy.sendAddImageFiles(fileChooser.getSelectedFiles());
+			try {
+				proxy.sendAddImageFiles(fileChooser.getSelectedFiles());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -1008,6 +1088,123 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		refreshTimeLeftTimer.start();
 	}
 
+
+	private void updateEditorLable() throws MediaDoesNotExsistException {
+		int selectedTab = tabbedPaneContainer.getSelectedIndex();
+		int row;
+		switch (selectedTab) {
+		case 0:
+			jlFileName.setText("Filename");
+			jchbEnabled.setVisible(false);
+			jlPriority.setVisible(true);
+			jcbPriorityChange.setVisible(true);
+			jlShowcount.setVisible(true);
+			jlShowcountNumber.setVisible(true);
+			jlCurrent.setVisible(true);
+			jlCurrentYesNo.setVisible(true);
+			jbResetShowcount.setVisible(true);
+			
+			row = jtAllMedia.getSelectedRow();
+			if(row >= 0) {
+				ClientMediaFile selected = mediaModel.getValueAt(row);
+				
+				currentSelected = selected;
+				
+				jtfFileName.setText(selected.getName());
+				jlShowcountNumber.setText(Integer.toString(selected.getShowCount()));
+				if(selected.isCurrent()) {
+					jlCurrentYesNo.setText("Yes");
+				} else {
+					jlCurrentYesNo.setText("No");
+				}
+			}
+
+			break;
+		case 1:
+
+			jlFileName.setText("Filename");
+			jchbEnabled.setVisible(false);
+			jlPriority.setVisible(true);
+			jcbPriorityChange.setVisible(true);
+			jlShowcount.setVisible(true);
+			jlShowcountNumber.setVisible(true);
+			jlCurrent.setVisible(true);
+			jlCurrentYesNo.setVisible(true);
+			jbResetShowcount.setVisible(true);
+			
+			row = jtCustomQueue.getSelectedRow();
+			if(row >= 0) {
+				ClientMediaFile selected = mediaModel.getMediaFileById(mediaModel.getCustomQueue().get(row));
+				
+				currentSelected = selected;
+				
+				jtfFileName.setText(selected.getName());
+				jlShowcountNumber.setText(Integer.toString(selected.getShowCount()));
+				if(selected.isCurrent()) {
+					jlCurrentYesNo.setText("Yes");
+				} else {
+					jlCurrentYesNo.setText("No");
+				}
+			}
+			break;
+		case 2:
+			jlFileName.setText("Text");
+			jchbEnabled.setVisible(true);
+			jlPriority.setVisible(false);
+			jcbPriorityChange.setVisible(false);
+			jlShowcount.setVisible(false);
+			jlShowcountNumber.setVisible(false);
+			jlCurrent.setVisible(false);
+			jlCurrentYesNo.setVisible(false);
+			jbResetShowcount.setVisible(false);
+			
+			row = jtLiveTicker.getSelectedRow();
+			if(row >= 0) {
+				ClientTickerElement selected = tickerModel.getValueAt(row);
+				jtfFileName.setText(selected.getText());
+				jchbEnabled.setSelected(selected.isShow());
+			}
+			break;
+		default:
+			log.debug("remove: no propper tab selected");
+			break;
+
+		}
+
+	}
+	
+	private void updatePreviewLable() throws MediaDoesNotExsistException {
+		int selectedTab = tabbedPaneContainer.getSelectedIndex();
+		int row;
+		switch (selectedTab) {
+		case 0:
+			row = jtAllMedia.getSelectedRow();
+			if(row >= 0) {
+				ClientMediaFile selected = mediaModel.getValueAt(row);
+				jlPreview.setIcon(selected.getPreview());
+			}
+
+			break;
+		case 1:
+			row = jtCustomQueue.getSelectedRow();
+			if(row >= 0) {
+				ClientMediaFile selected = mediaModel.getMediaFileById(mediaModel.getCustomQueue().get(row));
+				jlPreview.setIcon(selected.getPreview());
+			}
+			break;
+		case 2:
+			jlPreview.setIcon(null);
+			jlPreview.setText(tickerModel.completeTickerText());
+			break;
+		default:
+			log.debug("remove: no propper tab selected");
+			break;
+
+		}
+		
+		
+	}
+	
 	/**
 	 * changing programs standard behaviour if user clicks the "x" on the main
 	 * frame therefore it invokes the quit method
@@ -1071,21 +1268,6 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelPreview;
-    private javax.swing.JLabel jLabelPreview1;
-    private javax.swing.JLabel jLabelPreview2;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
     private javax.swing.JButton jbAddFile;
     private javax.swing.JButton jbAddThemeslide;
     private javax.swing.JButton jbAddTickerElement;

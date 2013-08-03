@@ -53,7 +53,7 @@ public class Constants {
 	protected static final int DEFAULT_SCREEN_NUMBER_FULLSCREEN = 1;
 	
 	protected static final int DEFAULT_TICKER_SPEED = 40; //means 25 FPS
-	protected static final String DEFAULT_TICKER_SEPERATOR = " +++ ";
+	public static final String DEFAULT_TICKER_SEPERATOR = " +++ ";
 	protected static final int DEFAULT_TICKER_FONTSIZE = 32;
 	protected static final String DEFAULT_TICKER_FONTTYPE = "Arial";
 	protected static final int DEFAULT_TICKER_FONTCOLOR = -16777216;

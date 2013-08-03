@@ -1,9 +1,12 @@
 package de.netprojectev.client.networking;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import org.apache.logging.log4j.Logger;
@@ -70,13 +73,19 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
 	}
 	
-	public void sendAddImageFile(File file) {
-		String name = file.getName();
-		ImageIcon image = new ImageIcon(file.getAbsolutePath());
-		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, new ImageFile(name, image)));
+	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
+		fileToEdit.setPreview(null);
+		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
 	}
 	
-	public void sendAddImageFiles(File[] files) {
+	public void sendAddImageFile(File file) throws IOException {
+		String name = file.getName();
+		BufferedImage image = ImageIO.read(file);
+		ImageIcon icon = new ImageIcon(image);
+		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, new ImageFile(name, icon)));
+	}
+	
+	public void sendAddImageFiles(File[] files) throws IOException {
 		for(int i = 0; i < files.length; i++) {
 			sendAddImageFile(files[i]);
 		}

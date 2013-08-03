@@ -8,10 +8,13 @@ import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.Logger;
 
+import com.sun.corba.se.impl.orbutil.closure.Constant;
+
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.gui.tablemodels.TickerTableModel.UpdateTickerDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.LoggerBuilder;
 
 public class TickerModelClient {
@@ -90,6 +93,20 @@ public class TickerModelClient {
 		if(elements.get(id) == null) {
 			throw new MediaDoesNotExsistException("Ticker element does not exist. Query id: " + id);
 		}
+	}
+	
+	public String completeTickerText() {
+		String text = "";
+		
+		for(int i = 0; i < allElementsList.size(); i++) {
+			if(i < allElementsList.size() - 1) {
+				text += allElementsList.get(i) + Constants.DEFAULT_TICKER_SEPERATOR;
+			} else {
+				text += allElementsList.get(i);
+			}
+				
+		}
+		return text;
 	}
 
 	public HashMap<UUID, ClientTickerElement> getElements() {
