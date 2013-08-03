@@ -48,6 +48,8 @@ public class AddPriorityDialog extends javax.swing.JDialog {
         this.proxy = proxy;
         initComponents();
 
+        setLocationRelativeTo(parent);
+        
         setLocation(Misc.currentMousePosition());
         
         // Close the dialog when Esc is pressed

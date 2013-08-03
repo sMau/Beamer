@@ -188,7 +188,11 @@ public class MessageProxyServer {
 		HashMap<UUID, ServerMediaFile> allMedia = mediaModel.getAllMediaFiles();
 		LinkedList<UUID> customQueue = mediaModel.getMediaPrivateQueue();
 		HashMap<UUID, ServerTickerElement> tickerElements = tickerModel.getElements();
+		HashMap<UUID, Theme> themes = prefsModel.getThemes();
+		HashMap<UUID, Priority> priorities = prefsModel.getPrios();
+		
 		channel.write(new Message(OpCode.STC_FULL_SYNC_START));
+		
 		for(UUID id : allMedia.keySet()) {
 			channel.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
 		}
@@ -200,6 +204,15 @@ public class MessageProxyServer {
 		for(UUID id : tickerElements.keySet()) {
 			channel.write(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(tickerElements.get(id))));
 		}
+		
+		for(UUID id : themes.keySet()) {
+			channel.write(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
+		}
+			
+		for(UUID id : priorities.keySet()) {
+			channel.write(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
+		}
+		
 		channel.write(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
 	

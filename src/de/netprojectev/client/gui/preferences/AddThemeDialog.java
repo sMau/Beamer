@@ -60,7 +60,7 @@ public class AddThemeDialog extends javax.swing.JDialog {
         this.proxy = proxy;
         initComponents();
         
-        setLocation(Misc.currentMousePosition());
+        setLocationRelativeTo(parent);
 
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";

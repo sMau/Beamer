@@ -35,6 +35,7 @@ public class CreateTickerElementDialog extends javax.swing.JDialog {
     public CreateTickerElementDialog(java.awt.Frame parent, boolean modal, DialogClosedListener listener) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(parent);
         this.closeListener = listener;
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);

@@ -45,7 +45,9 @@ public class LoginDialog extends javax.swing.JDialog {
     public LoginDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-
+        
+        setLocationRelativeTo(parent);
+        
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);

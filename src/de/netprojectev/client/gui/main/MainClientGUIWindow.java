@@ -827,7 +827,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_jmiAddThemeActionPerformed
 
 	private void jmiPrefsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiPrefsActionPerformed
-		new PreferencesFrame(proxy).setVisible(true);
+		new PreferencesFrame(this, proxy).setVisible(true);
 	}// GEN-LAST:event_jmiPrefsActionPerformed
 
 	private void jmirbAutomodeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmirbAutomodeActionPerformed

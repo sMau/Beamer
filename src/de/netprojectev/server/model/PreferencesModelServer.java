@@ -22,8 +22,8 @@ public class PreferencesModelServer {
 	
 	private static Properties props;
 	private final MessageProxyServer proxy;
-	private HashMap<UUID, Priority> prios;
-	private HashMap<UUID, Theme> themes;
+	private final HashMap<UUID, Priority> prios;
+	private final HashMap<UUID, Theme> themes;
 	
 	public PreferencesModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
@@ -99,6 +99,14 @@ public class PreferencesModelServer {
 		props = new Properties(Misc.generateServerDefaultProps());
 		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SERVER_SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
 		props.putAll(propsLoaded);
+	}
+
+	public HashMap<UUID, Priority> getPrios() {
+		return prios;
+	}
+
+	public HashMap<UUID, Theme> getThemes() {
+		return themes;
 	}
 	
 

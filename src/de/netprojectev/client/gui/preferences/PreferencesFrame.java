@@ -4,6 +4,7 @@
  */
 package de.netprojectev.client.gui.preferences;
 
+import java.awt.Frame;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,11 +38,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	/**
      * Creates new form PreferencesFrame
      */
-    public PreferencesFrame(ClientMessageProxy proxy) {
+    public PreferencesFrame(Frame parent, ClientMessageProxy proxy) {
         this.prefs = proxy.getPrefs();
         this.proxy = proxy;
     	initComponents();
-    	
+    	setLocationRelativeTo(parent);
     	jliPriorities.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
@@ -432,7 +433,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PreferencesFrame(null).setVisible(true);
+                new PreferencesFrame(null, null).setVisible(true);
             }
         });
     }
