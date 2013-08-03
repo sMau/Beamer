@@ -4,6 +4,8 @@
  */
 package de.netprojectev.client.gui.main;
 
+import java.awt.Container;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -71,7 +73,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	/**
 	 * Creates new form MainClientGUIWindow
 	 */
-	public MainClientGUIWindow(ClientMessageProxy proxy) {
+	public MainClientGUIWindow(Container parent, ClientMessageProxy proxy) {
 		this.mediaModel = proxy.getMediaModel();
 
 		this.mediaModel.setUpdateCurrentFileListener(new UpdateCurrentFileListener() {
@@ -105,6 +107,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
 		this.proxy = proxy;
 		initComponents();
+		
+		this.setLocationRelativeTo(parent);
 		
 		jtAllMedia.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -1269,7 +1273,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new MainClientGUIWindow(null).setVisible(true);
+				new MainClientGUIWindow(null, null).setVisible(true);
 			}
 		});
 	}

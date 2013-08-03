@@ -29,7 +29,7 @@ public class PreferencesModelServer {
 		this.proxy = proxy;
 		prios = new HashMap<>();
 		themes = new HashMap<>();
-		props = new Properties(Misc.generateServerDefaultProps());
+		props = new Properties(Misc.generateDefaultProps());
 		try {
 			loadProperties();
 		} catch (IOException e) {
@@ -96,7 +96,7 @@ public class PreferencesModelServer {
 	
 	public static void loadProperties() throws IOException {
 		log.info("Loading properties");
-		props = new Properties(Misc.generateServerDefaultProps());
+		props = new Properties(Misc.generateDefaultProps());
 		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SERVER_SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
 		props.putAll(propsLoaded);
 	}

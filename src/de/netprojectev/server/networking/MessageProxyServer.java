@@ -323,12 +323,15 @@ public class MessageProxyServer {
 		broadcastMessage(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 	}
 	private void updateAutoModeTimer() {
-		if(autoModusTimer != null) {
-			autoModusTimer.cancel();
-			autoModusTimer.purge();			
+		if(automodeEnabled) {
+			if(autoModusTimer != null) {
+				autoModusTimer.cancel();
+				autoModusTimer.purge();			
+			}
+			autoModusTimer = new Timer();
+			autoModusTimer.schedule(new AutomodeTimerTask(), currentFile.getPriority().getTimeToShowInMilliseconds());
 		}
-		autoModusTimer = new Timer();
-		autoModusTimer.schedule(new AutomodeTimerTask(), currentFile.getPriority().getTimeToShowInMilliseconds());
+		
 	}
 	
 	private void disableAutoMode() {

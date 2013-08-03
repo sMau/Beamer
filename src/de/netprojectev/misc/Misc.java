@@ -245,8 +245,16 @@ public class Misc {
 
 	}
 
-	public static Properties generateServerDefaultProps() {
+	public static Properties generateDefaultProps() {
 		Properties defProps = new Properties();
+
+		defProps.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + Constants.DEFAULT_PREVIEW_SCALE_WIDTH);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE + "pt");
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT);
+		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
+
 		defProps.setProperty(ConstantsServer.PROP_SERVER_PW, ConstantsServer.DEFAULT_SERVER_PW);
 		
 		defProps.setProperty(Constants.PROP_TICKER_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
@@ -257,20 +265,7 @@ public class Misc {
 		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTCOLOR, "" + Constants.DEFAULT_COUNTDOWN_FONTCOLOR);
 		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTSIZE, "" + Constants.DEFAULT_COUNTDOWN_FONTSIZE);
 		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTTYPE, Constants.DEFAULT_COUNTDOWN_FONTTYPE);
-
-		return defProps;
-	}
-
-	public static Properties generateClientDefaultProps() {
-		Properties defProps = new Properties();
-
-		defProps.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + Constants.DEFAULT_PREVIEW_SCALE_WIDTH);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE + "pt");
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
-
+		
 		return defProps;
 	}
 

@@ -32,9 +32,21 @@ public class MediaModelClient {
 	
 	private MediaFile currentMediaFile;
 	
-	private UpdateAllMediaDataListener allMediaListener;
-	private UpdateCustomQueueDataListener customQueueListener;
-	private UpdateCurrentFileListener updateCurrentFileListener;
+	private UpdateAllMediaDataListener allMediaListener = new UpdateAllMediaDataListener() {
+		@Override
+		public void update() {			
+		}
+	};
+	private UpdateCustomQueueDataListener customQueueListener = new UpdateCustomQueueDataListener() {
+		@Override
+		public void update() {			
+		}
+	};
+	private UpdateCurrentFileListener updateCurrentFileListener = new UpdateCurrentFileListener() {
+		@Override
+		public void update() {			
+		}
+	};
 	
 	public MediaModelClient(ClientMessageProxy proxy) {
 		this.proxy = proxy;
