@@ -15,6 +15,12 @@ public class ClientTickerElement implements Serializable {
 	private String text;
 	private boolean show;
 	
+	private ClientTickerElement(ClientTickerElement elt) {
+		this.id = elt.id;
+		this.text = elt.text;
+		this.show = elt.show;
+	}
+	
 	public ClientTickerElement(ServerTickerElement serverElt) {
 		this.id = serverElt.getId();
 		this.text = serverElt.getText();
@@ -39,6 +45,10 @@ public class ClientTickerElement implements Serializable {
 
 	public void setShow(boolean show) {
 		this.show = show;
+	}
+	
+	public ClientTickerElement copy() {
+		return new ClientTickerElement(this);
 	}
 	
 	@Override

@@ -60,7 +60,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	private final TickerModelClient tickerModel;
 	private final PreferencesModelClient prefs;
 
-	private ClientMediaFile currentSelected;
+	private ClientMediaFile currentSelectedMediaFile;
+	private ClientTickerElement currentSelectedTickerElement;
 	
 	private Timer refreshTimeLeftTimer;
 
@@ -761,11 +762,27 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_jcbPriorityChangeActionPerformed
 
     private void jbUpdateFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateFileDataActionPerformed
-    	String newFilename = jtfFileName.getText();
+    	String text = jtfFileName.getText();
+    	
     	//TODO get Prio, server sided change to prio uuid not the prio object
-    	ClientMediaFile copyToSend = currentSelected.copy();
-    	copyToSend.setName(newFilename);
-    	proxy.sendEditMediaFile(copyToSend);
+    	//TODO add proper string handling, like removing trailing and leading spaces, avoid only spaces in the string and so on
+    	if(currentSelectedMediaFile != null) {
+    		ClientMediaFile copyToSend = currentSelectedMediaFile.copy();
+        	copyToSend.setName(text);
+        	if(text != null && !text.isEmpty()) {
+        		proxy.sendEditMediaFile(copyToSend);
+        	}
+        	
+    	}
+    	if(currentSelectedTickerElement != null) {
+    		ClientTickerElement copyToSend = currentSelectedTickerElement.copy();
+    		copyToSend.setText(text);
+    		copyToSend.setShow(jchbEnabled.isSelected());
+    		if(text != null && !text.isEmpty()) {
+        		proxy.sendEditTickerElement(copyToSend);
+        	}
+    	}
+    	
     }//GEN-LAST:event_jbUpdateFileDataActionPerformed
 
     private void jbResetFileDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbResetFileDataActionPerformed
@@ -1108,7 +1125,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 			if(row >= 0) {
 				ClientMediaFile selected = mediaModel.getValueAt(row);
 				
-				currentSelected = selected;
+				currentSelectedMediaFile = selected;
+				currentSelectedTickerElement = null;
 				
 				jtfFileName.setText(selected.getName());
 				jlShowcountNumber.setText(Integer.toString(selected.getShowCount()));
@@ -1136,7 +1154,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 			if(row >= 0) {
 				ClientMediaFile selected = mediaModel.getMediaFileById(mediaModel.getCustomQueue().get(row));
 				
-				currentSelected = selected;
+				currentSelectedMediaFile = selected;
+				currentSelectedTickerElement = null;
 				
 				jtfFileName.setText(selected.getName());
 				jlShowcountNumber.setText(Integer.toString(selected.getShowCount()));
@@ -1161,6 +1180,10 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 			row = jtLiveTicker.getSelectedRow();
 			if(row >= 0) {
 				ClientTickerElement selected = tickerModel.getValueAt(row);
+				
+				currentSelectedMediaFile = null;
+				currentSelectedTickerElement = selected;
+				
 				jtfFileName.setText(selected.getText());
 				jchbEnabled.setSelected(selected.isShow());
 			}

@@ -9,7 +9,7 @@ public class ServerTickerElement implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 7790234554937908704L;
-	private UUID id;
+	private final UUID id;
 	private String text;
 	private boolean show;
 	
@@ -46,5 +46,9 @@ public class ServerTickerElement implements Serializable {
 	    } else {
 	    	return false;
 	    }
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 }

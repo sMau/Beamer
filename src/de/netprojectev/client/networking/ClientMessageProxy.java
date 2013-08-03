@@ -78,6 +78,10 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
 	}
 	
+	public void sendEditTickerElement(ClientTickerElement eltToEdit) {
+		sendMessageToServer(new Message(OpCode.CTS_EDIT_LIVE_TICKER_ELEMENT, eltToEdit));
+	}
+	
 	public void sendAddImageFile(File file) throws IOException {
 		String name = file.getName();
 		BufferedImage image = ImageIO.read(file);

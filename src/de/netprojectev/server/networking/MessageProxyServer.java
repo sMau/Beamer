@@ -84,6 +84,9 @@ public class MessageProxyServer {
 		case CTS_EDIT_MEDIA_FILE:
 			editMediaFile(msg);
 			break;
+		case CTS_EDIT_LIVE_TICKER_ELEMENT:
+			editLiveTickerElement(msg);
+			break;
 		case CTS_SHOW_NEXT_MEDIA_FILE:
 			showNextMediaFile();
 			break;
@@ -139,6 +142,13 @@ public class MessageProxyServer {
 	}
 
 
+	private void editLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
+		ClientTickerElement edited = (ClientTickerElement) msg.getData();
+		ServerTickerElement correlatedServerFile = tickerModel.getElementByID(edited.getId());
+		correlatedServerFile.setShow(edited.isShow());
+		correlatedServerFile.setText(edited.getText());
+		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(correlatedServerFile)));
+	}
 	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException {
 		ClientMediaFile editedFile = (ClientMediaFile) msg.getData();
 		ServerMediaFile correlatedServerFile = mediaModel.getMediaFileById(editedFile.getId());		
