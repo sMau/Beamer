@@ -258,23 +258,19 @@ public class ClientMessageProxy {
 	}
 
 	private void liveTickerDisabled(Message msg) {
-		// TODO Auto-generated method stub
-		
+		prefs.disableLiveTicker();
 	}
 
 	private void liveTickerEnabled(Message msg) {
-		// TODO Auto-generated method stub
-		
+		prefs.enableLiveTicker();
 	}
 
 	private void fullscreenDisabled(Message msg) {
-		// TODO Auto-generated method stub
-		
+		prefs.disableFullscreen();
 	}
 
 	private void fullscreenEnabled(Message msg) {
-		// TODO Auto-generated method stub
-		
+		prefs.enableFullscreen();
 	}
 
 	private void autoModeDisabled(Message msg) {
@@ -423,6 +419,22 @@ public class ClientMessageProxy {
 		} else {
 			sendMessageToServer(new Message(OpCode.CTS_DISABLE_AUTO_MODE));
 		}
+	}
+
+	public void sendStartLiveTicker() {
+		sendMessageToServer(new Message(OpCode.CTS_ENABLE_LIVE_TICKER));
+	}
+
+	public void sendStopLiveTicker() {
+		sendMessageToServer(new Message(OpCode.CTS_DISABLE_LIVE_TICKER));
+	}
+
+	public void sendEnterFullscreen() {
+		sendMessageToServer(new Message(OpCode.CTS_ENABLE_FULLSCREEN));
+	}
+
+	public void sendExitFullscreen() {
+		sendMessageToServer(new Message(OpCode.CTS_DISABLE_FULLSCREEN));
 	}
 
 	

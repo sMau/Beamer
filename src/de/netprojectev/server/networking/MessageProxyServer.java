@@ -42,6 +42,8 @@ public class MessageProxyServer {
 	private final PreferencesModelServer prefsModel;
 	private final DisplayFrame frame;
 	private boolean automodeEnabled;
+	private boolean fullscreenEnabled;
+	private boolean liveTickerEnabled;
 	private ServerMediaFile currentFile;
 	private Timer autoModusTimer;
 	
@@ -226,6 +228,14 @@ public class MessageProxyServer {
 			channel.write(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 		}
 		
+		if(liveTickerEnabled) {
+			channel.write(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
+		}
+		
+		if(fullscreenEnabled) {
+			channel.write(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
+		}
+		
 		channel.write(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
 	
@@ -328,12 +338,18 @@ public class MessageProxyServer {
 	}
 	
 	private void enableFullScreen() {
-		// TODO Auto-generated method stub
+		fullscreenEnabled = true;
 		
+		//TODO update display
+		
+		broadcastMessage(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 	}
 	
 	private void disableFullScreen() {
-		// TODO Auto-generated method stub
+		fullscreenEnabled = false;
+		//TODO update display	
+		
+		broadcastMessage(new Message(OpCode.STC_DISABLE_FULLSCREEN_ACK));
 		
 	}
 
@@ -366,23 +382,19 @@ public class MessageProxyServer {
 		autoModusTimer = null;
 		broadcastMessage(new Message(OpCode.STC_DISABLE_AUTO_MODE_ACK));
 	}
-	
-	//TODO last worked here: made fullsync including themes and prios
-	/*
-	 * make it possible to set prios and add default prio
-	 * next make enabling liveticker msg
-	 * next make enabling fullscreen msg
-	 * next make starting live ticker msg
-	 */
 
 	private void enableLiveTicker() {
-		// TODO Auto-generated method stub
+		liveTickerEnabled = true;
+		//TODO update display
 		
+		broadcastMessage(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
 	}
 	
 	private void disableLiveTicker() {
-		// TODO Auto-generated method stub
+		liveTickerEnabled = false;
+		//TODO update display
 		
+		broadcastMessage(new Message(OpCode.STC_DISABLE_LIVE_TICKER_ACK));
 	}
 	
 	public boolean isAutomodeEnabled() {
@@ -419,6 +431,12 @@ public class MessageProxyServer {
 
 	public PreferencesModelServer getPrefsModel() {
 		return prefsModel;
+	}
+	public boolean isFullscreenEnabled() {
+		return fullscreenEnabled;
+	}
+	public boolean isLiveTickerEnabled() {
+		return liveTickerEnabled;
 	}
 
 }

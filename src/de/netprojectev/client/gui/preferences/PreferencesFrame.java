@@ -10,10 +10,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import de.netprojectev.client.model.PreferencesModelClient;
+import de.netprojectev.client.model.PreferencesModelClient.FullscreenStateListener;
+import de.netprojectev.client.model.PreferencesModelClient.LiveTickerStateListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
@@ -43,6 +46,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
         this.proxy = proxy;
     	initComponents();
     	setLocationRelativeTo(parent);
+    	jlDefaultPrioVar.setText(prefs.getDefaultPriority().getName());
+    	
+    	updateFullscreenState();
+    	updateLiveTickerState();
+    	
     	jliPriorities.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			
 			@Override
@@ -61,6 +69,26 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			
 		});
         
+    	prefs.setLiveTickerStateListener(new LiveTickerStateListener() {
+			
+			@Override
+			public void update() {
+				updateLiveTickerState();
+			}
+
+			
+		});
+    	
+    	prefs.setFullscreenStateListener(new FullscreenStateListener() {
+			
+			@Override
+			public void update() {
+				updateFullscreenState();
+			}
+
+			
+		});
+    	
     }
 
 
@@ -74,6 +102,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jtpPreferences = new javax.swing.JTabbedPane();
+        jpGeneral = new javax.swing.JPanel();
+        jbEnableFullscreen = new javax.swing.JButton();
+        jbExitFullscreen = new javax.swing.JButton();
+        jlFullscreen = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
         jpPriorities = new javax.swing.JPanel();
         jspPrioList = new javax.swing.JScrollPane();
         jliPriorities = new javax.swing.JList();
@@ -83,6 +116,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jlTimeToShowVar = new javax.swing.JLabel();
         jbRemovePrio = new javax.swing.JButton();
         jbAddPrio = new javax.swing.JButton();
+        jlPrioDefault = new javax.swing.JLabel();
+        jlDefaultPrioVar = new javax.swing.JLabel();
         jpThemes = new javax.swing.JPanel();
         jspThemeList = new javax.swing.JScrollPane();
         jliThemes = new javax.swing.JList();
@@ -92,12 +127,67 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jbRemoveTheme = new javax.swing.JButton();
         jbAddNewTheme = new javax.swing.JButton();
         jpTicker = new javax.swing.JPanel();
+        jbStartTicker = new javax.swing.JButton();
+        jbStopLiveTicker = new javax.swing.JButton();
+        jlTickerStatus = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
         jpThemeslideCreator = new javax.swing.JPanel();
         jpCountdown = new javax.swing.JPanel();
         jbClosePrefs = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Preferences");
+
+        jbEnableFullscreen.setLabel("Enter");
+        jbEnableFullscreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEnableFullscreenActionPerformed(evt);
+            }
+        });
+
+        jbExitFullscreen.setLabel("Exit");
+        jbExitFullscreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExitFullscreenActionPerformed(evt);
+            }
+        });
+
+        jlFullscreen.setText("Fullscreen");
+
+        javax.swing.GroupLayout jpGeneralLayout = new javax.swing.GroupLayout(jpGeneral);
+        jpGeneral.setLayout(jpGeneralLayout);
+        jpGeneralLayout.setHorizontalGroup(
+            jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpGeneralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpGeneralLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jbEnableFullscreen)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbExitFullscreen)
+                        .addGap(0, 482, Short.MAX_VALUE))
+                    .addGroup(jpGeneralLayout.createSequentialGroup()
+                        .addComponent(jlFullscreen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1)))
+                .addContainerGap())
+        );
+        jpGeneralLayout.setVerticalGroup(
+            jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpGeneralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlFullscreen)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbEnableFullscreen)
+                    .addComponent(jbExitFullscreen))
+                .addContainerGap(264, Short.MAX_VALUE))
+        );
+
+        jtpPreferences.addTab("General", jpGeneral);
 
         jliPriorities.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jliPriorities.setModel(new PriorityListModel(prefs));
@@ -125,6 +215,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
             }
         });
 
+        jlPrioDefault.setText("Default");
+
+        jlDefaultPrioVar.setText("unknown");
+
         javax.swing.GroupLayout jpPrioritiesLayout = new javax.swing.GroupLayout(jpPriorities);
         jpPriorities.setLayout(jpPrioritiesLayout);
         jpPrioritiesLayout.setHorizontalGroup(
@@ -135,18 +229,20 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGap(80, 80, 80)
                 .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpPrioritiesLayout.createSequentialGroup()
-                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlPrioTime)
-                            .addComponent(jlPrioName))
-                        .addGap(30, 30, 30)
-                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlPrioNameVar)
-                            .addComponent(jlTimeToShowVar)))
-                    .addGroup(jpPrioritiesLayout.createSequentialGroup()
                         .addComponent(jbRemovePrio)
                         .addGap(18, 18, 18)
-                        .addComponent(jbAddPrio)))
-                .addContainerGap(142, Short.MAX_VALUE))
+                        .addComponent(jbAddPrio))
+                    .addGroup(jpPrioritiesLayout.createSequentialGroup()
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlPrioTime)
+                            .addComponent(jlPrioName)
+                            .addComponent(jlPrioDefault))
+                        .addGap(30, 30, 30)
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlDefaultPrioVar)
+                            .addComponent(jlPrioNameVar)
+                            .addComponent(jlTimeToShowVar))))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
         jpPrioritiesLayout.setVerticalGroup(
             jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -161,7 +257,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jlPrioTime)
                             .addComponent(jlTimeToShowVar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlPrioDefault)
+                            .addComponent(jlDefaultPrioVar))
+                        .addGap(18, 18, 18)
                         .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbRemovePrio)
                             .addComponent(jbAddPrio)))
@@ -216,7 +316,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jbRemoveTheme)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbAddNewTheme)))
-                        .addGap(0, 136, Short.MAX_VALUE))
+                        .addGap(0, 151, Short.MAX_VALUE))
                     .addComponent(jlThemeBackgroundPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -241,15 +341,53 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jtpPreferences.addTab("Themes", jpThemes);
 
+        jbStartTicker.setText("Start");
+        jbStartTicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbStartTickerActionPerformed(evt);
+            }
+        });
+
+        jbStopLiveTicker.setText("Stop");
+        jbStopLiveTicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbStopLiveTickerActionPerformed(evt);
+            }
+        });
+
+        jlTickerStatus.setText("Status");
+
         javax.swing.GroupLayout jpTickerLayout = new javax.swing.GroupLayout(jpTicker);
         jpTicker.setLayout(jpTickerLayout);
         jpTickerLayout.setHorizontalGroup(
             jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 615, Short.MAX_VALUE)
+            .addGroup(jpTickerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpTickerLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jbStartTicker)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbStopLiveTicker)
+                        .addGap(0, 478, Short.MAX_VALUE))
+                    .addGroup(jpTickerLayout.createSequentialGroup()
+                        .addComponent(jlTickerStatus)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator2)))
+                .addContainerGap())
         );
         jpTickerLayout.setVerticalGroup(
             jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 319, Short.MAX_VALUE)
+            .addGroup(jpTickerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlTickerStatus)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbStartTicker)
+                    .addComponent(jbStopLiveTicker))
+                .addContainerGap(265, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("Ticker", jpTicker);
@@ -258,7 +396,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jpThemeslideCreator.setLayout(jpThemeslideCreatorLayout);
         jpThemeslideCreatorLayout.setHorizontalGroup(
             jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 615, Short.MAX_VALUE)
+            .addGap(0, 630, Short.MAX_VALUE)
         );
         jpThemeslideCreatorLayout.setVerticalGroup(
             jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,7 +409,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jpCountdown.setLayout(jpCountdownLayout);
         jpCountdownLayout.setHorizontalGroup(
             jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 615, Short.MAX_VALUE)
+            .addGap(0, 630, Short.MAX_VALUE)
         );
         jpCountdownLayout.setVerticalGroup(
             jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,7 +430,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jtpPreferences)
+                .addComponent(jtpPreferences, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -305,7 +443,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addComponent(jtpPreferences, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbClosePrefs)
-                .addGap(0, 12, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();
@@ -324,7 +462,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
         int selected = jliPriorities.getSelectedIndex();
         if(selected >= 0 && prefs.priorityCount() > 0 && selected < prefs.priorityCount()) {
         	try {
-				proxy.sendRemovePriority(prefs.getPriorityAt(selected).getId());
+        		Priority selectedPrio = prefs.getPriorityAt(selected);
+        		if(selectedPrio.isDefaultPriority()) {
+        			JOptionPane.showMessageDialog(this, "You cannot remove the default priority.", "Remove Priority", JOptionPane.ERROR_MESSAGE);
+        			return;
+        		}
+				proxy.sendRemovePriority(selectedPrio.getId());
 			} catch (PriorityDoesNotExistException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -352,6 +495,22 @@ public class PreferencesFrame extends javax.swing.JFrame {
         new AddThemeDialog(this, true, proxy).setVisible(true);
         updateThemePanel();
     }//GEN-LAST:event_jbAddNewThemeActionPerformed
+
+    private void jbStartTickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStartTickerActionPerformed
+        proxy.sendStartLiveTicker();
+    }//GEN-LAST:event_jbStartTickerActionPerformed
+
+    private void jbStopLiveTickerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbStopLiveTickerActionPerformed
+        proxy.sendStopLiveTicker();
+    }//GEN-LAST:event_jbStopLiveTickerActionPerformed
+
+    private void jbEnableFullscreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEnableFullscreenActionPerformed
+        proxy.sendEnterFullscreen();
+    }//GEN-LAST:event_jbEnableFullscreenActionPerformed
+
+    private void jbExitFullscreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitFullscreenActionPerformed
+        proxy.sendExitFullscreen();
+    }//GEN-LAST:event_jbExitFullscreenActionPerformed
 
     @Override
 	protected void processWindowEvent(WindowEvent e) {
@@ -395,12 +554,35 @@ public class PreferencesFrame extends javax.swing.JFrame {
 				selected = prefs.getPriorityAt(row);
 				jlPrioNameVar.setText(selected.getName());
 	        	jlTimeToShowVar.setText(Integer.toString(selected.getMinutesToShow()));
+	        	jlDefaultPrioVar.setText(prefs.getDefaultPriority().getName());
 			} catch (PriorityDoesNotExistException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	
         }
+	}
+    
+    private void updateLiveTickerState() {
+		boolean liveTickerEnabled = prefs.isLiveTickerRunning();
+		if(liveTickerEnabled) {
+			jbStartTicker.setEnabled(false);
+			jbStopLiveTicker.setEnabled(true);
+		} else {
+			jbStartTicker.setEnabled(true);
+			jbStopLiveTicker.setEnabled(false);
+		}
+	}
+    
+	private void updateFullscreenState() {
+		boolean fullscreenEnabled = prefs.isFullscreen();
+		if(fullscreenEnabled) {
+			jbEnableFullscreen.setEnabled(false);
+			jbExitFullscreen.setEnabled(true);
+		} else {
+			jbEnableFullscreen.setEnabled(true);
+			jbExitFullscreen.setEnabled(false);
+		}
 	}
     
     /**
@@ -438,21 +620,32 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton jbAddNewTheme;
     private javax.swing.JButton jbAddPrio;
     private javax.swing.JButton jbClosePrefs;
+    private javax.swing.JButton jbEnableFullscreen;
+    private javax.swing.JButton jbExitFullscreen;
     private javax.swing.JButton jbRemovePrio;
     private javax.swing.JButton jbRemoveTheme;
+    private javax.swing.JButton jbStartTicker;
+    private javax.swing.JButton jbStopLiveTicker;
+    private javax.swing.JLabel jlDefaultPrioVar;
+    private javax.swing.JLabel jlFullscreen;
+    private javax.swing.JLabel jlPrioDefault;
     private javax.swing.JLabel jlPrioName;
     private javax.swing.JLabel jlPrioNameVar;
     private javax.swing.JLabel jlPrioTime;
     private javax.swing.JLabel jlThemeBackgroundPreview;
     private javax.swing.JLabel jlThemeName;
     private javax.swing.JLabel jlThemeNameVar;
+    private javax.swing.JLabel jlTickerStatus;
     private javax.swing.JLabel jlTimeToShowVar;
     private javax.swing.JList jliPriorities;
     private javax.swing.JList jliThemes;
     private javax.swing.JPanel jpCountdown;
+    private javax.swing.JPanel jpGeneral;
     private javax.swing.JPanel jpPriorities;
     private javax.swing.JPanel jpThemes;
     private javax.swing.JPanel jpThemeslideCreator;

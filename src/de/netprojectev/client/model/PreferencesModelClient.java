@@ -29,6 +29,14 @@ public class PreferencesModelClient {
 		public void update();
 	}
 
+	public interface LiveTickerStateListener {
+		public void update();
+	}
+	
+	public interface FullscreenStateListener {
+		public void update();
+	}
+	
 	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
 
 	private final ClientMessageProxy proxy;
@@ -51,6 +59,17 @@ public class PreferencesModelClient {
 	private UpdateAutoModeStateListener autoModeStateListener = new UpdateAutoModeStateListener() {
 		@Override
 		public void update(boolean fullsync) {
+		}
+	};
+	
+	private LiveTickerStateListener liveTickerStateListener = new LiveTickerStateListener() {
+		@Override
+		public void update() {
+		}
+	};
+	private FullscreenStateListener fullscreenStateListener = new FullscreenStateListener() {
+		@Override
+		public void update() {
 		}
 	};
 
@@ -173,16 +192,24 @@ public class PreferencesModelClient {
 		log.debug("automode toggled, new value value: " + automode);
 	}
 
-	public void toggleFullscreen() {
-		fullscreen = !fullscreen;
-		log.debug("fullscreen toggled, new value value: " + fullscreen);
-
+	public void enableFullscreen() {
+		fullscreen = true;
+		fullscreenStateListener.update();
 	}
-
-	public void toggleLiveTickerRunning() {
-		liveTickerRunning = !liveTickerRunning;
-		log.debug("liveTickerRunning toggled, new value value: " + liveTickerRunning);
-
+	
+	public void disableFullscreen() {
+		fullscreen = false;
+		fullscreenStateListener.update();
+	}
+	
+	public void enableLiveTicker() {
+		liveTickerRunning = true;
+		liveTickerStateListener.update();
+	}
+	
+	public void disableLiveTicker() {
+		liveTickerRunning = false;
+		liveTickerStateListener.update();
 	}
 
 	public boolean isAutomode() {
@@ -231,6 +258,14 @@ public class PreferencesModelClient {
 
 	public Priority getDefaultPriority() {
 		return defaultPriority;
+	}
+
+	public void setLiveTickerStateListener(LiveTickerStateListener liveTickerStateListener) {
+		this.liveTickerStateListener = liveTickerStateListener;
+	}
+
+	public void setFullscreenStateListener(FullscreenStateListener fullscreenStateListener) {
+		this.fullscreenStateListener = fullscreenStateListener;
 	}
 	
 }
