@@ -419,14 +419,12 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jbAddTickerElement" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jbEdit" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jbRemoveFromList" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jbShowSelected" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jbShowNext" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
                   <Component id="jlAutomodeTimeleft" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -441,7 +439,6 @@
                       <Component id="jbAddThemeslide" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbAddTickerElement" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbRemoveFromList" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbEdit" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbShowSelected" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jbShowNext" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jlAutomodeTimeleft" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -474,14 +471,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAddTickerElementActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="jbEdit">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Edit"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbEditActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbRemoveFromList">
