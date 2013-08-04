@@ -229,5 +229,12 @@ public class MediaModelClient {
 		this.updateCurrentFileListener = updateCurrentFileListener;
 	}
 
+
+	public void resetShowCount(UUID toReset) throws MediaDoesNotExsistException {
+		getMediaFileById(toReset).resetShowCount();
+		updateAllMediaTable();
+		updateCustomQueueTable();
+	}
+
 }
  

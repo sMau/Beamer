@@ -34,6 +34,9 @@ public class ClientMediaFile extends MediaFile {
 		super(serverMediaFile.getName(), serverMediaFile.getPriority(), serverMediaFile.getId());
 		// TODO maybe make previews possible for the others too
 		
+		this.showCount = serverMediaFile.getShowCount();
+		this.current = serverMediaFile.isCurrent();
+		
 		int widthToScaleTo = 640; // TODO receive this from the props
 		
 		if (serverMediaFile instanceof Countdown) {

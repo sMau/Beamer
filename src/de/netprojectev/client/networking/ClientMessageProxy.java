@@ -42,6 +42,8 @@ public class ClientMessageProxy {
 	private final TickerModelClient tickerModel;
 	private final PreferencesModelClient prefs;
 	
+	private boolean fullsync;
+	
 	private Channel channelToServer;
 	
 	public ClientMessageProxy(Client client) {
@@ -49,6 +51,7 @@ public class ClientMessageProxy {
 		tickerModel = new TickerModelClient(this);
 		prefs = new PreferencesModelClient(this);
 		this.client = client;
+		this.fullsync = false;
 	}
 	
 	//TODO mark this as private at the moment only public for testing
@@ -161,6 +164,10 @@ public class ClientMessageProxy {
 	public void sendRemoveSelectedTickerElement(int row) {
 		sendMessageToServer(new Message(OpCode.CTS_REMOVE_LIVE_TICKER_ELEMENT, tickerModel.getValueAt(row).getId()));
 	}
+	
+	public void sendResetShowCount(UUID medieToReset) {
+		sendMessageToServer(new Message(OpCode.CTS_RESET_SHOW_COUNT, medieToReset));
+	}
 
 	public void receiveMessage(Message msg) throws UnkownMessageException, MediaDoesNotExsistException, OutOfSyncException {
 		log.debug("Receiving message: " + msg.toString());
@@ -234,12 +241,20 @@ public class ClientMessageProxy {
 		case STC_FULL_SYNC_STOP:
 			fullSyncStop();
 			break;
+		case STC_RESET_SHOW_COUNT_ACK:
+			resetShowCount(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 		
 		
+	}
+
+	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
+		UUID toReset = (UUID) msg.getData();
+		mediaModel.resetShowCount(toReset);
 	}
 
 	private void liveTickerDisabled(Message msg) {
@@ -267,17 +282,17 @@ public class ClientMessageProxy {
 	}
 
 	private void autoModeEnabled(Message msg) {
-		prefs.enableAutomode();
+		prefs.enableAutomode(fullsync);
 	}
 
 	private void fullSyncStop() {
-		// TODO Auto-generated method stub
-		
+		// TODO add gui handling
+		fullsync = false;
 	}
 
 	private void fullSyncStart() {
-		// TODO Auto-generated method stub
-		
+		// TODO add gui handling
+		fullsync = true;
 	}
 
 	private void mediaFileDequeued(Message msg) throws MediaDoesNotExsistException, OutOfSyncException {

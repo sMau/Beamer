@@ -49,9 +49,7 @@ public class AddPriorityDialog extends javax.swing.JDialog {
         initComponents();
 
         setLocationRelativeTo(parent);
-        
-        setLocation(Misc.currentMousePosition());
-        
+                
         // Close the dialog when Esc is pressed
         String cancelName = "cancel";
         InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);

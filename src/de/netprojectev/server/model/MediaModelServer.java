@@ -126,5 +126,9 @@ public class MediaModelServer {
 	public LinkedList<UUID> getMediaPrivateQueue() {
 		return mediaPrivateQueue;
 	}
+
+	public void resetShowCount(UUID toReset) throws MediaDoesNotExsistException {
+		getMediaFileById(toReset).resetShowCount();
+	}
 	
 }

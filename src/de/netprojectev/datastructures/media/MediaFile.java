@@ -80,6 +80,10 @@ public abstract class MediaFile implements Serializable {
 	public int getShowCount() {
 		return showCount;
 	}
+	
+	public void resetShowCount() {
+		showCount = 0;
+	}
 
 	public MediaFile increaseShowCount() {
 		

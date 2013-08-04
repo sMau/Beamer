@@ -51,7 +51,7 @@ public class PreferencesModelClient {
 	};
 	private UpdateAutoModeStateListener autoModeStateListener = new UpdateAutoModeStateListener() {
 		@Override
-		public void update() {
+		public void update(boolean fullsync) {
 		}
 	};
 
@@ -150,15 +150,15 @@ public class PreferencesModelClient {
 
 	}
 
-	public void enableAutomode() {
+	public void enableAutomode(boolean fullsync) {
 		automode = true;
-		autoModeStateListener.update();
+		autoModeStateListener.update(fullsync);
 		log.debug("automode toggled, new value value: " + automode);
 	}
 
 	public void disableAutomode() {
 		automode = false;
-		autoModeStateListener.update();
+		autoModeStateListener.update(false);
 		log.debug("automode toggled, new value value: " + automode);
 	}
 

@@ -99,7 +99,7 @@ public class TickerModelClient {
 	public String completeTickerText() throws MediaDoesNotExsistException {
 		String text = "";
 
-		for (int i = 0; i < allElementsList.size() - 1; i++) {
+		for (int i = 0; i < allElementsList.size(); i++) {
 			if (getElementByID(allElementsList.get(i)).isShow()) {
 				text += getElementByID(allElementsList.get(i)).getText() + PreferencesModelClient.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR);
 			}

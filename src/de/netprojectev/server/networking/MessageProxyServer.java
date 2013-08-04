@@ -135,6 +135,9 @@ public class MessageProxyServer {
 		case CTS_REQUEST_FULL_SYNC:
 			fullSyncRequested(msg, channel);
 			break;
+		case CTS_RESET_SHOW_COUNT:
+			resetShowCount(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
@@ -142,6 +145,12 @@ public class MessageProxyServer {
 	}
 
 
+	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
+		UUID toReset = (UUID) msg.getData();
+		mediaModel.resetShowCount(toReset);
+		broadcastMessage(new Message(OpCode.STC_RESET_SHOW_COUNT_ACK, toReset));
+	}
+	
 	private void editLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
 		ClientTickerElement edited = (ClientTickerElement) msg.getData();
 		ServerTickerElement correlatedServerFile = tickerModel.getElementByID(edited.getId());
@@ -149,6 +158,7 @@ public class MessageProxyServer {
 		correlatedServerFile.setText(edited.getText());
 		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(correlatedServerFile)));
 	}
+	
 	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException {
 		ClientMediaFile editedFile = (ClientMediaFile) msg.getData();
 		ServerMediaFile correlatedServerFile = mediaModel.getMediaFileById(editedFile.getId());		
@@ -184,7 +194,6 @@ public class MessageProxyServer {
 	
 	private void fullSyncRequested(Message msg, Channel channel) throws FileNotFoundException, IOException {
 		
-		//TODO include all props, themes and prios and so on
 		HashMap<UUID, ServerMediaFile> allMedia = mediaModel.getAllMediaFiles();
 		LinkedList<UUID> customQueue = mediaModel.getMediaPrivateQueue();
 		HashMap<UUID, ServerTickerElement> tickerElements = tickerModel.getElements();
@@ -211,6 +220,10 @@ public class MessageProxyServer {
 			
 		for(UUID id : priorities.keySet()) {
 			channel.write(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
+		}
+		
+		if(automodeEnabled) {
+			channel.write(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 		}
 		
 		channel.write(new Message(OpCode.STC_FULL_SYNC_STOP));
@@ -278,7 +291,7 @@ public class MessageProxyServer {
 		
 	}
 
-	private void showMediaFile(Message msg) throws MediaDoesNotExsistException {
+	private void showMediaFile(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException {
 		UUID toShow = (UUID) msg.getData();
 		ServerMediaFile fileToShow = mediaModel.getMediaFileById(toShow);
 		currentFile = fileToShow;
@@ -318,28 +331,43 @@ public class MessageProxyServer {
 		
 	}
 
-	private void enableAutoMode() {
+	private void enableAutoMode() throws MediaDoesNotExsistException, MediaListsEmptyException {
+		this.automodeEnabled = true;
 		updateAutoModeTimer();
 		broadcastMessage(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 	}
-	private void updateAutoModeTimer() {
+	private void updateAutoModeTimer() throws MediaDoesNotExsistException, MediaListsEmptyException {
 		if(automodeEnabled) {
 			if(autoModusTimer != null) {
 				autoModusTimer.cancel();
 				autoModusTimer.purge();			
 			}
 			autoModusTimer = new Timer();
-			autoModusTimer.schedule(new AutomodeTimerTask(), currentFile.getPriority().getTimeToShowInMilliseconds());
+			if(currentFile == null) {
+				showNextMediaFile();
+			} else {
+				autoModusTimer.schedule(new AutomodeTimerTask(), currentFile.getPriority().getTimeToShowInMilliseconds());
+			}
+			
 		}
 		
 	}
 	
 	private void disableAutoMode() {
+		this.automodeEnabled = false;
 		autoModusTimer.cancel();
 		autoModusTimer.purge();
 		autoModusTimer = null;
 		broadcastMessage(new Message(OpCode.STC_DISABLE_AUTO_MODE_ACK));
 	}
+	
+	//TODO last worked here: made fullsync including themes and prios
+	/*
+	 * make it possible to set prios and add default prio
+	 * next make enabling liveticker msg
+	 * next make enabling fullscreen msg
+	 * next make starting live ticker msg
+	 */
 
 	private void enableLiveTicker() {
 		// TODO Auto-generated method stub
@@ -353,10 +381,6 @@ public class MessageProxyServer {
 	
 	public boolean isAutomodeEnabled() {
 		return automodeEnabled;
-	}
-
-	public void setAutomodeEnabled(boolean automodeEnabled) {
-		this.automodeEnabled = automodeEnabled;
 	}
 
 	public Timer getAutoModusTimer() {
