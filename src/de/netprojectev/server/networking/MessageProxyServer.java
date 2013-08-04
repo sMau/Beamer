@@ -280,27 +280,33 @@ public class MessageProxyServer {
 			fileFromPrivateQueue = true;
 		}
 		ServerMediaFile fileToShow = mediaModel.getNext();
-		currentFile = fileToShow;
 		
-		updateAutoModeTimer();
-		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, fileToShow.getId()));
+		showMedia(fileToShow);
+		
 		if(fileFromPrivateQueue) {
 			broadcastMessage(new Message(OpCode.STC_DEQUEUE_MEDIAFILE_ACK, new DequeueData(0, fileToShow.getId())));
-		}
-		//TODO implement the display part
-		
+		}		
 	}
 
 	private void showMediaFile(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException {
 		UUID toShow = (UUID) msg.getData();
 		ServerMediaFile fileToShow = mediaModel.getMediaFileById(toShow);
-		currentFile = fileToShow;
 		
+		showMedia(fileToShow);
+
+	}
+	
+	
+	private void showMedia(ServerMediaFile toShow) throws MediaDoesNotExsistException, MediaListsEmptyException {
+		if(currentFile != null) {
+			currentFile.setCurrent(false);
+		}
+		currentFile = toShow;
+		toShow.setCurrent(true).increaseShowCount();
 		updateAutoModeTimer();
-		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow));
+		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));
 		
 		//TODO implement the display part
-
 	}
 
 	private void unkownMessageReceived(Message msg) throws UnkownMessageException {

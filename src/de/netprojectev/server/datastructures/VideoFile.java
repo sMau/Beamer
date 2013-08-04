@@ -12,7 +12,7 @@ public class VideoFile extends ServerMediaFile {
 	private int duration;
 	
 	public VideoFile(String name, File videoFile) {
-		super(name);
+		super(name, null);
 		this.videoFile = videoFile;
 		
 		//TODO est. of duration

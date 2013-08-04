@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.netprojectev.client.gui.main;
 
 import java.awt.Container;
@@ -10,12 +6,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
+import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -24,17 +23,21 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.gui.main.CreateTickerElementDialog.DialogClosedListener;
+import de.netprojectev.client.gui.models.AllMediaTableModel;
+import de.netprojectev.client.gui.models.CustomQueueTableModel;
+import de.netprojectev.client.gui.models.PriorityComboBoxModel;
+import de.netprojectev.client.gui.models.TickerTableModel;
 import de.netprojectev.client.gui.preferences.AddPriorityDialog;
 import de.netprojectev.client.gui.preferences.AddThemeDialog;
 import de.netprojectev.client.gui.preferences.PreferencesFrame;
-import de.netprojectev.client.gui.tablemodels.AllMediaTableModel;
-import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel;
-import de.netprojectev.client.gui.tablemodels.TickerTableModel;
+import de.netprojectev.client.gui.preferences.PriorityListModel;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
@@ -166,6 +169,13 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				}
 			}
 		});
+		
+		try {
+			jcbPriorityChange.setModel(new PriorityComboBoxModel(prefs));
+		} catch (PriorityDoesNotExistException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	/**
@@ -750,8 +760,10 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		// spaces, avoid only spaces in the string and so on
 		if (currentSelectedMediaFile != null) {
 			ClientMediaFile copyToSend = currentSelectedMediaFile.copy();
+			Priority selectedPrio = (Priority) jcbPriorityChange.getSelectedItem();
 			copyToSend.setName(text);
-			if (text != null && !text.isEmpty()) {
+			copyToSend.setPriority(selectedPrio);
+			if (text != null && !text.isEmpty() && selectedPrio != null) {
 				proxy.sendEditMediaFile(copyToSend);
 			}
 
@@ -1119,6 +1131,9 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				} else {
 					jlCurrentYesNo.setText("No");
 				}
+				
+				jcbPriorityChange.setSelectedItem(currentSelectedMediaFile.getPriority());
+				
 			}
 
 			break;
@@ -1148,6 +1163,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				} else {
 					jlCurrentYesNo.setText("No");
 				}
+				jcbPriorityChange.setSelectedItem(currentSelectedMediaFile.getPriority());
 			}
 			break;
 		case 2:
@@ -1283,7 +1299,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     private javax.swing.JButton jbShowNext;
     private javax.swing.JButton jbShowSelected;
     private javax.swing.JButton jbUpdateFileData;
-    private javax.swing.JComboBox jcbPriorityChange;
+    private javax.swing.JComboBox<Priority> jcbPriorityChange;
     private javax.swing.JCheckBox jchbEnabled;
     private javax.swing.JLabel jlAutomodeTimeleft;
     private javax.swing.JLabel jlCurrent;

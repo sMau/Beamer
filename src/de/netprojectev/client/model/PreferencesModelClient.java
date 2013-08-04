@@ -19,7 +19,8 @@ import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 
 public class PreferencesModelClient {
-
+	
+	
 	public interface PriorityListChangedListener {
 		public void update();
 	}
@@ -37,6 +38,8 @@ public class PreferencesModelClient {
 	private final ArrayList<UUID> allPrioritiesList;
 	private final ArrayList<UUID> allThemesList;
 
+	private Priority defaultPriority;
+	
 	private static Properties props;
 
 	private ThemeListChangedListener themeListChangeListener = new ThemeListChangedListener() {
@@ -44,11 +47,7 @@ public class PreferencesModelClient {
 		public void update() {
 		}
 	};
-	private PriorityListChangedListener priorityChangedListener = new PriorityListChangedListener() {
-		@Override
-		public void update() {
-		}
-	};
+	private ArrayList<PriorityListChangedListener> priorityChangedListeners = new ArrayList<>();
 	private UpdateAutoModeStateListener autoModeStateListener = new UpdateAutoModeStateListener() {
 		@Override
 		public void update(boolean fullsync) {
@@ -103,15 +102,27 @@ public class PreferencesModelClient {
 		if (!allPrioritiesList.contains(prio.getId())) {
 			allPrioritiesList.add(prio.getId());
 		}
-		priorityChangedListener.update();
+		if(prio.isDefaultPriority()) {
+			defaultPriority = prio;
+		}
+		updateAllPrioChangedListeners();
 		log.debug("Priority added id: " + prio.getId());
 	}
 
 	public void prioRemoved(UUID prio) {
 		prios.remove(prio);
 		allPrioritiesList.remove(prio);
-		priorityChangedListener.update();
+		updateAllPrioChangedListeners();
 		log.debug("Priority removed, id: " + prio);
+	}
+	
+	public Priority[] prioritiesAsArray() throws PriorityDoesNotExistException {
+		UUID[] allIDs = allPrioritiesList.toArray(new UUID[allPrioritiesList.size()]);
+		Priority[] allPrios = new Priority[allIDs.length];
+		for(int i = 0 ; i < allIDs.length; i++) {
+			allPrios[i] = getPriorityByID(allIDs[i]);
+		}
+		return allPrios;
 	}
 
 	public int priorityCount() {
@@ -206,8 +217,20 @@ public class PreferencesModelClient {
 		this.themeListChangeListener = themeListChangeListener;
 	}
 
-	public void setPriorityChangedListener(PriorityListChangedListener priorityChangedListener) {
-		this.priorityChangedListener = priorityChangedListener;
+	public void addPriorityChangedListener(PriorityListChangedListener priorityChangedListener) {
+		if(!priorityChangedListeners.contains(priorityChangedListener)) {
+			this.priorityChangedListeners.add(priorityChangedListener);
+		}
+	}
+	
+	private void updateAllPrioChangedListeners() {
+		for(int i = 0; i < priorityChangedListeners.size(); i++) {
+			priorityChangedListeners.get(i).update();
+		}
 	}
 
+	public Priority getDefaultPriority() {
+		return defaultPriority;
+	}
+	
 }

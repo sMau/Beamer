@@ -1,6 +1,7 @@
 package de.netprojectev.client.gui.preferences;
 
 import javax.swing.AbstractListModel;
+import javax.swing.ComboBoxModel;
 import javax.swing.SwingUtilities;
 
 import de.netprojectev.client.model.PreferencesModelClient;
@@ -19,7 +20,7 @@ public class PriorityListModel extends AbstractListModel<Priority> {
 	public PriorityListModel(PreferencesModelClient prefs) {
 		super();
 		this.prefs = prefs;
-		this.prefs.setPriorityChangedListener(new PriorityListChangedListener() {
+		this.prefs.addPriorityChangedListener(new PriorityListChangedListener() {
 			
 			@Override
 			public void update() {
@@ -55,5 +56,6 @@ public class PriorityListModel extends AbstractListModel<Priority> {
 		});
 
 	}
+
 
 }

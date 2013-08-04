@@ -9,7 +9,7 @@ public class Countdown extends ServerMediaFile {
 	private int duration;
 	
 	public Countdown(String name, int duration) {
-		super(name);
+		super(name, null);
 		this.duration = duration;
 	}
 }

@@ -2,6 +2,8 @@ package de.netprojectev.server.datastructures;
 
 import java.util.UUID;
 
+import de.netprojectev.datastructures.media.Priority;
+
 public class Themeslide extends ServerMediaFile {
 
 	/**
@@ -11,8 +13,8 @@ public class Themeslide extends ServerMediaFile {
 	private ImageFile imageRepresantation;
 	private UUID themeId;
 	
-	public Themeslide(String name, ImageFile image, UUID themeId) {
-		super(name);
+	public Themeslide(String name, ImageFile image, UUID themeId, Priority priority) {
+		super(name, priority);
 		this.imageRepresantation = image;
 		this.themeId = themeId;
 	}

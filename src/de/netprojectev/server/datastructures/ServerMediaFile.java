@@ -16,9 +16,5 @@ public class ServerMediaFile extends MediaFile {
 	protected ServerMediaFile(String name, Priority priority) {
 		super(name, priority, UUID.randomUUID());
 	}
-	
-	protected ServerMediaFile(String name) {
-		super(name, UUID.randomUUID());
-	}
 
 }

@@ -105,7 +105,7 @@ public class ClientMessageProxy {
 		String name = file.getName();
 		BufferedImage image = ImageIO.read(file);
 		ImageIcon icon = new ImageIcon(image);
-		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, new ImageFile(name, icon)));
+		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, new ImageFile(name, icon, prefs.getDefaultPriority())));
 	}
 	
 	public void sendAddImageFiles(File[] files) throws IOException {
@@ -288,6 +288,7 @@ public class ClientMessageProxy {
 	private void fullSyncStop() {
 		// TODO add gui handling
 		fullsync = false;
+		
 	}
 
 	private void fullSyncStart() {

@@ -20,10 +20,14 @@ public class PreferencesModelServer {
 	
 	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelServer.class);
 	
+	private static final int DEFAULT_PRIO_TIME = 1;
+	
 	private static Properties props;
 	private final MessageProxyServer proxy;
 	private final HashMap<UUID, Priority> prios;
 	private final HashMap<UUID, Theme> themes;
+	
+	private Priority defaultPriority;
 	
 	public PreferencesModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
@@ -35,6 +39,10 @@ public class PreferencesModelServer {
 		} catch (IOException e) {
 			log.warn("Error loading properties.", e);
 		}
+		Priority defaultPrio = new Priority("default", DEFAULT_PRIO_TIME);
+		defaultPrio.setDefaultPriority(true);
+		addPriority(defaultPrio);
+		this.defaultPriority = defaultPrio;
 	}
 	
 	public static String getPropertyByKey(String key) {
@@ -107,6 +115,14 @@ public class PreferencesModelServer {
 
 	public HashMap<UUID, Theme> getThemes() {
 		return themes;
+	}
+
+	public Priority getDefaultPriority() {
+		return defaultPriority;
+	}
+
+	public void setDefaultPriority(Priority defaultPriority) {
+		this.defaultPriority = defaultPriority;
 	}
 	
 

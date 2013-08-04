@@ -45,9 +45,6 @@ public class Constants {
 	 * Defaults
 	 */
 	
-	public static final Priority DEFAULT_PRIORITY = new Priority("default", 3);
-
-	
 	protected static final int DEFAULT_PREVIEW_SCALE_WIDTH = 640;
 	
 	protected static final int DEFAULT_SCREEN_NUMBER_FULLSCREEN = 1;

@@ -15,6 +15,7 @@ public class Priority implements Serializable {
 	private final UUID id;
 	private String name;
 	private int minutesToShow;
+	private boolean defaultPriority;
 
 	/**
 	 * 
@@ -25,6 +26,7 @@ public class Priority implements Serializable {
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.minutesToShow = minutesToShow;
+		this.defaultPriority = false;
 	}
 
 	public String getName() {
@@ -67,6 +69,14 @@ public class Priority implements Serializable {
 	    } else {
 	    	return false;
 	    }
+	}
+
+	public boolean isDefaultPriority() {
+		return defaultPriority;
+	}
+
+	public void setDefaultPriority(boolean defaultPriority) {
+		this.defaultPriority = defaultPriority;
 	}
 
 }

@@ -9,7 +9,7 @@ import javax.swing.SwingUtilities;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientTickerElement;
-import de.netprojectev.client.gui.tablemodels.TickerTableModel.UpdateTickerDataListener;
+import de.netprojectev.client.gui.models.TickerTableModel.UpdateTickerDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.misc.Constants;

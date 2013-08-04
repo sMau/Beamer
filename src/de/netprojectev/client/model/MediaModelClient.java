@@ -11,8 +11,8 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.gui.main.MainClientGUIWindow.UpdateCurrentFileListener;
-import de.netprojectev.client.gui.tablemodels.AllMediaTableModel.UpdateAllMediaDataListener;
-import de.netprojectev.client.gui.tablemodels.CustomQueueTableModel.UpdateCustomQueueDataListener;
+import de.netprojectev.client.gui.models.AllMediaTableModel.UpdateAllMediaDataListener;
+import de.netprojectev.client.gui.models.CustomQueueTableModel.UpdateCustomQueueDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
