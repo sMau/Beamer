@@ -144,6 +144,15 @@ public class PreferencesModelClient {
 		return allPrios;
 	}
 
+	public Theme[] themesAsArray() throws ThemeDoesNotExistException {
+		UUID[] allIDs = allThemesList.toArray(new UUID[allThemesList.size()]);
+		Theme[] allThemes = new Theme[allIDs.length];
+		for(int i = 0 ; i < allIDs.length; i++) {
+			allThemes[i] = getThemeByID(allIDs[i]);
+		}
+		return allThemes;
+	}
+	
 	public int priorityCount() {
 		return allPrioritiesList.size();
 	}

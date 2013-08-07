@@ -198,7 +198,7 @@ public class MessageProxyServer {
 	//TODO last worked here: made enable live ticker and fullscreen messages work, including client gui reactions and added to fullsync
 	/*
 	 * next adding themeslides
-	 * next adding countdowns
+	 * DONE! next adding countdowns
 	 * next pimp the client gui a little: icons for buttons, comfort in the tables and resiszing of columns also use icons
 	 * 			and make the calc for when a queued file is shown
 	 * next server gui

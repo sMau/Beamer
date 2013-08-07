@@ -170,6 +170,35 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_RESET_SHOW_COUNT, medieToReset));
 	}
 
+
+	public void sendAutoModeToggle(boolean selected) {
+		if(selected) {
+			sendMessageToServer(new Message(OpCode.CTS_ENABLE_AUTO_MODE));
+		} else {
+			sendMessageToServer(new Message(OpCode.CTS_DISABLE_AUTO_MODE));
+		}
+	}
+
+	public void sendStartLiveTicker() {
+		sendMessageToServer(new Message(OpCode.CTS_ENABLE_LIVE_TICKER));
+	}
+
+	public void sendStopLiveTicker() {
+		sendMessageToServer(new Message(OpCode.CTS_DISABLE_LIVE_TICKER));
+	}
+
+	public void sendEnterFullscreen() {
+		sendMessageToServer(new Message(OpCode.CTS_ENABLE_FULLSCREEN));
+	}
+
+	public void sendExitFullscreen() {
+		sendMessageToServer(new Message(OpCode.CTS_DISABLE_FULLSCREEN));
+	}
+
+	public void sendAddCountdown(Countdown countdown) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, countdown));
+	}
+	
 	public void receiveMessage(Message msg) throws UnkownMessageException, MediaDoesNotExsistException, OutOfSyncException {
 		log.debug("Receiving message: " + msg.toString());
 		switch (msg.getOpCode()) {
@@ -412,34 +441,6 @@ public class ClientMessageProxy {
 
 	public PreferencesModelClient getPrefs() {
 		return prefs;
-	}
-
-	public void sendAutoModeToggle(boolean selected) {
-		if(selected) {
-			sendMessageToServer(new Message(OpCode.CTS_ENABLE_AUTO_MODE));
-		} else {
-			sendMessageToServer(new Message(OpCode.CTS_DISABLE_AUTO_MODE));
-		}
-	}
-
-	public void sendStartLiveTicker() {
-		sendMessageToServer(new Message(OpCode.CTS_ENABLE_LIVE_TICKER));
-	}
-
-	public void sendStopLiveTicker() {
-		sendMessageToServer(new Message(OpCode.CTS_DISABLE_LIVE_TICKER));
-	}
-
-	public void sendEnterFullscreen() {
-		sendMessageToServer(new Message(OpCode.CTS_ENABLE_FULLSCREEN));
-	}
-
-	public void sendExitFullscreen() {
-		sendMessageToServer(new Message(OpCode.CTS_DISABLE_FULLSCREEN));
-	}
-
-	public void sendAddCountdown(Countdown countdown) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, countdown));
 	}
 
 	

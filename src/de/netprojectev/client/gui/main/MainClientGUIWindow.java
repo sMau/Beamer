@@ -18,6 +18,8 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import old.de.netprojectev.client.gui.themeslide.ThemeslideCreatorFrame;
+
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
@@ -39,6 +41,7 @@ import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
+import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.misc.ImageFileFilter;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
@@ -1019,8 +1022,15 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_jbAddThemeslideActionPerformed
 
 	private void addThemeslide() {
-		JOptionPane.showMessageDialog(this, "Themeslide Creator Placeholder");
-		// TODO add the themeslidecreator
+		try {
+			new ThemeslideCreatorFrame(this, proxy).setVisible(true);
+		} catch (ThemeDoesNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (PriorityDoesNotExistException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void jbAddTickerElementActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbAddTickerElementActionPerformed

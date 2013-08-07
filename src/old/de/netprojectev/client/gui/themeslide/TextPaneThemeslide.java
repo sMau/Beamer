@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 
 
@@ -52,16 +53,18 @@ public class TextPaneThemeslide extends JTextPane {
         super.paintComponent(g2d);
     }
     
-    public void setThemeBackground(File file) {
-		try {
-			image = ImageIO.read(file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    //TODO better use a file here, in all themslides to avoid high ram usage
+    public void setThemeBackground(ImageIcon imageIcon) {
+		image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+		Graphics g = image.createGraphics();
+		imageIcon.paintIcon(null, g, 0, 0);
+		g.dispose();
 		
 		resizeToImageSize();
 		
 	}
+    
+    //TODO check this for efficency better use the algo. in misc prob.
     
     private void resizeToImageSize() {
 

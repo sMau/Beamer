@@ -10,12 +10,11 @@ public class Themeslide extends ServerMediaFile {
 	 * 
 	 */
 	private static final long serialVersionUID = -14234502199126341L;
-	private ImageFile imageRepresantation;
 	private UUID themeId;
+	private ImageFile imageRepresantation;
 	
-	public Themeslide(String name, ImageFile image, UUID themeId, Priority priority) {
+	public Themeslide(String name, UUID themeId, Priority priority) {
 		super(name, priority);
-		this.imageRepresantation = image;
 		this.themeId = themeId;
 	}
 
@@ -25,6 +24,10 @@ public class Themeslide extends ServerMediaFile {
 
 	public UUID getThemeId() {
 		return themeId;
+	}
+
+	public void setImageRepresantation(ImageFile imageRepresantation) {
+		this.imageRepresantation = imageRepresantation;
 	}
 	
 }
