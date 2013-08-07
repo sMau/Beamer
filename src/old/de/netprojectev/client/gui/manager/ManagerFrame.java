@@ -37,7 +37,7 @@ import old.de.netprojectev.ImageFile;
 import old.de.netprojectev.MediaHandlerOld;
 import old.de.netprojectev.PreferencesModelOld;
 import old.de.netprojectev.Themeslide;
-import old.de.netprojectev.client.gui.dialogs.AddCountdownDialog;
+import de.netprojectev.client.gui.preferences.AddCountdownDialog;
 import old.de.netprojectev.client.gui.dialogs.AddTickerElement;
 import old.de.netprojectev.client.gui.dialogs.EditMediaFileFrame;
 import old.de.netprojectev.client.gui.preferences.PreferencesFrame;

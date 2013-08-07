@@ -27,6 +27,7 @@ import de.netprojectev.client.gui.models.AllMediaTableModel;
 import de.netprojectev.client.gui.models.CustomQueueTableModel;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.gui.models.TickerTableModel;
+import de.netprojectev.client.gui.preferences.AddCountdownDialog;
 import de.netprojectev.client.gui.preferences.AddPriorityDialog;
 import de.netprojectev.client.gui.preferences.AddThemeDialog;
 import de.netprojectev.client.gui.preferences.PreferencesFrame;
@@ -821,7 +822,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_jmiAddTickerEltActionPerformed
 
 	private void jmiAddCntDownActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiAddCntDownActionPerformed
-		// TODO add your handling code here:
+		new AddCountdownDialog(this, true, proxy).setVisible(true);
 	}// GEN-LAST:event_jmiAddCntDownActionPerformed
 
 	private void jmiRemoveActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiRemoveActionPerformed

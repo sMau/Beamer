@@ -1,7 +1,5 @@
 package de.netprojectev.client.datastructures;
 
-import java.awt.Graphics;
-import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 

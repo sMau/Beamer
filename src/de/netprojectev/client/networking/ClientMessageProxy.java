@@ -28,6 +28,7 @@ import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.Themeslide;
@@ -435,6 +436,10 @@ public class ClientMessageProxy {
 
 	public void sendExitFullscreen() {
 		sendMessageToServer(new Message(OpCode.CTS_DISABLE_FULLSCREEN));
+	}
+
+	public void sendAddCountdown(Countdown countdown) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, countdown));
 	}
 
 	
