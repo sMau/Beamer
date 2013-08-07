@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.misc.Constants;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.model.PreferencesModelServer;
@@ -116,9 +117,9 @@ public class ServerTickerModelTest {
 		
 		String actual = tickerModel.generateCompleteTickerText();
 
-		assertTrue(actual.contains(elt123.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_TICKER_SEPERATOR)));
-		assertTrue(actual.contains(elt456.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_TICKER_SEPERATOR)));
-		assertTrue(actual.contains(elt789.getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_TICKER_SEPERATOR)));
+		assertTrue(actual.contains(elt123.getText() + PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR)));
+		assertTrue(actual.contains(elt456.getText() + PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR)));
+		assertTrue(actual.contains(elt789.getText() + PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR)));
 
 	}
 }

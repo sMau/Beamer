@@ -3,6 +3,8 @@ package de.netprojectev.tests.client;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,13 +31,15 @@ public class ClientMessageProxyTest {
 	private ServerTickerElement elt123 = new ServerTickerElement("Test123");
 	private ServerTickerElement elt456 = new ServerTickerElement("Test456");
 	
-	private ClientMediaFile clmedia1 = new ClientMediaFile(media1);
-	private ClientMediaFile clmedia2 = new ClientMediaFile(media2);
+	private ClientMediaFile clmedia1;
+	private ClientMediaFile clmedia2;
 	private ClientTickerElement clelt1 = new ClientTickerElement(elt123);
 	private ClientTickerElement clelt2 = new ClientTickerElement(elt456);
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws FileNotFoundException, IOException {
+		clmedia1 = new ClientMediaFile(media1);
+		clmedia2 = new ClientMediaFile(media2);
 		client = new Client("127.0.0.1", 11111, new LoginData("test", ""));
 	}
 	

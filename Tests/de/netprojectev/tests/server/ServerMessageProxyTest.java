@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +36,7 @@ public class ServerMessageProxyTest {
 	}
 	
 	@Test
-	public void testReceiveMessage1() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
+	public void testReceiveMessage1() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
 		
 		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1), null);
 		assertEquals(media1, proxy.getMediaModel().getNext());
@@ -49,7 +51,7 @@ public class ServerMessageProxyTest {
 	}
 	
 	@Test
-	public void testReceiveMessage2() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
+	public void testReceiveMessage2() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
 		
 		ServerTickerElement elt1 = new ServerTickerElement("test12");
 		ServerTickerElement elt2 = new ServerTickerElement("test34");
@@ -64,7 +66,7 @@ public class ServerMessageProxyTest {
 	}
 	
 	@Test
-	public void testReceiveMessage3() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
+	public void testReceiveMessage3() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
 		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1), null);
 		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2), null);
 		ServerMediaFile next = proxy.getMediaModel().getNext();
@@ -82,7 +84,7 @@ public class ServerMessageProxyTest {
 	}
 	
 	@Test
-	public void testReceiveMessage4() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
+	public void testReceiveMessage4() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
 		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media1), null);
 		proxy.receiveMessage(new Message(OpCode.CTS_ADD_MEDIA_FILE, media2), null);
 		
@@ -115,12 +117,12 @@ public class ServerMessageProxyTest {
 	
 	
 	@Test(expected=MediaDoesNotExsistException.class)
-	public void testReceiveMessage5() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
+	public void testReceiveMessage5() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
 		proxy.receiveMessage(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, media1.getId()), null);
 	}
 	
 	@Test(expected=MediaListsEmptyException.class)
-	public void testReceiveMessage6() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException {
+	public void testReceiveMessage6() throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
 		proxy.receiveMessage(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE), null);
 	}
 	

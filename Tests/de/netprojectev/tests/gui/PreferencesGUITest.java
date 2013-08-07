@@ -1,5 +1,7 @@
 package de.netprojectev.tests.gui;
 
+import javax.swing.JFrame;
+
 import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.gui.preferences.PreferencesFrame;
 
@@ -33,7 +35,7 @@ public class PreferencesGUITest {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	new PreferencesFrame(null).setVisible(true);
+            	new PreferencesFrame(new JFrame(), null).setVisible(true);
             }
         });
 		

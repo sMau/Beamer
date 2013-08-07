@@ -1,6 +1,10 @@
 package de.netprojectev.tests.gui;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.swing.JFrame;
 
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
@@ -18,9 +22,11 @@ public class ClientGUITest {
 	/**
 	 * @param args
 	 * @throws MediaDoesNotExsistException
+	 * @throws IOException 
+	 * @throws FileNotFoundException 
 	 * @throws InstancePolicyLeakedException 
 	 */
-	public static void main(String[] args) throws MediaDoesNotExsistException {
+	public static void main(String[] args) throws MediaDoesNotExsistException, FileNotFoundException, IOException {
 		
 		final ClientMessageProxy proxy = new ClientMessageProxy(new Client("", 0, null));
 		
@@ -75,7 +81,7 @@ public class ClientGUITest {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-            	 new MainClientGUIWindow(mediaModel, tickerModel, proxy).setVisible(true);
+            	new MainClientGUIWindow(new JFrame(), proxy).setVisible(true);
             }
         });
 
