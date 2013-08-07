@@ -1,4 +1,4 @@
-package old.de.netprojectev.client.gui.themeslide;
+package de.netprojectev.client.gui.themeslide;
 
 import java.awt.Color;
 import java.awt.Dimension;

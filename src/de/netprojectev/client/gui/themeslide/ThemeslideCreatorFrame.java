@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package old.de.netprojectev.client.gui.themeslide;
+package de.netprojectev.client.gui.themeslide;
 
 import java.awt.Color;
 import java.awt.Frame;
@@ -146,8 +146,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
         jTextFieldMarginLeft = new javax.swing.JTextField();
         jTextFieldMarginTop = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        textPanePanel1 = new old.de.netprojectev.client.gui.themeslide.TextPanePanel();
-        textPaneThemeslide = new old.de.netprojectev.client.gui.themeslide.TextPaneThemeslide();
+        textPanePanel1 = new de.netprojectev.client.gui.themeslide.TextPanePanel();
+        textPaneThemeslide = new de.netprojectev.client.gui.themeslide.TextPaneThemeslide();
         jToggleButtonItalic = new javax.swing.JToggleButton();
         jToggleButtonUnderline = new javax.swing.JToggleButton();
         jButtonColorPicker = new javax.swing.JButton();
@@ -1079,13 +1079,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     private javax.swing.JToggleButton jToggleButtonBold;
     private javax.swing.JToggleButton jToggleButtonItalic;
     private javax.swing.JToggleButton jToggleButtonUnderline;
-    private old.de.netprojectev.client.gui.themeslide.TextPanePanel textPanePanel1;
-    private old.de.netprojectev.client.gui.themeslide.TextPaneThemeslide textPaneThemeslide;
+    private de.netprojectev.client.gui.themeslide.TextPanePanel textPanePanel1;
+    private de.netprojectev.client.gui.themeslide.TextPaneThemeslide textPaneThemeslide;
     // End of variables declaration//GEN-END:variables
 
 
 	
-	public void setTextPanePanel1(old.de.netprojectev.client.gui.themeslide.TextPanePanel textPanePanel1) {
+	public void setTextPanePanel1(de.netprojectev.client.gui.themeslide.TextPanePanel textPanePanel1) {
 		this.textPanePanel1 = textPanePanel1;
 		repaint();
 		

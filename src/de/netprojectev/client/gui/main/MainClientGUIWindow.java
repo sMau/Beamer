@@ -18,7 +18,6 @@ import javax.swing.event.ListDataListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import old.de.netprojectev.client.gui.themeslide.ThemeslideCreatorFrame;
 
 import org.apache.logging.log4j.Logger;
 
@@ -34,6 +33,7 @@ import de.netprojectev.client.gui.preferences.AddPriorityDialog;
 import de.netprojectev.client.gui.preferences.AddThemeDialog;
 import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.gui.preferences.PriorityListModel;
+import de.netprojectev.client.gui.themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.TickerModelClient;
