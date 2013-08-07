@@ -13,7 +13,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/Beamer/lib/swingx-all-1.6.4-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/netty-3.6.2.Final.jar" sourcepath="lib/netty-3.6.2.Final-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/log4j-api-2.0-beta8.jar" sourcepath="lib/log4j-api-2.0-beta8-sources.jar">
 		<attributes>
@@ -25,5 +24,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/Beamer/lib/log4j-core-2.0-beta8-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/netty-3.6.6.Final.jar" sourcepath="lib/netty-3.6.6.Final-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
