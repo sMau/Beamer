@@ -413,35 +413,40 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jbAddFile" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jbAddFile" min="-2" pref="77" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jbAddThemeslide" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jbAddTickerElement" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jbRemoveFromList" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jbShowSelected" min="-2" max="-2" attributes="0"/>
+                  <Component id="jsToolbar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="jbShowSelected" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="jbShowNext" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-                  <Component id="jlAutomodeTimeleft" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jlAutomodeTimeleft" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jbAddFile" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbAddThemeslide" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbAddTickerElement" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbRemoveFromList" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbShowSelected" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbShowNext" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jlAutomodeTimeleft" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jbAddFile" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbAddThemeslide" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbAddTickerElement" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbRemoveFromList" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbShowSelected" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbShowNext" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jlAutomodeTimeleft" alignment="0" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Component id="jsToolbar" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -451,7 +456,10 @@
       <SubComponents>
         <Component class="javax.swing.JButton" name="jbAddFile">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add File"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/de/netprojectev/client/gfx/plus_2.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="File"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAddFileActionPerformed"/>
@@ -459,7 +467,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbAddThemeslide">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Themeslide"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/de/netprojectev/client/gfx/plus_2.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Themeslide"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAddThemeslideActionPerformed"/>
@@ -467,7 +478,10 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbAddTickerElement">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Add Tickerelement"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/de/netprojectev/client/gfx/plus_2.png"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Ticker"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbAddTickerElementActionPerformed"/>
@@ -475,7 +489,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbRemoveFromList">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Remove"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/de/netprojectev/client/gfx/delete_2.png"/>
+            </Property>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <Events>
@@ -484,7 +500,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbShowSelected">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Show"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/de/netprojectev/client/gfx/play.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbShowSelectedActionPerformed"/>
@@ -492,7 +510,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="jbShowNext">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Show Next"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/de/netprojectev/client/gfx/next.png"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbShowNextActionPerformed"/>
@@ -501,6 +521,11 @@
         <Component class="javax.swing.JLabel" name="jlAutomodeTimeleft">
           <Properties>
             <Property name="text" type="java.lang.String" value="Timeleft: --:--"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JSeparator" name="jsToolbar">
+          <Properties>
+            <Property name="orientation" type="int" value="1"/>
           </Properties>
         </Component>
       </SubComponents>

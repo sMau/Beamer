@@ -226,6 +226,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         jbShowSelected = new javax.swing.JButton();
         jbShowNext = new javax.swing.JButton();
         jlAutomodeTimeleft = new javax.swing.JLabel();
+        jsToolbar = new javax.swing.JSeparator();
         jpPreviewAndEditor = new javax.swing.JPanel();
         jspPreview = new javax.swing.JScrollPane();
         jlPreview = new javax.swing.JLabel();
@@ -432,28 +433,31 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
         tabbedPaneContainer.addTab("Ticker", jpLiveTicker);
 
-        jbAddFile.setText("Add File");
+        jbAddFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
+        jbAddFile.setText("File");
         jbAddFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAddFileActionPerformed(evt);
             }
         });
 
-        jbAddThemeslide.setText("Add Themeslide");
+        jbAddThemeslide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
+        jbAddThemeslide.setText("Themeslide");
         jbAddThemeslide.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAddThemeslideActionPerformed(evt);
             }
         });
 
-        jbAddTickerElement.setText("Add Tickerelement");
+        jbAddTickerElement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
+        jbAddTickerElement.setText("Ticker");
         jbAddTickerElement.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbAddTickerElementActionPerformed(evt);
             }
         });
 
-        jbRemoveFromList.setText("Remove");
+        jbRemoveFromList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/delete_2.png"))); // NOI18N
         jbRemoveFromList.setToolTipText("");
         jbRemoveFromList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -461,14 +465,14 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
             }
         });
 
-        jbShowSelected.setText("Show");
+        jbShowSelected.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/play.png"))); // NOI18N
         jbShowSelected.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbShowSelectedActionPerformed(evt);
             }
         });
 
-        jbShowNext.setText("Show Next");
+        jbShowNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/next.png"))); // NOI18N
         jbShowNext.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbShowNextActionPerformed(evt);
@@ -477,39 +481,45 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
         jlAutomodeTimeleft.setText("Timeleft: --:--");
 
+        jsToolbar.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
         javax.swing.GroupLayout jpButtonContainerLayout = new javax.swing.GroupLayout(jpButtonContainer);
         jpButtonContainer.setLayout(jpButtonContainerLayout);
         jpButtonContainerLayout.setHorizontalGroup(
             jpButtonContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpButtonContainerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jbAddFile)
-                .addGap(18, 18, 18)
+                .addComponent(jbAddFile, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbAddThemeslide)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbAddTickerElement)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbRemoveFromList)
                 .addGap(18, 18, 18)
-                .addComponent(jbShowSelected)
+                .addComponent(jsToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jbShowSelected)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbShowNext)
-                .addGap(88, 88, 88)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jlAutomodeTimeleft)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jpButtonContainerLayout.setVerticalGroup(
             jpButtonContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpButtonContainerLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jpButtonContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbAddFile)
-                    .addComponent(jbAddThemeslide)
-                    .addComponent(jbAddTickerElement)
-                    .addComponent(jbRemoveFromList)
-                    .addComponent(jbShowSelected)
-                    .addComponent(jbShowNext)
-                    .addComponent(jlAutomodeTimeleft))
+                .addGroup(jpButtonContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpButtonContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbAddFile)
+                        .addComponent(jbAddThemeslide)
+                        .addComponent(jbAddTickerElement)
+                        .addComponent(jbRemoveFromList)
+                        .addComponent(jbShowSelected)
+                        .addComponent(jbShowNext)
+                        .addComponent(jlAutomodeTimeleft))
+                    .addComponent(jsToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1310,7 +1320,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     private javax.swing.JButton jbShowNext;
     private javax.swing.JButton jbShowSelected;
     private javax.swing.JButton jbUpdateFileData;
-    private javax.swing.JComboBox<Priority> jcbPriorityChange;
+    private javax.swing.JComboBox jcbPriorityChange;
     private javax.swing.JCheckBox jchbEnabled;
     private javax.swing.JLabel jlAutomodeTimeleft;
     private javax.swing.JLabel jlCurrent;
@@ -1353,6 +1363,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
     private javax.swing.JPopupMenu jpmAllTables;
     private javax.swing.JPopupMenu jpmQueueTable;
     private javax.swing.JPopupMenu jpmTickerTable;
+    private javax.swing.JSeparator jsToolbar;
     private javax.swing.JScrollPane jspEditor;
     private javax.swing.JScrollPane jspMediaTableContainer;
     private javax.swing.JScrollPane jspPreview;
