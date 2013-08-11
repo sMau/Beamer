@@ -3,19 +3,56 @@ package de.netprojectev.client.gui.main;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
+import de.netprojectev.misc.Misc;
+
 public class TableButtonRenderer extends JButton implements TableCellRenderer {
 	
-	public TableButtonRenderer() {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2922120099859842011L;
+	private final boolean add;
+	
+	
+	public TableButtonRenderer(boolean add) {
 		setOpaque(true);
+		this.add = add;
+		if(this.add) {
+			ImageIcon iconPlus = new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"));
+			try {
+				iconPlus = Misc.getScaledImageIcon(iconPlus, 12);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}			
+			setIcon(iconPlus);
+		} else {
+			ImageIcon iconDelete = new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/delete_2.png"));
+			try {
+				iconDelete = Misc.getScaledImageIcon(iconDelete, 12);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			setIcon(iconDelete);
+		}
 	}
 
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {

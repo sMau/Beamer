@@ -303,12 +303,14 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new AllMediaTableModel(mediaModel)" type="code"/>
                     </Property>
+                    <Property name="rowHeight" type="int" value="20"/>
+                    <Property name="rowMargin" type="int" value="2"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtAllMediaMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtAllMedia.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer());&#xa;jtAllMedia.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int row) {&#xa;        queue(row);&#xa;    }&#xa;}));"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtAllMedia.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer(true));&#xa;jtAllMedia.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int row) {&#xa;        queue(row);&#xa;    }&#xa;}));&#xa;&#xa;jtAllMedia.getColumnModel().getColumn(1).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(2).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(0).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(0).setMinWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(1).setMinWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(2).setMinWidth(30);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -349,12 +351,14 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new CustomQueueTableModel(mediaModel)" type="code"/>
                     </Property>
+                    <Property name="rowHeight" type="int" value="20"/>
+                    <Property name="rowMargin" type="int" value="2"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtCustomQueueMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtCustomQueue.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer());&#xa;jtCustomQueue.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int row) {&#xa;        dequeue(row);&#xa;    }&#xa;}));"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtCustomQueue.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer(false));&#xa;jtCustomQueue.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int row) {&#xa;        dequeue(row);&#xa;    }&#xa;}));&#xa;&#xa;jtCustomQueue.getColumnModel().getColumn(0).setMaxWidth(30);&#xa;jtCustomQueue.getColumnModel().getColumn(0).setMinWidth(30);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -399,6 +403,9 @@
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtLiveTickerMouseClicked"/>
                   </Events>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_ListenersCodePost" type="java.lang.String" value="jtLiveTicker.getColumnModel().getColumn(0).setMaxWidth(30);&#xa;jtLiveTicker.getColumnModel().getColumn(0).setMinWidth(30);"/>
+                  </AuxValues>
                 </Component>
               </SubComponents>
             </Container>
@@ -437,14 +444,14 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="jbRemoveFromList" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbShowSelected" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jbShowNext" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlAutomodeTimeleft" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jbAddFile" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jbAddThemeslide" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jbAddTickerElement" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbRemoveFromList" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbShowSelected" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbShowNext" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jlAutomodeTimeleft" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jsToolbar" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>

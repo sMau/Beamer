@@ -19,7 +19,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 	}
 	//TODO make a column for the position in queue, and a column for the time in min when the media is shown (add all former prios)
 	private final MediaModelClient mediaModel;
-	private final String[] columns = { "Dequeue", "Name", "Priority", "Type" };
+	private final String[] columns = { " ", "Name", "Priority", "Type" };
 	
 	public CustomQueueTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
@@ -90,7 +90,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 		} else {
 			switch (columnIndex) {
 			case 0:
-				return "dequeue";
+				return "";
 			case 1:
 				return media.getName();
 			case 2:

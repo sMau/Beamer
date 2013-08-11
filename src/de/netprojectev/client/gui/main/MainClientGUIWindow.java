@@ -357,12 +357,21 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         });
 
         jtAllMedia.setModel(new AllMediaTableModel(mediaModel));
-        jtAllMedia.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer());
+        jtAllMedia.setRowHeight(20);
+        jtAllMedia.setRowMargin(2);
+        jtAllMedia.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer(true));
         jtAllMedia.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {
             public void buttonClicked(int row) {
                 queue(row);
             }
         }));
+
+        jtAllMedia.getColumnModel().getColumn(1).setMaxWidth(30);
+        jtAllMedia.getColumnModel().getColumn(2).setMaxWidth(30);
+        jtAllMedia.getColumnModel().getColumn(0).setMaxWidth(30);
+        jtAllMedia.getColumnModel().getColumn(0).setMinWidth(30);
+        jtAllMedia.getColumnModel().getColumn(1).setMinWidth(30);
+        jtAllMedia.getColumnModel().getColumn(2).setMinWidth(30);
         jtAllMedia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtAllMediaMouseClicked(evt);
@@ -386,12 +395,17 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
         tabbedPaneContainer.addTab("Media", jpAllMedia);
 
         jtCustomQueue.setModel(new CustomQueueTableModel(mediaModel));
-        jtCustomQueue.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer());
+        jtCustomQueue.setRowHeight(20);
+        jtCustomQueue.setRowMargin(2);
+        jtCustomQueue.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer(false));
         jtCustomQueue.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {
             public void buttonClicked(int row) {
                 dequeue(row);
             }
         }));
+
+        jtCustomQueue.getColumnModel().getColumn(0).setMaxWidth(30);
+        jtCustomQueue.getColumnModel().getColumn(0).setMinWidth(30);
         jtCustomQueue.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jtCustomQueueMouseClicked(evt);
@@ -418,6 +432,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
                 jtLiveTickerMouseClicked(evt);
             }
         });
+        jtLiveTicker.getColumnModel().getColumn(0).setMaxWidth(30);
+        jtLiveTicker.getColumnModel().getColumn(0).setMinWidth(30);
         jspTickerTableContainer.setViewportView(jtLiveTicker);
 
         javax.swing.GroupLayout jpLiveTickerLayout = new javax.swing.GroupLayout(jpLiveTicker);
@@ -511,14 +527,14 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
             .addGroup(jpButtonContainerLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpButtonContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbRemoveFromList)
+                    .addComponent(jbShowSelected)
+                    .addComponent(jbShowNext)
+                    .addComponent(jlAutomodeTimeleft)
                     .addGroup(jpButtonContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jbAddFile)
                         .addComponent(jbAddThemeslide)
-                        .addComponent(jbAddTickerElement)
-                        .addComponent(jbRemoveFromList)
-                        .addComponent(jbShowSelected)
-                        .addComponent(jbShowNext)
-                        .addComponent(jlAutomodeTimeleft))
+                        .addComponent(jbAddTickerElement))
                     .addComponent(jsToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );

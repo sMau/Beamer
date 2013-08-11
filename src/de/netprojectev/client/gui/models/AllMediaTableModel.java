@@ -23,7 +23,7 @@ public class AllMediaTableModel extends AbstractTableModel {
 	private static final Logger log = LoggerBuilder.createLogger(AllMediaTableModel.class);
 
 	private final MediaModelClient mediaModel;
-	private final String[] columns = { "Queue", "Cur", "#Show", "Name", "Priority", "Type" };
+	private final String[] columns = { " ", " ", " ", "Name", "Priority", "Type" };
 
 	public AllMediaTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
@@ -92,7 +92,7 @@ public class AllMediaTableModel extends AbstractTableModel {
 		} else {
 			switch (columnIndex) {
 			case 0:
-				return "queue";
+				return "";
 			case 1:
 				return media.isCurrent();
 			case 2:
