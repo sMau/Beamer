@@ -9,13 +9,14 @@ import java.awt.GraphicsEnvironment;
 
 import javax.swing.JOptionPane;
 
-import old.de.netprojectev.Countdown;
-import old.de.netprojectev.ImageFile;
-import old.de.netprojectev.Themeslide;
-
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.misc.Misc;
+import de.netprojectev.server.datastructures.Countdown;
+import de.netprojectev.server.datastructures.ImageFile;
+import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
 
@@ -33,28 +34,40 @@ public class DisplayFrame extends javax.swing.JFrame {
 
 	private final MessageProxyServer proxy;
 	private boolean fullscreen;
-	private int screenNumberDisplayFrame; 
 	
     public DisplayFrame(MessageProxyServer proxy) {
         this.proxy = proxy;
     	initComponents();
         fullscreen = false;
-        screenNumberDisplayFrame = 0;
     }
 
-    public void showImageFile(ImageFile image) {
+    public void showMediaFileInMainComponent(ServerMediaFile fileToShow) {
+    	if(fileToShow instanceof ImageFile) {
+    		showImageFile((ImageFile) fileToShow);
+    	} else if(fileToShow instanceof Themeslide) {
+    		showThemeslide((Themeslide) fileToShow);
+    	} else if(fileToShow instanceof VideoFile) {
+    		showVideoFile((VideoFile) fileToShow);
+    	} else if(fileToShow instanceof Countdown) {
+    		showCountdown((Countdown) fileToShow);
+    	} else {
+    		//TODO throw Exception
+    	}
+    }
+    
+    private void showImageFile(ImageFile image) {
+    	displayMainComponent.drawImage(Misc.imageIconToBufferedImage(image.getImage()));
+    }
+    
+    private void showVideoFile(VideoFile video) {
     	// TODO
     }
     
-    public void showVideoFile(VideoFile video) {
+    private void showThemeslide(Themeslide themeslide) {
     	// TODO
     }
     
-    public void showThemeslide(Themeslide themeslide) {
-    	// TODO
-    }
-    
-    public void showCountdown(Countdown countdown) {
+    private void showCountdown(Countdown countdown) {
     	// TODO
     }
     
@@ -83,7 +96,6 @@ public class DisplayFrame extends javax.swing.JFrame {
     	
     	if(!fullscreen) {
     		//log.log(Level.INFO, "entering fullscreen mode");
-    		screenNumberDisplayFrame = screenNumber;
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
@@ -97,7 +109,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 		    	// MediaHandlerOld.getInstance().generateNewDisplayImages();
 			} else {
 				//log.log(Level.SEVERE, "error entering fullscreen mode");
-				JOptionPane.showMessageDialog(this, "Error during entering fullscreen exclusive mode. \nCheck the choosen screen.", "Error", JOptionPane.ERROR_MESSAGE);
+				//TODO throw Exception
 				dispose();
 				this.setUndecorated(false);
 				setVisible(true);
@@ -119,7 +131,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 			dispose();
 			this.setUndecorated(false);
 			setVisible(true);
-			myDevices[screenNumberDisplayFrame].setFullScreenWindow(null);
+			myDevices[0].setFullScreenWindow(null);
 			pack();
     		fullscreen = false;
     		//TODO handle fullscreen change, because the resolution of images have to change

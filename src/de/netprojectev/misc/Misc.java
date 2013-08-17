@@ -270,16 +270,20 @@ public class Misc {
 	}
 
 	public static ImageIcon getScaledImageIcon(ImageIcon original, int widthToScaleTo) throws FileNotFoundException, IOException {
-		BufferedImage bi = new BufferedImage(original.getIconWidth(), original.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics g = bi.createGraphics();
-		original.paintIcon(null, g, 0, 0);
-		g.dispose();
-		
+		BufferedImage bi = imageIconToBufferedImage(original);
 		
 		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(bi, widthToScaleTo , (int) (widthToScaleTo * bi.getHeight(null))/bi.getWidth(null)));
 		bi = null;
 		
 		return scaled;
+	}
+	
+	public static BufferedImage imageIconToBufferedImage(ImageIcon iconToConvert) {
+		BufferedImage bi = new BufferedImage(iconToConvert.getIconWidth(), iconToConvert.getIconHeight(), BufferedImage.TYPE_4BYTE_ABGR);
+		Graphics g = bi.createGraphics();
+		iconToConvert.paintIcon(null, g, 0, 0);
+		g.dispose();
+		return bi;
 	}
 	
 

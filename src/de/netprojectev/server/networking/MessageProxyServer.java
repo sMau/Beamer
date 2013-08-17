@@ -40,7 +40,7 @@ public class MessageProxyServer {
 	private final MediaModelServer mediaModel;
 	private final TickerModelServer tickerModel;
 	private final PreferencesModelServer prefsModel;
-	private final DisplayFrame frame;
+	private final DisplayFrame display;
 	private boolean automodeEnabled;
 	private boolean fullscreenEnabled;
 	private boolean liveTickerEnabled;
@@ -69,7 +69,8 @@ public class MessageProxyServer {
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
 		this.prefsModel = new PreferencesModelServer(this);
-		this.frame = new DisplayFrame(this); 
+		this.display = new DisplayFrame(this);
+		this.display.setVisible(true);
 	}
 	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
 	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
@@ -202,6 +203,7 @@ public class MessageProxyServer {
 	 * DONE! next pimp the client gui a little: icons for buttons, comfort in the tables and resiszing of columns also use icons
 	 * 			and make the calc for when a queued file is shown
 	 * next server gui
+	 * next check all the image to imageicon conversions and choose best for performance and RAM usage
 	 * next detail prefs like font sizes and colors and so on
 	 * next pimp server gui (Effects and so on)
 	 * next exception handling
@@ -328,9 +330,9 @@ public class MessageProxyServer {
 		currentFile = toShow;
 		toShow.setCurrent(true).increaseShowCount();
 		updateAutoModeTimer();
+		//TODO last worked here displaying should work now for images
+		display.showMediaFileInMainComponent(currentFile);
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));
-		
-		//TODO implement the display part
 	}
 
 	private void unkownMessageReceived(Message msg) throws UnkownMessageException {
@@ -436,7 +438,7 @@ public class MessageProxyServer {
 	}
 
 	public DisplayFrame getFrame() {
-		return frame;
+		return display;
 	}
 
 	public ServerMediaFile getCurrentFile() {
