@@ -220,7 +220,7 @@ public class MediaModelClient {
 	}
 
 
-	public MediaFile getCurrentMediaFile() {
+	public MediaFile getCurrentMediaFile() { 
 		return currentMediaFile;
 	}
 
@@ -236,5 +236,14 @@ public class MediaModelClient {
 		updateCustomQueueTable();
 	}
 
+	public int timeUntilShow(int rowIndex) throws MediaDoesNotExsistException {
+		//TODO take current file time into account
+		int res = 0;
+		for(int i = 0; i < rowIndex; i++) {
+			res += getMediaFileById(customQueue.get(i)).getPriority().getMinutesToShow();
+		}
+		return res;
+	}
+	
 }
  

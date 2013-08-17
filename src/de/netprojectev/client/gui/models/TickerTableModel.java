@@ -17,7 +17,7 @@ public class TickerTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = -1213494137268165971L;
 	private final TickerModelClient tickerModel; 
-	private final String[] columns = { "Show", "Text" };
+	private final String[] columns = { " ", "Text" };
 	
 	public TickerTableModel(TickerModelClient tickerModel) {
 		this.tickerModel = tickerModel;
@@ -63,12 +63,14 @@ public class TickerTableModel extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
+		if(columnIndex == 0) {
+			return Boolean.class;
+		}
 		return Object.class;
 	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

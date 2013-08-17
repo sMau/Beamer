@@ -72,7 +72,16 @@ public class AllMediaTableModel extends AbstractTableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		return Object.class;
+		switch (columnIndex) {
+		case 1:
+			return Boolean.class;
+		case 2:
+			return Integer.class;
+		default:
+			return Object.class;
+		}
+
+		
 	}
 
 	@Override

@@ -199,12 +199,14 @@ public class MessageProxyServer {
 	/*
 	 * DONE! next adding themeslides
 	 * DONE! next adding countdowns
-	 * next pimp the client gui a little: icons for buttons, comfort in the tables and resiszing of columns also use icons
+	 * DONE! next pimp the client gui a little: icons for buttons, comfort in the tables and resiszing of columns also use icons
 	 * 			and make the calc for when a queued file is shown
 	 * next server gui
 	 * next detail prefs like font sizes and colors and so on
-	 * next pimp server gui
-	 * 
+	 * next pimp server gui (Effects and so on)
+	 * next exception handling
+	 * next new themeslide creator using templates or something like that
+	 * next proper login handling (also to see which user did what and when) and maybe the possibility to send messages or notes or something like that
 	 */
 	private void fullSyncRequested(Message msg, Channel channel) throws FileNotFoundException, IOException {
 		

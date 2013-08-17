@@ -19,7 +19,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 	}
 	//TODO make a column for the position in queue, and a column for the time in min when the media is shown (add all former prios)
 	private final MediaModelClient mediaModel;
-	private final String[] columns = { " ", "Name", "Priority", "Type" };
+	private final String[] columns = { " ", " ", "Name", "Priority", "Type" };
 	
 	public CustomQueueTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
@@ -92,10 +92,18 @@ public class CustomQueueTableModel extends AbstractTableModel {
 			case 0:
 				return "";
 			case 1:
-				return media.getName();
+				try {
+					return mediaModel.timeUntilShow(rowIndex);
+				} catch (MediaDoesNotExsistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return 0;
+				}
 			case 2:
-				return media.getPriority().toString();
+				return media.getName();
 			case 3:
+				return media.getPriority().toString();
+			case 4:
 				return media.getType();
 			default:
 				return "error loading data";
