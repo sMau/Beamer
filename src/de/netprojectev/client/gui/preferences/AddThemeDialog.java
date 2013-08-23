@@ -23,7 +23,7 @@ import javax.swing.KeyStroke;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
-import de.netprojectev.misc.ImageFileFilter;
+import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -206,7 +206,7 @@ public class AddThemeDialog extends javax.swing.JDialog {
 		fileChooser.setApproveButtonText("Choose");
 		fileChooser.setDialogTitle("Choose Background Image");
 		fileChooser.setMultiSelectionEnabled(false);
-		fileChooser.setFileFilter(new ImageFileFilter());
+		fileChooser.setFileFilter(new MediaFileFilter());
 		int returnVal = fileChooser.showOpenDialog(this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {

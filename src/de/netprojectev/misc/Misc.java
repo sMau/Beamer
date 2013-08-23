@@ -298,17 +298,16 @@ public class Misc {
 	 * @param newWidth
 	 *            the new width
 	 * @param newHeight
-	 *            the new height
+	 *            the new height, if 0 then the height is calculated to keep the aspect ratio
 	 * @return the scaled image instance as {@link BufferedImage} in compatible
 	 *         mode
 	 */
 	public static BufferedImage getScaledImageInstanceFast(BufferedImage imageToScale, int newWidth, int newHeight) {
-
 		BufferedImage scaledImage;
 
 		int oldWidth = imageToScale.getWidth();
 		int oldHeight = imageToScale.getHeight();
-
+		
 		if (oldWidth > newWidth && oldHeight > newHeight) {
 			scaledImage = GraphicsUtilities.createThumbnail(imageToScale, newWidth, newHeight);
 		} else {
@@ -322,6 +321,7 @@ public class Misc {
 		return scaledImage;
 	}
 
+	
 	/**
 	 * 
 	 * @param dir
@@ -332,7 +332,7 @@ public class Misc {
 	public static File[] searchForAllImageFiles(File dir) {
 		ArrayList<File> allFiles = searchFile(dir);
 		ArrayList<File> imageFiles = new ArrayList<File>();
-		ImageFileFilter filter = new ImageFileFilter();
+		MediaFileFilter filter = new MediaFileFilter();
 
 		for (int i = 0; i < allFiles.size(); i++) {
 			if (filter.accept(allFiles.get(i))) {

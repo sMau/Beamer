@@ -64,7 +64,7 @@ public class DisplayFrame extends javax.swing.JFrame {
     }
     
     private void showThemeslide(Themeslide themeslide) {
-    	// TODO
+    	displayMainComponent.drawImage(Misc.imageIconToBufferedImage(themeslide.getImageRepresantation().getImage()));
     }
     
     private void showCountdown(Countdown countdown) {

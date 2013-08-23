@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
@@ -14,6 +15,8 @@ import old.de.netprojectev.Countdown;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.misc.Misc;
+import de.netprojectev.server.datastructures.Themeslide;
 /**
  * 
  * GUI Component to draw images and themeslide background images
@@ -25,7 +28,7 @@ public class DisplayMainComponent extends JComponent {
 	private static final Logger log = LoggerBuilder.createLogger(DisplayMainComponent.class);
 
 	private static final long serialVersionUID = 3915763660057625809L;
-	private Image image;
+	private BufferedImage image;
 	
 	private boolean countdownShowing = false;
 	
@@ -69,10 +72,11 @@ public class DisplayMainComponent extends JComponent {
 	 * Tell this to draw the given image.
 	 * @param file the image file to draw on component
 	 */
-	protected void drawImage(final Image compImage) {
-		
+	protected void drawImage(final BufferedImage compImage) {
+		//TODO check for performance probs. in resizing and so on
+
 		countdownShowing = false;
-		this.image = compImage;
+		this.image = Misc.getScaledImageInstanceFast(compImage, (int) (getHeight() * compImage.getWidth()/compImage.getHeight()), (int) getHeight());
 		repaint(0,0,getWidth(), getHeight());
 
 	}

@@ -25,7 +25,7 @@ import old.de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
-import de.netprojectev.misc.ImageFileFilter;
+import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.misc.Misc;
 
 /**
@@ -1005,7 +1005,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void jButtonChooseBgImageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonChooseBgImageActionPerformed
 
     	
-    	jFileChooser1.setFileFilter(new ImageFileFilter());
+    	jFileChooser1.setFileFilter(new MediaFileFilter());
     	int returnVal = jFileChooser1.showOpenDialog(this);
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {

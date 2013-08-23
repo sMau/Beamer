@@ -42,7 +42,7 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
-import de.netprojectev.misc.ImageFileFilter;
+import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 
@@ -1030,9 +1030,9 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		fileChooser.setApproveButtonText("Add");
 		fileChooser.setDialogTitle("Add Files");
 		fileChooser.setMultiSelectionEnabled(true);
-		fileChooser.setFileFilter(new ImageFileFilter());
+		fileChooser.setFileFilter(new MediaFileFilter());
 		int returnVal = fileChooser.showOpenDialog(this);
-
+		//TODO respect directories and flaten them
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
 				proxy.sendAddImageFiles(fileChooser.getSelectedFiles());

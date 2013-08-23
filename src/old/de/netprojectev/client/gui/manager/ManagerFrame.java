@@ -45,7 +45,7 @@ import old.de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.misc.Constants;
-import de.netprojectev.misc.ImageFileFilter;
+import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.VideoFile;
@@ -882,7 +882,7 @@ public class ManagerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemAddFileActionPerformed
 
 	private void openFileChooser() {
-		jFileChooser.setFileFilter(new ImageFileFilter());
+		jFileChooser.setFileFilter(new MediaFileFilter());
 		int returnVal = jFileChooser.showOpenDialog(this);
         if (returnVal == JFileChooser.APPROVE_OPTION) {
         	MediaHandlerOld.getInstance().add(Misc.createMediaFromFiles(jFileChooser.getSelectedFiles()));
@@ -1336,7 +1336,7 @@ public class ManagerFrame extends javax.swing.JFrame {
 		// methods in misc for helping already implmented
 		dtde.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
         Transferable t = dtde.getTransferable();
-        ImageFileFilter filter = new ImageFileFilter();
+        MediaFileFilter filter = new MediaFileFilter();
 		List<?> fileList = null;
 		try {
 			fileList = (List<?>)t.getTransferData(DataFlavor.javaFileListFlavor);
