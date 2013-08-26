@@ -368,7 +368,6 @@ public class MessageProxyServer {
 		currentFile = toShow;
 		toShow.setCurrent(true).increaseShowCount();
 		updateAutoModeTimer();
-		//TODO last worked here displaying should work now for images (resizing fails)
 		display.showMediaFileInMainComponent(currentFile);
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));
 	}

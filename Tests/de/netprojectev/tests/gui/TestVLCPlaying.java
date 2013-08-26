@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Timer;
 
 public class TestVLCPlaying {
 	
@@ -13,26 +12,23 @@ public class TestVLCPlaying {
 
 			
 		
-	        final ArrayList<String> serverStartCommand = new ArrayList<>();
-	        serverStartCommand.add("vlc");
-	        serverStartCommand.add("-f");
-	        serverStartCommand.add("/media/truecrypt1/JDown/tvs-poi-dd51-ded-dl-7p-ithd-avc/Person.of.Interest.S02E09.Liebesgruesse.aus.Estland.German.DD51.Dubbed.DL.720p.iTunesHD.AVC-TVS");
+	        final ArrayList<String> vlcStartCommand = new ArrayList<>();
+	        vlcStartCommand.add("vlc");
+	        vlcStartCommand.add("-f");
+	        vlcStartCommand.add("--no-video-title-show");
+	        vlcStartCommand.add("--play-and-exit");
+	        vlcStartCommand.add("/media/truecrypt1/JDown/tvs-poi-dd51-ded-dl-7p-ithd-avc/Person.of.Interest.S02E09.Liebesgruesse.aus.Estland.German.DD51.Dubbed.DL.720p.iTunesHD.AVC-TVS");
 
 	        
 			try {
-				final Process vlc = new ProcessBuilder(serverStartCommand).start();
+				final Process vlc = new ProcessBuilder(vlcStartCommand).start();
 				
+				/*
 				startLogReader(vlc.getInputStream());
 		        startLogReader(vlc.getErrorStream());
 		        
-		        
-		        new Timer().schedule(new java.util.TimerTask() {
-					
-					@Override
-					public void run() {
-						vlc.destroy();
-					}
-				} ,10000);
+		        */
+				
 			} catch (Exception e) {
 				System.out.println("catched!!!");
 				e.printStackTrace();

@@ -60,7 +60,17 @@ public class DisplayFrame extends javax.swing.JFrame {
     }
     
     private void showVideoFile(VideoFile video) {
-    	// TODO
+    	//TODO (maybe) handle the switch between the image and themeslide show window and vlc player
+    	try {
+    		final Process vlc = new VlcPlayBackUtility(video.getVideoFile()).startPlay();
+    		//TODO LAST WORKED HERE VIDEO PLAYBACK
+    		//TODO wait for vlc to exit and then continue in automode if its enabled
+    		
+		} catch (Exception e) {
+			// TODO make proper exception handling if video fails to play
+			e.printStackTrace();
+		}
+
     }
     
     private void showThemeslide(Themeslide themeslide) {
