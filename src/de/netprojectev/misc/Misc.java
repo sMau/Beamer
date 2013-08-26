@@ -24,6 +24,7 @@ import java.util.Properties;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 
 import org.apache.logging.log4j.Logger;
 import org.jdesktop.swingx.util.GraphicsUtilities;
@@ -69,6 +70,7 @@ public class Misc {
 		PointerInfo info = MouseInfo.getPointerInfo();
 		return info.getLocation();
 	}
+	
 
 	/**
 	 * Generates font sizes based on stepwidth n, start and end size.

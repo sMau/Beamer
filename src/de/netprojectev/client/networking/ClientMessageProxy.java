@@ -25,6 +25,7 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -32,6 +33,7 @@ import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.Themeslide;
+import de.netprojectev.server.datastructures.VideoFile;
 
 public class ClientMessageProxy {
 	
@@ -102,6 +104,24 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_REMOVE_PRIORITY, toRemove));
 	}
 	
+	public void sendAddMediaFiles(File[] selectedFiles) throws IOException {
+		for(int i = 0; i < selectedFiles.length; i++) {
+			if(!selectedFiles[i].isDirectory()) {
+				if(MediaFileFilter.isImageFile(selectedFiles[i].getName())) {
+					sendAddImageFile(selectedFiles[i]);
+				} else if (MediaFileFilter.isVideoFile(selectedFiles[i].getName())) {
+					sendAddVideoFile(selectedFiles[i]);
+				}
+			}
+			
+		}
+	}
+	
+	public void sendAddVideoFile(File file) {
+		//TODO last worked here, transfering the video is needed here now
+		new VideoFile(file.getName(), file);
+	}
+
 	public void sendAddImageFile(File file) throws IOException {
 		String name = file.getName();
 		BufferedImage image = ImageIO.read(file);
@@ -442,6 +462,8 @@ public class ClientMessageProxy {
 	public PreferencesModelClient getPrefs() {
 		return prefs;
 	}
+
+
 
 	
 }

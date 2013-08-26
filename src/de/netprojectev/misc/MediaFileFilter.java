@@ -17,6 +17,7 @@ public class MediaFileFilter extends FileFilter {
 		if(f.isDirectory()) {
 		    return true;
 		}
+		
 		String fileName = f.getName().toLowerCase();
 		
 		if(isImageFile(fileName)) {
@@ -29,6 +30,8 @@ public class MediaFileFilter extends FileFilter {
 
 		return false;
 	}
+	
+	//TODO check the vlc support list
 
 	public static boolean isVideoFile(String fileName) {
 		
@@ -121,7 +124,7 @@ public class MediaFileFilter extends FileFilter {
 	@Override
 	public String getDescription() {
 		
-		return "supported image files";
+		return "supported media files";
 	}
 	
 	

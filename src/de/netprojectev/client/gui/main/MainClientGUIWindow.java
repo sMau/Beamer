@@ -4,7 +4,9 @@ import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -1032,10 +1034,9 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		fileChooser.setMultiSelectionEnabled(true);
 		fileChooser.setFileFilter(new MediaFileFilter());
 		int returnVal = fileChooser.showOpenDialog(this);
-		//TODO respect directories and flaten them
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
-				proxy.sendAddImageFiles(fileChooser.getSelectedFiles());
+				proxy.sendAddMediaFiles(fileChooser.getSelectedFiles());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
