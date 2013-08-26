@@ -1,5 +1,6 @@
 package de.netprojectev.server.networking;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,12 +26,16 @@ import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.networking.VideoFileData;
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
+import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.gui.DisplayFrame;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
+import de.netprojectev.server.networking.VideoFileReceiveHandler.ToManyMessagesException;
 
 public class MessageProxyServer {
 	
@@ -40,6 +45,7 @@ public class MessageProxyServer {
 	private final MediaModelServer mediaModel;
 	private final TickerModelServer tickerModel;
 	private final PreferencesModelServer prefsModel;
+	private final VideoFileReceiveHandler videoFileReceiveHandler;
 	private final DisplayFrame display;
 	private boolean automodeEnabled;
 	private boolean fullscreenEnabled;
@@ -69,11 +75,12 @@ public class MessageProxyServer {
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
 		this.prefsModel = new PreferencesModelServer(this);
+		this.videoFileReceiveHandler = new VideoFileReceiveHandler();
 		this.display = new DisplayFrame(this);
 		this.display.setVisible(true);
 	}
 	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
-	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException {
+	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_MEDIA_FILE:
 			addMediaFile(msg);
@@ -141,6 +148,15 @@ public class MessageProxyServer {
 		case CTS_RESET_SHOW_COUNT:
 			resetShowCount(msg);
 			break;
+		case CTS_ADD_VIDEO_FILE_START:
+			videoTransferStarted(msg);
+			break;
+		case CTS_ADD_VIDEO_FILE_FINISH:
+			videoTransferFinished(msg);
+			break;
+		case CTS_ADD_VIDEO_FILE_DATA:
+			videoTransferReceiveData(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
@@ -148,14 +164,36 @@ public class MessageProxyServer {
 	}
 
 
+	private void videoTransferReceiveData(Message msg) throws IOException, ToManyMessagesException {
+		VideoFileData data = (VideoFileData) msg.getData()[0];
+		
+		videoFileReceiveHandler.receiveData(data.getVideoFileUUID(), data.getByteBuffer());
+	}
+	
+	private void videoTransferFinished(Message msg) throws IOException {
+		VideoFile file = (VideoFile) msg.getData()[0];
+		videoFileReceiveHandler.finishingReceivingVideo(file.getId());
+		
+		file.setVideoFile(new File(ConstantsServer.SERVER_SAVE_PATH + ConstantsServer.SERVER_CACHE_FOLDER + file.getId()));
+		
+		mediaModel.addMediaFile(file);
+		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(file)));
+	}
+	
+	private void videoTransferStarted(Message msg) throws FileNotFoundException {
+		UUID idOfVideoFile = (UUID) msg.getData()[0];
+		int estMsgCount = (Integer) msg.getData()[1];
+		videoFileReceiveHandler.startingReceivingVideo(idOfVideoFile, estMsgCount);
+	}
+	
 	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
-		UUID toReset = (UUID) msg.getData();
+		UUID toReset = (UUID) msg.getData()[0];
 		mediaModel.resetShowCount(toReset);
 		broadcastMessage(new Message(OpCode.STC_RESET_SHOW_COUNT_ACK, toReset));
 	}
 	
 	private void editLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
-		ClientTickerElement edited = (ClientTickerElement) msg.getData();
+		ClientTickerElement edited = (ClientTickerElement) msg.getData()[0];
 		ServerTickerElement correlatedServerFile = tickerModel.getElementByID(edited.getId());
 		correlatedServerFile.setShow(edited.isShow());
 		correlatedServerFile.setText(edited.getText());
@@ -163,7 +201,7 @@ public class MessageProxyServer {
 	}
 	
 	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException {
-		ClientMediaFile editedFile = (ClientMediaFile) msg.getData();
+		ClientMediaFile editedFile = (ClientMediaFile) msg.getData()[0];
 		ServerMediaFile correlatedServerFile = mediaModel.getMediaFileById(editedFile.getId());		
 		correlatedServerFile.setName(editedFile.getName());
 		correlatedServerFile.setPriority(editedFile.getPriority()); //TODO check if this is working with objects, else change to id based prios
@@ -188,7 +226,7 @@ public class MessageProxyServer {
 	}
 	
 	private void dequeueMediaFile(Message msg) throws MediaDoesNotExsistException, OutOfSyncException {
-		DequeueData mediaToDequeue = (DequeueData) msg.getData();
+		DequeueData mediaToDequeue = (DequeueData) msg.getData()[0];
 		mediaModel.dequeue(mediaToDequeue.getId(), mediaToDequeue.getRow());
 		
 		broadcastMessage(new Message(OpCode.STC_DEQUEUE_MEDIAFILE_ACK, mediaToDequeue));
@@ -256,45 +294,45 @@ public class MessageProxyServer {
 	}
 	
 	private void removePriority(Message msg) {
-		UUID prioToRemove = (UUID) msg.getData();
+		UUID prioToRemove = (UUID) msg.getData()[0];
 		prefsModel.removePriority(prioToRemove);
 		broadcastMessage(new Message(OpCode.STC_REMOVE_PRIORITY_ACK, prioToRemove));
 	}
 
 	private void removeTheme(Message msg) {
-		UUID themeToRemove = (UUID) msg.getData();
+		UUID themeToRemove = (UUID) msg.getData()[0];
 		prefsModel.removeTheme(themeToRemove);
 		broadcastMessage(new Message(OpCode.STC_REMOVE_THEME_ACK, themeToRemove));
 	}
 
 	private void addPriority(Message msg) {
-		Priority prioToAdd = (Priority) msg.getData();
+		Priority prioToAdd = (Priority) msg.getData()[0];
 		prefsModel.addPriority(prioToAdd);
 		broadcastMessage(new Message(OpCode.STC_ADD_PRIORITY_ACK, prioToAdd));
 	}
 
 	private void addTheme(Message msg) {
-		Theme themeToAdd = (Theme) msg.getData();
+		Theme themeToAdd = (Theme) msg.getData()[0];
 		prefsModel.addTheme(themeToAdd);
 		broadcastMessage(new Message(OpCode.STC_ADD_THEME_ACK, themeToAdd));
 	}
 	
 	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
-		UUID eltToRemove = (UUID) msg.getData();
+		UUID eltToRemove = (UUID) msg.getData()[0];
 		tickerModel.removeTickerElement(eltToRemove);
 		
 		broadcastMessage(new Message(OpCode.STC_REMOVE_LIVE_TICKER_ELEMENT_ACK, eltToRemove));
 	}
 
 	private void addLiveTickerElement(Message msg) {
-		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData();
+		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData()[0];
 		tickerModel.addTickerElement(eltToAdd);
 		//TODO implement the display part
 		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(eltToAdd)));
 	}
 
 	private void queueMediaFile(Message msg) throws MediaDoesNotExsistException {
-		UUID toQueue = (UUID) msg.getData();
+		UUID toQueue = (UUID) msg.getData()[0];
 		mediaModel.queue(toQueue);		
 		
 		broadcastMessage(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, toQueue));
@@ -315,7 +353,7 @@ public class MessageProxyServer {
 	}
 
 	private void showMediaFile(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException {
-		UUID toShow = (UUID) msg.getData();
+		UUID toShow = (UUID) msg.getData()[0];
 		ServerMediaFile fileToShow = mediaModel.getMediaFileById(toShow);
 		
 		showMedia(fileToShow);
@@ -340,14 +378,14 @@ public class MessageProxyServer {
 	}
 
 	private void removeMediaFile(Message msg) throws MediaDoesNotExsistException {
-		UUID toRemove = (UUID) msg.getData();
+		UUID toRemove = (UUID) msg.getData()[0];
 		mediaModel.removeMediaFile(toRemove);
 		
 		broadcastMessage(new Message(OpCode.STC_REMOVE_MEDIA_FILE_ACK, toRemove));
 	}
 
 	private void addMediaFile(Message msg) throws FileNotFoundException, IOException {
-		ServerMediaFile fileToAdd = (ServerMediaFile) msg.getData();
+		ServerMediaFile fileToAdd = (ServerMediaFile) msg.getData()[0];
 		mediaModel.addMediaFile(fileToAdd);
 		
 		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(fileToAdd)));

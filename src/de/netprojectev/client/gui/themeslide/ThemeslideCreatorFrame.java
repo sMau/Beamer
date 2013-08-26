@@ -557,11 +557,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     }
 
 	private BufferedImage generatePNGRepresentation(Themeslide themeSlide) {
-	
-    	String savePath = Constants.SAVE_PATH + Constants.FOLDER_THEMESLIDE_CACHE;
-    	if(!new File(savePath).isDirectory()) {
-    		new File(savePath).mkdir();
-    	}
     	
     	String fileName = themeSlide.getId().toString() + ".png";
     	

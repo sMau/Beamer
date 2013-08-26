@@ -25,7 +25,6 @@ public class Constants {
 	public static final String FILENAME_LOGALL = "log_beamer_";
 	
 	public static final String SAVE_PATH = System.getProperty("user.home") + "/.beamermanager/";
-	public static final String FOLDER_THEMESLIDE_CACHE = "themeslidecache/";
 	
 	/*
 	 * Misc

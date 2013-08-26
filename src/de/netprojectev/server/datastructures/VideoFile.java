@@ -2,6 +2,8 @@ package de.netprojectev.server.datastructures;
 
 import java.io.File;
 
+import de.netprojectev.datastructures.media.Priority;
+
 public class VideoFile extends ServerMediaFile {
 
 	/**
@@ -12,10 +14,18 @@ public class VideoFile extends ServerMediaFile {
 	private int duration;
 	
 	public VideoFile(String name, File videoFile) {
-		super(name, null);
+		super(name, new Priority("Video", 0));
 		this.videoFile = videoFile;
 		
 		//TODO est. of duration
+	}
+
+	public File getVideoFile() {
+		return videoFile;
+	}
+
+	public void setVideoFile(File videoFile) {
+		this.videoFile = videoFile;
 	}
 	
 }

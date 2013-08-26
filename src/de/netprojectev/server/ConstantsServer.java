@@ -10,7 +10,7 @@ public class ConstantsServer {
 	public static final String SERVER_FILENAME_LOGALL = "log_beamer_server_";
 	
 	public static final String SERVER_SAVE_PATH = System.getProperty("user.home") + "/.beamermanager_server/";
-	public static final String SERVER_FOLDER_THEMESLIDE_CACHE = "themeslidecache/";
+	public static final String SERVER_CACHE_FOLDER = "cache/";
 	
 	public static final String DEFAULT_SERVER_PW = "";	
 	

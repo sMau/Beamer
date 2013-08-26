@@ -14,6 +14,7 @@ import de.netprojectev.exceptions.MediaNotInQueueException;
 import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
 
 public class MediaModelServer {
@@ -62,7 +63,7 @@ public class MediaModelServer {
 	public void removeMediaFile(UUID id) throws MediaDoesNotExsistException {
 		testIfMediaFileExists(id);
 		log.debug("Removing media file: " + id);
-		allMediaFiles.remove(id);
+		ServerMediaFile removedFile = allMediaFiles.remove(id);
 		
 		while(mediaPrivateQueue.contains(id)) {
 			mediaPrivateQueue.remove(id);
@@ -70,9 +71,23 @@ public class MediaModelServer {
 		while(mediaStandardList.contains(id)) {
 			mediaStandardList.remove(id);
 		}
+		
+		cleanUpAfterRemove(removedFile);
 
 	}
 	
+	private void cleanUpAfterRemove(ServerMediaFile removedFile) {
+		if(removedFile instanceof VideoFile) {
+			if(((VideoFile) removedFile).getVideoFile().exists()) {
+				if(removedFile.isCurrent()) {
+					((VideoFile) removedFile).getVideoFile().deleteOnExit();
+				} else {
+					((VideoFile) removedFile).getVideoFile().delete();
+				}
+			}
+		}
+	}
+
 	public void queue(UUID id) throws MediaDoesNotExsistException {
 		testIfMediaFileExists(id);
 		log.debug("Queuing media file: " + id);

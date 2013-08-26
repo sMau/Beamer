@@ -1,5 +1,6 @@
 package de.netprojectev.server;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
@@ -33,6 +34,13 @@ public class Server {
 
 	public Server(int port) {
 		this.port = port;
+		
+		//TODO this is only for testing, a clean setup of all necessary files is better here
+		File savePath = new File(ConstantsServer.SERVER_SAVE_PATH + ConstantsServer.SERVER_CACHE_FOLDER);
+		if(!savePath.exists()) {
+			savePath.mkdirs();
+		}
+		
 		proxy = new MessageProxyServer();
 		bindListeningSocket();
 	}

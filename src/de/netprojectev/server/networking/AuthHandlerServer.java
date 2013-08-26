@@ -35,7 +35,7 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 		Message received = (Message) e.getMessage();
 		if(chanConnected && received.getOpCode().equals(OpCode.CTS_LOGIN_REQUEST)) {
 			
-			LoginData login = (LoginData) received.getData();
+			LoginData login = (LoginData) received.getData()[0];
 			
 			if(login.getKey().equals(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_PW))) {
 				proxy.clientConnected(e.getChannel());

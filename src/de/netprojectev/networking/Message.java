@@ -12,14 +12,14 @@ public class Message implements Serializable {
 	
 	private final OpCode opCode;
 	private final UUID id;
-	private Serializable data;
+	private Serializable[] data;
 	
 	public Message(OpCode opCode) {
 		this.id = UUID.randomUUID();
 		this.opCode = opCode;
 	}
 	
-	public Message(OpCode opCode, Serializable data) {
+	public Message(OpCode opCode, Serializable... data) {
 		this.id = UUID.randomUUID();
 		this.opCode = opCode;
 		this.data = data;
@@ -33,7 +33,7 @@ public class Message implements Serializable {
 		return id;
 	}
 
-	public Object getData() {
+	public Serializable[] getData() {
 		return data;
 	}
 	
