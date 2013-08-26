@@ -241,7 +241,15 @@ public class MessageProxyServer {
 	 * DONE! next adding countdowns
 	 * DONE! next pimp the client gui a little: icons for buttons, comfort in the tables and resiszing of columns also use icons
 	 * 			and make the calc for when a queued file is shown
-	 * next server gui
+	 * DONE! next server gui
+	 * 
+	 * Showing Countdown
+	 * Add proper serialization (client and espacially SERVER!
+	 * Check all TODOS
+	 * add handling for further prefs like changing fonts and colors of live ticker
+	 * pimp the live ticker a little slightly transparent overlay or something like that 
+	 * 
+	 * 
 	 * next check all the image to imageicon conversions and choose best for performance and RAM usage
 	 * next detail prefs like font sizes and colors and so on
 	 * next pimp server gui (Effects and so on)
