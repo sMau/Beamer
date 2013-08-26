@@ -22,15 +22,10 @@ public class VlcPlayBackUtility {
 		vlcStartCommand.add("-f");
 		vlcStartCommand.add("--no-video-title-show");
 		vlcStartCommand.add("--play-and-exit");
+		vlcStartCommand.add("--video-on-top");
 		vlcStartCommand.add(toPlay.getAbsolutePath());
 		
 		return new ProcessBuilder(vlcStartCommand).start();
-
-			/*
-			 * startLogReader(vlc.getInputStream());
-			 * startLogReader(vlc.getErrorStream());
-			 */
-		
 	}
 
 	private void startLogReader(final InputStream input) {

@@ -32,6 +32,7 @@ import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.gui.DisplayFrame;
+import de.netprojectev.server.gui.DisplayFrame.VideoFinishListener;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
@@ -327,7 +328,7 @@ public class MessageProxyServer {
 	private void addLiveTickerElement(Message msg) {
 		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData()[0];
 		tickerModel.addTickerElement(eltToAdd);
-		//TODO implement the display part
+		display.updateLiveTicker();
 		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(eltToAdd)));
 	}
 
@@ -367,7 +368,19 @@ public class MessageProxyServer {
 		}
 		currentFile = toShow;
 		toShow.setCurrent(true).increaseShowCount();
-		updateAutoModeTimer();
+		if(toShow instanceof VideoFile) {
+			display.setVideoFinishedListener(new VideoFinishListener() {
+				
+				@Override
+				public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException {
+					if(automodeEnabled) {
+						showNextMediaFile();
+					}
+				}
+			});
+		} else {
+			updateAutoModeTimer();
+		}
 		display.showMediaFileInMainComponent(currentFile);
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));
 	}
@@ -438,14 +451,16 @@ public class MessageProxyServer {
 
 	private void enableLiveTicker() {
 		liveTickerEnabled = true;
-		//TODO update display
+		
+		display.startLiveTicker();
 		
 		broadcastMessage(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
 	}
 	
 	private void disableLiveTicker() {
 		liveTickerEnabled = false;
-		//TODO update display
+		
+		display.stopLiveTicker();
 		
 		broadcastMessage(new Message(OpCode.STC_DISABLE_LIVE_TICKER_ACK));
 	}

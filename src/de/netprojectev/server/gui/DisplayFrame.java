@@ -7,10 +7,10 @@ package de.netprojectev.server.gui;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 
-import javax.swing.JOptionPane;
-
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.server.datastructures.Countdown;
@@ -26,6 +26,11 @@ import de.netprojectev.server.networking.MessageProxyServer;
  */
 public class DisplayFrame extends javax.swing.JFrame {
 
+	
+	public interface VideoFinishListener {
+		public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException;
+	}
+	
 	/**
 	 * 
 	 */
@@ -34,6 +39,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 
 	private final MessageProxyServer proxy;
 	private boolean fullscreen;
+	private VideoFinishListener videoFinishedListener;
 	
     public DisplayFrame(MessageProxyServer proxy) {
         this.proxy = proxy;
@@ -60,11 +66,33 @@ public class DisplayFrame extends javax.swing.JFrame {
     }
     
     private void showVideoFile(VideoFile video) {
-    	//TODO (maybe) handle the switch between the image and themeslide show window and vlc player
+    	//TODO maybe check what the timer is doing during automode enabled and video playing
+    	//TODO check if the switch works with fullscreen
     	try {
     		final Process vlc = new VlcPlayBackUtility(video.getVideoFile()).startPlay();
-    		//TODO LAST WORKED HERE VIDEO PLAYBACK
-    		//TODO wait for vlc to exit and then continue in automode if its enabled
+    		
+    		new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						vlc.waitFor();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					try {
+						videoFinishedListener.videoFinished();
+					} catch (MediaDoesNotExsistException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (MediaListsEmptyException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}).start();
+    		
     		
 		} catch (Exception e) {
 			// TODO make proper exception handling if video fails to play
@@ -82,19 +110,20 @@ public class DisplayFrame extends javax.swing.JFrame {
     }
     
     public void startLiveTicker() {
-    	// TODO
+    	tickerComponent.setTickerString(proxy.getTickerModel().generateCompleteTickerText());
+    	tickerComponent.initLiveTickerAndStart();
     }
     
-    public void updateLiveTIcker(String tickerText) {
-    	// TODO
+    public void updateLiveTicker() {
+    	tickerComponent.setTickerString(proxy.getTickerModel().generateCompleteTickerText());
     }
     
     public void stopLiveTicker() {
-    	// TODO
+    	tickerComponent.stopLiveTicker();
     }
     
     public void clearDisplay() {
-    	// TODO
+    	displayMainComponent.clear();
     }
     
     
@@ -251,5 +280,9 @@ public class DisplayFrame extends javax.swing.JFrame {
     private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
     private de.netprojectev.server.gui.TickerComponent tickerComponent;
     // End of variables declaration//GEN-END:variables
+
+	public void setVideoFinishedListener(VideoFinishListener videoFinishedListener) {
+		this.videoFinishedListener = videoFinishedListener;
+	}
 	
 }

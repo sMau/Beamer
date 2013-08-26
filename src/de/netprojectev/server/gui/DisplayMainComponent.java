@@ -114,4 +114,8 @@ public class DisplayMainComponent extends JComponent {
 		
 	}
 
+	protected void clear() {
+		//TODO implement clear
+	}
+
 }

@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,7 +16,9 @@ import old.de.netprojectev.PreferencesModelOld;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.server.model.PreferencesModelServer;
 
 /**
  * GUI component to draw the live ticker string.
@@ -53,6 +56,7 @@ public class TickerComponent extends JComponent {
 	
 	protected TickerComponent() {
 		super();
+		updateLiveTickerAttributes();
 		toDraw1 = " ";
 		toDraw2 = " ";
 		tickerString = " ";
@@ -122,7 +126,8 @@ public class TickerComponent extends JComponent {
 	private void startLiveTicker() {
 		
 		if(liveTickerTimer != null) {
-			stopLiveTicker();
+			liveTickerTimer.cancel();
+        	liveTickerTimer.purge();
 		}
 		liveTickerTimer = new Timer();
 		liveTickerTimer.schedule(new TickerTimerTask(), 0, tickerSpeed);
@@ -132,14 +137,17 @@ public class TickerComponent extends JComponent {
 
 	
 	/**
-	 * stops the live ticker timer
+	 * Clears the ticker string and stops the live ticker timer
 	 */
-    private void stopLiveTicker() {
+    protected void stopLiveTicker() {
+    	setTickerString("");
     	if(liveTickerTimer != null) {
+    		
     		//log.log(Level.INFO, "Live Ticker stoped");
     		liveTickerTimer.cancel();
         	liveTickerTimer.purge();
     	}
+    	repaint();
     }
 	
     /**
@@ -147,15 +155,14 @@ public class TickerComponent extends JComponent {
      * the speed, font size,type and color attributes are affected.
      */
     private void updateLiveTickerAttributes() {
-		/*log.log(Level.INFO, "updateing live ticker attributes");
-    	Properties props = PreferencesModelOld.getInstance().getProperties();
+		
     	try {
-			tickerSpeed = Integer.parseInt(props.getProperty(Constants.PROP_TICKER_SPEED));
-			tickerFont = new Font(props.getProperty(Constants.PROP_TICKER_FONTTYPE), Font.PLAIN, Integer.parseInt(props.getProperty(Constants.PROP_TICKER_FONTSIZE)));
-			tickerColor = new Color(Integer.parseInt(props.getProperty(Constants.PROP_TICKER_FONTCOLOR))); 
+			tickerSpeed = Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_SPEED));
+			tickerFont = new Font(PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_FONTSIZE)));
+			tickerColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_FONTCOLOR))); 
     	} catch (NumberFormatException e) {
-			log.log(Level.INFO, "Number format exeception", e);
-		}*/
+			log.warn("Number format exeception", e);
+		}
     	//TODO
     }
     
