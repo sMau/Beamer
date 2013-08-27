@@ -4,19 +4,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JComponent;
 
-import old.de.netprojectev.Countdown;
-
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.Themeslide;
+import de.netprojectev.server.datastructures.Countdown;
+import de.netprojectev.server.model.PreferencesModelServer;
 /**
  * 
  * GUI Component to draw images and themeslide background images
@@ -40,32 +39,16 @@ public class DisplayMainComponent extends JComponent {
 
 	protected DisplayMainComponent() {
 		super();
-
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(3000);
-				} catch (InterruptedException e) {
-					//log.log(Level.SEVERE, "interupt exception", e);
-				}
-				updateCountdownFont();
-				
-			}
-		}).start();
-		
+		updateCountdownFont();
 	}
 
 	/**
 	 * updates the countdown font family, size and color via reading it from the properties
 	 */
 	protected void updateCountdownFont() {
-		/*Properties props = PreferencesModelOld.getInstance().getProperties();
-		countdownFont = new Font(props.getProperty(Constants.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTSIZE)));
-		countdownColor = new Color(Integer.parseInt(props.getProperty(Constants.PROP_COUNTDOWN_FONTCOLOR)));
-		log.log(Level.INFO, "countdown font attributes updated");*/
-		//TODO
+		countdownFont = new Font(PreferencesModelServer.getPropertyByKey(Constants.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_COUNTDOWN_FONTSIZE)));
+		countdownColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_COUNTDOWN_FONTCOLOR)));
+		log.debug("countdown font attributes updated to font: " + countdownFont + " color: " + countdownColor);
 	}
 	
 	/**
@@ -86,9 +69,13 @@ public class DisplayMainComponent extends JComponent {
 	 * 
 	 * @param countdown the countdown object to draw
 	 */
-	protected void drawCountdown(Countdown countdown) {
+	protected void drawCountdown(final Countdown countdown) {
 		countdownShowing = true;
 		this.countdown = countdown;
+	}
+	
+	protected void countdownFinished() {
+		countdownShowing = false;
 	}
 
 	/**
@@ -97,6 +84,7 @@ public class DisplayMainComponent extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		if(countdownShowing) {
+			log.debug("repainting countdown");
 			Graphics2D tmpG2D = (Graphics2D) g.create();
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);	        
@@ -108,6 +96,7 @@ public class DisplayMainComponent extends JComponent {
 			
 		} else {
 			if (image != null) {
+				log.debug("repainting image");
 				g.drawImage(image, (getWidth() - image.getWidth(null))/2,(getHeight() - image.getHeight(null))/2, this);
 			}
 		}

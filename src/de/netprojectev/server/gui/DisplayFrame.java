@@ -6,6 +6,10 @@ package de.netprojectev.server.gui;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
 
 import org.apache.logging.log4j.Logger;
 
@@ -39,6 +43,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 
 	private final MessageProxyServer proxy;
 	private boolean fullscreen;
+	private Timer countdownTimer;
 	private VideoFinishListener videoFinishedListener;
 	
     public DisplayFrame(MessageProxyServer proxy) {
@@ -105,8 +110,26 @@ public class DisplayFrame extends javax.swing.JFrame {
     	displayMainComponent.drawImage(Misc.imageIconToBufferedImage(themeslide.getImageRepresantation().getImage()));
     }
     
-    private void showCountdown(Countdown countdown) {
-    	// TODO
+    private void showCountdown(final Countdown countdown) {
+    	if(countdownTimer != null) {
+    		countdownTimer.stop();
+    	}
+    	
+    	displayMainComponent.drawCountdown(countdown);
+    	displayMainComponent.repaint();
+    	countdownTimer = new Timer(1000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				countdown.decreaseOneSecond();
+				displayMainComponent.repaint();
+				if(countdown.getDurationInSeconds() <= 0) {
+					countdownTimer.stop();
+					displayMainComponent.countdownFinished();
+				}
+			}
+		});
+    	countdownTimer.start();
     }
     
     public void startLiveTicker() {

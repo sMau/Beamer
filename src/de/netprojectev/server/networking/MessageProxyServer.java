@@ -376,6 +376,7 @@ public class MessageProxyServer {
 		}
 		currentFile = toShow;
 		toShow.setCurrent(true).increaseShowCount();
+		
 		if(toShow instanceof VideoFile) {
 			display.setVideoFinishedListener(new VideoFinishListener() {
 				
@@ -389,6 +390,7 @@ public class MessageProxyServer {
 		} else {
 			updateAutoModeTimer();
 		}
+		
 		display.showMediaFileInMainComponent(currentFile);
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));
 	}
