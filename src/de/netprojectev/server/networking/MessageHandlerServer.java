@@ -5,6 +5,7 @@ import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
+import org.jboss.netty.handler.timeout.ReadTimeoutException;
 
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
@@ -26,7 +27,8 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
 		Message received = (Message) e.getMessage();
 		if(received.getOpCode().equals(OpCode.CTS_DISCONNECT)) {
-			proxy.clientDisconnected(e.getChannel());
+			
+			proxy.clientDisconnected(e.getChannel(), (String) received.getData()[0]);
 		} else {
 			proxy.receiveMessage(received, e.getChannel());
 		}
@@ -43,7 +45,7 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
 		log.warn("Exception caught in MessageHandler", e.getCause());
-		
+
 		//TODO check if closing is the correct behavior
 		e.getChannel().close();
 	}

@@ -352,11 +352,18 @@ public class ClientMessageProxy {
 		case STC_SERVER_SHUTDOWN:
 			serverShutdown(msg);
 			break;
+		case STC_HEARTBEAT_REQUEST:
+			hearbeatRequest();
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 
+	}
+
+	private void hearbeatRequest() {
+		sendMessageToServer(new Message(OpCode.CTS_HEARTBEAT_ACK));
 	}
 
 	private void serverShutdown(Message msg) {

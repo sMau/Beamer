@@ -258,6 +258,7 @@ public class Misc {
 		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
 
 		defProps.setProperty(ConstantsServer.PROP_SERVER_PW, ConstantsServer.DEFAULT_SERVER_PW);
+		defProps.setProperty(ConstantsServer.PROP_SERVER_TIMEOUT, ConstantsServer.DEFAULT_SERVER_TIMEOUT);
 		
 		defProps.setProperty(Constants.PROP_TICKER_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
 		defProps.setProperty(Constants.PROP_TICKER_FONTSIZE, "" + Constants.DEFAULT_TICKER_FONTSIZE);
@@ -267,6 +268,12 @@ public class Misc {
 		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTCOLOR, "" + Constants.DEFAULT_COUNTDOWN_FONTCOLOR);
 		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTSIZE, "" + Constants.DEFAULT_COUNTDOWN_FONTSIZE);
 		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTTYPE, Constants.DEFAULT_COUNTDOWN_FONTTYPE);
+		
+		try {
+			Misc.savePropertiesToDisk(defProps, ConstantsServer.SERVER_SAVE_PATH, ConstantsServer.SERVER_FILENAME_DEFAULT_PROPERTIES);
+		} catch (IOException e) {
+			log.warn("Error during saving default properties to disk.", e);
+		}
 		
 		return defProps;
 	}

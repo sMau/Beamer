@@ -84,7 +84,7 @@ public class Client {
 
 	public void disconnect() {
 		log.info("Client disconnecting");
-		proxy.sendMessageToServer(new Message(OpCode.CTS_DISCONNECT)).awaitUninterruptibly();
+		proxy.sendMessageToServer(new Message(OpCode.CTS_DISCONNECT, login.getAlias())).awaitUninterruptibly();
 		releaseExternalRessources();
 		log.info("Disconnecting complete");
 	}

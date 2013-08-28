@@ -34,6 +34,7 @@ public class PreferencesModelServer {
 		prios = new HashMap<>();
 		themes = new HashMap<>();
 		props = new Properties(Misc.generateDefaultProps());
+
 		try {
 			loadProperties();
 		} catch (IOException e) {

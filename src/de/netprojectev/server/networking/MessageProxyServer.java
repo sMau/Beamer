@@ -3,16 +3,20 @@ package de.netprojectev.server.networking;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.group.ChannelGroupFuture;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
+import org.jboss.netty.util.HashedWheelTimer;
+import org.jboss.netty.util.Timeout;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
@@ -45,12 +49,15 @@ public class MessageProxyServer {
 	private static final Logger log = LoggerBuilder.createLogger(MessageProxyServer.class);
 	
 	private final DefaultChannelGroup allClients;
+	private final ArrayList<ConnectedUser> connectedUsers;
 	private final MediaModelServer mediaModel;
 	private final TickerModelServer tickerModel;
 	private final PreferencesModelServer prefsModel;
 	private final VideoFileReceiveHandler videoFileReceiveHandler;
 	private final DisplayFrame display;
 	private final Server server;
+	private final HashedWheelTimer timeoutChecker;
+	private int timeoutInSeconds;
 	private boolean automodeEnabled;
 	private boolean fullscreenEnabled;
 	private boolean liveTickerEnabled;
@@ -74,6 +81,30 @@ public class MessageProxyServer {
 		
 	}
 	
+	
+	private class TimeoutTimerTask implements org.jboss.netty.util.TimerTask {
+
+		@Override
+		public void run(Timeout timeout) throws Exception {
+			
+			ArrayList<ConnectedUser> timedOuts = new ArrayList<>();
+			
+			timeoutChecker.newTimeout(new TimeoutTimerTask(), timeoutInSeconds, TimeUnit.SECONDS);
+			for(ConnectedUser user : connectedUsers) {
+				if(!user.isAlive()) {
+					timedOuts.add(user);
+				}
+				user.setAlive(false);
+			}
+			for(ConnectedUser user : timedOuts) {
+				clientTimedOut(user.getChannel());
+			}
+			broadcastMessage(new Message(OpCode.STC_HEARTBEAT_REQUEST));	
+		}
+		
+		
+	}
+	
 	public MessageProxyServer(Server server) {
 		this.allClients = new DefaultChannelGroup("beamer-clients");
 		this.mediaModel = new MediaModelServer(this);
@@ -83,6 +114,22 @@ public class MessageProxyServer {
 		this.display = new DisplayFrame(this);
 		this.display.setVisible(true);
 		this.server = server;
+		this.connectedUsers = new ArrayList<>();
+		this.timeoutChecker = new HashedWheelTimer();
+		
+		try {
+			this.timeoutInSeconds = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_TIMEOUT));
+		} catch (NumberFormatException e) {
+			try {
+				this.timeoutInSeconds = Integer.parseInt(ConstantsServer.DEFAULT_SERVER_TIMEOUT);
+			} catch (NumberFormatException e1) {
+				this.timeoutInSeconds = 30;
+			}
+			log.warn("Read timeout is no number.", e);
+		}
+		
+		this.timeoutChecker.newTimeout(new TimeoutTimerTask(), timeoutInSeconds, TimeUnit.SECONDS);
+		
 	}
 	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
 	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException {
@@ -165,6 +212,9 @@ public class MessageProxyServer {
 		case CTS_REQUEST_SERVER_SHUTDOWN:
 			serverShutdownRequested();
 			break;
+		case CTS_HEARTBEAT_ACK:
+			hearbeatack(channel);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
@@ -172,6 +222,9 @@ public class MessageProxyServer {
 	}
 
 
+	private void hearbeatack(Channel channel) {
+		findUserByChan(channel).setAlive(true);
+	}
 	private void serverShutdownRequested() {
 		
 		server.shutdownServer();
@@ -225,16 +278,43 @@ public class MessageProxyServer {
 		return allClients.write(msg);
 	}
 	
-	public void clientConnected(Channel chan) {
+	public void clientConnected(Channel chan, String alias) {
 		log.info("Client connected.");
 		allClients.add(chan);
-		
-		
+		connectedUsers.add(new ConnectedUser(chan, alias));
 	}
 	
-	public void clientDisconnected(Channel chan) {
-		log.info("Client disconnected.");
+	public void clientDisconnected(Channel chan, String alias) {
+		
 		allClients.remove(chan);
+		ConnectedUser user = findUserByChan(chan);
+		connectedUsers.remove(user);
+		log.info("Client disconnected. Alias: " + user.getAlias());
+	}
+	
+	public void clientTimedOut(Channel chan) {
+		allClients.remove(chan);
+		ConnectedUser user = findUserByChan(chan);
+		connectedUsers.remove(user);
+		log.info("Client timed out. Alias: " + user.getAlias());
+	}
+	
+	public ConnectedUser findUserByChan(Channel chan) {
+		for(ConnectedUser user : connectedUsers) {
+			if(user.getChannel().equals(chan)) {
+				return user;
+			}
+		}
+		return null;
+	}
+	
+	public ConnectedUser findUserByAlias(String alias) {
+		for(ConnectedUser user : connectedUsers) {
+			if(user.getAlias().equals(alias)) {
+				return user;
+			}
+		}
+		return null;
 	}
 	
 	private void dequeueMediaFile(Message msg) throws MediaDoesNotExsistException, OutOfSyncException {
@@ -533,6 +613,9 @@ public class MessageProxyServer {
 	}
 	public boolean isLiveTickerEnabled() {
 		return liveTickerEnabled;
+	}
+	public ArrayList<ConnectedUser> getConnectedUsers() {
+		return connectedUsers;
 	}
 
 }

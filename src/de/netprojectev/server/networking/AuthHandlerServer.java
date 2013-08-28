@@ -38,19 +38,25 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 			LoginData login = (LoginData) received.getData()[0];
 			
 			if(login.getKey().equals(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_PW))) {
-				proxy.clientConnected(e.getChannel());
-				authSuccessful = true;
-				e.getChannel().write(new Message(OpCode.STC_CONNECTION_ACK));
-				ctx.getPipeline().remove(this);
-				log.info("Client connected successfully. Alias: " + login.getAlias());
+				
+				if(proxy.findUserByAlias(login.getAlias()) == null) {
+					proxy.clientConnected(e.getChannel(), login.getAlias());
+					authSuccessful = true;
+					e.getChannel().write(new Message(OpCode.STC_CONNECTION_ACK));
+					e.getChannel().getPipeline().remove(this);
+					log.info("Client connected successfully. Alias: " + login.getAlias());
+				} else {
+					denyAccessToClient("Alias already in use.", e);
+				}
+				
 			} else {
-				denyAccessToClient(e);
+				denyAccessToClient("No valid login.", e);
 			}
 			
 		} else if(chanConnected && authSuccessful) {
 			super.messageReceived(ctx, e);
 		} else {
-			denyAccessToClient(e);
+			denyAccessToClient("Unknown error occured.", e);
 		}
 	}
 	
@@ -66,9 +72,9 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 	}
 	
 
-	private void denyAccessToClient(MessageEvent e) {
-		log.warn("Login request denied");
-		e.getChannel().write(new Message(OpCode.STC_LOGIN_DENIED, "Access denied.")).awaitUninterruptibly();
+	private void denyAccessToClient(String reason, MessageEvent e) {
+		log.warn("Login request denied: " + reason); 
+		e.getChannel().write(new Message(OpCode.STC_LOGIN_DENIED, reason)).awaitUninterruptibly();
 		e.getChannel().close().awaitUninterruptibly();
 	}
 }
