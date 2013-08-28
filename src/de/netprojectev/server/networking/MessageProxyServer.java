@@ -344,7 +344,7 @@ public class MessageProxyServer {
 	 * 1 Add proper serialization (properties are good, but serialize the media and ticker elts and so on too)
 	 * 2 Check all TODOS
 	 * 3 next exception handling
-	 * 
+	 * 4 Test with notebook as server (esp. video things and fullscreen switches (preferred using tv as monitor like the beamer))
 	 * 
 	 * add handling for further prefs like changing fonts and colors of live ticker
 	 * pimp the live ticker a little slightly transparent overlay or something like that 
