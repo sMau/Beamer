@@ -68,7 +68,7 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 
 	private void denyAccessToClient(MessageEvent e) {
 		log.warn("Login request denied");
-		e.getChannel().write(new Message(OpCode.STC_LOGIN_DENIED)).awaitUninterruptibly();
+		e.getChannel().write(new Message(OpCode.STC_LOGIN_DENIED, "Access denied.")).awaitUninterruptibly();
 		e.getChannel().close().awaitUninterruptibly();
 	}
 }

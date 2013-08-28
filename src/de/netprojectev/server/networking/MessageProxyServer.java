@@ -28,6 +28,7 @@ import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.networking.VideoFileData;
 import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.VideoFile;
@@ -249,6 +250,7 @@ public class MessageProxyServer {
 	 * add handling for further prefs like changing fonts and colors of live ticker
 	 * pimp the live ticker a little slightly transparent overlay or something like that 
 	 * 
+	 * check for already running server instances, and esp. get a port from the os not fixed (scanning the network for the server is required then)
 	 * 
 	 * next check all the image to imageicon conversions and choose best for performance and RAM usage
 	 * next detail prefs like font sizes and colors and so on
@@ -431,8 +433,8 @@ public class MessageProxyServer {
 
 	private void enableAutoMode() throws MediaDoesNotExsistException, MediaListsEmptyException {
 		this.automodeEnabled = true;
-		updateAutoModeTimer();
 		broadcastMessage(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
+		updateAutoModeTimer();
 	}
 	private void updateAutoModeTimer() throws MediaDoesNotExsistException, MediaListsEmptyException {
 		if(automodeEnabled) {
@@ -444,7 +446,13 @@ public class MessageProxyServer {
 			if(currentFile == null) {
 				showNextMediaFile();
 			} else {
-				autoModusTimer.schedule(new AutomodeTimerTask(), currentFile.getPriority().getTimeToShowInMilliseconds());
+				if(!(currentFile instanceof Countdown)) {
+					autoModusTimer.schedule(new AutomodeTimerTask(), currentFile.getPriority().getTimeToShowInMilliseconds());
+				} else {
+					autoModusTimer.schedule(new AutomodeTimerTask(), ((Countdown) currentFile).getDurationInSeconds() * 1000);
+					broadcastMessage(new Message(OpCode.STC_TIMELEFT_SYNC, ((Countdown) currentFile).getDurationInSeconds()));
+				}
+				
 			}
 			
 		}

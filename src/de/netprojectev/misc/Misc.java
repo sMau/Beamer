@@ -205,18 +205,18 @@ public class Misc {
 	 *            seconds to convert
 	 * @return a formatted string like mm:ss
 	 */
-	public static synchronized String convertFromSecondsToTimeString(int seconds, boolean respectHours) {
+	public static synchronized String convertFromSecondsToTimeString(long seconds, boolean respectHours) {
 
 		if (!respectHours) {
 
-			int minutes = seconds / 60;
-			int secondsLeft = seconds % 60;
+			long minutes = seconds / 60;
+			long secondsLeft = seconds % 60;
 
-			String minutesString = Integer.toString(minutes);
+			String minutesString = Long.toString(minutes);
 			if (minutesString.length() == 1) {
 				minutesString = "0" + minutesString;
 			}
-			String secondsLeftString = Integer.toString(secondsLeft);
+			String secondsLeftString = Long.toString(secondsLeft);
 			if (secondsLeftString.length() == 1) {
 				secondsLeftString = "0" + secondsLeftString;
 			}
@@ -224,19 +224,19 @@ public class Misc {
 			return minutesString + ":" + secondsLeftString;
 		} else {
 
-			int hours = seconds / 3600;
-			int minutes = (seconds % 3600) / 60;
-			int secondsLeft = seconds % 60;
+			long hours = seconds / 3600;
+			long minutes = (seconds % 3600) / 60;
+			long secondsLeft = seconds % 60;
 
-			String hoursString = Integer.toString(hours);
+			String hoursString = Long.toString(hours);
 			if (hoursString.length() == 1) {
 				hoursString = "0" + hoursString;
 			}
-			String minutesString = Integer.toString(minutes);
+			String minutesString = Long.toString(minutes);
 			if (minutesString.length() == 1) {
 				minutesString = "0" + minutesString;
 			}
-			String secondsLeftString = Integer.toString(secondsLeft);
+			String secondsLeftString = Long.toString(secondsLeft);
 			if (secondsLeftString.length() == 1) {
 				secondsLeftString = "0" + secondsLeftString;
 			}

@@ -84,7 +84,6 @@ public class DisplayMainComponent extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		if(countdownShowing) {
-			log.debug("repainting countdown");
 			Graphics2D tmpG2D = (Graphics2D) g.create();
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);	        
@@ -96,7 +95,6 @@ public class DisplayMainComponent extends JComponent {
 			
 		} else {
 			if (image != null) {
-				log.debug("repainting image");
 				g.drawImage(image, (getWidth() - image.getWidth(null))/2,(getHeight() - image.getHeight(null))/2, this);
 			}
 		}

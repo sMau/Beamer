@@ -2,13 +2,9 @@ package de.netprojectev.client.networking;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.UUID;
 
@@ -16,13 +12,13 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import org.apache.logging.log4j.Logger;
-import org.jboss.netty.buffer.ChannelBufferInputStream;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
+import de.netprojectev.client.gui.main.MainClientGUIWindow.TimeSyncListener;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.TickerModelClient;
@@ -44,7 +40,7 @@ import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
 
 public class ClientMessageProxy {
-
+	
 	private static final Logger log = LoggerBuilder.createLogger(ClientMessageProxy.class);
 
 	private final Client client;
@@ -53,6 +49,8 @@ public class ClientMessageProxy {
 	private final TickerModelClient tickerModel;
 	private final PreferencesModelClient prefs;
 
+	private TimeSyncListener timeSyncListener;
+	
 	private boolean fullsync;
 
 	private Channel channelToServer;
@@ -127,7 +125,7 @@ public class ClientMessageProxy {
 	}
 
 	public void sendAddVideoFile(File file) throws IOException {
-		// TODO last worked here, transfering the video is needed here now
+
 		VideoFile toSend = new VideoFile(file.getName(), file);
 		FileInputStream fileInputStream = new FileInputStream(toSend.getVideoFile());
 		BufferedInputStream buf = new BufferedInputStream(fileInputStream);
@@ -342,11 +340,20 @@ public class ClientMessageProxy {
 		case STC_RESET_SHOW_COUNT_ACK:
 			resetShowCount(msg);
 			break;
+		case STC_TIMELEFT_SYNC:
+			timeleftSync(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 
+	}
+
+	private void timeleftSync(Message msg) {
+		long currentTimeLeftInSeconds = (Long) msg.getData()[0];
+		timeSyncListener.timesync(currentTimeLeftInSeconds);
+		
 	}
 
 	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
@@ -498,6 +505,10 @@ public class ClientMessageProxy {
 
 	public PreferencesModelClient getPrefs() {
 		return prefs;
+	}
+
+	public void setTimeSyncListener(TimeSyncListener timeSyncListener) {
+		this.timeSyncListener = timeSyncListener;
 	}
 
 }

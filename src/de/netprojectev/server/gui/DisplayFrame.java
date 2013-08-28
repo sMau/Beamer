@@ -131,7 +131,6 @@ public class DisplayFrame extends javax.swing.JFrame {
 		});
     	countdownTimer.start();
     	
-    	//TODO last worked here, make a time sync and make it work enabling autmode while countdown already runningS
     }
     
     public void startLiveTicker() {
