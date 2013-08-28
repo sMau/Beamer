@@ -15,7 +15,6 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
-import org.jboss.netty.handler.timeout.ReadTimeoutHandler;
 import org.jboss.netty.util.HashedWheelTimer;
 
 import de.netprojectev.misc.LoggerBuilder;
@@ -38,17 +37,34 @@ public class Server {
 	public Server(int port) {
 		this.port = port;
 
-		// TODO this is only for testing, a clean setup of all necessary files
-		// is better here
-		File savePath = new File(ConstantsServer.SERVER_SAVE_PATH
-				+ ConstantsServer.SERVER_CACHE_FOLDER);
-		if (!savePath.exists()) {
-			savePath.mkdirs();
-		}
+		checkAndCreateDirs();
 
 		proxy = new MessageProxyServer(this);
 		timer = new HashedWheelTimer();
 		bindListeningSocket();
+	}
+
+	private void checkAndCreateDirs() {
+		File savePath = new File(ConstantsServer.SAVE_PATH
+				+ ConstantsServer.CACHE_PATH);
+		if (!savePath.exists()) {
+			savePath.mkdirs();
+		}
+		savePath = new File(ConstantsServer.SAVE_PATH
+				+ ConstantsServer.CACHE_PATH_IMAGES);
+		if (!savePath.exists()) {
+			savePath.mkdirs();
+		}
+		savePath = new File(ConstantsServer.SAVE_PATH
+				+ ConstantsServer.CACHE_PATH_VIDEOS);
+		if (!savePath.exists()) {
+			savePath.mkdirs();
+		}
+		savePath = new File(ConstantsServer.SAVE_PATH
+				+ ConstantsServer.CACHE_PATH_THEMESLIDES);
+		if (!savePath.exists()) {
+			savePath.mkdirs();
+		}
 	}
 
 	private void bindListeningSocket() {

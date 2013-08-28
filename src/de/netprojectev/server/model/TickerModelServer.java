@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerTickerElement;
@@ -50,7 +49,7 @@ public class TickerModelServer {
 		
 		for(UUID id : elements.keySet()) {
 			if(elements.get(id).isShow()) {
-				completeString += elements.get(id).getText() + PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR);
+				completeString += elements.get(id).getText() + PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR);
 			}
 		}
 		log.debug("Generating complete ticker string: " + completeString);

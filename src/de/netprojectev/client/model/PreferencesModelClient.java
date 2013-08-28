@@ -48,7 +48,8 @@ public class PreferencesModelClient {
 
 	private Priority defaultPriority;
 	
-	private static Properties props;
+	private static Properties clientProperties;
+	private static Properties serverProperties;
 
 	private ThemeListChangedListener themeListChangeListener = new ThemeListChangedListener() {
 		@Override
@@ -84,20 +85,31 @@ public class PreferencesModelClient {
 		this.prios = new HashMap<>();
 		this.allPrioritiesList = new ArrayList<>();
 		this.allThemesList = new ArrayList<>();
-		PreferencesModelClient.props = new Properties(Misc.generateDefaultProps());
+		PreferencesModelClient.clientProperties = new Properties(Misc.generateClientDefaultProps());
 	}
 
-	public static String getPropertyByKey(String key) {
+	public static String getClientPropertyByKey(String key) {
 		log.debug("Getting property: " + key);
-		return props.getProperty(key);
-
+		return clientProperties.getProperty(key);
 	}
 
-	// TODO Auto-generated method stub
-
-	public static void setProperty(String key, String value) {
+	public static void setClientProperty(String key, String value) {
 		log.debug("Setting property: " + key + ", to: " + value);
-		props.setProperty(key, value);
+		clientProperties.setProperty(key, value);
+	}
+	
+	public static void initServerProperties(Properties props) {
+		serverProperties = props;
+	}
+	
+	public static String getServerPropertyByKey(String key) {
+		//TODO if null ask the server (maybe?)
+		
+		return serverProperties.getProperty(key);
+	}
+	
+	public static void serverPropertyUpdated(String key, String value) {
+		serverProperties.put(key, value);
 	}
 
 	public void themeAdded(Theme theme) {
@@ -239,14 +251,14 @@ public class PreferencesModelClient {
 
 	public static void saveProperties() throws IOException {
 		log.info("Saving properties");
-		Misc.savePropertiesToDisk(props, ConstantsClient.CLIENT_SAVE_PATH, ConstantsClient.CLIENT_FILENAME_PRIORITIES);
+		Misc.savePropertiesToDisk(clientProperties, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
 	}
 
 	public static void loadProperties() throws IOException {
 		log.info("Loading properties");
-		props = new Properties(Misc.generateDefaultProps());
-		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsClient.CLIENT_SAVE_PATH, ConstantsClient.CLIENT_FILENAME_PRIORITIES);
-		props.putAll(propsLoaded);
+		clientProperties = new Properties(Misc.generateClientDefaultProps());
+		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
+		clientProperties.putAll(propsLoaded);
 	}
 
 	public void setThemeListChangeListener(ThemeListChangedListener themeListChangeListener) {

@@ -48,20 +48,20 @@ public class PreferencesModelOld {
 	 */
 	public void updatePropertiesFromPreferencesFrame() throws IOException {
 
-		properties.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + preferencesFrame.getPreviewWidth());
-		properties.setProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN, "" + preferencesFrame.getFullscreenNumber());
-		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, preferencesFrame.getThemeslideCreatorFontColor());
-		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, preferencesFrame.getThemeslideCreatorFontSize());
-		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, preferencesFrame.getThemeslideCreatorFontType());
-		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + preferencesFrame.getThemeslideCreatorMarginLeft());
-		properties.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + preferencesFrame.getThemeslideCreatorMarginTop());
-		properties.setProperty(Constants.PROP_TICKER_FONTCOLOR, preferencesFrame.getTickerFontColor());
-		properties.setProperty(Constants.PROP_TICKER_FONTSIZE, preferencesFrame.getTickerFontSize());
-		properties.setProperty(Constants.PROP_TICKER_FONTTYPE, preferencesFrame.getTickerFontType());
-		properties.setProperty(Constants.PROP_TICKER_SPEED, "" + preferencesFrame.getTickerSpeed());
-		properties.setProperty(Constants.PROP_COUNTDOWN_FONTCOLOR, preferencesFrame.getCountdownFontColor());
-		properties.setProperty(Constants.PROP_COUNTDOWN_FONTSIZE, preferencesFrame.getCountdownFontSize());
-		properties.setProperty(Constants.PROP_COUNTDOWN_FONTTYPE, preferencesFrame.getCountdownFontType());
+		properties.setClientProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + preferencesFrame.getPreviewWidth());
+		properties.setClientProperty(Constants.PROP_SCREEN_NUMBER_FULLSCREEN, "" + preferencesFrame.getFullscreenNumber());
+		properties.setClientProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, preferencesFrame.getThemeslideCreatorFontColor());
+		properties.setClientProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, preferencesFrame.getThemeslideCreatorFontSize());
+		properties.setClientProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, preferencesFrame.getThemeslideCreatorFontType());
+		properties.setClientProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + preferencesFrame.getThemeslideCreatorMarginLeft());
+		properties.setClientProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + preferencesFrame.getThemeslideCreatorMarginTop());
+		properties.setClientProperty(Constants.PROP_TICKER_FONTCOLOR, preferencesFrame.getTickerFontColor());
+		properties.setClientProperty(Constants.PROP_TICKER_FONTSIZE, preferencesFrame.getTickerFontSize());
+		properties.setClientProperty(Constants.PROP_TICKER_FONTTYPE, preferencesFrame.getTickerFontType());
+		properties.setClientProperty(Constants.PROP_TICKER_SPEED, "" + preferencesFrame.getTickerSpeed());
+		properties.setClientProperty(Constants.PROP_COUNTDOWN_FONTCOLOR, preferencesFrame.getCountdownFontColor());
+		properties.setClientProperty(Constants.PROP_COUNTDOWN_FONTSIZE, preferencesFrame.getCountdownFontSize());
+		properties.setClientProperty(Constants.PROP_COUNTDOWN_FONTTYPE, preferencesFrame.getCountdownFontType());
 		
 		log.log(Level.INFO, "properties successfully updated");
 		

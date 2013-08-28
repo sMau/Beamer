@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -42,6 +43,10 @@ import de.netprojectev.server.datastructures.VideoFile;
 
 public class ClientMessageProxy {
 	
+	public interface ServerPropertyUpdateListener {
+		public void propertyUpdated();
+	}
+	
 	private static final Logger log = LoggerBuilder.createLogger(ClientMessageProxy.class);
 
 	private final Client client;
@@ -52,6 +57,7 @@ public class ClientMessageProxy {
 
 	private TimeSyncListener timeSyncListener;
 	private ServerShutdownListener serverShutdownListener;
+	private ServerPropertyUpdateListener serverPropertyUpdateListener;
 	
 	private boolean fullsync;
 
@@ -265,6 +271,10 @@ public class ClientMessageProxy {
 	public void sendExitFullscreen() {
 		sendMessageToServer(new Message(OpCode.CTS_DISABLE_FULLSCREEN));
 	}
+	
+	public void sendPropertyUpdate(String key, String newValue) {
+		sendMessageToServer(new Message(OpCode.CTS_PROPERTY_UPDATE, key, newValue));
+	}
 
 	public void sendAddCountdown(Countdown countdown) {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, countdown));
@@ -355,11 +365,31 @@ public class ClientMessageProxy {
 		case STC_HEARTBEAT_REQUEST:
 			hearbeatRequest();
 			break;
+		case STC_INIT_PROPERTIES:
+			initServerProperties(msg);
+			break;
+		case STC_PROPERTY_UPDATE_ACK:
+			updatePropertyAck(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 
+	}
+
+	private void updatePropertyAck(Message msg) {
+		String key = (String) msg.getData()[0];
+		String newValue = (String) msg.getData()[1];
+		PreferencesModelClient.serverPropertyUpdated(key, newValue); 
+		if(serverPropertyUpdateListener != null) {
+			serverPropertyUpdateListener.propertyUpdated();
+		}
+	}
+
+	private void initServerProperties(Message msg) {
+		Properties serverProps = (Properties) msg.getData()[0];
+		PreferencesModelClient.initServerProperties(serverProps);
 	}
 
 	private void hearbeatRequest() {
@@ -534,6 +564,10 @@ public class ClientMessageProxy {
 
 	public void setServerShutdownListener(ServerShutdownListener serverShutdownListener) {
 		this.serverShutdownListener = serverShutdownListener;
+	}
+
+	public void setServerPropertyUpdateListener(ServerPropertyUpdateListener serverPropertyUpdateListener) {
+		this.serverPropertyUpdateListener = serverPropertyUpdateListener;
 	}
 
 }

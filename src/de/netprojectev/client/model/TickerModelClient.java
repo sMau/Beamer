@@ -12,8 +12,8 @@ import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.gui.models.TickerTableModel.UpdateTickerDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.server.ConstantsServer;
 
 public class TickerModelClient {
 	private static final Logger log = LoggerBuilder.createLogger(TickerModelClient.class);
@@ -82,7 +82,6 @@ public class TickerModelClient {
 
 	public ClientTickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
 		checkIfElementExists(id);
-		log.debug("Getting ticker element: " + id);
 		return elements.get(id);
 	}
 
@@ -101,12 +100,12 @@ public class TickerModelClient {
 
 		for (int i = 0; i < allElementsList.size(); i++) {
 			if (getElementByID(allElementsList.get(i)).isShow()) {
-				text += getElementByID(allElementsList.get(i)).getText() + PreferencesModelClient.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR);
+				text += getElementByID(allElementsList.get(i)).getText() + PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR);
 			}
 		}
 
-		if (text.length() > PreferencesModelClient.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR).length()) {
-			text = text.substring(0, text.length() - PreferencesModelClient.getPropertyByKey(Constants.PROP_TICKER_SEPERATOR).length());
+		if (text.length() > PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR).length()) {
+			text = text.substring(0, text.length() - PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR).length());
 		}
 
 		return text;

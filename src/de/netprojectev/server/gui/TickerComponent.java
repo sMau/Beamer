@@ -15,8 +15,8 @@ import old.de.netprojectev.PreferencesModelOld;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.model.PreferencesModelServer;
 
 /**
@@ -156,9 +156,9 @@ public class TickerComponent extends JComponent {
     private void updateLiveTickerAttributes() {
 		
     	try {
-			tickerSpeed = Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_SPEED));
-			tickerFont = new Font(PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_FONTSIZE)));
-			tickerColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_TICKER_FONTCOLOR))); 
+			tickerSpeed = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SPEED));
+			tickerFont = new Font(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTSIZE)));
+			tickerColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR))); 
     	} catch (NumberFormatException e) {
 			log.warn("Number format exeception", e);
 		}

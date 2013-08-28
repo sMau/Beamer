@@ -29,6 +29,7 @@ import javax.swing.filechooser.FileFilter;
 import org.apache.logging.log4j.Logger;
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
+import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.StarterClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.server.ConstantsServer;
@@ -247,30 +248,43 @@ public class Misc {
 
 	}
 
-	public static Properties generateDefaultProps() {
-		Properties defProps = new Properties();
-
-		defProps.setProperty(Constants.PROP_PREVIEW_SCALE_WIDTH, "" + Constants.DEFAULT_PREVIEW_SCALE_WIDTH);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE + "pt");
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT);
-		defProps.setProperty(Constants.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + Constants.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
-
-		defProps.setProperty(ConstantsServer.PROP_SERVER_PW, ConstantsServer.DEFAULT_SERVER_PW);
-		defProps.setProperty(ConstantsServer.PROP_SERVER_TIMEOUT, ConstantsServer.DEFAULT_SERVER_TIMEOUT);
+	public static Properties generateServerDefaultProps() {
 		
-		defProps.setProperty(Constants.PROP_TICKER_FONTCOLOR, "" + Constants.DEFAULT_TICKER_FONTCOLOR);
-		defProps.setProperty(Constants.PROP_TICKER_FONTSIZE, "" + Constants.DEFAULT_TICKER_FONTSIZE);
-		defProps.setProperty(Constants.PROP_TICKER_FONTTYPE, Constants.DEFAULT_TICKER_FONTTYPE);
-		defProps.setProperty(Constants.PROP_TICKER_SPEED, "" + Constants.DEFAULT_TICKER_SPEED);
-		defProps.setProperty(Constants.PROP_TICKER_SEPERATOR, "" + Constants.DEFAULT_TICKER_SEPERATOR);
-		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTCOLOR, "" + Constants.DEFAULT_COUNTDOWN_FONTCOLOR);
-		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTSIZE, "" + Constants.DEFAULT_COUNTDOWN_FONTSIZE);
-		defProps.setProperty(Constants.PROP_COUNTDOWN_FONTTYPE, Constants.DEFAULT_COUNTDOWN_FONTTYPE);
+		Properties defProps = new Properties();
+		
+		defProps.setProperty(ConstantsServer.PROP_PW, ConstantsServer.DEFAULT_PW);
+		defProps.setProperty(ConstantsServer.PROP_HEARTBEAT_INTERVALL, ConstantsServer.DEFAULT_HEARTBEAT_INTERVALL);
+		
+		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTCOLOR, "" + ConstantsServer.DEFAULT_TICKER_FONTCOLOR);
+		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTSIZE, "" + ConstantsServer.DEFAULT_TICKER_FONTSIZE);
+		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTTYPE, ConstantsServer.DEFAULT_TICKER_FONTTYPE);
+		defProps.setProperty(ConstantsServer.PROP_TICKER_SPEED, "" + ConstantsServer.DEFAULT_TICKER_SPEED);
+		defProps.setProperty(ConstantsServer.PROP_TICKER_SEPERATOR, "" + ConstantsServer.DEFAULT_TICKER_SEPERATOR);
+		defProps.setProperty(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR, "" + ConstantsServer.DEFAULT_COUNTDOWN_FONTCOLOR);
+		defProps.setProperty(ConstantsServer.PROP_COUNTDOWN_FONTSIZE, "" + ConstantsServer.DEFAULT_COUNTDOWN_FONTSIZE);
+		defProps.setProperty(ConstantsServer.PROP_COUNTDOWN_FONTTYPE, ConstantsServer.DEFAULT_COUNTDOWN_FONTTYPE);
 		
 		try {
-			Misc.savePropertiesToDisk(defProps, ConstantsServer.SERVER_SAVE_PATH, ConstantsServer.SERVER_FILENAME_DEFAULT_PROPERTIES);
+			Misc.savePropertiesToDisk(defProps, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_DEFAULT_PROPERTIES);
+		} catch (IOException e) {
+			log.warn("Error during saving default properties to disk.", e);
+		}
+		
+		return defProps;
+	}
+	
+	public static Properties generateClientDefaultProps() {
+		Properties defProps = new Properties();
+
+		defProps.setProperty(ConstantsClient.PROP_PREVIEW_SCALE_WIDTH, "" + ConstantsClient.DEFAULT_PREVIEW_SCALE_WIDTH);
+		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR);
+		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE + "pt");
+		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE);
+		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT);
+		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
+		
+		try {
+			Misc.savePropertiesToDisk(defProps, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_DEFAULT_PROPERTIES);
 		} catch (IOException e) {
 			log.warn("Error during saving default properties to disk.", e);
 		}

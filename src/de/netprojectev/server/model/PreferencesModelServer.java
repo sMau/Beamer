@@ -33,7 +33,7 @@ public class PreferencesModelServer {
 		this.proxy = proxy;
 		prios = new HashMap<>();
 		themes = new HashMap<>();
-		props = new Properties(Misc.generateDefaultProps());
+		props = new Properties(Misc.generateServerDefaultProps());
 
 		try {
 			loadProperties();
@@ -100,13 +100,13 @@ public class PreferencesModelServer {
 	
 	public static void saveProperties() throws IOException {
 		log.info("Saving properties");
-		Misc.savePropertiesToDisk(props, ConstantsServer.SERVER_SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
+		Misc.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
 	}
 	
 	public static void loadProperties() throws IOException {
 		log.info("Loading properties");
-		props = new Properties(Misc.generateDefaultProps());
-		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SERVER_SAVE_PATH, ConstantsServer.SERVER_FILENAME_PROPERTIES);
+		props = new Properties(Misc.generateServerDefaultProps());
+		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
 		props.putAll(propsLoaded);
 	}
 
@@ -124,6 +124,10 @@ public class PreferencesModelServer {
 
 	public void setDefaultPriority(Priority defaultPriority) {
 		this.defaultPriority = defaultPriority;
+	}
+
+	public static Properties getProps() {
+		return props;
 	}
 	
 

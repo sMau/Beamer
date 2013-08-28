@@ -118,10 +118,10 @@ public class MessageProxyServer {
 		this.timeoutChecker = new HashedWheelTimer();
 		
 		try {
-			this.timeoutInSeconds = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_SERVER_TIMEOUT));
+			this.timeoutInSeconds = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_HEARTBEAT_INTERVALL));
 		} catch (NumberFormatException e) {
 			try {
-				this.timeoutInSeconds = Integer.parseInt(ConstantsServer.DEFAULT_SERVER_TIMEOUT);
+				this.timeoutInSeconds = Integer.parseInt(ConstantsServer.DEFAULT_HEARTBEAT_INTERVALL);
 			} catch (NumberFormatException e1) {
 				this.timeoutInSeconds = 30;
 			}
@@ -215,6 +215,9 @@ public class MessageProxyServer {
 		case CTS_HEARTBEAT_ACK:
 			hearbeatack(channel);
 			break;
+		case CTS_PROPERTY_UPDATE:
+			propertyUpdate(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
@@ -222,13 +225,23 @@ public class MessageProxyServer {
 	}
 
 
+	private void propertyUpdate(Message msg) {
+		String key = (String) msg.getData()[0];
+		String newValue = (String) msg.getData()[1];
+		
+		PreferencesModelServer.setProperty(key, newValue);
+		broadcastMessage(new Message(OpCode.STC_PROPERTY_UPDATE_ACK, key, newValue));
+	}
+	
 	private void hearbeatack(Channel channel) {
 		findUserByChan(channel).setAlive(true);
 	}
+	
 	private void serverShutdownRequested() {
 		
 		server.shutdownServer();
 	}
+	
 	private void videoTransferReceiveData(Message msg) throws IOException, ToManyMessagesException {
 		VideoFileData data = (VideoFileData) msg.getData()[0];
 		
@@ -239,7 +252,7 @@ public class MessageProxyServer {
 		VideoFile file = (VideoFile) msg.getData()[0];
 		videoFileReceiveHandler.finishingReceivingVideo(file.getId());
 		
-		file.setVideoFile(new File(ConstantsServer.SERVER_SAVE_PATH + ConstantsServer.SERVER_CACHE_FOLDER + file.getId()));
+		file.setVideoFile(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + file.getId()));
 		
 		mediaModel.addMediaFile(file);
 		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(file)));
@@ -326,26 +339,20 @@ public class MessageProxyServer {
 	}
 	
 	
-	//TODO last worked here: made enable live ticker and fullscreen messages work, including client gui reactions and added to fullsync
+	//TODO last worked here: made changing server props work (only live ticker sep atm)
 	/*
-	 * DONE! next adding themeslides
-	 * DONE! next adding countdowns
-	 * DONE! next pimp the client gui a little: icons for buttons, comfort in the tables and resiszing of columns also use icons
-	 * 			and make the calc for when a queued file is shown
-	 * DONE! next server gui
+	 * 1 Add proper serialization (properties are good, but serialize the media and ticker elts and so on too)
+	 * 2 Check all TODOS
+	 * 3 next exception handling
 	 * 
-	 * DONE! Showing Countdown
-	 * Add proper serialization (client and espacially SERVER!
-	 * Check all TODOS
+	 * 
 	 * add handling for further prefs like changing fonts and colors of live ticker
 	 * pimp the live ticker a little slightly transparent overlay or something like that 
-	 * 
+ 	 * next pimp server gui (Effects and so on)
+	 *
 	 * check for already running server instances, and esp. get a port from the os not fixed (scanning the network for the server is required then)
 	 * 
 	 * next check all the image to imageicon conversions and choose best for performance and RAM usage
-	 * next detail prefs like font sizes and colors and so on
-	 * next pimp server gui (Effects and so on)
-	 * next exception handling
 	 * next new themeslide creator using templates or something like that
 	 * next proper login handling (also to see which user did what and when) and maybe the possibility to send messages or notes or something like that
 	 */
@@ -358,6 +365,8 @@ public class MessageProxyServer {
 		HashMap<UUID, Priority> priorities = prefsModel.getPrios();
 		
 		channel.write(new Message(OpCode.STC_FULL_SYNC_START));
+		
+		channel.write(new Message(OpCode.STC_INIT_PROPERTIES, PreferencesModelServer.getProps()));
 		
 		for(UUID id : allMedia.keySet()) {
 			channel.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));

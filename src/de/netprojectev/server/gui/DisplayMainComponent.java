@@ -11,9 +11,9 @@ import javax.swing.JComponent;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.model.PreferencesModelServer;
 /**
@@ -46,8 +46,8 @@ public class DisplayMainComponent extends JComponent {
 	 * updates the countdown font family, size and color via reading it from the properties
 	 */
 	protected void updateCountdownFont() {
-		countdownFont = new Font(PreferencesModelServer.getPropertyByKey(Constants.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_COUNTDOWN_FONTSIZE)));
-		countdownColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(Constants.PROP_COUNTDOWN_FONTCOLOR)));
+		countdownFont = new Font(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTSIZE)));
+		countdownColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
 		log.debug("countdown font attributes updated to font: " + countdownFont + " color: " + countdownColor);
 	}
 	

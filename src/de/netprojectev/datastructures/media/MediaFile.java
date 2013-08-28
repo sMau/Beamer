@@ -3,8 +3,6 @@ package de.netprojectev.datastructures.media;
 import java.io.Serializable;
 import java.util.UUID;
 
-import de.netprojectev.misc.Constants;
-
 
 public abstract class MediaFile implements Serializable {
 

@@ -1,5 +1,6 @@
 package de.netprojectev.client;
 
+import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
@@ -42,6 +43,11 @@ public class Client {
 		this.login = login;
 		this.host = host;
 		this.port = port;
+		
+		File savePath = new File(ConstantsClient.SAVE_PATH);
+		if (!savePath.exists()) {
+			savePath.mkdirs();
+		}
 		
 		this.proxy = new ClientMessageProxy(this);
 		

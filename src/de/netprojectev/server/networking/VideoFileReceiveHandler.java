@@ -29,8 +29,8 @@ public class VideoFileReceiveHandler {
 	public void startingReceivingVideo(UUID id, int maxMsgCount) throws FileNotFoundException {
 		receivingFiles.add(id);
 		msgCounter.put(id, new MessageCounter(maxMsgCount));
-		FileOutputStream out = new FileOutputStream(new File(ConstantsServer.SERVER_SAVE_PATH
-				+ ConstantsServer.SERVER_CACHE_FOLDER + id.toString()));
+		FileOutputStream out = new FileOutputStream(new File(ConstantsServer.SAVE_PATH
+				+ ConstantsServer.CACHE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + id.toString()));
 		BufferedOutputStream bufOut = new BufferedOutputStream(out);
 		outputstreams.put(id, bufOut);
 
