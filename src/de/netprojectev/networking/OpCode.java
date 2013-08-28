@@ -38,6 +38,8 @@ public enum OpCode {
 	CTS_REQUEST_FULL_SYNC,
 	CTS_RESET_SHOW_COUNT,
 	
+	CTS_REQUEST_SERVER_SHUTDOWN,
+	
 	
 	
 	/*

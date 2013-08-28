@@ -11,6 +11,8 @@ import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
 import de.netprojectev.client.Client;
@@ -75,40 +77,9 @@ public class LoginDialog extends javax.swing.JDialog {
         String ip = tfServerIP.getText();
         String port = tfPort.getText();
         String pw = tfServerPW.getText();
-        Client client = new Client(ip, Integer.parseInt(port), new LoginData(alias, pw));
+        Client client = new Client(ip, Integer.parseInt(port), new LoginData(alias, pw), this);
 	
-        
-        final ClientMessageProxy proxy = client.connect();
-		
-		final MediaModelClient mediaModel = proxy.getMediaModel();
-		final TickerModelClient tickerModel = proxy.getTickerModel();
-
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-            	 MainClientGUIWindow mainGUI = new MainClientGUIWindow(getParent(), proxy);
-            	 
-            	 mainGUI.setVisible(true);
-            }
-        });
+        client.connect();
         
     }
     
@@ -238,7 +209,6 @@ public class LoginDialog extends javax.swing.JDialog {
 
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         loginButtonClicked();
-        doClose(RET_OK);
     }//GEN-LAST:event_okButtonActionPerformed
     
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -264,6 +234,41 @@ public class LoginDialog extends javax.swing.JDialog {
         returnStatus = retStatus;
         setVisible(false);
         dispose();
+    }
+    
+    
+    public void loginSuccess(final ClientMessageProxy proxy) {
+    	try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainClientGUIWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+            	 MainClientGUIWindow mainGUI = new MainClientGUIWindow(LoginDialog.this, proxy);
+            	 mainGUI.setVisible(true);
+            }
+        });
+        
+        doClose(RET_OK);
+    }
+    
+    public void loginFailed(String reason) {
+    	JOptionPane.showMessageDialog(this, reason, "Login Failed", JOptionPane.ERROR_MESSAGE);
     }
 
     /**

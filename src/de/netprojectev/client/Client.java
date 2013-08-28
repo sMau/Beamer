@@ -15,6 +15,7 @@ import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
+import de.netprojectev.client.gui.main.LoginDialog;
 import de.netprojectev.client.networking.ClientMessageHandler;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.misc.LoggerBuilder;
@@ -31,21 +32,24 @@ public class Client {
 	private final ClientMessageProxy proxy;
 	private final String host;
 	private final int port;
+	private LoginDialog dialog;
 	
 	private boolean loginSuccess;
 	
 	private ChannelFactory factory;
 	
-	public Client(String host, int port, LoginData login) {
+	public Client(String host, int port, LoginData login, LoginDialog loginDialog) {
 		this.login = login;
 		this.host = host;
 		this.port = port;
 		
 		this.proxy = new ClientMessageProxy(this);
 		
+		this.dialog = loginDialog;
+		
 	}
 	
-	public ClientMessageProxy connect() {
+	public void connect() {
 		factory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 		ClientBootstrap bootstrap = new ClientBootstrap(factory);
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
@@ -72,38 +76,61 @@ public class Client {
 			log.info("Login request sent to server");
 			
 		} else {
-			log.warn("Connection failed. Reason: ", connectFuture.getCause());
-			connectFuture.getChannel().getCloseFuture().awaitUninterruptibly();
-			factory.releaseExternalResources();
-			
+			log.warn("Connection failed. Reason: Host not reachable.");
+			releaseExternalRessources();		
+			loginFailed("Connection failed. Reason: Host not reachable.");
 		}
-		return proxy;
 	}
 
 	public void disconnect() {
 		log.info("Client disconnecting");
 		proxy.sendMessageToServer(new Message(OpCode.CTS_DISCONNECT)).awaitUninterruptibly();
-		proxy.getChannelToServer().close().awaitUninterruptibly();
-		factory.releaseExternalResources();
+		releaseExternalRessources();
 		log.info("Disconnecting complete");
 	}
 
 	public void loginSuccess() {
 		loginSuccess = true;
+		dialog.loginSuccess(proxy);
 	}
 
 	public ClientMessageProxy getProxy() {
 		return proxy;
 	}
 
-	public void loginDenied(String reason) {
-		//TODO
-		
+	public void loginFailed(String reason) {
+		log.info("Login failed, releasing all external ressources.");
+		releaseExternalRessources();
+		dialog.loginFailed(reason);
 	}
 
 	public boolean isLoginSuccess() {
 		return loginSuccess;
 	}
+
+	public void serverShutdown() {
+		
+		log.info("Server shutdown, releasing all external ressources.");
+		releaseExternalRessources();
+		//TODO serialization or something like that
+	}
 	
 
+	private Thread releaseExternalRessources() {
+		if(proxy.getChannelToServer() != null) {
+			proxy.getChannelToServer().close().awaitUninterruptibly();
+		}
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				factory.releaseExternalResources();
+				log.info("Ressources releasing complete.");
+			}
+		});
+		t.start();
+		
+		return t;
+	}
+	
 }

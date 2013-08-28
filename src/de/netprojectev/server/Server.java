@@ -41,7 +41,7 @@ public class Server {
 			savePath.mkdirs();
 		}
 		
-		proxy = new MessageProxyServer();
+		proxy = new MessageProxyServer(this);
 		bindListeningSocket();
 	}
 	
@@ -81,13 +81,24 @@ public class Server {
 		log.info("Starting server shutdown, informing clients.");
 		proxy.broadcastMessage(new Message(OpCode.STC_SERVER_SHUTDOWN)).awaitUninterruptibly();
 		proxy.getAllClients().close().awaitUninterruptibly();
-		factory.releaseExternalResources();
+		
+		Thread t = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				factory.releaseExternalResources();	
+			}
+		});
+		t.start();
+		
 		try {
 			PreferencesModelServer.saveProperties();
 		} catch (IOException e) {
 			log.warn("Error during saving properties.", e);
 		}
 		log.info("Server shutdown complete.");
+		
+		System.exit(0);
 	}
 	
 	public MessageProxyServer getProxy() {

@@ -107,6 +107,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jbExitFullscreen = new javax.swing.JButton();
         jlFullscreen = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
+        jlGeneralServerControl = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jbServerShutdown = new javax.swing.JButton();
         jpPriorities = new javax.swing.JPanel();
         jspPrioList = new javax.swing.JScrollPane();
         jliPriorities = new javax.swing.JList();
@@ -154,6 +157,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jlFullscreen.setText("Fullscreen");
 
+        jlGeneralServerControl.setText("Server Control");
+
+        jbServerShutdown.setText("Server Shutdown");
+        jbServerShutdown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbServerShutdownActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpGeneralLayout = new javax.swing.GroupLayout(jpGeneral);
         jpGeneral.setLayout(jpGeneralLayout);
         jpGeneralLayout.setHorizontalGroup(
@@ -163,15 +175,25 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpGeneralLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jbEnableFullscreen)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbExitFullscreen)
-                        .addGap(0, 482, Short.MAX_VALUE))
+                        .addComponent(jbServerShutdown)
+                        .addContainerGap(484, Short.MAX_VALUE))
                     .addGroup(jpGeneralLayout.createSequentialGroup()
-                        .addComponent(jlFullscreen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jSeparator1)))
-                .addContainerGap())
+                        .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpGeneralLayout.createSequentialGroup()
+                                .addComponent(jlFullscreen)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1))
+                            .addGroup(jpGeneralLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jbEnableFullscreen)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbExitFullscreen)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jpGeneralLayout.createSequentialGroup()
+                                .addComponent(jlGeneralServerControl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator3)))
+                        .addContainerGap())))
         );
         jpGeneralLayout.setVerticalGroup(
             jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,7 +206,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbEnableFullscreen)
                     .addComponent(jbExitFullscreen))
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlGeneralServerControl)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbServerShutdown)
+                .addContainerGap(192, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("General", jpGeneral);
@@ -430,7 +458,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jtpPreferences, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
+                .addComponent(jtpPreferences)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -511,6 +539,16 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void jbExitFullscreenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbExitFullscreenActionPerformed
         proxy.sendExitFullscreen();
     }//GEN-LAST:event_jbExitFullscreenActionPerformed
+
+    private void jbServerShutdownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbServerShutdownActionPerformed
+    	int result = JOptionPane.showConfirmDialog(this, "Do you really want the server to shutdown?"
+    			, "Server Shutdown", JOptionPane.YES_NO_OPTION);
+
+    	if(result == JOptionPane.YES_OPTION) {
+    		proxy.sendRequestServerShutdown();
+    	}
+    	
+    }//GEN-LAST:event_jbServerShutdownActionPerformed
 
     @Override
 	protected void processWindowEvent(WindowEvent e) {
@@ -622,6 +660,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JButton jbAddNewTheme;
     private javax.swing.JButton jbAddPrio;
     private javax.swing.JButton jbClosePrefs;
@@ -629,10 +668,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jbExitFullscreen;
     private javax.swing.JButton jbRemovePrio;
     private javax.swing.JButton jbRemoveTheme;
+    private javax.swing.JButton jbServerShutdown;
     private javax.swing.JButton jbStartTicker;
     private javax.swing.JButton jbStopLiveTicker;
     private javax.swing.JLabel jlDefaultPrioVar;
     private javax.swing.JLabel jlFullscreen;
+    private javax.swing.JLabel jlGeneralServerControl;
     private javax.swing.JLabel jlPrioDefault;
     private javax.swing.JLabel jlPrioName;
     private javax.swing.JLabel jlPrioNameVar;

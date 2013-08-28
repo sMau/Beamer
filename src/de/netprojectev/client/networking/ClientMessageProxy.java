@@ -18,6 +18,7 @@ import org.jboss.netty.channel.ChannelFuture;
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
+import de.netprojectev.client.gui.main.MainClientGUIWindow.ServerShutdownListener;
 import de.netprojectev.client.gui.main.MainClientGUIWindow.TimeSyncListener;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.PreferencesModelClient;
@@ -50,6 +51,7 @@ public class ClientMessageProxy {
 	private final PreferencesModelClient prefs;
 
 	private TimeSyncListener timeSyncListener;
+	private ServerShutdownListener serverShutdownListener;
 	
 	private boolean fullsync;
 
@@ -73,6 +75,10 @@ public class ClientMessageProxy {
 		client.disconnect();
 	}
 
+	public void sendRequestServerShutdown() {
+		sendMessageToServer(new Message(OpCode.CTS_REQUEST_SERVER_SHUTDOWN));
+	}
+	
 	public void sendRequestFullSync() {
 		sendMessageToServer(new Message(OpCode.CTS_REQUEST_FULL_SYNC));
 	}
@@ -343,11 +349,19 @@ public class ClientMessageProxy {
 		case STC_TIMELEFT_SYNC:
 			timeleftSync(msg);
 			break;
+		case STC_SERVER_SHUTDOWN:
+			serverShutdown(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 
+	}
+
+	private void serverShutdown(Message msg) {
+		client.serverShutdown();
+		serverShutdownListener.serverShutdown();
 	}
 
 	private void timeleftSync(Message msg) {
@@ -414,7 +428,7 @@ public class ClientMessageProxy {
 	}
 
 	private void loginDenied(Message msg) {
-		client.loginDenied((String) msg.getData()[0]);
+		client.loginFailed((String) msg.getData()[0]);
 	}
 
 	private void connectionSuccessful(Message msg) {
@@ -509,6 +523,10 @@ public class ClientMessageProxy {
 
 	public void setTimeSyncListener(TimeSyncListener timeSyncListener) {
 		this.timeSyncListener = timeSyncListener;
+	}
+
+	public void setServerShutdownListener(ServerShutdownListener serverShutdownListener) {
+		this.serverShutdownListener = serverShutdownListener;
 	}
 
 }

@@ -28,6 +28,7 @@ import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.networking.VideoFileData;
 import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.server.Server;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
@@ -49,6 +50,7 @@ public class MessageProxyServer {
 	private final PreferencesModelServer prefsModel;
 	private final VideoFileReceiveHandler videoFileReceiveHandler;
 	private final DisplayFrame display;
+	private final Server server;
 	private boolean automodeEnabled;
 	private boolean fullscreenEnabled;
 	private boolean liveTickerEnabled;
@@ -72,7 +74,7 @@ public class MessageProxyServer {
 		
 	}
 	
-	public MessageProxyServer() {
+	public MessageProxyServer(Server server) {
 		this.allClients = new DefaultChannelGroup("beamer-clients");
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
@@ -80,6 +82,7 @@ public class MessageProxyServer {
 		this.videoFileReceiveHandler = new VideoFileReceiveHandler();
 		this.display = new DisplayFrame(this);
 		this.display.setVisible(true);
+		this.server = server;
 	}
 	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
 	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException {
@@ -159,6 +162,9 @@ public class MessageProxyServer {
 		case CTS_ADD_VIDEO_FILE_DATA:
 			videoTransferReceiveData(msg);
 			break;
+		case CTS_REQUEST_SERVER_SHUTDOWN:
+			serverShutdownRequested();
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
@@ -166,6 +172,10 @@ public class MessageProxyServer {
 	}
 
 
+	private void serverShutdownRequested() {
+		
+		server.shutdownServer();
+	}
 	private void videoTransferReceiveData(Message msg) throws IOException, ToManyMessagesException {
 		VideoFileData data = (VideoFileData) msg.getData()[0];
 		
@@ -244,7 +254,7 @@ public class MessageProxyServer {
 	 * 			and make the calc for when a queued file is shown
 	 * DONE! next server gui
 	 * 
-	 * Showing Countdown
+	 * DONE! Showing Countdown
 	 * Add proper serialization (client and espacially SERVER!
 	 * Check all TODOS
 	 * add handling for further prefs like changing fonts and colors of live ticker

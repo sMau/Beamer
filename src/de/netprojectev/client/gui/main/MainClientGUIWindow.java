@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -56,6 +57,10 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
 	public interface TimeSyncListener {
 		public void timesync(long timeLeftInSeconds);
+	}
+	
+	public interface ServerShutdownListener {
+		public void serverShutdown();
 	}
 
 	/**
@@ -120,6 +125,16 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 			public void timesync(long timeLeftInSeconds) {
 				timeleftData.setTimeleftInSeconds(timeLeftInSeconds);
 				
+			}
+		});
+		
+		this.proxy.setServerShutdownListener(new ServerShutdownListener() {
+			
+			@Override
+			public void serverShutdown() {
+				JOptionPane.showMessageDialog(MainClientGUIWindow.this, "Server was shut down. The Program is no exiting."
+						, "Server shutdown", JOptionPane.INFORMATION_MESSAGE);
+				System.exit(0);
 			}
 		});
 		
