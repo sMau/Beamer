@@ -392,11 +392,19 @@ public class ClientMessageProxy {
 		case STC_PROPERTY_UPDATE_ACK:
 			updatePropertyAck(msg);
 			break;
+		case STC_FORCE_RECONNECT:
+			reconnectForced();
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 
+	}
+
+	public void reconnectForced() {
+		sendDisconnectRequest();
+		client.connect();
 	}
 
 	private void updatePropertyAck(Message msg) {

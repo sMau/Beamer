@@ -6,7 +6,6 @@ import java.util.logging.Logger;
 
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
-import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 

@@ -1,9 +1,5 @@
 package de.netprojectev.server.datastructures;
 
-import java.text.DateFormat;
-import java.util.Date;
-
-import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.misc.Misc;
 

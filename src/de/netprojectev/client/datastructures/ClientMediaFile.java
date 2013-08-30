@@ -15,7 +15,6 @@ import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
-import de.netprojectev.server.networking.MessageProxyServer;
 
 public class ClientMediaFile extends MediaFile {
 

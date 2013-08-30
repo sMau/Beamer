@@ -9,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.misc.Constants;
-import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;

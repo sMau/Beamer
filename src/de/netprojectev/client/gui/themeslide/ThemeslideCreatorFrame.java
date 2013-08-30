@@ -37,7 +37,6 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
-import de.netprojectev.misc.Misc;
 
 /**
  * This is a GUI class to create and design a new Themeslide. It contains a

@@ -4,8 +4,6 @@ import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
-import javax.swing.JOptionPane;
-
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.ChannelFactory;

@@ -1,7 +1,6 @@
 package de.netprojectev.client.gui.preferences;
 
 import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 

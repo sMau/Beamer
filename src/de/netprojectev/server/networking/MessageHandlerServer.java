@@ -42,6 +42,8 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+		ctx.getChannel().write(new Message(OpCode.STC_FORCE_RECONNECT));
 		log.warn("Exception caught in MessageHandler", e.getCause());
+		e.getChannel().close();
 	}
 }

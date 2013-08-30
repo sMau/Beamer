@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;

@@ -3,7 +3,6 @@ package old.de.netprojectev;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
 
 public class DisplayTickerModelOld {

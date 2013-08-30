@@ -24,7 +24,6 @@ import old.de.netprojectev.client.gui.dialogs.ColorPickerDialog;
 import old.de.netprojectev.client.gui.manager.ManagerFrame;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
-import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.misc.Misc;
 

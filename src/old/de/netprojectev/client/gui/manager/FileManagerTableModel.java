@@ -13,7 +13,6 @@ import old.de.netprojectev.ImageFile;
 import old.de.netprojectev.MediaHandlerOld;
 import old.de.netprojectev.PreferencesModelOld;
 import old.de.netprojectev.Themeslide;
-import de.netprojectev.misc.Constants;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.VideoFile;
 

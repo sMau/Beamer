@@ -29,7 +29,11 @@ public class ClientMessageHandler extends SimpleChannelHandler {
 	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
-		log.warn("Exception caught", e.getCause());
+		log.warn("Exception caught in channel handler, forcing reconnect.", e.getCause());
+		
+		proxy.reconnectForced();
+		
+		e.getChannel().close();
 	}
 	
 }

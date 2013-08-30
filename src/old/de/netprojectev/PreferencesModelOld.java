@@ -12,7 +12,6 @@ import old.de.netprojectev.client.gui.preferences.PriorityListModel;
 import old.de.netprojectev.client.gui.preferences.ThemeListModel;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
-import de.netprojectev.misc.Constants;
 import de.netprojectev.misc.Misc;
 
 /**
