@@ -208,7 +208,7 @@ public class Misc {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static Object loadFromFile(String filename, String path) throws IOException, ClassNotFoundException {
+	public static Serializable loadFromFile(String filename, String path) throws IOException, ClassNotFoundException {
 
 		Object fileToLoad = null;
 
@@ -219,7 +219,7 @@ public class Misc {
 			fileToLoad = o.readObject();
 			o.close();
 
-			return fileToLoad;
+			return (Serializable) fileToLoad;
 		} else {
 			return null;
 		}

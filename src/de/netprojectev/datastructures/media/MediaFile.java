@@ -14,7 +14,7 @@ public abstract class MediaFile implements Serializable {
 	protected String name;
 	protected Priority priority;
 	protected boolean current;
-	protected int showCount;
+	protected transient int showCount;
 	
 	protected MediaFile(String name, Priority priority, UUID id) {
 		this.id = id;

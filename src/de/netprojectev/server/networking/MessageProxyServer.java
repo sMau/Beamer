@@ -234,6 +234,8 @@ public class MessageProxyServer {
 	private void addMediaFile(ServerMediaFile toAdd) throws FileNotFoundException, IOException {
 		mediaModel.addMediaFile(toAdd);
 		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(toAdd)));
+		
+		prefsModel.serializeMediaDatabase();
 	}
 	
 	private void addImageFile(Message msg) throws FileNotFoundException, IOException {
@@ -286,8 +288,7 @@ public class MessageProxyServer {
 		
 		file.setVideoFile(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + file.getId()));
 		
-		mediaModel.addMediaFile(file);
-		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(file)));
+		addMediaFile(file);
 	}
 	
 	private void videoTransferStarted(Message msg) throws FileNotFoundException {
@@ -296,18 +297,21 @@ public class MessageProxyServer {
 		videoFileReceiveHandler.startingReceivingVideo(idOfVideoFile, estMsgCount);
 	}
 	
-	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
+	private void resetShowCount(Message msg) throws MediaDoesNotExsistException, IOException {
 		UUID toReset = (UUID) msg.getData()[0];
 		mediaModel.resetShowCount(toReset);
 		broadcastMessage(new Message(OpCode.STC_RESET_SHOW_COUNT_ACK, toReset));
+		
 	}
 	
-	private void editLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
+	private void editLiveTickerElement(Message msg) throws MediaDoesNotExsistException, IOException {
 		ClientTickerElement edited = (ClientTickerElement) msg.getData()[0];
 		ServerTickerElement correlatedServerFile = tickerModel.getElementByID(edited.getId());
 		correlatedServerFile.setShow(edited.isShow());
 		correlatedServerFile.setText(edited.getText());
 		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(correlatedServerFile)));
+		
+		prefsModel.serializeTickerDatabase();
 	}
 	
 	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException {
@@ -316,6 +320,8 @@ public class MessageProxyServer {
 		correlatedServerFile.setName(editedFile.getName());
 		correlatedServerFile.setPriority(editedFile.getPriority()); //TODO check if this is working with objects, else change to id based prios
 		broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(correlatedServerFile)));
+		
+		prefsModel.serializeMediaDatabase();
 	}
 	
 	public void makeGUIVisible() {
@@ -441,42 +447,58 @@ public class MessageProxyServer {
 		channel.write(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
 	
-	private void removePriority(Message msg) {
+	private void removePriority(Message msg) throws IOException {
 		UUID prioToRemove = (UUID) msg.getData()[0];
 		prefsModel.removePriority(prioToRemove);
 		broadcastMessage(new Message(OpCode.STC_REMOVE_PRIORITY_ACK, prioToRemove));
+		
+		prefsModel.serializePriorityDatabase();
 	}
 
-	private void removeTheme(Message msg) {
+	private void removeTheme(Message msg) throws IOException {
 		UUID themeToRemove = (UUID) msg.getData()[0];
 		prefsModel.removeTheme(themeToRemove);
 		broadcastMessage(new Message(OpCode.STC_REMOVE_THEME_ACK, themeToRemove));
+		
+		prefsModel.serializeThemeDatabase();
 	}
 
-	private void addPriority(Message msg) {
+	private void addPriority(Message msg) throws IOException {
 		Priority prioToAdd = (Priority) msg.getData()[0];
 		prefsModel.addPriority(prioToAdd);
 		broadcastMessage(new Message(OpCode.STC_ADD_PRIORITY_ACK, prioToAdd));
+		
+		
+		prefsModel.serializePriorityDatabase();
+
 	}
 
-	private void addTheme(Message msg) {
+	private void addTheme(Message msg) throws IOException {
 		Theme themeToAdd = (Theme) msg.getData()[0];
 		prefsModel.addTheme(themeToAdd);
 		broadcastMessage(new Message(OpCode.STC_ADD_THEME_ACK, themeToAdd));
+		
+	
+		prefsModel.serializeThemeDatabase();
+
 	}
 	
-	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException {
+	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException, IOException {
 		UUID eltToRemove = (UUID) msg.getData()[0];
 		tickerModel.removeTickerElement(eltToRemove);
 		
 		broadcastMessage(new Message(OpCode.STC_REMOVE_LIVE_TICKER_ELEMENT_ACK, eltToRemove));
+		
+		prefsModel.serializeTickerDatabase();
 	}
 
-	private void addLiveTickerElement(Message msg) {
+	private void addLiveTickerElement(Message msg) throws IOException {
 		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData()[0];
 		tickerModel.addTickerElement(eltToAdd);
 		display.updateLiveTicker();
 		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(eltToAdd)));
+		
+		prefsModel.serializeTickerDatabase();
 	}
 
 	private void queueMediaFile(Message msg) throws MediaDoesNotExsistException {
@@ -543,11 +565,13 @@ public class MessageProxyServer {
 		throw new UnkownMessageException("A unkown message was received. Debug information: " + msg.toString());	
 	}
 
-	private void removeMediaFile(Message msg) throws MediaDoesNotExsistException {
+	private void removeMediaFile(Message msg) throws MediaDoesNotExsistException, IOException {
 		UUID toRemove = (UUID) msg.getData()[0];
 		mediaModel.removeMediaFile(toRemove);
 		
 		broadcastMessage(new Message(OpCode.STC_REMOVE_MEDIA_FILE_ACK, toRemove));
+		
+		prefsModel.serializeMediaDatabase();
 	}
 
 	private void enableFullScreen() {

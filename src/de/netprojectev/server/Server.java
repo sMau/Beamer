@@ -40,6 +40,15 @@ public class Server {
 		checkAndCreateDirs();
 
 		proxy = new MessageProxyServer(this);
+		try {
+			proxy.getPrefsModel().deserializeAll();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		timer = new HashedWheelTimer();
 		bindListeningSocket();
 		
@@ -129,10 +138,18 @@ public class Server {
 		try {
 			PreferencesModelServer.saveProperties();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			log.warn("Error during saving properties.", e);
 		}
 		log.info("Server shutdown complete.");
 
+		try {
+			proxy.getPrefsModel().serializeAll();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.exit(0);
 	}
 
