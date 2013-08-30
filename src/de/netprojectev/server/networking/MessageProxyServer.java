@@ -34,8 +34,10 @@ import de.netprojectev.networking.VideoFileData;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.Server;
 import de.netprojectev.server.datastructures.Countdown;
+import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
+import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.gui.DisplayFrame;
 import de.netprojectev.server.gui.DisplayFrame.VideoFinishListener;
@@ -112,7 +114,6 @@ public class MessageProxyServer {
 		this.prefsModel = new PreferencesModelServer(this);
 		this.videoFileReceiveHandler = new VideoFileReceiveHandler();
 		this.display = new DisplayFrame(this);
-		this.display.setVisible(true);
 		this.server = server;
 		this.connectedUsers = new ArrayList<>();
 		this.timeoutChecker = new HashedWheelTimer();
@@ -134,8 +135,14 @@ public class MessageProxyServer {
 	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
 	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException {
 		switch (msg.getOpCode()) {
-		case CTS_ADD_MEDIA_FILE:
-			addMediaFile(msg);
+		case CTS_ADD_IMAGE_FILE:
+			addImageFile(msg);
+			break;
+		case CTS_ADD_COUNTDOWN:
+			addCountdown(msg);
+			break;
+		case CTS_ADD_THEMESLIDE:
+			addThemeSlide(msg);
 			break;
 		case CTS_REMOVE_MEDIA_FILE:
 			removeMediaFile(msg);
@@ -224,7 +231,32 @@ public class MessageProxyServer {
 		}
 	}
 
-
+	private void addMediaFile(ServerMediaFile toAdd) throws FileNotFoundException, IOException {
+		mediaModel.addMediaFile(toAdd);
+		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(toAdd)));
+	}
+	
+	private void addImageFile(Message msg) throws FileNotFoundException, IOException {
+		String name = (String) msg.getData()[0];
+		Priority priority = (Priority) msg.getData()[1];
+		int[][] rgbaValues = (int[][]) msg.getData()[2];
+		addMediaFile(new ImageFile(name, priority, rgbaValues));
+		
+	}
+	
+	private void addCountdown(Message msg) throws FileNotFoundException, IOException {
+		addMediaFile((ServerMediaFile) msg.getData()[0]);
+	}
+	
+	private void addThemeSlide(Message msg) throws FileNotFoundException, IOException {
+		String name = (String) msg.getData()[0];
+		UUID themeId = (UUID) msg.getData()[1];
+		Priority priority = (Priority) msg.getData()[2];
+		int[][] rgbaValues = (int[][]) msg.getData()[3];
+		
+		addMediaFile(new Themeslide(name, themeId, priority, new ImageFile(name, priority, rgbaValues)));
+		
+	}
 	private void propertyUpdate(Message msg) {
 		String key = (String) msg.getData()[0];
 		String newValue = (String) msg.getData()[1];
@@ -284,6 +316,10 @@ public class MessageProxyServer {
 		correlatedServerFile.setName(editedFile.getName());
 		correlatedServerFile.setPriority(editedFile.getPriority()); //TODO check if this is working with objects, else change to id based prios
 		broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(correlatedServerFile)));
+	}
+	
+	public void makeGUIVisible() {
+		this.display.setVisible(true);
 	}
 	
 	public ChannelGroupFuture broadcastMessage(Message msg) {
@@ -351,6 +387,8 @@ public class MessageProxyServer {
  	 * next pimp server gui (Effects and so on)
 	 *
 	 * check for already running server instances, and esp. get a port from the os not fixed (scanning the network for the server is required then)
+	 * 
+	 * pimp the clinet gui -> resizable areas, event log, loading dialogs during network operations
 	 * 
 	 * next check all the image to imageicon conversions and choose best for performance and RAM usage
 	 * next new themeslide creator using templates or something like that
@@ -492,7 +530,12 @@ public class MessageProxyServer {
 			updateAutoModeTimer();
 		}
 		
-		display.showMediaFileInMainComponent(currentFile);
+		try {
+			display.showMediaFileInMainComponent(currentFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));
 	}
 
@@ -507,13 +550,6 @@ public class MessageProxyServer {
 		broadcastMessage(new Message(OpCode.STC_REMOVE_MEDIA_FILE_ACK, toRemove));
 	}
 
-	private void addMediaFile(Message msg) throws FileNotFoundException, IOException {
-		ServerMediaFile fileToAdd = (ServerMediaFile) msg.getData()[0];
-		mediaModel.addMediaFile(fileToAdd);
-		
-		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(fileToAdd)));
-	}
-	
 	private void enableFullScreen() {
 		fullscreenEnabled = true;
 		

@@ -59,6 +59,7 @@ public class DisplayMainComponent extends JComponent {
 		//TODO check for performance probs. in resizing and so on
 
 		countdownShowing = false;
+				
 		this.image = Misc.getScaledImageInstanceFast(compImage, (int) (getHeight() * compImage.getWidth()/compImage.getHeight()), (int) getHeight());
 		repaint(0,0,getWidth(), getHeight());
 

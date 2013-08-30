@@ -177,9 +177,17 @@ public class ClientMessageProxy {
 	public void sendAddImageFile(File file) throws IOException {
 		String name = file.getName();
 		BufferedImage image = ImageIO.read(file);
-		ImageIcon icon = new ImageIcon(image);
-		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, new ImageFile(name, icon,
-				prefs.getDefaultPriority())));
+		int width = image.getWidth();
+		int height = image.getHeight();
+		int[][] rgbaValues = new int[width][height];
+		
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				rgbaValues[i][j] = image.getRGB(i, j);
+			}
+		}
+		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, name,
+				prefs.getDefaultPriority(), rgbaValues));
 	}
 
 	public void sendAddImageFiles(File[] files) throws IOException {
@@ -194,7 +202,11 @@ public class ClientMessageProxy {
 	}
 
 	public void sendAddThemeSlide(Themeslide themeslide) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, themeslide));
+		
+	}
+
+	public void sendAddThemeSlide(String name, UUID id, Priority priority, int[][] rgbaValues) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, id, priority, rgbaValues));
 	}
 
 	public void sendRemoveSelectedMedia(int[] selectedRowsAllMedia) {
@@ -277,7 +289,7 @@ public class ClientMessageProxy {
 	}
 
 	public void sendAddCountdown(Countdown countdown) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_MEDIA_FILE, countdown));
+		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
 	}
 
 	public void receiveMessage(Message msg) throws UnkownMessageException,
@@ -569,5 +581,6 @@ public class ClientMessageProxy {
 	public void setServerPropertyUpdateListener(ServerPropertyUpdateListener serverPropertyUpdateListener) {
 		this.serverPropertyUpdateListener = serverPropertyUpdateListener;
 	}
+
 
 }

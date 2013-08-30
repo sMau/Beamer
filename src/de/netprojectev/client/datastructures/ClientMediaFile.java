@@ -42,13 +42,13 @@ public class ClientMediaFile extends MediaFile {
 			preview = null;
 		} else if (serverMediaFile instanceof ImageFile) {
 			type = MediaType.Image;
-			preview = Misc.getScaledImageIcon(((ImageFile) serverMediaFile).getImage(), widthToScaleTo);
+			preview = Misc.getScaledImageIconFromBufImg(((ImageFile) serverMediaFile).get(), widthToScaleTo);
 		} else if (serverMediaFile instanceof VideoFile) {
 			type = MediaType.Video;
 			preview = null;
 		} else if (serverMediaFile instanceof Themeslide) {
 			type = MediaType.Themeslide;
-			preview = Misc.getScaledImageIcon(((Themeslide) serverMediaFile).getImageRepresantation().getImage(), widthToScaleTo);
+			preview = Misc.getScaledImageIconFromBufImg(((Themeslide) serverMediaFile).get(), widthToScaleTo);
 			
 		} else {
 			type = MediaType.Unknown;

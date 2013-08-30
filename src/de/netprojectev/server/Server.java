@@ -42,6 +42,13 @@ public class Server {
 		proxy = new MessageProxyServer(this);
 		timer = new HashedWheelTimer();
 		bindListeningSocket();
+		
+		
+		/*
+		 * when setup is finished make the gui visible
+		 */
+		
+		proxy.makeGUIVisible();
 	}
 
 	private void checkAndCreateDirs() {

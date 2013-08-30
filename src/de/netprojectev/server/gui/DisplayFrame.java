@@ -8,6 +8,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.Timer;
 
@@ -52,7 +53,7 @@ public class DisplayFrame extends javax.swing.JFrame {
         fullscreen = false;
     }
 
-    public void showMediaFileInMainComponent(ServerMediaFile fileToShow) {
+    public void showMediaFileInMainComponent(ServerMediaFile fileToShow) throws IOException {
     	if(fileToShow instanceof ImageFile) {
     		showImageFile((ImageFile) fileToShow);
     	} else if(fileToShow instanceof Themeslide) {
@@ -66,8 +67,8 @@ public class DisplayFrame extends javax.swing.JFrame {
     	}
     }
     
-    private void showImageFile(ImageFile image) {
-    	displayMainComponent.drawImage(Misc.imageIconToBufferedImage(image.getImage()));
+    private void showImageFile(ImageFile image) throws IOException {
+    	displayMainComponent.drawImage(image.get());
     }
     
     private void showVideoFile(VideoFile video) {
@@ -106,8 +107,8 @@ public class DisplayFrame extends javax.swing.JFrame {
 
     }
     
-    private void showThemeslide(Themeslide themeslide) {
-    	displayMainComponent.drawImage(Misc.imageIconToBufferedImage(themeslide.getImageRepresantation().getImage()));
+    private void showThemeslide(Themeslide themeslide) throws IOException {
+    	displayMainComponent.drawImage(themeslide.get());
     }
     
     private void showCountdown(final Countdown countdown) {
