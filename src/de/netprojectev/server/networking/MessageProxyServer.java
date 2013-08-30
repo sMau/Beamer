@@ -382,20 +382,22 @@ public class MessageProxyServer {
 	//TODO last worked here: made changing server props work (only live ticker sep atm)
 	/*
 	 * DONE 1 Add proper serialization (properties are good, but serialize the media and ticker elts and so on too)
-	 * 2 Check all TODOS
-	 * 3 next exception handling
+	 * DONE 2 Check all TODOS
+	 * DONE 3 next exception handling
 	 * 4 Test with notebook as server (esp. video things and fullscreen switches (preferred using tv as monitor like the beamer))
 	 * 
 	 * add handling for further prefs like changing fonts and colors of live ticker
 	 * pimp the live ticker a little slightly transparent overlay or something like that 
  	 * next pimp server gui (Effects and so on)
 	 *
+	 * Advanced/Alternative themeslide creator using templates or something like that
+	 *
 	 * check for already running server instances, and esp. get a port from the os not fixed (scanning the network for the server is required then)
 	 * 
 	 * pimp the clinet gui -> resizable areas, event log, loading dialogs during network operations
 	 * 
 	 * next check all the image to imageicon conversions and choose best for performance and RAM usage
-	 * next new themeslide creator using templates or something like that
+	 * 
 	 * next proper login handling (also to see which user did what and when) and maybe the possibility to send messages or notes or something like that
 	 */
 	private void fullSyncRequested(Message msg, Channel channel) throws FileNotFoundException, IOException {
@@ -575,14 +577,15 @@ public class MessageProxyServer {
 	private void enableFullScreen() {
 		fullscreenEnabled = true;
 		
-		//TODO update display
+		display.enterFullscreen(0);
 		
 		broadcastMessage(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 	}
 	
 	private void disableFullScreen() {
 		fullscreenEnabled = false;
-		//TODO update display	
+		
+		display.exitFullscreen();
 		
 		broadcastMessage(new Message(OpCode.STC_DISABLE_FULLSCREEN_ACK));
 		

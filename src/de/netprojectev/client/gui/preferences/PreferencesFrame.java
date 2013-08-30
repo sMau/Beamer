@@ -118,213 +118,845 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		jtpPreferences = new javax.swing.JTabbedPane();
-		jpGeneral = new javax.swing.JPanel();
-		jbEnableFullscreen = new javax.swing.JButton();
-		jbExitFullscreen = new javax.swing.JButton();
-		jlFullscreen = new javax.swing.JLabel();
-		jSeparator1 = new javax.swing.JSeparator();
-		jlGeneralServerControl = new javax.swing.JLabel();
-		jSeparator3 = new javax.swing.JSeparator();
-		jbServerShutdown = new javax.swing.JButton();
-		jpPriorities = new javax.swing.JPanel();
-		jspPrioList = new javax.swing.JScrollPane();
-		jliPriorities = new javax.swing.JList();
-		jlPrioName = new javax.swing.JLabel();
-		jlPrioNameVar = new javax.swing.JLabel();
-		jlPrioTime = new javax.swing.JLabel();
-		jlTimeToShowVar = new javax.swing.JLabel();
-		jbRemovePrio = new javax.swing.JButton();
-		jbAddPrio = new javax.swing.JButton();
-		jlPrioDefault = new javax.swing.JLabel();
-		jlDefaultPrioVar = new javax.swing.JLabel();
-		jpThemes = new javax.swing.JPanel();
-		jspThemeList = new javax.swing.JScrollPane();
-		jliThemes = new javax.swing.JList();
-		jlThemeName = new javax.swing.JLabel();
-		jlThemeNameVar = new javax.swing.JLabel();
-		jlThemeBackgroundPreview = new javax.swing.JLabel();
-		jbRemoveTheme = new javax.swing.JButton();
-		jbAddNewTheme = new javax.swing.JButton();
-		jpTicker = new javax.swing.JPanel();
-		jbStartTicker = new javax.swing.JButton();
-		jbStopLiveTicker = new javax.swing.JButton();
-		jlTickerStatus = new javax.swing.JLabel();
-		jSeparator2 = new javax.swing.JSeparator();
-		jlSeperator = new javax.swing.JLabel();
-		jSeparator4 = new javax.swing.JSeparator();
-		jtfTickerSeparator = new javax.swing.JTextField();
-		jbUpdateTickerSeparator = new javax.swing.JButton();
-		jpThemeslideCreator = new javax.swing.JPanel();
-		jpCountdown = new javax.swing.JPanel();
-		jbClosePrefs = new javax.swing.JButton();
+        jtpPreferences = new javax.swing.JTabbedPane();
+        jpGeneral = new javax.swing.JPanel();
+        jbEnableFullscreen = new javax.swing.JButton();
+        jbExitFullscreen = new javax.swing.JButton();
+        jlFullscreen = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jlGeneralServerControl = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jbServerShutdown = new javax.swing.JButton();
+        jpPriorities = new javax.swing.JPanel();
+        jspPrioList = new javax.swing.JScrollPane();
+        jliPriorities = new javax.swing.JList();
+        jlPrioName = new javax.swing.JLabel();
+        jlPrioNameVar = new javax.swing.JLabel();
+        jlPrioTime = new javax.swing.JLabel();
+        jlTimeToShowVar = new javax.swing.JLabel();
+        jbRemovePrio = new javax.swing.JButton();
+        jbAddPrio = new javax.swing.JButton();
+        jlPrioDefault = new javax.swing.JLabel();
+        jlDefaultPrioVar = new javax.swing.JLabel();
+        jpThemes = new javax.swing.JPanel();
+        jspThemeList = new javax.swing.JScrollPane();
+        jliThemes = new javax.swing.JList();
+        jlThemeName = new javax.swing.JLabel();
+        jlThemeNameVar = new javax.swing.JLabel();
+        jlThemeBackgroundPreview = new javax.swing.JLabel();
+        jbRemoveTheme = new javax.swing.JButton();
+        jbAddNewTheme = new javax.swing.JButton();
+        jpTicker = new javax.swing.JPanel();
+        jbStartTicker = new javax.swing.JButton();
+        jbStopLiveTicker = new javax.swing.JButton();
+        jlTickerStatus = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jlSeperator = new javax.swing.JLabel();
+        jSeparator4 = new javax.swing.JSeparator();
+        jtfTickerSeparator = new javax.swing.JTextField();
+        jbUpdateTickerSeparator = new javax.swing.JButton();
+        jlTickerLookAFeel = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
+        jlTickerFont = new javax.swing.JLabel();
+        jcbTickerFont = new javax.swing.JComboBox();
+        jbTickerFontUpdate = new javax.swing.JButton();
+        jlTickerFontColor = new javax.swing.JLabel();
+        jbChooseTickerFontColor = new javax.swing.JButton();
+        jbUpdateTickerFontColor = new javax.swing.JButton();
+        jlTickerBGColor = new javax.swing.JLabel();
+        jbChooseBGColor = new javax.swing.JButton();
+        jbUpdateTickerBGColor = new javax.swing.JButton();
+        jlTickerFontSize = new javax.swing.JLabel();
+        jcbTickerFontSize = new javax.swing.JComboBox();
+        jbUpdateTickerFontSize = new javax.swing.JButton();
+        jpCountdown = new javax.swing.JPanel();
+        jlCountdownLookAFeel = new javax.swing.JLabel();
+        jSeparator6 = new javax.swing.JSeparator();
+        jlCountdownFont = new javax.swing.JLabel();
+        jcbCountdownFont = new javax.swing.JComboBox();
+        jbUpdateCountdownFont = new javax.swing.JButton();
+        jlCountdownFontColor = new javax.swing.JLabel();
+        jbChooseCountdownFontColor = new javax.swing.JButton();
+        jbUpdateCountdownFontColor = new javax.swing.JButton();
+        jlCountdownFontSize = new javax.swing.JLabel();
+        jcbCountdownFontSize = new javax.swing.JComboBox();
+        jbUpdateCountdownFontSize = new javax.swing.JButton();
+        jpThemeslideCreator = new javax.swing.JPanel();
+        jlFontAttrCreator = new javax.swing.JLabel();
+        jSeparator7 = new javax.swing.JSeparator();
+        jlFontSizeCreator = new javax.swing.JLabel();
+        jcbCreatorFontSize = new javax.swing.JComboBox();
+        jlCreatorFontColor = new javax.swing.JLabel();
+        jbCreatorChooseFontColor = new javax.swing.JButton();
+        jlCreatorFontFamily = new javax.swing.JLabel();
+        jcbCreatorFont = new javax.swing.JComboBox();
+        jlCreatorMargin = new javax.swing.JLabel();
+        jSeparator8 = new javax.swing.JSeparator();
+        jlCreatorMarginLeft = new javax.swing.JLabel();
+        jtfCreatorMarginLeft = new javax.swing.JTextField();
+        jlCreatorMarginTop = new javax.swing.JLabel();
+        jtfCreatorMarginTop = new javax.swing.JTextField();
+        jbClosePrefs = new javax.swing.JButton();
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-		setTitle("Preferences");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Preferences");
 
-		jbEnableFullscreen.setLabel("Enter");
-		jbEnableFullscreen.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbEnableFullscreenActionPerformed(evt);
-			}
-		});
+        jbEnableFullscreen.setLabel("Enter");
+        jbEnableFullscreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEnableFullscreenActionPerformed(evt);
+            }
+        });
 
-		jbExitFullscreen.setLabel("Exit");
-		jbExitFullscreen.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbExitFullscreenActionPerformed(evt);
-			}
-		});
+        jbExitFullscreen.setLabel("Exit");
+        jbExitFullscreen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbExitFullscreenActionPerformed(evt);
+            }
+        });
 
-		jlFullscreen.setText("Fullscreen");
+        jlFullscreen.setText("Fullscreen");
 
-		jlGeneralServerControl.setText("Server Control");
+        jlGeneralServerControl.setText("Server Control");
 
-		jbServerShutdown.setText("Server Shutdown");
-		jbServerShutdown.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbServerShutdownActionPerformed(evt);
-			}
-		});
+        jbServerShutdown.setText("Server Shutdown");
+        jbServerShutdown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbServerShutdownActionPerformed(evt);
+            }
+        });
 
-		javax.swing.GroupLayout jpGeneralLayout = new javax.swing.GroupLayout(jpGeneral);
-		jpGeneral.setLayout(jpGeneralLayout);
-		jpGeneralLayout.setHorizontalGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpGeneralLayout.createSequentialGroup().addContainerGap().addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpGeneralLayout.createSequentialGroup().addGap(6, 6, 6).addComponent(jbServerShutdown).addContainerGap(484, Short.MAX_VALUE)).addGroup(jpGeneralLayout.createSequentialGroup().addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpGeneralLayout.createSequentialGroup().addComponent(jlFullscreen).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jSeparator1)).addGroup(jpGeneralLayout.createSequentialGroup().addGap(6, 6, 6).addComponent(jbEnableFullscreen).addGap(18, 18, 18).addComponent(jbExitFullscreen).addGap(0, 0, Short.MAX_VALUE)).addGroup(jpGeneralLayout.createSequentialGroup().addComponent(jlGeneralServerControl).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jSeparator3))).addContainerGap()))));
-		jpGeneralLayout.setVerticalGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpGeneralLayout.createSequentialGroup().addContainerGap().addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(jlFullscreen).addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)).addGap(7, 7, 7).addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jbEnableFullscreen).addComponent(jbExitFullscreen)).addGap(18, 18, 18).addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(jlGeneralServerControl).addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addComponent(jbServerShutdown).addContainerGap(192, Short.MAX_VALUE)));
+        javax.swing.GroupLayout jpGeneralLayout = new javax.swing.GroupLayout(jpGeneral);
+        jpGeneral.setLayout(jpGeneralLayout);
+        jpGeneralLayout.setHorizontalGroup(
+            jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpGeneralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpGeneralLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jbServerShutdown)
+                        .addContainerGap(484, Short.MAX_VALUE))
+                    .addGroup(jpGeneralLayout.createSequentialGroup()
+                        .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpGeneralLayout.createSequentialGroup()
+                                .addComponent(jlFullscreen)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator1))
+                            .addGroup(jpGeneralLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jbEnableFullscreen)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbExitFullscreen)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jpGeneralLayout.createSequentialGroup()
+                                .addComponent(jlGeneralServerControl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator3)))
+                        .addContainerGap())))
+        );
+        jpGeneralLayout.setVerticalGroup(
+            jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpGeneralLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlFullscreen)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbEnableFullscreen)
+                    .addComponent(jbExitFullscreen))
+                .addGap(18, 18, 18)
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlGeneralServerControl)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbServerShutdown)
+                .addContainerGap(232, Short.MAX_VALUE))
+        );
 
-		jtpPreferences.addTab("General", jpGeneral);
+        jtpPreferences.addTab("General", jpGeneral);
 
-		jliPriorities.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-		jliPriorities.setModel(new PriorityListModel(prefs));
-		jspPrioList.setViewportView(jliPriorities);
+        jliPriorities.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jliPriorities.setModel(new PriorityListModel(prefs));
+        jspPrioList.setViewportView(jliPriorities);
 
-		jlPrioName.setText("Name");
+        jlPrioName.setText("Name");
 
-		jlPrioNameVar.setText("unknown");
+        jlPrioNameVar.setText("unknown");
 
-		jlPrioTime.setText("Time to show");
+        jlPrioTime.setText("Time to show");
 
-		jlTimeToShowVar.setText("unknown");
+        jlTimeToShowVar.setText("unknown");
 
-		jbRemovePrio.setText("Remove");
-		jbRemovePrio.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbRemovePrioActionPerformed(evt);
-			}
-		});
+        jbRemovePrio.setText("Remove");
+        jbRemovePrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRemovePrioActionPerformed(evt);
+            }
+        });
 
-		jbAddPrio.setText("Add New");
-		jbAddPrio.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbAddPrioActionPerformed(evt);
-			}
-		});
+        jbAddPrio.setText("Add New");
+        jbAddPrio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAddPrioActionPerformed(evt);
+            }
+        });
 
-		jlPrioDefault.setText("Default");
+        jlPrioDefault.setText("Default");
 
-		jlDefaultPrioVar.setText("unknown");
+        jlDefaultPrioVar.setText("unknown");
 
-		javax.swing.GroupLayout jpPrioritiesLayout = new javax.swing.GroupLayout(jpPriorities);
-		jpPriorities.setLayout(jpPrioritiesLayout);
-		jpPrioritiesLayout.setHorizontalGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpPrioritiesLayout.createSequentialGroup().addContainerGap().addComponent(jspPrioList, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(80, 80, 80).addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpPrioritiesLayout.createSequentialGroup().addComponent(jbRemovePrio).addGap(18, 18, 18).addComponent(jbAddPrio)).addGroup(jpPrioritiesLayout.createSequentialGroup().addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(jlPrioTime).addComponent(jlPrioName).addComponent(jlPrioDefault)).addGap(30, 30, 30).addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(jlDefaultPrioVar).addComponent(jlPrioNameVar).addComponent(jlTimeToShowVar)))).addContainerGap(157, Short.MAX_VALUE)));
-		jpPrioritiesLayout.setVerticalGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrioritiesLayout.createSequentialGroup().addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addGroup(jpPrioritiesLayout.createSequentialGroup().addGap(32, 32, 32).addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jlPrioName).addComponent(jlPrioNameVar)).addGap(18, 18, 18).addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jlPrioTime).addComponent(jlTimeToShowVar)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE).addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jlPrioDefault).addComponent(jlDefaultPrioVar)).addGap(18, 18, 18).addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jbRemovePrio).addComponent(jbAddPrio))).addGroup(jpPrioritiesLayout.createSequentialGroup().addContainerGap().addComponent(jspPrioList, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE))).addContainerGap()));
+        javax.swing.GroupLayout jpPrioritiesLayout = new javax.swing.GroupLayout(jpPriorities);
+        jpPriorities.setLayout(jpPrioritiesLayout);
+        jpPrioritiesLayout.setHorizontalGroup(
+            jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpPrioritiesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jspPrioList, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
+                .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrioritiesLayout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(jbAddPrio))
+                    .addGroup(jpPrioritiesLayout.createSequentialGroup()
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlPrioTime)
+                            .addComponent(jlPrioName)
+                            .addComponent(jlPrioDefault)
+                            .addComponent(jbRemovePrio))
+                        .addGap(30, 30, 30)
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlDefaultPrioVar)
+                            .addComponent(jlPrioNameVar)
+                            .addComponent(jlTimeToShowVar))))
+                .addContainerGap(157, Short.MAX_VALUE))
+        );
+        jpPrioritiesLayout.setVerticalGroup(
+            jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpPrioritiesLayout.createSequentialGroup()
+                .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpPrioritiesLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlPrioName)
+                            .addComponent(jlPrioNameVar))
+                        .addGap(18, 18, 18)
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlPrioTime)
+                            .addComponent(jlTimeToShowVar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlPrioDefault)
+                            .addComponent(jlDefaultPrioVar))
+                        .addGap(11, 11, 11)
+                        .addGroup(jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbRemovePrio)
+                            .addComponent(jbAddPrio)))
+                    .addGroup(jpPrioritiesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jspPrioList, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)))
+                .addGap(45, 45, 45))
+        );
 
-		jtpPreferences.addTab("Priorities", jpPriorities);
+        jtpPreferences.addTab("Priorities", jpPriorities);
 
-		jliThemes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-		jliThemes.setModel(new ThemeListModel(prefs));
-		jspThemeList.setViewportView(jliThemes);
+        jliThemes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jliThemes.setModel(new ThemeListModel(prefs));
+        jspThemeList.setViewportView(jliThemes);
 
-		jlThemeName.setText("Name");
+        jlThemeName.setText("Name");
 
-		jlThemeNameVar.setText("unknown");
+        jlThemeNameVar.setText("unknown");
 
-		jlThemeBackgroundPreview.setText("Preview");
+        jlThemeBackgroundPreview.setText("Preview");
 
-		jbRemoveTheme.setText("Remove");
-		jbRemoveTheme.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbRemoveThemeActionPerformed(evt);
-			}
-		});
+        jbRemoveTheme.setText("Remove");
+        jbRemoveTheme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbRemoveThemeActionPerformed(evt);
+            }
+        });
 
-		jbAddNewTheme.setText("Add New");
-		jbAddNewTheme.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbAddNewThemeActionPerformed(evt);
-			}
-		});
+        jbAddNewTheme.setText("Add New");
+        jbAddNewTheme.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbAddNewThemeActionPerformed(evt);
+            }
+        });
 
-		javax.swing.GroupLayout jpThemesLayout = new javax.swing.GroupLayout(jpThemes);
-		jpThemes.setLayout(jpThemesLayout);
-		jpThemesLayout.setHorizontalGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpThemesLayout.createSequentialGroup().addContainerGap().addComponent(jspThemeList, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(80, 80, 80).addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpThemesLayout.createSequentialGroup().addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpThemesLayout.createSequentialGroup().addComponent(jlThemeName).addGap(77, 77, 77).addComponent(jlThemeNameVar)).addGroup(jpThemesLayout.createSequentialGroup().addComponent(jbRemoveTheme).addGap(18, 18, 18).addComponent(jbAddNewTheme))).addGap(0, 151, Short.MAX_VALUE)).addComponent(jlThemeBackgroundPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)).addContainerGap()));
-		jpThemesLayout.setVerticalGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpThemesLayout.createSequentialGroup().addContainerGap().addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(jspThemeList, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE).addGroup(jpThemesLayout.createSequentialGroup().addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jlThemeName).addComponent(jlThemeNameVar)).addGap(18, 18, 18).addComponent(jlThemeBackgroundPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18, 18).addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jbRemoveTheme).addComponent(jbAddNewTheme)))).addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+        javax.swing.GroupLayout jpThemesLayout = new javax.swing.GroupLayout(jpThemes);
+        jpThemes.setLayout(jpThemesLayout);
+        jpThemesLayout.setHorizontalGroup(
+            jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpThemesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jspThemeList, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
+                .addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpThemesLayout.createSequentialGroup()
+                        .addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpThemesLayout.createSequentialGroup()
+                                .addComponent(jlThemeName)
+                                .addGap(77, 77, 77)
+                                .addComponent(jlThemeNameVar))
+                            .addGroup(jpThemesLayout.createSequentialGroup()
+                                .addComponent(jbRemoveTheme)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbAddNewTheme)))
+                        .addGap(0, 151, Short.MAX_VALUE))
+                    .addComponent(jlThemeBackgroundPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jpThemesLayout.setVerticalGroup(
+            jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpThemesLayout.createSequentialGroup()
+                .addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jpThemesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jspThemeList, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jpThemesLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlThemeName)
+                            .addComponent(jlThemeNameVar))
+                        .addGap(18, 18, 18)
+                        .addComponent(jlThemeBackgroundPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbRemoveTheme)
+                            .addComponent(jbAddNewTheme))))
+                .addContainerGap(46, Short.MAX_VALUE))
+        );
 
-		jtpPreferences.addTab("Themes", jpThemes);
+        jtpPreferences.addTab("Themes", jpThemes);
 
-		jbStartTicker.setText("Start");
-		jbStartTicker.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbStartTickerActionPerformed(evt);
-			}
-		});
+        jbStartTicker.setText("Start");
+        jbStartTicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbStartTickerActionPerformed(evt);
+            }
+        });
 
-		jbStopLiveTicker.setText("Stop");
-		jbStopLiveTicker.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbStopLiveTickerActionPerformed(evt);
-			}
-		});
+        jbStopLiveTicker.setText("Stop");
+        jbStopLiveTicker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbStopLiveTickerActionPerformed(evt);
+            }
+        });
 
-		jlTickerStatus.setText("Status");
+        jlTickerStatus.setText("Status");
 
-		jlSeperator.setText("Separator");
+        jlSeperator.setText("Separator");
 
-		jbUpdateTickerSeparator.setText("Update");
-		jbUpdateTickerSeparator.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbUpdateTickerSeparatorActionPerformed(evt);
-			}
-		});
+        jbUpdateTickerSeparator.setText("Update");
+        jbUpdateTickerSeparator.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateTickerSeparatorActionPerformed(evt);
+            }
+        });
 
-		javax.swing.GroupLayout jpTickerLayout = new javax.swing.GroupLayout(jpTicker);
-		jpTicker.setLayout(jpTickerLayout);
-		jpTickerLayout.setHorizontalGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpTickerLayout.createSequentialGroup().addContainerGap().addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpTickerLayout.createSequentialGroup().addComponent(jlTickerStatus).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jSeparator2)).addGroup(jpTickerLayout.createSequentialGroup().addGap(6, 6, 6).addComponent(jbStartTicker).addGap(18, 18, 18).addComponent(jbStopLiveTicker).addGap(0, 0, Short.MAX_VALUE)).addGroup(jpTickerLayout.createSequentialGroup().addComponent(jlSeperator).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(jSeparator4))).addContainerGap()).addGroup(jpTickerLayout.createSequentialGroup().addGap(12, 12, 12).addComponent(jtfTickerSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18, 18).addComponent(jbUpdateTickerSeparator).addContainerGap(415, Short.MAX_VALUE)));
-		jpTickerLayout.setVerticalGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jpTickerLayout.createSequentialGroup().addContainerGap().addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(jlTickerStatus).addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jbStartTicker).addComponent(jbStopLiveTicker)).addGap(18, 18, 18).addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING).addComponent(jlSeperator).addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED).addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jtfTickerSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(jbUpdateTickerSeparator)).addContainerGap(193, Short.MAX_VALUE)));
+        jlTickerLookAFeel.setText("Look and Feel");
 
-		jtpPreferences.addTab("Ticker", jpTicker);
+        jlTickerFont.setText("Font");
 
-		javax.swing.GroupLayout jpThemeslideCreatorLayout = new javax.swing.GroupLayout(jpThemeslideCreator);
-		jpThemeslideCreator.setLayout(jpThemeslideCreatorLayout);
-		jpThemeslideCreatorLayout.setHorizontalGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 630, Short.MAX_VALUE));
-		jpThemeslideCreatorLayout.setVerticalGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 319, Short.MAX_VALUE));
+        jbTickerFontUpdate.setText("Update");
+        jbTickerFontUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbTickerFontUpdateActionPerformed(evt);
+            }
+        });
 
-		jtpPreferences.addTab("Themeslide Creator", jpThemeslideCreator);
+        jlTickerFontColor.setText("Font Color");
 
-		javax.swing.GroupLayout jpCountdownLayout = new javax.swing.GroupLayout(jpCountdown);
-		jpCountdown.setLayout(jpCountdownLayout);
-		jpCountdownLayout.setHorizontalGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 630, Short.MAX_VALUE));
-		jpCountdownLayout.setVerticalGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 319, Short.MAX_VALUE));
+        jbChooseTickerFontColor.setText("Choose Color");
+        jbChooseTickerFontColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbChooseTickerFontColorActionPerformed(evt);
+            }
+        });
 
-		jtpPreferences.addTab("Countdown", jpCountdown);
+        jbUpdateTickerFontColor.setText("Update");
+        jbUpdateTickerFontColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateTickerFontColorActionPerformed(evt);
+            }
+        });
 
-		jbClosePrefs.setText("Close");
-		jbClosePrefs.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				jbClosePrefsActionPerformed(evt);
-			}
-		});
+        jlTickerBGColor.setText("Background Color");
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(jtpPreferences).addContainerGap()).addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup().addGap(0, 0, Short.MAX_VALUE).addComponent(jbClosePrefs).addGap(34, 34, 34)));
-		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout.createSequentialGroup().addComponent(jtpPreferences, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18, 18).addComponent(jbClosePrefs).addGap(0, 11, Short.MAX_VALUE)));
+        jbChooseBGColor.setText("Choose Color");
+        jbChooseBGColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbChooseBGColorActionPerformed(evt);
+            }
+        });
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        jbUpdateTickerBGColor.setText("Update");
+        jbUpdateTickerBGColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateTickerBGColorActionPerformed(evt);
+            }
+        });
+
+        jlTickerFontSize.setText("Font Size");
+
+        jbUpdateTickerFontSize.setText("Update");
+        jbUpdateTickerFontSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateTickerFontSizeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpTickerLayout = new javax.swing.GroupLayout(jpTicker);
+        jpTicker.setLayout(jpTickerLayout);
+        jpTickerLayout.setHorizontalGroup(
+            jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpTickerLayout.createSequentialGroup()
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpTickerLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                .addComponent(jlTickerStatus)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator2))
+                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jbStartTicker)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbStopLiveTicker)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                .addComponent(jlSeperator)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator4))))
+                    .addGroup(jpTickerLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jtfTickerSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbUpdateTickerSeparator)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jpTickerLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                .addComponent(jlTickerLookAFeel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator5))
+                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpTickerLayout.createSequentialGroup()
+                                            .addComponent(jlTickerFont)
+                                            .addGap(101, 101, 101))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpTickerLayout.createSequentialGroup()
+                                            .addComponent(jlTickerFontSize)
+                                            .addGap(73, 73, 73)))
+                                    .addGroup(jpTickerLayout.createSequentialGroup()
+                                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlTickerFontColor)
+                                            .addComponent(jlTickerBGColor))
+                                        .addGap(18, 18, 18)))
+                                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jpTickerLayout.createSequentialGroup()
+                                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jcbTickerFont, 0, 111, Short.MAX_VALUE)
+                                            .addComponent(jcbTickerFontSize, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jbTickerFontUpdate)
+                                            .addComponent(jbUpdateTickerFontSize))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE))
+                                    .addGroup(jpTickerLayout.createSequentialGroup()
+                                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                                .addComponent(jbChooseTickerFontColor)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jbUpdateTickerFontColor))
+                                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                                .addComponent(jbChooseBGColor)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jbUpdateTickerBGColor)))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                .addContainerGap())
+        );
+        jpTickerLayout.setVerticalGroup(
+            jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpTickerLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlTickerStatus)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbStartTicker)
+                    .addComponent(jbStopLiveTicker))
+                .addGap(18, 18, 18)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlSeperator)
+                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jtfTickerSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbUpdateTickerSeparator))
+                .addGap(18, 18, 18)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlTickerLookAFeel)
+                    .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTickerFont)
+                    .addComponent(jcbTickerFont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbTickerFontUpdate))
+                .addGap(18, 18, 18)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTickerFontSize)
+                    .addComponent(jcbTickerFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbUpdateTickerFontSize))
+                .addGap(18, 18, 18)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTickerFontColor)
+                    .addComponent(jbChooseTickerFontColor)
+                    .addComponent(jbUpdateTickerFontColor))
+                .addGap(18, 18, 18)
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlTickerBGColor)
+                    .addComponent(jbChooseBGColor)
+                    .addComponent(jbUpdateTickerBGColor))
+                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        jtpPreferences.addTab("Ticker", jpTicker);
+
+        jlCountdownLookAFeel.setText("Look and Feel");
+
+        jlCountdownFont.setText("Font");
+
+        jbUpdateCountdownFont.setText("Update");
+        jbUpdateCountdownFont.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateCountdownFontActionPerformed(evt);
+            }
+        });
+
+        jlCountdownFontColor.setText("Font Color");
+
+        jbChooseCountdownFontColor.setText("Choose Color");
+        jbChooseCountdownFontColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbChooseCountdownFontColorActionPerformed(evt);
+            }
+        });
+
+        jbUpdateCountdownFontColor.setText("Update");
+        jbUpdateCountdownFontColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateCountdownFontColorActionPerformed(evt);
+            }
+        });
+
+        jlCountdownFontSize.setText("Font Size");
+
+        jbUpdateCountdownFontSize.setText("Update");
+        jbUpdateCountdownFontSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateCountdownFontSizeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpCountdownLayout = new javax.swing.GroupLayout(jpCountdown);
+        jpCountdown.setLayout(jpCountdownLayout);
+        jpCountdownLayout.setHorizontalGroup(
+            jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCountdownLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpCountdownLayout.createSequentialGroup()
+                        .addComponent(jlCountdownLookAFeel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator6)
+                        .addContainerGap())
+                    .addGroup(jpCountdownLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlCountdownFontColor)
+                            .addComponent(jlCountdownFontSize)
+                            .addComponent(jlCountdownFont))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jcbCountdownFontSize, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jcbCountdownFont, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbChooseCountdownFontColor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jpCountdownLayout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jbUpdateCountdownFontColor))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCountdownLayout.createSequentialGroup()
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jbUpdateCountdownFont)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpCountdownLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jbUpdateCountdownFontSize)))
+                        .addContainerGap(287, Short.MAX_VALUE))))
+        );
+        jpCountdownLayout.setVerticalGroup(
+            jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpCountdownLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlCountdownLookAFeel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCountdownFont)
+                    .addComponent(jcbCountdownFont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbUpdateCountdownFont))
+                .addGap(18, 18, 18)
+                .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCountdownFontColor)
+                    .addComponent(jbChooseCountdownFontColor)
+                    .addComponent(jbUpdateCountdownFontColor))
+                .addGap(18, 18, 18)
+                .addGroup(jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCountdownFontSize)
+                    .addComponent(jcbCountdownFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbUpdateCountdownFontSize))
+                .addContainerGap(209, Short.MAX_VALUE))
+        );
+
+        jtpPreferences.addTab("Countdown", jpCountdown);
+
+        jlFontAttrCreator.setText("Font Attribute Defaults");
+
+        jlFontSizeCreator.setText("Font Size");
+
+        jcbCreatorFontSize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbCreatorFontSizeActionPerformed(evt);
+            }
+        });
+
+        jlCreatorFontColor.setText("Font Color");
+
+        jbCreatorChooseFontColor.setText("Choose Color");
+        jbCreatorChooseFontColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbCreatorChooseFontColorActionPerformed(evt);
+            }
+        });
+
+        jlCreatorFontFamily.setText("Font");
+
+        jcbCreatorFont.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbCreatorFontActionPerformed(evt);
+            }
+        });
+
+        jlCreatorMargin.setText("Margin Default");
+
+        jlCreatorMarginLeft.setText("Margin Left");
+
+        jtfCreatorMarginLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfCreatorMarginLeftActionPerformed(evt);
+            }
+        });
+
+        jlCreatorMarginTop.setText("Margin Top");
+
+        jtfCreatorMarginTop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfCreatorMarginTopActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpThemeslideCreatorLayout = new javax.swing.GroupLayout(jpThemeslideCreator);
+        jpThemeslideCreator.setLayout(jpThemeslideCreatorLayout);
+        jpThemeslideCreatorLayout.setHorizontalGroup(
+            jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                        .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                                .addComponent(jlFontAttrCreator)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator7))
+                            .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jlCreatorFontColor)
+                                .addGap(26, 26, 26)
+                                .addComponent(jbCreatorChooseFontColor)
+                                .addGap(0, 411, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                        .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlCreatorFontFamily)
+                                    .addComponent(jlFontSizeCreator))
+                                .addGap(34, 34, 34)
+                                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jcbCreatorFontSize, 0, 111, Short.MAX_VALUE)
+                                    .addComponent(jcbCreatorFont, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                                .addComponent(jlCreatorMargin)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator8)))
+                        .addGap(6, 6, 6))
+                    .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                                .addComponent(jlCreatorMarginTop)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtfCreatorMarginTop))
+                            .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                                .addComponent(jlCreatorMarginLeft)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtfCreatorMarginLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+        );
+        jpThemeslideCreatorLayout.setVerticalGroup(
+            jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlFontAttrCreator))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCreatorFontFamily)
+                    .addComponent(jcbCreatorFont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlFontSizeCreator)
+                    .addComponent(jcbCreatorFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCreatorFontColor)
+                    .addComponent(jbCreatorChooseFontColor))
+                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jlCreatorMargin))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpThemeslideCreatorLayout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCreatorMarginLeft)
+                    .addComponent(jtfCreatorMarginLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlCreatorMarginTop)
+                    .addComponent(jtfCreatorMarginTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(102, Short.MAX_VALUE))
+        );
+
+        jtpPreferences.addTab("Themeslide Creator", jpThemeslideCreator);
+
+        jbClosePrefs.setText("Close");
+        jbClosePrefs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbClosePrefsActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jtpPreferences, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jbClosePrefs)
+                .addGap(34, 34, 34))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jtpPreferences, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbClosePrefs)
+                .addGap(0, 11, Short.MAX_VALUE))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jbTickerFontUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbTickerFontUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbTickerFontUpdateActionPerformed
+
+    private void jbUpdateTickerFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerFontColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbUpdateTickerFontColorActionPerformed
+
+    private void jbChooseTickerFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbChooseTickerFontColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbChooseTickerFontColorActionPerformed
+
+    private void jbChooseBGColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbChooseBGColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbChooseBGColorActionPerformed
+
+    private void jbUpdateTickerBGColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerBGColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbUpdateTickerBGColorActionPerformed
+
+    private void jbUpdateCountdownFontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateCountdownFontActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbUpdateCountdownFontActionPerformed
+
+    private void jbUpdateCountdownFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateCountdownFontColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbUpdateCountdownFontColorActionPerformed
+
+    private void jbUpdateCountdownFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateCountdownFontSizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbUpdateCountdownFontSizeActionPerformed
+
+    private void jbUpdateTickerFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerFontSizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbUpdateTickerFontSizeActionPerformed
+
+    private void jbChooseCountdownFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbChooseCountdownFontColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbChooseCountdownFontColorActionPerformed
+
+    private void jbCreatorChooseFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatorChooseFontColorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbCreatorChooseFontColorActionPerformed
+
+    private void jcbCreatorFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCreatorFontSizeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCreatorFontSizeActionPerformed
+
+    private void jtfCreatorMarginLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCreatorMarginLeftActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfCreatorMarginLeftActionPerformed
+
+    private void jtfCreatorMarginTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCreatorMarginTopActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfCreatorMarginTopActionPerformed
+
+    private void jcbCreatorFontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCreatorFontActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jcbCreatorFontActionPerformed
 
 	private void jbClosePrefsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbClosePrefsActionPerformed
 		dispose();
@@ -520,46 +1152,85 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		});
 	}
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private javax.swing.JSeparator jSeparator1;
-	private javax.swing.JSeparator jSeparator2;
-	private javax.swing.JSeparator jSeparator3;
-	private javax.swing.JSeparator jSeparator4;
-	private javax.swing.JButton jbAddNewTheme;
-	private javax.swing.JButton jbAddPrio;
-	private javax.swing.JButton jbClosePrefs;
-	private javax.swing.JButton jbEnableFullscreen;
-	private javax.swing.JButton jbExitFullscreen;
-	private javax.swing.JButton jbRemovePrio;
-	private javax.swing.JButton jbRemoveTheme;
-	private javax.swing.JButton jbServerShutdown;
-	private javax.swing.JButton jbStartTicker;
-	private javax.swing.JButton jbStopLiveTicker;
-	private javax.swing.JButton jbUpdateTickerSeparator;
-	private javax.swing.JLabel jlDefaultPrioVar;
-	private javax.swing.JLabel jlFullscreen;
-	private javax.swing.JLabel jlGeneralServerControl;
-	private javax.swing.JLabel jlPrioDefault;
-	private javax.swing.JLabel jlPrioName;
-	private javax.swing.JLabel jlPrioNameVar;
-	private javax.swing.JLabel jlPrioTime;
-	private javax.swing.JLabel jlSeperator;
-	private javax.swing.JLabel jlThemeBackgroundPreview;
-	private javax.swing.JLabel jlThemeName;
-	private javax.swing.JLabel jlThemeNameVar;
-	private javax.swing.JLabel jlTickerStatus;
-	private javax.swing.JLabel jlTimeToShowVar;
-	private javax.swing.JList jliPriorities;
-	private javax.swing.JList jliThemes;
-	private javax.swing.JPanel jpCountdown;
-	private javax.swing.JPanel jpGeneral;
-	private javax.swing.JPanel jpPriorities;
-	private javax.swing.JPanel jpThemes;
-	private javax.swing.JPanel jpThemeslideCreator;
-	private javax.swing.JPanel jpTicker;
-	private javax.swing.JScrollPane jspPrioList;
-	private javax.swing.JScrollPane jspThemeList;
-	private javax.swing.JTextField jtfTickerSeparator;
-	private javax.swing.JTabbedPane jtpPreferences;
-	// End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
+    private javax.swing.JSeparator jSeparator6;
+    private javax.swing.JSeparator jSeparator7;
+    private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JButton jbAddNewTheme;
+    private javax.swing.JButton jbAddPrio;
+    private javax.swing.JButton jbChooseBGColor;
+    private javax.swing.JButton jbChooseCountdownFontColor;
+    private javax.swing.JButton jbChooseTickerFontColor;
+    private javax.swing.JButton jbClosePrefs;
+    private javax.swing.JButton jbCreatorChooseFontColor;
+    private javax.swing.JButton jbEnableFullscreen;
+    private javax.swing.JButton jbExitFullscreen;
+    private javax.swing.JButton jbRemovePrio;
+    private javax.swing.JButton jbRemoveTheme;
+    private javax.swing.JButton jbServerShutdown;
+    private javax.swing.JButton jbStartTicker;
+    private javax.swing.JButton jbStopLiveTicker;
+    private javax.swing.JButton jbTickerFontUpdate;
+    private javax.swing.JButton jbUpdateCountdownFont;
+    private javax.swing.JButton jbUpdateCountdownFontColor;
+    private javax.swing.JButton jbUpdateCountdownFontSize;
+    private javax.swing.JButton jbUpdateTickerBGColor;
+    private javax.swing.JButton jbUpdateTickerFontColor;
+    private javax.swing.JButton jbUpdateTickerFontSize;
+    private javax.swing.JButton jbUpdateTickerSeparator;
+    private javax.swing.JComboBox jcbCountdownFont;
+    private javax.swing.JComboBox jcbCountdownFontSize;
+    private javax.swing.JComboBox jcbCreatorFont;
+    private javax.swing.JComboBox jcbCreatorFontSize;
+    private javax.swing.JComboBox jcbTickerFont;
+    private javax.swing.JComboBox jcbTickerFontSize;
+    private javax.swing.JLabel jlCountdownFont;
+    private javax.swing.JLabel jlCountdownFontColor;
+    private javax.swing.JLabel jlCountdownFontSize;
+    private javax.swing.JLabel jlCountdownLookAFeel;
+    private javax.swing.JLabel jlCreatorFontColor;
+    private javax.swing.JLabel jlCreatorFontFamily;
+    private javax.swing.JLabel jlCreatorMargin;
+    private javax.swing.JLabel jlCreatorMarginLeft;
+    private javax.swing.JLabel jlCreatorMarginTop;
+    private javax.swing.JLabel jlDefaultPrioVar;
+    private javax.swing.JLabel jlFontAttrCreator;
+    private javax.swing.JLabel jlFontSizeCreator;
+    private javax.swing.JLabel jlFullscreen;
+    private javax.swing.JLabel jlGeneralServerControl;
+    private javax.swing.JLabel jlPrioDefault;
+    private javax.swing.JLabel jlPrioName;
+    private javax.swing.JLabel jlPrioNameVar;
+    private javax.swing.JLabel jlPrioTime;
+    private javax.swing.JLabel jlSeperator;
+    private javax.swing.JLabel jlThemeBackgroundPreview;
+    private javax.swing.JLabel jlThemeName;
+    private javax.swing.JLabel jlThemeNameVar;
+    private javax.swing.JLabel jlTickerBGColor;
+    private javax.swing.JLabel jlTickerFont;
+    private javax.swing.JLabel jlTickerFontColor;
+    private javax.swing.JLabel jlTickerFontSize;
+    private javax.swing.JLabel jlTickerLookAFeel;
+    private javax.swing.JLabel jlTickerStatus;
+    private javax.swing.JLabel jlTimeToShowVar;
+    private javax.swing.JList jliPriorities;
+    private javax.swing.JList jliThemes;
+    private javax.swing.JPanel jpCountdown;
+    private javax.swing.JPanel jpGeneral;
+    private javax.swing.JPanel jpPriorities;
+    private javax.swing.JPanel jpThemes;
+    private javax.swing.JPanel jpThemeslideCreator;
+    private javax.swing.JPanel jpTicker;
+    private javax.swing.JScrollPane jspPrioList;
+    private javax.swing.JScrollPane jspThemeList;
+    private javax.swing.JTextField jtfCreatorMarginLeft;
+    private javax.swing.JTextField jtfCreatorMarginTop;
+    private javax.swing.JTextField jtfTickerSeparator;
+    private javax.swing.JTabbedPane jtpPreferences;
+    // End of variables declaration//GEN-END:variables
 }
