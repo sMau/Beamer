@@ -156,29 +156,77 @@ public class PreferencesModelServer {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public void deserializeAll() throws ClassNotFoundException, IOException {
+	public void deserializeAll() {
 		
-		HashMap<UUID, ServerMediaFile> allMedia = (HashMap<UUID, ServerMediaFile>) Misc.loadFromFile(ConstantsServer.FILENAME_MEDIAFILES, ConstantsServer.SAVE_PATH);
-		HashMap<UUID, ServerTickerElement> allTickerElements = (HashMap<UUID, ServerTickerElement>) Misc.loadFromFile(ConstantsServer.FILENAME_LIVETICKER, ConstantsServer.SAVE_PATH);
-		HashMap<UUID, Priority> allPriorities = (HashMap<UUID, Priority>) Misc.loadFromFile(ConstantsServer.FILENAME_PRIORITIES, ConstantsServer.SAVE_PATH);
-		HashMap<UUID, Theme> allThemes = (HashMap<UUID, Theme>) Misc.loadFromFile(ConstantsServer.FILENAME_THEMES, ConstantsServer.SAVE_PATH);
-
-		for (UUID id : allMedia.keySet()) {
-			proxy.getMediaModel().addMediaFile(allMedia.get(id));
+		HashMap<UUID, ServerMediaFile> allMedia = null;
+		try {
+			allMedia = (HashMap<UUID, ServerMediaFile>) Misc.loadFromFile(ConstantsServer.FILENAME_MEDIAFILES, ConstantsServer.SAVE_PATH);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HashMap<UUID, ServerTickerElement> allTickerElements = null;
+		try {
+			allTickerElements = (HashMap<UUID, ServerTickerElement>) Misc.loadFromFile(ConstantsServer.FILENAME_LIVETICKER, ConstantsServer.SAVE_PATH);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HashMap<UUID, Priority> allPriorities = null;
+		try {
+			allPriorities = (HashMap<UUID, Priority>) Misc.loadFromFile(ConstantsServer.FILENAME_PRIORITIES, ConstantsServer.SAVE_PATH);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HashMap<UUID, Theme> allThemes = null;
+		try {
+			allThemes = (HashMap<UUID, Theme>) Misc.loadFromFile(ConstantsServer.FILENAME_THEMES, ConstantsServer.SAVE_PATH);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
-		for (UUID id : allTickerElements.keySet()) {
-			proxy.getTickerModel().addTickerElement(allTickerElements.get(id));
+		if(allMedia != null) {
+			for (UUID id : allMedia.keySet()) {
+				proxy.getMediaModel().addMediaFile(allMedia.get(id));
+			}
+
 		}
 		
-		for (UUID id : allPriorities.keySet()) {
-			addPriority(allPriorities.get(id));
+		if(allTickerElements != null) {
+			for (UUID id : allTickerElements.keySet()) {
+				proxy.getTickerModel().addTickerElement(allTickerElements.get(id));
+			}
+			
 		}
 		
-		for (UUID id : allThemes.keySet()) {
-			addTheme(allThemes.get(id));
+		if(allPriorities != null) {
+			for (UUID id : allPriorities.keySet()) {
+				addPriority(allPriorities.get(id));
+			}
+				
 		}
-
+		
+		if(allThemes != null) {
+			for (UUID id : allThemes.keySet()) {
+				addTheme(allThemes.get(id));
+			}
+	
+		}
+		
 	}
 
 }

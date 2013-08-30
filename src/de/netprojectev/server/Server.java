@@ -40,15 +40,9 @@ public class Server {
 		checkAndCreateDirs();
 
 		proxy = new MessageProxyServer(this);
-		try {
-			proxy.getPrefsModel().deserializeAll();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		proxy.getPrefsModel().deserializeAll();
+
 		timer = new HashedWheelTimer();
 		bindListeningSocket();
 		
