@@ -162,7 +162,6 @@ public class TickerComponent extends JComponent {
     	} catch (NumberFormatException e) {
 			log.warn("Number format exeception", e);
 		}
-    	//TODO
     }
     
 	/**

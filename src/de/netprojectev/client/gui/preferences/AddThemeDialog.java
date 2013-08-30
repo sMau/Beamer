@@ -215,7 +215,7 @@ public class AddThemeDialog extends javax.swing.JDialog {
     
     private void doClose(int retStatus) {
     	if(retStatus == RET_OK) {
-    		String name = jtfNewThemeName.getText();
+    		String name = jtfNewThemeName.getText().trim();
 
     		if(name == null || name.isEmpty()) {
     			JOptionPane.showMessageDialog(this, "The entered name is not valid.");

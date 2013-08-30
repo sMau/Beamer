@@ -132,7 +132,6 @@ public class Server {
 		try {
 			PreferencesModelServer.saveProperties();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			log.warn("Error during saving properties.", e);
 		}
 		log.info("Server shutdown complete.");
@@ -140,8 +139,7 @@ public class Server {
 		try {
 			proxy.getPrefsModel().serializeAll();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during serilization.", e);
 		}
 		
 		System.exit(0);

@@ -121,9 +121,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="tfAlias">
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfAliasActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfServerPW">
     </Component>
@@ -138,9 +135,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="11111"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tfPortActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblPort">
       <Properties>

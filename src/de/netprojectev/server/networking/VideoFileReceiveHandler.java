@@ -17,8 +17,6 @@ public class VideoFileReceiveHandler {
 	private final HashMap<UUID, BufferedOutputStream> outputstreams;
 	private final HashMap<UUID, MessageCounter> msgCounter;
 
-	// TODO check for correct path for writing, maybe add a separate video cache
-	// folder
 	public VideoFileReceiveHandler() {
 		receivingFiles = new ArrayList<>();
 		outputstreams = new HashMap<>();

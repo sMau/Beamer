@@ -56,7 +56,6 @@ public class DisplayMainComponent extends JComponent {
 	 * @param file the image file to draw on component
 	 */
 	protected void drawImage(final BufferedImage compImage) {
-		//TODO check for performance probs. in resizing and so on
 
 		countdownShowing = false;
 				
@@ -103,7 +102,9 @@ public class DisplayMainComponent extends JComponent {
 	}
 
 	protected void clear() {
-		//TODO implement clear
+		countdownShowing = false;
+		image = null;
+		repaint();
 	}
 
 }

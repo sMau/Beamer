@@ -23,10 +23,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
@@ -73,21 +74,38 @@ public class Misc {
 		}
 
 	}
-	
+
+	public static boolean isIpAddress(final String ip) {
+
+		if(ip.equals("localhost")) {
+			return true;
+		}
+		
+		String PATTERN = 
+				"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+				"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." + 
+				"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." + 
+				"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+
+		Pattern pattern = Pattern.compile(PATTERN);
+		Matcher matcher = pattern.matcher(ip);
+		return matcher.matches();
+	}
+
 	public static void writeImageToDiskAsPNG(BufferedImage image, File path) {
 		Iterator<ImageWriter> itereratorImageWriter = ImageIO.getImageWritersByFormatName("png");
-        ImageWriter writer = (ImageWriter) itereratorImageWriter.next();
-        ImageWriteParam writeParams = writer.getDefaultWriteParam();
+		ImageWriter writer = (ImageWriter) itereratorImageWriter.next();
+		ImageWriteParam writeParams = writer.getDefaultWriteParam();
 
-        try {
-            FileImageOutputStream fos = new FileImageOutputStream(path);
-            writer.setOutput(fos);
-            IIOImage img = new IIOImage((RenderedImage) image, null, null);
-            writer.write(null, img, writeParams);
+		try {
+			FileImageOutputStream fos = new FileImageOutputStream(path);
+			writer.setOutput(fos);
+			IIOImage img = new IIOImage((RenderedImage) image, null, null);
+			writer.write(null, img, writeParams);
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	/**
@@ -99,7 +117,6 @@ public class Misc {
 		PointerInfo info = MouseInfo.getPointerInfo();
 		return info.getLocation();
 	}
-	
 
 	/**
 	 * Generates font sizes based on stepwidth n, start and end size.
@@ -143,8 +160,7 @@ public class Misc {
 	}
 
 	/**
-	 * Saves the given property object to the in the Constants specified
-	 * path.
+	 * Saves the given property object to the in the Constants specified path.
 	 * 
 	 * @param props
 	 *            the property object to save
@@ -277,12 +293,12 @@ public class Misc {
 	}
 
 	public static Properties generateServerDefaultProps() {
-		
+
 		Properties defProps = new Properties();
-		
+
 		defProps.setProperty(ConstantsServer.PROP_PW, ConstantsServer.DEFAULT_PW);
 		defProps.setProperty(ConstantsServer.PROP_HEARTBEAT_INTERVALL, ConstantsServer.DEFAULT_HEARTBEAT_INTERVALL);
-		
+
 		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTCOLOR, "" + ConstantsServer.DEFAULT_TICKER_FONTCOLOR);
 		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTSIZE, "" + ConstantsServer.DEFAULT_TICKER_FONTSIZE);
 		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTTYPE, ConstantsServer.DEFAULT_TICKER_FONTTYPE);
@@ -291,16 +307,16 @@ public class Misc {
 		defProps.setProperty(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR, "" + ConstantsServer.DEFAULT_COUNTDOWN_FONTCOLOR);
 		defProps.setProperty(ConstantsServer.PROP_COUNTDOWN_FONTSIZE, "" + ConstantsServer.DEFAULT_COUNTDOWN_FONTSIZE);
 		defProps.setProperty(ConstantsServer.PROP_COUNTDOWN_FONTTYPE, ConstantsServer.DEFAULT_COUNTDOWN_FONTTYPE);
-		
+
 		try {
 			Misc.savePropertiesToDisk(defProps, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_DEFAULT_PROPERTIES);
 		} catch (IOException e) {
 			log.warn("Error during saving default properties to disk.", e);
 		}
-		
+
 		return defProps;
 	}
-	
+
 	public static Properties generateClientDefaultProps() {
 		Properties defProps = new Properties();
 
@@ -310,40 +326,39 @@ public class Misc {
 		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE);
 		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT);
 		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
-		
+
 		try {
 			Misc.savePropertiesToDisk(defProps, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_DEFAULT_PROPERTIES);
 		} catch (IOException e) {
 			log.warn("Error during saving default properties to disk.", e);
 		}
-		
+
 		return defProps;
 	}
 
 	public static ImageIcon getScaledImageIconFromBufImg(BufferedImage original, int widthToScaleTo) throws FileNotFoundException, IOException {
-		
-		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(original, widthToScaleTo , (int) (widthToScaleTo * original.getHeight(null))/original.getWidth(null)));
+
+		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(original, widthToScaleTo, (int) (widthToScaleTo * original.getHeight(null)) / original.getWidth(null)));
 		original = null;
-		
-		return scaled;
-	}
-	
-	public static ImageIcon getScaledImageIcon(ImageIcon original, int widthToScaleTo) throws FileNotFoundException, IOException {
-		BufferedImage bi = imageIconToBufferedImage(original);
-		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(bi, widthToScaleTo , (int) (widthToScaleTo * bi.getHeight(null))/bi.getWidth(null)));
 
 		return scaled;
 	}
-	
+
+	public static ImageIcon getScaledImageIcon(ImageIcon original, int widthToScaleTo) throws FileNotFoundException, IOException {
+		BufferedImage bi = imageIconToBufferedImage(original);
+		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(bi, widthToScaleTo, (int) (widthToScaleTo * bi.getHeight(null)) / bi.getWidth(null)));
+
+		return scaled;
+	}
+
 	public static BufferedImage imageIconToBufferedImage(ImageIcon iconToConvert) {
-		
+
 		BufferedImage bi = createCompatibleTranslucentImage(iconToConvert.getIconWidth(), iconToConvert.getIconHeight());
 		Graphics g = bi.createGraphics();
 		iconToConvert.paintIcon(null, g, 0, 0);
 		g.dispose();
 		return bi;
 	}
-	
 
 	/**
 	 * This method scales a given {@link BufferedImage} and returns the scaled
@@ -356,7 +371,8 @@ public class Misc {
 	 * @param newWidth
 	 *            the new width
 	 * @param newHeight
-	 *            the new height, if 0 then the height is calculated to keep the aspect ratio
+	 *            the new height, if 0 then the height is calculated to keep the
+	 *            aspect ratio
 	 * @return the scaled image instance as {@link BufferedImage} in compatible
 	 *         mode
 	 */
@@ -365,7 +381,7 @@ public class Misc {
 
 		int oldWidth = imageToScale.getWidth();
 		int oldHeight = imageToScale.getHeight();
-		
+
 		if (oldWidth > newWidth && oldHeight > newHeight) {
 			scaledImage = GraphicsUtilities.createThumbnail(imageToScale, newWidth, newHeight);
 		} else {
@@ -378,7 +394,7 @@ public class Misc {
 
 		return scaledImage;
 	}
-	
+
 	// This method returns an image that is compatible with the
 	// primary display device. If a user has multiple displays
 	// with different depths, this may be suboptimal, but it
@@ -439,7 +455,6 @@ public class Misc {
 
 	}
 
-	
 	/**
 	 * 
 	 * @param dir

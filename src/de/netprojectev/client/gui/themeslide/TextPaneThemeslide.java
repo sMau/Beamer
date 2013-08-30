@@ -7,12 +7,11 @@ import java.awt.Graphics2D;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
+
+import de.netprojectev.misc.Misc;
 
 
 public class TextPaneThemeslide extends JTextPane {
@@ -53,9 +52,8 @@ public class TextPaneThemeslide extends JTextPane {
         super.paintComponent(g2d);
     }
     
-    //TODO better use a file here, in all themslides to avoid high ram usage
     public void setThemeBackground(ImageIcon imageIcon) {
-		image = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(), BufferedImage.TYPE_INT_RGB);
+		image = Misc.createCompatibleTranslucentImage(imageIcon.getIconWidth(), imageIcon.getIconHeight());
 		Graphics g = image.createGraphics();
 		imageIcon.paintIcon(null, g, 0, 0);
 		g.dispose();
@@ -63,8 +61,7 @@ public class TextPaneThemeslide extends JTextPane {
 		resizeToImageSize();
 		
 	}
-    
-    //TODO check this for efficency better use the algo. in misc prob.
+
     
     private void resizeToImageSize() {
 

@@ -31,8 +31,6 @@ public class MediaFileFilter extends FileFilter {
 		return false;
 	}
 	
-	//TODO check the vlc support list
-
 	public static boolean isVideoFile(String fileName) {
 		
 		if(fileName.endsWith(".mp4")) {

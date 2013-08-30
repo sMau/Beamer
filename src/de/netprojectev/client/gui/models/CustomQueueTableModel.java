@@ -1,14 +1,18 @@
 package de.netprojectev.client.gui.models;
 
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 
 public class CustomQueueTableModel extends AbstractTableModel {
 
+	
 	/**
 	 * 
 	 */
@@ -17,7 +21,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 	public interface UpdateCustomQueueDataListener {
 		public void update();
 	}
-	//TODO make a column for the position in queue, and a column for the time in min when the media is shown (add all former prios)
+
 	private final MediaModelClient mediaModel;
 	private final String[] columns = { " ", " ", "Name", "Priority", "Type" };
 	
@@ -82,8 +86,8 @@ public class CustomQueueTableModel extends AbstractTableModel {
 		try {
 			media = mediaModel.getMediaFileById(mediaModel.getCustomQueue().get(rowIndex));
 		} catch (MediaDoesNotExsistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(mediaModel.getProxy(), e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 		}
 		if (media == null) {
 			return null;
@@ -95,8 +99,8 @@ public class CustomQueueTableModel extends AbstractTableModel {
 				try {
 					return mediaModel.timeUntilShow(rowIndex);
 				} catch (MediaDoesNotExsistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(mediaModel.getProxy(), e);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 					return 0;
 				}
 			case 2:

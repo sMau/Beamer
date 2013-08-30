@@ -63,7 +63,7 @@ public class DisplayFrame extends javax.swing.JFrame {
     	} else if(fileToShow instanceof Countdown) {
     		showCountdown((Countdown) fileToShow);
     	} else {
-    		//TODO throw Exception
+    		throw new IllegalArgumentException("The arg is no subclass of ServerMediaFile");
     	}
     }
     
@@ -72,8 +72,7 @@ public class DisplayFrame extends javax.swing.JFrame {
     }
     
     private void showVideoFile(VideoFile video) {
-    	//TODO maybe check what the timer is doing during automode enabled and video playing
-    	//TODO check if the switch works with fullscreen
+
     	try {
     		final Process vlc = new VlcPlayBackUtility(video.getVideoFile()).startPlay();
     		
@@ -84,25 +83,21 @@ public class DisplayFrame extends javax.swing.JFrame {
 					try {
 						vlc.waitFor();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.warn("vlc interrupted", e);
 					}
 					try {
 						videoFinishedListener.videoFinished();
 					} catch (MediaDoesNotExsistException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.warn("Video does not exist.", e);
 					} catch (MediaListsEmptyException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.warn("Video does not exist.", e);
 					}
 				}
 			}).start();
     		
     		
 		} catch (Exception e) {
-			// TODO make proper exception handling if video fails to play
-			e.printStackTrace();
+			log.warn("Video could not be played.", e);
 		}
 
     }
@@ -159,7 +154,6 @@ public class DisplayFrame extends javax.swing.JFrame {
     public void enterFullscreen(int screenNumber) {
     	
     	if(!fullscreen) {
-    		//log.log(Level.INFO, "entering fullscreen mode");
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
@@ -168,12 +162,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 			if (screenNumber >= 0 && screenNumber < myDevices.length) {
 				myDevices[screenNumber].setFullScreenWindow(this);
 		    	fullscreen = true;
-		    	//log.log(Level.INFO, "entering fullscreen mode successful");
-		    	//TODO handle fullscreen change, because the resolution of images have to change
-		    	// MediaHandlerOld.getInstance().generateNewDisplayImages();
 			} else {
-				//log.log(Level.SEVERE, "error entering fullscreen mode");
-				//TODO throw Exception
 				dispose();
 				this.setUndecorated(false);
 				setVisible(true);
@@ -189,7 +178,6 @@ public class DisplayFrame extends javax.swing.JFrame {
     public void exitFullscreen() {
     	
     	if(fullscreen) {
-    		//log.log(Level.INFO, "exiting fullscreen mode");
 	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
@@ -198,8 +186,6 @@ public class DisplayFrame extends javax.swing.JFrame {
 			myDevices[0].setFullScreenWindow(null);
 			pack();
     		fullscreen = false;
-    		//TODO handle fullscreen change, because the resolution of images have to change
-    		//MediaHandlerOld.getInstance().generateNewDisplayImages();
     	}
     }
 

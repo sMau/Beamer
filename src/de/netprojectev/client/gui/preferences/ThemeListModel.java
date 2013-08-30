@@ -1,10 +1,13 @@
 package de.netprojectev.client.gui.preferences;
 
 import javax.swing.AbstractListModel;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.PreferencesModelClient.ThemeListChangedListener;
+import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 
@@ -39,8 +42,8 @@ public class ThemeListModel extends AbstractListModel<Theme> {
 		try {
 			return prefs.getThemeAt(index);
 		} catch (ThemeDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(prefs.getProxy(), e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 		}
 		return null;
 	}

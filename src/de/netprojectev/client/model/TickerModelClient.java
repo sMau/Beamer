@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientTickerElement;
+import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.gui.models.TickerTableModel.UpdateTickerDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
@@ -62,8 +64,8 @@ public class TickerModelClient {
 				try {
 					checkIfElementExists(id);
 				} catch (MediaDoesNotExsistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 				}
 				elements.remove(id);
 				allElementsList.remove(id);

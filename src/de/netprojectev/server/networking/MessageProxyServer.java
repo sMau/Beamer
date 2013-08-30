@@ -73,11 +73,9 @@ public class MessageProxyServer {
 			try {
 				showNextMediaFile();
 			} catch (MediaDoesNotExsistException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn("Media file could not be shown.", e);
 			} catch (MediaListsEmptyException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn("Media file could not be shown.", e);
 			}
 		}
 		
@@ -132,7 +130,7 @@ public class MessageProxyServer {
 		this.timeoutChecker.newTimeout(new TimeoutTimerTask(), timeoutInSeconds, TimeUnit.SECONDS);
 		
 	}
-	//TODO add propper exception handling, e.g. force a resync of client after a outofsyncexc.
+	
 	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_IMAGE_FILE:
@@ -318,7 +316,7 @@ public class MessageProxyServer {
 		ClientMediaFile editedFile = (ClientMediaFile) msg.getData()[0];
 		ServerMediaFile correlatedServerFile = mediaModel.getMediaFileById(editedFile.getId());		
 		correlatedServerFile.setName(editedFile.getName());
-		correlatedServerFile.setPriority(editedFile.getPriority()); //TODO check if this is working with objects, else change to id based prios
+		correlatedServerFile.setPriority(editedFile.getPriority());
 		broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(correlatedServerFile)));
 		
 		prefsModel.serializeMediaDatabase();
@@ -383,7 +381,7 @@ public class MessageProxyServer {
 	
 	//TODO last worked here: made changing server props work (only live ticker sep atm)
 	/*
-	 * 1 Add proper serialization (properties are good, but serialize the media and ticker elts and so on too)
+	 * DONE 1 Add proper serialization (properties are good, but serialize the media and ticker elts and so on too)
 	 * 2 Check all TODOS
 	 * 3 next exception handling
 	 * 4 Test with notebook as server (esp. video things and fullscreen switches (preferred using tv as monitor like the beamer))
@@ -555,8 +553,8 @@ public class MessageProxyServer {
 		try {
 			display.showMediaFileInMainComponent(currentFile);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Media file could not be shown.", e);
+			return;
 		}
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));
 	}

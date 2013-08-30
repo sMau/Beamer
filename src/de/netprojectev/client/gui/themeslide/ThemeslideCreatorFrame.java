@@ -11,16 +11,7 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
-import java.io.File;
-import java.util.Iterator;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.FileImageOutputStream;
-import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
@@ -37,8 +28,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 
 import old.de.netprojectev.client.gui.dialogs.ColorPickerDialog;
-
 import de.netprojectev.client.ConstantsClient;
+import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
@@ -47,9 +38,6 @@ import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.server.datastructures.ImageFile;
-import de.netprojectev.server.datastructures.ServerMediaFile;
-import de.netprojectev.server.datastructures.Themeslide;
 
 /**
  * This is a GUI class to create and design a new Themeslide. It contains a
@@ -94,8 +82,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			jComboBoxFontType.addItem(font[i]);
 		}
 
-		// TODO check all props used here for consistency
-
 		jComboBoxFontType.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
 
 		for (int i = 0; i < ConstantsClient.FONT_SIZES.length; i++) {
@@ -115,7 +101,6 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		jButtonColorPicker.setForeground(new Color(selectedColorMain.getRGB()));
 		new FontColorAction(new Color(selectedColorMain.getRGB())).actionPerformed(null);
 		applyAsParagraphAttributes();
-		setLocation(Misc.currentMousePosition());
 	}
 
 	/**
@@ -320,11 +305,11 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		try {
 			success = addThemeslide();
 		} catch (PriorityDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 		} catch (ThemeDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 		}
 		if (success) {
 			dispose();
@@ -336,11 +321,11 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		try {
 			success = addThemeslide();
 		} catch (PriorityDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 		} catch (ThemeDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 		}
 		if (success) {
 			// TODO Add and show
@@ -358,8 +343,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		try {
 			textPaneThemeslide.setThemeBackground(prefs.getThemeAt(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
 		} catch (ThemeDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 		}
 	}// GEN-LAST:event_jComboBoxThemeActionPerformed
 
@@ -427,14 +412,13 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     	
     	Priority priority = null;
     	Theme theme = null;
-    	String name = null;
+    	String name = jTextFieldThemeSlideName.getText().trim();
 
-    	if(!jTextFieldThemeSlideName.getText().isEmpty() && jTextFieldThemeSlideName.getText() != null) {
-    		name = jTextFieldThemeSlideName.getText();
-    	} else {
+    	if(name.isEmpty()) {
     		JOptionPane.showMessageDialog(this, "Please enter a name.", "Error", JOptionPane.ERROR_MESSAGE);
     		return false;
     	}
+    	
     	if(jComboBoxPriority.getSelectedIndex() >= 0) {
     		priority = prefs.getPriorityAt(jComboBoxPriority.getSelectedIndex());
     	} else {
@@ -448,18 +432,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
     		return false;
     	}
     	    	
-    	if(name != null && priority != null && theme != null) {
-    		
+    	if(name != null && priority != null && theme != null) {	
     		
     		proxy.sendAddThemeSlide(name, theme.getId(), priority, generateRGBAValuesRepresentation());
-    		
-    		/*
-    		ServerMediaFile[] themeSlides = new ServerMediaFile[1];
-    		themeSlides[0] = new Themeslide(name, priority, theme);
-    		generatePNGRepresentation(themeSlides[0]);
-    		MediaHandlerOld.getInstance().add(themeSlides);
-    		
-    		((Themeslide) themeSlides[0]).createNewImageFileRepresentation();*/
+
     		return true;
     	} else {
     		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -787,7 +763,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		// comboboxes (fires the "requestfocus")
 
 		int currentParagraphLength = textPaneThemeslide.getStyledDocument().getParagraphElement(textPaneThemeslide.getCaretPosition()).getDocument().getLength();
-		// TODO
+
 		/*
 		 * last worked here, trying to fix the themeslide creator behavior at
 		 * the moment there are false syncs and due to para attr setting,
@@ -960,8 +936,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 				try {
 					new ThemeslideCreatorFrame(null, null).setVisible(true);
 				} catch (ThemeDoesNotExistException | PriorityDoesNotExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+
 				}
 			}
 		});

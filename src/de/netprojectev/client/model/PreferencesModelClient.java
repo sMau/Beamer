@@ -103,8 +103,6 @@ public class PreferencesModelClient {
 	}
 	
 	public static String getServerPropertyByKey(String key) {
-		//TODO if null ask the server (maybe?)
-		
 		return serverProperties.getProperty(key);
 	}
 	
@@ -287,6 +285,10 @@ public class PreferencesModelClient {
 
 	public void setFullscreenStateListener(FullscreenStateListener fullscreenStateListener) {
 		this.fullscreenStateListener = fullscreenStateListener;
+	}
+
+	public ClientMessageProxy getProxy() {
+		return proxy;
 	}
 	
 }

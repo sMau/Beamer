@@ -47,7 +47,7 @@ public enum OpCode {
 	
 	
 	/*
-	 *  Server to Client TODO not used yet (implement the message handlers client sided)
+	 *  Server to Client 
 	 */
 	STC_SERVER_SHUTDOWN,
 	STC_LOGIN_DENIED,

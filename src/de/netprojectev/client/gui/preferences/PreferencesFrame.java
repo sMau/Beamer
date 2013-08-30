@@ -14,6 +14,9 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.apache.logging.log4j.Logger;
+
+import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.PreferencesModelClient.FullscreenStateListener;
 import de.netprojectev.client.model.PreferencesModelClient.LiveTickerStateListener;
@@ -23,6 +26,7 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
 
@@ -32,6 +36,8 @@ import de.netprojectev.server.ConstantsServer;
  */
 public class PreferencesFrame extends javax.swing.JFrame {
 
+	private static final Logger log = LoggerBuilder.createLogger(PreferencesFrame.class);
+	
 	/**
 	 * 
 	 */
@@ -340,8 +346,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 				}
 				proxy.sendRemovePriority(selectedPrio.getId());
 			} catch (PriorityDoesNotExistException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ClientMessageProxy.errorRequestFullSync(proxy, e);
+				MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 			}
 			updatePriorityPanel();
 		}
@@ -354,8 +360,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			try {
 				proxy.sendRemoveTheme(prefs.getThemeAt(selected).getId());
 			} catch (ThemeDoesNotExistException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ClientMessageProxy.errorRequestFullSync(proxy, e);
+				MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 			}
 			updateThemePanel();
 		}
@@ -425,14 +431,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 				jlThemeBackgroundPreview.setIcon(scaledPreview);
 			} catch (ThemeDoesNotExistException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ClientMessageProxy.errorRequestFullSync(proxy, e);
+				MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Could not find theme image background.", e);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("Could not read theme image background.", e);
 			}
 		}
 	}
@@ -447,8 +451,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 				jlTimeToShowVar.setText(Integer.toString(selected.getMinutesToShow()));
 				jlDefaultPrioVar.setText(prefs.getDefaultPriority().getName());
 			} catch (PriorityDoesNotExistException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ClientMessageProxy.errorRequestFullSync(proxy, e);
+				MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 			}
 
 		}

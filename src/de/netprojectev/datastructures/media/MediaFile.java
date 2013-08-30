@@ -23,12 +23,6 @@ public abstract class MediaFile implements Serializable {
 	}
 	
 	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
-	}
-	
-	@Override
 	public boolean equals(Object other){
 	    if (other == null || this == null) {
 	    	return false;

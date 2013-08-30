@@ -10,7 +10,7 @@ import java.util.Properties;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.Channel;
@@ -19,6 +19,7 @@ import org.jboss.netty.channel.ChannelFuture;
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
+import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.gui.main.MainClientGUIWindow.ServerShutdownListener;
 import de.netprojectev.client.gui.main.MainClientGUIWindow.TimeSyncListener;
 import de.netprojectev.client.model.MediaModelClient;
@@ -36,7 +37,6 @@ import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.networking.VideoFileData;
 import de.netprojectev.server.datastructures.Countdown;
-import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
@@ -69,9 +69,14 @@ public class ClientMessageProxy {
 		prefs = new PreferencesModelClient(this);
 		this.client = client;
 		this.fullsync = false;
+	
 	}
 
-	// TODO mark this as private at the moment only public for testing
+	public static void errorRequestFullSync(final ClientMessageProxy proxy, Exception e) {
+		log.warn("The media read for updating does not exist. Requesting full sync.", e);
+		proxy.sendRequestFullSync();
+	}
+	
 	public ChannelFuture sendMessageToServer(Message msgToSend) {
 		log.debug("Sending message to server: " + msgToSend);
 		return channelToServer.write(msgToSend);
@@ -94,6 +99,10 @@ public class ClientMessageProxy {
 				.getId()));
 	}
 
+	public void sendShowMediaFile(UUID id) {
+		sendMessageToServer(new Message(OpCode.CTS_SHOW_MEDIA_FILE, id));
+	}
+	
 	public void sendShowNextMediaFile() {
 		sendMessageToServer(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
 	}
@@ -288,8 +297,8 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_PROPERTY_UPDATE, key, newValue));
 	}
 
-	public void sendAddCountdown(Countdown countdown) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
+	public ChannelFuture sendAddCountdown(Countdown countdown) {
+		return sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
 	}
 
 	public void receiveMessage(Message msg) throws UnkownMessageException,
@@ -449,13 +458,10 @@ public class ClientMessageProxy {
 	}
 
 	private void fullSyncStop() {
-		// TODO add gui handling
 		fullsync = false;
-
 	}
 
 	private void fullSyncStart() {
-		// TODO add gui handling
 		fullsync = true;
 	}
 
@@ -490,8 +496,8 @@ public class ClientMessageProxy {
 		try {
 			mediaModel.replaceMediaFile(media);
 		} catch (MediaDoesNotExsistException e) {
-			// TODO reload data from server to get in sync again
-			log.error("Error replacing mediaFile", e);
+			ClientMessageProxy.errorRequestFullSync(this, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 		}
 	}
 
@@ -500,8 +506,8 @@ public class ClientMessageProxy {
 		try {
 			tickerModel.replaceTickerElement(e);
 		} catch (MediaDoesNotExsistException e1) {
-			// TODO reload data from server to get in sync again
-			log.error("Error replacing tickerElement", e);
+			ClientMessageProxy.errorRequestFullSync(this, e1);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 		}
 	}
 

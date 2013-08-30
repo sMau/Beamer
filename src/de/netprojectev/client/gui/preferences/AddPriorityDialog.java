@@ -6,6 +6,7 @@ package de.netprojectev.client.gui.preferences;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.InputMap;
@@ -13,9 +14,11 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import org.apache.logging.log4j.Logger;
+
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.misc.Misc;
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 
@@ -25,6 +28,8 @@ import de.netprojectev.networking.OpCode;
  */
 public class AddPriorityDialog extends javax.swing.JDialog {
 
+	private static final Logger log = LoggerBuilder.createLogger(AddPriorityDialog.class);
+	
     /**
 	 * 
 	 */
@@ -178,13 +183,12 @@ public class AddPriorityDialog extends javax.swing.JDialog {
     
     private void doClose(int retStatus) {
     	if(retStatus == RET_OK) {
-    		String name = jtfNewPrioName.getText();
+    		String name = jtfNewPrioName.getText().trim();
     		int minutes = 0;
     		try {
-				minutes =  Integer.parseInt(jtfNewPrioMinutes.getText());
+				minutes =  Integer.parseInt(jtfNewPrioMinutes.getText().trim());
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn("minutes is no number.", e);
 				JOptionPane.showMessageDialog(this, "Please enter an numeric value for the time in minutes.");
 				return;
 			}

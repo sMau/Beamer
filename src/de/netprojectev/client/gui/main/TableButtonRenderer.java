@@ -14,42 +14,42 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
+import org.apache.logging.log4j.Logger;
+
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 
 public class TableButtonRenderer extends JButton implements TableCellRenderer {
-	
+
+	private static final Logger log = LoggerBuilder.createLogger(TableButtonRenderer.class);
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2922120099859842011L;
 	private final boolean add;
-	
-	
+
 	public TableButtonRenderer(boolean add) {
 		setOpaque(true);
 		this.add = add;
-		if(this.add) {
+		if (this.add) {
 			ImageIcon iconPlus = new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"));
 			try {
 				iconPlus = Misc.getScaledImageIcon(iconPlus, 12);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("could not load add image icon.", e);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
+				log.error("could not load add image icon.", e);
+			}
 			setIcon(iconPlus);
 		} else {
 			ImageIcon iconDelete = new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/delete_2.png"));
 			try {
 				iconDelete = Misc.getScaledImageIcon(iconDelete, 12);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("could not load delete image icon.", e);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error("could not load delete image icon.", e);
 			}
 			setIcon(iconDelete);
 		}
@@ -73,16 +73,21 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer {
  */
 
 class ButtonEditor extends DefaultCellEditor {
-	
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5485754352878058031L;
+
 	public interface TableButtonActionListener {
 		public void buttonClicked(int row);
 	}
-	
+
 	private final TableButtonActionListener l;
 	protected JButton button;
 	private int row;
 	private String label;
-	
+
 	private boolean isPushed;
 
 	public ButtonEditor(JCheckBox checkBox, TableButtonActionListener l) {

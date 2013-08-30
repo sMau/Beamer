@@ -5,13 +5,17 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
+import de.netprojectev.client.ConstantsClient;
+import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.datastructures.media.MediaFile;
+import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
+import de.netprojectev.server.networking.MessageProxyServer;
 
 public class ClientMediaFile extends MediaFile {
 
@@ -30,12 +34,19 @@ public class ClientMediaFile extends MediaFile {
 	
 	public ClientMediaFile(ServerMediaFile serverMediaFile) throws FileNotFoundException, IOException {
 		super(serverMediaFile.getName(), serverMediaFile.getPriority(), serverMediaFile.getId());
-		// TODO maybe make previews possible for the others too
+		// TODO make preview possible for videos and countdown
 		
 		this.showCount = serverMediaFile.getShowCount();
 		this.current = serverMediaFile.isCurrent();
 		
-		int widthToScaleTo = 640; // TODO receive this from the props
+		int widthToScaleTo = ConstantsClient.DEFAULT_PREVIEW_SCALE_WIDTH;
+		try {
+			widthToScaleTo = Integer.parseInt(PreferencesModelClient.
+					getClientPropertyByKey(ConstantsClient.PROP_PREVIEW_SCALE_WIDTH));
+		} catch (NumberFormatException e) {
+			LoggerBuilder.createLogger(ClientMediaFile.class).warn("preview scale width could not be read from props.", e);
+			widthToScaleTo = ConstantsClient.DEFAULT_PREVIEW_SCALE_WIDTH;
+		}
 		
 		if (serverMediaFile instanceof Countdown) {
 			type = MediaType.Countdown;

@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
+import javax.swing.JOptionPane;
+
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.channel.ChannelFactory;
@@ -63,7 +65,6 @@ public class Client {
 			@Override
 			public ChannelPipeline getPipeline() throws Exception {
 				
-				//TODO maybe adjust the size to somethin useful, also in the server class
 				return Channels.pipeline(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)), new ClientMessageHandler(proxy), new ObjectEncoder());
 			}
 		});
@@ -77,8 +78,11 @@ public class Client {
 			proxy.setChannelToServer(connectFuture.getChannel());
 			log.info("Client successfully connected to " + host + ":" + port);
 			
-			// TODO use awaitUnint. with timeout and react
-			proxy.sendMessageToServer(new Message(OpCode.CTS_LOGIN_REQUEST, login)).awaitUninterruptibly();
+			boolean loginSend = proxy.sendMessageToServer(new Message(OpCode.CTS_LOGIN_REQUEST, login)).awaitUninterruptibly(10000);
+			if(!loginSend) {
+				dialog.errorDuringLogin("Login message could not be sent.");
+				log.error("login message could not be send");
+			}
 			log.info("Login request sent to server");
 			
 		} else {
@@ -118,7 +122,6 @@ public class Client {
 		
 		log.info("Server shutdown, releasing all external ressources.");
 		releaseExternalRessources();
-		//TODO serialization or something like that
 	}
 	
 

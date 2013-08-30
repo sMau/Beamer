@@ -7,7 +7,9 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -83,7 +85,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	/**
 	 * Creates new form MainClientGUIWindow
 	 */
-	public MainClientGUIWindow(Container parent, ClientMessageProxy proxy) {
+	public MainClientGUIWindow(Container parent, final ClientMessageProxy proxy) {
 		this.mediaModel = proxy.getMediaModel();
 
 		this.timeleftData = new TimeLeftData(0);
@@ -149,14 +151,14 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				try {
 					updatePreviewLable();
 				} catch (MediaDoesNotExsistException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e1);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 				}
 				try {
 					updateEditorLable();
 				} catch (MediaDoesNotExsistException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e1);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 				}
 			}
 
@@ -169,14 +171,14 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				try {
 					updatePreviewLable();
 				} catch (MediaDoesNotExsistException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e1);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 				}
 				try {
 					updateEditorLable();
 				} catch (MediaDoesNotExsistException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e1);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 				}
 			}
 		});
@@ -188,14 +190,14 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				try {
 					updatePreviewLable();
 				} catch (MediaDoesNotExsistException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e1);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 				}
 				try {
 					updateEditorLable();
 				} catch (MediaDoesNotExsistException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e1);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 				}
 			}
 		});
@@ -203,10 +205,16 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		try {
 			jcbPriorityChange.setModel(new PriorityComboBoxModel(prefs));
 		} catch (PriorityDoesNotExistException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e1);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
 		}
 	}
+	
+	public static void errorRequestingFullsyncDialog(JFrame parent) {
+		JOptionPane.showMessageDialog(parent, "Could not find data.\n Requesting a full sync now.",
+				"Error reading data", JOptionPane.ERROR_MESSAGE);
+	}
+
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -924,11 +932,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}// </editor-fold>//GEN-END:initComponents
 
 	private void jbUpdateFileDataActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbUpdateFileDataActionPerformed
-		String text = jtfFileName.getText();
+		String text = jtfFileName.getText().trim();
 
-		// TODO get Prio, server sided change to prio uuid not the prio object
-		// TODO add proper string handling, like removing trailing and leading
-		// spaces, avoid only spaces in the string and so on
 		if (currentSelectedMediaFile != null) {
 			ClientMediaFile copyToSend = currentSelectedMediaFile.copy();
 			Priority selectedPrio = (Priority) jcbPriorityChange.getSelectedItem();
@@ -936,15 +941,20 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 			copyToSend.setPriority(selectedPrio);
 			if (text != null && !text.isEmpty() && selectedPrio != null) {
 				proxy.sendEditMediaFile(copyToSend);
+			} else {
+				JOptionPane.showMessageDialog(this, "Could not edit media file.\nThe name is not valid.", "Edit Media File", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
+		
 		if (currentSelectedTickerElement != null) {
 			ClientTickerElement copyToSend = currentSelectedTickerElement.copy();
 			copyToSend.setText(text);
 			copyToSend.setShow(jchbEnabled.isSelected());
 			if (text != null && !text.isEmpty()) {
 				proxy.sendEditTickerElement(copyToSend);
+			} else {
+				JOptionPane.showMessageDialog(this, "Could not edit ticker element.\nThe text is not valid.", "Edit Media File", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 
@@ -954,8 +964,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		try {
 			updateEditorLable();
 		} catch (MediaDoesNotExsistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 		}
 	}// GEN-LAST:event_jbResetFileDataActionPerformed
 
@@ -1141,7 +1151,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	}// GEN-LAST:event_jmipopShowNextInQueueActionPerformed
 
 	private void jmiPopToggleActivatedActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiPopToggleActivatedActionPerformed
-		// TODO add your handling code here:
+		if (currentSelectedTickerElement != null) {
+			ClientTickerElement copyToSend = currentSelectedTickerElement.copy();
+			copyToSend.setShow(!copyToSend.isShow());
+			proxy.sendEditTickerElement(copyToSend);
+			
+		}
 	}// GEN-LAST:event_jmiPopToggleActivatedActionPerformed
 
 	private void tabbedPaneContainerStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_tabbedPaneContainerStateChanged
@@ -1180,8 +1195,9 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 			try {
 				proxy.sendAddMediaFiles(fileChooser.getSelectedFiles());
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.warn("error adding send media file", e);
+				JOptionPane.showMessageDialog(this, "Error during adding media files.\n Please try again.",
+						"Error adding files", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}
@@ -1194,11 +1210,11 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		try {
 			new ThemeslideCreatorFrame(this, proxy).setVisible(true);
 		} catch (ThemeDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 		} catch (PriorityDoesNotExistException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			ClientMessageProxy.errorRequestFullSync(proxy, e);
+			MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
 		}
 	}
 

@@ -162,41 +162,33 @@ public class PreferencesModelServer {
 		try {
 			allMedia = (HashMap<UUID, ServerMediaFile>) Misc.loadFromFile(ConstantsServer.FILENAME_MEDIAFILES, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during deserialization", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during deserialization", e);
 		}
 		HashMap<UUID, ServerTickerElement> allTickerElements = null;
 		try {
 			allTickerElements = (HashMap<UUID, ServerTickerElement>) Misc.loadFromFile(ConstantsServer.FILENAME_LIVETICKER, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during deserialization", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during deserialization", e);
 		}
 		HashMap<UUID, Priority> allPriorities = null;
 		try {
 			allPriorities = (HashMap<UUID, Priority>) Misc.loadFromFile(ConstantsServer.FILENAME_PRIORITIES, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during deserialization", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during deserialization", e);
 		}
 		HashMap<UUID, Theme> allThemes = null;
 		try {
 			allThemes = (HashMap<UUID, Theme>) Misc.loadFromFile(ConstantsServer.FILENAME_THEMES, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during deserialization", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.warn("Error during deserialization", e);
 		}
 
 		if(allMedia != null) {

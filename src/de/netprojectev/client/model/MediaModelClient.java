@@ -5,11 +5,13 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.UUID;
 
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.gui.main.MainClientGUIWindow.UpdateCurrentFileListener;
 import de.netprojectev.client.gui.models.AllMediaTableModel.UpdateAllMediaDataListener;
 import de.netprojectev.client.gui.models.CustomQueueTableModel.UpdateCustomQueueDataListener;
@@ -94,8 +96,8 @@ public class MediaModelClient {
 				try {
 					checkIfMediaExists(toRemove);
 				} catch (MediaDoesNotExsistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 				}
 				log.debug("Removing media file: " + toRemove);
 				
@@ -135,15 +137,15 @@ public class MediaModelClient {
 				try {
 					checkIfMediaExists(id);
 				} catch (MediaDoesNotExsistException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					ClientMessageProxy.errorRequestFullSync(proxy, e1);
+					MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 				}
 				if(!customQueue.contains(id)) {
 					try {
 						throw new MediaNotInQueueException("Media not in private queue.");
 					} catch (MediaNotInQueueException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						ClientMessageProxy.errorRequestFullSync(proxy, e);
+						MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 					}
 				}
 				if(customQueue.get(row).equals(id)) {
@@ -152,8 +154,8 @@ public class MediaModelClient {
 					try {
 						throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
 					} catch (OutOfSyncException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						ClientMessageProxy.errorRequestFullSync(proxy, e);
+						MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
 					}
 				}
 			}
@@ -243,6 +245,11 @@ public class MediaModelClient {
 			res += getMediaFileById(customQueue.get(i)).getPriority().getMinutesToShow();
 		}
 		return res;
+	}
+
+
+	public ClientMessageProxy getProxy() {
+		return proxy;
 	}
 	
 }

@@ -278,10 +278,10 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 	 */
 	private void addAndStartCountdown() {
 		
-		//TODO starting countdown part missing
 		Countdown cntdwn = addCountdown();
 		if(cntdwn != null) {
-			proxy.sendAddCountdown(cntdwn);
+			proxy.sendAddCountdown(cntdwn).awaitUninterruptibly(5000);
+			proxy.sendShowMediaFile(cntdwn.getId());
 			dispose();
 		}
 	}
@@ -295,7 +295,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 	@SuppressWarnings("deprecation")
 	private Countdown addCountdown() {
 
-		String name = jTextFieldName.getText();
+		String name = jTextFieldName.getText().trim();
 
 		if (name.equals("")) {
 			JOptionPane.showMessageDialog(this,
@@ -303,28 +303,6 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 					"Error", JOptionPane.ERROR_MESSAGE);
 			return null;
 		}
-/*
-		if (jRadioButtonFinishDate.isSelected()) {
-			
-			
-			
-			SpinnerDateModel dateModel = (SpinnerDateModel) jSpinnerTime
-					.getModel();
-			Date finishDate = dateModel.getDate();
-			finishDate.setYear(new Date().getYear());
-			int compare = finishDate.compareTo(new Date());
-			if (!(compare > 0)) {
-				JOptionPane
-						.showMessageDialog(
-								this,
-								"Please choose a valid Date.\nThe Date you have choosen is in the past.",
-								"Error", JOptionPane.ERROR_MESSAGE);
-				return null;
-			}
-			return new Countdown(name, finishDate);
-		
-			
-		} else  */
 		
 		if (jRadioButtonTimeInMinutes.isSelected()) {
 
