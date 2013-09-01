@@ -10,6 +10,7 @@ import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
@@ -38,14 +39,8 @@ public class ClientMediaFile extends MediaFile {
 		this.showCount = serverMediaFile.getShowCount();
 		this.current = serverMediaFile.isCurrent();
 		
-		int widthToScaleTo = ConstantsClient.DEFAULT_PREVIEW_SCALE_WIDTH;
-		try {
-			widthToScaleTo = Integer.parseInt(PreferencesModelClient.
-					getClientPropertyByKey(ConstantsClient.PROP_PREVIEW_SCALE_WIDTH));
-		} catch (NumberFormatException e) {
-			LoggerBuilder.createLogger(ClientMediaFile.class).warn("preview scale width could not be read from props.", e);
-			widthToScaleTo = ConstantsClient.DEFAULT_PREVIEW_SCALE_WIDTH;
-		}
+		int widthToScaleTo = ConstantsServer.DEFAILT_PREVIEW_SCAL_WIDTH;
+		
 		
 		if (serverMediaFile instanceof Countdown) {
 			type = MediaType.Countdown;

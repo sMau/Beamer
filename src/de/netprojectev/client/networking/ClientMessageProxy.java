@@ -395,11 +395,19 @@ public class ClientMessageProxy {
 		case STC_FORCE_RECONNECT:
 			reconnectForced();
 			break;
+		case STC_ALL_FONTS:
+			receivedServerFonts(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 
+	}
+
+	private void receivedServerFonts(Message msg) {
+		String[] fontFamilies = (String[]) msg.getData()[0];
+		PreferencesModelClient.setServerFonts(fontFamilies);
 	}
 
 	public void reconnectForced() {

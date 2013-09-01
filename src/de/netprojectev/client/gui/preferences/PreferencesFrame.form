@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="502" max="32767" attributes="0"/>
               <Component id="jbClosePrefs" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
           </Group>
@@ -68,7 +68,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Component id="jbServerShutdown" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="484" max="32767" attributes="0"/>
+                              <EmptySpace pref="446" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -198,7 +198,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="157" max="32767" attributes="0"/>
+                      <EmptySpace pref="119" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -337,7 +337,7 @@
                                       <Component id="jbAddNewTheme" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="151" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="113" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jlThemeBackgroundPreview" max="32767" attributes="0"/>
                       </Group>
@@ -520,7 +520,7 @@
                                                       <Component id="jbUpdateTickerFontColor" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" attributes="0">
-                                                      <Component id="jbChooseBGColor" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jbChooseTickerBGColor" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                                       <Component id="jbUpdateTickerBGColor" min="-2" max="-2" attributes="0"/>
                                                   </Group>
@@ -585,7 +585,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jlTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbChooseBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jbChooseTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jbUpdateTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="26" max="32767" attributes="0"/>
@@ -687,12 +687,12 @@
                 <Property name="text" type="java.lang.String" value="Background Color"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jbChooseBGColor">
+            <Component class="javax.swing.JButton" name="jbChooseTickerBGColor">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Choose Color"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbChooseBGColorActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbChooseTickerBGColorActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jbUpdateTickerBGColor">
@@ -753,31 +753,19 @@
                                   <Component id="jlCountdownFontSize" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="jlCountdownFont" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="64" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jcbCountdownFontSize" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jcbCountdownFont" max="32767" attributes="0"/>
-                                      <Component id="jbChooseCountdownFontColor" max="32767" attributes="0"/>
-                                  </Group>
+                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jbChooseCountdownFontColor" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jcbCountdownFont" min="-2" pref="111" max="-2" attributes="0"/>
+                                  <Component id="jcbCountdownFontSize" min="-2" pref="111" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" alignment="0" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jbUpdateCountdownFontColor" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                          <Component id="jbUpdateCountdownFont" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                                      <Component id="jbUpdateCountdownFontSize" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jbUpdateCountdownFont" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jbUpdateCountdownFontSize" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jbUpdateCountdownFontColor" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="287" max="32767" attributes="0"/>
+                              <EmptySpace pref="290" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -912,7 +900,7 @@
                                       <Component id="jlCreatorFontColor" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       <Component id="jbCreatorChooseFontColor" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="411" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="373" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>

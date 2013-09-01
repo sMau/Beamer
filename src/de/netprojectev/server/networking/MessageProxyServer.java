@@ -3,6 +3,7 @@ package de.netprojectev.server.networking;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -385,6 +386,7 @@ public class MessageProxyServer {
 	 * DONE 2 Check all TODOS
 	 * DONE 3 next exception handling
 	 * 4 Test with notebook as server (esp. video things and fullscreen switches (preferred using tv as monitor like the beamer))
+	 * 5 reconnecting with a timer -> see todo reconnect in clientmsghandler
 	 * 
 	 * add handling for further prefs like changing fonts and colors of live ticker
 	 * pimp the live ticker a little slightly transparent overlay or something like that 
@@ -443,6 +445,8 @@ public class MessageProxyServer {
 		if(fullscreenEnabled) {
 			channel.write(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 		}
+		
+		channel.write(new Message(OpCode.STC_ALL_FONTS, (Serializable) ConstantsServer.FONT_FAMILIES));
 		
 		channel.write(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}

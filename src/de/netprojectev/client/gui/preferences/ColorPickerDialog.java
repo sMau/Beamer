@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package old.de.netprojectev.client.gui.dialogs;
+package de.netprojectev.client.gui.preferences;
 
 import java.awt.Color;
 

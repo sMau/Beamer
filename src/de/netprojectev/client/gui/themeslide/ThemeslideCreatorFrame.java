@@ -27,10 +27,10 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 
-import old.de.netprojectev.client.gui.dialogs.ColorPickerDialog;
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
+import de.netprojectev.client.gui.preferences.ColorPickerDialog;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;

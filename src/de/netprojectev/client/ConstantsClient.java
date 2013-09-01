@@ -47,7 +47,7 @@ public class ConstantsClient {
 	 */
 	public static final String[] FONT_SIZES = Misc.generateFontSizes();
 	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-
+	public static final String[] FONT_SIZES_COUNTDOWN = Misc.generateFontSizesCountdown();
 	
 	public static final Date TIMESTAMP = new Date();
 

@@ -50,6 +50,8 @@ public class PreferencesModelClient {
 	
 	private static Properties clientProperties;
 	private static Properties serverProperties;
+	
+	private static String[] serverFonts;
 
 	private ThemeListChangedListener themeListChangeListener = new ThemeListChangedListener() {
 		@Override
@@ -289,6 +291,14 @@ public class PreferencesModelClient {
 
 	public ClientMessageProxy getProxy() {
 		return proxy;
+	}
+
+	public static String[] getServerFonts() {
+		return serverFonts;
+	}
+
+	public static void setServerFonts(String[] serverFonts) {
+		PreferencesModelClient.serverFonts = serverFonts;
 	}
 	
 }

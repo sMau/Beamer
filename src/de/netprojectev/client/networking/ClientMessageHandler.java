@@ -30,7 +30,7 @@ public class ClientMessageHandler extends SimpleChannelHandler {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
 		log.warn("Exception caught in channel handler, forcing reconnect.", e.getCause());
-		
+		//TODO make reconnect with a timer every 5 secs or something like that
 		proxy.reconnectForced();
 		
 		e.getChannel().close();

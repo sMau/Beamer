@@ -1,5 +1,6 @@
 package de.netprojectev.server;
 
+import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.util.Date;
 
@@ -33,6 +34,8 @@ public class ConstantsServer {
 	 * DEFAULTS
 	 */
 	
+	public static final int DEFAILT_PREVIEW_SCAL_WIDTH = 640;
+	
 	public static final Priority NO_PRIORITY = new Priority("no priority", 0);
 	
 	public static final String DEFAULT_PW = "";	
@@ -47,7 +50,8 @@ public class ConstantsServer {
 	public static final int DEFAULT_TICKER_FONTSIZE = 32;
 	public static final String DEFAULT_TICKER_FONTTYPE = "Arial";
 	public static final int DEFAULT_TICKER_FONTCOLOR = -16777216;
-
+	public static final int DEFAULT_TICKER_BACKGROUND_COLOR = Color.WHITE.getRGB();
+	
 
 	
 	/*
@@ -60,6 +64,8 @@ public class ConstantsServer {
 	public static final String PROP_TICKER_FONTTYPE = "ticker.fontType";
 	public static final String PROP_TICKER_FONTCOLOR = "ticker.fontColor";
 	public static final String PROP_TICKER_SEPERATOR = "ticker.seperator";
+	public static final String PROP_TICKER_BACKGROUND_COLOR = "ticker.backgroundColor";
+
 	
 	public static final String PROP_PW = "password";
 	public static final String PROP_HEARTBEAT_INTERVALL = "timeout";
@@ -75,7 +81,6 @@ public class ConstantsServer {
 	public static final int NUMBER_OF_WORKER_THREADS = 3;
 	
 	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-	public static final String[] FONT_SIZES_COUNTDOWN = Misc.generateFontSizesCountdown();
 	
 	public static final Date TIMESTAMP = new Date();
 }
