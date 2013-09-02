@@ -34,7 +34,11 @@ public class ConstantsServer {
 	 * DEFAULTS
 	 */
 	
-	public static final int DEFAILT_PREVIEW_SCAL_WIDTH = 640;
+	public static final String DEFAULT_LOW_TICKER_SPEED = "40";
+	public static final String DEFAULT_MEDIUM_TICKER_SPEED = "30";
+	public static final String DEFAULT_HIGH_TICKER_SPEED = "20";
+	
+	public static final int DEFAULT_PREVIEW_SCAL_WIDTH = 640;
 	
 	public static final Priority NO_PRIORITY = new Priority("no priority", 0);
 	

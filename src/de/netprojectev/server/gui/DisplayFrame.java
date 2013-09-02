@@ -17,24 +17,27 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
+import de.netprojectev.server.networking.MessageProxyServer.PropertyUpdateListener;
 
 /**
- * GUI class frame, to store the viewing components, as the live ticker and the image and themeslide showing component.
+ * GUI class frame, to store the viewing components, as the live ticker and the
+ * image and themeslide showing component.
+ * 
  * @author samu
  */
 public class DisplayFrame extends javax.swing.JFrame {
 
-	
 	public interface VideoFinishListener {
 		public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException;
 	}
-	
+
 	/**
 	 * 
 	 */
@@ -45,38 +48,80 @@ public class DisplayFrame extends javax.swing.JFrame {
 	private boolean fullscreen;
 	private Timer countdownTimer;
 	private VideoFinishListener videoFinishedListener;
-	
-    public DisplayFrame(MessageProxyServer proxy) {
-        this.proxy = proxy;
-    	initComponents();
-        fullscreen = false;
-    }
 
-    public void showMediaFileInMainComponent(ServerMediaFile fileToShow) throws IOException {
-    	if(fileToShow instanceof ImageFile) {
-    		showImageFile((ImageFile) fileToShow);
-    	} else if(fileToShow instanceof Themeslide) {
-    		showThemeslide((Themeslide) fileToShow);
-    	} else if(fileToShow instanceof VideoFile) {
-    		showVideoFile((VideoFile) fileToShow);
-    	} else if(fileToShow instanceof Countdown) {
-    		showCountdown((Countdown) fileToShow);
-    	} else {
-    		throw new IllegalArgumentException("The arg is no subclass of ServerMediaFile");
-    	}
-    }
-    
-    private void showImageFile(ImageFile image) throws IOException {
-    	displayMainComponent.drawImage(image.get());
-    }
-    
-    private void showVideoFile(VideoFile video) {
+	public DisplayFrame(MessageProxyServer proxy) {
+		this.proxy = proxy;
+		initComponents();
+		fullscreen = false;
+		this.proxy.setPropertyUpdateListener(new PropertyUpdateListener() {
 
-    	try {
-    		final Process vlc = new VlcPlayBackUtility(video.getVideoFile()).startPlay();
-    		
-    		new Thread(new Runnable() {
-				
+			@Override
+			public void propertyUpdate(String keyPropertyUpdated) {
+				propertyUpdated(keyPropertyUpdated);
+			}
+		});
+	}
+
+	private void propertyUpdated(String key) {
+		switch (key) {
+		case ConstantsServer.PROP_COUNTDOWN_FONTCOLOR:
+			displayMainComponent.updateCountdownFontColor();
+			break;
+		case ConstantsServer.PROP_COUNTDOWN_FONTSIZE:
+			displayMainComponent.updateCountdownFont();
+			break;
+		case ConstantsServer.PROP_COUNTDOWN_FONTTYPE:
+			displayMainComponent.updateCountdownFont();
+			break;
+		case ConstantsServer.PROP_TICKER_BACKGROUND_COLOR:
+			tickerComponent.updateBackgroundColor();
+			break;
+		case ConstantsServer.PROP_TICKER_FONTCOLOR:
+			tickerComponent.updateFontColor();
+			break;
+		case ConstantsServer.PROP_TICKER_FONTSIZE:
+			tickerComponent.updateFont();
+			break;
+		case ConstantsServer.PROP_TICKER_FONTTYPE:
+			tickerComponent.updateFont();
+			break;
+		case ConstantsServer.PROP_TICKER_SEPERATOR:
+			updateLiveTickerString();
+			break;
+		case ConstantsServer.PROP_TICKER_SPEED:
+			tickerComponent.updateSpeed();
+			break;
+		default:
+			log.warn("received an unknown property key: " + key);
+			break;
+		}
+	}
+
+	public void showMediaFileInMainComponent(ServerMediaFile fileToShow) throws IOException {
+		if (fileToShow instanceof ImageFile) {
+			showImageFile((ImageFile) fileToShow);
+		} else if (fileToShow instanceof Themeslide) {
+			showThemeslide((Themeslide) fileToShow);
+		} else if (fileToShow instanceof VideoFile) {
+			showVideoFile((VideoFile) fileToShow);
+		} else if (fileToShow instanceof Countdown) {
+			showCountdown((Countdown) fileToShow);
+		} else {
+			throw new IllegalArgumentException("The arg is no subclass of ServerMediaFile");
+		}
+	}
+
+	private void showImageFile(ImageFile image) throws IOException {
+		displayMainComponent.drawImage(image.get());
+	}
+
+	private void showVideoFile(VideoFile video) {
+
+		try {
+			final Process vlc = new VlcPlayBackUtility(video.getVideoFile()).startPlay();
+
+			new Thread(new Runnable() {
+
 				@Override
 				public void run() {
 					try {
@@ -93,206 +138,217 @@ public class DisplayFrame extends javax.swing.JFrame {
 					}
 				}
 			}).start();
-    		
-    		
+
 		} catch (Exception e) {
 			log.warn("Video could not be played.", e);
 		}
 
-    }
-    
-    private void showThemeslide(Themeslide themeslide) throws IOException {
-    	displayMainComponent.drawImage(themeslide.get());
-    }
-    
-    private void showCountdown(final Countdown countdown) {
-    	if(countdownTimer != null) {
-    		countdownTimer.stop();
-    	}
-    	
-    	displayMainComponent.drawCountdown(countdown);
-    	displayMainComponent.repaint();
-    	countdownTimer = new Timer(1000, new ActionListener() {
-			
+	}
+
+	private void showThemeslide(Themeslide themeslide) throws IOException {
+		displayMainComponent.drawImage(themeslide.get());
+	}
+
+	private void showCountdown(final Countdown countdown) {
+		if (countdownTimer != null) {
+			countdownTimer.stop();
+		}
+
+		displayMainComponent.drawCountdown(countdown);
+		displayMainComponent.repaint();
+		countdownTimer = new Timer(1000, new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				countdown.decreaseOneSecond();
 				displayMainComponent.repaint();
-				if(countdown.getDurationInSeconds() <= 0) {
+				if (countdown.getDurationInSeconds() <= 0) {
 					countdownTimer.stop();
 					displayMainComponent.countdownFinished();
 				}
 			}
 		});
-    	countdownTimer.start();
-    	
-    }
-    
-    public void startLiveTicker() {
-    	tickerComponent.setTickerString(proxy.getTickerModel().generateCompleteTickerText());
-    	tickerComponent.initLiveTickerAndStart();
-    }
-    
-    public void updateLiveTicker() {
-    	tickerComponent.setTickerString(proxy.getTickerModel().generateCompleteTickerText());
-    }
-    
-    public void stopLiveTicker() {
-    	tickerComponent.stopLiveTicker();
-    }
-    
-    public void clearDisplay() {
-    	displayMainComponent.clear();
-    }
-    
-    
-    /**
-     * Setting the display frame as fullscreen exclusive window
-     * @param screenNumber the number of the screen to show on
-     */
-    public void enterFullscreen(int screenNumber) {
-    	
-    	if(!fullscreen) {
-	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		countdownTimer.start();
+
+	}
+
+	public void startLiveTicker() {
+		tickerComponent.setTickerString(proxy.getTickerModel().generateCompleteTickerText());
+		tickerComponent.initLiveTickerAndStart();
+	}
+
+	public void updateLiveTickerString() {
+		tickerComponent.setTickerString(proxy.getTickerModel().generateCompleteTickerText());
+	}
+
+	public void stopLiveTicker() {
+		tickerComponent.stop();
+	}
+
+	public void clearDisplay() {
+		displayMainComponent.clear();
+	}
+
+	/**
+	 * Setting the display frame as fullscreen exclusive window
+	 * 
+	 * @param screenNumber
+	 *            the number of the screen to show on
+	 */
+	public void enterFullscreen(int screenNumber) {
+
+		if (!fullscreen) {
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
 			this.setUndecorated(true);
 			setVisible(true);
 			if (screenNumber >= 0 && screenNumber < myDevices.length) {
 				myDevices[screenNumber].setFullScreenWindow(this);
-		    	fullscreen = true;
+				fullscreen = true;
 			} else {
 				dispose();
 				this.setUndecorated(false);
 				setVisible(true);
 				fullscreen = false;
 			}
-    	}
+		}
 
-    }
-    
-    /**
-     * lets the display window exiting the fullscreen
-     */
-    public void exitFullscreen() {
-    	
-    	if(fullscreen) {
-	    	GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+	}
+
+	/**
+	 * lets the display window exiting the fullscreen
+	 */
+	public void exitFullscreen() {
+
+		if (fullscreen) {
+			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
 			this.setUndecorated(false);
 			setVisible(true);
 			myDevices[0].setFullScreenWindow(null);
 			pack();
-    		fullscreen = false;
-    	}
-    }
+			fullscreen = false;
+		}
+	}
 
 	/**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
-    
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	 * This method is called from within the constructor to initialize the form.
+	 * WARNING: Do NOT modify this code. The content of this method is always
+	 * regenerated by the Form Editor.
+	 */
 
-        displayMainComponent = new de.netprojectev.server.gui.DisplayMainComponent();
-        tickerComponent = new de.netprojectev.server.gui.TickerComponent();
+	// <editor-fold defaultstate="collapsed"
+	// desc="Generated Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		displayMainComponent = new de.netprojectev.server.gui.DisplayMainComponent();
+		tickerComponent = new de.netprojectev.server.gui.TickerComponent();
 
-        displayMainComponent.setDoubleBuffered(true);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        tickerComponent.setDoubleBuffered(true);
-        tickerComponent.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+		displayMainComponent.setDoubleBuffered(true);
 
-        javax.swing.GroupLayout tickerComponentLayout = new javax.swing.GroupLayout(tickerComponent);
-        tickerComponent.setLayout(tickerComponentLayout);
-        tickerComponentLayout.setHorizontalGroup(
-            tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 848, Short.MAX_VALUE)
-        );
-        tickerComponentLayout.setVerticalGroup(
-            tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 61, Short.MAX_VALUE)
-        );
+		tickerComponent.setDoubleBuffered(true);
+		tickerComponent.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
 
-        javax.swing.GroupLayout displayMainComponentLayout = new javax.swing.GroupLayout(displayMainComponent);
-        displayMainComponent.setLayout(displayMainComponentLayout);
-        displayMainComponentLayout.setHorizontalGroup(
-            displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        displayMainComponentLayout.setVerticalGroup(
-            displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayMainComponentLayout.createSequentialGroup()
-                .addContainerGap(416, Short.MAX_VALUE)
-                .addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+		javax.swing.GroupLayout tickerComponentLayout = new javax.swing.GroupLayout(tickerComponent);
+		tickerComponent.setLayout(tickerComponentLayout);
+		tickerComponentLayout.setHorizontalGroup(tickerComponentLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 848, Short.MAX_VALUE));
+		tickerComponentLayout.setVerticalGroup(tickerComponentLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 61, Short.MAX_VALUE));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+		javax.swing.GroupLayout displayMainComponentLayout = new javax.swing.GroupLayout(
+				displayMainComponent);
+		displayMainComponent.setLayout(displayMainComponentLayout);
+		displayMainComponentLayout.setHorizontalGroup(displayMainComponentLayout
+				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
+						tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE,
+						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
+		displayMainComponentLayout.setVerticalGroup(displayMainComponentLayout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
+				javax.swing.GroupLayout.Alignment.TRAILING,
+				displayMainComponentLayout
+						.createSequentialGroup()
+						.addContainerGap(416, Short.MAX_VALUE)
+						.addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE,
+								javax.swing.GroupLayout.PREFERRED_SIZE)));
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(displayMainComponent,
+				javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+				Short.MAX_VALUE));
+		layout.setVerticalGroup(layout.createParallelGroup(
+				javax.swing.GroupLayout.Alignment.LEADING).addComponent(displayMainComponent,
+				javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
+				Short.MAX_VALUE));
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /*
-         * Set the Nimbus look and feel
-         */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the
-         * default look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
-        /*
-         * Create and display the form
-         */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+	/**
+	 * @param args
+	 *            the command line arguments
+	 */
+	public static void main(String args[]) {
+		/*
+		 * Set the Nimbus look and feel
+		 */
+		// <editor-fold defaultstate="collapsed"
+		// desc=" Look and feel setting code (optional) ">
+		/*
+		 * If Nimbus (introduced in Java SE 6) is not available, stay with the
+		 * default look and feel. For details see
+		 * http://download.oracle.com/javase
+		 * /tutorial/uiswing/lookandfeel/plaf.html
+		 */
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+					.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException ex) {
+			java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (InstantiationException ex) {
+			java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+			java.util.logging.Logger.getLogger(DisplayFrame.class.getName()).log(
+					java.util.logging.Level.SEVERE, null, ex);
+		}
+		// </editor-fold>
 
-            public void run() {
-                //new DisplayMainFrame().setVisible(true);
-            }
-        });
-    }
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
-    private de.netprojectev.server.gui.TickerComponent tickerComponent;
-    // End of variables declaration//GEN-END:variables
+		/*
+		 * Create and display the form
+		 */
+		java.awt.EventQueue.invokeLater(new Runnable() {
+
+			public void run() {
+				// new DisplayMainFrame().setVisible(true);
+			}
+		});
+	}
+
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
+	private de.netprojectev.server.gui.TickerComponent tickerComponent;
+
+	// End of variables declaration//GEN-END:variables
 
 	public void setVideoFinishedListener(VideoFinishListener videoFinishedListener) {
 		this.videoFinishedListener = videoFinishedListener;
 	}
-	
+
 }

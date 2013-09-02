@@ -49,6 +49,11 @@ import de.netprojectev.server.networking.VideoFileReceiveHandler.ToManyMessagesE
 
 public class MessageProxyServer {
 	
+	
+	public interface PropertyUpdateListener {
+		public void propertyUpdate(String keyPropertyUpdated);
+	}
+	
 	private static final Logger log = LoggerBuilder.createLogger(MessageProxyServer.class);
 	
 	private final DefaultChannelGroup allClients;
@@ -60,6 +65,9 @@ public class MessageProxyServer {
 	private final DisplayFrame display;
 	private final Server server;
 	private final HashedWheelTimer timeoutChecker;
+	
+	private PropertyUpdateListener propertyUpdateListener;
+	
 	private int timeoutInSeconds;
 	private boolean automodeEnabled;
 	private boolean fullscreenEnabled;
@@ -263,6 +271,11 @@ public class MessageProxyServer {
 		String newValue = (String) msg.getData()[1];
 		
 		PreferencesModelServer.setProperty(key, newValue);
+		
+		if(propertyUpdateListener != null) {
+			propertyUpdateListener.propertyUpdate(key);
+		}
+		
 		broadcastMessage(new Message(OpCode.STC_PROPERTY_UPDATE_ACK, key, newValue));
 	}
 	
@@ -381,14 +394,18 @@ public class MessageProxyServer {
 	
 	
 	//TODO last worked here: made changing server props work (only live ticker sep atm)
-	/*
+	
+	/* !!!!!!!!!!!!!!!
+	 * !!!!!! Test with notebook as server (esp. video things and fullscreen switches (preferred using tv as monitor like the beamer))
+	 * !!!!!!!!!!!!!!!
+	 * 
 	 * DONE 1 Add proper serialization (properties are good, but serialize the media and ticker elts and so on too)
 	 * DONE 2 Check all TODOS
 	 * DONE 3 next exception handling
-	 * 4 Test with notebook as server (esp. video things and fullscreen switches (preferred using tv as monitor like the beamer))
-	 * 5 reconnecting with a timer -> see todo reconnect in clientmsghandler
+	 * DONE 4 reconnecting with a timer -> see todo reconnect in clientmsghandler
 	 * 
 	 * add handling for further prefs like changing fonts and colors of live ticker
+	 * 
 	 * pimp the live ticker a little slightly transparent overlay or something like that 
  	 * next pimp server gui (Effects and so on)
 	 *
@@ -499,7 +516,7 @@ public class MessageProxyServer {
 	private void addLiveTickerElement(Message msg) throws IOException {
 		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData()[0];
 		tickerModel.addTickerElement(eltToAdd);
-		display.updateLiveTicker();
+		display.updateLiveTickerString();
 		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(eltToAdd)));
 		
 		prefsModel.serializeTickerDatabase();
@@ -690,6 +707,10 @@ public class MessageProxyServer {
 	}
 	public ArrayList<ConnectedUser> getConnectedUsers() {
 		return connectedUsers;
+	}
+
+	public void setPropertyUpdateListener(PropertyUpdateListener propertyUpdateListener) {
+		this.propertyUpdateListener = propertyUpdateListener;
 	}
 
 }

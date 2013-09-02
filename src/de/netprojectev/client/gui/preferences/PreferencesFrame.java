@@ -58,10 +58,6 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		this.proxy = proxy;
 		initComponents();
 		setLocationRelativeTo(parent);
-		jlDefaultPrioVar.setText(prefs.getDefaultPriority().getName());
-
-		updateFullscreenState();
-		updateLiveTickerState();
 
 		proxy.setServerPropertyUpdateListener(new ServerPropertyUpdateListener() {
 
@@ -112,18 +108,16 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	}
 
 	private void updateServerProperties() {
-		
+		/*
+		 * some general inits
+		 */
 		String[] fontFamilies = PreferencesModelClient.getServerFonts();
-		
-		jtfTickerSeparator.setText(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR));
 		
 		for(int i = 0; i < fontFamilies.length; i++) {
 			jcbCountdownFont.addItem(fontFamilies[i]);
 			jcbTickerFont.addItem(fontFamilies[i]);
 		}
 		
-		jcbCountdownFont.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTTYPE));
-		jcbTickerFont.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTTYPE));
 		
 		for(int i = 0; i < ConstantsClient.FONT_SIZES.length; i++) {
 			jcbCreatorFontSize.addItem(ConstantsClient.FONT_SIZES[i]);
@@ -134,28 +128,29 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			jcbCreatorFont.addItem(ConstantsClient.FONT_FAMILIES[i]);
 		}
 		
-		jcbCreatorFontSize.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
-		jcbTickerFontSize.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTSIZE));
-		jcbCreatorFont.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
-		
 		for(int i = 0; i < ConstantsClient.FONT_SIZES_COUNTDOWN.length; i++) {
 			jcbCountdownFontSize.addItem(ConstantsClient.FONT_SIZES_COUNTDOWN[i]);
 		}
 		
-		jcbCountdownFontSize.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTSIZE));
+		/*
+		 * General
+		 */
+		updateFullscreenState();
+
 		
-		jtfCreatorMarginLeft.setText(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
-		jtfCreatorMarginTop.setText(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
+		/*
+		 * Priorities
+		 */
+		jlDefaultPrioVar.setText(prefs.getDefaultPriority().getName());
+
 		
-		Color cntdwnFontColor = Color.BLACK;
-		try {
-			cntdwnFontColor = new Color(Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
-		} catch (NumberFormatException e) {
-			log.warn("Could not read countdown font color from prefs. Setting to black.", e );
-			cntdwnFontColor = Color.BLACK;
-		}
-		jbChooseCountdownFontColor.setBackground(cntdwnFontColor);
-		jbChooseCountdownFontColor.setForeground(cntdwnFontColor);
+		/*
+		 * Live Ticker
+		 */
+		updateLiveTickerState();
+		jtfTickerSeparator.setText(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR));
+		jcbTickerFont.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTTYPE));
+		jcbTickerFontSize.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTSIZE));
 		
 		Color tickerFontColor = Color.BLACK;
 		
@@ -181,6 +176,43 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		
 		jbChooseTickerBGColor.setBackground(tickerBackgroundColor);
 		jbChooseTickerBGColor.setForeground(tickerBackgroundColor);
+		
+		int tickerSpeed = Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SPEED));
+		String speedAsString;
+		if(tickerSpeed <= 20) {
+			speedAsString = "High";
+		} else if(tickerSpeed <= 30) {
+			speedAsString = "Medium";
+		} else {
+			speedAsString = "Low";
+		}
+		jcbTickerSpeed.setSelectedItem(speedAsString);
+		
+		/*
+		 * ThemeslideCreator
+		 */
+		jcbCreatorFontSize.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
+		jcbCreatorFont.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
+		jtfCreatorMarginLeft.setText(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
+		jtfCreatorMarginTop.setText(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
+		
+		
+		/*
+		 * Countdown
+		 */
+		jcbCountdownFont.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTTYPE));
+		jcbCountdownFontSize.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTSIZE));
+
+		Color cntdwnFontColor = Color.BLACK;
+		try {
+			cntdwnFontColor = new Color(Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
+		} catch (NumberFormatException e) {
+			log.warn("Could not read countdown font color from prefs. Setting to black.", e );
+			cntdwnFontColor = Color.BLACK;
+		}
+		jbChooseCountdownFontColor.setBackground(cntdwnFontColor);
+		jbChooseCountdownFontColor.setForeground(cntdwnFontColor);
+
 		
 	}
 
@@ -245,6 +277,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jlTickerFontSize = new javax.swing.JLabel();
         jcbTickerFontSize = new javax.swing.JComboBox();
         jbUpdateTickerFontSize = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jlTickerSpeed = new javax.swing.JLabel();
+        jbUpdateTickerSpeed = new javax.swing.JButton();
+        jSeparator9 = new javax.swing.JSeparator();
+        jcbTickerSpeed = new javax.swing.JComboBox();
         jpCountdown = new javax.swing.JPanel();
         jlCountdownLookAFeel = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
@@ -312,7 +351,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(jpGeneralLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jbServerShutdown)
-                        .addContainerGap(446, Short.MAX_VALUE))
+                        .addContainerGap(422, Short.MAX_VALUE))
                     .addGroup(jpGeneralLayout.createSequentialGroup()
                         .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpGeneralLayout.createSequentialGroup()
@@ -406,7 +445,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addComponent(jlDefaultPrioVar)
                             .addComponent(jlPrioNameVar)
                             .addComponent(jlTimeToShowVar))))
-                .addContainerGap(119, Short.MAX_VALUE))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         jpPrioritiesLayout.setVerticalGroup(
             jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -480,7 +519,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jbRemoveTheme)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbAddNewTheme)))
-                        .addGap(0, 113, Short.MAX_VALUE))
+                        .addGap(0, 89, Short.MAX_VALUE))
                     .addComponent(jlThemeBackgroundPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -584,6 +623,25 @@ public class PreferencesFrame extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Causes a ticker restart");
+
+        jLabel2.setText("Causes a ticker restart");
+
+        jLabel3.setText("Causes a ticker restart");
+
+        jlTickerSpeed.setText("Speed");
+
+        jbUpdateTickerSpeed.setText("Update");
+        jbUpdateTickerSpeed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateTickerSpeedActionPerformed(evt);
+            }
+        });
+
+        jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jcbTickerSpeed.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Low", "Medium", "High" }));
+
         javax.swing.GroupLayout jpTickerLayout = new javax.swing.GroupLayout(jpTicker);
         jpTicker.setLayout(jpTickerLayout);
         jpTickerLayout.setHorizontalGroup(
@@ -602,7 +660,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jbStartTicker)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbStopLiveTicker)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jlTickerSpeed)
+                                .addGap(18, 18, 18)
+                                .addComponent(jcbTickerSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbUpdateTickerSpeed)
+                                .addGap(0, 115, Short.MAX_VALUE))
                             .addGroup(jpTickerLayout.createSequentialGroup()
                                 .addComponent(jlSeperator)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -612,6 +678,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addComponent(jtfTickerSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jbUpdateTickerSeparator)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jpTickerLayout.createSequentialGroup()
                         .addContainerGap()
@@ -642,20 +710,23 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                             .addComponent(jcbTickerFontSize, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(18, 18, 18)
                                         .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jbTickerFontUpdate)
-                                            .addComponent(jbUpdateTickerFontSize))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 276, Short.MAX_VALUE))
+                                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                                .addComponent(jbUpdateTickerFontSize)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel2))
+                                            .addGroup(jpTickerLayout.createSequentialGroup()
+                                                .addComponent(jbTickerFontUpdate)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel1))))
                                     .addGroup(jpTickerLayout.createSequentialGroup()
-                                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jpTickerLayout.createSequentialGroup()
-                                                .addComponent(jbChooseTickerFontColor)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jbUpdateTickerFontColor))
-                                            .addGroup(jpTickerLayout.createSequentialGroup()
-                                                .addComponent(jbChooseTickerBGColor)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jbUpdateTickerBGColor)))
-                                        .addGap(0, 0, Short.MAX_VALUE)))))))
+                                        .addComponent(jbChooseTickerFontColor)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbUpdateTickerFontColor))
+                                    .addGroup(jpTickerLayout.createSequentialGroup()
+                                        .addComponent(jbChooseTickerBGColor)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbUpdateTickerBGColor)))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jpTickerLayout.setVerticalGroup(
@@ -666,9 +737,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jlTickerStatus)
                     .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbStartTicker)
-                    .addComponent(jbStopLiveTicker))
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jbStartTicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbStopLiveTicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jlTickerSpeed, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jbUpdateTickerSpeed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jcbTickerSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlSeperator)
@@ -676,7 +753,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfTickerSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbUpdateTickerSeparator))
+                    .addComponent(jbUpdateTickerSeparator)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jlTickerLookAFeel)
@@ -685,12 +763,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlTickerFont)
                     .addComponent(jcbTickerFont, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbTickerFontUpdate))
+                    .addComponent(jbTickerFontUpdate)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlTickerFontSize)
                     .addComponent(jcbTickerFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbUpdateTickerFontSize))
+                    .addComponent(jbUpdateTickerFontSize)
+                    .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlTickerFontColor)
@@ -701,7 +781,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jlTickerBGColor)
                     .addComponent(jbChooseTickerBGColor)
                     .addComponent(jbUpdateTickerBGColor))
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("Ticker", jpTicker);
@@ -770,7 +850,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addComponent(jbUpdateCountdownFont)
                             .addComponent(jbUpdateCountdownFontSize)
                             .addComponent(jbUpdateCountdownFontColor))
-                        .addContainerGap(290, Short.MAX_VALUE))))
+                        .addContainerGap(266, Short.MAX_VALUE))))
         );
         jpCountdownLayout.setVerticalGroup(
             jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -862,7 +942,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jlCreatorFontColor)
                                 .addGap(26, 26, 26)
                                 .addComponent(jbCreatorChooseFontColor)
-                                .addGap(0, 373, Short.MAX_VALUE)))
+                                .addGap(0, 349, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
                         .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -944,13 +1024,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jtpPreferences, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 502, Short.MAX_VALUE)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jbClosePrefs)
                 .addGap(34, 34, 34))
+            .addComponent(jtpPreferences, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -965,11 +1043,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbTickerFontUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbTickerFontUpdateActionPerformed
-        // TODO add your handling code here:
+        String newFont = (String) jcbTickerFont.getSelectedItem();
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_FONTTYPE, newFont);
     }//GEN-LAST:event_jbTickerFontUpdateActionPerformed
 
     private void jbUpdateTickerFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerFontColorActionPerformed
-        // TODO add your handling code here:
+        int rgbColor = jbChooseTickerFontColor.getBackground().getRGB();
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_FONTCOLOR, Integer.toString(rgbColor));
     }//GEN-LAST:event_jbUpdateTickerFontColorActionPerformed
 
     private void jbChooseTickerFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbChooseTickerFontColorActionPerformed
@@ -981,23 +1061,28 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbChooseTickerBGColorActionPerformed
 
     private void jbUpdateTickerBGColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerBGColorActionPerformed
-        // TODO add your handling code here:
+    	int rgbColor = jbChooseTickerBGColor.getBackground().getRGB();
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR, Integer.toString(rgbColor));
     }//GEN-LAST:event_jbUpdateTickerBGColorActionPerformed
 
     private void jbUpdateCountdownFontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateCountdownFontActionPerformed
-        // TODO add your handling code here:
+    	String newFont = (String) jcbCountdownFont.getSelectedItem();
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_COUNTDOWN_FONTTYPE, newFont);
     }//GEN-LAST:event_jbUpdateCountdownFontActionPerformed
 
     private void jbUpdateCountdownFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateCountdownFontColorActionPerformed
-        // TODO add your handling code here:
+    	int rgbColor = jbChooseCountdownFontColor.getBackground().getRGB();
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR, Integer.toString(rgbColor));
     }//GEN-LAST:event_jbUpdateCountdownFontColorActionPerformed
 
     private void jbUpdateCountdownFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateCountdownFontSizeActionPerformed
-        // TODO add your handling code here:
+        String newSize = (String) jcbCountdownFontSize.getSelectedItem();
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_COUNTDOWN_FONTSIZE, newSize);
     }//GEN-LAST:event_jbUpdateCountdownFontSizeActionPerformed
 
     private void jbUpdateTickerFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerFontSizeActionPerformed
-        // TODO add your handling code here:
+    	String newSize = (String) jcbTickerFontSize.getSelectedItem();
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_FONTSIZE, newSize);
     }//GEN-LAST:event_jbUpdateTickerFontSizeActionPerformed
 
     private void jbChooseCountdownFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbChooseCountdownFontColorActionPerformed
@@ -1005,24 +1090,61 @@ public class PreferencesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jbChooseCountdownFontColorActionPerformed
 
     private void jbCreatorChooseFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatorChooseFontColorActionPerformed
-    	openColorPickerTicker((JButton) evt.getSource());
+    	Color newColor = openColorPickerTicker((JButton) evt.getSource());
+    	if(newColor != null) {
+    		PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, Integer.toString(newColor.getRGB()));
+    	}
     }//GEN-LAST:event_jbCreatorChooseFontColorActionPerformed
 
     private void jcbCreatorFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCreatorFontSizeActionPerformed
-        // TODO add your handling code here:
+    	String newSize = (String) jcbCreatorFontSize.getSelectedItem();
+    	PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, newSize);
     }//GEN-LAST:event_jcbCreatorFontSizeActionPerformed
 
     private void jtfCreatorMarginLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCreatorMarginLeftActionPerformed
-        // TODO add your handling code here:
+        String newMarginLeft = jtfCreatorMarginLeft.getText().trim();
+        try {
+			Integer.parseInt(newMarginLeft);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "Margin Left has to be a numeric value.", "Margin Left", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+        PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, newMarginLeft);
     }//GEN-LAST:event_jtfCreatorMarginLeftActionPerformed
 
     private void jtfCreatorMarginTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCreatorMarginTopActionPerformed
-        // TODO add your handling code here:
+    	String newMarginTop = jtfCreatorMarginTop.getText().trim();
+        try {
+			Integer.parseInt(newMarginTop);
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(this, "Margin Top has to be a numeric value.", "Margin Top", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+        PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, newMarginTop);
     }//GEN-LAST:event_jtfCreatorMarginTopActionPerformed
 
     private void jcbCreatorFontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCreatorFontActionPerformed
-        // TODO add your handling code here:
+        String newFont = (String) jcbCreatorFont.getSelectedItem();
+        PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, newFont);
     }//GEN-LAST:event_jcbCreatorFontActionPerformed
+
+    private void jbUpdateTickerSpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerSpeedActionPerformed
+        String tickerSpeed = (String) jcbTickerSpeed.getSelectedItem();
+        switch (tickerSpeed) {
+		case "Low":
+			proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_SPEED, ConstantsServer.DEFAULT_LOW_TICKER_SPEED);
+			break;
+		case "Medium":
+			proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_SPEED, ConstantsServer.DEFAULT_MEDIUM_TICKER_SPEED);
+			break;
+		case "High":
+			proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_SPEED, ConstantsServer.DEFAULT_HIGH_TICKER_SPEED);
+			break;
+		default:
+			JOptionPane.showMessageDialog(this, "Error reading tickerspeed", "Ticker Speed", JOptionPane.ERROR_MESSAGE);
+			break;
+		}
+    }//GEN-LAST:event_jbUpdateTickerSpeedActionPerformed
 
 	private void jbClosePrefsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbClosePrefsActionPerformed
 		dispose();
@@ -1181,7 +1303,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     /**
      * Opens a new {@link ColorPickerDialog} and assigns the correct ticker text color.
      */
-	private void openColorPickerTicker(JButton chooseColorButton) {
+	private Color openColorPickerTicker(JButton chooseColorButton) {
 		ColorPickerDialog colorPicker = new ColorPickerDialog(this, true);
 		
 		colorPicker.setVisible(true);
@@ -1193,10 +1315,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
 				chooseColorButton.setBackground(bg);
 				chooseColorButton.setForeground(bg);
 
+				return bg;
 			}
 			
 		}
-		
+		return null;
 	}
 
 	/**
@@ -1240,6 +1363,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1248,6 +1374,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
+    private javax.swing.JSeparator jSeparator9;
     private javax.swing.JButton jbAddNewTheme;
     private javax.swing.JButton jbAddPrio;
     private javax.swing.JButton jbChooseCountdownFontColor;
@@ -1270,12 +1397,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jbUpdateTickerFontColor;
     private javax.swing.JButton jbUpdateTickerFontSize;
     private javax.swing.JButton jbUpdateTickerSeparator;
+    private javax.swing.JButton jbUpdateTickerSpeed;
     private javax.swing.JComboBox jcbCountdownFont;
     private javax.swing.JComboBox jcbCountdownFontSize;
     private javax.swing.JComboBox jcbCreatorFont;
     private javax.swing.JComboBox jcbCreatorFontSize;
     private javax.swing.JComboBox jcbTickerFont;
     private javax.swing.JComboBox jcbTickerFontSize;
+    private javax.swing.JComboBox jcbTickerSpeed;
     private javax.swing.JLabel jlCountdownFont;
     private javax.swing.JLabel jlCountdownFontColor;
     private javax.swing.JLabel jlCountdownFontSize;
@@ -1303,6 +1432,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jlTickerFontColor;
     private javax.swing.JLabel jlTickerFontSize;
     private javax.swing.JLabel jlTickerLookAFeel;
+    private javax.swing.JLabel jlTickerSpeed;
     private javax.swing.JLabel jlTickerStatus;
     private javax.swing.JLabel jlTimeToShowVar;
     private javax.swing.JList jliPriorities;

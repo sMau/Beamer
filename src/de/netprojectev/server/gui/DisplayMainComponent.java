@@ -33,7 +33,7 @@ public class DisplayMainComponent extends JComponent {
 	
 	private Countdown countdown;
 	private Font countdownFont;
-	private Color countdownColor;
+	private Color countdownFontColor;
 		
 	//TODO set a background for this component ( e.g. many 4s logos) that there isnt any grey space when showing a 4:3 resolution image
 
@@ -47,8 +47,12 @@ public class DisplayMainComponent extends JComponent {
 	 */
 	protected void updateCountdownFont() {
 		countdownFont = new Font(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTSIZE)));
-		countdownColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
-		log.debug("countdown font attributes updated to font: " + countdownFont + " color: " + countdownColor);
+		log.debug("countdown font updated to font: " + countdownFont);
+	}
+	
+	protected void updateCountdownFontColor() {
+		countdownFontColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
+		log.debug("updating countdown font color");
 	}
 	
 	/**
@@ -88,7 +92,7 @@ public class DisplayMainComponent extends JComponent {
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 	        tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);	        
 	        tmpG2D.setFont(countdownFont); 
-	        tmpG2D.setColor(countdownColor);
+	        tmpG2D.setColor(countdownFontColor);
 			
 			tmpG2D.drawString(countdown.getTimeString(), getWidth()/2 - tmpG2D.getFontMetrics(countdownFont).stringWidth(countdown.getTimeString())/2 , getHeight()/2);
 			tmpG2D.dispose();

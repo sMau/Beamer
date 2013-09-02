@@ -39,7 +39,7 @@ public class ClientMediaFile extends MediaFile {
 		this.showCount = serverMediaFile.getShowCount();
 		this.current = serverMediaFile.isCurrent();
 		
-		int widthToScaleTo = ConstantsServer.DEFAILT_PREVIEW_SCAL_WIDTH;
+		int widthToScaleTo = ConstantsServer.DEFAULT_PREVIEW_SCAL_WIDTH;
 		
 		
 		if (serverMediaFile instanceof Countdown) {

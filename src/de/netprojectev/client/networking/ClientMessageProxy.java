@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -58,6 +60,8 @@ public class ClientMessageProxy {
 	private TimeSyncListener timeSyncListener;
 	private ServerShutdownListener serverShutdownListener;
 	private ServerPropertyUpdateListener serverPropertyUpdateListener;
+	
+	private Timer autoReconnectTimer;
 	
 	private boolean fullsync;
 
@@ -412,7 +416,17 @@ public class ClientMessageProxy {
 
 	public void reconnectForced() {
 		sendDisconnectRequest();
-		client.connect();
+		
+		if(autoReconnectTimer == null) {
+			autoReconnectTimer = new Timer();
+			autoReconnectTimer.schedule(new TimerTask() {
+				
+				@Override
+				public void run() {
+					client.connect();
+				}
+			}, 0, 5000);
+		}
 	}
 
 	private void updatePropertyAck(Message msg) {
@@ -499,10 +513,20 @@ public class ClientMessageProxy {
 	}
 
 	private void loginDenied(Message msg) {
+		if(autoReconnectTimer != null) {
+			autoReconnectTimer.cancel();
+			autoReconnectTimer.purge();
+			autoReconnectTimer = null;
+		}
 		client.loginFailed((String) msg.getData()[0]);
 	}
 
 	private void connectionSuccessful(Message msg) {
+		if(autoReconnectTimer != null) {
+			autoReconnectTimer.cancel();
+			autoReconnectTimer.purge();
+			autoReconnectTimer = null;
+		}
 		client.loginSuccess();
 		sendRequestFullSync();
 	}

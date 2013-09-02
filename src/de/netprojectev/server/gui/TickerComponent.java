@@ -11,8 +11,6 @@ import java.util.TimerTask;
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
 
-import old.de.netprojectev.PreferencesModelOld;
-
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.misc.LoggerBuilder;
@@ -39,7 +37,7 @@ public class TickerComponent extends JComponent {
 	private int tickerSpeed;
 	
 	private Font tickerFont;
-	private Color tickerColor;
+	private Color tickerFontColor;
 	
 	private String toDraw1;
 	private String toDraw2;
@@ -55,7 +53,7 @@ public class TickerComponent extends JComponent {
 	
 	protected TickerComponent() {
 		super();
-		updateLiveTickerAttributes();
+		updateFont();
 		toDraw1 = " ";
 		toDraw2 = " ";
 		tickerString = " ";
@@ -66,22 +64,12 @@ public class TickerComponent extends JComponent {
 	
 	
 	/**
-	 * encapsulates the starting updating of attributes and the new string generation.
-	 * to guarantee the invocation in the appropriated order.
-	 */
-	protected void restartTicker() {
-		updateLiveTickerAttributes();
-		generateDrawingStrings();
-		startLiveTicker();
-	}
-	
-	/**
 	 * encapsulates the start method of the Live Ticker to guarentee
 	 * the attributes of the font to be initialized.
 	 */
 	protected void initLiveTickerAndStart() {
-		updateLiveTickerAttributes();
-		startLiveTicker();
+		updateFont();
+		startOrRestart();
 	}
 	
 	/**
@@ -122,7 +110,7 @@ public class TickerComponent extends JComponent {
 	 * creates a new Swing Timer with the given update interval and starts the timer.
 	 * The timer refreshes the ticker component every x milliseconds.
 	 */
-	private void startLiveTicker() {
+	private void startOrRestart() {
 		
 		if(liveTickerTimer != null) {
 			liveTickerTimer.cancel();
@@ -130,7 +118,7 @@ public class TickerComponent extends JComponent {
 		}
 		liveTickerTimer = new Timer();
 		liveTickerTimer.schedule(new TickerTimerTask(), 0, tickerSpeed);
-    	//log.log(Level.INFO, "Live Ticker started");
+    	log.debug("Live Ticker started");
 	}
     
 
@@ -138,7 +126,7 @@ public class TickerComponent extends JComponent {
 	/**
 	 * Clears the ticker string and stops the live ticker timer
 	 */
-    protected void stopLiveTicker() {
+    protected void stop() {
     	setTickerString("");
     	if(liveTickerTimer != null) {
     		
@@ -150,18 +138,44 @@ public class TickerComponent extends JComponent {
     }
 	
     /**
-     * updates the live ticker attributes via reading them from the properties object from the {@link PreferencesModelOld}
-     * the speed, font size,type and color attributes are affected.
+     * updates the live ticker font. This means size and family.
+     * This causes the ticker to restart, as the font calculations like string width has changed.
      */
-    private void updateLiveTickerAttributes() {
-		
+    protected void updateFont() {
+		Font oldFont = tickerFont;
     	try {
-			tickerSpeed = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SPEED));
+    		log.debug("Updating ticker font family and size.");
 			tickerFont = new Font(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTSIZE)));
-			tickerColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR))); 
     	} catch (NumberFormatException e) {
+    		tickerFont = oldFont;
 			log.warn("Number format exeception", e);
 		}
+		generateDrawingStrings();
+		startOrRestart();
+		
+    }
+    
+    protected void updateFontColor() {
+    	log.debug("Updating ticker font color.");
+		tickerFontColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR))); 
+    }
+    
+    protected void updateSpeed() {
+    	log.debug("Updating ticker speed.");
+    	int oldspeed = tickerSpeed;
+    	try {
+			tickerSpeed = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_SPEED));
+		} catch (NumberFormatException e) {
+			log.error("Tickerspeed is a non numeric value.", e);
+			tickerSpeed = oldspeed;
+		}
+    	generateDrawingStrings();
+		startOrRestart();
+    }
+    
+    protected void updateBackgroundColor() {
+    	log.debug("Updating ticker background color.");
+    	//TODO update background color of the live ticker
     }
     
 	/**
@@ -205,7 +219,7 @@ public class TickerComponent extends JComponent {
         tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		tmpG2D.setFont(tickerFont);
-		tmpG2D.setColor(tickerColor);
+		tmpG2D.setColor(tickerFontColor);
         tmpG2D.drawString(toDraw1, posOfString1, 55);
         tmpG2D.drawString(toDraw2, posOfString2, 55);
         tmpG2D.dispose();
