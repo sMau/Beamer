@@ -58,7 +58,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		this.proxy = proxy;
 		initComponents();
 		setLocationRelativeTo(parent);
-
+		
 		proxy.setServerPropertyUpdateListener(new ServerPropertyUpdateListener() {
 
 			@Override
