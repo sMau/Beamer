@@ -53,13 +53,12 @@ public class TickerComponent extends JComponent {
 	
 	protected TickerComponent() {
 		super();
-		updateFont();
 		toDraw1 = " ";
 		toDraw2 = " ";
 		tickerString = " ";
 		posOfString1 = getWidth();
 		posOfString2 = getWidth();
-		
+		initLiveTickerAndStart();
 	}
 	
 	
@@ -69,6 +68,10 @@ public class TickerComponent extends JComponent {
 	 */
 	protected void initLiveTickerAndStart() {
 		updateFont();
+		updateFontColor();
+		updateSpeed();
+		updateBackgroundColor();
+		generateDrawingStrings();
 		startOrRestart();
 	}
 	
@@ -141,7 +144,30 @@ public class TickerComponent extends JComponent {
      * updates the live ticker font. This means size and family.
      * This causes the ticker to restart, as the font calculations like string width has changed.
      */
-    protected void updateFont() {
+    protected void updateFontByClient() {
+    	updateFont();
+    	generateDrawingStrings();
+		startOrRestart();
+    }
+    
+    protected void updateSpeedByClient() {
+    	updateSpeed();
+    	generateDrawingStrings();
+		startOrRestart();
+    }
+    
+    protected void updateFontColor() {
+    	log.debug("Updating ticker font color.");
+		tickerFontColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR))); 
+    }
+    
+    
+    protected void updateBackgroundColor() {
+    	log.debug("Updating ticker background color.");
+    	//TODO update background color of the live ticker
+    }
+    
+    private void updateFont() {
 		Font oldFont = tickerFont;
     	try {
     		log.debug("Updating ticker font family and size.");
@@ -150,17 +176,9 @@ public class TickerComponent extends JComponent {
     		tickerFont = oldFont;
 			log.warn("Number format exeception", e);
 		}
-		generateDrawingStrings();
-		startOrRestart();
-		
     }
-    
-    protected void updateFontColor() {
-    	log.debug("Updating ticker font color.");
-		tickerFontColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR))); 
-    }
-    
-    protected void updateSpeed() {
+
+    private void updateSpeed() {
     	log.debug("Updating ticker speed.");
     	int oldspeed = tickerSpeed;
     	try {
@@ -169,13 +187,6 @@ public class TickerComponent extends JComponent {
 			log.error("Tickerspeed is a non numeric value.", e);
 			tickerSpeed = oldspeed;
 		}
-    	generateDrawingStrings();
-		startOrRestart();
-    }
-    
-    protected void updateBackgroundColor() {
-    	log.debug("Updating ticker background color.");
-    	//TODO update background color of the live ticker
     }
     
 	/**
@@ -184,6 +195,9 @@ public class TickerComponent extends JComponent {
 	 * @param tickerString
 	 */
     protected void setTickerString(String tickerString) {
+    	if(tickerString == null) {
+    		throw new IllegalArgumentException("tickerString cannot be null");
+    	}
 		this.tickerString = tickerString;
 		if(tickerString != null && !tickerString.equals("")) {
 			generateDrawingStrings();
@@ -198,6 +212,13 @@ public class TickerComponent extends JComponent {
 	 */
 	private void generateDrawingStrings() {
 		//log.log(Level.INFO, "generating new drawing strings");
+		if(tickerFont == null) {
+			log.error("TICKER FONT IS NULL!!!!!");
+		}
+		if(tickerString == null) {
+			log.error("TICKER STRING IS NULL!!!!!");
+		}
+		
 		int tickerStringWidth = getFontMetrics(tickerFont).stringWidth(tickerString);
 			
 		toDraw1 = tickerString;

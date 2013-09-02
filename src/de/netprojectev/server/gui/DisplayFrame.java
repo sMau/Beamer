@@ -80,16 +80,16 @@ public class DisplayFrame extends javax.swing.JFrame {
 			tickerComponent.updateFontColor();
 			break;
 		case ConstantsServer.PROP_TICKER_FONTSIZE:
-			tickerComponent.updateFont();
+			tickerComponent.updateFontByClient();
 			break;
 		case ConstantsServer.PROP_TICKER_FONTTYPE:
-			tickerComponent.updateFont();
+			tickerComponent.updateFontByClient();
 			break;
 		case ConstantsServer.PROP_TICKER_SEPERATOR:
 			updateLiveTickerString();
 			break;
 		case ConstantsServer.PROP_TICKER_SPEED:
-			tickerComponent.updateSpeed();
+			tickerComponent.updateSpeedByClient();
 			break;
 		default:
 			log.warn("received an unknown property key: " + key);

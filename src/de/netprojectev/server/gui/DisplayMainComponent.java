@@ -40,6 +40,7 @@ public class DisplayMainComponent extends JComponent {
 	protected DisplayMainComponent() {
 		super();
 		updateCountdownFont();
+		updateCountdownFontColor();
 	}
 
 	/**

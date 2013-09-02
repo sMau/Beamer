@@ -135,7 +135,7 @@ public class Misc {
 		String[] sizes = new String[arraySize];
 		int index = 0;
 		for (int i = start; i < end + 1; i += n) {
-			sizes[index] = Integer.toString(i) + "pt";
+			sizes[index] = Integer.toString(i);
 			index++;
 		}
 		return sizes;

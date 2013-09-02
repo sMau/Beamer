@@ -6,8 +6,6 @@ package de.netprojectev.client.gui.preferences;
 
 import java.awt.Color;
 
-import de.netprojectev.misc.Misc;
-
 /**
  *
  * @author samu
@@ -26,8 +24,9 @@ public class ColorPickerDialog extends javax.swing.JDialog {
 	
     public ColorPickerDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        setLocation(Misc.currentMousePosition());
+        setLocationRelativeTo(parent);
         initComponents();
+        
     }
 
     /**
