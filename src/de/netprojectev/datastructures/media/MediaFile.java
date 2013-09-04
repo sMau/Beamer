@@ -13,7 +13,7 @@ public abstract class MediaFile implements Serializable {
 	private final UUID id;
 	protected String name;
 	protected Priority priority;
-	protected boolean current;
+	protected transient boolean current;
 	protected transient int showCount;
 	
 	protected MediaFile(String name, Priority priority, UUID id) {

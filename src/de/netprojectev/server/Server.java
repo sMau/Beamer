@@ -103,6 +103,9 @@ public class Server {
 	}
 
 	public static void main(String[] args) {
+		
+		//TODO check Filthy rich clients for enabling flags for performance boost
+		
 		int port = 11111;
 		if (args.length == 1) {
 			try {
@@ -129,11 +132,6 @@ public class Server {
 		});
 		t.start();
 
-		try {
-			PreferencesModelServer.saveProperties();
-		} catch (IOException e) {
-			log.warn("Error during saving properties.", e);
-		}
 		log.info("Server shutdown complete.");
 
 		try {

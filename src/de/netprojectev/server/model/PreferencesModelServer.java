@@ -34,18 +34,7 @@ public class PreferencesModelServer {
 	public PreferencesModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
 		prios = new HashMap<>();
-		themes = new HashMap<>();
-		props = new Properties(Misc.generateServerDefaultProps());
-
-		try {
-			loadProperties();
-		} catch (IOException e) {
-			log.warn("Error loading properties.", e);
-		}
-		Priority defaultPrio = new Priority("default", DEFAULT_PRIO_TIME);
-		defaultPrio.setDefaultPriority(true);
-		addPriority(defaultPrio);
-		this.defaultPriority = defaultPrio;
+		themes = new HashMap<>();		
 	}
 
 	public static String getPropertyByKey(String key) {
@@ -105,10 +94,15 @@ public class PreferencesModelServer {
 		Misc.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
 	}
 
-	public static void loadProperties() throws IOException {
+	public static void loadProperties() {
 		log.info("Loading properties");
 		props = new Properties(Misc.generateServerDefaultProps());
-		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
+		Properties propsLoaded = new Properties();
+		try {
+			propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
+		} catch (IOException e) {
+			log.warn("Properties could not be loaded from disk.", e);
+		}
 		props.putAll(propsLoaded);
 	}
 
@@ -153,10 +147,13 @@ public class PreferencesModelServer {
 		serializeTickerDatabase();
 		serializePriorityDatabase();
 		serializeThemeDatabase();
+		saveProperties();
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void deserializeAll() {
+		
+		loadProperties();
 		
 		HashMap<UUID, ServerMediaFile> allMedia = null;
 		try {
@@ -205,11 +202,21 @@ public class PreferencesModelServer {
 			
 		}
 		
+		boolean defaulPrioExists = false;
 		if(allPriorities != null) {
 			for (UUID id : allPriorities.keySet()) {
+				if(allPriorities.get(id).isDefaultPriority()) {
+					defaulPrioExists = true;
+				}
 				addPriority(allPriorities.get(id));
 			}
 				
+		}
+		if(!defaulPrioExists) {
+			Priority defaultPrio = new Priority("default", DEFAULT_PRIO_TIME);
+			defaultPrio.setDefaultPriority(true);
+			addPriority(defaultPrio);
+			this.defaultPriority = defaultPrio;
 		}
 		
 		if(allThemes != null) {

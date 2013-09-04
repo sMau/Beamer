@@ -1,6 +1,8 @@
 package de.netprojectev.server.gui;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -28,6 +30,12 @@ public class TickerComponent extends JComponent {
 
 	private static final long serialVersionUID = 4472552567124740434L;
 	
+	private final JComponent parent;
+	
+	private final int paddingBottom = 10;
+	private final int paddingTop = 10;
+	private final int marginBottom = 32;
+	
 	private String tickerString;
 	private int posOfString1;
 	private int posOfString2;
@@ -37,7 +45,12 @@ public class TickerComponent extends JComponent {
 	private int tickerSpeed;
 	
 	private Font tickerFont;
+	int tickerStringHeight;
 	private Color tickerFontColor;
+	private int stringY;
+	
+	private Color tickerBackgroundColor;
+	private float tickerBackgroundAlpha;
 	
 	private String toDraw1;
 	private String toDraw2;
@@ -51,14 +64,16 @@ public class TickerComponent extends JComponent {
 		}
 	}
 	
-	protected TickerComponent() {
+	public TickerComponent(JComponent parent) {
 		super();
+		this.parent = parent;
 		toDraw1 = " ";
 		toDraw2 = " ";
 		tickerString = " ";
 		posOfString1 = getWidth();
 		posOfString2 = getWidth();
 		initLiveTickerAndStart();
+		
 	}
 	
 	
@@ -71,6 +86,7 @@ public class TickerComponent extends JComponent {
 		updateFontColor();
 		updateSpeed();
 		updateBackgroundColor();
+		updateBackgroundAlpha();
 		generateDrawingStrings();
 		startOrRestart();
 	}
@@ -164,7 +180,12 @@ public class TickerComponent extends JComponent {
     
     protected void updateBackgroundColor() {
     	log.debug("Updating ticker background color.");
-    	//TODO update background color of the live ticker
+    	tickerBackgroundColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)));
+    }
+    
+    protected void updateBackgroundAlpha() {
+    	log.debug("updating ticker background alpha");
+    	tickerBackgroundAlpha = Float.parseFloat(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA));
     }
     
     private void updateFont() {
@@ -176,6 +197,14 @@ public class TickerComponent extends JComponent {
     		tickerFont = oldFont;
 			log.warn("Number format exeception", e);
 		}
+    	tickerStringHeight = getFontMetrics(tickerFont).getHeight();
+    	
+    	int height = tickerStringHeight + paddingTop + paddingBottom;
+    	int y = parent.getHeight() - marginBottom - height;
+    	this.setBounds(0, y, parent.getWidth(), height);
+
+    	stringY = tickerStringHeight + paddingTop;
+    	
     }
 
     private void updateSpeed() {
@@ -220,7 +249,7 @@ public class TickerComponent extends JComponent {
 		}
 		
 		int tickerStringWidth = getFontMetrics(tickerFont).stringWidth(tickerString);
-			
+		
 		toDraw1 = tickerString;
 		toDrawStringWidth = tickerStringWidth;
 			
@@ -240,9 +269,19 @@ public class TickerComponent extends JComponent {
         tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
         tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 		tmpG2D.setFont(tickerFont);
+		
+		Composite oldComposite = tmpG2D.getComposite();
+		
+		tmpG2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, tickerBackgroundAlpha));
+		tmpG2D.setColor(tickerBackgroundColor);
+		tmpG2D.fillRect(tmpG2D.getClip().getBounds().x, tmpG2D.getClip().getBounds().x,
+				tmpG2D.getClip().getBounds().width, tmpG2D.getClip().getBounds().height);
+		
+		tmpG2D.setComposite(oldComposite);
+		
 		tmpG2D.setColor(tickerFontColor);
-        tmpG2D.drawString(toDraw1, posOfString1, 55);
-        tmpG2D.drawString(toDraw2, posOfString2, 55);
+        tmpG2D.drawString(toDraw1, posOfString1, stringY);
+        tmpG2D.drawString(toDraw2, posOfString2, stringY);
         tmpG2D.dispose();
 	}
 

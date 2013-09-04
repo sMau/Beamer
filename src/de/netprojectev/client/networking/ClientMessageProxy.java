@@ -298,6 +298,7 @@ public class ClientMessageProxy {
 	}
 	
 	public void sendPropertyUpdate(String key, String newValue) {
+		log.debug("Sending property update for: " + key + ", to: " + newValue);
 		sendMessageToServer(new Message(OpCode.CTS_PROPERTY_UPDATE, key, newValue));
 	}
 

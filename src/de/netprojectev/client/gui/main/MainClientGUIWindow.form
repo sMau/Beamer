@@ -116,6 +116,9 @@
       </SubComponents>
     </Container>
     <Menu class="javax.swing.JMenuBar" name="jmbMain">
+      <Properties>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
+      </Properties>
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jmFile">
           <Properties>
@@ -196,6 +199,7 @@
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jmirbAutomode">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Automode"/>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jmirbAutomodeActionPerformed"/>
@@ -260,6 +264,9 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JTabbedPane" name="tabbedPaneContainer">
+      <Properties>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
+      </Properties>
       <Events>
         <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="tabbedPaneContainerStateChanged"/>
       </Events>
@@ -292,6 +299,9 @@
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jspMediaTableContainer">
+              <Properties>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -303,8 +313,8 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new AllMediaTableModel(mediaModel)" type="code"/>
                     </Property>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
                     <Property name="rowHeight" type="int" value="20"/>
-                    <Property name="rowMargin" type="int" value="2"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtAllMediaMouseClicked"/>
@@ -340,6 +350,9 @@
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jspQueueTableContainer">
+              <Properties>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -351,8 +364,8 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new CustomQueueTableModel(mediaModel)" type="code"/>
                     </Property>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
                     <Property name="rowHeight" type="int" value="20"/>
-                    <Property name="rowMargin" type="int" value="2"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtCustomQueueMouseClicked"/>
@@ -388,6 +401,9 @@
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jspTickerTableContainer">
+              <Properties>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -399,6 +415,7 @@
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new TickerTableModel(tickerModel)" type="code"/>
                     </Property>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtLiveTickerMouseClicked"/>

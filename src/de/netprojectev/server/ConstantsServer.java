@@ -55,7 +55,7 @@ public class ConstantsServer {
 	public static final String DEFAULT_TICKER_FONTTYPE = "Arial";
 	public static final int DEFAULT_TICKER_FONTCOLOR = -16777216;
 	public static final int DEFAULT_TICKER_BACKGROUND_COLOR = Color.WHITE.getRGB();
-	
+	public static final float DEFAULT_TICKER_BACKGROUND_ALPHA = 0.3f;
 
 	
 	/*
@@ -69,7 +69,7 @@ public class ConstantsServer {
 	public static final String PROP_TICKER_FONTCOLOR = "ticker.fontColor";
 	public static final String PROP_TICKER_SEPERATOR = "ticker.seperator";
 	public static final String PROP_TICKER_BACKGROUND_COLOR = "ticker.backgroundColor";
-
+	public static final String PROP_TICKER_BACKGROUND_ALPHA = "ticker.backgroundAlpha";
 	
 	public static final String PROP_PW = "password";
 	public static final String PROP_HEARTBEAT_INTERVALL = "timeout";

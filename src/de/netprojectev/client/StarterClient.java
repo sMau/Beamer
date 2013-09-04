@@ -9,6 +9,8 @@ public class StarterClient {
 	 */
 	public static void main(String[] args) {
 
+		
+		//TODO check Filthy rich clients for enabling flags for performance boost
 		  try {
 	            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 	                if ("Nimbus".equals(info.getName())) {

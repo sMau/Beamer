@@ -269,7 +269,7 @@ public class MessageProxyServer {
 	private void propertyUpdate(Message msg) {
 		String key = (String) msg.getData()[0];
 		String newValue = (String) msg.getData()[1];
-		
+				
 		PreferencesModelServer.setProperty(key, newValue);
 		
 		if(propertyUpdateListener != null) {

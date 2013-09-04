@@ -91,6 +91,9 @@ public class DisplayFrame extends javax.swing.JFrame {
 		case ConstantsServer.PROP_TICKER_SPEED:
 			tickerComponent.updateSpeedByClient();
 			break;
+		case ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA:
+			tickerComponent.updateBackgroundAlpha();
+			break;
 		default:
 			log.warn("received an unknown property key: " + key);
 			break;
@@ -240,56 +243,59 @@ public class DisplayFrame extends javax.swing.JFrame {
 	 */
 
 	// <editor-fold defaultstate="collapsed"
-	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-		displayMainComponent = new de.netprojectev.server.gui.DisplayMainComponent();
-		tickerComponent = new de.netprojectev.server.gui.TickerComponent();
+        displayMainComponent = new de.netprojectev.server.gui.DisplayMainComponent();
+        tickerComponent = new de.netprojectev.server.gui.TickerComponent(displayMainComponent);
 
-		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		displayMainComponent.setDoubleBuffered(true);
+        displayMainComponent.setDoubleBuffered(true);
 
-		tickerComponent.setDoubleBuffered(true);
-		tickerComponent.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        tickerComponent.setDoubleBuffered(true);
+        tickerComponent.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+        tickerComponent.setMinimumSize(new java.awt.Dimension(0, 0));
+        tickerComponent.setPreferredSize(new java.awt.Dimension(800, 80));
 
-		javax.swing.GroupLayout tickerComponentLayout = new javax.swing.GroupLayout(tickerComponent);
-		tickerComponent.setLayout(tickerComponentLayout);
-		tickerComponentLayout.setHorizontalGroup(tickerComponentLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 848, Short.MAX_VALUE));
-		tickerComponentLayout.setVerticalGroup(tickerComponentLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGap(0, 61, Short.MAX_VALUE));
+        javax.swing.GroupLayout tickerComponentLayout = new javax.swing.GroupLayout(tickerComponent);
+        tickerComponent.setLayout(tickerComponentLayout);
+        tickerComponentLayout.setHorizontalGroup(
+            tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+        tickerComponentLayout.setVerticalGroup(
+            tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
 
-		javax.swing.GroupLayout displayMainComponentLayout = new javax.swing.GroupLayout(
-				displayMainComponent);
-		displayMainComponent.setLayout(displayMainComponentLayout);
-		displayMainComponentLayout.setHorizontalGroup(displayMainComponentLayout
-				.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-						tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE,
-						javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-		displayMainComponentLayout.setVerticalGroup(displayMainComponentLayout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addGroup(
-				javax.swing.GroupLayout.Alignment.TRAILING,
-				displayMainComponentLayout
-						.createSequentialGroup()
-						.addContainerGap(416, Short.MAX_VALUE)
-						.addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE,
-								javax.swing.GroupLayout.DEFAULT_SIZE,
-								javax.swing.GroupLayout.PREFERRED_SIZE)));
+        javax.swing.GroupLayout displayMainComponentLayout = new javax.swing.GroupLayout(displayMainComponent);
+        displayMainComponent.setLayout(displayMainComponentLayout);
+        displayMainComponentLayout.setHorizontalGroup(
+            displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        displayMainComponentLayout.setVerticalGroup(
+            displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayMainComponentLayout.createSequentialGroup()
+                .addContainerGap(338, Short.MAX_VALUE)
+                .addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32))
+        );
 
-		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-		getContentPane().setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(displayMainComponent,
-				javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-				Short.MAX_VALUE));
-		layout.setVerticalGroup(layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(displayMainComponent,
-				javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE,
-				Short.MAX_VALUE));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
-		pack();
-	}// </editor-fold>//GEN-END:initComponents
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
 
 	/**
 	 * @param args
@@ -341,11 +347,10 @@ public class DisplayFrame extends javax.swing.JFrame {
 		});
 	}
 
-	// Variables declaration - do not modify//GEN-BEGIN:variables
-	private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
-	private de.netprojectev.server.gui.TickerComponent tickerComponent;
-
-	// End of variables declaration//GEN-END:variables
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
+    private de.netprojectev.server.gui.TickerComponent tickerComponent;
+    // End of variables declaration//GEN-END:variables
 
 	public void setVideoFinishedListener(VideoFinishListener videoFinishedListener) {
 		this.videoFinishedListener = videoFinishedListener;

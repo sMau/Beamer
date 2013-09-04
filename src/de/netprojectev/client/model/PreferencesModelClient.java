@@ -91,7 +91,6 @@ public class PreferencesModelClient {
 	}
 
 	public static String getClientPropertyByKey(String key) {
-		log.debug("Getting property: " + key);
 		return clientProperties.getProperty(key);
 	}
 

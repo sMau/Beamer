@@ -188,6 +188,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		}
 		jcbTickerSpeed.setSelectedItem(speedAsString);
 		
+		int tickerBacḱgroundAlpha = (int) (ConstantsServer.DEFAULT_TICKER_BACKGROUND_ALPHA * 100);
+		try {
+			tickerBacḱgroundAlpha = (int) (Float.parseFloat(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA)) * 100);
+		} catch (NumberFormatException e1) {
+			tickerBacḱgroundAlpha = (int) (ConstantsServer.DEFAULT_TICKER_BACKGROUND_ALPHA * 100);
+			log.warn("Could not read ticker background alpha from prefs. Setting to default.", e1 );
+		}
+		jslTickerBackgroundAlpha.setValue(tickerBacḱgroundAlpha);
+		
 		/*
 		 * ThemeslideCreator
 		 */
@@ -284,6 +293,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jbUpdateTickerSpeed = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JSeparator();
         jcbTickerSpeed = new javax.swing.JComboBox();
+        jlTickerBackgroundAlpha = new javax.swing.JLabel();
+        jslTickerBackgroundAlpha = new javax.swing.JSlider();
+        jbUpdateTickerBGAlpha = new javax.swing.JButton();
         jpCountdown = new javax.swing.JPanel();
         jlCountdownLookAFeel = new javax.swing.JLabel();
         jSeparator6 = new javax.swing.JSeparator();
@@ -315,6 +327,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Preferences");
+
+        jtpPreferences.setDoubleBuffered(true);
 
         jbEnableFullscreen.setLabel("Enter");
         jbEnableFullscreen.addActionListener(new java.awt.event.ActionListener() {
@@ -351,7 +365,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addGroup(jpGeneralLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jbServerShutdown)
-                        .addContainerGap(422, Short.MAX_VALUE))
+                        .addContainerGap(452, Short.MAX_VALUE))
                     .addGroup(jpGeneralLayout.createSequentialGroup()
                         .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpGeneralLayout.createSequentialGroup()
@@ -387,12 +401,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbServerShutdown)
-                .addContainerGap(232, Short.MAX_VALUE))
+                .addContainerGap(286, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("General", jpGeneral);
 
+        jspPrioList.setDoubleBuffered(true);
+
         jliPriorities.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jliPriorities.setDoubleBuffered(true);
         jliPriorities.setModel(new PriorityListModel(prefs));
         jspPrioList.setViewportView(jliPriorities);
 
@@ -445,7 +462,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addComponent(jlDefaultPrioVar)
                             .addComponent(jlPrioNameVar)
                             .addComponent(jlTimeToShowVar))))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jpPrioritiesLayout.setVerticalGroup(
             jpPrioritiesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -470,13 +487,16 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addComponent(jbAddPrio)))
                     .addGroup(jpPrioritiesLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jspPrioList, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)))
+                        .addComponent(jspPrioList, javax.swing.GroupLayout.DEFAULT_SIZE, 362, Short.MAX_VALUE)))
                 .addGap(45, 45, 45))
         );
 
         jtpPreferences.addTab("Priorities", jpPriorities);
 
+        jspThemeList.setDoubleBuffered(true);
+
         jliThemes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jliThemes.setDoubleBuffered(true);
         jliThemes.setModel(new ThemeListModel(prefs));
         jspThemeList.setViewportView(jliThemes);
 
@@ -519,7 +539,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jbRemoveTheme)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbAddNewTheme)))
-                        .addGap(0, 89, Short.MAX_VALUE))
+                        .addGap(0, 119, Short.MAX_VALUE))
                     .addComponent(jlThemeBackgroundPreview, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -541,7 +561,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                         .addGroup(jpThemesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jbRemoveTheme)
                             .addComponent(jbAddNewTheme))))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("Themes", jpThemes);
@@ -574,6 +594,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jlTickerLookAFeel.setText("Look and Feel");
 
         jlTickerFont.setText("Font");
+
+        jcbTickerFont.setDoubleBuffered(true);
 
         jbTickerFontUpdate.setText("Update");
         jbTickerFontUpdate.addActionListener(new java.awt.event.ActionListener() {
@@ -616,6 +638,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jlTickerFontSize.setText("Font Size");
 
+        jcbTickerFontSize.setDoubleBuffered(true);
+
         jbUpdateTickerFontSize.setText("Update");
         jbUpdateTickerFontSize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -641,6 +665,20 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jSeparator9.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
         jcbTickerSpeed.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Low", "Medium", "High" }));
+
+        jlTickerBackgroundAlpha.setText("Background Alpha");
+
+        jslTickerBackgroundAlpha.setMajorTickSpacing(10);
+        jslTickerBackgroundAlpha.setMinorTickSpacing(1);
+        jslTickerBackgroundAlpha.setToolTipText("100 is completly opaque. 0 means completly transculent");
+        jslTickerBackgroundAlpha.setValue(30);
+
+        jbUpdateTickerBGAlpha.setText("Update");
+        jbUpdateTickerBGAlpha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateTickerBGAlphaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpTickerLayout = new javax.swing.GroupLayout(jpTicker);
         jpTicker.setLayout(jpTickerLayout);
@@ -668,7 +706,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jcbTickerSpeed, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jbUpdateTickerSpeed)
-                                .addGap(0, 115, Short.MAX_VALUE))
+                                .addGap(0, 145, Short.MAX_VALUE))
                             .addGroup(jpTickerLayout.createSequentialGroup()
                                 .addComponent(jlSeperator)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -701,7 +739,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addGroup(jpTickerLayout.createSequentialGroup()
                                         .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jlTickerFontColor)
-                                            .addComponent(jlTickerBGColor))
+                                            .addComponent(jlTickerBGColor)
+                                            .addComponent(jlTickerBackgroundAlpha))
                                         .addGap(18, 18, 18)))
                                 .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jpTickerLayout.createSequentialGroup()
@@ -725,7 +764,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                     .addGroup(jpTickerLayout.createSequentialGroup()
                                         .addComponent(jbChooseTickerBGColor)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jbUpdateTickerBGColor)))
+                                        .addComponent(jbUpdateTickerBGColor))
+                                    .addGroup(jpTickerLayout.createSequentialGroup()
+                                        .addComponent(jslTickerBackgroundAlpha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jbUpdateTickerBGAlpha)))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -772,16 +815,23 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jbUpdateTickerFontSize)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlTickerFontColor)
-                    .addComponent(jbChooseTickerFontColor)
-                    .addComponent(jbUpdateTickerFontColor))
-                .addGap(18, 18, 18)
-                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlTickerBGColor)
-                    .addComponent(jbChooseTickerBGColor)
-                    .addComponent(jbUpdateTickerBGColor))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jpTickerLayout.createSequentialGroup()
+                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlTickerFontColor)
+                            .addComponent(jbChooseTickerFontColor)
+                            .addComponent(jbUpdateTickerFontColor))
+                        .addGap(18, 18, 18)
+                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jlTickerBGColor)
+                            .addComponent(jbChooseTickerBGColor)
+                            .addComponent(jbUpdateTickerBGColor))
+                        .addGap(18, 18, 18)
+                        .addGroup(jpTickerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlTickerBackgroundAlpha)
+                            .addComponent(jslTickerBackgroundAlpha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jbUpdateTickerBGAlpha))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("Ticker", jpTicker);
@@ -789,6 +839,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jlCountdownLookAFeel.setText("Look and Feel");
 
         jlCountdownFont.setText("Font");
+
+        jcbCountdownFont.setDoubleBuffered(true);
 
         jbUpdateCountdownFont.setText("Update");
         jbUpdateCountdownFont.addActionListener(new java.awt.event.ActionListener() {
@@ -814,6 +866,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
         });
 
         jlCountdownFontSize.setText("Font Size");
+
+        jcbCountdownFontSize.setDoubleBuffered(true);
 
         jbUpdateCountdownFontSize.setText("Update");
         jbUpdateCountdownFontSize.addActionListener(new java.awt.event.ActionListener() {
@@ -850,7 +904,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addComponent(jbUpdateCountdownFont)
                             .addComponent(jbUpdateCountdownFontSize)
                             .addComponent(jbUpdateCountdownFontColor))
-                        .addContainerGap(266, Short.MAX_VALUE))))
+                        .addContainerGap(296, Short.MAX_VALUE))))
         );
         jpCountdownLayout.setVerticalGroup(
             jpCountdownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -874,7 +928,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jlCountdownFontSize)
                     .addComponent(jcbCountdownFontSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbUpdateCountdownFontSize))
-                .addContainerGap(209, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("Countdown", jpCountdown);
@@ -883,6 +937,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jlFontSizeCreator.setText("Font Size");
 
+        jcbCreatorFontSize.setDoubleBuffered(true);
         jcbCreatorFontSize.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbCreatorFontSizeActionPerformed(evt);
@@ -900,6 +955,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
         jlCreatorFontFamily.setText("Font");
 
+        jcbCreatorFont.setDoubleBuffered(true);
         jcbCreatorFont.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbCreatorFontActionPerformed(evt);
@@ -942,7 +998,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
                                 .addComponent(jlCreatorFontColor)
                                 .addGap(26, 26, 26)
                                 .addComponent(jbCreatorChooseFontColor)
-                                .addGap(0, 349, Short.MAX_VALUE)))
+                                .addGap(0, 379, Short.MAX_VALUE)))
                         .addContainerGap())
                     .addGroup(jpThemeslideCreatorLayout.createSequentialGroup()
                         .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1008,12 +1064,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGroup(jpThemeslideCreatorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlCreatorMarginTop)
                     .addComponent(jtfCreatorMarginTop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(102, Short.MAX_VALUE))
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("Themeslide Creator", jpThemeslideCreator);
 
         jbClosePrefs.setText("Close");
+        jbClosePrefs.setDoubleBuffered(true);
         jbClosePrefs.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbClosePrefsActionPerformed(evt);
@@ -1033,10 +1090,10 @@ public class PreferencesFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jtpPreferences, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jtpPreferences, javax.swing.GroupLayout.PREFERRED_SIZE, 442, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jbClosePrefs)
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
         );
 
         pack();
@@ -1145,6 +1202,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			break;
 		}
     }//GEN-LAST:event_jbUpdateTickerSpeedActionPerformed
+
+    private void jbUpdateTickerBGAlphaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerBGAlphaActionPerformed
+        float alphaToSet = ((float) jslTickerBackgroundAlpha.getValue()) / 100;
+        log.debug("Read alpha in the client preferences before update: " + alphaToSet);
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA, Float.toString(alphaToSet));
+    }//GEN-LAST:event_jbUpdateTickerBGAlphaActionPerformed
 
 	private void jbClosePrefsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbClosePrefsActionPerformed
 		dispose();
@@ -1393,6 +1456,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jbUpdateCountdownFont;
     private javax.swing.JButton jbUpdateCountdownFontColor;
     private javax.swing.JButton jbUpdateCountdownFontSize;
+    private javax.swing.JButton jbUpdateTickerBGAlpha;
     private javax.swing.JButton jbUpdateTickerBGColor;
     private javax.swing.JButton jbUpdateTickerFontColor;
     private javax.swing.JButton jbUpdateTickerFontSize;
@@ -1428,6 +1492,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jlThemeName;
     private javax.swing.JLabel jlThemeNameVar;
     private javax.swing.JLabel jlTickerBGColor;
+    private javax.swing.JLabel jlTickerBackgroundAlpha;
     private javax.swing.JLabel jlTickerFont;
     private javax.swing.JLabel jlTickerFontColor;
     private javax.swing.JLabel jlTickerFontSize;
@@ -1443,6 +1508,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jpThemes;
     private javax.swing.JPanel jpThemeslideCreator;
     private javax.swing.JPanel jpTicker;
+    private javax.swing.JSlider jslTickerBackgroundAlpha;
     private javax.swing.JScrollPane jspPrioList;
     private javax.swing.JScrollPane jspThemeList;
     private javax.swing.JTextField jtfCreatorMarginLeft;

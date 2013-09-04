@@ -34,16 +34,19 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="jtpPreferences" min="-2" pref="388" max="-2" attributes="0"/>
+              <Component id="jtpPreferences" min="-2" pref="442" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jbClosePrefs" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="17" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JTabbedPane" name="jtpPreferences">
+      <Properties>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -65,7 +68,7 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                               <Component id="jbServerShutdown" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="422" max="32767" attributes="0"/>
+                              <EmptySpace pref="452" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -113,7 +116,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jbServerShutdown" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="232" max="32767" attributes="0"/>
+                      <EmptySpace pref="286" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -195,7 +198,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="95" max="32767" attributes="0"/>
+                      <EmptySpace pref="125" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -227,7 +230,7 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jspPrioList" pref="308" max="32767" attributes="0"/>
+                              <Component id="jspPrioList" pref="362" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
@@ -237,6 +240,9 @@
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jspPrioList">
+              <Properties>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -249,6 +255,7 @@
                       <StringArray count="0"/>
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jliPriorities.setModel(new PriorityListModel(prefs));"/>
@@ -334,7 +341,7 @@
                                       <Component id="jbAddNewTheme" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="89" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="119" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jlThemeBackgroundPreview" max="32767" attributes="0"/>
                       </Group>
@@ -365,13 +372,16 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="46" max="32767" attributes="0"/>
+                      <EmptySpace pref="100" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
             <Container class="javax.swing.JScrollPane" name="jspThemeList">
+              <Properties>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
+              </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
               </AuxValues>
@@ -384,6 +394,7 @@
                       <StringArray count="0"/>
                     </Property>
                     <Property name="selectionMode" type="int" value="0"/>
+                    <Property name="doubleBuffered" type="boolean" value="true"/>
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jliThemes.setModel(new ThemeListModel(prefs));"/>
@@ -459,7 +470,7 @@
                                       <Component id="jcbTickerSpeed" min="-2" pref="113" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jbUpdateTickerSpeed" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="115" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="145" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jlSeperator" min="-2" max="-2" attributes="0"/>
@@ -502,6 +513,7 @@
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jlTickerFontColor" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   <Component id="jlTickerBGColor" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jlTickerBackgroundAlpha" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                           </Group>
@@ -535,6 +547,11 @@
                                               <Component id="jbChooseTickerBGColor" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="jbUpdateTickerBGColor" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="jslTickerBackgroundAlpha" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="jbUpdateTickerBGAlpha" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -598,18 +615,28 @@
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jlTickerFontColor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbChooseTickerFontColor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbUpdateTickerFontColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jlTickerFontColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jbChooseTickerFontColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jbUpdateTickerFontColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jlTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jbChooseTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jbUpdateTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="jlTickerBackgroundAlpha" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jslTickerBackgroundAlpha" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Component id="jbUpdateTickerBGAlpha" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jlTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbChooseTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jbUpdateTickerBGColor" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="21" max="32767" attributes="0"/>
+                      <EmptySpace pref="36" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -672,6 +699,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jbTickerFontUpdate">
@@ -734,6 +762,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jbUpdateTickerFontSize">
@@ -788,6 +817,27 @@
                 </Property>
               </Properties>
             </Component>
+            <Component class="javax.swing.JLabel" name="jlTickerBackgroundAlpha">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Background Alpha"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JSlider" name="jslTickerBackgroundAlpha">
+              <Properties>
+                <Property name="majorTickSpacing" type="int" value="10"/>
+                <Property name="minorTickSpacing" type="int" value="1"/>
+                <Property name="toolTipText" type="java.lang.String" value="100 is completly opaque. 0 means completly transculent"/>
+                <Property name="value" type="int" value="30"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JButton" name="jbUpdateTickerBGAlpha">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Update"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbUpdateTickerBGAlphaActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="jpCountdown">
@@ -830,7 +880,7 @@
                                   <Component id="jbUpdateCountdownFontSize" min="-2" max="-2" attributes="0"/>
                                   <Component id="jbUpdateCountdownFontColor" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="266" max="32767" attributes="0"/>
+                              <EmptySpace pref="296" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -862,7 +912,7 @@
                           <Component id="jcbCountdownFontSize" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jbUpdateCountdownFontSize" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="209" max="32767" attributes="0"/>
+                      <EmptySpace pref="263" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -885,6 +935,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jbUpdateCountdownFont">
@@ -926,6 +977,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="jbUpdateCountdownFontSize">
@@ -965,7 +1017,7 @@
                                       <Component id="jlCreatorFontColor" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       <Component id="jbCreatorChooseFontColor" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="0" pref="349" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="379" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1056,7 +1108,7 @@
                           <Component id="jlCreatorMarginTop" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jtfCreatorMarginTop" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="102" max="32767" attributes="0"/>
+                      <EmptySpace pref="156" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1079,6 +1131,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbCreatorFontSizeActionPerformed"/>
@@ -1107,6 +1160,7 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="0"/>
                 </Property>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbCreatorFontActionPerformed"/>
@@ -1146,6 +1200,7 @@
     <Component class="javax.swing.JButton" name="jbClosePrefs">
       <Properties>
         <Property name="text" type="java.lang.String" value="Close"/>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbClosePrefsActionPerformed"/>
