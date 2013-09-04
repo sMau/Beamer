@@ -119,6 +119,7 @@ public class MessageProxyServer {
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
 		this.prefsModel = new PreferencesModelServer(this);
+		this.prefsModel.deserializeAll();
 		this.videoFileReceiveHandler = new VideoFileReceiveHandler();
 		this.display = new DisplayFrame(this);
 		this.server = server;

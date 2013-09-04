@@ -20,7 +20,6 @@ import org.jboss.netty.util.HashedWheelTimer;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
@@ -41,11 +40,8 @@ public class Server {
 
 		proxy = new MessageProxyServer(this);
 		
-		proxy.getPrefsModel().deserializeAll();
-
 		timer = new HashedWheelTimer();
 		bindListeningSocket();
-		
 		
 		/*
 		 * when setup is finished make the gui visible
