@@ -407,6 +407,12 @@ public class MessageProxyServer {
 	 * 
 	 * add handling for further prefs like changing fonts and colors of live ticker
 	 * 
+	 * Use Command line lib like:
+	 * 		http://jewelcli.lexicalscope.com
+	 * 		http://pholser.github.io/jopt-simple/
+	 * 
+	 * Use Installer lib like IzPack
+	 * 
 	 * pimp the live ticker a little slightly transparent overlay or something like that 
  	 * next pimp server gui (Effects and so on)
 	 *
