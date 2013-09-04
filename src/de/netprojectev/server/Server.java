@@ -17,6 +17,9 @@ import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 import org.jboss.netty.util.HashedWheelTimer;
 
+import uk.co.flamingpenguin.jewel.cli.ArgumentValidationException;
+import uk.co.flamingpenguin.jewel.cli.CliFactory;
+
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -101,7 +104,16 @@ public class Server {
 	public static void main(String[] args) {
 		
 		//TODO check Filthy rich clients for enabling flags for performance boost
+
+		try {
+			ServerCLI commands = CliFactory.parseArguments(ServerCLI.class, args);
+			
+		} catch (ArgumentValidationException e) {
+			e.printStackTrace();
+		}
 		
+		
+
 		int port = 11111;
 		if (args.length == 1) {
 			try {
