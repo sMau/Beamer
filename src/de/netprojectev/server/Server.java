@@ -18,6 +18,7 @@ import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 import org.jboss.netty.util.HashedWheelTimer;
 
 import uk.co.flamingpenguin.jewel.cli.ArgumentValidationException;
+import uk.co.flamingpenguin.jewel.cli.Cli;
 import uk.co.flamingpenguin.jewel.cli.CliFactory;
 
 import de.netprojectev.misc.LoggerBuilder;
@@ -36,7 +37,7 @@ public class Server {
 	private ChannelFactory factory;
 	private HashedWheelTimer timer;
 
-	public Server(int port) {
+	public Server(int port, boolean fullscreen) {
 		this.port = port;
 
 		checkAndCreateDirs();
@@ -46,11 +47,15 @@ public class Server {
 		timer = new HashedWheelTimer();
 		bindListeningSocket();
 		
+		
 		/*
 		 * when setup is finished make the gui visible
 		 */
-		
+		if(fullscreen) {
+			proxy.enableFullScreen();
+		}
 		proxy.makeGUIVisible();
+		
 	}
 
 	private void checkAndCreateDirs() {
@@ -103,26 +108,29 @@ public class Server {
 
 	public static void main(String[] args) {
 		
-		//TODO check Filthy rich clients for enabling flags for performance boost
-
+		//TODO add memory params to the vm
+		
+		System.setProperty("sun.java2d.opengl", "True");
+		
+		ServerCLI commands = null;
+		final Cli<ServerCLI> cli = CliFactory.createCli(ServerCLI.class);
 		try {
-			ServerCLI commands = CliFactory.parseArguments(ServerCLI.class, args);
-			
+			commands = cli.parseArguments(args);
 		} catch (ArgumentValidationException e) {
-			e.printStackTrace();
+			System.out.println(cli.getHelpMessage());
+			System.exit(0);
 		}
-		
-		
 
-		int port = 11111;
-		if (args.length == 1) {
-			try {
-				port = Integer.parseInt(args[0]);
-			} catch (NumberFormatException e) {
-				log.warn("Port not set. Arg was no number.");
-			}
+		int port = commands.getPort();
+		
+		if(!(port < 65535 && port > 1024)) {
+			System.out.println(cli.getHelpMessage());
+			System.exit(0);
 		}
-		new Server(port);
+		
+		boolean fullscreen = commands.isFullscreen();
+		
+		new Server(port, fullscreen);
 	}
 
 	public void shutdownServer() {

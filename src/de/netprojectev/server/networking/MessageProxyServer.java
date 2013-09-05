@@ -602,7 +602,7 @@ public class MessageProxyServer {
 		prefsModel.serializeMediaDatabase();
 	}
 
-	private void enableFullScreen() {
+	public void enableFullScreen() {
 		fullscreenEnabled = true;
 		
 		display.enterFullscreen(0);

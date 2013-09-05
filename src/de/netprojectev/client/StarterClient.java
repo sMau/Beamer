@@ -9,8 +9,9 @@ public class StarterClient {
 	 */
 	public static void main(String[] args) {
 
+		System.setProperty("sun.java2d.opengl", "True");
 		
-		//TODO check Filthy rich clients for enabling flags for performance boost
+		//TODO add memory params to the vm
 		  try {
 	            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
 	                if ("Nimbus".equals(info.getName())) {
