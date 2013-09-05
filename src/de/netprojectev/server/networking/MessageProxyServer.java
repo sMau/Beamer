@@ -394,7 +394,7 @@ public class MessageProxyServer {
 	}
 	
 	
-	//TODO last worked here: made changing server props work (only live ticker sep atm)
+	//TODO todo list
 	
 	/* !!!!!!!!!!!!!!!
 	 * !!!!!! Test with notebook as server (esp. video things and fullscreen switches (preferred using tv as monitor like the beamer))
@@ -405,9 +405,9 @@ public class MessageProxyServer {
 	 * DONE 3 next exception handling
 	 * DONE 4 reconnecting with a timer -> see todo reconnect in clientmsghandler
 	 * 
-	 * add handling for further prefs like changing fonts and colors of live ticker
+	 * DONE add handling for further prefs like changing fonts and colors of live ticker
 	 * 
-	 * Use Command line lib like:
+	 * DONE Use Command line lib like:
 	 * 		http://jewelcli.lexicalscope.com
 	 * 		http://pholser.github.io/jopt-simple/
 	 * 
@@ -420,7 +420,7 @@ public class MessageProxyServer {
 	 *
 	 * check for already running server instances, and esp. get a port from the os not fixed (scanning the network for the server is required then)
 	 * 
-	 * pimp the clinet gui -> resizable areas, event log, loading dialogs during network operations
+	 * pimp the client gui -> resizable areas, event log, loading dialogs during network operations
 	 * 
 	 * next check all the image to imageicon conversions and choose best for performance and RAM usage
 	 * 

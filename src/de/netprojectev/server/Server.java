@@ -109,6 +109,7 @@ public class Server {
 	public static void main(String[] args) {
 		
 		//TODO add memory params to the vm
+		//TODO check which look and feel to use (maybe makes difference for fullscreen or somethin like that)
 		
 		System.setProperty("sun.java2d.opengl", "True");
 		
