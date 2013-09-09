@@ -33,8 +33,8 @@ public class PreferencesModelServer {
 
 	public PreferencesModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
-		prios = new HashMap<>();
-		themes = new HashMap<>();		
+		prios = new HashMap<UUID, Priority>();
+		themes = new HashMap<UUID, Theme>();		
 	}
 
 	public static String getPropertyByKey(String key) {

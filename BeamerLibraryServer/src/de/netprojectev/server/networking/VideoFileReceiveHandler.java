@@ -18,9 +18,9 @@ public class VideoFileReceiveHandler {
 	private final HashMap<UUID, MessageCounter> msgCounter;
 
 	public VideoFileReceiveHandler() {
-		receivingFiles = new ArrayList<>();
-		outputstreams = new HashMap<>();
-		msgCounter = new HashMap<>();
+		receivingFiles = new ArrayList<UUID>();
+		outputstreams = new HashMap<UUID, BufferedOutputStream>();
+		msgCounter = new HashMap<UUID, MessageCounter>();
 
 	}
 

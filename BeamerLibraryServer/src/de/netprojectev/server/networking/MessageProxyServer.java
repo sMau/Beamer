@@ -96,7 +96,7 @@ public class MessageProxyServer {
 		@Override
 		public void run(Timeout timeout) throws Exception {
 			
-			ArrayList<ConnectedUser> timedOuts = new ArrayList<>();
+			ArrayList<ConnectedUser> timedOuts = new ArrayList<ConnectedUser>();
 			
 			timeoutChecker.newTimeout(new TimeoutTimerTask(), timeoutInSeconds, TimeUnit.SECONDS);
 			for(ConnectedUser user : connectedUsers) {
@@ -123,7 +123,7 @@ public class MessageProxyServer {
 		this.videoFileReceiveHandler = new VideoFileReceiveHandler();
 		this.display = new DisplayFrame(this);
 		this.server = server;
-		this.connectedUsers = new ArrayList<>();
+		this.connectedUsers = new ArrayList<ConnectedUser>();
 		this.timeoutChecker = new HashedWheelTimer();
 		
 		try {

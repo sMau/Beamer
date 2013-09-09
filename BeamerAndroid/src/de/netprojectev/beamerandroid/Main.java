@@ -9,12 +9,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import de.netprojectev.beamerandroid.LoginDialog.LoginDialogListener;
 import de.netprojectev.beamerandroid.media.AllMediaFragment;
 import de.netprojectev.beamerandroid.media.MediaQueueFragment;
 import de.netprojectev.beamerandroid.ticker.TickerFragment;
 import de.netprojectev.client.ClientGUI;
+import de.netprojectev.networking.LoginData;
 
-public class Main extends ActionBarActivity implements ClientGUI {
+public class Main extends ActionBarActivity implements LoginDialogListener, ClientGUI {
 
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private ViewPager mViewPager;
@@ -26,6 +28,8 @@ public class Main extends ActionBarActivity implements ClientGUI {
 		
 		getSupportActionBar().setSubtitle("Overview");
 
+		new LoginDialog().show(getSupportFragmentManager(), "Login");		
+		
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -77,6 +81,19 @@ public class Main extends ActionBarActivity implements ClientGUI {
 			}
 			return null;
 		}
+	}
+
+
+	@Override
+	public void onLoginClicked(String ip, int port, LoginData login) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onCancelClicked() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override

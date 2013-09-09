@@ -22,7 +22,7 @@ public class TickerModelServer {
 	public TickerModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
 		completeTickerText = "";
-		elements = new HashMap<>();
+		elements = new HashMap<UUID, ServerTickerElement>();
 	}
 	
 	public UUID addTickerElement(ServerTickerElement e) {

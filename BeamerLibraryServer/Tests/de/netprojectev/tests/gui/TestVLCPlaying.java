@@ -12,7 +12,7 @@ public class TestVLCPlaying {
 
 			
 		
-	        final ArrayList<String> vlcStartCommand = new ArrayList<>();
+	        final ArrayList<String> vlcStartCommand = new ArrayList<String>();
 	        vlcStartCommand.add("vlc");
 	        vlcStartCommand.add("-f");
 	        vlcStartCommand.add("--no-video-title-show");

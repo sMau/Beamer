@@ -60,7 +60,7 @@ public class PreferencesModelClient {
 		public void update() {
 		}
 	};
-	private ArrayList<PriorityListChangedListener> priorityChangedListeners = new ArrayList<>();
+	private ArrayList<PriorityListChangedListener> priorityChangedListeners = new ArrayList<PriorityListChangedListener>();
 	private UpdateAutoModeStateListener autoModeStateListener = new UpdateAutoModeStateListener() {
 		@Override
 		public void update(boolean fullsync) {
@@ -85,10 +85,10 @@ public class PreferencesModelClient {
 	public PreferencesModelClient(ClientMessageProxy proxy) {
 
 		this.proxy = proxy;
-		this.themes = new HashMap<>();
-		this.prios = new HashMap<>();
-		this.allPrioritiesList = new ArrayList<>();
-		this.allThemesList = new ArrayList<>();
+		this.themes = new HashMap<UUID, Theme>();
+		this.prios = new HashMap<UUID, Priority>();
+		this.allPrioritiesList = new ArrayList<UUID>();
+		this.allThemesList = new ArrayList<UUID>();
 		PreferencesModelClient.clientProperties = new Properties(Misc.generateClientDefaultProps());
 	}
 

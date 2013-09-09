@@ -37,8 +37,8 @@ public class TickerModelClient {
 	public TickerModelClient(ClientMessageProxy proxy) {
 
 		this.proxy = proxy;
-		this.elements = new HashMap<>();
-		this.allElementsList = new ArrayList<>();
+		this.elements = new HashMap<UUID, ClientTickerElement>();
+		this.allElementsList = new ArrayList<UUID>();
 	}
 
 	public UUID addTickerElement(ClientTickerElement e) {

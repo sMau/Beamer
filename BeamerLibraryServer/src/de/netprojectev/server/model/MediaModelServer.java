@@ -29,9 +29,9 @@ public class MediaModelServer {
 	
 	public MediaModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
-		allMediaFiles = new HashMap<>();
-		mediaStandardList = new LinkedList<>();
-		mediaPrivateQueue = new LinkedList<>();
+		allMediaFiles = new HashMap<UUID, ServerMediaFile>();
+		mediaStandardList = new LinkedList<UUID>();
+		mediaPrivateQueue = new LinkedList<UUID>();
 		rand = new Random();
 		log.debug("Media model successfully created");
 	}

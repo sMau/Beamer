@@ -18,7 +18,7 @@ public class VlcPlayBackUtility {
 	public Process startPlay() throws Exception {
 
 		//TODO quit video if nexat is clicked before video playing is finished
-		final ArrayList<String> vlcStartCommand = new ArrayList<>();
+		final ArrayList<String> vlcStartCommand = new ArrayList<String>();
 		vlcStartCommand.add("vlc");
 		vlcStartCommand.add("-f");
 		vlcStartCommand.add("--no-video-title-show");

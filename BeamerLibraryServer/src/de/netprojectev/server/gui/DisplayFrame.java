@@ -63,41 +63,31 @@ public class DisplayFrame extends javax.swing.JFrame {
 	}
 
 	private void propertyUpdated(String key) {
-		switch (key) {
-		case ConstantsServer.PROP_COUNTDOWN_FONTCOLOR:
+		if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)) {
 			displayMainComponent.updateCountdownFontColor();
-			break;
-		case ConstantsServer.PROP_COUNTDOWN_FONTSIZE:
+
+		} else if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTSIZE)) {
 			displayMainComponent.updateCountdownFont();
-			break;
-		case ConstantsServer.PROP_COUNTDOWN_FONTTYPE:
+		} else if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTTYPE)) {
 			displayMainComponent.updateCountdownFont();
-			break;
-		case ConstantsServer.PROP_TICKER_BACKGROUND_COLOR:
+		} else if(key.equals(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)) {
 			tickerComponent.updateBackgroundColor();
-			break;
-		case ConstantsServer.PROP_TICKER_FONTCOLOR:
+		} else if(key.equals(ConstantsServer.PROP_TICKER_FONTCOLOR)) {
 			tickerComponent.updateFontColor();
-			break;
-		case ConstantsServer.PROP_TICKER_FONTSIZE:
+		} else if(key.equals(ConstantsServer.PROP_TICKER_FONTSIZE)) {
 			tickerComponent.updateFontByClient();
-			break;
-		case ConstantsServer.PROP_TICKER_FONTTYPE:
+		} else if(key.equals(ConstantsServer.PROP_TICKER_FONTTYPE)) {
 			tickerComponent.updateFontByClient();
-			break;
-		case ConstantsServer.PROP_TICKER_SEPERATOR:
+		} else if(key.equals(ConstantsServer.PROP_TICKER_SEPERATOR)) {
 			updateLiveTickerString();
-			break;
-		case ConstantsServer.PROP_TICKER_SPEED:
+		} else if(key.equals(ConstantsServer.PROP_TICKER_SPEED)) {
 			tickerComponent.updateSpeedByClient();
-			break;
-		case ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA:
+		} else if(key.equals(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA)) {
 			tickerComponent.updateBackgroundAlpha();
-			break;
-		default:
+		} else {
 			log.warn("received an unknown property key: " + key);
-			break;
 		}
+		
 	}
 
 	public void showMediaFileInMainComponent(ServerMediaFile fileToShow) throws IOException {

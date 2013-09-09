@@ -59,9 +59,9 @@ public class MediaModelClient {
 	
 	public MediaModelClient(ClientMessageProxy proxy) {
 		this.proxy = proxy;
-		this.allMedia = new HashMap<>();
-		this.allMediaList = new ArrayList<>();
-		this.customQueue = new LinkedList<>();
+		this.allMedia = new HashMap<UUID, ClientMediaFile>();
+		this.allMediaList = new ArrayList<UUID>();
+		this.customQueue = new LinkedList<UUID>();
 	}
 	
 	
