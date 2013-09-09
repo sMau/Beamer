@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.client.model.MediaModelClient.UpdateCustomQueueDataListener;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 
@@ -84,8 +85,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 		try {
 			media = mediaModel.getMediaFileById(mediaModel.getCustomQueue().get(rowIndex));
 		} catch (MediaDoesNotExsistException e) {
-			ClientMessageProxy.errorRequestFullSync(mediaModel.getProxy(), e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
+			mediaModel.getProxy().errorRequestFullSync(e);
 		}
 		if (media == null) {
 			return null;
@@ -97,8 +97,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 				try {
 					return mediaModel.timeUntilShow(rowIndex);
 				} catch (MediaDoesNotExsistException e) {
-					ClientMessageProxy.errorRequestFullSync(mediaModel.getProxy(), e);
-					MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
+					mediaModel.getProxy().errorRequestFullSync(e);
 					return 0;
 				}
 			case 2:

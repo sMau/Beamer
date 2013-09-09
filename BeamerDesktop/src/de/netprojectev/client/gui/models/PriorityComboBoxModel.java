@@ -30,8 +30,7 @@ public class PriorityComboBoxModel extends DefaultComboBoxModel<Priority> {
 				try {
 					updateListData();
 				} catch (PriorityDoesNotExistException e) {
-					ClientMessageProxy.errorRequestFullSync(prefs.getProxy(), e);
-					MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
+					prefs.getProxy().errorRequestFullSync(e);
 				}
 			}
 		});

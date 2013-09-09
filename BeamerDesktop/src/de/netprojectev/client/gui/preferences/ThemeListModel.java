@@ -42,8 +42,7 @@ public class ThemeListModel extends AbstractListModel<Theme> {
 		try {
 			return prefs.getThemeAt(index);
 		} catch (ThemeDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(prefs.getProxy(), e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
+			prefs.getProxy().errorRequestFullSync(e);
 		}
 		return null;
 	}

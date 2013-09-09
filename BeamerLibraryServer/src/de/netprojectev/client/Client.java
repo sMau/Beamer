@@ -1,6 +1,5 @@
 package de.netprojectev.client;
 
-import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
@@ -32,7 +31,7 @@ public class Client {
 	private final ClientMessageProxy proxy;
 	private final String host;
 	private final int port;
-	private ClientGUI gui;
+	private final ClientGUI gui;
 	
 	private boolean loginSuccess;
 	
@@ -42,19 +41,13 @@ public class Client {
 		this.login = login;
 		this.host = host;
 		this.port = port;
-		
-		File savePath = new File(ConstantsClient.SAVE_PATH);
-		if (!savePath.exists()) {
-			savePath.mkdirs();
-		}
-		
-		this.proxy = new ClientMessageProxy(this);
-		
 		this.gui = gui;
 		
+		this.proxy = new ClientMessageProxy(this);
+
 	}
 	
-	public void connect() {
+	public ClientMessageProxy connect() {
 		factory = new NioClientSocketChannelFactory(Executors.newCachedThreadPool(), Executors.newCachedThreadPool());
 		ClientBootstrap bootstrap = new ClientBootstrap(factory);
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
@@ -87,6 +80,8 @@ public class Client {
 			releaseExternalRessources();		
 			loginFailed("Connection failed. Reason: Host not reachable.");
 		}
+		
+		return proxy;
 	}
 
 	public void disconnect() {
@@ -141,6 +136,18 @@ public class Client {
 
 	public ClientGUI getGui() {
 		return gui;
+	}
+
+	public LoginData getLogin() {
+		return login;
+	}
+
+	public String getHost() {
+		return host;
+	}
+
+	public int getPort() {
+		return port;
 	}
 	
 }

@@ -1,6 +1,5 @@
 package de.netprojectev.client.gui.main;
 
-import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -18,6 +17,8 @@ import javax.swing.event.ListSelectionListener;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.client.Client;
+import de.netprojectev.client.ClientGUI;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.gui.main.CreateTickerElementDialog.DialogClosedListener;
@@ -31,9 +32,13 @@ import de.netprojectev.client.gui.preferences.AddThemeDialog;
 import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.gui.themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.client.model.MediaModelClient.UpdateCurrentFileListener;
 import de.netprojectev.client.model.PreferencesModelClient;
+import de.netprojectev.client.model.PreferencesModelClient.UpdateAutoModeStateListener;
 import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.ClientMessageProxy.ServerShutdownListener;
+import de.netprojectev.client.networking.ClientMessageProxy.TimeSyncListener;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
@@ -41,12 +46,13 @@ import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.misc.Misc;
+import de.netprojectev.networking.LoginData;
 
 /**
  * 
  * @author samu
  */
-public class MainClientGUIWindow extends javax.swing.JFrame {
+public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI {
 
 
 
@@ -72,7 +78,15 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 	/**
 	 * Creates new form MainClientGUIWindow
 	 */
-	public MainClientGUIWindow(Container parent, final ClientMessageProxy proxy) {
+	public MainClientGUIWindow() {
+		
+		LoginDialog loginDialog = new LoginDialog(this, true);
+		loginDialog.setVisible(true);
+		
+		Client client = new Client(loginDialog.getIp(), loginDialog.getPort(), 
+				new LoginData(loginDialog.getAlias(), loginDialog.getPassword()), this);
+		this.proxy = client.connect();
+
 		this.mediaModel = proxy.getMediaModel();
 
 		this.timeleftData = new TimeLeftData(0);
@@ -105,9 +119,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 			}
 
 		});
-
-		this.proxy = proxy;
-		
+	
 		this.proxy.setTimeSyncListener(new TimeSyncListener() {
 			
 			@Override
@@ -129,7 +141,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		
 		initComponents();
 
-		this.setLocationRelativeTo(parent);
+		this.setLocationRelativeTo(new JFrame());
 
 		jtAllMedia.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
@@ -138,14 +150,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				try {
 					updatePreviewLable();
 				} catch (MediaDoesNotExsistException e1) {
-					ClientMessageProxy.errorRequestFullSync(proxy, e1);
-					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+					proxy.errorRequestFullSync(e1);
 				}
 				try {
 					updateEditorLable();
 				} catch (MediaDoesNotExsistException e1) {
-					ClientMessageProxy.errorRequestFullSync(proxy, e1);
-					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+					proxy.errorRequestFullSync(e1);
 				}
 			}
 
@@ -158,14 +168,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				try {
 					updatePreviewLable();
 				} catch (MediaDoesNotExsistException e1) {
-					ClientMessageProxy.errorRequestFullSync(proxy, e1);
-					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+					proxy.errorRequestFullSync(e1);
 				}
 				try {
 					updateEditorLable();
 				} catch (MediaDoesNotExsistException e1) {
-					ClientMessageProxy.errorRequestFullSync(proxy, e1);
-					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+					proxy.errorRequestFullSync(e1);
 				}
 			}
 		});
@@ -177,14 +185,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 				try {
 					updatePreviewLable();
 				} catch (MediaDoesNotExsistException e1) {
-					ClientMessageProxy.errorRequestFullSync(proxy, e1);
-					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+					proxy.errorRequestFullSync(e1);
 				}
 				try {
 					updateEditorLable();
 				} catch (MediaDoesNotExsistException e1) {
-					ClientMessageProxy.errorRequestFullSync(proxy, e1);
-					MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+					proxy.errorRequestFullSync(e1);
 				}
 			}
 		});
@@ -192,15 +198,10 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		try {
 			jcbPriorityChange.setModel(new PriorityComboBoxModel(prefs));
 		} catch (PriorityDoesNotExistException e1) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e1);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+			proxy.errorRequestFullSync(e1);
 		}
 	}
-	
-	public static void errorRequestingFullsyncDialog(JFrame parent) {
-		JOptionPane.showMessageDialog(parent, "Could not find data.\n Requesting a full sync now.",
-				"Error reading data", JOptionPane.ERROR_MESSAGE);
-	}
+
 
 
 	/**
@@ -848,8 +849,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		try {
 			updateEditorLable();
 		} catch (MediaDoesNotExsistException e) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+			proxy.errorRequestFullSync(e);
 		}
 	}// GEN-LAST:event_jbResetFileDataActionPerformed
 
@@ -1094,11 +1094,9 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		try {
 			new ThemeslideCreatorFrame(this, proxy).setVisible(true);
 		} catch (ThemeDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+			proxy.errorRequestFullSync(e);
 		} catch (PriorityDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(MainClientGUIWindow.this);
+			proxy.errorRequestFullSync(e);
 		}
 	}
 
@@ -1398,7 +1396,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new MainClientGUIWindow(null, null).setVisible(true);
+				new MainClientGUIWindow().setVisible(true);
 			}
 		});
 	}
@@ -1471,6 +1469,25 @@ public class MainClientGUIWindow extends javax.swing.JFrame {
 
 	public TimeLeftData getTimeleftData() {
 		return timeleftData;
+	}
+
+	@Override
+	public void errorDuringLogin(String msg) {
+		JOptionPane.showMessageDialog(this, msg, "Error Login", JOptionPane.ERROR_MESSAGE);
+	}
+
+	@Override
+	public void loginSuccess() {
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				setVisible(true);
+			}
+		});
+	}
+	
+	public void errorRequestingFullsyncDialog() {
+		JOptionPane.showMessageDialog(this, "Could not find data.\n Requesting a full sync now.",
+				"Error reading data", JOptionPane.ERROR_MESSAGE);
 	}
 
 }

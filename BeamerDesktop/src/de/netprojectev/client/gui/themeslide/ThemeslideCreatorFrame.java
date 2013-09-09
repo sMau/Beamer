@@ -28,7 +28,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 
 import de.netprojectev.client.ConstantsClient;
-import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.gui.preferences.ColorPickerDialog;
 import de.netprojectev.client.model.PreferencesModelClient;
@@ -304,11 +303,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		try {
 			success = addThemeslide();
 		} catch (PriorityDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+			proxy.errorRequestFullSync(e);
 		} catch (ThemeDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+			proxy.errorRequestFullSync(e);
 		}
 		if (success) {
 			dispose();
@@ -320,11 +317,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		try {
 			success = addThemeslide();
 		} catch (PriorityDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+			proxy.errorRequestFullSync(e);
 		} catch (ThemeDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+			proxy.errorRequestFullSync(e);
 		}
 		if (success) {
 			// TODO Add and show
@@ -342,8 +337,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		try {
 			textPaneThemeslide.setThemeBackground(prefs.getThemeAt(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
 		} catch (ThemeDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(proxy, e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+			proxy.errorRequestFullSync(e);
 		}
 	}// GEN-LAST:event_jComboBoxThemeActionPerformed
 

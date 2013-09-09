@@ -200,7 +200,7 @@ public class AddPriorityDialog extends javax.swing.JDialog {
     			JOptionPane.showMessageDialog(this, "The entered minutes are not valid.");
     			return;
     		}
-    		proxy.sendMessageToServer(new Message(OpCode.CTS_ADD_PRIORITY, new Priority(name, minutes)));
+    		proxy.sendAddPriority(new Priority(name, minutes));
     	}
         returnStatus = retStatus;
         setVisible(false);

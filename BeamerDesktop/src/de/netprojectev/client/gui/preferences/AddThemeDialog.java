@@ -239,7 +239,7 @@ public class AddThemeDialog extends javax.swing.JDialog {
 		        return;
 			}
 			
-    		proxy.sendMessageToServer(new Message(OpCode.CTS_ADD_THEME, new Theme(name, new ImageIcon(backgroundImage))));
+    		proxy.sendAddTheme(new Theme(name, new ImageIcon(backgroundImage)));
     	}
         returnStatus = retStatus;
         setVisible(false);

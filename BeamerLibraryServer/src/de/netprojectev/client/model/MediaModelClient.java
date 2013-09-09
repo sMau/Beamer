@@ -104,7 +104,6 @@ public class MediaModelClient {
 					checkIfMediaExists(toRemove);
 				} catch (MediaDoesNotExsistException e) {
 					proxy.errorRequestFullSync(e);
-					proxy.getClient().getGui().errorRequestingFullsyncDialog();
 				}
 				log.debug("Removing media file: " + toRemove);
 				
@@ -145,14 +144,12 @@ public class MediaModelClient {
 					checkIfMediaExists(id);
 				} catch (MediaDoesNotExsistException e1) {
 					proxy.errorRequestFullSync(e1);
-					proxy.getClient().getGui().errorRequestingFullsyncDialog();
 				}
 				if(!customQueue.contains(id)) {
 					try {
 						throw new MediaNotInQueueException("Media not in private queue.");
 					} catch (MediaNotInQueueException e) {
 						proxy.errorRequestFullSync(e);
-						proxy.getClient().getGui().errorRequestingFullsyncDialog();
 					}
 				}
 				if(customQueue.get(row).equals(id)) {
@@ -162,7 +159,6 @@ public class MediaModelClient {
 						throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
 					} catch (OutOfSyncException e) {
 						proxy.errorRequestFullSync(e);
-						proxy.getClient().getGui().errorRequestingFullsyncDialog();
 					}
 				}
 			}

@@ -25,6 +25,12 @@ import de.netprojectev.networking.LoginData;
  */
 public class LoginDialog extends javax.swing.JDialog {
 
+	
+	private String alias;
+	private String ip;
+	private String password;
+	private int port;
+	
 	/**
 	 * 
 	 */
@@ -68,10 +74,10 @@ public class LoginDialog extends javax.swing.JDialog {
 
 	private void loginButtonClicked() {
 
-		String alias = tfAlias.getText().trim();
-		String ip = tfServerIP.getText().trim();
-		String port = tfPort.getText().trim();
-		String pw = tfServerPW.getText();
+		alias = tfAlias.getText().trim();
+		ip = tfServerIP.getText().trim();
+		password = tfServerPW.getText();
+		String portAsString = tfPort.getText().trim();
 
 		if (alias.isEmpty()) {
 			JOptionPane.showMessageDialog(this, "The choosen alias is not valid.", "Alias", JOptionPane.ERROR_MESSAGE);
@@ -83,17 +89,14 @@ public class LoginDialog extends javax.swing.JDialog {
 			return;
 		}
 		
-		int portAsInt;
 		try {
-			portAsInt = Integer.parseInt(port);
+			port = Integer.parseInt(portAsString);
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "The port is not valid.", "Port", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		
-		Client client = new Client(ip, portAsInt, new LoginData(alias, pw), this);
-
-		client.connect();
+		doClose(RET_OK);
 
 	}
 
@@ -232,23 +235,6 @@ public class LoginDialog extends javax.swing.JDialog {
 		dispose();
 	}
 
-	public void loginSuccess(final ClientMessageProxy proxy) {
-	
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				MainClientGUIWindow mainGUI = new MainClientGUIWindow(LoginDialog.this, proxy);
-				mainGUI.setVisible(true);
-			}
-		});
-
-		doClose(RET_OK);
-	}
-
-	public void loginFailed(String reason) {
-		JOptionPane.showMessageDialog(this, reason, "Login Failed", JOptionPane.ERROR_MESSAGE);
-	}
-
 	/**
 	 * @param args
 	 *            the command line arguments
@@ -310,8 +296,21 @@ public class LoginDialog extends javax.swing.JDialog {
 	// End of variables declaration//GEN-END:variables
 	private int returnStatus = RET_CANCEL;
 
-	public void errorDuringLogin(String msg) {
-		JOptionPane.showMessageDialog(this, msg, "Error Login", JOptionPane.ERROR_MESSAGE);
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public String getIp() {
+		return ip;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public int getPort() {
+		return port;
 	}
 
 }

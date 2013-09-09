@@ -12,7 +12,6 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.Channel;
@@ -84,6 +83,7 @@ public class ClientMessageProxy {
 	public void errorRequestFullSync(Exception e) {
 		log.warn("The media read for updating does not exist. Requesting full sync.", e);
 		sendRequestFullSync();
+		client.getGui().errorRequestingFullsyncDialog();
 	}
 	
 	public ChannelFuture sendMessageToServer(Message msgToSend) {
@@ -307,8 +307,13 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_PROPERTY_UPDATE, key, newValue));
 	}
 
-	public ChannelFuture sendAddCountdown(Countdown countdown) {
-		return sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
+	public void sendAddCountdown(Countdown countdown) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
+	}
+	
+	public void sendAddAndShowCountdown(Countdown countdown) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown)).awaitUninterruptibly(5000);
+		sendShowMediaFile(countdown.getId());
 	}
 
 	public void receiveMessage(Message msg) throws UnkownMessageException,
@@ -543,7 +548,6 @@ public class ClientMessageProxy {
 			mediaModel.replaceMediaFile(media);
 		} catch (MediaDoesNotExsistException e) {
 			errorRequestFullSync(e);
-			client.getGui().errorRequestingFullsyncDialog();
 		}
 	}
 
@@ -553,7 +557,6 @@ public class ClientMessageProxy {
 			tickerModel.replaceTickerElement(e);
 		} catch (MediaDoesNotExsistException e1) {
 			errorRequestFullSync(e1);
-			client.getGui().errorRequestingFullsyncDialog();
 		}
 	}
 

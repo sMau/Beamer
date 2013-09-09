@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.client.model.MediaModelClient.UpdateAllMediaDataListener;
 import de.netprojectev.misc.LoggerBuilder;
 
 public class AllMediaTableModel extends AbstractTableModel {

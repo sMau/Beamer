@@ -280,8 +280,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 		
 		Countdown cntdwn = addCountdown();
 		if(cntdwn != null) {
-			proxy.sendAddCountdown(cntdwn).awaitUninterruptibly(5000);
-			proxy.sendShowMediaFile(cntdwn.getId());
+			proxy.sendAddAndShowCountdown(cntdwn);
 			dispose();
 		}
 	}

@@ -5,6 +5,7 @@ import javax.swing.table.AbstractTableModel;
 
 import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.model.TickerModelClient;
+import de.netprojectev.client.model.TickerModelClient.UpdateTickerDataListener;
 
 public class TickerTableModel extends AbstractTableModel {
 

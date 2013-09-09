@@ -1,13 +1,10 @@
 package de.netprojectev.client.gui.preferences;
 
 import javax.swing.AbstractListModel;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.PreferencesModelClient.PriorityListChangedListener;
-import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 
@@ -43,8 +40,7 @@ public class PriorityListModel extends AbstractListModel<Priority> {
 		try {
 			return prefs.getPriorityAt(index);
 		} catch (PriorityDoesNotExistException e) {
-			ClientMessageProxy.errorRequestFullSync(prefs.getProxy(), e);
-			MainClientGUIWindow.errorRequestingFullsyncDialog(new JFrame());
+			prefs.getProxy().errorRequestFullSync(e);
 		}
 		return null;
 	}

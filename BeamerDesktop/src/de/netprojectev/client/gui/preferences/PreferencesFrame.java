@@ -1229,8 +1229,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 				}
 				proxy.sendRemovePriority(selectedPrio.getId());
 			} catch (PriorityDoesNotExistException e) {
-				ClientMessageProxy.errorRequestFullSync(proxy, e);
-				MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+				proxy.errorRequestFullSync(e);
 			}
 			updatePriorityPanel();
 		}
@@ -1243,8 +1242,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			try {
 				proxy.sendRemoveTheme(prefs.getThemeAt(selected).getId());
 			} catch (ThemeDoesNotExistException e) {
-				ClientMessageProxy.errorRequestFullSync(proxy, e);
-				MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+				proxy.errorRequestFullSync(e);
 			}
 			updateThemePanel();
 		}
@@ -1314,8 +1312,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 				jlThemeBackgroundPreview.setIcon(scaledPreview);
 			} catch (ThemeDoesNotExistException e) {
-				ClientMessageProxy.errorRequestFullSync(proxy, e);
-				MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+				proxy.errorRequestFullSync(e);
 			} catch (FileNotFoundException e) {
 				log.error("Could not find theme image background.", e);
 			} catch (IOException e) {
@@ -1334,8 +1331,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 				jlTimeToShowVar.setText(Integer.toString(selected.getMinutesToShow()));
 				jlDefaultPrioVar.setText(prefs.getDefaultPriority().getName());
 			} catch (PriorityDoesNotExistException e) {
-				ClientMessageProxy.errorRequestFullSync(proxy, e);
-				MainClientGUIWindow.errorRequestingFullsyncDialog(this);
+				proxy.errorRequestFullSync(e);
 			}
 
 		}

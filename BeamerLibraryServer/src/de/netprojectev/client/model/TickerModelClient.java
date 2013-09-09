@@ -69,7 +69,6 @@ public class TickerModelClient {
 					checkIfElementExists(id);
 				} catch (MediaDoesNotExsistException e) {
 					proxy.errorRequestFullSync(e);
-					proxy.getClient().getGui().errorRequestingFullsyncDialog();
 				}
 				elements.remove(id);
 				allElementsList.remove(id);
