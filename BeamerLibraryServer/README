@@ -1,6 +1,0 @@
-Das Projekt ist nach dem pullen sowohl in Eclipse als auch Netbeans zu öffnen. Für beide Programme sind die jeweiligen Projektdateien mit gepusht.
-Nach Möglichkeit keine generated Sachen pushen (wie jars oder class Dateien).
-
-Der Ordner Analyse Entwurf umfasst ein paar Mockups die mit dem Wireframesketcher erstellt wurden und ein Pflichtenheft.
-
-Vor dem pushen zumindest immer die JUnit Tests laufen lassen und TestJTable ausführen und schauen ob alles richtig aussieht.
