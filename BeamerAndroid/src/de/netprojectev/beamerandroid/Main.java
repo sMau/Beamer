@@ -12,8 +12,9 @@ import android.view.Menu;
 import de.netprojectev.beamerandroid.media.AllMediaFragment;
 import de.netprojectev.beamerandroid.media.MediaQueueFragment;
 import de.netprojectev.beamerandroid.ticker.TickerFragment;
+import de.netprojectev.client.ClientGUI;
 
-public class Main extends ActionBarActivity {
+public class Main extends ActionBarActivity implements ClientGUI {
 
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private ViewPager mViewPager;
@@ -76,5 +77,23 @@ public class Main extends ActionBarActivity {
 			}
 			return null;
 		}
+	}
+
+	@Override
+	public void errorDuringLogin(String msg) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void loginSuccess() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void errorRequestingFullsyncDialog() {
+		// TODO Auto-generated method stub
+		
 	}
 }
