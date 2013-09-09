@@ -8,3 +8,5 @@ gen/
 *.dex
 *.cache
 R.java
+/BeamerLibraryServer/nbproject/private/
+/BeamerDesktop/nbproject/private/
