@@ -1,3 +1,10 @@
-/build/
-/dist/
-/bin/
+build/
+dist/
+bin/
+gen/
+*.class
+*.apk
+*.ap_
+*.dex
+*.cache
+R.java
