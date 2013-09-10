@@ -7,7 +7,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
-import android.webkit.WebView.FindListener;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
 import de.netprojectev.misc.Misc;
@@ -25,16 +26,18 @@ public class LoginDialog extends DialogFragment {
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
 		LayoutInflater inflater = getActivity().getLayoutInflater();
-
+		
+		final View view = inflater.inflate(R.layout.login_dialog_fragment, null);
+		
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle("Login").setView(inflater.inflate(R.layout.login_dialog_fragment, null))
-				.setPositiveButton("Login", new DialogInterface.OnClickListener() {
+		builder.setTitle("Login").setView(view)
+		.setPositiveButton("Login", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
 						
-						EditText aliasEt = (EditText) getActivity().findViewById(R.id.etAlias);
-						EditText ipEt = (EditText) getActivity().findViewById(R.id.etHost);
-						EditText portEt = (EditText) getActivity().findViewById(R.id.etPort);
-						EditText passwordEt = (EditText) getActivity().findViewById(R.id.etPassword);
+						EditText aliasEt = (EditText) view.findViewById(R.id.etAlias);
+						EditText ipEt = (EditText) view.findViewById(R.id.etHost);
+						EditText portEt = (EditText) view.findViewById(R.id.etPort);
+						EditText passwordEt = (EditText) view.findViewById(R.id.etPassword);
 						
 						String alias = aliasEt.getText().toString().trim();
 						String ip = ipEt.getText().toString().trim();

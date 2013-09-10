@@ -97,6 +97,7 @@ public class DisplayMainComponent extends JComponent {
 	 * drawing the image centered.
 	 */
 	@Override
+	
 	protected void paintComponent(Graphics g) {
 		
 		Color oldColor = g.getColor();

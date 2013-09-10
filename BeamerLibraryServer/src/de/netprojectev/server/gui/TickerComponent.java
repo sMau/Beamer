@@ -9,7 +9,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Paint;
 import java.awt.RenderingHints;
-import java.awt.TexturePaint;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -37,7 +36,7 @@ public class TickerComponent extends JComponent {
 	private final JComponent parent;
 
 	private final int paddingBottom = 10;
-	private final int paddingTop = 10;
+	private final int paddingTop = 0;
 	private final int marginBottom = 32;
 	private final float brightnessMultiplicator = 0.5f;
 
@@ -78,7 +77,6 @@ public class TickerComponent extends JComponent {
 		posOfString1 = getWidth();
 		posOfString2 = getWidth();
 		initLiveTickerAndStart();
-
 	}
 
 	/**
@@ -138,6 +136,7 @@ public class TickerComponent extends JComponent {
 			liveTickerTimer.cancel();
 			liveTickerTimer.purge();
 		}
+		generateDrawingStrings();
 		liveTickerTimer = new Timer();
 		liveTickerTimer.schedule(new TickerTimerTask(), 0, tickerSpeed);
 		log.debug("Live Ticker started");
@@ -164,13 +163,11 @@ public class TickerComponent extends JComponent {
 	 */
 	protected void updateFontByClient() {
 		updateFont();
-		generateDrawingStrings();
 		startOrRestart();
 	}
 
 	protected void updateSpeedByClient() {
 		updateSpeed();
-		generateDrawingStrings();
 		startOrRestart();
 	}
 

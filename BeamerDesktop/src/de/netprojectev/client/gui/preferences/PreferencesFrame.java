@@ -16,14 +16,12 @@ import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.ConstantsClient;
-import de.netprojectev.client.gui.main.MainClientGUIWindow;
-import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.PreferencesModelClient.FullscreenStateListener;
 import de.netprojectev.client.model.PreferencesModelClient.LiveTickerStateListener;
+import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.client.networking.ClientMessageProxy.ServerPropertyUpdateListener;
 import de.netprojectev.datastructures.media.Priority;
@@ -48,13 +46,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1287233997445904109L;
 
 	private final ClientMessageProxy proxy;
-	private final PreferencesModelClient prefs;
+	private final PreferencesModelClientDesktop prefs;
 
 	/**
 	 * Creates new form PreferencesFrame
 	 */
 	public PreferencesFrame(Frame parent, ClientMessageProxy proxy) {
-		this.prefs = proxy.getPrefs();
+		this.prefs = (PreferencesModelClientDesktop) proxy.getPrefs();
 		this.proxy = proxy;
 		initComponents();
 		setLocationRelativeTo(parent);
@@ -111,7 +109,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		/*
 		 * some general inits
 		 */
-		String[] fontFamilies = PreferencesModelClient.getServerFonts();
+		String[] fontFamilies = prefs.getServerFonts();
 		
 		for(int i = 0; i < fontFamilies.length; i++) {
 			jcbCountdownFont.addItem(fontFamilies[i]);
@@ -139,7 +137,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		Color genBGColor = Color.BLACK;
 		
 		try {
-			genBGColor = new Color(Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)));
+			genBGColor = new Color(Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)));
 		} catch (NumberFormatException e) {
 			log.warn("Could not read ticker font color from prefs. Setting to black.", e );
 			genBGColor = Color.BLACK;
@@ -158,14 +156,14 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		 * Live Ticker
 		 */
 		updateLiveTickerState();
-		jtfTickerSeparator.setText(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR));
-		jcbTickerFont.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTTYPE));
-		jcbTickerFontSize.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTSIZE));
+		jtfTickerSeparator.setText(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR));
+		jcbTickerFont.setSelectedItem(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTTYPE));
+		jcbTickerFontSize.setSelectedItem(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTSIZE));
 		
 		Color tickerFontColor = Color.BLACK;
 		
 		try {
-			tickerFontColor = new Color(Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR)));
+			tickerFontColor = new Color(Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR)));
 		} catch (NumberFormatException e) {
 			log.warn("Could not read ticker font color from prefs. Setting to black.", e );
 			tickerFontColor = Color.BLACK;
@@ -178,7 +176,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		Color tickerBackgroundColor = Color.WHITE;
 		
 		try {
-			tickerBackgroundColor = new Color(Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)));
+			tickerBackgroundColor = new Color(Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)));
 		} catch (NumberFormatException e) {
 			log.warn("Could not read ticker background color from prefs. Setting to white.", e );
 			tickerBackgroundColor = Color.WHITE;
@@ -187,7 +185,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		jbChooseTickerBGColor.setBackground(tickerBackgroundColor);
 		jbChooseTickerBGColor.setForeground(tickerBackgroundColor);
 		
-		int tickerSpeed = Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SPEED));
+		int tickerSpeed = Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SPEED));
 		String speedAsString;
 		if(tickerSpeed <= 20) {
 			speedAsString = "High";
@@ -200,7 +198,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		
 		int tickerBacḱgroundAlpha = (int) (ConstantsServer.DEFAULT_TICKER_BACKGROUND_ALPHA * 100);
 		try {
-			tickerBacḱgroundAlpha = (int) (Float.parseFloat(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA)) * 100);
+			tickerBacḱgroundAlpha = (int) (Float.parseFloat(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA)) * 100);
 		} catch (NumberFormatException e1) {
 			tickerBacḱgroundAlpha = (int) (ConstantsServer.DEFAULT_TICKER_BACKGROUND_ALPHA * 100);
 			log.warn("Could not read ticker background alpha from prefs. Setting to default.", e1 );
@@ -210,21 +208,21 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		/*
 		 * ThemeslideCreator
 		 */
-		jcbCreatorFontSize.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
-		jcbCreatorFont.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
-		jtfCreatorMarginLeft.setText(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
-		jtfCreatorMarginTop.setText(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
+		jcbCreatorFontSize.setSelectedItem(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
+		jcbCreatorFont.setSelectedItem(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
+		jtfCreatorMarginLeft.setText(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
+		jtfCreatorMarginTop.setText(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
 		
 		
 		/*
 		 * Countdown
 		 */
-		jcbCountdownFont.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTTYPE));
-		jcbCountdownFontSize.setSelectedItem(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTSIZE));
+		jcbCountdownFont.setSelectedItem(prefs.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTTYPE));
+		jcbCountdownFontSize.setSelectedItem(prefs.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTSIZE));
 
 		Color cntdwnFontColor = Color.BLACK;
 		try {
-			cntdwnFontColor = new Color(Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
+			cntdwnFontColor = new Color(Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
 		} catch (NumberFormatException e) {
 			log.warn("Could not read countdown font color from prefs. Setting to black.", e );
 			cntdwnFontColor = Color.BLACK;
@@ -1203,13 +1201,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private void jbCreatorChooseFontColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCreatorChooseFontColorActionPerformed
     	Color newColor = openColorPickerTicker((JButton) evt.getSource());
     	if(newColor != null) {
-    		PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, Integer.toString(newColor.getRGB()));
+    		prefs.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, Integer.toString(newColor.getRGB()));
     	}
     }//GEN-LAST:event_jbCreatorChooseFontColorActionPerformed
 
     private void jcbCreatorFontSizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCreatorFontSizeActionPerformed
     	String newSize = (String) jcbCreatorFontSize.getSelectedItem();
-    	PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, newSize);
+    	prefs.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, newSize);
     }//GEN-LAST:event_jcbCreatorFontSizeActionPerformed
 
     private void jtfCreatorMarginLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCreatorMarginLeftActionPerformed
@@ -1220,7 +1218,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Margin Left has to be a numeric value.", "Margin Left", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-        PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, newMarginLeft);
+        prefs.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, newMarginLeft);
     }//GEN-LAST:event_jtfCreatorMarginLeftActionPerformed
 
     private void jtfCreatorMarginTopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfCreatorMarginTopActionPerformed
@@ -1231,12 +1229,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Margin Top has to be a numeric value.", "Margin Top", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-        PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, newMarginTop);
+        prefs.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, newMarginTop);
     }//GEN-LAST:event_jtfCreatorMarginTopActionPerformed
 
     private void jcbCreatorFontActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbCreatorFontActionPerformed
         String newFont = (String) jcbCreatorFont.getSelectedItem();
-        PreferencesModelClient.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, newFont);
+        prefs.setClientProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, newFont);
     }//GEN-LAST:event_jcbCreatorFontActionPerformed
 
     private void jbUpdateTickerSpeedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateTickerSpeedActionPerformed

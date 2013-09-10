@@ -30,7 +30,7 @@ import javax.swing.text.StyledEditorKit;
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.gui.preferences.ColorPickerDialog;
-import de.netprojectev.client.model.PreferencesModelClient;
+import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
@@ -48,7 +48,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	private static final long serialVersionUID = -3653577264825548156L;
 
-	private final PreferencesModelClient prefs;
+	private final PreferencesModelClientDesktop prefs;
 	private final ClientMessageProxy proxy;
 
 	private Boolean evtFromGUIupdateFontSize = false;
@@ -61,7 +61,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	public ThemeslideCreatorFrame(Frame parent, ClientMessageProxy proxy) throws ThemeDoesNotExistException, PriorityDoesNotExistException {
 
-		this.prefs = proxy.getPrefs();
+		this.prefs = (PreferencesModelClientDesktop) proxy.getPrefs();
 		this.proxy = proxy;
 		setLocationRelativeTo(parent);
 		initComponents();
@@ -80,20 +80,20 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			jComboBoxFontType.addItem(font[i]);
 		}
 
-		jComboBoxFontType.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
+		jComboBoxFontType.setSelectedItem(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
 
 		for (int i = 0; i < ConstantsClient.FONT_SIZES.length; i++) {
 			jComboBoxFontSize.addItem(ConstantsClient.FONT_SIZES[i]);
 		}
-		jComboBoxFontSize.setSelectedItem(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
+		jComboBoxFontSize.setSelectedItem(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
 
-		jTextFieldMarginLeft.setText(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
-		jTextFieldMarginTop.setText(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
+		jTextFieldMarginLeft.setText(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT));
+		jTextFieldMarginTop.setText(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP));
 
 		jComboBoxFontTypeActionPerformed(new ActionEvent(textPaneThemeslide, 0, ""));
 		jComboBoxFontSizeActionPerformed(new ActionEvent(textPaneThemeslide, 0, ""));
 
-		selectedColorMain = new Color(Integer.parseInt(PreferencesModelClient.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR)));
+		selectedColorMain = new Color(Integer.parseInt(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR)));
 		System.out.println(selectedColorMain);
 		jButtonColorPicker.setBackground(new Color(selectedColorMain.getRGB()));
 		jButtonColorPicker.setForeground(new Color(selectedColorMain.getRGB()));

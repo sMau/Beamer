@@ -3,8 +3,8 @@ package de.netprojectev.client.gui.preferences;
 import javax.swing.AbstractListModel;
 import javax.swing.SwingUtilities;
 
-import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.PreferencesModelClient.PriorityListChangedListener;
+import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 
@@ -14,9 +14,9 @@ public class PriorityListModel extends AbstractListModel<Priority> {
 	 * 
 	 */
 	private static final long serialVersionUID = -5497538191945223356L;
-	private final PreferencesModelClient prefs;
+	private final PreferencesModelClientDesktop prefs;
 	
-	public PriorityListModel(PreferencesModelClient prefs) {
+	public PriorityListModel(PreferencesModelClientDesktop prefs) {
 		super();
 		this.prefs = prefs;
 		this.prefs.addPriorityChangedListener(new PriorityListChangedListener() {

@@ -320,25 +320,6 @@ public class Misc {
 		return defProps;
 	}
 
-	public static Properties generateClientDefaultProps() {
-		Properties defProps = new Properties();
-
-		defProps.setProperty(ConstantsClient.PROP_PREVIEW_SCALE_WIDTH, "" + ConstantsClient.DEFAULT_PREVIEW_SCALE_WIDTH);
-		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR);
-		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE, ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE + "pt");
-		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE, ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE);
-		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINLEFT);
-		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
-
-		try {
-			Misc.savePropertiesToDisk(defProps, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_DEFAULT_PROPERTIES);
-		} catch (IOException e) {
-			log.warn("Error during saving default properties to disk.", e);
-		}
-
-		return defProps;
-	}
-
 	public static ImageIcon getScaledImageIconFromBufImg(BufferedImage original, int widthToScaleTo) throws FileNotFoundException, IOException {
 
 		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(original, widthToScaleTo, (int) (widthToScaleTo * original.getHeight(null)) / original.getWidth(null)));

@@ -1,6 +1,7 @@
 package de.netprojectev.client.gui.main;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -48,7 +49,12 @@ public class StarterClient {
 
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new MainClientGUIWindow();
+				try {
+					new MainClientGUIWindow();
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+					e.printStackTrace();
+					System.exit(0);
+				}
 			}
 		});
 	}

@@ -1,26 +1,75 @@
 package de.netprojectev.beamerandroid;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
+import android.widget.Toast;
 import de.netprojectev.beamerandroid.LoginDialog.LoginDialogListener;
 import de.netprojectev.beamerandroid.media.AllMediaFragment;
 import de.netprojectev.beamerandroid.media.MediaQueueFragment;
+import de.netprojectev.beamerandroid.networking.NetworkService;
 import de.netprojectev.beamerandroid.ticker.TickerFragment;
 import de.netprojectev.client.ClientGUI;
 import de.netprojectev.networking.LoginData;
+
 
 public class Main extends ActionBarActivity implements LoginDialogListener, ClientGUI {
 
 	private SectionsPagerAdapter mSectionsPagerAdapter;
 	private ViewPager mViewPager;
 
+	private NetworkService network;
+	private ServiceConnection networkServiceConnection = new ServiceConnection() {
+
+		public void onServiceConnected(ComponentName className, IBinder binder) {
+			Log.d("", "NetworkService connected to main activity");
+			network = ((NetworkService.NetworkServiceBinder) binder).getService();
+			
+			onServiceBoundSuccess();
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			Log.d("", "NetworkService disconnected from main activity");
+		}
+
+	};		
+
+	private void onServiceBoundSuccess() {
+		if(!network.isLoggedIn()) {
+			new LoginDialog().show(getSupportFragmentManager(), "Login");
+		}
+	}
+	
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		doBindService();
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		unbindService(networkServiceConnection);
+	}
+	
+	private void doBindService() {
+		bindService(new Intent(this, NetworkService.class), networkServiceConnection, Context.BIND_DEBUG_UNBIND);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,12 +77,13 @@ public class Main extends ActionBarActivity implements LoginDialogListener, Clie
 		
 		getSupportActionBar().setSubtitle("Overview");
 
-		new LoginDialog().show(getSupportFragmentManager(), "Login");		
-		
+		startService(new Intent(this, NetworkService.class));
+
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+
 
 	}
 
@@ -86,31 +136,26 @@ public class Main extends ActionBarActivity implements LoginDialogListener, Clie
 
 	@Override
 	public void onLoginClicked(String ip, int port, LoginData login) {
-		// TODO Auto-generated method stub
-		
+		network.login(login, ip, port, this);
 	}
 
 	@Override
 	public void onCancelClicked() {
-		// TODO Auto-generated method stub
-		
+		finish();
 	}
 
 	@Override
 	public void errorDuringLogin(String msg) {
-		// TODO Auto-generated method stub
-		
+		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
 	}
 
 	@Override
 	public void loginSuccess() {
-		// TODO Auto-generated method stub
-		
+		Toast.makeText(this, "Login Success", Toast.LENGTH_LONG).show();		
 	}
 
 	@Override
 	public void errorRequestingFullsyncDialog() {
-		// TODO Auto-generated method stub
-		
+		Toast.makeText(this, "A network error occured. Trying to sync again.", Toast.LENGTH_LONG).show();	
 	}
 }

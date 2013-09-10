@@ -5,6 +5,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.Timer;
@@ -61,6 +62,8 @@ public class ClientMessageProxy {
 	private final TickerModelClient tickerModel;
 	private final PreferencesModelClient prefs;
 
+	private final Class<? extends PreferencesModelClient> prefsModelClazz;
+	
 	private TimeSyncListener timeSyncListener;
 	private ServerShutdownListener serverShutdownListener;
 	private ServerPropertyUpdateListener serverPropertyUpdateListener;
@@ -71,10 +74,14 @@ public class ClientMessageProxy {
 
 	private Channel channelToServer;
 
-	public ClientMessageProxy(Client client) {
+	public ClientMessageProxy(Client client, Class<? extends PreferencesModelClient> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
 		mediaModel = new MediaModelClient(this);
 		tickerModel = new TickerModelClient(this);
-		prefs = new PreferencesModelClient(this);
+
+		prefsModelClazz = clazz;
+		
+		prefs = (PreferencesModelClient) clazz.getConstructors()[0].newInstance(this);
+		
 		this.client = client;
 		this.fullsync = false;
 	
@@ -422,7 +429,7 @@ public class ClientMessageProxy {
 
 	private void receivedServerFonts(Message msg) {
 		String[] fontFamilies = (String[]) msg.getData()[0];
-		PreferencesModelClient.setServerFonts(fontFamilies);
+		prefs.setServerFonts(fontFamilies);
 	}
 
 	public void reconnectForced() {
@@ -436,14 +443,14 @@ public class ClientMessageProxy {
 				public void run() {
 					client.connect();
 				}
-			}, 0, 5000);
+			}, 5000, 5000);
 		}
 	}
 
 	private void updatePropertyAck(Message msg) {
 		String key = (String) msg.getData()[0];
 		String newValue = (String) msg.getData()[1];
-		PreferencesModelClient.serverPropertyUpdated(key, newValue); 
+		prefs.serverPropertyUpdated(key, newValue); 
 		if(serverPropertyUpdateListener != null) {
 			serverPropertyUpdateListener.propertyUpdated();
 		}
@@ -451,7 +458,7 @@ public class ClientMessageProxy {
 
 	private void initServerProperties(Message msg) {
 		Properties serverProps = (Properties) msg.getData()[0];
-		PreferencesModelClient.initServerProperties(serverProps);
+		prefs.initServerProperties(serverProps);
 	}
 
 	private void hearbeatRequest() {
@@ -639,6 +646,10 @@ public class ClientMessageProxy {
 
 	public Client getClient() {
 		return client;
+	}
+
+	public Class<? extends PreferencesModelClient> getPrefsModelClazz() {
+		return prefsModelClazz;
 	}
 
 

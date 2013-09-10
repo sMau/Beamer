@@ -8,16 +8,16 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.Misc;
 
-public class PreferencesModelClient {
+public abstract class PreferencesModelClient {
+
+	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
 	
 	public interface UpdateAutoModeStateListener {
 		public void update(boolean fullsync);
@@ -39,22 +39,6 @@ public class PreferencesModelClient {
 		public void update();
 	}
 	
-	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
-
-	private final ClientMessageProxy proxy;
-	private final HashMap<UUID, Theme> themes;
-	private final HashMap<UUID, Priority> prios;
-
-	private final ArrayList<UUID> allPrioritiesList;
-	private final ArrayList<UUID> allThemesList;
-
-	private Priority defaultPriority;
-	
-	private static Properties clientProperties;
-	private static Properties serverProperties;
-	
-	private static String[] serverFonts;
-
 	private ThemeListChangedListener themeListChangeListener = new ThemeListChangedListener() {
 		@Override
 		public void update() {
@@ -81,7 +65,22 @@ public class PreferencesModelClient {
 	private boolean automode;
 	private boolean fullscreen;
 	private boolean liveTickerRunning;
+	
 
+	private final ClientMessageProxy proxy;
+	private final HashMap<UUID, Theme> themes;
+	private final HashMap<UUID, Priority> prios;
+
+	private final ArrayList<UUID> allPrioritiesList;
+	private final ArrayList<UUID> allThemesList;
+
+	private Priority defaultPriority;
+	
+	protected Properties clientProperties;
+	protected Properties serverProperties;
+	
+	private String[] serverFonts;
+	
 	public PreferencesModelClient(ClientMessageProxy proxy) {
 
 		this.proxy = proxy;
@@ -89,27 +88,31 @@ public class PreferencesModelClient {
 		this.prios = new HashMap<UUID, Priority>();
 		this.allPrioritiesList = new ArrayList<UUID>();
 		this.allThemesList = new ArrayList<UUID>();
-		PreferencesModelClient.clientProperties = new Properties(Misc.generateClientDefaultProps());
 	}
+	
 
-	public static String getClientPropertyByKey(String key) {
+	public abstract void saveProperties() throws IOException;
+
+	public abstract void loadProperties() throws IOException;
+
+	public String getClientPropertyByKey(String key) {
 		return clientProperties.getProperty(key);
 	}
 
-	public static void setClientProperty(String key, String value) {
+	public void setClientProperty(String key, String value) {
 		log.debug("Setting property: " + key + ", to: " + value);
 		clientProperties.setProperty(key, value);
 	}
 	
-	public static void initServerProperties(Properties props) {
+	public void initServerProperties(Properties props) {
 		serverProperties = props;
 	}
 	
-	public static String getServerPropertyByKey(String key) {
+	public String getServerPropertyByKey(String key) {
 		return serverProperties.getProperty(key);
 	}
 	
-	public static void serverPropertyUpdated(String key, String value) {
+	public void serverPropertyUpdated(String key, String value) {
 		serverProperties.put(key, value);
 	}
 
@@ -250,18 +253,6 @@ public class PreferencesModelClient {
 		this.autoModeStateListener = autoModeStateListener;
 	}
 
-	public static void saveProperties() throws IOException {
-		log.info("Saving properties");
-		Misc.savePropertiesToDisk(clientProperties, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
-	}
-
-	public static void loadProperties() throws IOException {
-		log.info("Loading properties");
-		clientProperties = new Properties(Misc.generateClientDefaultProps());
-		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
-		clientProperties.putAll(propsLoaded);
-	}
-
 	public void setThemeListChangeListener(ThemeListChangedListener themeListChangeListener) {
 		this.themeListChangeListener = themeListChangeListener;
 	}
@@ -294,12 +285,13 @@ public class PreferencesModelClient {
 		return proxy;
 	}
 
-	public static String[] getServerFonts() {
+	public String[] getServerFonts() {
 		return serverFonts;
 	}
 
-	public static void setServerFonts(String[] serverFonts) {
-		PreferencesModelClient.serverFonts = serverFonts;
+	public void setServerFonts(String[] serverFonts) {
+		this.serverFonts = serverFonts;
 	}
+	
 	
 }

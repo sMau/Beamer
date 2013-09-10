@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.Logger;
@@ -60,21 +59,22 @@ public class TickerModelClient {
 
 	public void removeTickerElement(final UUID id) throws MediaDoesNotExsistException {
 
-		SwingUtilities.invokeLater(new Runnable() {
+	/*	SwingUtilities.invokeLater(new Runnable() {
 
 			@Override
 			public void run() {
-				log.debug("Removing ticker element: " + id);
-				try {
-					checkIfElementExists(id);
-				} catch (MediaDoesNotExsistException e) {
-					proxy.errorRequestFullSync(e);
-				}
-				elements.remove(id);
-				allElementsList.remove(id);
+				
 			}
-		});
+		});*/
 
+		log.debug("Removing ticker element: " + id);
+		try {
+			checkIfElementExists(id);
+		} catch (MediaDoesNotExsistException e) {
+			proxy.errorRequestFullSync(e);
+		}
+		elements.remove(id);
+		allElementsList.remove(id);
 		updateTickerTable();
 	}
 
@@ -105,12 +105,12 @@ public class TickerModelClient {
 
 		for (int i = 0; i < allElementsList.size(); i++) {
 			if (getElementByID(allElementsList.get(i)).isShow()) {
-				text += getElementByID(allElementsList.get(i)).getText() + PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR);
+				text += getElementByID(allElementsList.get(i)).getText() + proxy.getPrefs().getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR);
 			}
 		}
 
-		if (text.length() > PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR).length()) {
-			text = text.substring(0, text.length() - PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR).length());
+		if (text.length() > proxy.getPrefs().getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR).length()) {
+			text = text.substring(0, text.length() - proxy.getPrefs().getServerPropertyByKey(ConstantsServer.PROP_TICKER_SEPERATOR).length());
 		}
 
 		return text;

@@ -413,7 +413,7 @@ public class MessageProxyServer {
 	 * 
 	 * Use Installer lib like IzPack
 	 * 
-	 * pimp the live ticker a little slightly transparent overlay or something like that 
+	 * DONE pimp the live ticker a little slightly transparent overlay or something like that 
  	 * next pimp server gui (Effects and so on)
 	 *
 	 * Advanced/Alternative themeslide creator using templates or something like that

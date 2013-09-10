@@ -1,5 +1,6 @@
 package de.netprojectev.client;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
@@ -15,6 +16,7 @@ import org.jboss.netty.handler.codec.serialization.ClassResolvers;
 import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
+import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.ClientMessageHandler;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.misc.LoggerBuilder;
@@ -37,13 +39,13 @@ public class Client {
 	
 	private ChannelFactory factory;
 	
-	public Client(String host, int port, LoginData login, ClientGUI gui) {
+	public Client(String host, int port, LoginData login, ClientGUI gui, Class<? extends PreferencesModelClient> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
 		this.login = login;
 		this.host = host;
 		this.port = port;
 		this.gui = gui;
 		
-		this.proxy = new ClientMessageProxy(this);
+		this.proxy = new ClientMessageProxy(this, clazz);
 
 	}
 	

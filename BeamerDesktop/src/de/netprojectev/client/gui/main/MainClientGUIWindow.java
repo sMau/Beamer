@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -32,8 +33,8 @@ import de.netprojectev.client.gui.preferences.AddThemeDialog;
 import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.gui.themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.model.MediaModelClient.UpdateCurrentFileListener;
-import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.PreferencesModelClient.UpdateAutoModeStateListener;
 import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
@@ -67,7 +68,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	private final ClientMessageProxy proxy;
 	private final MediaModelClient mediaModel;
 	private final TickerModelClient tickerModel;
-	private final PreferencesModelClient prefs;
+	private final PreferencesModelClientDesktop prefs;
 
 	private ClientMediaFile currentSelectedMediaFile;
 	private ClientTickerElement currentSelectedTickerElement;
@@ -77,14 +78,19 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 
 	/**
 	 * Creates new form MainClientGUIWindow
+	 * @throws SecurityException 
+	 * @throws InvocationTargetException 
+	 * @throws IllegalArgumentException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
 	 */
-	public MainClientGUIWindow() {
+	public MainClientGUIWindow() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
 		
 		LoginDialog loginDialog = new LoginDialog(this, true);
 		loginDialog.setVisible(true);
 		
 		Client client = new Client(loginDialog.getIp(), loginDialog.getPort(), 
-				new LoginData(loginDialog.getAlias(), loginDialog.getPassword()), this);
+				new LoginData(loginDialog.getAlias(), loginDialog.getPassword()), this, PreferencesModelClientDesktop.class);
 		this.proxy = client.connect();
 
 		this.mediaModel = proxy.getMediaModel();
@@ -104,7 +110,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 		});
 
 		this.tickerModel = proxy.getTickerModel();
-		this.prefs = proxy.getPrefs();
+		this.prefs = (PreferencesModelClientDesktop) proxy.getPrefs();
 
 		this.prefs.setAutoModeStateListener(new UpdateAutoModeStateListener() {
 
@@ -1158,30 +1164,30 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			refreshTimeLeftTimer.stop();
 		}
 		if (!fullsync) {
-			timeleftData.setTimeleftInSeconds(mediaModel
-					.getCurrentMediaFile().getPriority().getMinutesToShow() * 60);
-			
-			refreshTimeLeftTimer = new Timer(1000, new ActionListener() {
+			if(mediaModel.getCurrentMediaFile() != null) {
+				timeleftData.setTimeleftInSeconds(mediaModel
+						.getCurrentMediaFile().getPriority().getMinutesToShow() * 60);
+				
+				refreshTimeLeftTimer = new Timer(1000, new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
+					@Override
+					public void actionPerformed(ActionEvent e) {
 
-					timeleftData.decreaseTimeLeftByOne();
-					
-					log.debug("refreshing timeleft label, seconds left: " + timeleftData.getTimeleftInSeconds());
-					
-					if (timeleftData.getTimeleftInSeconds() > 3600) {
-						jlAutomodeTimeleft.setText("Timeleft:"
-								+ Misc.convertFromSecondsToTimeString(timeleftData.getTimeleftInSeconds(), true));
-					} else {
-						jlAutomodeTimeleft.setText("Timeleft:"
-								+ Misc.convertFromSecondsToTimeString(timeleftData.getTimeleftInSeconds(), false));
+						timeleftData.decreaseTimeLeftByOne();
+												
+						if (timeleftData.getTimeleftInSeconds() > 3600) {
+							jlAutomodeTimeleft.setText("Timeleft:"
+									+ Misc.convertFromSecondsToTimeString(timeleftData.getTimeleftInSeconds(), true));
+						} else {
+							jlAutomodeTimeleft.setText("Timeleft:"
+									+ Misc.convertFromSecondsToTimeString(timeleftData.getTimeleftInSeconds(), false));
+						}
+
 					}
-
-				}
-			});
-			refreshTimeLeftTimer.start();
-
+				});
+				refreshTimeLeftTimer.start();
+			}
+			
 		} else {
 			jlAutomodeTimeleft.setText("Timeleft:" + "out of sync");
 		}
@@ -1396,7 +1402,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new MainClientGUIWindow().setVisible(true);
+				try {
+					new MainClientGUIWindow().setVisible(true);
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 	}

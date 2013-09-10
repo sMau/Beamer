@@ -95,28 +95,30 @@ public class MediaModelClient {
 	
 	public void removeMediaFile(final UUID toRemove) throws MediaDoesNotExsistException {
 		
-		SwingUtilities.invokeLater(new Runnable() {
+		/*SwingUtilities.invokeLater(new Runnable() {
 			
 			@Override
 			public void run() {
 				
-				try {
-					checkIfMediaExists(toRemove);
-				} catch (MediaDoesNotExsistException e) {
-					proxy.errorRequestFullSync(e);
-				}
-				log.debug("Removing media file: " + toRemove);
-				
-				while(customQueue.contains(toRemove)) {
-					customQueue.remove(toRemove);
-				}
-				
-				allMedia.remove(toRemove);
-				allMediaList.remove(toRemove);
+			
 				
 			}
-		});
+		});*/
 
+		try {
+			checkIfMediaExists(toRemove);
+		} catch (MediaDoesNotExsistException e) {
+			proxy.errorRequestFullSync(e);
+		}
+		log.debug("Removing media file: " + toRemove);
+		
+		while(customQueue.contains(toRemove)) {
+			customQueue.remove(toRemove);
+		}
+		
+		allMedia.remove(toRemove);
+		allMediaList.remove(toRemove);
+		
 		updateAllMediaTable();
 		updateCustomQueueTable();
 	}
@@ -136,33 +138,36 @@ public class MediaModelClient {
 
 	public void dequeueMediaFile(final int row, final UUID id) throws MediaDoesNotExsistException, OutOfSyncException {
 		
-		SwingUtilities.invokeLater(new Runnable() {
+	/*	SwingUtilities.invokeLater(new Runnable() {
 			
 			@Override
 			public void run() {
-				try {
-					checkIfMediaExists(id);
-				} catch (MediaDoesNotExsistException e1) {
-					proxy.errorRequestFullSync(e1);
-				}
-				if(!customQueue.contains(id)) {
-					try {
-						throw new MediaNotInQueueException("Media not in private queue.");
-					} catch (MediaNotInQueueException e) {
-						proxy.errorRequestFullSync(e);
-					}
-				}
-				if(customQueue.get(row).equals(id)) {
-					customQueue.remove(row);
-				} else {
-					try {
-						throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
-					} catch (OutOfSyncException e) {
-						proxy.errorRequestFullSync(e);
-					}
-				}
+				
 			}
 		});
+		*/
+		try {
+			checkIfMediaExists(id);
+		} catch (MediaDoesNotExsistException e1) {
+			proxy.errorRequestFullSync(e1);
+		}
+		if(!customQueue.contains(id)) {
+			try {
+				throw new MediaNotInQueueException("Media not in private queue.");
+			} catch (MediaNotInQueueException e) {
+				proxy.errorRequestFullSync(e);
+			}
+		}
+		if(customQueue.get(row).equals(id)) {
+			customQueue.remove(row);
+		} else {
+			try {
+				throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
+			} catch (OutOfSyncException e) {
+				proxy.errorRequestFullSync(e);
+			}
+		}
+		
 		updateCustomQueueTable();
 	}
 

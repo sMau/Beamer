@@ -1,13 +1,10 @@
 package de.netprojectev.client.gui.preferences;
 
 import javax.swing.AbstractListModel;
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import de.netprojectev.client.gui.main.MainClientGUIWindow;
-import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.PreferencesModelClient.ThemeListChangedListener;
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 
@@ -17,9 +14,9 @@ public class ThemeListModel extends AbstractListModel<Theme> {
 	 * 
 	 */
 	private static final long serialVersionUID = -7505622765694721418L;
-	private final PreferencesModelClient prefs;
+	private final PreferencesModelClientDesktop prefs;
 	
-	public ThemeListModel(PreferencesModelClient prefs) {
+	public ThemeListModel(PreferencesModelClientDesktop prefs) {
 		super();
 		this.prefs = prefs;
 		this.prefs.setThemeListChangeListener(new ThemeListChangedListener() {
