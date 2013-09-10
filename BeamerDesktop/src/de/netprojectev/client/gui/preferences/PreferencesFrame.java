@@ -136,7 +136,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		 * General
 		 */
 		updateFullscreenState();
-
+		Color genBGColor = Color.BLACK;
+		
+		try {
+			genBGColor = new Color(Integer.parseInt(PreferencesModelClient.getServerPropertyByKey(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)));
+		} catch (NumberFormatException e) {
+			log.warn("Could not read ticker font color from prefs. Setting to black.", e );
+			genBGColor = Color.BLACK;
+		}
+		
+		jbChooseGenBGColor.setBackground(genBGColor);
+		jbChooseGenBGColor.setForeground(genBGColor);
 		
 		/*
 		 * Priorities
@@ -244,6 +254,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
         jlGeneralServerControl = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
         jbServerShutdown = new javax.swing.JButton();
+        jlBackground = new javax.swing.JLabel();
+        jSeparator10 = new javax.swing.JSeparator();
+        jlGenBGColor = new javax.swing.JLabel();
+        jbChooseGenBGColor = new javax.swing.JButton();
+        jbUpdateGenBGColor = new javax.swing.JButton();
         jpPriorities = new javax.swing.JPanel();
         jspPrioList = new javax.swing.JScrollPane();
         jliPriorities = new javax.swing.JList();
@@ -355,6 +370,24 @@ public class PreferencesFrame extends javax.swing.JFrame {
             }
         });
 
+        jlBackground.setText("Background");
+
+        jlGenBGColor.setText("Background Color");
+
+        jbChooseGenBGColor.setText("Choose Color");
+        jbChooseGenBGColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbChooseGenBGColorActionPerformed(evt);
+            }
+        });
+
+        jbUpdateGenBGColor.setText("Update");
+        jbUpdateGenBGColor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbUpdateGenBGColorActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpGeneralLayout = new javax.swing.GroupLayout(jpGeneral);
         jpGeneral.setLayout(jpGeneralLayout);
         jpGeneralLayout.setHorizontalGroup(
@@ -364,10 +397,18 @@ public class PreferencesFrame extends javax.swing.JFrame {
                 .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpGeneralLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jbServerShutdown)
-                        .addContainerGap(452, Short.MAX_VALUE))
+                        .addComponent(jlGenBGColor)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbChooseGenBGColor)
+                        .addGap(18, 18, 18)
+                        .addComponent(jbUpdateGenBGColor)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jpGeneralLayout.createSequentialGroup()
                         .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jpGeneralLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jbServerShutdown)
+                                .addGap(0, 446, Short.MAX_VALUE))
                             .addGroup(jpGeneralLayout.createSequentialGroup()
                                 .addComponent(jlFullscreen)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -381,7 +422,11 @@ public class PreferencesFrame extends javax.swing.JFrame {
                             .addGroup(jpGeneralLayout.createSequentialGroup()
                                 .addComponent(jlGeneralServerControl)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator3)))
+                                .addComponent(jSeparator3))
+                            .addGroup(jpGeneralLayout.createSequentialGroup()
+                                .addComponent(jlBackground)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSeparator10)))
                         .addContainerGap())))
         );
         jpGeneralLayout.setVerticalGroup(
@@ -401,7 +446,16 @@ public class PreferencesFrame extends javax.swing.JFrame {
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbServerShutdown)
-                .addContainerGap(286, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jlBackground)
+                    .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpGeneralLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlGenBGColor)
+                    .addComponent(jbChooseGenBGColor)
+                    .addComponent(jbUpdateGenBGColor))
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
         jtpPreferences.addTab("General", jpGeneral);
@@ -1209,6 +1263,15 @@ public class PreferencesFrame extends javax.swing.JFrame {
         proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA, Float.toString(alphaToSet));
     }//GEN-LAST:event_jbUpdateTickerBGAlphaActionPerformed
 
+    private void jbChooseGenBGColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbChooseGenBGColorActionPerformed
+    	openColorPickerTicker((JButton) evt.getSource());
+    }//GEN-LAST:event_jbChooseGenBGColorActionPerformed
+
+    private void jbUpdateGenBGColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbUpdateGenBGColorActionPerformed
+    	int rgbColor = jbChooseGenBGColor.getBackground().getRGB();
+        proxy.sendPropertyUpdate(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR, Integer.toString(rgbColor));
+    }//GEN-LAST:event_jbUpdateGenBGColorActionPerformed
+
 	private void jbClosePrefsActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbClosePrefsActionPerformed
 		dispose();
 	}// GEN-LAST:event_jbClosePrefsActionPerformed
@@ -1426,6 +1489,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -1437,6 +1501,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jbAddNewTheme;
     private javax.swing.JButton jbAddPrio;
     private javax.swing.JButton jbChooseCountdownFontColor;
+    private javax.swing.JButton jbChooseGenBGColor;
     private javax.swing.JButton jbChooseTickerBGColor;
     private javax.swing.JButton jbChooseTickerFontColor;
     private javax.swing.JButton jbClosePrefs;
@@ -1452,6 +1517,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JButton jbUpdateCountdownFont;
     private javax.swing.JButton jbUpdateCountdownFontColor;
     private javax.swing.JButton jbUpdateCountdownFontSize;
+    private javax.swing.JButton jbUpdateGenBGColor;
     private javax.swing.JButton jbUpdateTickerBGAlpha;
     private javax.swing.JButton jbUpdateTickerBGColor;
     private javax.swing.JButton jbUpdateTickerFontColor;
@@ -1465,6 +1531,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox jcbTickerFont;
     private javax.swing.JComboBox jcbTickerFontSize;
     private javax.swing.JComboBox jcbTickerSpeed;
+    private javax.swing.JLabel jlBackground;
     private javax.swing.JLabel jlCountdownFont;
     private javax.swing.JLabel jlCountdownFontColor;
     private javax.swing.JLabel jlCountdownFontSize;
@@ -1478,6 +1545,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jlFontAttrCreator;
     private javax.swing.JLabel jlFontSizeCreator;
     private javax.swing.JLabel jlFullscreen;
+    private javax.swing.JLabel jlGenBGColor;
     private javax.swing.JLabel jlGeneralServerControl;
     private javax.swing.JLabel jlPrioDefault;
     private javax.swing.JLabel jlPrioName;

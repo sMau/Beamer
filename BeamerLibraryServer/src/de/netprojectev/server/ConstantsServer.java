@@ -49,6 +49,8 @@ public class ConstantsServer {
 	public static final int DEFAULT_COUNTDOWN_FONTSIZE = 32;
 	public static final String DEFAULT_COUNTDOWN_FONTTYPE = "Arial";
 	
+	public static final int DEFAULT_GENERAL_BACKGROUND_COLOR = Color.BLACK.getRGB();
+	
 	public static final int DEFAULT_TICKER_SPEED = 40; //means 25 FPS
 	public static final String DEFAULT_TICKER_SEPERATOR = " +++ ";
 	public static final int DEFAULT_TICKER_FONTSIZE = 32;
@@ -62,6 +64,7 @@ public class ConstantsServer {
 	 * PROPERTY KEYS
 	 */
 	
+	public static final String PROP_GENERAL_BACKGROUND_COLOR = "general.backgroundColor";
 		
 	public static final String PROP_TICKER_SPEED = "ticker.speed";
 	public static final String PROP_TICKER_FONTSIZE = "ticker.fontSize";

@@ -65,7 +65,6 @@ public class DisplayFrame extends javax.swing.JFrame {
 	private void propertyUpdated(String key) {
 		if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)) {
 			displayMainComponent.updateCountdownFontColor();
-
 		} else if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTSIZE)) {
 			displayMainComponent.updateCountdownFont();
 		} else if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTTYPE)) {
@@ -84,6 +83,8 @@ public class DisplayFrame extends javax.swing.JFrame {
 			tickerComponent.updateSpeedByClient();
 		} else if(key.equals(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA)) {
 			tickerComponent.updateBackgroundAlpha();
+		} else if(key.equals(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)) {
+			displayMainComponent.updateBackgroundColor();
 		} else {
 			log.warn("received an unknown property key: " + key);
 		}

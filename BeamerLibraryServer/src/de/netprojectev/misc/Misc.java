@@ -298,6 +298,8 @@ public class Misc {
 		defProps.setProperty(ConstantsServer.PROP_PW, ConstantsServer.DEFAULT_PW);
 		defProps.setProperty(ConstantsServer.PROP_HEARTBEAT_INTERVALL, ConstantsServer.DEFAULT_HEARTBEAT_INTERVALL);
 
+		defProps.setProperty(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR, "" + ConstantsServer.DEFAULT_GENERAL_BACKGROUND_COLOR);
+
 		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTCOLOR, "" + ConstantsServer.DEFAULT_TICKER_FONTCOLOR);
 		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTSIZE, "" + ConstantsServer.DEFAULT_TICKER_FONTSIZE);
 		defProps.setProperty(ConstantsServer.PROP_TICKER_FONTTYPE, ConstantsServer.DEFAULT_TICKER_FONTTYPE);

@@ -36,6 +36,8 @@ public class DisplayMainComponent extends JComponent {
 	private Countdown countdown;
 	private Font countdownFont;
 	private Color countdownFontColor;
+	
+	private Color generalBGColor;
 
 	// TODO set a background for this component ( e.g. many 4s logos) that there
 	// isnt any grey space when showing a 4:3 resolution image
@@ -44,6 +46,7 @@ public class DisplayMainComponent extends JComponent {
 		super();
 		updateCountdownFont();
 		updateCountdownFontColor();
+		updateBackgroundColor();
 	}
 
 	/**
@@ -95,6 +98,14 @@ public class DisplayMainComponent extends JComponent {
 	 */
 	@Override
 	protected void paintComponent(Graphics g) {
+		
+		Color oldColor = g.getColor();
+		
+		g.setColor(generalBGColor);
+        g.fillRect(0, 0, getWidth(), getHeight());
+		
+        g.setColor(oldColor);
+        
 		if (countdownShowing) {
 			Graphics2D tmpG2D = (Graphics2D) g.create();
 			tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -117,6 +128,12 @@ public class DisplayMainComponent extends JComponent {
 		countdownShowing = false;
 		image = null;
 		repaint();
+	}
+
+	protected void updateBackgroundColor() {
+		generalBGColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)));
+		log.debug("updating general background color");
+		repaint(0, 0, getWidth(), getHeight());
 	}
 
 }
