@@ -42,7 +42,6 @@ import org.jdesktop.swingx.util.GraphicsUtilities;
 
 import com.sun.org.apache.bcel.internal.Constants;
 
-import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.server.ConstantsServer;
 

@@ -1485,6 +1485,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	@Override
 	public void errorDuringLogin(String msg) {
 		JOptionPane.showMessageDialog(this, msg, "Error Login", JOptionPane.ERROR_MESSAGE);
+		System.exit(0);
 	}
 
 	@Override

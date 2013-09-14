@@ -60,11 +60,6 @@ public class Server {
 
 	private void checkAndCreateDirs() {
 		File savePath = new File(ConstantsServer.SAVE_PATH
-				+ ConstantsServer.CACHE_PATH);
-		if (!savePath.exists()) {
-			savePath.mkdirs();
-		}
-		savePath = new File(ConstantsServer.SAVE_PATH
 				+ ConstantsServer.CACHE_PATH_IMAGES);
 		if (!savePath.exists()) {
 			savePath.mkdirs();

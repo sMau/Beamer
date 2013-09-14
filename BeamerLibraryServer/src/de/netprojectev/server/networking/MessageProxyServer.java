@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -299,7 +300,7 @@ public class MessageProxyServer {
 		VideoFile file = (VideoFile) msg.getData()[0];
 		videoFileReceiveHandler.finishingReceivingVideo(file.getId());
 		
-		file.setVideoFile(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + file.getId()));
+		file.setVideoFile(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + file.getId()));
 		
 		addMediaFile(file);
 	}
@@ -363,13 +364,16 @@ public class MessageProxyServer {
 	public void clientTimedOut(Channel chan) {
 		allClients.remove(chan);
 		ConnectedUser user = findUserByChan(chan);
-		connectedUsers.remove(user);
 		log.info("Client timed out. Alias: " + user.getAlias());
+		connectedUsers.remove(user);
 	}
 	
 	public ConnectedUser findUserByChan(Channel chan) {
 		for(ConnectedUser user : connectedUsers) {
-			if(user.getChannel().equals(chan)) {
+			InetSocketAddress argChanAddr = ((InetSocketAddress) chan.getRemoteAddress());
+			InetSocketAddress searchChanAddr = ((InetSocketAddress) user.getChannel().getRemoteAddress());
+			if(searchChanAddr.getAddress().equals(argChanAddr.getAddress()) 
+					&& searchChanAddr.getPort() == argChanAddr.getPort()) {
 				return user;
 			}
 		}

@@ -14,10 +14,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import de.netprojectev.client.Client;
-import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.misc.Misc;
-import de.netprojectev.networking.LoginData;
 
 /**
  * 
@@ -95,9 +92,7 @@ public class LoginDialog extends javax.swing.JDialog {
 			JOptionPane.showMessageDialog(this, "The port is not valid.", "Port", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
 		doClose(RET_OK);
-
 	}
 
 	/**

@@ -5,7 +5,6 @@ import java.awt.GraphicsEnvironment;
 import java.util.Date;
 
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.misc.Misc;
 
 public class ConstantsServer {
 	
@@ -14,9 +13,7 @@ public class ConstantsServer {
 	 */
 	
 	public static final String SAVE_PATH = System.getProperty("user.home") + "/.beamermanager_server/";
-	
-	public static final String CACHE_PATH = "cache/";
-	
+		
 	public static final String FILENAME_MEDIAFILES = "mediafiles.brm";
 	public static final String FILENAME_PRIORITIES = "priorities.brm";
 	public static final String FILENAME_THEMES = "themes.brm";

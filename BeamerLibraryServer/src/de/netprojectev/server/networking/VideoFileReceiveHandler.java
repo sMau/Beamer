@@ -28,7 +28,7 @@ public class VideoFileReceiveHandler {
 		receivingFiles.add(id);
 		msgCounter.put(id, new MessageCounter(maxMsgCount));
 		FileOutputStream out = new FileOutputStream(new File(ConstantsServer.SAVE_PATH
-				+ ConstantsServer.CACHE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + id.toString()));
+				 + ConstantsServer.CACHE_PATH_VIDEOS + id.toString()));
 		BufferedOutputStream bufOut = new BufferedOutputStream(out);
 		outputstreams.put(id, bufOut);
 

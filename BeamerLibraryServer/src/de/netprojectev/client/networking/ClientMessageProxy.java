@@ -443,7 +443,7 @@ public class ClientMessageProxy {
 				public void run() {
 					client.connect();
 				}
-			}, 5000, 5000);
+			}, 2000, 5000);
 		}
 	}
 

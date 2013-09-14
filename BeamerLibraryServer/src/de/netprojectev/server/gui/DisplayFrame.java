@@ -4,12 +4,17 @@
  */
 package de.netprojectev.server.gui;
 
+import java.awt.Cursor;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import org.apache.logging.log4j.Logger;
@@ -52,6 +57,15 @@ public class DisplayFrame extends javax.swing.JFrame {
 	public DisplayFrame(MessageProxyServer proxy) {
 		this.proxy = proxy;
 		initComponents();
+		// Transparent 16 x 16 pixel cursor image.
+		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+
+		// Create a new blank cursor.
+		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+		    cursorImg, new Point(0, 0), "blank cursor");
+
+		// Set the blank cursor to the JFrame.
+		this.getContentPane().setCursor(blankCursor);
 		fullscreen = false;
 		this.proxy.setPropertyUpdateListener(new PropertyUpdateListener() {
 
@@ -111,6 +125,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 
 	private void showVideoFile(VideoFile video) {
 
+		setAlwaysOnTop(false);
 		try {
 			final Process vlc = new VlcPlayBackUtility(video.getVideoFile()).startPlay();
 
@@ -124,6 +139,9 @@ public class DisplayFrame extends javax.swing.JFrame {
 						log.warn("vlc interrupted", e);
 					}
 					try {
+						setAlwaysOnTop(true);
+						requestFocus();
+						toFront();
 						videoFinishedListener.videoFinished();
 					} catch (MediaDoesNotExsistException e) {
 						log.warn("Video does not exist.", e);
@@ -135,6 +153,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 
 		} catch (Exception e) {
 			log.warn("Video could not be played.", e);
+			setAlwaysOnTop(true);
 		}
 
 	}
@@ -192,20 +211,20 @@ public class DisplayFrame extends javax.swing.JFrame {
 	public void enterFullscreen(int screenNumber) {
 
 		if (!fullscreen) {
-			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-			GraphicsDevice[] myDevices = ge.getScreenDevices();
+
 			dispose();
 			this.setUndecorated(true);
+			setAlwaysOnTop(true);
+			setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
+			setResizable(false);
 			setVisible(true);
-			if (screenNumber >= 0 && screenNumber < myDevices.length) {
-				myDevices[screenNumber].setFullScreenWindow(this);
-				fullscreen = true;
-			} else {
-				dispose();
-				this.setUndecorated(false);
-				setVisible(true);
-				fullscreen = false;
-			}
+			requestFocus();
+			toFront();
+			
+			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsDevice device = env.getDefaultScreenDevice();
+			device.setFullScreenWindow(this);  
+
 		}
 
 	}
