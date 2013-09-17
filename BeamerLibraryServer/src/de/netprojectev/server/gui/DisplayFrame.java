@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import org.apache.logging.log4j.Logger;
@@ -62,7 +62,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 
 		// Create a new blank cursor.
 		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-		    cursorImg, new Point(0, 0), "blank cursor");
+				cursorImg, new Point(0, 0), "blank cursor");
 
 		// Set the blank cursor to the JFrame.
 		this.getContentPane().setCursor(blankCursor);
@@ -77,32 +77,32 @@ public class DisplayFrame extends javax.swing.JFrame {
 	}
 
 	private void propertyUpdated(String key) {
-		if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)) {
+		if (key.equals(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)) {
 			displayMainComponent.updateCountdownFontColor();
-		} else if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTSIZE)) {
+		} else if (key.equals(ConstantsServer.PROP_COUNTDOWN_FONTSIZE)) {
 			displayMainComponent.updateCountdownFont();
-		} else if(key.equals(ConstantsServer.PROP_COUNTDOWN_FONTTYPE)) {
+		} else if (key.equals(ConstantsServer.PROP_COUNTDOWN_FONTTYPE)) {
 			displayMainComponent.updateCountdownFont();
-		} else if(key.equals(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)) {
+		} else if (key.equals(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)) {
 			tickerComponent.updateBackgroundColor();
-		} else if(key.equals(ConstantsServer.PROP_TICKER_FONTCOLOR)) {
+		} else if (key.equals(ConstantsServer.PROP_TICKER_FONTCOLOR)) {
 			tickerComponent.updateFontColor();
-		} else if(key.equals(ConstantsServer.PROP_TICKER_FONTSIZE)) {
+		} else if (key.equals(ConstantsServer.PROP_TICKER_FONTSIZE)) {
 			tickerComponent.updateFontByClient();
-		} else if(key.equals(ConstantsServer.PROP_TICKER_FONTTYPE)) {
+		} else if (key.equals(ConstantsServer.PROP_TICKER_FONTTYPE)) {
 			tickerComponent.updateFontByClient();
-		} else if(key.equals(ConstantsServer.PROP_TICKER_SEPERATOR)) {
+		} else if (key.equals(ConstantsServer.PROP_TICKER_SEPERATOR)) {
 			updateLiveTickerString();
-		} else if(key.equals(ConstantsServer.PROP_TICKER_SPEED)) {
+		} else if (key.equals(ConstantsServer.PROP_TICKER_SPEED)) {
 			tickerComponent.updateSpeedByClient();
-		} else if(key.equals(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA)) {
+		} else if (key.equals(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA)) {
 			tickerComponent.updateBackgroundAlpha();
-		} else if(key.equals(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)) {
+		} else if (key.equals(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)) {
 			displayMainComponent.updateBackgroundColor();
 		} else {
 			log.warn("received an unknown property key: " + key);
 		}
-		
+
 	}
 
 	public void showMediaFileInMainComponent(ServerMediaFile fileToShow) throws IOException {
@@ -125,8 +125,8 @@ public class DisplayFrame extends javax.swing.JFrame {
 
 	private void showVideoFile(VideoFile video) {
 
-		setAlwaysOnTop(false);
 		try {
+			setAlwaysOnTop(false);
 			final Process vlc = new VlcPlayBackUtility(video.getVideoFile()).startPlay();
 
 			new Thread(new Runnable() {
@@ -138,22 +138,27 @@ public class DisplayFrame extends javax.swing.JFrame {
 					} catch (InterruptedException e) {
 						log.warn("vlc interrupted", e);
 					}
-					try {
-						setAlwaysOnTop(true);
-						requestFocus();
-						toFront();
-						videoFinishedListener.videoFinished();
-					} catch (MediaDoesNotExsistException e) {
-						log.warn("Video does not exist.", e);
-					} catch (MediaListsEmptyException e) {
-						log.warn("Video does not exist.", e);
-					}
+					SwingUtilities.invokeLater(new Runnable() {
+
+						@Override
+						public void run() {
+							exitFullscreen();
+							enterFullscreen(0);
+							try {
+								videoFinishedListener.videoFinished();
+							} catch (MediaDoesNotExsistException e) {
+								log.warn("Video does not exist.", e);
+							} catch (MediaListsEmptyException e) {
+								log.warn("Video does not exist.", e);
+							}
+						}
+					});
+
 				}
 			}).start();
 
 		} catch (Exception e) {
 			log.warn("Video could not be played.", e);
-			setAlwaysOnTop(true);
 		}
 
 	}
@@ -211,20 +216,19 @@ public class DisplayFrame extends javax.swing.JFrame {
 	public void enterFullscreen(int screenNumber) {
 
 		if (!fullscreen) {
-
 			dispose();
 			this.setUndecorated(true);
-			setAlwaysOnTop(true);
 			setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
 			setResizable(false);
+			setAlwaysOnTop(true);
 			setVisible(true);
-			requestFocus();
 			toFront();
 			
 			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice device = env.getDefaultScreenDevice();
-			device.setFullScreenWindow(this);  
-
+			device.setFullScreenWindow(this);
+			
+			fullscreen = true;
 		}
 
 	}
@@ -238,10 +242,17 @@ public class DisplayFrame extends javax.swing.JFrame {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
+			setAlwaysOnTop(false);
 			this.setUndecorated(false);
+			setResizable(true);
+			setSize(getPreferredSize());
 			setVisible(true);
+			
 			myDevices[0].setFullScreenWindow(null);
+			
+			toFront();
 			pack();
+			
 			fullscreen = false;
 		}
 	}
@@ -253,59 +264,60 @@ public class DisplayFrame extends javax.swing.JFrame {
 	 */
 
 	// <editor-fold defaultstate="collapsed"
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+	// <editor-fold defaultstate="collapsed"
+	// desc="Generated Code">//GEN-BEGIN:initComponents
+	private void initComponents() {
 
-        displayMainComponent = new de.netprojectev.server.gui.DisplayMainComponent();
-        tickerComponent = new de.netprojectev.server.gui.TickerComponent(displayMainComponent);
+		displayMainComponent = new de.netprojectev.server.gui.DisplayMainComponent();
+		tickerComponent = new de.netprojectev.server.gui.TickerComponent(displayMainComponent);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
-        displayMainComponent.setDoubleBuffered(true);
+		displayMainComponent.setDoubleBuffered(true);
 
-        tickerComponent.setDoubleBuffered(true);
-        tickerComponent.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
-        tickerComponent.setMinimumSize(new java.awt.Dimension(0, 0));
-        tickerComponent.setPreferredSize(new java.awt.Dimension(800, 80));
+		tickerComponent.setDoubleBuffered(true);
+		tickerComponent.setFont(new java.awt.Font("Arial", 1, 36)); // NOI18N
+		tickerComponent.setMinimumSize(new java.awt.Dimension(0, 0));
+		tickerComponent.setPreferredSize(new java.awt.Dimension(800, 80));
 
-        javax.swing.GroupLayout tickerComponentLayout = new javax.swing.GroupLayout(tickerComponent);
-        tickerComponent.setLayout(tickerComponentLayout);
-        tickerComponentLayout.setHorizontalGroup(
-            tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-        tickerComponentLayout.setVerticalGroup(
-            tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
-        );
+		javax.swing.GroupLayout tickerComponentLayout = new javax.swing.GroupLayout(tickerComponent);
+		tickerComponent.setLayout(tickerComponentLayout);
+		tickerComponentLayout.setHorizontalGroup(
+				tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGap(0, 800, Short.MAX_VALUE)
+				);
+		tickerComponentLayout.setVerticalGroup(
+				tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGap(0, 80, Short.MAX_VALUE)
+				);
 
-        javax.swing.GroupLayout displayMainComponentLayout = new javax.swing.GroupLayout(displayMainComponent);
-        displayMainComponent.setLayout(displayMainComponentLayout);
-        displayMainComponentLayout.setHorizontalGroup(
-            displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        displayMainComponentLayout.setVerticalGroup(
-            displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayMainComponentLayout.createSequentialGroup()
-                .addContainerGap(338, Short.MAX_VALUE)
-                .addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32))
-        );
+		javax.swing.GroupLayout displayMainComponentLayout = new javax.swing.GroupLayout(displayMainComponent);
+		displayMainComponent.setLayout(displayMainComponentLayout);
+		displayMainComponentLayout.setHorizontalGroup(
+				displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addComponent(tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				);
+		displayMainComponentLayout.setVerticalGroup(
+				displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayMainComponentLayout.createSequentialGroup()
+								.addContainerGap(338, Short.MAX_VALUE)
+								.addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+								.addGap(32, 32, 32))
+				);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				);
+		layout.setVerticalGroup(
+				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+						.addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				);
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+		pack();
+	}// </editor-fold>//GEN-END:initComponents
 
 	/**
 	 * @param args
@@ -357,10 +369,11 @@ public class DisplayFrame extends javax.swing.JFrame {
 		});
 	}
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
-    private de.netprojectev.server.gui.TickerComponent tickerComponent;
-    // End of variables declaration//GEN-END:variables
+	// Variables declaration - do not modify//GEN-BEGIN:variables
+	private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
+	private de.netprojectev.server.gui.TickerComponent tickerComponent;
+
+	// End of variables declaration//GEN-END:variables
 
 	public void setVideoFinishedListener(VideoFinishListener videoFinishedListener) {
 		this.videoFinishedListener = videoFinishedListener;

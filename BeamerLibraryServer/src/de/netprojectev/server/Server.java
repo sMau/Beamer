@@ -105,7 +105,8 @@ public class Server {
 		
 		//TODO add memory params to the vm
 		//TODO check which look and feel to use (maybe makes difference for fullscreen or somethin like that)
-		
+		// TODO enable direct3d for windows
+
 		System.setProperty("sun.java2d.opengl", "True");
 		
 		ServerCLI commands = null;

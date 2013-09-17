@@ -1,14 +1,11 @@
 package de.netprojectev.client.gui.models;
 
-import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
-import de.netprojectev.client.gui.main.MainClientGUIWindow;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.MediaModelClient.UpdateCustomQueueDataListener;
-import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 
 public class CustomQueueTableModel extends AbstractTableModel {
@@ -22,7 +19,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 
 
 	private final MediaModelClient mediaModel;
-	private final String[] columns = { " ", " ", "Name", "Priority", "Type" };
+	private final String[] columns = { " ", "#", "Name", "Priority", "Type" };
 	
 	public CustomQueueTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
@@ -94,12 +91,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 			case 0:
 				return "";
 			case 1:
-				try {
-					return mediaModel.timeUntilShow(rowIndex);
-				} catch (MediaDoesNotExsistException e) {
-					mediaModel.getProxy().errorRequestFullSync(e);
-					return 0;
-				}
+				return rowIndex + 1;
 			case 2:
 				return media.getName();
 			case 3:

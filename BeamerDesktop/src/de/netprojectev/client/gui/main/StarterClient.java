@@ -9,16 +9,25 @@ import de.netprojectev.client.ConstantsClient;
 
 public class StarterClient {
 
+	private static String OS = System.getProperty("os.name").toLowerCase();
+
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
-		System.setProperty("sun.java2d.opengl", "True");
-
+		if (isWindows()) {
+			System.setProperty("sun.java2d.opengl", "False");
+		} else if (isMac()) {
+			System.setProperty("sun.java2d.opengl", "True");
+		} else if (isUnix()) {
+			System.setProperty("sun.java2d.opengl", "True");
+		} else if (isSolaris()) {
+			System.setProperty("sun.java2d.opengl", "True");
+		}
 		// TODO add memory params to the vm
 		// TODO check which look and feel to use
-
+		// TODO enable direct3d for windows
 		/*
 		 * try {
 		 * UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -57,6 +66,30 @@ public class StarterClient {
 				}
 			}
 		});
+	}
+	
+	public static boolean isWindows() {
+		 
+		return (OS.indexOf("win") >= 0);
+ 
+	}
+ 
+	public static boolean isMac() {
+ 
+		return (OS.indexOf("mac") >= 0);
+ 
+	}
+ 
+	public static boolean isUnix() {
+ 
+		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
+ 
+	}
+ 
+	public static boolean isSolaris() {
+ 
+		return (OS.indexOf("sunos") >= 0);
+ 
 	}
 
 }

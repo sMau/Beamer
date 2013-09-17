@@ -35,7 +35,7 @@ public class TickerComponent extends JComponent {
 
 	private final JComponent parent;
 
-	private final int paddingBottom = 10;
+	private final int paddingBottom = 16;
 	private final int paddingTop = 0;
 	private final int marginBottom = 32;
 	private final float brightnessMultiplicator = 0.5f;
@@ -208,7 +208,7 @@ public class TickerComponent extends JComponent {
 		tickerStringHeight = getFontMetrics(tickerFont).getHeight();
 
 		int height = tickerStringHeight + paddingTop + paddingBottom;
-		int y = parent.getHeight() - marginBottom - height;
+		int y = parent.getHeight() - marginBottom - height - paddingBottom;
 		this.setBounds(0, y, parent.getWidth(), height);
 
 		stringY = tickerStringHeight + paddingTop;
