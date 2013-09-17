@@ -126,7 +126,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 	private void showVideoFile(VideoFile video) {
 
 		try {
-			setAlwaysOnTop(false);
+			exitFullscreen();
 			final Process vlc = new VlcPlayBackUtility(video.getVideoFile()).startPlay();
 
 			new Thread(new Runnable() {
@@ -142,7 +142,6 @@ public class DisplayFrame extends javax.swing.JFrame {
 
 						@Override
 						public void run() {
-							exitFullscreen();
 							enterFullscreen(0);
 							try {
 								videoFinishedListener.videoFinished();
@@ -218,11 +217,9 @@ public class DisplayFrame extends javax.swing.JFrame {
 		if (!fullscreen) {
 			dispose();
 			this.setUndecorated(true);
-			setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
-			setResizable(false);
-			setAlwaysOnTop(true);
+			//setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
+			//setResizable(false);
 			setVisible(true);
-			toFront();
 			
 			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice device = env.getDefaultScreenDevice();
@@ -242,16 +239,12 @@ public class DisplayFrame extends javax.swing.JFrame {
 			GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
-			setAlwaysOnTop(false);
 			this.setUndecorated(false);
-			setResizable(true);
-			setSize(getPreferredSize());
+			//setResizable(true);
+			//setSize(getPreferredSize());
 			setVisible(true);
 			
 			myDevices[0].setFullScreenWindow(null);
-			
-			toFront();
-			pack();
 			
 			fullscreen = false;
 		}
