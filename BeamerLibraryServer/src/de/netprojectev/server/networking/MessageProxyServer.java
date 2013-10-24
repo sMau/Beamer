@@ -428,6 +428,8 @@ public class MessageProxyServer {
 	 * 
 	 * next check all the image to imageicon conversions and choose best for performance and RAM usage
 	 * 
+	 * show once funktion z.b. für countdown oder videos
+	 * 
 	 * next proper login handling (also to see which user did what and when) and maybe the possibility to send messages or notes or something like that
 	 */
 	private void fullSyncRequested(Message msg, Channel channel) throws FileNotFoundException, IOException {

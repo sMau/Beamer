@@ -926,11 +926,17 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 
 			public void run() {
-				try {
-					new ThemeslideCreatorFrame(null, null).setVisible(true);
-				} catch (ThemeDoesNotExistException | PriorityDoesNotExistException e) {
-
-				}
+				
+					try {
+						new ThemeslideCreatorFrame(null, null).setVisible(true);
+					} catch (ThemeDoesNotExistException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (PriorityDoesNotExistException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
 			}
 		});
 	}

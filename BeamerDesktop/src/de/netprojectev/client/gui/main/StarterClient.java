@@ -13,43 +13,53 @@ public class StarterClient {
 
 	/**
 	 * @param args
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 
 		if (isWindows()) {
 			System.setProperty("sun.java2d.opengl", "False");
+			System.setProperty("sun.java2d.d3d", "True");
+
+				javax.swing.UIManager.setLookAndFeel(
+						javax.swing.UIManager.getSystemLookAndFeelClassName());
+
+
 		} else if (isMac()) {
 			System.setProperty("sun.java2d.opengl", "True");
+			
+				javax.swing.UIManager.setLookAndFeel(
+						javax.swing.UIManager.getSystemLookAndFeelClassName());
+			
 		} else if (isUnix()) {
 			System.setProperty("sun.java2d.opengl", "True");
+			
+				for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+						.getInstalledLookAndFeels()) {
+					if ("Nimbus".equals(info.getName())) {
+						javax.swing.UIManager.setLookAndFeel(info.getClassName());
+						break;
+					}
+				}
+			
+
+			
 		} else if (isSolaris()) {
 			System.setProperty("sun.java2d.opengl", "True");
-		}
-		// TODO add memory params to the vm
-		// TODO check which look and feel to use
-		// TODO enable direct3d for windows
-		/*
-		 * try {
-		 * UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		 * } catch (ClassNotFoundException | InstantiationException |
-		 * IllegalAccessException | UnsupportedLookAndFeelException e) {
-		 * 
-		 * e.printStackTrace();
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-					.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
+			
+				for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+						.getInstalledLookAndFeels()) {
+					if ("Nimbus".equals(info.getName())) {
+						javax.swing.UIManager.setLookAndFeel(info.getClassName());
+						break;
+					}
 				}
-			}
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e1) {
-			e1.printStackTrace();
-			System.exit(0);
+
+			
 		}
-		// }
 
 		File savePath = new File(ConstantsClient.SAVE_PATH);
 		if (!savePath.exists()) {
@@ -58,38 +68,52 @@ public class StarterClient {
 
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				try {
-					new MainClientGUIWindow();
-				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
-					e.printStackTrace();
-					System.exit(0);
-				}
+
+					try {
+						new MainClientGUIWindow();
+					} catch (InstantiationException e) {
+						e.printStackTrace();
+						System.exit(0);
+					} catch (IllegalAccessException e) {
+						e.printStackTrace();
+						System.exit(0);
+					} catch (IllegalArgumentException e) {
+						e.printStackTrace();
+						System.exit(0);
+					} catch (InvocationTargetException e) {
+						e.printStackTrace();
+						System.exit(0);
+					} catch (SecurityException e) {
+						e.printStackTrace();
+						System.exit(0);
+					}
+
 			}
 		});
 	}
-	
+
 	public static boolean isWindows() {
-		 
+
 		return (OS.indexOf("win") >= 0);
- 
+
 	}
- 
+
 	public static boolean isMac() {
- 
+
 		return (OS.indexOf("mac") >= 0);
- 
+
 	}
- 
+
 	public static boolean isUnix() {
- 
-		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
- 
+
+		return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+
 	}
- 
+
 	public static boolean isSolaris() {
- 
+
 		return (OS.indexOf("sunos") >= 0);
- 
+
 	}
 
 }

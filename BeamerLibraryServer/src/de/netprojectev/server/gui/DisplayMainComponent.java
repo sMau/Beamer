@@ -73,7 +73,11 @@ public class DisplayMainComponent extends JComponent {
 
 		countdownShowing = false;
 
-		this.image = Misc.getScaledImageInstanceFast(compImage, (int) (getHeight() * compImage.getWidth() / compImage.getHeight()), (int) getHeight());
+		//TODO check the scaling and respect aspect ratio
+		int newWidth = getWidth();
+		int newHeight = (getWidth() / compImage.getWidth()) * compImage.getHeight();
+		
+		this.image = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
 		repaint(0, 0, getWidth(), getHeight());
 
 	}
