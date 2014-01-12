@@ -22,6 +22,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/netty-3.6.6.Final.jar" sourcepath="lib/netty-3.6.6.Final-sources.jar"/>
-	<classpathentry kind="lib" path="lib/jewelcli-0.7.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jewelcli-0.7.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

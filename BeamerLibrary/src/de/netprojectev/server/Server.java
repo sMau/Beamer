@@ -17,16 +17,13 @@ import org.jboss.netty.handler.codec.serialization.ObjectDecoder;
 import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 import org.jboss.netty.util.HashedWheelTimer;
 
-import uk.co.flamingpenguin.jewel.cli.ArgumentValidationException;
-import uk.co.flamingpenguin.jewel.cli.Cli;
-import uk.co.flamingpenguin.jewel.cli.CliFactory;
-
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
+import de.netprojectev.server.networking.ServerGUI;
 
 public class Server {
 
@@ -37,25 +34,30 @@ public class Server {
 	private ChannelFactory factory;
 	private HashedWheelTimer timer;
 
-	public Server(int port, boolean fullscreen) {
+	public Server(int port, ServerGUI serverGUI) {
 		this.port = port;
-
+		this.proxy = new MessageProxyServer(this, serverGUI);
+		
 		checkAndCreateDirs();
-
-		proxy = new MessageProxyServer(this);
+		
+	}
+	
+	public MessageProxyServer bindServerSocket(boolean startInFullscreen) {
+		
 		
 		timer = new HashedWheelTimer();
 		bindListeningSocket();
 		
-		
-		/*
-		 * when setup is finished make the gui visible
-		 */
-		if(fullscreen) {
+		if(startInFullscreen) {
 			proxy.enableFullScreen();
 		}
 		proxy.makeGUIVisible();
 		
+		return proxy;
+		/*
+		 * when setup is finished make the gui visible
+		 */
+
 	}
 
 	private void checkAndCreateDirs() {
@@ -99,31 +101,6 @@ public class Server {
 
 		bootstrap.bind(new InetSocketAddress(port));
 		log.info("Binding listening socket to port: " + port);
-	}
-
-	public static void main(String[] args) {
-		
-		System.setProperty("sun.java2d.opengl", "True");
-		
-		ServerCLI commands = null;
-		final Cli<ServerCLI> cli = CliFactory.createCli(ServerCLI.class);
-		try {
-			commands = cli.parseArguments(args);
-		} catch (ArgumentValidationException e) {
-			System.out.println(cli.getHelpMessage());
-			System.exit(0);
-		}
-
-		int port = commands.getPort();
-		
-		if(!(port < 65535 && port > 1024)) {
-			System.out.println(cli.getHelpMessage());
-			System.exit(0);
-		}
-		
-		boolean fullscreen = commands.isFullscreen();
-		
-		new Server(port, fullscreen);
 	}
 
 	public void shutdownServer() {

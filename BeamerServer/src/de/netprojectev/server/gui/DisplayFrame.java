@@ -23,12 +23,15 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.server.Server;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
+import de.netprojectev.server.networking.MessageProxyServer.VideoFinishListener;
+import de.netprojectev.server.networking.ServerGUI;
 import de.netprojectev.server.networking.MessageProxyServer.PropertyUpdateListener;
 
 /**
@@ -37,11 +40,7 @@ import de.netprojectev.server.networking.MessageProxyServer.PropertyUpdateListen
  * 
  * @author samu
  */
-public class DisplayFrame extends javax.swing.JFrame {
-
-	public interface VideoFinishListener {
-		public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException;
-	}
+public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 
 	/**
 	 * 
@@ -54,8 +53,10 @@ public class DisplayFrame extends javax.swing.JFrame {
 	private Timer countdownTimer;
 	private VideoFinishListener videoFinishedListener;
 
-	public DisplayFrame(MessageProxyServer proxy) {
-		this.proxy = proxy;
+	public DisplayFrame(boolean fullscreen, int port) {
+		
+		this.proxy = new Server(port, this).bindServerSocket(fullscreen);
+		
 		initComponents();
 		// Transparent 16 x 16 pixel cursor image.
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
@@ -250,6 +251,12 @@ public class DisplayFrame extends javax.swing.JFrame {
 		}
 	}
 
+	@Override
+	public void setVideoFinishedListener(VideoFinishListener videoFinishListener) {
+		this.videoFinishedListener = videoFinishListener;
+	}
+	
+	
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -366,10 +373,7 @@ public class DisplayFrame extends javax.swing.JFrame {
 	private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
 	private de.netprojectev.server.gui.TickerComponent tickerComponent;
 
-	// End of variables declaration//GEN-END:variables
 
-	public void setVideoFinishedListener(VideoFinishListener videoFinishedListener) {
-		this.videoFinishedListener = videoFinishedListener;
-	}
+	// End of variables declaration//GEN-END:variables
 
 }

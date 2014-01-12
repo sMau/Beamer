@@ -41,8 +41,6 @@ import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
-import de.netprojectev.server.gui.DisplayFrame;
-import de.netprojectev.server.gui.DisplayFrame.VideoFinishListener;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
@@ -50,6 +48,9 @@ import de.netprojectev.server.networking.VideoFileReceiveHandler.ToManyMessagesE
 
 public class MessageProxyServer {
 	
+	public interface VideoFinishListener {
+		public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException;
+	}
 	
 	public interface PropertyUpdateListener {
 		public void propertyUpdate(String keyPropertyUpdated);
@@ -63,7 +64,7 @@ public class MessageProxyServer {
 	private final TickerModelServer tickerModel;
 	private final PreferencesModelServer prefsModel;
 	private final VideoFileReceiveHandler videoFileReceiveHandler;
-	private final DisplayFrame display;
+	private final ServerGUI serverGUI;
 	private final Server server;
 	private final HashedWheelTimer timeoutChecker;
 	
@@ -115,14 +116,14 @@ public class MessageProxyServer {
 		
 	}
 	
-	public MessageProxyServer(Server server) {
+	public MessageProxyServer(Server server, ServerGUI serverGUI) {
 		this.allClients = new DefaultChannelGroup("beamer-clients");
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
 		this.prefsModel = new PreferencesModelServer(this);
 		this.prefsModel.deserializeAll();
 		this.videoFileReceiveHandler = new VideoFileReceiveHandler();
-		this.display = new DisplayFrame(this);
+		this.serverGUI = serverGUI;
 		this.server = server;
 		this.connectedUsers = new ArrayList<ConnectedUser>();
 		this.timeoutChecker = new HashedWheelTimer();
@@ -339,7 +340,7 @@ public class MessageProxyServer {
 	}
 	
 	public void makeGUIVisible() {
-		this.display.setVisible(true);
+		this.serverGUI.setVisible(true);
 	}
 	
 	public ChannelGroupFuture broadcastMessage(Message msg) {
@@ -529,7 +530,7 @@ public class MessageProxyServer {
 	private void addLiveTickerElement(Message msg) throws IOException {
 		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData()[0];
 		tickerModel.addTickerElement(eltToAdd);
-		display.updateLiveTickerString();
+		serverGUI.updateLiveTickerString();
 		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(eltToAdd)));
 		
 		prefsModel.serializeTickerDatabase();
@@ -573,7 +574,7 @@ public class MessageProxyServer {
 		toShow.setCurrent(true).increaseShowCount();
 		
 		if(toShow instanceof VideoFile) {
-			display.setVideoFinishedListener(new VideoFinishListener() {
+			serverGUI.setVideoFinishedListener(new VideoFinishListener() {
 				
 				@Override
 				public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException {
@@ -587,7 +588,7 @@ public class MessageProxyServer {
 		}
 		
 		try {
-			display.showMediaFileInMainComponent(currentFile);
+			serverGUI.showMediaFileInMainComponent(currentFile);
 		} catch (IOException e) {
 			log.warn("Media file could not be shown.", e);
 			return;
@@ -611,7 +612,7 @@ public class MessageProxyServer {
 	public void enableFullScreen() {
 		fullscreenEnabled = true;
 		
-		display.enterFullscreen(0);
+		serverGUI.enterFullscreen(0);
 		
 		broadcastMessage(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 	}
@@ -619,7 +620,7 @@ public class MessageProxyServer {
 	private void disableFullScreen() {
 		fullscreenEnabled = false;
 		
-		display.exitFullscreen();
+		serverGUI.exitFullscreen();
 		
 		broadcastMessage(new Message(OpCode.STC_DISABLE_FULLSCREEN_ACK));
 		
@@ -664,7 +665,7 @@ public class MessageProxyServer {
 	private void enableLiveTicker() {
 		liveTickerEnabled = true;
 		
-		display.startLiveTicker();
+		serverGUI.startLiveTicker();
 		
 		broadcastMessage(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
 	}
@@ -672,7 +673,7 @@ public class MessageProxyServer {
 	private void disableLiveTicker() {
 		liveTickerEnabled = false;
 		
-		display.stopLiveTicker();
+		serverGUI.stopLiveTicker();
 		
 		broadcastMessage(new Message(OpCode.STC_DISABLE_LIVE_TICKER_ACK));
 	}
@@ -701,8 +702,8 @@ public class MessageProxyServer {
 		return tickerModel;
 	}
 
-	public DisplayFrame getFrame() {
-		return display;
+	public ServerGUI getFrame() {
+		return serverGUI;
 	}
 
 	public ServerMediaFile getCurrentFile() {
