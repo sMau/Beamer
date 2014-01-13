@@ -16,7 +16,7 @@ import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaNotInQueueException;
 import de.netprojectev.exceptions.OutOfSyncException;
-import de.netprojectev.misc.LoggerBuilder;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class MediaModelClient {
 

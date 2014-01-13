@@ -6,10 +6,10 @@ import java.util.UUID;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.networking.MessageProxyServer;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class TickerModelServer {
 

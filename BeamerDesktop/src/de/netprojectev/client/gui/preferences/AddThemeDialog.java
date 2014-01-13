@@ -22,9 +22,9 @@ import javax.swing.KeyStroke;
 
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Theme;
-import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.utils.MediaFileFilter;
 
 /**
  *

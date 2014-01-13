@@ -1,4 +1,4 @@
-package de.netprojectev.misc;
+package de.netprojectev.utils;
 
 import java.io.File;
 

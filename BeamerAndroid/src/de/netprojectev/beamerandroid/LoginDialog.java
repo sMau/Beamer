@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.LoginData;
+import de.netprojectev.utils.HelperMethods;
 
 public class LoginDialog extends DialogFragment {
 
@@ -50,7 +50,7 @@ public class LoginDialog extends DialogFragment {
 							return;
 						}
 
-						if (!Misc.isIpAddress(ip)) {
+						if (!HelperMethods.isIpAddress(ip)) {
 							Toast.makeText(getActivity(), "The ip address is not valid.", Toast.LENGTH_SHORT).show();
 							return;
 						}

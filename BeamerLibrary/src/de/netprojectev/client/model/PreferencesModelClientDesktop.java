@@ -7,8 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
-import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.Misc;
+import de.netprojectev.utils.LoggerBuilder;
+import de.netprojectev.utils.HelperMethods;
 
 public class PreferencesModelClientDesktop extends PreferencesModelClient {
 	
@@ -22,13 +22,13 @@ public class PreferencesModelClientDesktop extends PreferencesModelClient {
 
 	public void saveProperties() throws IOException {
 		log.info("Saving properties");
-		Misc.savePropertiesToDisk(clientProperties, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
+		HelperMethods.savePropertiesToDisk(clientProperties, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
 	}
 
 	public void loadProperties() throws IOException {
 		log.info("Loading properties");
 		clientProperties = new Properties(generateClientDesktopDefaultProps());
-		Properties propsLoaded = Misc.loadPropertiesFromDisk(ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
+		Properties propsLoaded = HelperMethods.loadPropertiesFromDisk(ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
 		clientProperties.putAll(propsLoaded);
 	}
 	
@@ -44,7 +44,7 @@ public class PreferencesModelClientDesktop extends PreferencesModelClient {
 		defProps.setProperty(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP, "" + ConstantsClient.DEFAULT_THEMESLIDECREATOR_PRESETTINGS_MARGINTOP);
 
 		try {
-			Misc.savePropertiesToDisk(defProps, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_DEFAULT_PROPERTIES);
+			HelperMethods.savePropertiesToDisk(defProps, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_DEFAULT_PROPERTIES);
 		} catch (IOException e) {
 			log.warn("Error during saving default properties to disk.", e);
 		}

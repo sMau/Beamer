@@ -28,7 +28,6 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
-import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -45,6 +44,7 @@ import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
 import de.netprojectev.server.networking.VideoFileReceiveHandler.ToManyMessagesException;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class MessageProxyServer {
 	

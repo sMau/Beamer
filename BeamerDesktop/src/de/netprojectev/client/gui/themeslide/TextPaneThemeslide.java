@@ -11,7 +11,8 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JTextPane;
 
-import de.netprojectev.misc.Misc;
+import de.netprojectev.client.gui.main.Misc;
+
 
 
 public class TextPaneThemeslide extends JTextPane {

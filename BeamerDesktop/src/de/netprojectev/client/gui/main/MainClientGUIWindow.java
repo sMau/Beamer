@@ -44,10 +44,10 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
-import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.MediaFileFilter;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.networking.LoginData;
+import de.netprojectev.utils.LoggerBuilder;
+import de.netprojectev.utils.MediaFileFilter;
+import de.netprojectev.utils.HelperMethods;
 
 /**
  * 
@@ -916,7 +916,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	}// GEN-LAST:event_jmiExitActionPerformed
 
 	private void quit() {
-		Misc.quit(this, proxy);
+		HelperMethods.quit(this, proxy);
 	}
 
 	private void jtAllMediaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jtAllMediaMouseClicked
@@ -1177,10 +1177,10 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 												
 						if (timeleftData.getTimeleftInSeconds() > 3600) {
 							jlAutomodeTimeleft.setText("Timeleft:"
-									+ Misc.convertFromSecondsToTimeString(timeleftData.getTimeleftInSeconds(), true));
+									+ HelperMethods.convertFromSecondsToTimeString(timeleftData.getTimeleftInSeconds(), true));
 						} else {
 							jlAutomodeTimeleft.setText("Timeleft:"
-									+ Misc.convertFromSecondsToTimeString(timeleftData.getTimeleftInSeconds(), false));
+									+ HelperMethods.convertFromSecondsToTimeString(timeleftData.getTimeleftInSeconds(), false));
 						}
 
 					}

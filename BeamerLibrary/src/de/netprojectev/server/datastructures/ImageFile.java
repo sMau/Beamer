@@ -6,8 +6,8 @@ import java.io.File;
 import java.io.IOException;
 
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.utils.HelperMethods;
 
 public class ImageFile extends ServerMediaFile {
 
@@ -25,7 +25,7 @@ public class ImageFile extends ServerMediaFile {
 		this.image = null;
 
 		BufferedImage tmpImage = readRGBAValues(rgbaValues);
-		Misc.writeImageToDiskAsPNG(tmpImage, pathOnDisk);
+		HelperMethods.writeImageToDiskAsPNG(tmpImage, pathOnDisk);
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class ImageFile extends ServerMediaFile {
 	 */
 	public BufferedImage get() throws IOException {
 		if(image == null) {
-			image = Misc.loadCompatibleImage(pathOnDisk);
+			image = HelperMethods.loadCompatibleImage(pathOnDisk);
 		}
 		return image;
 	}
@@ -50,7 +50,7 @@ public class ImageFile extends ServerMediaFile {
 			throw new IllegalArgumentException("The given int array have to be at least 1x1");
 		}
 		
-		image = Misc.getConfiguration().createCompatibleImage(rbgaValues.length, rbgaValues[0].length, Transparency.TRANSLUCENT);
+		image = HelperMethods.getConfiguration().createCompatibleImage(rbgaValues.length, rbgaValues[0].length, Transparency.TRANSLUCENT);
 
 		for (int i = 0; i < rbgaValues.length; i++) {
 			for (int j = 0; j < rbgaValues[0].length; j++) {

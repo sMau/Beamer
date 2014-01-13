@@ -6,16 +6,20 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 
 import de.netprojectev.datastructures.media.MediaFile;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
+import de.netprojectev.utils.HelperMethods;
 
 public class ClientMediaFile extends MediaFile {
 
+	public interface ClientMediaFilePreview {
+		
+	}
+	
 	private final MediaType type;
 	private ImageIcon preview;
 
@@ -44,13 +48,13 @@ public class ClientMediaFile extends MediaFile {
 			preview = null;
 		} else if (serverMediaFile instanceof ImageFile) {
 			type = MediaType.Image;
-			preview = Misc.getScaledImageIconFromBufImg(((ImageFile) serverMediaFile).get(), widthToScaleTo);
+			preview = HelperMethods.getScaledImageIconFromBufImg(((ImageFile) serverMediaFile).get(), widthToScaleTo);
 		} else if (serverMediaFile instanceof VideoFile) {
 			type = MediaType.Video;
 			preview = null;
 		} else if (serverMediaFile instanceof Themeslide) {
 			type = MediaType.Themeslide;
-			preview = Misc.getScaledImageIconFromBufImg(((Themeslide) serverMediaFile).get(), widthToScaleTo);
+			preview = HelperMethods.getScaledImageIconFromBufImg(((Themeslide) serverMediaFile).get(), widthToScaleTo);
 			
 		} else {
 			type = MediaType.Unknown;

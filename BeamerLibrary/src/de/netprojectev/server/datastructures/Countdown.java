@@ -1,7 +1,7 @@
 package de.netprojectev.server.datastructures;
 
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.misc.Misc;
+import de.netprojectev.utils.HelperMethods;
 
 public class Countdown extends ServerMediaFile {
 
@@ -21,7 +21,7 @@ public class Countdown extends ServerMediaFile {
 		}
 		this.initDurationInSeconds = durationInMinutes * 60;
 		this.durationInSeconds = initDurationInSeconds;
-		this.timeString = Misc.convertFromSecondsToTimeString((int) durationInSeconds, true);
+		this.timeString = HelperMethods.convertFromSecondsToTimeString((int) durationInSeconds, true);
 	}
 
 	public long getInitDurationInSeconds() {
@@ -30,7 +30,7 @@ public class Countdown extends ServerMediaFile {
 	
 	public void decreaseOneSecond() {
 		durationInSeconds--;
-		timeString = Misc.convertFromSecondsToTimeString((int) durationInSeconds, true);
+		timeString = HelperMethods.convertFromSecondsToTimeString((int) durationInSeconds, true);
 		if(durationInSeconds < 0) {
 			durationInSeconds = initDurationInSeconds;
 		}

@@ -3,7 +3,7 @@ package de.netprojectev.client;
 import java.awt.GraphicsEnvironment;
 import java.util.Date;
 
-import de.netprojectev.misc.Misc;
+import de.netprojectev.utils.HelperMethods;
 
 public class ConstantsClient {
 
@@ -45,9 +45,9 @@ public class ConstantsClient {
 	/*
 	 * MISC
 	 */
-	public static final String[] FONT_SIZES = Misc.generateFontSizes();
+	public static final String[] FONT_SIZES = HelperMethods.generateFontSizes();
 	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-	public static final String[] FONT_SIZES_COUNTDOWN = Misc.generateFontSizesCountdown();
+	public static final String[] FONT_SIZES_COUNTDOWN = HelperMethods.generateFontSizesCountdown();
 	
 	public static final Date TIMESTAMP = new Date();
 

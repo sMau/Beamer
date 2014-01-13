@@ -29,8 +29,6 @@ import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
-import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.MediaFileFilter;
 import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -39,6 +37,8 @@ import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
+import de.netprojectev.utils.LoggerBuilder;
+import de.netprojectev.utils.MediaFileFilter;
 
 public class ClientMessageProxy {
 	

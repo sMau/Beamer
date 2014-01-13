@@ -16,8 +16,7 @@ import javax.swing.table.TableCellRenderer;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.Misc;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class TableButtonRenderer extends JButton implements TableCellRenderer {
 

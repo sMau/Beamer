@@ -14,7 +14,7 @@ import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import de.netprojectev.misc.Misc;
+import de.netprojectev.utils.HelperMethods;
 
 /**
  * 
@@ -81,7 +81,7 @@ public class LoginDialog extends javax.swing.JDialog {
 			return;
 		}
 
-		if (!Misc.isIpAddress(ip)) {
+		if (!HelperMethods.isIpAddress(ip)) {
 			JOptionPane.showMessageDialog(this, "The ip address is not valid.", "IP", JOptionPane.ERROR_MESSAGE);
 			return;
 		}

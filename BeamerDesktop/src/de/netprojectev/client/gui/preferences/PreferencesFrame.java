@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.ConstantsClient;
+import de.netprojectev.client.gui.main.Misc;
 import de.netprojectev.client.model.PreferencesModelClient.FullscreenStateListener;
 import de.netprojectev.client.model.PreferencesModelClient.LiveTickerStateListener;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
@@ -28,9 +29,8 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
-import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.utils.LoggerBuilder;
 
 /**
  * 

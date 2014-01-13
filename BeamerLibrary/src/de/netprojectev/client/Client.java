@@ -19,10 +19,10 @@ import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.ClientMessageHandler;
 import de.netprojectev.client.networking.ClientMessageProxy;
-import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class Client {
 	

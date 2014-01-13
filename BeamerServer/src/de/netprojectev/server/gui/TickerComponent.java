@@ -17,9 +17,9 @@ import javax.swing.SwingUtilities;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.misc.LoggerBuilder;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.model.PreferencesModelServer;
+import de.netprojectev.utils.LoggerBuilder;
 
 /**
  * GUI component to draw the live ticker string.

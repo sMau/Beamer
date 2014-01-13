@@ -11,12 +11,12 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
-import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.networking.MessageProxyServer;
+import de.netprojectev.utils.LoggerBuilder;
+import de.netprojectev.utils.HelperMethods;
 
 public class PreferencesModelServer {
 
@@ -91,15 +91,15 @@ public class PreferencesModelServer {
 
 	public static void saveProperties() throws IOException {
 		log.info("Saving properties");
-		Misc.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
+		HelperMethods.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
 	}
 
 	public static void loadProperties() {
 		log.info("Loading properties");
-		props = new Properties(Misc.generateServerDefaultProps());
+		props = new Properties(HelperMethods.generateServerDefaultProps());
 		Properties propsLoaded = new Properties();
 		try {
-			propsLoaded = Misc.loadPropertiesFromDisk(ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
+			propsLoaded = HelperMethods.loadPropertiesFromDisk(ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
 		} catch (IOException e) {
 			log.warn("Properties could not be loaded from disk.", e);
 		}
@@ -127,19 +127,19 @@ public class PreferencesModelServer {
 	}
 
 	public void serializeMediaDatabase() throws IOException {
-		Misc.saveToFile(proxy.getMediaModel().getAllMediaFiles(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_MEDIAFILES);
+		HelperMethods.saveToFile(proxy.getMediaModel().getAllMediaFiles(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_MEDIAFILES);
 	}
 
 	public void serializeTickerDatabase() throws IOException {
-		Misc.saveToFile(proxy.getTickerModel().getElements(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_LIVETICKER);
+		HelperMethods.saveToFile(proxy.getTickerModel().getElements(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_LIVETICKER);
 	}
 
 	public void serializePriorityDatabase() throws IOException {
-		Misc.saveToFile(this.getPrios(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PRIORITIES);
+		HelperMethods.saveToFile(this.getPrios(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PRIORITIES);
 	}
 
 	public void serializeThemeDatabase() throws IOException {
-		Misc.saveToFile(this.getThemes(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_THEMES);
+		HelperMethods.saveToFile(this.getThemes(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_THEMES);
 	}
 
 	public void serializeAll() throws IOException {
@@ -157,7 +157,7 @@ public class PreferencesModelServer {
 		
 		HashMap<UUID, ServerMediaFile> allMedia = null;
 		try {
-			allMedia = (HashMap<UUID, ServerMediaFile>) Misc.loadFromFile(ConstantsServer.FILENAME_MEDIAFILES, ConstantsServer.SAVE_PATH);
+			allMedia = (HashMap<UUID, ServerMediaFile>) HelperMethods.loadFromFile(ConstantsServer.FILENAME_MEDIAFILES, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
 			log.warn("Error during deserialization", e);
 		} catch (IOException e) {
@@ -165,7 +165,7 @@ public class PreferencesModelServer {
 		}
 		HashMap<UUID, ServerTickerElement> allTickerElements = null;
 		try {
-			allTickerElements = (HashMap<UUID, ServerTickerElement>) Misc.loadFromFile(ConstantsServer.FILENAME_LIVETICKER, ConstantsServer.SAVE_PATH);
+			allTickerElements = (HashMap<UUID, ServerTickerElement>) HelperMethods.loadFromFile(ConstantsServer.FILENAME_LIVETICKER, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
 			log.warn("Error during deserialization", e);
 		} catch (IOException e) {
@@ -173,7 +173,7 @@ public class PreferencesModelServer {
 		}
 		HashMap<UUID, Priority> allPriorities = null;
 		try {
-			allPriorities = (HashMap<UUID, Priority>) Misc.loadFromFile(ConstantsServer.FILENAME_PRIORITIES, ConstantsServer.SAVE_PATH);
+			allPriorities = (HashMap<UUID, Priority>) HelperMethods.loadFromFile(ConstantsServer.FILENAME_PRIORITIES, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
 			log.warn("Error during deserialization", e);
 		} catch (IOException e) {
@@ -181,7 +181,7 @@ public class PreferencesModelServer {
 		}
 		HashMap<UUID, Theme> allThemes = null;
 		try {
-			allThemes = (HashMap<UUID, Theme>) Misc.loadFromFile(ConstantsServer.FILENAME_THEMES, ConstantsServer.SAVE_PATH);
+			allThemes = (HashMap<UUID, Theme>) HelperMethods.loadFromFile(ConstantsServer.FILENAME_THEMES, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
 			log.warn("Error during deserialization", e);
 		} catch (IOException e) {

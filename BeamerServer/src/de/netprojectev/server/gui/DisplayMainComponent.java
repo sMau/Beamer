@@ -11,11 +11,10 @@ import javax.swing.JComponent;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.misc.LoggerBuilder;
-import de.netprojectev.misc.Misc;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.model.PreferencesModelServer;
+import de.netprojectev.utils.LoggerBuilder;
 
 /**
  * 
@@ -74,8 +73,11 @@ public class DisplayMainComponent extends JComponent {
 		countdownShowing = false;
 
 		//TODO check the scaling and respect aspect ratio
+		// sometimes exceptions can be observed, cause of a new size like wx0
 		int newWidth = getWidth();
 		int newHeight = (getWidth() / compImage.getWidth()) * compImage.getHeight();
+		
+		log.debug("new size of the image: " + newWidth + "x" + newHeight);
 		
 		this.image = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
 		repaint(0, 0, getWidth(), getHeight());
