@@ -6,6 +6,7 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -916,7 +917,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	}// GEN-LAST:event_jmiExitActionPerformed
 
 	private void quit() {
-		HelperMethods.quit(this, proxy);
+		Misc.quit(this, proxy);
 	}
 
 	private void jtAllMediaMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_jtAllMediaMouseClicked
@@ -1079,7 +1080,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 		fileChooser.setApproveButtonText("Add");
 		fileChooser.setDialogTitle("Add Files");
 		fileChooser.setMultiSelectionEnabled(true);
-		fileChooser.setFileFilter(new MediaFileFilter());
+		fileChooser.setFileFilter(new MediaFileFilterDesktop());
 		int returnVal = fileChooser.showOpenDialog(this);
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			try {
@@ -1296,7 +1297,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			row = jtAllMedia.getSelectedRow();
 			if (row >= 0) {
 				ClientMediaFile selected = mediaModel.getValueAt(row);
-				jlPreview.setIcon(selected.getPreview());
+				jlPreview.setIcon(new ImageIcon(selected.getPreview()));
 			}
 
 			break;
@@ -1305,7 +1306,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			if (row >= 0) {
 				ClientMediaFile selected = mediaModel.getMediaFileById(mediaModel.getCustomQueue()
 						.get(row));
-				jlPreview.setIcon(selected.getPreview());
+				jlPreview.setIcon(new ImageIcon(selected.getPreview()));
 			}
 			break;
 		case 2:

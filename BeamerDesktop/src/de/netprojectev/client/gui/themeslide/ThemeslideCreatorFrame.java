@@ -11,7 +11,11 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
@@ -28,6 +32,8 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 
 import de.netprojectev.client.ConstantsClient;
+import de.netprojectev.client.gui.main.Constants;
+import de.netprojectev.client.gui.main.Misc;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.gui.preferences.ColorPickerDialog;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
@@ -75,15 +81,15 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		jComboBoxPriority.setModel(new PriorityComboBoxModel(prefs));
 
-		String[] font = ConstantsClient.FONT_FAMILIES;
+		String[] font = Constants.FONT_FAMILIES;
 		for (int i = 0; i < font.length; i++) {
 			jComboBoxFontType.addItem(font[i]);
 		}
 
 		jComboBoxFontType.setSelectedItem(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE));
 
-		for (int i = 0; i < ConstantsClient.FONT_SIZES.length; i++) {
-			jComboBoxFontSize.addItem(ConstantsClient.FONT_SIZES[i]);
+		for (int i = 0; i < Constants.FONT_SIZES.length; i++) {
+			jComboBoxFontSize.addItem(Constants.FONT_SIZES[i]);
 		}
 		jComboBoxFontSize.setSelectedItem(prefs.getClientPropertyByKey(ConstantsClient.PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE));
 
@@ -335,7 +341,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 */
 	private void jComboBoxThemeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxThemeActionPerformed
 		try {
-			textPaneThemeslide.setThemeBackground(prefs.getThemeAt(jComboBoxTheme.getSelectedIndex()).getBackgroundImage());
+			textPaneThemeslide.setThemeBackground(new ImageIcon(prefs.getThemeAt(jComboBoxTheme.getSelectedIndex()).getBackgroundImage()));
 		} catch (ThemeDoesNotExistException e) {
 			proxy.errorRequestFullSync(e);
 		}
@@ -402,42 +408,44 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 * @throws ThemeDoesNotExistException
 	 */
 	private boolean addThemeslide() throws PriorityDoesNotExistException, ThemeDoesNotExistException {
-    	
-    	Priority priority = null;
-    	Theme theme = null;
-    	String name = jTextFieldThemeSlideName.getText().trim();
 
-    	if(name.isEmpty()) {
-    		JOptionPane.showMessageDialog(this, "Please enter a name.", "Error", JOptionPane.ERROR_MESSAGE);
-    		return false;
-    	}
-    	
-    	if(jComboBoxPriority.getSelectedIndex() >= 0) {
-    		priority = prefs.getPriorityAt(jComboBoxPriority.getSelectedIndex());
-    	} else {
-    		JOptionPane.showMessageDialog(this, "Please select a priority.", "Error", JOptionPane.ERROR_MESSAGE);
-    		return false;
-    	}
-    	if(jComboBoxTheme.getSelectedIndex() >= 0) {
-    		theme = prefs.getThemeAt(jComboBoxTheme.getSelectedIndex());
-    	} else {
-    		JOptionPane.showMessageDialog(this, "Please select a theme.", "Error", JOptionPane.ERROR_MESSAGE);
-    		return false;
-    	}
-    	    	
-    	if(name != null && priority != null && theme != null) {	
-    		
-    		proxy.sendAddThemeSlide(name, theme.getId(), priority, generateRGBAValuesRepresentation());
+		Priority priority = null;
+		Theme theme = null;
+		String name = jTextFieldThemeSlideName.getText().trim();
 
-    		return true;
-    	} else {
-    		JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
-    		return false;
-    	}
+		if (name.isEmpty()) {
+			JOptionPane.showMessageDialog(this, "Please enter a name.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 
-    }
+		if (jComboBoxPriority.getSelectedIndex() >= 0) {
+			priority = prefs.getPriorityAt(jComboBoxPriority.getSelectedIndex());
+		} else {
+			JOptionPane.showMessageDialog(this, "Please select a priority.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+		if (jComboBoxTheme.getSelectedIndex() >= 0) {
+			theme = prefs.getThemeAt(jComboBoxTheme.getSelectedIndex());
+		} else {
+			JOptionPane.showMessageDialog(this, "Please select a theme.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 
-	private int[][] generateRGBAValuesRepresentation() {
+		if (name != null && priority != null && theme != null) {
+
+			proxy.sendAddThemeSlide(name, theme.getId(), priority, generateByteArray());
+
+			return true;
+		} else {
+			JOptionPane.showMessageDialog(this, "Error while reading data.", "Error", JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
+
+	}
+
+	private byte[] generateByteArray() {
+		
+		//TODO check the efficiency of this conversion
 
 		int w = textPaneThemeslide.getWidth();
 		int h = textPaneThemeslide.getHeight();
@@ -456,15 +464,16 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		tmpG2D.dispose();
 
-		int[][] rgbaValues = new int[bufImage.getWidth()][bufImage.getHeight()];
+		/*
+		 * int[][] rgbaValues = new
+		 * int[bufImage.getWidth()][bufImage.getHeight()];
+		 * 
+		 * for (int i = 0; i < bufImage.getWidth(); i++) { for (int j = 0; j <
+		 * bufImage.getHeight(); j++) { rgbaValues[i][j] = bufImage.getRGB(i,
+		 * j); } }
+		 */
 
-		for (int i = 0; i < bufImage.getWidth(); i++) {
-			for (int j = 0; j < bufImage.getHeight(); j++) {
-				rgbaValues[i][j] = bufImage.getRGB(i, j);
-			}
-		}
-
-		return rgbaValues;
+		return Misc.bufferedImageToByteArray(bufImage);
 	}
 
 	/**
@@ -853,7 +862,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 					jToggleButtonItalic.setSelected(false);
 				}
 
-				String[] sizes = ConstantsClient.FONT_SIZES;
+				String[] sizes = Constants.FONT_SIZES;
 
 				for (int i = 0; i < sizes.length; i++) {
 
@@ -870,7 +879,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 				}
 
-				String[] fonts = ConstantsClient.FONT_FAMILIES;
+				String[] fonts = Constants.FONT_FAMILIES;
 
 				for (int i = 0; i < fonts.length; i++) {
 
@@ -926,17 +935,17 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		java.awt.EventQueue.invokeLater(new Runnable() {
 
 			public void run() {
-				
-					try {
-						new ThemeslideCreatorFrame(null, null).setVisible(true);
-					} catch (ThemeDoesNotExistException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (PriorityDoesNotExistException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
+
+				try {
+					new ThemeslideCreatorFrame(null, null).setVisible(true);
+				} catch (ThemeDoesNotExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (PriorityDoesNotExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
 			}
 		});
 	}

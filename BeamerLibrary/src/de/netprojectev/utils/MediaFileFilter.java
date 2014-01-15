@@ -2,16 +2,13 @@ package de.netprojectev.utils;
 
 import java.io.File;
 
-import javax.swing.filechooser.FileFilter;
-
 /**
  * This class is an imagefile filter that only accept the standard java supported image formats
  * @author samu
  *
  */
-public class MediaFileFilter extends FileFilter {
+public class MediaFileFilter {
 
-	@Override
 	public boolean accept(File f) {
 		
 		if(f.isDirectory()) {
@@ -119,7 +116,6 @@ public class MediaFileFilter extends FileFilter {
 		return false;
 	}
 
-	@Override
 	public String getDescription() {
 		
 		return "supported media files";

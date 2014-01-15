@@ -121,7 +121,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 	}
 
 	private void showImageFile(ImageFile image) throws IOException {
-		displayMainComponent.drawImage(image.get());
+		displayMainComponent.drawImage(image);
 	}
 
 	private void showVideoFile(VideoFile video) {
@@ -164,7 +164,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 	}
 
 	private void showThemeslide(Themeslide themeslide) throws IOException {
-		displayMainComponent.drawImage(themeslide.get());
+		displayMainComponent.drawImage(themeslide.getImageRepresantation());
 	}
 
 	private void showCountdown(final Countdown countdown) {

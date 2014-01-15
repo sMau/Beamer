@@ -16,6 +16,8 @@ import javax.swing.ImageIcon;
 
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
+import de.netprojectev.utils.HelperMethods;
+
 public class Misc {
 	public static ImageIcon getScaledImageIconFromBufImg(BufferedImage original, int widthToScaleTo) throws FileNotFoundException, IOException {
 
@@ -111,7 +113,7 @@ public class Misc {
 	// Creates a compatible image from the content specified
 	// by the resource
 	public static BufferedImage loadCompatibleImage(File resource) throws IOException {
-		BufferedImage image = ImageIO.read(resource);
+		BufferedImage image = ImageIO.read(resource);		
 		return toCompatibleImage(image);
 	}
 
@@ -132,6 +134,24 @@ public class Misc {
 		g.drawImage(image, 0, 0, null);
 		g.dispose();
 		return compatibleImage;
+
+	}
+	
+	private static BufferedImage readRGBAValues(int[][] rbgaValues) {
+		BufferedImage image;
+		if(rbgaValues == null || rbgaValues.length < 1 || rbgaValues[0].length < 1) {
+			throw new IllegalArgumentException("The given int array have to be at least 1x1");
+		}
+		
+		image = getConfiguration().createCompatibleImage(rbgaValues.length, rbgaValues[0].length, Transparency.TRANSLUCENT);
+
+		for (int i = 0; i < rbgaValues.length; i++) {
+			for (int j = 0; j < rbgaValues[0].length; j++) {
+				image.setRGB(i, j, rbgaValues[i][j]);
+			}
+		}
+		
+		return image;
 
 	}
 }

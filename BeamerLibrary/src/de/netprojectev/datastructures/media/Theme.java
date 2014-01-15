@@ -3,8 +3,6 @@ package de.netprojectev.datastructures.media;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.swing.ImageIcon;
-
 /**
  * 
  * Datastructure to manage the a theme. Its to be hold by a themeslide, mostly to specifiy the background image.
@@ -15,14 +13,14 @@ public class Theme implements Serializable {
 	private static final long serialVersionUID = 5562694101580970506L;
 	private final UUID id;
 	private String name;
-	private ImageIcon backgroundImage;
+	private byte[] backgroundImage;
 
 	/**
 	 * 
 	 * @param name name as identifier for the theme
 	 * @param bgImg background image from the hard disk
 	 */
-	public Theme(String name, ImageIcon bgImg) {
+	public Theme(String name, byte[] bgImg) {
 		this.id = UUID.randomUUID();
 		this.name  = name;
 		this.backgroundImage = bgImg;
@@ -36,7 +34,7 @@ public class Theme implements Serializable {
 		this.name = name;
 	}
 
-	public ImageIcon getBackgroundImage() {
+	public byte[] getBackgroundImage() {
 		return backgroundImage;
 	}
 

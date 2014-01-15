@@ -19,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.ConstantsClient;
+import de.netprojectev.client.gui.main.Constants;
 import de.netprojectev.client.gui.main.Misc;
 import de.netprojectev.client.model.PreferencesModelClient.FullscreenStateListener;
 import de.netprojectev.client.model.PreferencesModelClient.LiveTickerStateListener;
@@ -117,17 +118,17 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		}
 		
 		
-		for(int i = 0; i < ConstantsClient.FONT_SIZES.length; i++) {
-			jcbCreatorFontSize.addItem(ConstantsClient.FONT_SIZES[i]);
-			jcbTickerFontSize.addItem(ConstantsClient.FONT_SIZES[i]);
+		for(int i = 0; i < Constants.FONT_SIZES.length; i++) {
+			jcbCreatorFontSize.addItem(Constants.FONT_SIZES[i]);
+			jcbTickerFontSize.addItem(Constants.FONT_SIZES[i]);
 		}
 		
-		for(int i = 0; i < ConstantsClient.FONT_FAMILIES.length; i++) {
-			jcbCreatorFont.addItem(ConstantsClient.FONT_FAMILIES[i]);
+		for(int i = 0; i < Constants.FONT_FAMILIES.length; i++) {
+			jcbCreatorFont.addItem(Constants.FONT_FAMILIES[i]);
 		}
 		
-		for(int i = 0; i < ConstantsClient.FONT_SIZES_COUNTDOWN.length; i++) {
-			jcbCountdownFontSize.addItem(ConstantsClient.FONT_SIZES_COUNTDOWN[i]);
+		for(int i = 0; i < Constants.FONT_SIZES_COUNTDOWN.length; i++) {
+			jcbCountdownFontSize.addItem(Constants.FONT_SIZES_COUNTDOWN[i]);
 		}
 		
 		/*
@@ -1369,7 +1370,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 				jlThemeNameVar.setText(selected.getName());
 				jlThemeBackgroundPreview.setText("");
 
-				ImageIcon scaledPreview = Misc.getScaledImageIcon(selected.getBackgroundImage(), jlThemeBackgroundPreview.getWidth());
+				ImageIcon scaledPreview = Misc.getScaledImageIcon(new ImageIcon(selected.getBackgroundImage()), jlThemeBackgroundPreview.getWidth());
 
 				jlThemeBackgroundPreview.setIcon(scaledPreview);
 			} catch (ThemeDoesNotExistException e) {

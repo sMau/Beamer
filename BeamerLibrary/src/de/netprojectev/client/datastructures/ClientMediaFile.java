@@ -3,8 +3,6 @@ package de.netprojectev.client.datastructures;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import javax.swing.ImageIcon;
-
 import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
@@ -12,16 +10,15 @@ import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
-import de.netprojectev.utils.HelperMethods;
 
 public class ClientMediaFile extends MediaFile {
 
 	public interface ClientMediaFilePreview {
 		
 	}
-	
+	//TODO safe the previews scaled to disk to save RAM
 	private final MediaType type;
-	private ImageIcon preview;
+	private byte[] preview;
 
 	/**
 	 * 
@@ -48,13 +45,13 @@ public class ClientMediaFile extends MediaFile {
 			preview = null;
 		} else if (serverMediaFile instanceof ImageFile) {
 			type = MediaType.Image;
-			preview = HelperMethods.getScaledImageIconFromBufImg(((ImageFile) serverMediaFile).get(), widthToScaleTo);
+			preview = ((ImageFile) serverMediaFile).get();
 		} else if (serverMediaFile instanceof VideoFile) {
 			type = MediaType.Video;
 			preview = null;
 		} else if (serverMediaFile instanceof Themeslide) {
 			type = MediaType.Themeslide;
-			preview = HelperMethods.getScaledImageIconFromBufImg(((Themeslide) serverMediaFile).get(), widthToScaleTo);
+			preview = ((Themeslide) serverMediaFile).get();
 			
 		} else {
 			type = MediaType.Unknown;
@@ -83,11 +80,11 @@ public class ClientMediaFile extends MediaFile {
 		return type;
 	}
 
-	public ImageIcon getPreview() {
+	public byte[] getPreview() {
 		return preview;
 	}
 
-	public void setPreview(ImageIcon preview) {
+	public void setPreview(byte[] preview) {
 		this.preview = preview;
 	}
 

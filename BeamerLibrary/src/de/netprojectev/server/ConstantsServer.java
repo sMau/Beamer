@@ -8,6 +8,9 @@ import de.netprojectev.datastructures.media.Priority;
 
 public class ConstantsServer {
 	
+	
+	//TODO maybe check this because of the awt imports
+	
 	/*
 	 * PATH AND FOLDERS
 	 */

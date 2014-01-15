@@ -251,8 +251,8 @@ public class MessageProxyServer {
 	private void addImageFile(Message msg) throws FileNotFoundException, IOException {
 		String name = (String) msg.getData()[0];
 		Priority priority = (Priority) msg.getData()[1];
-		int[][] rgbaValues = (int[][]) msg.getData()[2];
-		addMediaFile(new ImageFile(name, priority, rgbaValues));
+		byte[] imageByteData = (byte[]) msg.getData()[2];
+		addMediaFile(new ImageFile(name, priority, imageByteData));
 		
 	}
 	
@@ -264,9 +264,9 @@ public class MessageProxyServer {
 		String name = (String) msg.getData()[0];
 		UUID themeId = (UUID) msg.getData()[1];
 		Priority priority = (Priority) msg.getData()[2];
-		int[][] rgbaValues = (int[][]) msg.getData()[3];
+		byte[] imageByteData = (byte[]) msg.getData()[3];
 		
-		addMediaFile(new Themeslide(name, themeId, priority, new ImageFile(name, priority, rgbaValues)));
+		addMediaFile(new Themeslide(name, themeId, priority, new ImageFile(name, priority, imageByteData)));
 		
 	}
 	private void propertyUpdate(Message msg) {

@@ -1,18 +1,17 @@
 package de.netprojectev.client.networking;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-
-import javax.imageio.ImageIO;
 
 import org.apache.logging.log4j.Logger;
 import org.jboss.netty.channel.Channel;
@@ -201,18 +200,9 @@ public class ClientMessageProxy {
 
 	public void sendAddImageFile(File file) throws IOException {
 		String name = file.getName();
-		BufferedImage image = ImageIO.read(file);
-		int width = image.getWidth();
-		int height = image.getHeight();
-		int[][] rgbaValues = new int[width][height];
-		
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				rgbaValues[i][j] = image.getRGB(i, j);
-			}
-		}
+		byte[] imageDataAsBytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
 		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, name,
-				prefs.getDefaultPriority(), rgbaValues));
+				prefs.getDefaultPriority(), imageDataAsBytes));
 	}
 
 	public void sendAddImageFiles(File[] files) throws IOException {
@@ -230,8 +220,8 @@ public class ClientMessageProxy {
 		
 	}
 
-	public void sendAddThemeSlide(String name, UUID id, Priority priority, int[][] rgbaValues) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, id, priority, rgbaValues));
+	public void sendAddThemeSlide(String name, UUID id, Priority priority, byte[] imageDataAsBytes) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, id, priority, imageDataAsBytes));
 	}
 
 	public void sendRemoveSelectedMedia(int[] selectedRowsAllMedia) {

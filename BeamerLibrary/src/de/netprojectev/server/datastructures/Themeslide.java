@@ -1,6 +1,5 @@
 package de.netprojectev.server.datastructures;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -21,12 +20,16 @@ public class Themeslide extends ServerMediaFile {
 		this.imageRepresantation = imageRepresentation;
 	}
 
-	public BufferedImage get() throws IOException {
+	public byte[] get() throws IOException {
 		return imageRepresantation.get();
 	}
 
 	public UUID getThemeId() {
 		return themeId;
+	}
+
+	public ImageFile getImageRepresantation() {
+		return imageRepresantation;
 	}
 
 }

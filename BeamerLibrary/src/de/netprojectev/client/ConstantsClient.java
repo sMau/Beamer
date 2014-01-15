@@ -1,9 +1,6 @@
 package de.netprojectev.client;
 
-import java.awt.GraphicsEnvironment;
 import java.util.Date;
-
-import de.netprojectev.utils.HelperMethods;
 
 public class ConstantsClient {
 
@@ -41,13 +38,7 @@ public class ConstantsClient {
 	public static final String PROP_THEMESLIDECREATOR_PRESETTINGS_FONTSIZE = "themeslideCreator.defaults.fontSize";
 	public static final String PROP_THEMESLIDECREATOR_PRESETTINGS_FONTTYPE = "themeslideCreator.defaults.fontType";
 	public static final String PROP_THEMESLIDECREATOR_PRESETTINGS_FONTCOLOR = "themeslideCreator.defaults.fontColor";
-	
-	/*
-	 * MISC
-	 */
-	public static final String[] FONT_SIZES = HelperMethods.generateFontSizes();
-	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-	public static final String[] FONT_SIZES_COUNTDOWN = HelperMethods.generateFontSizesCountdown();
+
 	
 	public static final Date TIMESTAMP = new Date();
 

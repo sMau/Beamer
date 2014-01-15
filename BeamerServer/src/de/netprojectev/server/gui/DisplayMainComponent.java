@@ -6,13 +6,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
+import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -67,9 +70,13 @@ public class DisplayMainComponent extends JComponent {
 	 * 
 	 * @param file
 	 *            the image file to draw on component
+	 * @throws IOException 
 	 */
-	protected void drawImage(final BufferedImage compImage) {
-
+	protected void drawImage(ImageFile image) throws IOException {
+		
+		//TODO optimize this method cause of the many different conversions could be slow
+		final BufferedImage compImage = Misc.imageIconToBufferedImage(new ImageIcon(image.get()));
+		
 		countdownShowing = false;
 
 		//TODO check the scaling and respect aspect ratio

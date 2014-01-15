@@ -1,20 +1,30 @@
 package de.netprojectev.client.gui.main;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsEnvironment;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.PointerInfo;
 import java.awt.RenderingHints;
 import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import org.jdesktop.swingx.util.GraphicsUtilities;
+
+import de.netprojectev.client.networking.ClientMessageProxy;
 
 
 public class Misc {
@@ -135,4 +145,91 @@ public class Misc {
 		return compatibleImage;
 
 	}
+	
+	public static byte[] bufferedImageToByteArray(BufferedImage bufImage) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		try
+		{
+			int width = bufImage.getWidth(null);
+			int height = bufImage.getHeight(null);
+			BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+			bi.getGraphics().drawImage(bufImage, 0, 0, null);
+			ImageIO.write(bi, "PNG", baos);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return baos.toByteArray();
+	}
+	
+	
+	/**
+	 * handling the programs termination showing up a confirmation dialog and
+	 * invokes the serialization
+	 */
+	public static void quit(final Component parent, final ClientMessageProxy proxy) {
+		int exit = JOptionPane.showConfirmDialog(parent, "Are you sure you want to exit?", "Quit", JOptionPane.YES_NO_OPTION);
+		if (exit == JOptionPane.YES_OPTION) {
+			proxy.sendDisconnectRequest();
+			/*
+			 * try { saveToDisk(); ImageFile.threadPool.shutdownNow(); } catch
+			 * (IOException e) {
+			 * log.error("Error during saving settings and files.", e); }
+			 */
+
+			System.exit(0);
+		}
+
+	}
+	
+	/**
+	 * Restarts the currently running jar file using the process builder.
+	 * 
+	 * @throws URISyntaxException
+	 * @throws IOException
+	 */
+	public static void restartApplication(Class<?> clazz) throws URISyntaxException, IOException {
+		final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
+		final File currentJar = new File(clazz.getProtectionDomain().getCodeSource().getLocation().toURI());
+
+		if (!currentJar.getName().endsWith(".jar"))
+			return;
+
+		final ArrayList<String> command = new ArrayList<String>();
+		command.add(javaBin);
+		command.add("-jar");
+		command.add(currentJar.getPath());
+		final ProcessBuilder builder = new ProcessBuilder(command);
+		builder.start();
+		System.exit(0);
+	}
+	
+	/*
+	public static void writeImageToDiskAsPNG(BufferedImage image, File path) {
+		Iterator<ImageWriter> itereratorImageWriter = ImageIO.getImageWritersByFormatName("png");
+		ImageWriter writer = (ImageWriter) itereratorImageWriter.next();
+		ImageWriteParam writeParams = writer.getDefaultWriteParam();
+
+		try {
+			FileImageOutputStream fos = new FileImageOutputStream(path);
+			writer.setOutput(fos);
+			IIOImage img = new IIOImage((RenderedImage) image, null, null);
+			writer.write(null, img, writeParams);
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	*/
+	
+	/**
+	 * reading current mouse pointer position
+	 * 
+	 * @return current mouse pointer position.
+	 */
+	public static Point currentMousePosition() {
+		PointerInfo info = MouseInfo.getPointerInfo();
+		return info.getLocation();
+	}
+	
 }

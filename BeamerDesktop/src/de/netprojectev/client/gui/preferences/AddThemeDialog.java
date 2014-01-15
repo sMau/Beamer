@@ -13,18 +13,16 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
+import de.netprojectev.client.gui.main.MediaFileFilterDesktop;
+import de.netprojectev.client.gui.main.Misc;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Theme;
-import de.netprojectev.networking.Message;
-import de.netprojectev.networking.OpCode;
-import de.netprojectev.utils.MediaFileFilter;
 
 /**
  *
@@ -204,7 +202,7 @@ public class AddThemeDialog extends javax.swing.JDialog {
 		fileChooser.setApproveButtonText("Choose");
 		fileChooser.setDialogTitle("Choose Background Image");
 		fileChooser.setMultiSelectionEnabled(false);
-		fileChooser.setFileFilter(new MediaFileFilter());
+		fileChooser.setFileFilter(new MediaFileFilterDesktop());
 		int returnVal = fileChooser.showOpenDialog(this);
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -239,7 +237,7 @@ public class AddThemeDialog extends javax.swing.JDialog {
 		        return;
 			}
 			
-    		proxy.sendAddTheme(new Theme(name, new ImageIcon(backgroundImage)));
+    		proxy.sendAddTheme(new Theme(name, Misc.bufferedImageToByteArray(backgroundImage)));
     	}
         returnStatus = retStatus;
         setVisible(false);
