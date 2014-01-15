@@ -77,12 +77,13 @@ public class DisplayMainComponent extends JComponent {
 		//TODO optimize this method cause of the many different conversions could be slow
 		final BufferedImage compImage = Misc.imageIconToBufferedImage(new ImageIcon(image.get()));
 		
+		log.debug(compImage.getHeight());
+		
 		countdownShowing = false;
 
 		//TODO check the scaling and respect aspect ratio
-		// sometimes exceptions can be observed, cause of a new size like wx0
 		int newWidth = getWidth();
-		int newHeight = (getWidth() / compImage.getWidth()) * compImage.getHeight();
+		int newHeight = (int) (((double) getWidth() / (double) compImage.getWidth()) * (double) compImage.getHeight());
 		
 		log.debug("new size of the image: " + newWidth + "x" + newHeight);
 		
