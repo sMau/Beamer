@@ -1,5 +1,7 @@
 package de.netprojectev.client.networking;
 
+import io.netty.channel.ChannelFuture;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,8 +16,6 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
 
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;

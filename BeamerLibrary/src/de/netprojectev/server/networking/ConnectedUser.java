@@ -1,6 +1,5 @@
 package de.netprojectev.server.networking;
 
-import org.jboss.netty.channel.Channel;
 
 public class ConnectedUser {
 	

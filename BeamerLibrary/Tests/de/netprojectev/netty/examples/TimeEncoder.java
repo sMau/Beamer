@@ -1,9 +1,6 @@
 package de.netprojectev.netty.examples;
 
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelHandler;
-
+import io.netty.channel.ChannelHandlerContext;
 import de.netprojectev.netty.testing2.CommandMessage;
 
 public class TimeEncoder extends SimpleChannelHandler {

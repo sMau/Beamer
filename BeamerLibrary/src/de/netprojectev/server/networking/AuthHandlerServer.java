@@ -1,11 +1,8 @@
 package de.netprojectev.server.networking;
 
+import io.netty.channel.ChannelHandlerContext;
+
 import org.apache.logging.log4j.Logger;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ChannelStateEvent;
-import org.jboss.netty.channel.ExceptionEvent;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelHandler;
 
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;

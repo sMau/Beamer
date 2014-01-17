@@ -15,8 +15,8 @@ import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.networking.MessageProxyServer;
-import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.HelperMethods;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class PreferencesModelServer {
 

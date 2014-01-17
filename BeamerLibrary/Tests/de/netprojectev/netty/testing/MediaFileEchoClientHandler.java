@@ -1,10 +1,6 @@
 package de.netprojectev.netty.testing;
 
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.ChannelStateEvent;
-import org.jboss.netty.channel.ExceptionEvent;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
 
 public class MediaFileEchoClientHandler extends SimpleChannelHandler {
 

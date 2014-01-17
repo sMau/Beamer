@@ -7,8 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
-import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.HelperMethods;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class PreferencesModelClientDesktop extends PreferencesModelClient {
 	

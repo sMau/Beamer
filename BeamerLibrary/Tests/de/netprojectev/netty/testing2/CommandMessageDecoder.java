@@ -1,8 +1,6 @@
 package de.netprojectev.netty.testing2;
 
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.channel.MessageEvent;
-import org.jboss.netty.channel.SimpleChannelHandler;
+import io.netty.channel.ChannelHandlerContext;
 
 public class CommandMessageDecoder extends SimpleChannelHandler {
 	

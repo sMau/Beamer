@@ -1,19 +1,15 @@
 package de.netprojectev.netty.testing;
 
+import io.netty.bootstrap.ChannelFactory;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelPipeline;
+import io.netty.handler.codec.serialization.ObjectEncoder;
+
 import java.io.File;
 import java.net.InetSocketAddress;
+import java.nio.channels.Channels;
 import java.util.concurrent.Executors;
-
-import org.jboss.netty.bootstrap.ClientBootstrap;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFactory;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.Channels;
-import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
-import org.jboss.netty.handler.codec.serialization.ObjectEncoder;
 
 import de.netprojectev.server.datastructures.VideoFile;
 
