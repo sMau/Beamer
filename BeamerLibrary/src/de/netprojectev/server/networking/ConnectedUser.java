@@ -1,5 +1,7 @@
 package de.netprojectev.server.networking;
 
+import io.netty.channel.Channel;
+
 
 public class ConnectedUser {
 	

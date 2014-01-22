@@ -1,8 +1,13 @@
 package de.netprojectev.server.networking;
 
+import io.netty.channel.Channel;
 import io.netty.channel.group.ChannelGroupFuture;
 import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.util.HashedWheelTimer;
+import io.netty.util.Timeout;
+import io.netty.util.concurrent.CompleteFuture;
+import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -92,7 +97,7 @@ public class MessageProxyServer {
 	}
 	
 	
-	private class TimeoutTimerTask implements org.jboss.netty.util.TimerTask {
+	private class TimeoutTimerTask implements io.netty.util.TimerTask {
 
 		@Override
 		public void run(Timeout timeout) throws Exception {
@@ -116,7 +121,8 @@ public class MessageProxyServer {
 	}
 	
 	public MessageProxyServer(Server server, ServerGUI serverGUI) {
-		this.allClients = new DefaultChannelGroup("beamer-clients");
+		//TODO check if the defaulthcannelgroup is ok like this especially performance
+		this.allClients = new DefaultChannelGroup("beamer-clients", new NioEventLoopGroup().next());
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
 		this.prefsModel = new PreferencesModelServer(this);
@@ -370,8 +376,8 @@ public class MessageProxyServer {
 	
 	public ConnectedUser findUserByChan(Channel chan) {
 		for(ConnectedUser user : connectedUsers) {
-			InetSocketAddress argChanAddr = ((InetSocketAddress) chan.getRemoteAddress());
-			InetSocketAddress searchChanAddr = ((InetSocketAddress) user.getChannel().getRemoteAddress());
+			InetSocketAddress argChanAddr = ((InetSocketAddress) chan.remoteAddress());
+			InetSocketAddress searchChanAddr = ((InetSocketAddress) user.getChannel().remoteAddress());
 			if(searchChanAddr.getAddress().equals(argChanAddr.getAddress()) 
 					&& searchChanAddr.getPort() == argChanAddr.getPort()) {
 				return user;

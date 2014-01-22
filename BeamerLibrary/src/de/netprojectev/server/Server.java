@@ -38,7 +38,7 @@ public class Server {
 
 	private static final EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
 	private static final EventLoopGroup workerGroup = new NioEventLoopGroup();
-	
+
 	private final int port;
 	private final MessageProxyServer proxy;
 	private HashedWheelTimer timer;
@@ -46,22 +46,21 @@ public class Server {
 	public Server(int port, ServerGUI serverGUI) {
 		this.port = port;
 		this.proxy = new MessageProxyServer(this, serverGUI);
-		
+
 		checkAndCreateDirs();
-		
+
 	}
-	
+
 	public MessageProxyServer bindServerSocket(boolean startInFullscreen) {
-		
-		
+
 		timer = new HashedWheelTimer();
 		bindListeningSocket();
-		
-		if(startInFullscreen) {
+
+		if (startInFullscreen) {
 			proxy.enableFullScreen();
 		}
 		proxy.makeGUIVisible();
-		
+
 		return proxy;
 		/*
 		 * when setup is finished make the gui visible
@@ -88,52 +87,27 @@ public class Server {
 	}
 
 	private void bindListeningSocket() {
+
+		ServerBootstrap b = new ServerBootstrap(); // (2)
+		b.group(bossGroup, workerGroup)
+				.channel(NioServerSocketChannel.class) // (3)
+				.childHandler(new ChannelInitializer<SocketChannel>() { // (4)
+					@Override
+					public void initChannel(SocketChannel ch) throws Exception {
+						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers
+								.weakCachingResolver(null)));
+						ch.pipeline().addLast(new AuthHandlerServer(proxy));
+						ch.pipeline().addLast(new MessageHandlerServer(proxy));
+						ch.pipeline().addLast(new ObjectEncoder());
+						
+					}
+				})
+				.option(ChannelOption.SO_BACKLOG, 128) // (5)
+				.childOption(ChannelOption.SO_KEEPALIVE, true) // (6)
+				.childOption(ChannelOption.TCP_NODELAY, true);
+
+		ChannelFuture f = b.bind(port); // (7)
 		
-		try {
-			ServerBootstrap b = new ServerBootstrap(); // (2)
-			b.group(bossGroup, workerGroup)
-					.channel(NioServerSocketChannel.class) // (3)
-					.childHandler(new ChannelInitializer<SocketChannel>() { // (4)
-						@Override
-						public void initChannel(SocketChannel ch) throws Exception {
-							ch.pipeline().addLast(new DiscardServerHandler());
-						}
-					})
-					.option(ChannelOption.SO_BACKLOG, 128) // (5)
-					.childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
-
-			// Bind and start to accept incoming connections.
-			ChannelFuture f = b.bind(port).sync(); // (7)
-
-			// Wait until the server socket is closed.
-			// In this example, this does not happen, but you can do that to
-			// gracefully
-			// shut down your server.
-			f.channel().closeFuture().sync();
-		} finally {
-			
-		}
-		
-		factory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(),
-				Executors.newCachedThreadPool());
-		ServerBootstrap bootstrap = new ServerBootstrap(factory);
-		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-
-			@Override
-			public ChannelPipeline getPipeline() throws Exception {
-				
-				return Channels.pipeline(
-						new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers
-								.weakCachingResolver(null)), new AuthHandlerServer(proxy), 
-						new MessageHandlerServer(proxy), new ObjectEncoder());
-
-			}
-		});
-
-		bootstrap.setOption("child.tcpNoDelay", true);
-		bootstrap.setOption("child.keepAlive", true);
-
-		bootstrap.bind(new InetSocketAddress(port));
 		log.info("Binding listening socket to port: " + port);
 	}
 
@@ -160,7 +134,7 @@ public class Server {
 		} catch (IOException e) {
 			log.warn("Error during serilization.", e);
 		}
-		
+
 		System.exit(0);
 	}
 

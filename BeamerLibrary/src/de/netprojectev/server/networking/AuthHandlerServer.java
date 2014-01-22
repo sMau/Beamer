@@ -1,6 +1,7 @@
 package de.netprojectev.server.networking;
 
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import org.apache.logging.log4j.Logger;
 
@@ -11,7 +12,7 @@ import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.utils.LoggerBuilder;
 
-public class AuthHandlerServer extends SimpleChannelHandler {
+public class AuthHandlerServer extends ChannelInboundHandlerAdapter {
 
 	private static final Logger log = LoggerBuilder.createLogger(AuthHandlerServer.class);
 
@@ -26,10 +27,11 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 		authSuccessful = false;
 		chanConnected = false;
 	}
-
+	
 	@Override
-	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-		Message received = (Message) e.getMessage();
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		
+		Message received = (Message) msg;
 		if(chanConnected && received.getOpCode().equals(OpCode.CTS_LOGIN_REQUEST)) {
 			
 			LoginData login = (LoginData) received.getData()[0];
@@ -37,41 +39,42 @@ public class AuthHandlerServer extends SimpleChannelHandler {
 			if(login.getKey().equals(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_PW))) {
 				
 				if(proxy.findUserByAlias(login.getAlias()) == null) {
-					proxy.clientConnected(e.getChannel(), login.getAlias());
+					proxy.clientConnected(ctx.channel(), login.getAlias());
 					authSuccessful = true;
-					e.getChannel().write(new Message(OpCode.STC_CONNECTION_ACK));
-					e.getChannel().getPipeline().remove(this);
+					ctx.write(new Message(OpCode.STC_CONNECTION_ACK));
+					ctx.pipeline().remove(this);
 					log.info("Client connected successfully. Alias: " + login.getAlias());
 				} else {
-					denyAccessToClient("Alias already in use.", e);
+					denyAccessToClient("Alias already in use.", ctx);
 				}
 				
 			} else {
-				denyAccessToClient("No valid login.", e);
+				denyAccessToClient("No valid login.", ctx);
 			}
 			
 		} else if(chanConnected && authSuccessful) {
-			super.messageReceived(ctx, e);
+			super.channelRead(ctx, msg);
 		} else {
-			denyAccessToClient("Unknown error occured.", e);
+			denyAccessToClient("Unknown error occured.", ctx);
 		}
+
 	}
-	
+
 	@Override
-	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		chanConnected = true;
 	}
+
 	
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) throws Exception {
-		log.warn("Exception caught in network stack.", e.getCause());
-		super.exceptionCaught(ctx, e);
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
+		log.warn("Exception caught in network stack.", cause.getCause());
 	}
 	
 
-	private void denyAccessToClient(String reason, MessageEvent e) {
+	private void denyAccessToClient(String reason, ChannelHandlerContext ctx) throws InterruptedException {
 		log.warn("Login request denied: " + reason); 
-		e.getChannel().write(new Message(OpCode.STC_LOGIN_DENIED, reason)).awaitUninterruptibly();
-		e.getChannel().close().awaitUninterruptibly();
+		ctx.write(new Message(OpCode.STC_LOGIN_DENIED, reason)).awaitUninterruptibly();
+		ctx.close().sync();
 	}
 }

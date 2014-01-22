@@ -1,6 +1,7 @@
 package de.netprojectev.server.networking;
 
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import org.apache.logging.log4j.Logger;
 
@@ -8,7 +9,7 @@ import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.utils.LoggerBuilder;
 
-public class MessageHandlerServer extends SimpleChannelHandler {
+public class MessageHandlerServer extends ChannelInboundHandlerAdapter {
 	
 	private static final Logger log = LoggerBuilder.createLogger(MessageHandlerServer.class); 
 	
@@ -19,30 +20,25 @@ public class MessageHandlerServer extends SimpleChannelHandler {
 		this.proxy = proxy;
 		
 	}
-
+	
 	@Override
-	public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-		Message received = (Message) e.getMessage();
+	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+		Message received = (Message) msg;
 		if(received.getOpCode().equals(OpCode.CTS_DISCONNECT)) {
 			
-			proxy.clientDisconnected(e.getChannel(), (String) received.getData()[0]);
+			proxy.clientDisconnected(ctx.channel(), (String) received.getData()[0]);
 		} else {
-			proxy.receiveMessage(received, e.getChannel());
+			proxy.receiveMessage(received, ctx.channel());
 		}
 		log.debug("Message received: " + received);
 		
 	}
 	
 	@Override
-	public void writeRequested(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
-		super.writeRequested(ctx, e);
-	}
-	
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 		log.warn("Exception caught in MessageHandler", e.getCause());
-		proxy.clientTimedOut(ctx.getChannel());
-		ctx.getChannel().write(new Message(OpCode.STC_FORCE_RECONNECT));
-		e.getChannel().close();
+		proxy.clientTimedOut(ctx.channel());
+		ctx.channel().write(new Message(OpCode.STC_FORCE_RECONNECT));
+		ctx.channel().close();
 	}
 }

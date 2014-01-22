@@ -1,5 +1,6 @@
 package de.netprojectev.client.networking;
 
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 
 import java.io.BufferedInputStream;
