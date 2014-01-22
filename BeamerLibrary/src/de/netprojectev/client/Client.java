@@ -55,7 +55,7 @@ public class Client {
 
 	}
 
-	public ClientMessageProxy connect() {
+	public ClientMessageProxy connect() throws InterruptedException {
 
 		Bootstrap b = new Bootstrap();
 		b.group(group)
@@ -69,10 +69,10 @@ public class Client {
 					}
 				});
 
-		b.option(ChannelOption.TCP_NODELAY, true);
-		b.option(ChannelOption.SO_KEEPALIVE, true);
+		//b.option(ChannelOption.TCP_NODELAY, true);
+		//b.option(ChannelOption.SO_KEEPALIVE, true);
 
-		ChannelFuture connectFuture = b.connect(host, port);
+		ChannelFuture connectFuture = b.connect(host, port).sync();
 		connectFuture.awaitUninterruptibly(5000);
 		if (connectFuture.isSuccess()) {
 			proxy.setChannelToServer(connectFuture.channel());
@@ -80,8 +80,8 @@ public class Client {
 
 			boolean loginSend = proxy.sendMessageToServer(new Message(OpCode.CTS_LOGIN_REQUEST, login)).awaitUninterruptibly(10000);
 			if (!loginSend) {
-				gui.errorDuringLogin("Login message could not be sent.");
 				log.error("login message could not be send");
+				gui.errorDuringLogin("Login message could not be sent.");
 			}
 			log.info("Login request sent to server");
 

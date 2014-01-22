@@ -95,7 +95,7 @@ public class ClientMessageProxy {
 	
 	public ChannelFuture sendMessageToServer(Message msgToSend) {
 		log.debug("Sending message to server: " + msgToSend);
-		return channelToServer.write(msgToSend);
+		return channelToServer.writeAndFlush(msgToSend);
 	}
 
 	public void sendDisconnectRequest() {
@@ -432,7 +432,12 @@ public class ClientMessageProxy {
 				
 				@Override
 				public void run() {
-					client.connect();
+					try {
+						client.connect();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}, 2000, 5000);
 		}

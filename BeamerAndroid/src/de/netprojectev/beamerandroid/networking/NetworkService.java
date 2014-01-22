@@ -76,7 +76,12 @@ public class NetworkService extends Service {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				client.connect();
+				try {
+					client.connect();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				proxy = client.getProxy();
 				loggedIn = true;
 			}

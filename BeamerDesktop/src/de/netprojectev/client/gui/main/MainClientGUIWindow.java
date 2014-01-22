@@ -84,8 +84,9 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	 * @throws IllegalArgumentException 
 	 * @throws IllegalAccessException 
 	 * @throws InstantiationException 
+	 * @throws InterruptedException 
 	 */
-	public MainClientGUIWindow() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
+	public MainClientGUIWindow() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException, InterruptedException {
 		
 		LoginDialog loginDialog = new LoginDialog(this, true);
 		loginDialog.setVisible(true);
@@ -1418,6 +1419,9 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
