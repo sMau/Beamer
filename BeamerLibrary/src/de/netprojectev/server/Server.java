@@ -2,7 +2,14 @@ package de.netprojectev.server;
 
 import io.netty.bootstrap.ChannelFactory;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -16,6 +23,7 @@ import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.netty.examples.DiscardServerHandler;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.networking.AuthHandlerServer;
@@ -28,9 +36,11 @@ public class Server {
 
 	private static final Logger log = LoggerBuilder.createLogger(Server.class);
 
+	private static final EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
+	private static final EventLoopGroup workerGroup = new NioEventLoopGroup();
+	
 	private final int port;
 	private final MessageProxyServer proxy;
-	private ChannelFactory factory;
 	private HashedWheelTimer timer;
 
 	public Server(int port, ServerGUI serverGUI) {
@@ -78,7 +88,32 @@ public class Server {
 	}
 
 	private void bindListeningSocket() {
+		
+		try {
+			ServerBootstrap b = new ServerBootstrap(); // (2)
+			b.group(bossGroup, workerGroup)
+					.channel(NioServerSocketChannel.class) // (3)
+					.childHandler(new ChannelInitializer<SocketChannel>() { // (4)
+						@Override
+						public void initChannel(SocketChannel ch) throws Exception {
+							ch.pipeline().addLast(new DiscardServerHandler());
+						}
+					})
+					.option(ChannelOption.SO_BACKLOG, 128) // (5)
+					.childOption(ChannelOption.SO_KEEPALIVE, true); // (6)
 
+			// Bind and start to accept incoming connections.
+			ChannelFuture f = b.bind(port).sync(); // (7)
+
+			// Wait until the server socket is closed.
+			// In this example, this does not happen, but you can do that to
+			// gracefully
+			// shut down your server.
+			f.channel().closeFuture().sync();
+		} finally {
+			
+		}
+		
 		factory = new NioServerSocketChannelFactory(Executors.newCachedThreadPool(),
 				Executors.newCachedThreadPool());
 		ServerBootstrap bootstrap = new ServerBootstrap(factory);
@@ -112,7 +147,8 @@ public class Server {
 			@Override
 			public void run() {
 				timer.stop();
-				factory.releaseExternalResources();
+				workerGroup.shutdownGracefully();
+				bossGroup.shutdownGracefully();
 			}
 		});
 		t.start();
