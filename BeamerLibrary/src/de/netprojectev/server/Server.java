@@ -1,11 +1,9 @@
 package de.netprojectev.server;
 
-import io.netty.bootstrap.ChannelFactory;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
-import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -17,13 +15,9 @@ import io.netty.util.HashedWheelTimer;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.nio.channels.Channels;
-import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.netty.examples.DiscardServerHandler;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.networking.AuthHandlerServer;

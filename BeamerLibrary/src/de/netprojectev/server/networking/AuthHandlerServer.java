@@ -41,7 +41,7 @@ public class AuthHandlerServer extends ChannelInboundHandlerAdapter {
 				if(proxy.findUserByAlias(login.getAlias()) == null) {
 					proxy.clientConnected(ctx.channel(), login.getAlias());
 					authSuccessful = true;
-					ctx.write(new Message(OpCode.STC_CONNECTION_ACK));
+					ctx.writeAndFlush(new Message(OpCode.STC_CONNECTION_ACK));
 					ctx.pipeline().remove(this);
 					log.info("Client connected successfully. Alias: " + login.getAlias());
 				} else {
@@ -74,7 +74,7 @@ public class AuthHandlerServer extends ChannelInboundHandlerAdapter {
 
 	private void denyAccessToClient(String reason, ChannelHandlerContext ctx) throws InterruptedException {
 		log.warn("Login request denied: " + reason); 
-		ctx.write(new Message(OpCode.STC_LOGIN_DENIED, reason)).awaitUninterruptibly();
+		ctx.writeAndFlush(new Message(OpCode.STC_LOGIN_DENIED, reason)).awaitUninterruptibly();
 		ctx.close().sync();
 	}
 }

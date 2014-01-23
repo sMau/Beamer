@@ -16,8 +16,6 @@ import javax.swing.ImageIcon;
 
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
-import de.netprojectev.utils.HelperMethods;
-
 public class Misc {
 	public static ImageIcon getScaledImageIconFromBufImg(BufferedImage original, int widthToScaleTo) throws FileNotFoundException, IOException {
 

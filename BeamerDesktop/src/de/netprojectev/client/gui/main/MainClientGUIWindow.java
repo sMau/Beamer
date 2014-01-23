@@ -34,9 +34,9 @@ import de.netprojectev.client.gui.preferences.AddThemeDialog;
 import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.gui.themeslide.ThemeslideCreatorFrame;
 import de.netprojectev.client.model.MediaModelClient;
-import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.model.MediaModelClient.UpdateCurrentFileListener;
 import de.netprojectev.client.model.PreferencesModelClient.UpdateAutoModeStateListener;
+import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.client.networking.ClientMessageProxy.ServerShutdownListener;
@@ -46,9 +46,8 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.networking.LoginData;
-import de.netprojectev.utils.LoggerBuilder;
-import de.netprojectev.utils.MediaFileFilter;
 import de.netprojectev.utils.HelperMethods;
+import de.netprojectev.utils.LoggerBuilder;
 
 /**
  * 

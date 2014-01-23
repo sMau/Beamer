@@ -18,8 +18,6 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.networking.ClientMessageProxy;
 import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.networking.Message;
-import de.netprojectev.networking.OpCode;
 import de.netprojectev.utils.LoggerBuilder;
 
 /**

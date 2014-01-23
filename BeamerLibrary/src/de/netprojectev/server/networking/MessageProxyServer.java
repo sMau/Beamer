@@ -6,8 +6,6 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
-import io.netty.util.concurrent.CompleteFuture;
-import io.netty.util.concurrent.DefaultEventExecutorGroup;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -350,7 +348,7 @@ public class MessageProxyServer {
 	
 	public ChannelGroupFuture broadcastMessage(Message msg) {
 		log.debug("Broadcasting message: " + msg);
-		return allClients.write(msg);
+		return allClients.writeAndFlush(msg);
 	}
 	
 	public void clientConnected(Channel chan, String alias) {
@@ -446,45 +444,45 @@ public class MessageProxyServer {
 		HashMap<UUID, Theme> themes = prefsModel.getThemes();
 		HashMap<UUID, Priority> priorities = prefsModel.getPrios();
 		
-		channel.write(new Message(OpCode.STC_FULL_SYNC_START));
+		channel.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_START));
 		
-		channel.write(new Message(OpCode.STC_INIT_PROPERTIES, PreferencesModelServer.getProps()));
+		channel.writeAndFlush(new Message(OpCode.STC_INIT_PROPERTIES, PreferencesModelServer.getProps()));
 		
 		for(UUID id : allMedia.keySet()) {
-			channel.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
+			channel.writeAndFlush(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
 		}
 		
 		for(UUID id : customQueue) {
-			channel.write(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
+			channel.writeAndFlush(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
 		}
 		
 		for(UUID id : tickerElements.keySet()) {
-			channel.write(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(tickerElements.get(id))));
+			channel.writeAndFlush(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(tickerElements.get(id))));
 		}
 		
 		for(UUID id : themes.keySet()) {
-			channel.write(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
+			channel.writeAndFlush(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
 		}
 			
 		for(UUID id : priorities.keySet()) {
-			channel.write(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
+			channel.writeAndFlush(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
 		}
 		
 		if(automodeEnabled) {
-			channel.write(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
+			channel.writeAndFlush(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 		}
 		
 		if(liveTickerEnabled) {
-			channel.write(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
+			channel.writeAndFlush(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
 		}
 		
 		if(fullscreenEnabled) {
-			channel.write(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
+			channel.writeAndFlush(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 		}
 		
-		channel.write(new Message(OpCode.STC_ALL_FONTS, (Serializable) ConstantsServer.FONT_FAMILIES));
+		channel.writeAndFlush(new Message(OpCode.STC_ALL_FONTS, (Serializable) ConstantsServer.FONT_FAMILIES));
 		
-		channel.write(new Message(OpCode.STC_FULL_SYNC_STOP));
+		channel.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
 	
 	private void removePriority(Message msg) throws IOException {
