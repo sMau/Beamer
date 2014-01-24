@@ -30,7 +30,7 @@ public class AuthHandlerServer extends ChannelInboundHandlerAdapter {
 	
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-		
+
 		Message received = (Message) msg;
 		if(chanConnected && received.getOpCode().equals(OpCode.CTS_LOGIN_REQUEST)) {
 			
@@ -40,8 +40,10 @@ public class AuthHandlerServer extends ChannelInboundHandlerAdapter {
 				
 				if(proxy.findUserByAlias(login.getAlias()) == null) {
 					proxy.clientConnected(ctx.channel(), login.getAlias());
-					authSuccessful = true;
-					ctx.writeAndFlush(new Message(OpCode.STC_CONNECTION_ACK));
+					authSuccessful = true;					
+					
+					ctx.channel().writeAndFlush(new Message(OpCode.STC_CONNECTION_ACK)).sync();
+					
 					ctx.pipeline().remove(this);
 					log.info("Client connected successfully. Alias: " + login.getAlias());
 				} else {
