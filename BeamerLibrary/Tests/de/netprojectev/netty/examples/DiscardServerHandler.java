@@ -7,7 +7,7 @@ public class DiscardServerHandler extends ChannelInboundHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
-		ctx.writeAndFlush(msg);
+		ctx.channel().writeAndFlush(msg);
 	}
 
 	@Override

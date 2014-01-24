@@ -76,7 +76,7 @@ public class AuthHandlerServer extends ChannelInboundHandlerAdapter {
 
 	private void denyAccessToClient(String reason, ChannelHandlerContext ctx) throws InterruptedException {
 		log.warn("Login request denied: " + reason); 
-		ctx.writeAndFlush(new Message(OpCode.STC_LOGIN_DENIED, reason)).awaitUninterruptibly();
+		ctx.channel().writeAndFlush(new Message(OpCode.STC_LOGIN_DENIED, reason)).awaitUninterruptibly();
 		ctx.close().sync();
 	}
 }
