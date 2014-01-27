@@ -15,9 +15,7 @@ public enum OpCode {
 	CTS_SHOW_PREVIOUS_MEDIA_FILE, 
 	CTS_SHOW_NEXT_MEDIA_FILE,
 	CTS_DEQUEUE_MEDIAFILE,
-	CTS_ADD_VIDEO_FILE_START,
-	CTS_ADD_VIDEO_FILE_DATA,
-	CTS_ADD_VIDEO_FILE_FINISH,
+	CTS_ADD_VIDEO_FILE,
 
 	CTS_ADD_LIVE_TICKER_ELEMENT, 
 	CTS_REMOVE_LIVE_TICKER_ELEMENT,
@@ -85,4 +83,7 @@ public enum OpCode {
 	STC_PROPERTY_UPDATE_ACK,
 	STC_ALL_FONTS;
 	
+	
+	//TODO rewrite heartbeat code to be handled in the "handlers" not using any toplevel
+	//TODO rewrite fullsync to be done in an extra handler (no need for start stop messages)
 }

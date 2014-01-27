@@ -12,18 +12,18 @@ public abstract class MediaFile implements Serializable {
 	private static final long serialVersionUID = 6210917731163785789L;
 	private final UUID id;
 	protected String name;
-	protected Priority priority;
+	protected UUID priority;
 	protected transient boolean current;
 	protected transient int showCount;
 	
-	protected MediaFile(String name, Priority priority, UUID id) {
+	protected MediaFile(String name, UUID priority, UUID id) {
 		this.id = id;
 		this.priority = priority;
 		this.name = name;
 	}
 	
 	@Override
-	public boolean equals(Object other){
+	public boolean equals(Object other) {
 	    if (other == null || this == null) {
 	    	return false;
 	    } else if(other == this){
@@ -47,11 +47,11 @@ public abstract class MediaFile implements Serializable {
 		this.name = name;
 	}
 
-	public Priority getPriority() {
+	public UUID getPriority() {
 		return priority;
 	}
 
-	public void setPriority(Priority priority) {
+	public void setPriority(UUID priority) {
 		this.priority = priority;
 	}
 
