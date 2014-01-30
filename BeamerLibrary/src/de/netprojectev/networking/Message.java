@@ -1,25 +1,25 @@
 package de.netprojectev.networking;
 
-import io.netty.buffer.ByteBuf;
-
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Message implements ByteEncodable {
+public class Message implements Serializable {
 
 	/**
 	 * Class to encapsulate messages transfered via network.
 	 */
+	private static final long serialVersionUID = 5081391059509425751L;
 	
 	private final OpCode opCode;
 	private final UUID id;
-	private ByteEncodable[] data;
+	private Serializable[] data;
 	
 	public Message(OpCode opCode) {
 		this.id = UUID.randomUUID();
 		this.opCode = opCode;
 	}
 	
-	public Message(OpCode opCode, ByteEncodable... data) {
+	public Message(OpCode opCode, Serializable... data) {
 		this.id = UUID.randomUUID();
 		this.opCode = opCode;
 		this.data = data;
@@ -33,25 +33,13 @@ public class Message implements ByteEncodable {
 		return id;
 	}
 
-	public ByteEncodable[] getData() {
+	public Serializable[] getData() {
 		return data;
 	}
 	
 	@Override
 	public String toString() {
 		return "Message: " + id + "; OpCode: " + opCode + "; Data: " + data;
-	}
-
-	@Override
-	public ByteBuf encode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ByteEncodable decode(ByteBuf encodedBytes) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 }
