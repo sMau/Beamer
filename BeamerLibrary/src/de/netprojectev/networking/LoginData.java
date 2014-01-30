@@ -1,9 +1,13 @@
 package de.netprojectev.networking;
 
-import io.netty.buffer.ByteBuf;
+import java.io.Serializable;
 
-public class LoginData implements ByteEncodable {
-
+public class LoginData implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5784399877829356516L;
 	private final String alias;
 	private final String key;
 	
@@ -18,18 +22,6 @@ public class LoginData implements ByteEncodable {
 
 	public String getKey() {
 		return key;
-	}
-
-	@Override
-	public ByteBuf encode() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ByteEncodable decode(ByteBuf encodedBytes) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
