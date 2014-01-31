@@ -40,6 +40,13 @@ import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.MediaFileFilter;
 
+
+/*
+ * TODO work here next!
+ * 1 all opcodes in bytes, Message not serializable anymore only contents as pojo
+ * 2 files in bytes
+ * 3 own object structures in bytes
+ */
 public class ClientMessageProxy {
 	
 	public interface ServerPropertyUpdateListener {
