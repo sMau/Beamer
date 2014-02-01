@@ -27,9 +27,15 @@ public class Message {
 		return data;
 	}
 	
+	public void setData(Serializable[] data) {
+		this.data = data;
+	}
+	
 	@Override
 	public String toString() {
 		return "Message " + "; OpCode: " + opCode + "; Data: " + data;
 	}
+
+	
 	
 }

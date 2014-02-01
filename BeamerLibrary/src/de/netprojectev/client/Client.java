@@ -3,6 +3,7 @@ package de.netprojectev.client;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -18,9 +19,13 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.ClientMessageHandler;
 import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.networking.IntegerByteCodec;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
+import de.netprojectev.networking.MessageJoin;
+import de.netprojectev.networking.MessageSplit;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.networking.OpCodeByteCodec;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class Client {
@@ -56,14 +61,22 @@ public class Client {
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
-						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
-						ch.pipeline().addLast(new ClientMessageHandler(proxy));
+						ch.pipeline().addLast(new MessageSplit());
+						
+						ch.pipeline().addLast(new OpCodeByteCodec());
+						ch.pipeline().addLast(new IntegerByteCodec());
+						
 						ch.pipeline().addLast(new ObjectEncoder());
+						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
+						
+						ch.pipeline().addLast(new MessageJoin());
+						ch.pipeline().addLast(new ClientMessageHandler(proxy));
+						
 					}
 				});
 
-		//b.option(ChannelOption.TCP_NODELAY, true);
-		//b.option(ChannelOption.SO_KEEPALIVE, true);
+		b.option(ChannelOption.TCP_NODELAY, true);
+		b.option(ChannelOption.SO_KEEPALIVE, true);
 
 		ChannelFuture connectFuture = b.connect(host, port).sync();
 		connectFuture.awaitUninterruptibly(5000);

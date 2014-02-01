@@ -18,9 +18,12 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.networking.IntegerByteCodec;
 import de.netprojectev.networking.Message;
+import de.netprojectev.networking.MessageJoin;
+import de.netprojectev.networking.MessageSplit;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.server.networking.AuthHandlerServer;
+import de.netprojectev.networking.OpCodeByteCodec;
 import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.server.networking.ServerGUI;
@@ -82,25 +85,31 @@ public class Server {
 
 	private void bindListeningSocket() {
 
-		ServerBootstrap b = new ServerBootstrap(); // (2)
+		ServerBootstrap b = new ServerBootstrap();
 		b.group(bossGroup, workerGroup)
-				.channel(NioServerSocketChannel.class) // (3)
-				.childHandler(new ChannelInitializer<SocketChannel>() { // (4)
+				.channel(NioServerSocketChannel.class)
+				.childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
-						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers
-								.weakCachingResolver(null)));
-						ch.pipeline().addLast(new AuthHandlerServer(proxy));
-						ch.pipeline().addLast(new MessageHandlerServer(proxy));
+						
+						ch.pipeline().addLast(new MessageSplit());
+						
+						ch.pipeline().addLast(new OpCodeByteCodec());
+						ch.pipeline().addLast(new IntegerByteCodec());
+						
 						ch.pipeline().addLast(new ObjectEncoder());
+						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
+						
+						ch.pipeline().addLast(new MessageJoin());
+						ch.pipeline().addLast(new MessageHandlerServer(proxy));
 						
 					}
 				})
-				.option(ChannelOption.SO_BACKLOG, 128) // (5)
-				.childOption(ChannelOption.SO_KEEPALIVE, true) // (6)
+				.option(ChannelOption.SO_BACKLOG, 128)
+				.childOption(ChannelOption.SO_KEEPALIVE, true)
 				.childOption(ChannelOption.TCP_NODELAY, true);
 
-		ChannelFuture f = b.bind(port); // (7)
+		ChannelFuture f = b.bind(port);
 		
 		log.info("Binding listening socket to port: " + port);
 	}
