@@ -5,8 +5,15 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import java.io.Serializable;
 
-public class MessageJoin extends ChannelInboundHandlerAdapter {
+import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.utils.LoggerBuilder;
+
+public class MessageJoin extends ChannelInboundHandlerAdapter {
+	
+	private static final Logger log = LoggerBuilder.createLogger(MessageJoin.class);
+
+	
 	private byte state = WAITING;
 	
 	public static final byte WAITING = 0;
@@ -58,6 +65,12 @@ public class MessageJoin extends ChannelInboundHandlerAdapter {
 			break;
 		}
 		
+	}
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		log.warn("Exception caught in channel handler, forcing reconnect.", cause.getCause());
+		ctx.channel().close();
 	}
 
 }

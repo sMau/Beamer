@@ -61,16 +61,16 @@ public class Client {
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
-						ch.pipeline().addLast(new MessageSplit());
+						
 						
 						ch.pipeline().addLast(new OpCodeByteCodec());
 						ch.pipeline().addLast(new IntegerByteCodec());
-						
-						ch.pipeline().addLast(new ObjectEncoder());
 						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
-						
 						ch.pipeline().addLast(new MessageJoin());
 						ch.pipeline().addLast(new ClientMessageHandler(proxy));
+						
+						ch.pipeline().addLast(new ObjectEncoder());
+						ch.pipeline().addLast(new MessageSplit());
 						
 					}
 				});
@@ -79,12 +79,12 @@ public class Client {
 		b.option(ChannelOption.SO_KEEPALIVE, true);
 
 		ChannelFuture connectFuture = b.connect(host, port).sync();
-		connectFuture.awaitUninterruptibly(5000);
+		connectFuture.awaitUninterruptibly(5000); //TODO change this fucking shit!
 		if (connectFuture.isSuccess()) {
 			proxy.setChannelToServer(connectFuture.channel());
 			log.info("Client successfully connected to " + host + ":" + port);
 
-			boolean loginSend = proxy.sendMessageToServer(new Message(OpCode.CTS_LOGIN_REQUEST, login)).awaitUninterruptibly(10000);
+			boolean loginSend = proxy.sendMessageToServer(new Message(OpCode.CTS_LOGIN_REQUEST, login)).awaitUninterruptibly(600000); //TODO change this fucking shit!
 			if (!loginSend) {
 				log.error("login message could not be send");
 				gui.errorDuringLogin("Login message could not be sent.");
