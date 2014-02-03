@@ -26,7 +26,6 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<Message> {
 		ctx.channel().close();
 	}
 
-
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
 		proxy.receiveMessage((Message) msg);

@@ -15,6 +15,12 @@ public class IntegerByteCodec extends ByteToMessageCodec<Integer> {
 	private static final Logger log = LoggerBuilder.createLogger(IntegerByteCodec.class);
 
 	@Override
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		ctx.attr(HandlerState.INTEGER_CODEC_STATE).set(HandlerState.READ_OPCODE);
+		super.channelActive(ctx);
+	}
+	
+	@Override
 	protected void encode(ChannelHandlerContext ctx, Integer msg, ByteBuf out)
 			throws Exception {
 		out.writeInt(msg);
@@ -23,7 +29,9 @@ public class IntegerByteCodec extends ByteToMessageCodec<Integer> {
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
-		out.add(in.readInt());
+		if(ctx.attr(HandlerState.INTEGER_CODEC_STATE).compareAndSet(HandlerState.READ_DATA_LENGTH, HandlerState.READ_DATA)) {
+			out.add(in.readInt());
+		}
 	}
 	
 	@Override
