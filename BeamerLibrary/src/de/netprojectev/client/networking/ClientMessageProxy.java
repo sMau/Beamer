@@ -42,7 +42,12 @@ import de.netprojectev.utils.MediaFileFilter;
 
 
 /*
- * TODO work here next!
+ * TODO work here next! (look at the paper in the college block and:
+ * 		http://stackoverflow.com/questions/21276007/what-happens-to-multiple-messages-in-bytetomessagedecoder
+ * 		http://netty.io/5.0/api/io/netty/handler/codec/ReplayingDecoder.html
+ * 
+ * 		if i understand it right simply put the modified bytebuf in the out list
+ * 
  * 1 all opcodes in bytes, Message not serializable anymore only contents as pojo
  * 2 files in bytes
  * 3 own object structures in bytes
