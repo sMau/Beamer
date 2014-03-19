@@ -326,6 +326,7 @@ public class ClientMessageProxy {
 		sendShowMediaFile(countdown.getId());
 	}
 
+	
 	public void receiveMessage(Message msg) throws UnkownMessageException,
 			MediaDoesNotExsistException, OutOfSyncException {
 		log.debug("Receiving message: " + msg.toString());

@@ -31,6 +31,7 @@ public class MessageHandlerServer extends SimpleChannelInboundHandler<Message> {
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, Message msg) throws Exception {
+		//XXX should be refactored in the proxy class
 		Message received = (Message) msg;
 		if(received.getOpCode().equals(OpCode.CTS_DISCONNECT)) {
 			

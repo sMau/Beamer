@@ -18,12 +18,12 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.networking.IntegerByteCodec;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.MessageJoin;
+import de.netprojectev.networking.MessageReplayingDecoder;
 import de.netprojectev.networking.MessageSplit;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.networking.OpCodeByteCodec;
+import de.netprojectev.networking.OpCodeByteEncoder;
 import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.server.networking.ServerGUI;
@@ -92,15 +92,15 @@ public class Server {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 
-						ch.pipeline().addLast(new ObjectEncoder());
-						
-						ch.pipeline().addLast(new IntegerByteCodec());
-						ch.pipeline().addLast(new OpCodeByteCodec());
+						ch.pipeline().addLast(new MessageReplayingDecoder());
 						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
 						ch.pipeline().addLast(new MessageJoin());
 						ch.pipeline().addLast(new MessageHandlerServer(proxy));
 						
+						ch.pipeline().addLast(new ObjectEncoder());
+						ch.pipeline().addLast(new OpCodeByteEncoder());
 						ch.pipeline().addLast(new MessageSplit());
+
 						
 					}
 				})
