@@ -18,7 +18,9 @@ public class MessageSplit extends MessageToMessageEncoder<Message> {
 	protected void encode(ChannelHandlerContext ctx, Message msg,
 			List<Object> out) throws Exception {
 		out.add(msg.getOpCode());
-		out.add(msg.getData());
+		if(msg.getOpCode().isContainsData()) {
+			out.add(msg.getData());
+		}
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package de.netprojectev.server.networking;
 
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.group.ChannelGroupFuture;
 import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -146,7 +147,7 @@ public class MessageProxyServer {
 		
 	}
 	
-	public void receiveMessage(Message msg, Channel channel) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException {
+	public void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_IMAGE_FILE:
 			addImageFile(msg);
@@ -215,7 +216,7 @@ public class MessageProxyServer {
 			dequeueMediaFile(msg);
 			break;
 		case CTS_REQUEST_FULL_SYNC:
-			fullSyncRequested(msg, channel);
+			fullSyncRequested(msg, ctx);
 			break;
 		case CTS_RESET_SHOW_COUNT:
 			resetShowCount(msg);
@@ -233,7 +234,7 @@ public class MessageProxyServer {
 			serverShutdownRequested();
 			break;
 		case CTS_HEARTBEAT_ACK:
-			hearbeatack(channel);
+			hearbeatack(ctx);
 			break;
 		case CTS_PROPERTY_UPDATE:
 			propertyUpdate(msg);
@@ -285,8 +286,8 @@ public class MessageProxyServer {
 		broadcastMessage(new Message(OpCode.STC_PROPERTY_UPDATE_ACK, key, newValue));
 	}
 	
-	private void hearbeatack(Channel channel) {
-		findUserByChan(channel).setAlive(true);
+	private void hearbeatack(ChannelHandlerContext ctx) {
+		findUserByChan(ctx.channel()).setAlive(true);
 	}
 	
 	private void serverShutdownRequested() {
@@ -436,7 +437,7 @@ public class MessageProxyServer {
 	 * 
 	 * next proper login handling (also to see which user did what and when) and maybe the possibility to send messages or notes or something like that
 	 */
-	private void fullSyncRequested(Message msg, Channel channel) throws FileNotFoundException, IOException {
+	private void fullSyncRequested(Message msg, ChannelHandlerContext ctx) throws FileNotFoundException, IOException {
 		
 		HashMap<UUID, ServerMediaFile> allMedia = mediaModel.getAllMediaFiles();
 		LinkedList<UUID> customQueue = mediaModel.getMediaPrivateQueue();
@@ -444,45 +445,45 @@ public class MessageProxyServer {
 		HashMap<UUID, Theme> themes = prefsModel.getThemes();
 		HashMap<UUID, Priority> priorities = prefsModel.getPrios();
 		
-		channel.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_START));
+		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_START));
 		
-		channel.writeAndFlush(new Message(OpCode.STC_INIT_PROPERTIES, PreferencesModelServer.getProps()));
+		ctx.writeAndFlush(new Message(OpCode.STC_INIT_PROPERTIES, PreferencesModelServer.getProps()));
 		
 		for(UUID id : allMedia.keySet()) {
-			channel.writeAndFlush(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
+			ctx.writeAndFlush(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
 		}
 		
 		for(UUID id : customQueue) {
-			channel.writeAndFlush(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
+			ctx.writeAndFlush(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
 		}
 		
 		for(UUID id : tickerElements.keySet()) {
-			channel.writeAndFlush(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(tickerElements.get(id))));
+			ctx.writeAndFlush(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(tickerElements.get(id))));
 		}
 		
 		for(UUID id : themes.keySet()) {
-			channel.writeAndFlush(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
+			ctx.writeAndFlush(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
 		}
 			
 		for(UUID id : priorities.keySet()) {
-			channel.writeAndFlush(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
+			ctx.writeAndFlush(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
 		}
 		
 		if(automodeEnabled) {
-			channel.writeAndFlush(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
+			ctx.writeAndFlush(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 		}
 		
 		if(liveTickerEnabled) {
-			channel.writeAndFlush(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
+			ctx.writeAndFlush(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
 		}
 		
 		if(fullscreenEnabled) {
-			channel.writeAndFlush(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
+			ctx.writeAndFlush(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 		}
 		
-		channel.writeAndFlush(new Message(OpCode.STC_ALL_FONTS, (Serializable) ConstantsServer.FONT_FAMILIES));
+		ctx.writeAndFlush(new Message(OpCode.STC_ALL_FONTS, (Serializable) ConstantsServer.FONT_FAMILIES));
 		
-		channel.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
+		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
 	
 	private void removePriority(Message msg) throws IOException {

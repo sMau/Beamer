@@ -63,14 +63,16 @@ public class Client {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 
+						ch.pipeline().addLast(new ObjectEncoder());
+						ch.pipeline().addLast(new OpCodeByteEncoder());
+						ch.pipeline().addLast(new MessageSplit());
+						
 						ch.pipeline().addLast(new MessageReplayingDecoder());
 						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
 						ch.pipeline().addLast(new MessageJoin());
 						ch.pipeline().addLast(new ClientMessageHandler(proxy));
 						
-						ch.pipeline().addLast(new ObjectEncoder());
-						ch.pipeline().addLast(new OpCodeByteEncoder());
-						ch.pipeline().addLast(new MessageSplit());
+						
 						
 						
 					}

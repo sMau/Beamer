@@ -20,7 +20,7 @@ public class MessageHandlerServer extends SimpleChannelInboundHandler<Message> {
 		this.proxy = proxy;
 		
 	}
-
+	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 		log.warn("Exception caught in MessageHandler", e.getCause());
@@ -37,7 +37,7 @@ public class MessageHandlerServer extends SimpleChannelInboundHandler<Message> {
 			
 			proxy.clientDisconnected(ctx.channel(), (String) received.getData()[0]);
 		} else {
-			proxy.receiveMessage(received, ctx.channel());
+			proxy.receiveMessage(received, ctx);
 		}
 		log.debug("Message received: " + received);
 	}
