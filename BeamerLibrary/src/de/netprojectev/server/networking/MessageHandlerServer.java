@@ -25,7 +25,7 @@ public class MessageHandlerServer extends SimpleChannelInboundHandler<Message> {
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 		log.warn("Exception caught in MessageHandler", e.getCause());
 		proxy.clientTimedOut(ctx.channel());
-		ctx.channel().writeAndFlush(new Message(OpCode.STC_FORCE_RECONNECT));
+		ctx.writeAndFlush(new Message(OpCode.STC_FORCE_RECONNECT));
 		ctx.channel().close();
 	}
 

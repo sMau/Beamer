@@ -23,6 +23,6 @@ public class OpCodeByteEncoder extends MessageToByteEncoder<OpCode> {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler, forcing reconnect.", cause.getCause());
-		ctx.channel().close();
+		ctx.channel().close(); //XXX
 	}
 }

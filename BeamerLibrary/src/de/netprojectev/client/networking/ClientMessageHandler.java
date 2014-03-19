@@ -22,7 +22,7 @@ public class ClientMessageHandler extends SimpleChannelInboundHandler<Message> {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) throws Exception {
 		log.warn("Exception caught in channel handler, forcing reconnect.", e.getCause());
-		//TODO correct reconnect handling (means override the alias in use thing) proxy.reconnectForced();		
+		//XXX correct reconnect handling (means override the alias in use thing) proxy.reconnectForced();		
 		ctx.channel().close();
 	}
 
