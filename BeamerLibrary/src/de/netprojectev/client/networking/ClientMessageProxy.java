@@ -2,10 +2,13 @@ package de.netprojectev.client.networking;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.DefaultFileRegion;
+import io.netty.channel.FileRegion;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
@@ -110,6 +113,20 @@ public class ClientMessageProxy {
 		return channelToServer.writeAndFlush(msgToSend);
 	}
 
+	public ChannelFuture sendFileToServer(File fileToSend) throws IOException {
+		
+		FileInputStream fis = new FileInputStream(fileToSend);
+		FileRegion fileRegion = new DefaultFileRegion(fis.getChannel(), 0, fileToSend.length());
+		
+		channelToServer.write(fileRegion);
+		
+		
+		
+		fis.close();
+		
+		return null;
+	}
+	
 	public void sendDisconnectRequest() {
 		client.disconnect();
 	}
@@ -210,6 +227,7 @@ public class ClientMessageProxy {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_FINISH, toSend));
 		
 	}
+	
 
 	public void sendAddImageFile(File file) throws IOException {
 		String name = file.getName();

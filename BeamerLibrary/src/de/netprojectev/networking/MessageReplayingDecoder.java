@@ -29,6 +29,7 @@ public class MessageReplayingDecoder extends
 			out.add(readOpCode);
 			break;
 		case READ_DATA:
+			in.markReaderIndex();
 			int length = in.readInt();
 			in.readerIndex(in.readerIndex() - 4);
 			ByteBuf dataFrame = in.readBytes(length + 4);

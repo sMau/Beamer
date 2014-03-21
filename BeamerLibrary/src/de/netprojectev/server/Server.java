@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.networking.FileByteCodec;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.MessageJoin;
 import de.netprojectev.networking.MessageReplayingDecoder;
@@ -96,9 +97,11 @@ public class Server {
 						
 						ch.pipeline().addLast(new ObjectEncoder());
 						ch.pipeline().addLast(new OpCodeByteEncoder());
+						
 						ch.pipeline().addLast(new MessageSplit());
 						
 						ch.pipeline().addLast(new MessageReplayingDecoder());
+						ch.pipeline().addLast(new FileByteCodec());
 						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
 						ch.pipeline().addLast(new MessageJoin());
 						ch.pipeline().addLast(new AuthHandlerServer(proxy));
