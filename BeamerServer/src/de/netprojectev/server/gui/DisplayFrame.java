@@ -23,6 +23,7 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.Server;
+import de.netprojectev.server.ServerGUI;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
@@ -31,7 +32,6 @@ import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.server.networking.MessageProxyServer.PropertyUpdateListener;
 import de.netprojectev.server.networking.MessageProxyServer.VideoFinishListener;
-import de.netprojectev.server.networking.ServerGUI;
 import de.netprojectev.utils.LoggerBuilder;
 
 /**

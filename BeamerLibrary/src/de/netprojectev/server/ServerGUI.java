@@ -1,8 +1,9 @@
-package de.netprojectev.server.networking;
+package de.netprojectev.server;
 
 import java.io.IOException;
 
 import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.server.networking.MessageProxyServer.VideoFinishListener;
 
 public interface ServerGUI {

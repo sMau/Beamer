@@ -113,18 +113,17 @@ public class ClientMessageProxy {
 		return channelToServer.writeAndFlush(msgToSend);
 	}
 
-	public ChannelFuture sendFileToServer(File fileToSend) throws IOException {
+	private ChannelFuture sendFileToServer(File fileToSend) throws IOException {
 		
 		FileInputStream fis = new FileInputStream(fileToSend);
 		FileRegion fileRegion = new DefaultFileRegion(fis.getChannel(), 0, fileToSend.length());
 		
-		channelToServer.write(fileRegion);
-		
-		
-		
+		channelToServer.write(fileToSend.length());
+		ChannelFuture fut = channelToServer.write(fileRegion);
+
 		fis.close();
 		
-		return null;
+		return fut;
 	}
 	
 	public void sendDisconnectRequest() {

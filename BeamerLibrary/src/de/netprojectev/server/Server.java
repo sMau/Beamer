@@ -18,7 +18,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.networking.FileByteCodec;
+import de.netprojectev.networking.FileToByteEncoder;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.MessageJoin;
 import de.netprojectev.networking.MessageReplayingDecoder;
@@ -28,7 +28,6 @@ import de.netprojectev.networking.OpCodeByteEncoder;
 import de.netprojectev.server.networking.AuthHandlerServer;
 import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
-import de.netprojectev.server.networking.ServerGUI;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class Server {
@@ -93,15 +92,20 @@ public class Server {
 				.childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
-
+						//TODO next work here 03.04.14
+						/*
+						 * use filencoder and decoder for file transfers.
+						 * next to do is to add file decoders dynamically after meta data received
+						 */
 						
 						ch.pipeline().addLast(new ObjectEncoder());
+						ch.pipeline().addLast(new FileToByteEncoder());
 						ch.pipeline().addLast(new OpCodeByteEncoder());
 						
 						ch.pipeline().addLast(new MessageSplit());
 						
 						ch.pipeline().addLast(new MessageReplayingDecoder());
-						ch.pipeline().addLast(new FileByteCodec());
+						
 						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
 						ch.pipeline().addLast(new MessageJoin());
 						ch.pipeline().addLast(new AuthHandlerServer(proxy));

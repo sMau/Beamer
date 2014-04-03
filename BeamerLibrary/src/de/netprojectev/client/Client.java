@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.ClientMessageHandler;
 import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.networking.FileToByteEncoder;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.MessageJoin;
@@ -64,6 +65,7 @@ public class Client {
 					public void initChannel(SocketChannel ch) throws Exception {
 
 						ch.pipeline().addLast(new ObjectEncoder());
+						ch.pipeline().addLast(new FileToByteEncoder());
 						ch.pipeline().addLast(new OpCodeByteEncoder());
 						ch.pipeline().addLast(new MessageSplit());
 						
