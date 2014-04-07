@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 
 
 public class Misc {
@@ -166,7 +166,7 @@ public class Misc {
 	 * handling the programs termination showing up a confirmation dialog and
 	 * invokes the serialization
 	 */
-	public static void quit(final Component parent, final ClientMessageProxy proxy) {
+	public static void quit(final Component parent, final MessageProxyClient proxy) {
 		int exit = JOptionPane.showConfirmDialog(parent, "Are you sure you want to exit?", "Quit", JOptionPane.YES_NO_OPTION);
 		if (exit == JOptionPane.YES_OPTION) {
 			proxy.sendDisconnectRequest();

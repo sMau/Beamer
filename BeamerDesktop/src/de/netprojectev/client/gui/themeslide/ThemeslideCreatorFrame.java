@@ -34,7 +34,7 @@ import de.netprojectev.client.gui.main.Misc;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.gui.preferences.ColorPickerDialog;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
@@ -52,7 +52,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	private static final long serialVersionUID = -3653577264825548156L;
 
 	private final PreferencesModelClientDesktop prefs;
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 
 	private Boolean evtFromGUIupdateFontSize = false;
 	private Boolean evtFromGUIupdateFontFamily = false;
@@ -62,7 +62,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	private Color selectedColorMain;
 
-	public ThemeslideCreatorFrame(Frame parent, ClientMessageProxy proxy) throws ThemeDoesNotExistException, PriorityDoesNotExistException {
+	public ThemeslideCreatorFrame(Frame parent, MessageProxyClient proxy) throws ThemeDoesNotExistException, PriorityDoesNotExistException {
 
 		this.prefs = (PreferencesModelClientDesktop) proxy.getPrefs();
 		this.proxy = proxy;

@@ -6,7 +6,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.ConstantsClient;
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.utils.HelperMethods;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -15,7 +15,7 @@ public class PreferencesModelClientDesktop extends PreferencesModelClient {
 	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClientDesktop.class);
 
 	
-	public PreferencesModelClientDesktop(ClientMessageProxy proxy) {
+	public PreferencesModelClientDesktop(MessageProxyClient proxy) {
 		super(proxy);
 		clientProperties = generateClientDesktopDefaultProps();
 	}

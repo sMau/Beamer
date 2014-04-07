@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.media.MediaFile;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaNotInQueueException;
@@ -31,7 +31,7 @@ public class MediaModelClient {
 
 	private static final Logger log = LoggerBuilder.createLogger(MediaModelClient.class);
 	
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 	private final HashMap<UUID, ClientMediaFile> allMedia;
 	private final ArrayList<UUID> allMediaList;
 	private final LinkedList<UUID> customQueue;
@@ -54,7 +54,7 @@ public class MediaModelClient {
 		}
 	};
 	
-	public MediaModelClient(ClientMessageProxy proxy) {
+	public MediaModelClient(MessageProxyClient proxy) {
 		this.proxy = proxy;
 		this.allMedia = new HashMap<UUID, ClientMediaFile>();
 		this.allMediaList = new ArrayList<UUID>();
@@ -253,7 +253,7 @@ public class MediaModelClient {
 	}
 
 
-	public ClientMessageProxy getProxy() {
+	public MessageProxyClient getProxy() {
 		return proxy;
 	}
 	

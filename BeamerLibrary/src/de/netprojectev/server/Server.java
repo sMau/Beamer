@@ -19,6 +19,7 @@ import java.io.IOException;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.networking.FileToByteEncoder;
+import de.netprojectev.networking.HandlerNames;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.MessageJoin;
 import de.netprojectev.networking.MessageReplayingDecoder;
@@ -96,20 +97,25 @@ public class Server {
 						/*
 						 * use filencoder and decoder for file transfers.
 						 * next to do is to add file decoders dynamically after meta data received
+						 * 
+						 * 1 all opcodes in bytes, Message not serializable anymore only contents as pojo
+						 * 2 files in bytes
+						 * 3 own object structures in bytes
 						 */
 						
-						ch.pipeline().addLast(new ObjectEncoder());
-						ch.pipeline().addLast(new FileToByteEncoder());
-						ch.pipeline().addLast(new OpCodeByteEncoder());
 						
-						ch.pipeline().addLast(new MessageSplit());
+						ch.pipeline().addLast(HandlerNames.OBJECT_ENCODER, new ObjectEncoder());
+						ch.pipeline().addLast(HandlerNames.FILE_TO_BYTE_ENCODER, new FileToByteEncoder());
+						ch.pipeline().addLast(HandlerNames.OPCODE_BYTE_ENCODER, new OpCodeByteEncoder());
 						
-						ch.pipeline().addLast(new MessageReplayingDecoder());
+						ch.pipeline().addLast(HandlerNames.MESSAGE_SPLIT, new MessageSplit());
 						
-						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
-						ch.pipeline().addLast(new MessageJoin());
-						ch.pipeline().addLast(new AuthHandlerServer(proxy));
-						ch.pipeline().addLast(new MessageHandlerServer(proxy));
+						ch.pipeline().addLast(HandlerNames.MESSAGE_REPLAYING_DECODER, new MessageReplayingDecoder());
+						
+						ch.pipeline().addLast(HandlerNames.OBJECT_DECODER, new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
+						ch.pipeline().addLast(HandlerNames.MESSAGE_JOIN, new MessageJoin());
+						ch.pipeline().addLast(HandlerNames.AUTH_HANDLER_SERVER, new AuthHandlerServer(proxy));
+						ch.pipeline().addLast(HandlerNames.MESSAGE_HANDLER_SERVER, new MessageHandlerServer(proxy));
 						
 
 

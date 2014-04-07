@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
@@ -67,7 +67,7 @@ public abstract class PreferencesModelClient {
 	private boolean liveTickerRunning;
 	
 
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 	private final HashMap<UUID, Theme> themes;
 	private final HashMap<UUID, Priority> prios;
 
@@ -81,7 +81,7 @@ public abstract class PreferencesModelClient {
 	
 	private String[] serverFonts;
 	
-	public PreferencesModelClient(ClientMessageProxy proxy) {
+	public PreferencesModelClient(MessageProxyClient proxy) {
 
 		this.proxy = proxy;
 		this.themes = new HashMap<UUID, Theme>();
@@ -281,7 +281,7 @@ public abstract class PreferencesModelClient {
 		this.fullscreenStateListener = fullscreenStateListener;
 	}
 
-	public ClientMessageProxy getProxy() {
+	public MessageProxyClient getProxy() {
 		return proxy;
 	}
 

@@ -24,8 +24,8 @@ import de.netprojectev.client.gui.main.Misc;
 import de.netprojectev.client.model.PreferencesModelClient.FullscreenStateListener;
 import de.netprojectev.client.model.PreferencesModelClient.LiveTickerStateListener;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
-import de.netprojectev.client.networking.ClientMessageProxy;
-import de.netprojectev.client.networking.ClientMessageProxy.ServerPropertyUpdateListener;
+import de.netprojectev.client.networking.MessageProxyClient;
+import de.netprojectev.client.networking.MessageProxyClient.ServerPropertyUpdateListener;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
@@ -46,13 +46,13 @@ public class PreferencesFrame extends javax.swing.JFrame {
 	 */
 	private static final long serialVersionUID = 1287233997445904109L;
 
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 	private final PreferencesModelClientDesktop prefs;
 
 	/**
 	 * Creates new form PreferencesFrame
 	 */
-	public PreferencesFrame(Frame parent, ClientMessageProxy proxy) {
+	public PreferencesFrame(Frame parent, MessageProxyClient proxy) {
 		this.prefs = (PreferencesModelClientDesktop) proxy.getPrefs();
 		this.proxy = proxy;
 		initComponents();

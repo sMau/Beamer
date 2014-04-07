@@ -6,7 +6,7 @@ import de.netprojectev.client.Client;
 import de.netprojectev.client.ClientGUI;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.PreferencesModelClientAndroid;
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.networking.LoginData;
 import android.app.Service;
 import android.content.Intent;
@@ -19,7 +19,7 @@ public class NetworkService extends Service {
 	private final IBinder binder = new NetworkServiceBinder();
 
 	private Client client;
-	private ClientMessageProxy proxy;
+	private MessageProxyClient proxy;
 	private boolean loggedIn;
 	
 	
@@ -94,7 +94,7 @@ public class NetworkService extends Service {
 		return loggedIn;
 	}
 
-	public ClientMessageProxy getProxy() {
+	public MessageProxyClient getProxy() {
 		return proxy;
 	}
 

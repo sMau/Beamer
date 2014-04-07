@@ -8,7 +8,6 @@ import io.netty.channel.FileRegion;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
@@ -44,18 +43,7 @@ import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.MediaFileFilter;
 
 
-/*
- * TODO work here next! (look at the paper in the college block and:
- * 		http://stackoverflow.com/questions/21276007/what-happens-to-multiple-messages-in-bytetomessagedecoder
- * 		http://netty.io/5.0/api/io/netty/handler/codec/ReplayingDecoder.html
- * 
- * 		if i understand it right simply put the modified bytebuf in the out list
- * 
- * 1 all opcodes in bytes, Message not serializable anymore only contents as pojo
- * 2 files in bytes
- * 3 own object structures in bytes
- */
-public class ClientMessageProxy {
+public class MessageProxyClient {
 	
 	public interface ServerPropertyUpdateListener {
 		public void propertyUpdated();
@@ -69,7 +57,7 @@ public class ClientMessageProxy {
 		public void serverShutdown();
 	}
 	
-	private static final Logger log = LoggerBuilder.createLogger(ClientMessageProxy.class);
+	private static final Logger log = LoggerBuilder.createLogger(MessageProxyClient.class);
 
 	private final Client client;
 
@@ -89,7 +77,7 @@ public class ClientMessageProxy {
 
 	private Channel channelToServer;
 
-	public ClientMessageProxy(Client client, Class<? extends PreferencesModelClient> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
+	public MessageProxyClient(Client client, Class<? extends PreferencesModelClient> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
 		mediaModel = new MediaModelClient(this);
 		tickerModel = new TickerModelClient(this);
 

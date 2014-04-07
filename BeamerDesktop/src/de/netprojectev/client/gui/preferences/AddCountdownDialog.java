@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.server.datastructures.Countdown;
 
 /**
@@ -25,12 +25,12 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 	 */
 	private static final long serialVersionUID = 7849002135529613765L;
 
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 	
 	/**
 	 * Creates new form AddCountdownDialog
 	 */
-	public AddCountdownDialog(java.awt.Frame parent, boolean modal, ClientMessageProxy proxy) {
+	public AddCountdownDialog(java.awt.Frame parent, boolean modal, MessageProxyClient proxy) {
 		super(parent, modal);
 		this.proxy = proxy;
 		setLocationRelativeTo(parent);

@@ -21,7 +21,7 @@ import javax.swing.KeyStroke;
 
 import de.netprojectev.client.gui.main.MediaFileFilterDesktop;
 import de.netprojectev.client.gui.main.Misc;
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.media.Theme;
 
 /**
@@ -44,14 +44,14 @@ public class AddThemeDialog extends javax.swing.JDialog {
      */
     public static final int RET_OK = 1;
 
-    private final ClientMessageProxy proxy;
+    private final MessageProxyClient proxy;
     
     private File choosenBackground;
     
     /**
      * Creates new form AddThemeDialog
      */
-    public AddThemeDialog(java.awt.Frame parent, boolean modal, ClientMessageProxy proxy) {
+    public AddThemeDialog(java.awt.Frame parent, boolean modal, MessageProxyClient proxy) {
         super(parent, modal);
         this.proxy = proxy;
         initComponents();

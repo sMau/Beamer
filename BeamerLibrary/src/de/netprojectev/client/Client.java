@@ -17,9 +17,10 @@ import java.lang.reflect.InvocationTargetException;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.model.PreferencesModelClient;
-import de.netprojectev.client.networking.ClientMessageHandler;
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageHandlerClient;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.networking.FileToByteEncoder;
+import de.netprojectev.networking.HandlerNames;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.MessageJoin;
@@ -36,7 +37,7 @@ public class Client {
 
 	private LoginData login;
 
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 	private final String host;
 	private final int port;
 	private final ClientGUI gui;
@@ -51,11 +52,11 @@ public class Client {
 		this.port = port;
 		this.gui = gui;
 
-		this.proxy = new ClientMessageProxy(this, clazz);
+		this.proxy = new MessageProxyClient(this, clazz);
 
 	}
 
-	public ClientMessageProxy connect() throws InterruptedException {
+	public MessageProxyClient connect() throws InterruptedException {
 
 		Bootstrap b = new Bootstrap();
 		b.group(group)
@@ -64,15 +65,15 @@ public class Client {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 
-						ch.pipeline().addLast(new ObjectEncoder());
-						ch.pipeline().addLast(new FileToByteEncoder());
-						ch.pipeline().addLast(new OpCodeByteEncoder());
-						ch.pipeline().addLast(new MessageSplit());
+						ch.pipeline().addLast(HandlerNames.OBJECT_ENCODER, new ObjectEncoder());
+						ch.pipeline().addLast(HandlerNames.FILE_TO_BYTE_ENCODER, new FileToByteEncoder());
+						ch.pipeline().addLast(HandlerNames.OPCODE_BYTE_ENCODER, new OpCodeByteEncoder());
+						ch.pipeline().addLast(HandlerNames.MESSAGE_SPLIT, new MessageSplit());
 						
-						ch.pipeline().addLast(new MessageReplayingDecoder());
-						ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
-						ch.pipeline().addLast(new MessageJoin());
-						ch.pipeline().addLast(new ClientMessageHandler(proxy));
+						ch.pipeline().addLast(HandlerNames.MESSAGE_REPLAYING_DECODER, new MessageReplayingDecoder());
+						ch.pipeline().addLast(HandlerNames.OBJECT_DECODER, new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
+						ch.pipeline().addLast(HandlerNames.MESSAGE_JOIN, new MessageJoin());
+						ch.pipeline().addLast(HandlerNames.MESSAGE_HANDLER_CLIENT, new MessageHandlerClient(proxy));
 						
 						
 						
@@ -117,7 +118,7 @@ public class Client {
 		gui.loginSuccess();
 	}
 
-	public ClientMessageProxy getProxy() {
+	public MessageProxyClient getProxy() {
 		return proxy;
 	}
 

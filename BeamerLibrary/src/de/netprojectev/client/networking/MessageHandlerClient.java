@@ -8,14 +8,14 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.networking.Message;
 import de.netprojectev.utils.LoggerBuilder;
 
-public class ClientMessageHandler extends SimpleChannelInboundHandler<Message> {
+public class MessageHandlerClient extends SimpleChannelInboundHandler<Message> {
 
 	
-	private static final Logger log = LoggerBuilder.createLogger(ClientMessageHandler.class);
+	private static final Logger log = LoggerBuilder.createLogger(MessageHandlerClient.class);
 
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 	
-	public ClientMessageHandler(ClientMessageProxy proxy) {
+	public MessageHandlerClient(MessageProxyClient proxy) {
 		this.proxy = proxy;
 	}
 	

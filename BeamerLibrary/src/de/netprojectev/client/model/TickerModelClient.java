@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientTickerElement;
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.utils.LoggerBuilder;
@@ -21,7 +21,7 @@ public class TickerModelClient {
 	
 	private static final Logger log = LoggerBuilder.createLogger(TickerModelClient.class);
 
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 	private final HashMap<UUID, ClientTickerElement> elements;
 	private final ArrayList<UUID> allElementsList;
 
@@ -31,7 +31,7 @@ public class TickerModelClient {
 		}
 	};
 
-	public TickerModelClient(ClientMessageProxy proxy) {
+	public TickerModelClient(MessageProxyClient proxy) {
 
 		this.proxy = proxy;
 		this.elements = new HashMap<UUID, ClientTickerElement>();

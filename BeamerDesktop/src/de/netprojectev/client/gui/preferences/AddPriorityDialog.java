@@ -16,7 +16,7 @@ import javax.swing.KeyStroke;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.client.networking.ClientMessageProxy;
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -41,12 +41,12 @@ public class AddPriorityDialog extends javax.swing.JDialog {
      */
     public static final int RET_OK = 1;
 
-    private final ClientMessageProxy proxy;
+    private final MessageProxyClient proxy;
     
     /**
      * Creates new form AddPriorityDialog
      */
-    public AddPriorityDialog(java.awt.Frame parent, boolean modal, ClientMessageProxy proxy) {
+    public AddPriorityDialog(java.awt.Frame parent, boolean modal, MessageProxyClient proxy) {
         super(parent, modal);
         this.proxy = proxy;
         initComponents();

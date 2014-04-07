@@ -38,9 +38,9 @@ import de.netprojectev.client.model.MediaModelClient.UpdateCurrentFileListener;
 import de.netprojectev.client.model.PreferencesModelClient.UpdateAutoModeStateListener;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.model.TickerModelClient;
-import de.netprojectev.client.networking.ClientMessageProxy;
-import de.netprojectev.client.networking.ClientMessageProxy.ServerShutdownListener;
-import de.netprojectev.client.networking.ClientMessageProxy.TimeSyncListener;
+import de.netprojectev.client.networking.MessageProxyClient;
+import de.netprojectev.client.networking.MessageProxyClient.ServerShutdownListener;
+import de.netprojectev.client.networking.MessageProxyClient.TimeSyncListener;
 import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
@@ -65,7 +65,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	private static final long serialVersionUID = -4247573311423083026L;
 	private static final Logger log = LoggerBuilder.createLogger(MainClientGUIWindow.class);
 
-	private final ClientMessageProxy proxy;
+	private final MessageProxyClient proxy;
 	private final MediaModelClient mediaModel;
 	private final TickerModelClient tickerModel;
 	private final PreferencesModelClientDesktop prefs;
