@@ -1,4 +1,4 @@
-package de.netprojectev.server.networking;
+package old.de.netprojectev.server.networking;
 
 import io.netty.channel.Channel;
 

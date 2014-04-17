@@ -17,6 +17,8 @@ import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import old.de.netprojectev.networking.LoginData;
+
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.Client;
@@ -45,7 +47,6 @@ import de.netprojectev.datastructures.media.Priority;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
-import de.netprojectev.networking.LoginData;
 import de.netprojectev.utils.HelperMethods;
 import de.netprojectev.utils.LoggerBuilder;
 

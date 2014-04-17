@@ -21,6 +21,12 @@ import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import old.de.netprojectev.networking.DequeueData;
+import old.de.netprojectev.networking.VideoFileData;
+import old.de.netprojectev.server.networking.ConnectedUser;
+import old.de.netprojectev.server.networking.VideoFileReceiveHandler;
+import old.de.netprojectev.server.networking.VideoFileReceiveHandler.ToManyMessagesException;
+
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
@@ -31,10 +37,8 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
-import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.networking.VideoFileData;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.Server;
 import de.netprojectev.server.ServerGUI;
@@ -47,7 +51,6 @@ import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.model.MediaModelServer;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
-import de.netprojectev.server.networking.VideoFileReceiveHandler.ToManyMessagesException;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class MessageProxyServer {

@@ -1,10 +1,12 @@
-package de.netprojectev.networking;
+package old.de.netprojectev.networking;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
 
 import java.util.List;
+
+import de.netprojectev.networking.OpCode;
 
 public class MessageReplayingDecoder extends
 		ReplayingDecoder<MessageDecoderState> {
@@ -21,7 +23,7 @@ public class MessageReplayingDecoder extends
 		case READ_OPCODE:
 			byte opCode = in.readByte();
 			OpCode readOpCode = OpCode.values()[(int) opCode];
-			if(readOpCode.isContainsData()) {
+			if(readOpCode.isDataContained()) {
 				checkpoint(MessageDecoderState.READ_DATA);
 			} else {
 				checkpoint(MessageDecoderState.READ_OPCODE);

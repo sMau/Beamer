@@ -10,6 +10,14 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.utils.LoggerBuilder;
 
+/**
+ * 
+ * @author Samuel Schüppen
+ * 
+ * Class to split a {@link Message} in its {@link OpCode} and its data objects.
+ *
+ */
+
 @Sharable
 public class MessageSplit extends MessageToMessageEncoder<Message> {
 	private static final Logger log = LoggerBuilder.createLogger(MessageSplit.class);
@@ -18,8 +26,11 @@ public class MessageSplit extends MessageToMessageEncoder<Message> {
 	protected void encode(ChannelHandlerContext ctx, Message msg,
 			List<Object> out) throws Exception {
 		out.add(msg.getOpCode());
-		if(msg.getOpCode().isContainsData()) {
-			out.add(msg.getData());
+		if(msg.getOpCode().isDataContained()) {
+			out.add(msg.getData().length);
+			for(Object o : msg.getData()) {
+				out.add(o);
+			}
 		}
 	}
 	

@@ -16,18 +16,19 @@ import io.netty.util.HashedWheelTimer;
 import java.io.File;
 import java.io.IOException;
 
+import old.de.netprojectev.networking.HandlerNames;
+import old.de.netprojectev.networking.MessageJoin;
+import old.de.netprojectev.networking.MessageReplayingDecoder;
+import old.de.netprojectev.server.networking.AuthHandlerServer;
+import old.de.netprojectev.server.networking.MessageHandlerServer;
+
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.networking.FileToByteEncoder;
-import de.netprojectev.networking.HandlerNames;
+import de.netprojectev.networking.FileByteEncoder;
 import de.netprojectev.networking.Message;
-import de.netprojectev.networking.MessageJoin;
-import de.netprojectev.networking.MessageReplayingDecoder;
 import de.netprojectev.networking.MessageSplit;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.networking.OpCodeByteEncoder;
-import de.netprojectev.server.networking.AuthHandlerServer;
-import de.netprojectev.server.networking.MessageHandlerServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -105,7 +106,7 @@ public class Server {
 						
 						
 						ch.pipeline().addLast(HandlerNames.OBJECT_ENCODER, new ObjectEncoder());
-						ch.pipeline().addLast(HandlerNames.FILE_TO_BYTE_ENCODER, new FileToByteEncoder());
+						ch.pipeline().addLast(HandlerNames.FILE_TO_BYTE_ENCODER, new FileByteEncoder());
 						ch.pipeline().addLast(HandlerNames.OPCODE_BYTE_ENCODER, new OpCodeByteEncoder());
 						
 						ch.pipeline().addLast(HandlerNames.MESSAGE_SPLIT, new MessageSplit());

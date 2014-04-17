@@ -1,15 +1,16 @@
-package de.netprojectev.server.networking;
+package old.de.netprojectev.server.networking;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import old.de.netprojectev.networking.LoginData;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.model.PreferencesModelServer;
+import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class AuthHandlerServer extends ChannelInboundHandlerAdapter {

@@ -9,7 +9,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import java.io.File;
 import java.io.FileInputStream;
 
-public class FileToByteEncoder extends MessageToByteEncoder<File> {
+public class FileByteEncoder extends MessageToByteEncoder<File> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, File msg, ByteBuf out) throws Exception {

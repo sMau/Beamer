@@ -86,17 +86,17 @@ public enum OpCode {
 	STC_ALL_FONTS;
 	
 	
-	private final boolean containsData;
+	private final boolean dataContained;
 	
 	private OpCode() {
-		containsData = true;
+		dataContained = true;
 	}
 	
-	private OpCode(boolean containsData) {
-		this.containsData = containsData;
+	private OpCode(boolean dataContained) {
+		this.dataContained = dataContained;
 	}
 
-	public boolean isContainsData() {
-		return containsData;
+	public boolean isDataContained() {
+		return dataContained;
 	}
 }

@@ -1,4 +1,4 @@
-package de.netprojectev.server.networking;
+package old.de.netprojectev.server.networking;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class MessageHandlerServer extends SimpleChannelInboundHandler<Message> {

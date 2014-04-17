@@ -18,6 +18,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import old.de.netprojectev.networking.DequeueData;
+import old.de.netprojectev.networking.VideoFileData;
+
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.Client;
@@ -31,10 +34,8 @@ import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
-import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.networking.VideoFileData;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.Themeslide;
@@ -101,19 +102,6 @@ public class MessageProxyClient {
 		return channelToServer.writeAndFlush(msgToSend);
 	}
 
-	private ChannelFuture sendFileToServer(File fileToSend) throws IOException {
-		
-		FileInputStream fis = new FileInputStream(fileToSend);
-		FileRegion fileRegion = new DefaultFileRegion(fis.getChannel(), 0, fileToSend.length());
-		
-		channelToServer.write(fileToSend.length());
-		ChannelFuture fut = channelToServer.write(fileRegion);
-
-		fis.close();
-		
-		return fut;
-	}
-	
 	public void sendDisconnectRequest() {
 		client.disconnect();
 	}

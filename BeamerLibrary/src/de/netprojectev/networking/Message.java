@@ -1,20 +1,21 @@
 package de.netprojectev.networking;
 
-import java.io.Serializable;
+
 
 /**
- * Class to encapsulate messages transfered via network.
+ * Class to encapsulate messages transfered via network in the control flow.
+ * Actual network messages are converted to plain byte streams.
  */
 public class Message {
 	
 	private final OpCode opCode;
-	private Serializable[] data;
+	private Object[] data;
 	
 	public Message(OpCode opCode) {
 		this.opCode = opCode;
 	}
 	
-	public Message(OpCode opCode, Serializable... data) {
+	public Message(OpCode opCode, Object... data) {
 		this.opCode = opCode;
 		this.data = data;
 	}
@@ -23,14 +24,10 @@ public class Message {
 		return opCode;
 	}
 
-	public Serializable[] getData() {
+	public Object[] getData() {
 		return data;
 	}
-	
-	public void setData(Serializable[] data) {
-		this.data = data;
-	}
-	
+
 	@Override
 	public String toString() {
 		return "Message " + "; OpCode: " + opCode + "; Data: " + data;

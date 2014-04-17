@@ -1,4 +1,4 @@
-package de.netprojectev.networking;
+package old.de.netprojectev.networking;
 
 
 public enum MessageDecoderState {

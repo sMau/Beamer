@@ -1,4 +1,4 @@
-package de.netprojectev.networking;
+package old.de.netprojectev.networking;
 
 import java.io.Serializable;
 
@@ -7,6 +7,8 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class MessageJoin extends ChannelInboundHandlerAdapter {
@@ -24,7 +26,7 @@ public class MessageJoin extends ChannelInboundHandlerAdapter {
 		switch (currentState) {
 		case READ_OPCODE:
 			currentOpCode = (OpCode) msg;
-			if(currentOpCode.isContainsData()) {
+			if(currentOpCode.isDataContained()) {
 				currentState = MessageDecoderState.READ_DATA;
 			} else {
 				ctx.fireChannelRead(new Message(currentOpCode));

@@ -1,10 +1,11 @@
-package de.netprojectev.client.networking;
+package old.de.netprojectev.client.networking;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.networking.Message;
 import de.netprojectev.utils.LoggerBuilder;
 
