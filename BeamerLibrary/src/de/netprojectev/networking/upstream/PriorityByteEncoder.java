@@ -1,4 +1,4 @@
-package de.netprojectev.networking;
+package de.netprojectev.networking.upstream;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;

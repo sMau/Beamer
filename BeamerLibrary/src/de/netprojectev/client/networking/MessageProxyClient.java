@@ -97,7 +97,7 @@ public class MessageProxyClient {
 		client.getGui().errorRequestingFullsyncDialog();
 	}
 	
-	public ChannelFuture sendMessageToServer(Message msgToSend) {
+	private ChannelFuture sendMessageToServer(Message msgToSend) {
 		log.debug("Sending message to server: " + msgToSend);
 		return channelToServer.writeAndFlush(msgToSend);
 	}
@@ -127,11 +127,13 @@ public class MessageProxyClient {
 		sendMessageToServer(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
 	}
 
+	//TODO change editing, that not for every single editing a new encoder ist necessary 
 	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
 		fileToEdit.setPreview(null);
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
 	}
 
+	//TODO change editing, that not for every single editing a new encoder ist necessary 
 	public void sendEditTickerElement(ClientTickerElement eltToEdit) {
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_LIVE_TICKER_ELEMENT, eltToEdit));
 	}
@@ -165,6 +167,7 @@ public class MessageProxyClient {
 		}
 	}
 
+	// TODO use file encoding handler on netty low level
 	public void sendAddVideoFile(File file) throws IOException {
 
 		VideoFile toSend = new VideoFile(file.getName(), file);
@@ -203,7 +206,7 @@ public class MessageProxyClient {
 		
 	}
 	
-
+	//TODO send file instead of byte array
 	public void sendAddImageFile(File file) throws IOException {
 		String name = file.getName();
 		byte[] imageDataAsBytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
@@ -216,16 +219,14 @@ public class MessageProxyClient {
 			sendAddImageFile(files[i]);
 		}
 	}
-
+	
+	//TODO send only text to use StringEncoder on netty low level
 	public void sendAddTickerElement(String text) {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT,
 				new ServerTickerElement(text)));
 	}
 
-	public void sendAddThemeSlide(Themeslide themeslide) {
-		
-	}
-
+	//TODO send the data using the low level encoders of netty
 	public void sendAddThemeSlide(String name, UUID id, Priority priority, byte[] imageDataAsBytes) {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, id, priority, imageDataAsBytes));
 	}

@@ -25,11 +25,11 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.MessageProxyClient;
-import de.netprojectev.networking.FileByteEncoder;
 import de.netprojectev.networking.Message;
-import de.netprojectev.networking.MessageSplit;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.networking.OpCodeByteEncoder;
+import de.netprojectev.networking.upstream.FileByteEncoder;
+import de.netprojectev.networking.upstream.MessageSplit;
+import de.netprojectev.networking.upstream.OpCodeByteEncoder;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class Client {

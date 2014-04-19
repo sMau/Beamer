@@ -1,4 +1,4 @@
-package de.netprojectev.networking;
+package de.netprojectev.networking.upstream;
 
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
 import de.netprojectev.utils.LoggerBuilder;
 
 /**

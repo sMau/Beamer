@@ -24,11 +24,11 @@ import old.de.netprojectev.server.networking.MessageHandlerServer;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.networking.FileByteEncoder;
 import de.netprojectev.networking.Message;
-import de.netprojectev.networking.MessageSplit;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.networking.OpCodeByteEncoder;
+import de.netprojectev.networking.upstream.FileByteEncoder;
+import de.netprojectev.networking.upstream.MessageSplit;
+import de.netprojectev.networking.upstream.OpCodeByteEncoder;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 
