@@ -2,8 +2,6 @@ package de.netprojectev.client.networking;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.DefaultFileRegion;
-import io.netty.channel.FileRegion;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -38,7 +36,6 @@ import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ServerTickerElement;
-import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.MediaFileFilter;
