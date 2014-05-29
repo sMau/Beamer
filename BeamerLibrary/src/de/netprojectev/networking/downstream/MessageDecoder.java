@@ -8,12 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.client.datastructures.MediaType;
 import de.netprojectev.datastructures.Priority;
 import de.netprojectev.datastructures.Theme;
 import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.DecodeMessageException;
+import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.server.datastructures.ImageFile;
+import de.netprojectev.server.datastructures.Themeslide;
 
 public class MessageDecoder extends ByteToMessageDecoder {
 
@@ -52,7 +57,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			return;
 		}
 
-		opCode = OpCode.values()[(int) in.readByte()];
+		opCode = OpCode.values()[in.readByte()];
 		dataObjectCount = in.readInt();
 
 		/*
@@ -61,7 +66,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		if (dataObjectCount <= 0) {
 			out.add(new Message(opCode));
 		} else {
-			inDup = in.duplicate();
+			this.inDup = in.duplicate();
 			for (int i = 0; i < dataObjectCount; i++) {
 				if (in.readableBytes() < 8) {
 					in.resetReaderIndex();
@@ -81,13 +86,36 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	}
 
+	private boolean decodeBoolean() {
+		this.inDup.readLong();
+		return this.inDup.readBoolean();
+	}
+
+	private byte[] decodeByteArray() {
+		byte[] decoded = new byte[(int) this.inDup.readLong()];
+		this.inDup.readBytes(decoded);
+		return decoded;
+	}
+
+	private ClientMediaFile decodeClientMediaFile() {
+		UUID id = decodeUUID();
+		String name = decodeString();
+		byte[] preview = decodeByteArray();
+		UUID priorityID = decodeUUID();
+		int showCount = decodeInt();
+		MediaType type = decodeMediaType();
+		boolean current = decodeBoolean();
+
+		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
+	}
+
 	private ArrayList<Object> decodeData(OpCode opCode, int dataObjectCount) throws DecodeMessageException {
 
 		/*
 		 * switch over all opcodes, indicating that data is contained
 		 */
 
-		data.clear();
+		this.data.clear();
 
 		switch (opCode) {
 
@@ -98,8 +126,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		case STC_PROPERTY_UPDATE_ACK:
 			String key = decodeString();
 			String value = decodeString();
-			data.add(key);
-			data.add(value);
+			this.data.add(key);
+			this.data.add(value);
 			break;
 		case STC_INIT_PROPERTIES:
 			// TODO properties object is sent here, maybe change to repeatedly
@@ -107,133 +135,153 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			break;
 		case STC_TIMELEFT_SYNC:
 			long timeleft = decodeLong();
-			data.add(timeleft);
+			this.data.add(timeleft);
 			break;
 		case STC_ADD_THEME_ACK:
-			data.add(decodeTheme());
+			this.data.add(decodeTheme());
 			break;
 		case STC_ADD_PRIORITY_ACK:
-			data.add(decodePriority());
+			this.data.add(decodePriority());
 			break;
 		case STC_ADD_LIVE_TICKER_ELEMENT_ACK:
-			data.add(decodeTickerElement());
+			this.data.add(decodeTickerElement());
 			break;
 		case STC_EDIT_LIVE_TICKER_ELEMENT_ACK:
-			data.add(decodeTickerElement());
+			this.data.add(decodeTickerElement());
 			break;
 		case STC_ADD_MEDIA_FILE_ACK:
-			// TODO polymorphism at the end :D
+			this.data.add(decodeClientMediaFile());
 			break;
 		case STC_EDIT_MEDIA_FILE_ACK:
-			// TODO polymorphism at the end :D
+			this.data.add(decodeClientMediaFile());
 			break;
 		case STC_LOGIN_DENIED:
-			// TODO anyway check the complete login procedure
+			this.data.add(decodeString());
 			break;
 		case STC_RESET_SHOW_COUNT_ACK:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case STC_REMOVE_LIVE_TICKER_ELEMENT_ACK:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case STC_SHOW_MEDIA_FILE_ACK:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case STC_DEQUEUE_MEDIAFILE_ACK:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case STC_QUEUE_MEDIA_FILE_ACK:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case STC_REMOVE_MEDIA_FILE_ACK:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case STC_REMOVE_THEME_ACK:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case STC_REMOVE_PRIORITY_ACK:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 
 		/*
 		 * Client to server
 		 */
 		case CTS_ADD_LIVE_TICKER_ELEMENT:
-			data.add(decodeTickerElement());
+			this.data.add(decodeTickerElement());
 			break;
 		case CTS_PROPERTY_UPDATE:
 			String key1 = decodeString();
 			String value1 = decodeString();
-			data.add(key1);
-			data.add(value1);
+			this.data.add(key1);
+			this.data.add(value1);
 			break;
 		case CTS_RESET_SHOW_COUNT:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case CTS_ADD_THEME:
-			data.add(decodeTheme());
+			this.data.add(decodeTheme());
 			break;
 		case CTS_ADD_PRIORITY:
-			data.add(decodePriority());
+			this.data.add(decodePriority());
 			break;
 		case CTS_EDIT_LIVE_TICKER_ELEMENT:
-			data.add(decodeTickerElement());
-			break;
-		case CTS_ADD_COUNTDOWN:
-			
+			this.data.add(decodeTickerElement());
 			break;
 		case CTS_EDIT_MEDIA_FILE:
+			this.data.add(decodeClientMediaFile());
 			break;
 		case CTS_ADD_IMAGE_FILE:
+			this.data.add(decodeImageFile());
 			break;
 		case CTS_ADD_THEMESLIDE:
-			break;
-		case CTS_ADD_VIDEO_FILE_DATA:
+			this.data.add(decodeThemeslide());
 			break;
 		case CTS_LOGIN_REQUEST:
+			this.data.add(decodeLoginData());
 			break;
 		case CTS_DISCONNECT:
+			this.data.add(decodeString());
+			break;
+		case CTS_ADD_COUNTDOWN:
+			// TODO
+			break;
+		case CTS_ADD_VIDEO_FILE_DATA:
+			// TODO
 			break;
 		case CTS_DEQUEUE_MEDIAFILE:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case CTS_REMOVE_LIVE_TICKER_ELEMENT:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case CTS_SHOW_MEDIA_FILE:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case CTS_REMOVE_THEME:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case CTS_REMOVE_PRIORITY:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case CTS_REMOVE_MEDIA_FILE:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		case CTS_QUEUE_MEDIA_FILE:
-			data.add(decodeUUID());
+			this.data.add(decodeUUID());
 			break;
 		default:
 			throw new DecodeMessageException("The header says the message contains data, but it does not.");
 		}
 
-		return data;
+		return this.data;
 	}
 
-	private Object decodeTickerElement() {
-		UUID id = decodeUUID();
-		String text = decodeString();
-		boolean show = decodeBoolean();
-		return new TickerElement(text, id).setShow(show);
+	private ImageFile decodeImageFile() {
+		String name = decodeString();
+		byte[] data = decodeByteArray();
+		UUID prioID = decodeUUID();
+		return new ImageFile(name, prioID, data);
 	}
 
-	private Theme decodeTheme() {
-		UUID themeID = decodeUUID();
-		String themeName = decodeString();
-		byte[] imageData = decodeByteArray();
-		return new Theme(themeName, imageData, themeID);
+	private int decodeInt() {
+		this.inDup.readLong();
+		return this.inDup.readInt();
+	}
+
+	private Object decodeLoginData() {
+		String alias = decodeString();
+		String key = decodeString();
+		return new LoginData(alias, key);
+	}
+
+	private long decodeLong() {
+		this.inDup.readLong();
+		return this.inDup.readLong();
+	}
+
+	private MediaType decodeMediaType() {
+		this.inDup.readLong();
+		return MediaType.values()[this.inDup.readByte()];
 	}
 
 	private Priority decodePriority() {
@@ -247,37 +295,36 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return prio;
 	}
 
-	private byte[] decodeByteArray() {
-		byte[] decoded = new byte[(int) inDup.readLong()];
-		inDup.readBytes(decoded);
-		return decoded;
-	}
-
-	private long decodeLong() {
-		inDup.readLong();
-		return inDup.readLong();
-	}
-
 	private String decodeString() {
-		byte[] rawString = new byte[(int) inDup.readLong()];
-		inDup.readBytes(rawString);
+		byte[] rawString = new byte[(int) this.inDup.readLong()];
+		this.inDup.readBytes(rawString);
 		return new String(rawString);
 	}
 
-	private boolean decodeBoolean() {
-		inDup.readLong();
-		return inDup.readBoolean();
+	private Theme decodeTheme() {
+		UUID themeID = decodeUUID();
+		String themeName = decodeString();
+		byte[] imageData = decodeByteArray();
+		return new Theme(themeName, imageData, themeID);
 	}
 
-	private int decodeInt() {
-		inDup.readLong();
-		return inDup.readInt();
+	private Themeslide decodeThemeslide() {
+		ImageFile imageFile = decodeImageFile();
+		UUID themeID = decodeUUID();
+		return new Themeslide(imageFile.getName(), themeID, imageFile.getPriorityID(), imageFile);
+	}
+
+	private TickerElement decodeTickerElement() {
+		UUID id = decodeUUID();
+		String text = decodeString();
+		boolean show = decodeBoolean();
+		return new TickerElement(text, id).setShow(show);
 	}
 
 	private UUID decodeUUID() {
-		inDup.readLong(); // read length
-		long least = inDup.readLong();
-		long most = inDup.readLong();
+		this.inDup.readLong(); // read length
+		long least = this.inDup.readLong();
+		long most = this.inDup.readLong();
 		return new UUID(most, least);
 	}
 

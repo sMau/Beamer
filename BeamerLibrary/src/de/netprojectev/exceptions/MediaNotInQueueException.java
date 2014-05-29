@@ -9,7 +9,7 @@ public class MediaNotInQueueException extends MediaDoesNotExsistException {
 
 	public MediaNotInQueueException(String msg) {
 		super(msg);
-		
+
 	}
 
 }

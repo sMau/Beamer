@@ -17,12 +17,17 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public abstract class PreferencesModelClient {
 
-	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
-	
-	public interface UpdateAutoModeStateListener {
-		public void update(boolean fullsync);
+	// TODO XXX maybe check if this is better to implement than with this hacky
+	// reflections
+
+	public interface FullscreenStateListener {
+		public void update();
 	}
-	
+
+	public interface LiveTickerStateListener {
+		public void update();
+	}
+
 	public interface PriorityListChangedListener {
 		public void update();
 	}
@@ -31,14 +36,12 @@ public abstract class PreferencesModelClient {
 		public void update();
 	}
 
-	public interface LiveTickerStateListener {
-		public void update();
+	public interface UpdateAutoModeStateListener {
+		public void update(boolean fullsync);
 	}
-	
-	public interface FullscreenStateListener {
-		public void update();
-	}
-	
+
+	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
+
 	private ThemeListChangedListener themeListChangeListener = new ThemeListChangedListener() {
 		@Override
 		public void update() {
@@ -50,7 +53,7 @@ public abstract class PreferencesModelClient {
 		public void update(boolean fullsync) {
 		}
 	};
-	
+
 	private LiveTickerStateListener liveTickerStateListener = new LiveTickerStateListener() {
 		@Override
 		public void update() {
@@ -65,7 +68,6 @@ public abstract class PreferencesModelClient {
 	private boolean automode;
 	private boolean fullscreen;
 	private boolean liveTickerRunning;
-	
 
 	private final MessageProxyClient proxy;
 	private final HashMap<UUID, Theme> themes;
@@ -74,13 +76,13 @@ public abstract class PreferencesModelClient {
 	private final ArrayList<UUID> allPrioritiesList;
 	private final ArrayList<UUID> allThemesList;
 
-	private Priority defaultPriority;
-	
+	private UUID defaultPriority;
+
 	protected Properties clientProperties;
 	protected Properties serverProperties;
-	
+
 	private String[] serverFonts;
-	
+
 	public PreferencesModelClient(MessageProxyClient proxy) {
 
 		this.proxy = proxy;
@@ -89,104 +91,59 @@ public abstract class PreferencesModelClient {
 		this.allPrioritiesList = new ArrayList<UUID>();
 		this.allThemesList = new ArrayList<UUID>();
 	}
-	
 
-	public abstract void saveProperties() throws IOException;
+	public void addPriorityChangedListener(PriorityListChangedListener priorityChangedListener) {
+		if (!this.priorityChangedListeners.contains(priorityChangedListener)) {
+			this.priorityChangedListeners.add(priorityChangedListener);
+		}
+	}
 
-	public abstract void loadProperties() throws IOException;
+	public void disableAutomode() {
+		this.automode = false;
+		this.autoModeStateListener.update(false);
+		log.debug("automode toggled, new value value: " + this.automode);
+	}
+
+	public void disableFullscreen() {
+		this.fullscreen = false;
+		this.fullscreenStateListener.update();
+	}
+
+	public void disableLiveTicker() {
+		this.liveTickerRunning = false;
+		this.liveTickerStateListener.update();
+	}
+
+	public void enableAutomode(boolean fullsync) {
+		this.automode = true;
+		this.autoModeStateListener.update(fullsync);
+		log.debug("automode toggled, new value value: " + this.automode);
+	}
+
+	public void enableFullscreen() {
+		this.fullscreen = true;
+		this.fullscreenStateListener.update();
+	}
+
+	public void enableLiveTicker() {
+		this.liveTickerRunning = true;
+		this.liveTickerStateListener.update();
+	}
 
 	public String getClientPropertyByKey(String key) {
-		return clientProperties.getProperty(key);
+		return this.clientProperties.getProperty(key);
 	}
 
-	public void setClientProperty(String key, String value) {
-		log.debug("Setting property: " + key + ", to: " + value);
-		clientProperties.setProperty(key, value);
-	}
-	
-	public void initServerProperties(Properties props) {
-		serverProperties = props;
-	}
-	
-	public String getServerPropertyByKey(String key) {
-		return serverProperties.getProperty(key);
-	}
-	
-	public void serverPropertyUpdated(String key, String value) {
-		serverProperties.put(key, value);
-	}
-
-	public void themeAdded(Theme theme) {
-		themes.put(theme.getId(), theme);
-		if (!allThemesList.contains(theme.getId())) {
-			allThemesList.add(theme.getId());
-		}
-		themeListChangeListener.update();
-		log.debug("Theme added id: " + theme.getId());
-	}
-
-	public void themeRemoved(UUID theme) {
-		themes.remove(theme);
-		allThemesList.remove(theme);
-		themeListChangeListener.update();
-		log.debug("Theme removed, id: " + theme);
-	}
-
-	public void prioAdded(Priority prio) {
-		prios.put(prio.getId(), prio);
-		if (!allPrioritiesList.contains(prio.getId())) {
-			allPrioritiesList.add(prio.getId());
-		}
-		if(prio.isDefaultPriority()) {
-			defaultPriority = prio;
-		}
-		updateAllPrioChangedListeners();
-		log.debug("Priority added id: " + prio.getId());
-	}
-
-	public void prioRemoved(UUID prio) {
-		prios.remove(prio);
-		allPrioritiesList.remove(prio);
-		updateAllPrioChangedListeners();
-		log.debug("Priority removed, id: " + prio);
-	}
-	
-	public Priority[] prioritiesAsArray() throws PriorityDoesNotExistException {
-		UUID[] allIDs = allPrioritiesList.toArray(new UUID[allPrioritiesList.size()]);
-		Priority[] allPrios = new Priority[allIDs.length];
-		for(int i = 0 ; i < allIDs.length; i++) {
-			allPrios[i] = getPriorityByID(allIDs[i]);
-		}
-		return allPrios;
-	}
-
-	public Theme[] themesAsArray() throws ThemeDoesNotExistException {
-		UUID[] allIDs = allThemesList.toArray(new UUID[allThemesList.size()]);
-		Theme[] allThemes = new Theme[allIDs.length];
-		for(int i = 0 ; i < allIDs.length; i++) {
-			allThemes[i] = getThemeByID(allIDs[i]);
-		}
-		return allThemes;
-	}
-	
-	public int priorityCount() {
-		return allPrioritiesList.size();
-	}
-
-	public int themeCount() {
-		return allThemesList.size();
+	public UUID getDefaultPriority() {
+		return this.defaultPriority;
 	}
 
 	public Priority getPriorityAt(int pos) throws PriorityDoesNotExistException {
-		return getPriorityByID(allPrioritiesList.get(pos));
-	}
-
-	public Theme getThemeAt(int pos) throws ThemeDoesNotExistException {
-		return getThemeByID(allThemesList.get(pos));
+		return getPriorityByID(this.allPrioritiesList.get(pos));
 	}
 
 	public Priority getPriorityByID(UUID id) throws PriorityDoesNotExistException {
-		Priority prio = prios.get(id);
+		Priority prio = this.prios.get(id);
 		if (prio == null) {
 			throw new PriorityDoesNotExistException("The priority is not available. ID: " + id);
 		} else {
@@ -195,8 +152,24 @@ public abstract class PreferencesModelClient {
 
 	}
 
+	public MessageProxyClient getProxy() {
+		return this.proxy;
+	}
+
+	public String[] getServerFonts() {
+		return this.serverFonts;
+	}
+
+	public String getServerPropertyByKey(String key) {
+		return this.serverProperties.getProperty(key);
+	}
+
+	public Theme getThemeAt(int pos) throws ThemeDoesNotExistException {
+		return getThemeByID(this.allThemesList.get(pos));
+	}
+
 	public Theme getThemeByID(UUID id) throws ThemeDoesNotExistException {
-		Theme theme = themes.get(id);
+		Theme theme = this.themes.get(id);
 		if (theme == null) {
 			throw new ThemeDoesNotExistException("The theme is not available. ID: " + id);
 		} else {
@@ -205,93 +178,120 @@ public abstract class PreferencesModelClient {
 
 	}
 
-	public void enableAutomode(boolean fullsync) {
-		automode = true;
-		autoModeStateListener.update(fullsync);
-		log.debug("automode toggled, new value value: " + automode);
-	}
-
-	public void disableAutomode() {
-		automode = false;
-		autoModeStateListener.update(false);
-		log.debug("automode toggled, new value value: " + automode);
-	}
-
-	public void enableFullscreen() {
-		fullscreen = true;
-		fullscreenStateListener.update();
-	}
-	
-	public void disableFullscreen() {
-		fullscreen = false;
-		fullscreenStateListener.update();
-	}
-	
-	public void enableLiveTicker() {
-		liveTickerRunning = true;
-		liveTickerStateListener.update();
-	}
-	
-	public void disableLiveTicker() {
-		liveTickerRunning = false;
-		liveTickerStateListener.update();
+	public void initServerProperties(Properties props) {
+		this.serverProperties = props;
 	}
 
 	public boolean isAutomode() {
-		return automode;
+		return this.automode;
 	}
 
 	public boolean isFullscreen() {
-		return fullscreen;
+		return this.fullscreen;
 	}
 
 	public boolean isLiveTickerRunning() {
-		return liveTickerRunning;
+		return this.liveTickerRunning;
+	}
+
+	public abstract void loadProperties() throws IOException;
+
+	public void prioAdded(Priority prio) {
+		this.prios.put(prio.getId(), prio);
+		if (!this.allPrioritiesList.contains(prio.getId())) {
+			this.allPrioritiesList.add(prio.getId());
+		}
+		if (prio.isDefaultPriority()) {
+			this.defaultPriority = prio.getId();
+		}
+		updateAllPrioChangedListeners();
+		log.debug("Priority added id: " + prio.getId());
+	}
+
+	public void prioRemoved(UUID prio) {
+		this.prios.remove(prio);
+		this.allPrioritiesList.remove(prio);
+		updateAllPrioChangedListeners();
+		log.debug("Priority removed, id: " + prio);
+	}
+
+	public Priority[] prioritiesAsArray() throws PriorityDoesNotExistException {
+		UUID[] allIDs = this.allPrioritiesList.toArray(new UUID[this.allPrioritiesList.size()]);
+		Priority[] allPrios = new Priority[allIDs.length];
+		for (int i = 0; i < allIDs.length; i++) {
+			allPrios[i] = getPriorityByID(allIDs[i]);
+		}
+		return allPrios;
+	}
+
+	public int priorityCount() {
+		return this.allPrioritiesList.size();
+	}
+
+	public abstract void saveProperties() throws IOException;
+
+	public void serverPropertyUpdated(String key, String value) {
+		this.serverProperties.put(key, value);
 	}
 
 	public void setAutoModeStateListener(UpdateAutoModeStateListener autoModeStateListener) {
 		this.autoModeStateListener = autoModeStateListener;
 	}
 
-	public void setThemeListChangeListener(ThemeListChangedListener themeListChangeListener) {
-		this.themeListChangeListener = themeListChangeListener;
-	}
-
-	public void addPriorityChangedListener(PriorityListChangedListener priorityChangedListener) {
-		if(!priorityChangedListeners.contains(priorityChangedListener)) {
-			this.priorityChangedListeners.add(priorityChangedListener);
-		}
-	}
-	
-	private void updateAllPrioChangedListeners() {
-		for(int i = 0; i < priorityChangedListeners.size(); i++) {
-			priorityChangedListeners.get(i).update();
-		}
-	}
-
-	public Priority getDefaultPriority() {
-		return defaultPriority;
-	}
-
-	public void setLiveTickerStateListener(LiveTickerStateListener liveTickerStateListener) {
-		this.liveTickerStateListener = liveTickerStateListener;
+	public void setClientProperty(String key, String value) {
+		log.debug("Setting property: " + key + ", to: " + value);
+		this.clientProperties.setProperty(key, value);
 	}
 
 	public void setFullscreenStateListener(FullscreenStateListener fullscreenStateListener) {
 		this.fullscreenStateListener = fullscreenStateListener;
 	}
 
-	public MessageProxyClient getProxy() {
-		return proxy;
-	}
-
-	public String[] getServerFonts() {
-		return serverFonts;
+	public void setLiveTickerStateListener(LiveTickerStateListener liveTickerStateListener) {
+		this.liveTickerStateListener = liveTickerStateListener;
 	}
 
 	public void setServerFonts(String[] serverFonts) {
 		this.serverFonts = serverFonts;
 	}
-	
-	
+
+	public void setThemeListChangeListener(ThemeListChangedListener themeListChangeListener) {
+		this.themeListChangeListener = themeListChangeListener;
+	}
+
+	public void themeAdded(Theme theme) {
+		this.themes.put(theme.getId(), theme);
+		if (!this.allThemesList.contains(theme.getId())) {
+			this.allThemesList.add(theme.getId());
+		}
+		this.themeListChangeListener.update();
+		log.debug("Theme added id: " + theme.getId());
+	}
+
+	public int themeCount() {
+		return this.allThemesList.size();
+	}
+
+	public void themeRemoved(UUID theme) {
+		this.themes.remove(theme);
+		this.allThemesList.remove(theme);
+		this.themeListChangeListener.update();
+		log.debug("Theme removed, id: " + theme);
+	}
+
+	public Theme[] themesAsArray() throws ThemeDoesNotExistException {
+		UUID[] allIDs = this.allThemesList.toArray(new UUID[this.allThemesList.size()]);
+		Theme[] allThemes = new Theme[allIDs.length];
+		for (int i = 0; i < allIDs.length; i++) {
+			allThemes[i] = getThemeByID(allIDs[i]);
+		}
+		return allThemes;
+	}
+
+	private void updateAllPrioChangedListeners() {
+		for (int i = 0; i < this.priorityChangedListeners.size(); i++) {
+			this.priorityChangedListeners.get(i).update();
+		}
+	}
+
 }

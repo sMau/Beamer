@@ -17,7 +17,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/jewelcli-0.7.6.jar"/>
-	<classpathentry kind="lib" path="lib/netty-all-4.0.15.Final.jar" sourcepath="lib/netty-all-4.0.15.Final-sources.jar">
+	<classpathentry exported="true" kind="lib" path="lib/netty-all-4.0.15.Final.jar" sourcepath="lib/netty-all-4.0.15.Final-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/BeamerLibrary/lib/netty-all-4.0.15.Final-javadoc.jar!/"/>
 		</attributes>

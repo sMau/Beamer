@@ -8,28 +8,33 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.bytes.ByteArrayEncoder;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
 
 import java.lang.reflect.InvocationTargetException;
 
-import old.de.netprojectev.client.networking.MessageHandlerClient;
-import old.de.netprojectev.networking.HandlerNames;
-import old.de.netprojectev.networking.LoginData;
-import old.de.netprojectev.networking.MessageJoin;
-import old.de.netprojectev.networking.MessageReplayingDecoder;
-import old.de.netprojectev.server.networking.MessageHandlerServer;
-
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.MessageProxyClient;
-import de.netprojectev.networking.Message;
-import de.netprojectev.networking.OpCode;
+import de.netprojectev.networking.LoginData;
+import de.netprojectev.networking.downstream.MessageDecoder;
+import de.netprojectev.networking.upstream.ClientMediaFileEncoder;
 import de.netprojectev.networking.upstream.FileByteEncoder;
+import de.netprojectev.networking.upstream.LoginByteEncoder;
 import de.netprojectev.networking.upstream.MessageSplit;
-import de.netprojectev.networking.upstream.OpCodeByteEncoder;
+import de.netprojectev.networking.upstream.PriorityByteEncoder;
+import de.netprojectev.networking.upstream.ServerMediaFileEncoder;
+import de.netprojectev.networking.upstream.ThemeByteEncoder;
+import de.netprojectev.networking.upstream.TickerElementEncoder;
+import de.netprojectev.networking.upstream.UUIDByteEncoder;
+import de.netprojectev.networking.upstream.primitives.BooleanByteEncoder;
+import de.netprojectev.networking.upstream.primitives.IntByteEncoder;
+import de.netprojectev.networking.upstream.primitives.MediaTypeByteEncoder;
+import de.netprojectev.networking.upstream.primitives.OpCodeByteEncoder;
+import de.netprojectev.networking.upstream.primitives.StringByteEncoder;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class Client {
@@ -60,41 +65,35 @@ public class Client {
 	public MessageProxyClient connect() throws InterruptedException {
 
 		Bootstrap b = new Bootstrap();
-		b.group(group)
+		b.group(this.group)
 				.channel(NioSocketChannel.class)
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 
-						ch.pipeline().addLast(HandlerNames.OBJECT_ENCODER, new ObjectEncoder());
-						ch.pipeline().addLast(HandlerNames.FILE_TO_BYTE_ENCODER, new FileByteEncoder());
-						ch.pipeline().addLast(HandlerNames.OPCODE_BYTE_ENCODER, new OpCodeByteEncoder());
-						ch.pipeline().addLast(HandlerNames.MESSAGE_SPLIT, new MessageSplit());
-						
-						ch.pipeline().addLast(HandlerNames.MESSAGE_REPLAYING_DECODER, new MessageReplayingDecoder());
-						ch.pipeline().addLast(HandlerNames.OBJECT_DECODER, new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
-						ch.pipeline().addLast(HandlerNames.MESSAGE_JOIN, new MessageJoin());
-						ch.pipeline().addLast(HandlerNames.MESSAGE_HANDLER_CLIENT, new MessageHandlerClient(proxy));
-						
-						
-						
-						
+						ch.pipeline().addLast(new MessageDecoder(), proxy);
+						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayEncoder(), new IntByteEncoder(),
+								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
+								new UUIDByteEncoder(), new ThemeByteEncoder(), new PriorityByteEncoder(),
+								new LoginByteEncoder(), new ClientMediaFileEncoder(), new ServerMediaFileEncoder(),
+								new TickerElementEncoder(), new MessageSplit());
 					}
 				});
 
 		b.option(ChannelOption.TCP_NODELAY, true);
 		b.option(ChannelOption.SO_KEEPALIVE, true);
 
-		ChannelFuture connectFuture = b.connect(host, port).sync();
-		connectFuture.awaitUninterruptibly(5000); //TODO change this fucking shit!
+		ChannelFuture connectFuture = b.connect(this.host, this.port).sync();
+		connectFuture.awaitUninterruptibly(5000); // TODO change this fucking
+													// shit!
 		if (connectFuture.isSuccess()) {
-			proxy.setChannelToServer(connectFuture.channel());
-			log.info("Client successfully connected to " + host + ":" + port);
+			this.proxy.setChannelToServer(connectFuture.channel());
+			log.info("Client successfully connected to " + this.host + ":" + this.port);
 
-			boolean loginSend = proxy.sendMessageToServer(new Message(OpCode.CTS_LOGIN_REQUEST, login)).awaitUninterruptibly(600000); //TODO change this fucking shit!
+			boolean loginSend = this.proxy.sendLoginRequest(this.login).awaitUninterruptibly(5000); // TODO shit!
 			if (!loginSend) {
 				log.error("login message could not be send");
-				gui.errorDuringLogin("Login message could not be sent.");
+				this.gui.errorDuringLogin("Login message could not be sent.");
 			}
 			log.info("Login request sent to server");
 
@@ -104,50 +103,60 @@ public class Client {
 			loginFailed("Connection failed. Reason: Host not reachable.");
 		}
 
-		return proxy;
+		return this.proxy;
 	}
 
 	public void disconnect() {
 		log.info("Client disconnecting");
-		proxy.sendMessageToServer(new Message(OpCode.CTS_DISCONNECT, login.getAlias())).awaitUninterruptibly();
+		this.proxy.sendDisconnectRequest().awaitUninterruptibly(5000);// TODO shit!
 		releaseExternalRessources();
 		log.info("Disconnecting complete");
 	}
 
-	public void loginSuccess() {
-		loginSuccess = true;
-		gui.loginSuccess();
+	public ClientGUI getGui() {
+		return this.gui;
+	}
+
+	public String getHost() {
+		return this.host;
+	}
+
+	public LoginData getLogin() {
+		return this.login;
+	}
+
+	public int getPort() {
+		return this.port;
 	}
 
 	public MessageProxyClient getProxy() {
-		return proxy;
+		return this.proxy;
+	}
+
+	public boolean isLoginSuccess() {
+		return this.loginSuccess;
 	}
 
 	public void loginFailed(String reason) {
 		log.info("Login failed, releasing all external ressources.");
 		releaseExternalRessources();
-		gui.errorDuringLogin(reason);
+		this.gui.errorDuringLogin(reason);
 	}
 
-	public boolean isLoginSuccess() {
-		return loginSuccess;
-	}
-
-	public void serverShutdown() {
-
-		log.info("Server shutdown, releasing all external ressources.");
-		releaseExternalRessources();
+	public void loginSuccess() {
+		this.loginSuccess = true;
+		this.gui.loginSuccess();
 	}
 
 	private Thread releaseExternalRessources() {
-		if (proxy.getChannelToServer() != null) {
-			proxy.getChannelToServer().close().awaitUninterruptibly();
+		if (this.proxy.getChannelToServer() != null) {
+			this.proxy.getChannelToServer().close().awaitUninterruptibly();
 		}
 		Thread t = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-	            group.shutdownGracefully();
+				Client.this.group.shutdownGracefully();
 				log.info("Ressources releasing complete.");
 			}
 		});
@@ -156,20 +165,10 @@ public class Client {
 		return t;
 	}
 
-	public ClientGUI getGui() {
-		return gui;
-	}
+	public void serverShutdown() {
 
-	public LoginData getLogin() {
-		return login;
-	}
-
-	public String getHost() {
-		return host;
-	}
-
-	public int getPort() {
-		return port;
+		log.info("Server shutdown, releasing all external ressources.");
+		releaseExternalRessources();
 	}
 
 }

@@ -21,6 +21,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
+import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.Server;
 import de.netprojectev.server.ServerGUI;
@@ -150,6 +151,9 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 								log.warn("Video does not exist.", e);
 							} catch (MediaListsEmptyException e) {
 								log.warn("Video does not exist.", e);
+							} catch (PriorityDoesNotExistException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 						}
 					});

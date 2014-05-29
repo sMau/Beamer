@@ -150,7 +150,12 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		/*
 		 * Priorities
 		 */
-		jlDefaultPrioVar.setText(prefs.getDefaultPriority().getName());
+		try {
+			jlDefaultPrioVar.setText(prefs.getPriorityByID(prefs.getDefaultPriority()).getName());
+		} catch (PriorityDoesNotExistException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		
 		/*
@@ -1391,7 +1396,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 				selected = prefs.getPriorityAt(row);
 				jlPrioNameVar.setText(selected.getName());
 				jlTimeToShowVar.setText(Integer.toString(selected.getMinutesToShow()));
-				jlDefaultPrioVar.setText(prefs.getDefaultPriority().getName());
+				jlDefaultPrioVar.setText(prefs.getPriorityByID(prefs.getDefaultPriority()).getName());
 			} catch (PriorityDoesNotExistException e) {
 				proxy.errorRequestFullSync(e);
 			}

@@ -1,4 +1,4 @@
-package old.de.netprojectev.networking;
+package old.de.netprojectev.server.networking;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -12,7 +12,7 @@ public class VideoFileData implements Serializable {
 	private final byte[] byteBuffer;
 	private final int msgNumber;
 	private final UUID videoFileUUID;
-	
+
 	public VideoFileData(byte[] byteBuffer, UUID videoFileUUID, int msgNumber) {
 		this.byteBuffer = byteBuffer;
 		this.videoFileUUID = videoFileUUID;
@@ -30,10 +30,10 @@ public class VideoFileData implements Serializable {
 	public UUID getVideoFileUUID() {
 		return videoFileUUID;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Video File Data Message. #" + msgNumber + "video file UUID: " + videoFileUUID;
 	}
-	
+
 }

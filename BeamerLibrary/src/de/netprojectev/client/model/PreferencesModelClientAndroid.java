@@ -12,13 +12,13 @@ public class PreferencesModelClientAndroid extends PreferencesModelClient {
 	}
 
 	@Override
-	public void saveProperties() throws IOException {
+	public void loadProperties() throws IOException {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void loadProperties() throws IOException {
+	public void saveProperties() throws IOException {
 		// TODO Auto-generated method stub
 
 	}

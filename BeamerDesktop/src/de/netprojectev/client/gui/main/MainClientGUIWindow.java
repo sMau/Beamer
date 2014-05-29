@@ -17,14 +17,11 @@ import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import old.de.netprojectev.networking.LoginData;
-
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.Client;
 import de.netprojectev.client.ClientGUI;
 import de.netprojectev.client.datastructures.ClientMediaFile;
-import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.gui.main.CreateTickerElementDialog.DialogClosedListener;
 import de.netprojectev.client.gui.models.AllMediaTableModel;
 import de.netprojectev.client.gui.models.CustomQueueTableModel;
@@ -44,9 +41,11 @@ import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.client.networking.MessageProxyClient.ServerShutdownListener;
 import de.netprojectev.client.networking.MessageProxyClient.TimeSyncListener;
 import de.netprojectev.datastructures.Priority;
+import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.networking.LoginData;
 import de.netprojectev.utils.HelperMethods;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -72,7 +71,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	private final PreferencesModelClientDesktop prefs;
 
 	private ClientMediaFile currentSelectedMediaFile;
-	private ClientTickerElement currentSelectedTickerElement;
+	private TickerElement currentSelectedTickerElement;
 
 	private Timer refreshTimeLeftTimer;
 	private TimeLeftData timeleftData;
@@ -104,7 +103,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			@Override
 			public void update() {
 				if (prefs.isAutomode()) {
-					startRefreshTimeLeftTimer(false);
+					try {
+						startRefreshTimeLeftTimer(false);
+					} catch (PriorityDoesNotExistException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				} else {
 					disableRefreshTimeLeftTimer();
 				}
@@ -122,7 +126,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 				if (!prefs.isAutomode()) {
 					disableRefreshTimeLeftTimer();
 				} else {
-					startRefreshTimeLeftTimer(fullsync);
+					try {
+						startRefreshTimeLeftTimer(fullsync);
+					} catch (PriorityDoesNotExistException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 
@@ -831,7 +840,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			ClientMediaFile copyToSend = currentSelectedMediaFile.copy();
 			Priority selectedPrio = (Priority) jcbPriorityChange.getSelectedItem();
 			copyToSend.setName(text);
-			copyToSend.setPriority(selectedPrio);
+			copyToSend.setPriority(selectedPrio.getId());
 			if (text != null && !text.isEmpty() && selectedPrio != null) {
 				proxy.sendEditMediaFile(copyToSend);
 			} else {
@@ -841,7 +850,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 		}
 		
 		if (currentSelectedTickerElement != null) {
-			ClientTickerElement copyToSend = currentSelectedTickerElement.copy();
+			TickerElement copyToSend = currentSelectedTickerElement.copy();
 			copyToSend.setText(text);
 			copyToSend.setShow(jchbEnabled.isSelected());
 			if (text != null && !text.isEmpty()) {
@@ -1044,7 +1053,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 
 	private void jmiPopToggleActivatedActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiPopToggleActivatedActionPerformed
 		if (currentSelectedTickerElement != null) {
-			ClientTickerElement copyToSend = currentSelectedTickerElement.copy();
+			TickerElement copyToSend = currentSelectedTickerElement.copy();
 			copyToSend.setShow(!copyToSend.isShow());
 			proxy.sendEditTickerElement(copyToSend);
 			
@@ -1160,15 +1169,15 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 		}
 	}
 
-	private void startRefreshTimeLeftTimer(boolean fullsync) {
+	private void startRefreshTimeLeftTimer(boolean fullsync) throws PriorityDoesNotExistException {
 
 		if (refreshTimeLeftTimer != null) {
 			refreshTimeLeftTimer.stop();
 		}
 		if (!fullsync) {
 			if(mediaModel.getCurrentMediaFile() != null) {
-				timeleftData.setTimeleftInSeconds(mediaModel
-						.getCurrentMediaFile().getPriority().getMinutesToShow() * 60);
+				timeleftData.setTimeleftInSeconds(prefs.getPriorityByID(mediaModel
+						.getCurrentMediaFile().getPriorityID()).getMinutesToShow() * 60);
 				
 				refreshTimeLeftTimer = new Timer(1000, new ActionListener() {
 
@@ -1225,7 +1234,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 					jlCurrentYesNo.setText("No");
 				}
 
-				jcbPriorityChange.setSelectedItem(currentSelectedMediaFile.getPriority());
+				jcbPriorityChange.setSelectedItem(currentSelectedMediaFile.getPriorityID());
 
 			}
 
@@ -1257,7 +1266,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 				} else {
 					jlCurrentYesNo.setText("No");
 				}
-				jcbPriorityChange.setSelectedItem(currentSelectedMediaFile.getPriority());
+				jcbPriorityChange.setSelectedItem(currentSelectedMediaFile.getPriorityID());
 			}
 			break;
 		case 2:
@@ -1273,7 +1282,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 
 			row = jtLiveTicker.getSelectedRow();
 			if (row >= 0) {
-				ClientTickerElement selected = tickerModel.getValueAt(row);
+				TickerElement selected = tickerModel.getValueAt(row);
 
 				currentSelectedMediaFile = null;
 				currentSelectedTickerElement = selected;

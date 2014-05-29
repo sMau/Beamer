@@ -3,9 +3,9 @@ package de.netprojectev.client.gui.models;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
-import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.model.TickerModelClient.UpdateTickerDataListener;
+import de.netprojectev.datastructures.TickerElement;
 
 public class TickerTableModel extends AbstractTableModel {
 
@@ -74,7 +74,7 @@ public class TickerTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ClientTickerElement e = tickerModel.getValueAt(rowIndex);
+		TickerElement e = tickerModel.getValueAt(rowIndex);
 		switch(columnIndex) {
 			case 0:
 				return e.isShow();

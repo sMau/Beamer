@@ -29,147 +29,6 @@ public class HelperMethods {
 
 	private static final Logger log = LoggerBuilder.createLogger(HelperMethods.class);
 
-	public static boolean isIpAddress(final String ip) {
-
-		if(ip.equals("localhost")) {
-			return true;
-		}
-		
-		String PATTERN = 
-				"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
-				"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." + 
-				"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." + 
-				"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
-
-		Pattern pattern = Pattern.compile(PATTERN);
-		Matcher matcher = pattern.matcher(ip);
-		return matcher.matches();
-	}
-
-	/**
-	 * Generates font sizes based on stepwidth n, start and end size.
-	 * 
-	 * @return array of possible sizes
-	 */
-	public static String[] generateFontSizes() {
-		int n = 4;
-		int start = 12;
-		int end = 80;
-		int arraySize = 0;
-
-		for (int i = start; i < end + 1; i += n) {
-			arraySize++;
-		}
-		String[] sizes = new String[arraySize];
-		int index = 0;
-		for (int i = start; i < end + 1; i += n) {
-			sizes[index] = Integer.toString(i);
-			index++;
-		}
-		return sizes;
-	}
-
-	public static String[] generateFontSizesCountdown() {
-		int n = 4;
-		int start = 36;
-		int end = 140;
-		int arraySize = 0;
-
-		for (int i = start; i < end + 1; i += n) {
-			arraySize++;
-		}
-		String[] sizes = new String[arraySize];
-		int index = 0;
-		for (int i = start; i < end + 1; i += n) {
-			sizes[index] = Integer.toString(i);
-			index++;
-		}
-		return sizes;
-	}
-
-	/**
-	 * Saves the given property object to the in the Constants specified path.
-	 * 
-	 * @param props
-	 *            the property object to save
-	 * @throws IOException
-	 */
-	public static void savePropertiesToDisk(Properties props, String savePath, String filename) throws IOException {
-
-		if (!new File(savePath).exists()) {
-			new File(savePath).mkdirs();
-		}
-
-		FileWriter writer = new FileWriter(savePath + filename);
-		props.store(writer, null);
-		writer.close();
-	}
-
-	/**
-	 * Reads properties from disk using the in the {@link Constants} defined
-	 * path.
-	 * 
-	 * @return from disk loaded property object
-	 * @throws IOException
-	 */
-	public static Properties loadPropertiesFromDisk(String savePath, String filename) throws IOException {
-		Properties props = new Properties();
-		FileReader reader = new FileReader(savePath + filename);
-		props.load(reader);
-		reader.close();
-		return props;
-	}
-
-	/**
-	 * serializing a given object to the save path specified in the constants
-	 * using the given filename.
-	 * 
-	 * @param toSave
-	 *            a serializable object
-	 * @param filename
-	 *            the filename it should be saved to
-	 * @throws IOException
-	 */
-	public static void saveToFile(Serializable toSave, String savePath, String filename) throws IOException {
-
-		if (!new File(savePath).exists()) {
-			new File(savePath).mkdirs();
-		}
-
-		FileOutputStream file = new FileOutputStream(savePath + filename);
-		ObjectOutputStream o = new ObjectOutputStream(file);
-		o.writeObject(toSave);
-		o.close();
-	}
-
-	/**
-	 * Deserializing a object from hard disk in save path with the given
-	 * filename.
-	 * 
-	 * @param filename
-	 *            file to load from disk
-	 * @return deserialized object
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	public static Serializable loadFromFile(String filename, String path) throws IOException, ClassNotFoundException {
-
-		Object fileToLoad = null;
-
-		if (new File(path + filename).exists()) {
-
-			FileInputStream file = new FileInputStream(path + filename);
-			ObjectInputStream o = new ObjectInputStream(file);
-			fileToLoad = o.readObject();
-			o.close();
-
-			return (Serializable) fileToLoad;
-		} else {
-			return null;
-		}
-
-	}
-
 	/**
 	 * Converts seconds to a formatted String showing minutes and seconds
 	 * sperated by ":"
@@ -220,6 +79,47 @@ public class HelperMethods {
 
 	}
 
+	/**
+	 * Generates font sizes based on stepwidth n, start and end size.
+	 * 
+	 * @return array of possible sizes
+	 */
+	public static String[] generateFontSizes() {
+		int n = 4;
+		int start = 12;
+		int end = 80;
+		int arraySize = 0;
+
+		for (int i = start; i < end + 1; i += n) {
+			arraySize++;
+		}
+		String[] sizes = new String[arraySize];
+		int index = 0;
+		for (int i = start; i < end + 1; i += n) {
+			sizes[index] = Integer.toString(i);
+			index++;
+		}
+		return sizes;
+	}
+
+	public static String[] generateFontSizesCountdown() {
+		int n = 4;
+		int start = 36;
+		int end = 140;
+		int arraySize = 0;
+
+		for (int i = start; i < end + 1; i += n) {
+			arraySize++;
+		}
+		String[] sizes = new String[arraySize];
+		int index = 0;
+		for (int i = start; i < end + 1; i += n) {
+			sizes[index] = Integer.toString(i);
+			index++;
+		}
+		return sizes;
+	}
+
 	public static Properties generateServerDefaultProps() {
 
 		Properties defProps = new Properties();
@@ -249,27 +149,104 @@ public class HelperMethods {
 		return defProps;
 	}
 
-	
+	public static boolean isIpAddress(final String ip) {
+
+		if (ip.equals("localhost")) {
+			return true;
+		}
+
+		String PATTERN =
+				"^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+						"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+						"([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." +
+						"([01]?\\d\\d?|2[0-4]\\d|25[0-5])$";
+
+		Pattern pattern = Pattern.compile(PATTERN);
+		Matcher matcher = pattern.matcher(ip);
+		return matcher.matches();
+	}
 
 	/**
+	 * Deserializing a object from hard disk in save path with the given
+	 * filename.
 	 * 
-	 * @param dir
-	 *            directory where search for image files should be started
-	 * @return a {@link File} array of all image files in this and all
-	 *         subdirectories
+	 * @param filename
+	 *            file to load from disk
+	 * @return deserialized object
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
-	public static File[] searchForAllImageFiles(File dir) {
-		ArrayList<File> allFiles = searchFile(dir);
-		ArrayList<File> imageFiles = new ArrayList<File>();
-		MediaFileFilter filter = new MediaFileFilter();
+	public static Serializable loadFromFile(String filename, String path) throws IOException, ClassNotFoundException {
 
-		for (int i = 0; i < allFiles.size(); i++) {
-			if (filter.accept(allFiles.get(i))) {
-				imageFiles.add(allFiles.get(i));
-			}
+		Object fileToLoad = null;
 
+		if (new File(path + filename).exists()) {
+
+			FileInputStream file = new FileInputStream(path + filename);
+			ObjectInputStream o = new ObjectInputStream(file);
+			fileToLoad = o.readObject();
+			o.close();
+
+			return (Serializable) fileToLoad;
+		} else {
+			return null;
 		}
-		return imageFiles.toArray(new File[imageFiles.size()]);
+
+	}
+
+	/**
+	 * Reads properties from disk using the in the {@link Constants} defined
+	 * path.
+	 * 
+	 * @return from disk loaded property object
+	 * @throws IOException
+	 */
+	public static Properties loadPropertiesFromDisk(String savePath, String filename) throws IOException {
+		Properties props = new Properties();
+		FileReader reader = new FileReader(savePath + filename);
+		props.load(reader);
+		reader.close();
+		return props;
+	}
+
+	/**
+	 * Saves the given property object to the in the Constants specified path.
+	 * 
+	 * @param props
+	 *            the property object to save
+	 * @throws IOException
+	 */
+	public static void savePropertiesToDisk(Properties props, String savePath, String filename) throws IOException {
+
+		if (!new File(savePath).exists()) {
+			new File(savePath).mkdirs();
+		}
+
+		FileWriter writer = new FileWriter(savePath + filename);
+		props.store(writer, null);
+		writer.close();
+	}
+
+	/**
+	 * serializing a given object to the save path specified in the constants
+	 * using the given filename.
+	 * 
+	 * @param toSave
+	 *            a serializable object
+	 * @param filename
+	 *            the filename it should be saved to
+	 * @throws IOException
+	 */
+	public static void saveToFile(Serializable toSave, String savePath, String filename) throws IOException {
+
+		if (!new File(savePath).exists()) {
+			new File(savePath).mkdirs();
+		}
+
+		FileOutputStream file = new FileOutputStream(savePath + filename);
+		ObjectOutputStream o = new ObjectOutputStream(file);
+		o.writeObject(toSave);
+		o.close();
 	}
 
 	/**
@@ -296,6 +273,25 @@ public class HelperMethods {
 		return imageFiles;
 	}
 
+	/**
+	 * 
+	 * @param dir
+	 *            directory where search for image files should be started
+	 * @return a {@link File} array of all image files in this and all
+	 *         subdirectories
+	 */
+	public static File[] searchForAllImageFiles(File dir) {
+		ArrayList<File> allFiles = searchFile(dir);
+		ArrayList<File> imageFiles = new ArrayList<File>();
+		MediaFileFilter filter = new MediaFileFilter();
 
+		for (int i = 0; i < allFiles.size(); i++) {
+			if (filter.accept(allFiles.get(i))) {
+				imageFiles.add(allFiles.get(i));
+			}
+
+		}
+		return imageFiles.toArray(new File[imageFiles.size()]);
+	}
 
 }

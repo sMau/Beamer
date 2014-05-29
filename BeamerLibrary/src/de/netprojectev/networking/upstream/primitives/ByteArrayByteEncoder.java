@@ -1,4 +1,4 @@
-package de.netprojectev.networking.upstream;
+package de.netprojectev.networking.upstream.primitives;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
@@ -10,7 +10,7 @@ public class ByteArrayByteEncoder extends MessageToByteEncoder<byte[]> {
 	protected void encode(ChannelHandlerContext ctx, byte[] msg, ByteBuf out) throws Exception {
 		out.writeLong(msg.length);
 		out.writeBytes(msg);
-		
+
 	}
 
 }

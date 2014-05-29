@@ -11,27 +11,13 @@ import de.netprojectev.utils.HelperMethods;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class PreferencesModelClientDesktop extends PreferencesModelClient {
-	
+
 	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClientDesktop.class);
 
-	
 	public PreferencesModelClientDesktop(MessageProxyClient proxy) {
 		super(proxy);
-		clientProperties = generateClientDesktopDefaultProps();
+		this.clientProperties = generateClientDesktopDefaultProps();
 	}
-
-	public void saveProperties() throws IOException {
-		log.info("Saving properties");
-		HelperMethods.savePropertiesToDisk(clientProperties, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
-	}
-
-	public void loadProperties() throws IOException {
-		log.info("Loading properties");
-		clientProperties = new Properties(generateClientDesktopDefaultProps());
-		Properties propsLoaded = HelperMethods.loadPropertiesFromDisk(ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
-		clientProperties.putAll(propsLoaded);
-	}
-	
 
 	private Properties generateClientDesktopDefaultProps() {
 		Properties defProps = new Properties();
@@ -50,5 +36,19 @@ public class PreferencesModelClientDesktop extends PreferencesModelClient {
 		}
 
 		return defProps;
+	}
+
+	@Override
+	public void loadProperties() throws IOException {
+		log.info("Loading properties");
+		this.clientProperties = new Properties(generateClientDesktopDefaultProps());
+		Properties propsLoaded = HelperMethods.loadPropertiesFromDisk(ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
+		this.clientProperties.putAll(propsLoaded);
+	}
+
+	@Override
+	public void saveProperties() throws IOException {
+		log.info("Saving properties");
+		HelperMethods.savePropertiesToDisk(this.clientProperties, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_PROPERTIES);
 	}
 }

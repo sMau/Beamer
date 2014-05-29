@@ -10,5 +10,5 @@ public class DecodeMessageException extends Exception {
 	public DecodeMessageException(String msg) {
 		super(msg);
 	}
-	
+
 }

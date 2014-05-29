@@ -15,11 +15,11 @@ public class FileByteEncoder extends MessageToByteEncoder<File> {
 	protected void encode(ChannelHandlerContext ctx, File msg, ByteBuf out) throws Exception {
 		FileInputStream fis = new FileInputStream(msg);
 		FileRegion fileRegion = new DefaultFileRegion(fis.getChannel(), 0, msg.length());
-		
+
 		out.writeLong(msg.length());
-		ctx.write(fileRegion); //XXX not sure if this works
+		ctx.write(fileRegion); // XXX not sure if this works
 		ctx.flush();
-		
+
 		fis.close();
 	}
 

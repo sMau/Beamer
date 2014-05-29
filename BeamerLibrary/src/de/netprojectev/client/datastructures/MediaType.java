@@ -2,7 +2,7 @@ package de.netprojectev.client.datastructures;
 
 public enum MediaType {
 
-	Video("Video"), Image("Image"), Themeslide("Themeslide"), Countdown("Countdown"), Unknown("unknown");
+	Image("Image"), Themeslide("Themeslide"), Countdown("Countdown"), Video("Video"), Unknown("unknown");
 
 	private final String text;
 
@@ -12,6 +12,6 @@ public enum MediaType {
 
 	@Override
 	public String toString() {
-		return text;
+		return this.text;
 	}
 }

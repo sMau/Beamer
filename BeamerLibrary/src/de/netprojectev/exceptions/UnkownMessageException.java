@@ -2,7 +2,6 @@ package de.netprojectev.exceptions;
 
 public class UnkownMessageException extends Exception {
 
-	
 	/**
 	 * 
 	 */

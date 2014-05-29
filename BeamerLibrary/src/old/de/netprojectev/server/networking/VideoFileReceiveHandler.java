@@ -13,42 +13,6 @@ import de.netprojectev.server.ConstantsServer;
 
 public class VideoFileReceiveHandler {
 
-	private final ArrayList<UUID> receivingFiles;
-	private final HashMap<UUID, BufferedOutputStream> outputstreams;
-	private final HashMap<UUID, MessageCounter> msgCounter;
-
-	public VideoFileReceiveHandler() {
-		receivingFiles = new ArrayList<UUID>();
-		outputstreams = new HashMap<UUID, BufferedOutputStream>();
-		msgCounter = new HashMap<UUID, MessageCounter>();
-
-	}
-
-	public void startingReceivingVideo(UUID id, int maxMsgCount) throws FileNotFoundException {
-		receivingFiles.add(id);
-		msgCounter.put(id, new MessageCounter(maxMsgCount));
-		FileOutputStream out = new FileOutputStream(new File(ConstantsServer.SAVE_PATH
-				 + ConstantsServer.CACHE_PATH_VIDEOS + id.toString()));
-		BufferedOutputStream bufOut = new BufferedOutputStream(out);
-		outputstreams.put(id, bufOut);
-
-	}
-
-	public void finishingReceivingVideo(UUID id) throws IOException {
-		receivingFiles.remove(id);
-		msgCounter.remove(id);
-		outputstreams.get(id).flush();
-		outputstreams.get(id).close();
-		outputstreams.remove(id);
-
-	}
-
-	public void receiveData(UUID id, byte[] toWrite) throws IOException, ToManyMessagesException {
-		msgCounter.get(id).msgReceived();
-		outputstreams.get(id).write(toWrite);
-
-	}
-
 	private class MessageCounter {
 
 		private final int maxMsgs;
@@ -59,10 +23,10 @@ public class VideoFileReceiveHandler {
 		}
 
 		void msgReceived() throws ToManyMessagesException {
-			if (maxMsgs == msgsReceived) {
+			if (this.maxMsgs == this.msgsReceived) {
 				throw new ToManyMessagesException("Received more messages than actually calculated");
 			}
-			msgsReceived++;
+			this.msgsReceived++;
 		}
 
 	}
@@ -77,6 +41,44 @@ public class VideoFileReceiveHandler {
 		public ToManyMessagesException(String cause) {
 			super(cause);
 		}
+
+	}
+
+	private final ArrayList<UUID> receivingFiles;
+
+	private final HashMap<UUID, BufferedOutputStream> outputstreams;
+
+	private final HashMap<UUID, MessageCounter> msgCounter;
+
+	public VideoFileReceiveHandler() {
+		this.receivingFiles = new ArrayList<UUID>();
+		this.outputstreams = new HashMap<UUID, BufferedOutputStream>();
+		this.msgCounter = new HashMap<UUID, MessageCounter>();
+
+	}
+
+	public void finishingReceivingVideo(UUID id) throws IOException {
+		this.receivingFiles.remove(id);
+		this.msgCounter.remove(id);
+		this.outputstreams.get(id).flush();
+		this.outputstreams.get(id).close();
+		this.outputstreams.remove(id);
+
+	}
+
+	public void receiveData(UUID id, byte[] toWrite) throws IOException, ToManyMessagesException {
+		this.msgCounter.get(id).msgReceived();
+		this.outputstreams.get(id).write(toWrite);
+
+	}
+
+	public void startingReceivingVideo(UUID id, int maxMsgCount) throws FileNotFoundException {
+		this.receivingFiles.add(id);
+		this.msgCounter.put(id, new MessageCounter(maxMsgCount));
+		FileOutputStream out = new FileOutputStream(new File(ConstantsServer.SAVE_PATH
+				+ ConstantsServer.CACHE_PATH_VIDEOS + id.toString()));
+		BufferedOutputStream bufOut = new BufferedOutputStream(out);
+		this.outputstreams.put(id, bufOut);
 
 	}
 }

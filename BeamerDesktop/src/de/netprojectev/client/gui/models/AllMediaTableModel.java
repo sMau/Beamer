@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.MediaModelClient.UpdateAllMediaDataListener;
+import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class AllMediaTableModel extends AbstractTableModel {
@@ -108,7 +109,12 @@ public class AllMediaTableModel extends AbstractTableModel {
 			case 3:
 				return media.getName();
 			case 4:
-				return media.getPriority().toString();
+				try {
+					return mediaModel.getProxy().getPrefs().getPriorityByID(media.getPriorityID()).toString();
+				} catch (PriorityDoesNotExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			case 5:
 				return media.getType();
 			default:

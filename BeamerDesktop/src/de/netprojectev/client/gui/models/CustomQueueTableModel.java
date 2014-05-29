@@ -7,6 +7,7 @@ import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.MediaModelClient.UpdateCustomQueueDataListener;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.exceptions.PriorityDoesNotExistException;
 
 public class CustomQueueTableModel extends AbstractTableModel {
 
@@ -95,7 +96,12 @@ public class CustomQueueTableModel extends AbstractTableModel {
 			case 2:
 				return media.getName();
 			case 3:
-				return media.getPriority().toString();
+				try {
+					return mediaModel.getProxy().getPrefs().getPriorityByID(media.getPriorityID()).toString();
+				} catch (PriorityDoesNotExistException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			case 4:
 				return media.getType();
 			default:

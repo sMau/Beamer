@@ -2,6 +2,8 @@ package de.netprojectev.client.networking;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToMessageDecoder;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -11,13 +13,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
-import old.de.netprojectev.networking.DequeueData;
-import old.de.netprojectev.networking.VideoFileData;
+import old.de.netprojectev.server.networking.VideoFileData;
 
 import org.apache.logging.log4j.Logger;
 
@@ -32,28 +34,30 @@ import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
+import de.netprojectev.networking.DequeueData;
+import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.Countdown;
+import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.MediaFileFilter;
 
+public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
-public class MessageProxyClient {
-	
 	public interface ServerPropertyUpdateListener {
 		public void propertyUpdated();
 	}
-	
-	public interface TimeSyncListener {
-		public void timesync(long timeLeftInSeconds);
-	}
-	
+
 	public interface ServerShutdownListener {
 		public void serverShutdown();
 	}
-	
+
+	public interface TimeSyncListener {
+		public void timesync(long timeLeftInSeconds);
+	}
+
 	private static final Logger log = LoggerBuilder.createLogger(MessageProxyClient.class);
 
 	private final Client client;
@@ -63,260 +67,192 @@ public class MessageProxyClient {
 	private final PreferencesModelClient prefs;
 
 	private final Class<? extends PreferencesModelClient> prefsModelClazz;
-	
+
 	private TimeSyncListener timeSyncListener;
 	private ServerShutdownListener serverShutdownListener;
 	private ServerPropertyUpdateListener serverPropertyUpdateListener;
-	
+
 	private Timer autoReconnectTimer;
-	
+
 	private boolean fullsync;
 
 	private Channel channelToServer;
 
 	public MessageProxyClient(Client client, Class<? extends PreferencesModelClient> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
-		mediaModel = new MediaModelClient(this);
-		tickerModel = new TickerModelClient(this);
+		this.mediaModel = new MediaModelClient(this);
+		this.tickerModel = new TickerModelClient(this);
 
-		prefsModelClazz = clazz;
-		
-		prefs = (PreferencesModelClient) clazz.getConstructors()[0].newInstance(this);
-		
+		this.prefsModelClazz = clazz;
+
+		this.prefs = (PreferencesModelClient) clazz.getConstructors()[0].newInstance(this);
+
 		this.client = client;
 		this.fullsync = false;
-	
+
+	}
+
+	@Override
+	protected void decode(ChannelHandlerContext ctx, Message msg, List<Object> out) throws Exception {
+		receiveMessage(msg);
+	}
+
+
+	private void autoModeDisabled(Message msg) {
+		this.prefs.disableAutomode();
+	}
+
+	private void autoModeEnabled(Message msg) {
+		this.prefs.enableAutomode(this.fullsync);
+	}
+
+	private void connectionSuccessful(Message msg) {
+		if (this.autoReconnectTimer != null) {
+			this.autoReconnectTimer.cancel();
+			this.autoReconnectTimer.purge();
+			this.autoReconnectTimer = null;
+		}
+		this.client.loginSuccess();
+		sendRequestFullSync();
 	}
 
 	public void errorRequestFullSync(Exception e) {
 		log.warn("The media read for updating does not exist. Requesting full sync.", e);
 		sendRequestFullSync();
-		client.getGui().errorRequestingFullsyncDialog();
-	}
-	
-	private ChannelFuture sendMessageToServer(Message msgToSend) {
-		log.debug("Sending message to server: " + msgToSend);
-		return channelToServer.writeAndFlush(msgToSend);
+		this.client.getGui().errorRequestingFullsyncDialog();
 	}
 
-	public void sendDisconnectRequest() {
-		client.disconnect();
+	private void fullscreenDisabled(Message msg) {
+		this.prefs.disableFullscreen();
 	}
 
-	public void sendRequestServerShutdown() {
-		sendMessageToServer(new Message(OpCode.CTS_REQUEST_SERVER_SHUTDOWN));
-	}
-	
-	public void sendRequestFullSync() {
-		sendMessageToServer(new Message(OpCode.CTS_REQUEST_FULL_SYNC));
+	private void fullscreenEnabled(Message msg) {
+		this.prefs.enableFullscreen();
 	}
 
-	public void sendShowMediaFile(int row) {
-		sendMessageToServer(new Message(OpCode.CTS_SHOW_MEDIA_FILE, mediaModel.getValueAt(row)
-				.getId()));
+	private void fullSyncStart() {
+		this.fullsync = true;
 	}
 
-	public void sendShowMediaFile(UUID id) {
-		sendMessageToServer(new Message(OpCode.CTS_SHOW_MEDIA_FILE, id));
-	}
-	
-	public void sendShowNextMediaFile() {
-		sendMessageToServer(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+	private void fullSyncStop() {
+		this.fullsync = false;
 	}
 
-	//TODO change editing, that not for every single editing a new encoder ist necessary 
-	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
-		fileToEdit.setPreview(null);
-		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
+	public Channel getChannelToServer() {
+		return this.channelToServer;
 	}
 
-	//TODO change editing, that not for every single editing a new encoder ist necessary 
-	public void sendEditTickerElement(TickerElement eltToEdit) {
-		sendMessageToServer(new Message(OpCode.CTS_EDIT_LIVE_TICKER_ELEMENT, eltToEdit));
+	public Client getClient() {
+		return this.client;
 	}
 
-	public void sendAddTheme(Theme themeToAdd) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEME, themeToAdd));
+	public MediaModelClient getMediaModel() {
+		return this.mediaModel;
 	}
 
-	public void sendAddPriority(Priority prioToAdd) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_PRIORITY, prioToAdd));
+	public PreferencesModelClient getPrefs() {
+		return this.prefs;
 	}
 
-	public void sendRemoveTheme(UUID toRemove) {
-		sendMessageToServer(new Message(OpCode.CTS_REMOVE_THEME, toRemove));
+	public Class<? extends PreferencesModelClient> getPrefsModelClazz() {
+		return this.prefsModelClazz;
 	}
 
-	public void sendRemovePriority(UUID toRemove) {
-		sendMessageToServer(new Message(OpCode.CTS_REMOVE_PRIORITY, toRemove));
+	public TickerModelClient getTickerModel() {
+		return this.tickerModel;
 	}
 
-	public void sendAddMediaFiles(File[] selectedFiles) throws IOException {
-		for (int i = 0; i < selectedFiles.length; i++) {
-			if (!selectedFiles[i].isDirectory()) {
-				if (MediaFileFilter.isImageFile(selectedFiles[i].getName())) {
-					sendAddImageFile(selectedFiles[i]);
-				} else if (MediaFileFilter.isVideoFile(selectedFiles[i].getName())) {
-					sendAddVideoFile(selectedFiles[i]);
-				}
-			}
+	private void hearbeatRequest() {
+		sendMessageToServer(new Message(OpCode.CTS_HEARTBEAT_ACK));
+	}
 
+	private void initServerProperties(Message msg) {
+		Properties serverProps = (Properties) msg.getData().get(0);
+		this.prefs.initServerProperties(serverProps);
+	}
+
+	private void liveTickerDisabled(Message msg) {
+		this.prefs.disableLiveTicker();
+	}
+
+	private void liveTickerElementAdded(Message msg) {
+		TickerElement toAdd = (TickerElement) msg.getData().get(0);
+		this.tickerModel.addTickerElement(toAdd);
+	}
+
+	private void liveTickerElementEdited(Message msg) {
+		TickerElement e = (TickerElement) msg.getData().get(0);
+		try {
+			this.tickerModel.replaceTickerElement(e);
+		} catch (MediaDoesNotExsistException e1) {
+			errorRequestFullSync(e1);
 		}
 	}
 
-	// TODO use file encoding handler on netty low level
-	public void sendAddVideoFile(File file) throws IOException {
+	private void liveTickerElementRemoved(Message msg) throws MediaDoesNotExsistException {
+		UUID toRemove = (UUID) msg.getData().get(0);
+		this.tickerModel.removeTickerElement(toRemove);
+	}
 
-		VideoFile toSend = new VideoFile(file.getName(), file);
-		FileInputStream fileInputStream = new FileInputStream(toSend.getVideoFile());
-		BufferedInputStream buf = new BufferedInputStream(fileInputStream);
-		
-		int bestChunckSize = 1024*1024*8;
-		int messageNumber = 0;
-		long lengthInBytes = toSend.getVideoFile().length();
-		long overallBytesRead = 0L;
-		
-		int messagesToSend = ((int) lengthInBytes / bestChunckSize ) + 1;
-		
-		log.debug("Starting video file transfer to server, with file length: " + lengthInBytes + " Msgs To Send: " + messagesToSend);
-		
-		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_START, toSend.getId(), messagesToSend));
+	private void liveTickerEnabled(Message msg) {
+		this.prefs.enableLiveTicker();
+	}
 
-		while(overallBytesRead < lengthInBytes) {
-			int chunckSize = (int) Math.min(bestChunckSize, (lengthInBytes - overallBytesRead));
-			byte[] bytesRead = new byte[chunckSize];
-
-			buf.read(bytesRead, 0, chunckSize);
-
-			log.debug("Sending video message data to server, Num: " + messageNumber);
-			
-			sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_DATA, new VideoFileData(bytesRead, toSend.getId(), messageNumber)));
-			
-			overallBytesRead += chunckSize;
-			messageNumber++;
+	private void loginDenied(Message msg) {
+		if (this.autoReconnectTimer != null) {
+			this.autoReconnectTimer.cancel();
+			this.autoReconnectTimer.purge();
+			this.autoReconnectTimer = null;
 		}
-		
-		buf.close();
-		fileInputStream.close();
-		
-		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_FINISH, toSend));
-		
-	}
-	
-	//TODO send file instead of byte array
-	public void sendAddImageFile(File file) throws IOException {
-		String name = file.getName();
-		byte[] imageDataAsBytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
-		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, name,
-				prefs.getDefaultPriority(), imageDataAsBytes));
+		this.client.loginFailed((String) msg.getData().get(0));
 	}
 
-	public void sendAddImageFiles(File[] files) throws IOException {
-		for (int i = 0; i < files.length; i++) {
-			sendAddImageFile(files[i]);
-		}
-	}
-	
-	//TODO send only text to use StringEncoder on netty low level
-	public void sendAddTickerElement(String text) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT,
-				new TickerElement(text)));
+	private void mediaFileAdded(Message msg) {
+		ClientMediaFile toAdd = (ClientMediaFile) msg.getData().get(0);
+		this.mediaModel.addMediaFile(toAdd);
 	}
 
-	//TODO send the data using the low level encoders of netty
-	public void sendAddThemeSlide(String name, UUID id, Priority priority, byte[] imageDataAsBytes) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, id, priority, imageDataAsBytes));
+	private void mediaFileDequeued(Message msg) throws MediaDoesNotExsistException,
+			OutOfSyncException {
+		DequeueData toDequeue = (DequeueData) msg.getData().get(0);
+		this.mediaModel.dequeueMediaFile(toDequeue.getRow(), toDequeue.getId());
+
 	}
 
-	public void sendRemoveSelectedMedia(int[] selectedRowsAllMedia) {
-		Arrays.sort(selectedRowsAllMedia);
-		for (int i = selectedRowsAllMedia.length - 1; i >= 0; i--) {
-			sendRemoveSelectedMedia(selectedRowsAllMedia[i]);
+	private void mediaFileEdited(Message msg) {
+		ClientMediaFile media = (ClientMediaFile) msg.getData().get(0);
+		try {
+			this.mediaModel.replaceMediaFile(media);
+		} catch (MediaDoesNotExsistException e) {
+			errorRequestFullSync(e);
 		}
 	}
 
-	public void sendRemoveSelectedMedia(int row) {
-		sendMessageToServer(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, mediaModel.getValueAt(row)
-				.getId()));
+	private void mediaFileQueued(Message msg) throws MediaDoesNotExsistException {
+		UUID toQueue = (UUID) msg.getData().get(0);
+		this.mediaModel.queueMediaFile(toQueue);
 	}
 
-	public void sendDequeueSelectedMedia(int[] selectedRowsCustomQueue) {
-		Arrays.sort(selectedRowsCustomQueue);
-		for (int i = selectedRowsCustomQueue.length - 1; i >= 0; i--) {
-			sendDequeueSelectedMedia(selectedRowsCustomQueue[i]);
-		}
+	private void mediaFileRemoved(Message msg) throws MediaDoesNotExsistException {
+
+		UUID toRemove = (UUID) msg.getData().get(0);
+		this.mediaModel.removeMediaFile(toRemove);
 	}
 
-	public void sendDequeueSelectedMedia(int row) {
-		sendMessageToServer(new Message(OpCode.CTS_DEQUEUE_MEDIAFILE, new DequeueData(row,
-				mediaModel.getCustomQueue().get(row))));
+	private void mediaFileShowing(Message msg) throws MediaDoesNotExsistException {
+		UUID fileShowing = (UUID) msg.getData().get(0);
+		this.mediaModel.setAsCurrent(fileShowing);
 	}
 
-	public void sendQueueSelectedMedia(int[] selectedRows) {
-		for (int i = 0; i < selectedRows.length; i++) {
-			sendQueueSelectedMedia(selectedRows[i]);
-		}
+	private void priorityAdded(Message msg) {
+		Priority toAdd = (Priority) msg.getData().get(0);
+		this.prefs.prioAdded(toAdd);
 	}
 
-	public void sendQueueSelectedMedia(int selectedRow) {
-		sendMessageToServer(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, mediaModel.getValueAt(
-				selectedRow).getId()));
+	private void priorityRemoved(Message msg) {
+		UUID toRemove = (UUID) msg.getData().get(0);
+		this.prefs.prioRemoved(toRemove);
 	}
 
-	public void sendRemoveSelectedTickerElements(int[] selectedRowsLiveTicker) {
-		Arrays.sort(selectedRowsLiveTicker);
-		for (int i = selectedRowsLiveTicker.length - 1; i >= 0; i--) {
-			sendRemoveSelectedTickerElement(selectedRowsLiveTicker[i]);
-		}
-	}
-
-	public void sendRemoveSelectedTickerElement(int row) {
-		sendMessageToServer(new Message(OpCode.CTS_REMOVE_LIVE_TICKER_ELEMENT, tickerModel
-				.getValueAt(row).getId()));
-	}
-
-	public void sendResetShowCount(UUID mediaToReset) {
-		sendMessageToServer(new Message(OpCode.CTS_RESET_SHOW_COUNT, mediaToReset));
-	}
-
-	public void sendAutoModeToggle(boolean selected) {
-		if (selected) {
-			sendMessageToServer(new Message(OpCode.CTS_ENABLE_AUTO_MODE));
-		} else {
-			sendMessageToServer(new Message(OpCode.CTS_DISABLE_AUTO_MODE));
-		}
-	}
-
-	public void sendStartLiveTicker() {
-		sendMessageToServer(new Message(OpCode.CTS_ENABLE_LIVE_TICKER));
-	}
-
-	public void sendStopLiveTicker() {
-		sendMessageToServer(new Message(OpCode.CTS_DISABLE_LIVE_TICKER));
-	}
-
-	public void sendEnterFullscreen() {
-		sendMessageToServer(new Message(OpCode.CTS_ENABLE_FULLSCREEN));
-	}
-
-	public void sendExitFullscreen() {
-		sendMessageToServer(new Message(OpCode.CTS_DISABLE_FULLSCREEN));
-	}
-	
-	public void sendPropertyUpdate(String key, String newValue) {
-		log.debug("Sending property update for: " + key + ", to: " + newValue);
-		sendMessageToServer(new Message(OpCode.CTS_PROPERTY_UPDATE, key, newValue));
-	}
-
-	public void sendAddCountdown(Countdown countdown) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
-	}
-	
-	public void sendAddAndShowCountdown(Countdown countdown) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown)).awaitUninterruptibly(5000); //XXX not nice
-		sendShowMediaFile(countdown.getId());
-	}
-
-	
 	public void receiveMessage(Message msg) throws UnkownMessageException,
 			MediaDoesNotExsistException, OutOfSyncException {
 		log.debug("Receiving message: " + msg.toString());
@@ -420,15 +356,15 @@ public class MessageProxyClient {
 
 	public void reconnectForced() {
 		sendDisconnectRequest();
-		
-		if(autoReconnectTimer == null) {
-			autoReconnectTimer = new Timer();
-			autoReconnectTimer.schedule(new TimerTask() {
-				
+		// XXX reconnect is crappy
+		if (this.autoReconnectTimer == null) {
+			this.autoReconnectTimer = new Timer();
+			this.autoReconnectTimer.schedule(new TimerTask() {
+
 				@Override
 				public void run() {
 					try {
-						client.connect();
+						MessageProxyClient.this.client.connect();
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -438,210 +374,291 @@ public class MessageProxyClient {
 		}
 	}
 
-	private void updatePropertyAck(Message msg) {
-		String key = (String) msg.getData().get(0);
-		String newValue = (String) msg.getData().get(1);
-		prefs.serverPropertyUpdated(key, newValue); 
-		if(serverPropertyUpdateListener != null) {
-			serverPropertyUpdateListener.propertyUpdated();
+	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
+		UUID toReset = (UUID) msg.getData().get(0);
+		this.mediaModel.resetShowCount(toReset);
+	}
+
+	public void sendAddAndShowCountdown(Countdown countdown) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown)).awaitUninterruptibly(5000); // XXX
+																											// not
+																											// nice
+		sendShowMediaFile(countdown.getId());
+	}
+
+	public void sendAddCountdown(Countdown countdown) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
+	}
+
+	// TODO send file instead of byte array
+	public void sendAddImageFile(File file) throws IOException {
+		String name = file.getName();
+		byte[] imageDataAsBytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+
+		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, new ImageFile(name,
+				this.prefs.getDefaultPriority(), imageDataAsBytes)));
+	}
+
+	public void sendAddImageFiles(File[] files) throws IOException {
+		for (int i = 0; i < files.length; i++) {
+			sendAddImageFile(files[i]);
 		}
 	}
 
-	private void initServerProperties(Message msg) {
-		Properties serverProps = (Properties) msg.getData().get(0);
-		prefs.initServerProperties(serverProps);
+	public void sendAddMediaFiles(File[] selectedFiles) throws IOException {
+		for (int i = 0; i < selectedFiles.length; i++) {
+			if (!selectedFiles[i].isDirectory()) {
+				if (MediaFileFilter.isImageFile(selectedFiles[i].getName())) {
+					sendAddImageFile(selectedFiles[i]);
+				} else if (MediaFileFilter.isVideoFile(selectedFiles[i].getName())) {
+					sendAddVideoFile(selectedFiles[i]);
+				}
+			}
+
+		}
 	}
 
-	private void hearbeatRequest() {
-		sendMessageToServer(new Message(OpCode.CTS_HEARTBEAT_ACK));
+	public void sendAddPriority(Priority prioToAdd) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_PRIORITY, prioToAdd));
+	}
+
+	public void sendAddTheme(Theme themeToAdd) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEME, themeToAdd));
+	}
+
+	// TODO send the data using the low level encoders of netty
+	public void sendAddThemeSlide(String name, UUID id, Priority priority, byte[] imageDataAsBytes) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, id, priority, imageDataAsBytes));
+	}
+
+	// TODO send only text to use StringEncoder on netty low level
+	public void sendAddTickerElement(String text) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT,
+				new TickerElement(text)));
+	}
+
+	// TODO use file encoding handler on netty low level
+	public void sendAddVideoFile(File file) throws IOException {
+
+		VideoFile toSend = new VideoFile(file.getName(), file);
+		FileInputStream fileInputStream = new FileInputStream(toSend.getVideoFile());
+		BufferedInputStream buf = new BufferedInputStream(fileInputStream);
+
+		int bestChunckSize = 1024 * 1024 * 8;
+		int messageNumber = 0;
+		long lengthInBytes = toSend.getVideoFile().length();
+		long overallBytesRead = 0L;
+
+		int messagesToSend = ((int) lengthInBytes / bestChunckSize) + 1;
+
+		log.debug("Starting video file transfer to server, with file length: " + lengthInBytes + " Msgs To Send: " + messagesToSend);
+
+		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_START, toSend.getId(), messagesToSend));
+
+		while (overallBytesRead < lengthInBytes) {
+			int chunckSize = (int) Math.min(bestChunckSize, (lengthInBytes - overallBytesRead));
+			byte[] bytesRead = new byte[chunckSize];
+
+			buf.read(bytesRead, 0, chunckSize);
+
+			log.debug("Sending video message data to server, Num: " + messageNumber);
+
+			sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_DATA, new VideoFileData(bytesRead, toSend.getId(), messageNumber)));
+
+			overallBytesRead += chunckSize;
+			messageNumber++;
+		}
+
+		buf.close();
+		fileInputStream.close();
+
+		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_FINISH, toSend));
+
+	}
+
+	public void sendAutoModeToggle(boolean selected) {
+		if (selected) {
+			sendMessageToServer(new Message(OpCode.CTS_ENABLE_AUTO_MODE));
+		} else {
+			sendMessageToServer(new Message(OpCode.CTS_DISABLE_AUTO_MODE));
+		}
+	}
+
+	public void sendDequeueSelectedMedia(int row) {
+		sendMessageToServer(new Message(OpCode.CTS_DEQUEUE_MEDIAFILE, new DequeueData(row,
+				this.mediaModel.getCustomQueue().get(row))));
+	}
+
+	public void sendDequeueSelectedMedia(int[] selectedRowsCustomQueue) {
+		Arrays.sort(selectedRowsCustomQueue);
+		for (int i = selectedRowsCustomQueue.length - 1; i >= 0; i--) {
+			sendDequeueSelectedMedia(selectedRowsCustomQueue[i]);
+		}
+	}
+
+	public ChannelFuture sendDisconnectRequest() {
+		return sendMessageToServer(new Message(OpCode.CTS_DISCONNECT, this.client.getLogin().getAlias()));
+	}
+
+	// TODO change editing, that not for every single editing a new encoder ist
+	// necessary
+	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
+		fileToEdit.setPreview(null);
+		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
+	}
+
+	// TODO change editing, that not for every single editing a new encoder ist
+	// necessary
+	public void sendEditTickerElement(TickerElement eltToEdit) {
+		sendMessageToServer(new Message(OpCode.CTS_EDIT_LIVE_TICKER_ELEMENT, eltToEdit));
+	}
+
+	public void sendEnterFullscreen() {
+		sendMessageToServer(new Message(OpCode.CTS_ENABLE_FULLSCREEN));
+	}
+
+	public void sendExitFullscreen() {
+		sendMessageToServer(new Message(OpCode.CTS_DISABLE_FULLSCREEN));
+	}
+
+	public ChannelFuture sendLoginRequest(LoginData login) {
+		return sendMessageToServer(new Message(OpCode.CTS_LOGIN_REQUEST, login));
+	}
+
+	private ChannelFuture sendMessageToServer(Message msgToSend) {
+		log.debug("Sending message to server: " + msgToSend);
+		return this.channelToServer.writeAndFlush(msgToSend);
+	}
+
+	public void sendPropertyUpdate(String key, String newValue) {
+		log.debug("Sending property update for: " + key + ", to: " + newValue);
+		sendMessageToServer(new Message(OpCode.CTS_PROPERTY_UPDATE, key, newValue));
+	}
+
+	public void sendQueueSelectedMedia(int selectedRow) {
+		sendMessageToServer(new Message(OpCode.CTS_QUEUE_MEDIA_FILE, this.mediaModel.getValueAt(
+				selectedRow).getId()));
+	}
+
+	public void sendQueueSelectedMedia(int[] selectedRows) {
+		for (int i = 0; i < selectedRows.length; i++) {
+			sendQueueSelectedMedia(selectedRows[i]);
+		}
+	}
+
+	public void sendRemovePriority(UUID toRemove) {
+		sendMessageToServer(new Message(OpCode.CTS_REMOVE_PRIORITY, toRemove));
+	}
+
+	public void sendRemoveSelectedMedia(int row) {
+		sendMessageToServer(new Message(OpCode.CTS_REMOVE_MEDIA_FILE, this.mediaModel.getValueAt(row)
+				.getId()));
+	}
+
+	public void sendRemoveSelectedMedia(int[] selectedRowsAllMedia) {
+		Arrays.sort(selectedRowsAllMedia);
+		for (int i = selectedRowsAllMedia.length - 1; i >= 0; i--) {
+			sendRemoveSelectedMedia(selectedRowsAllMedia[i]);
+		}
+	}
+
+	public void sendRemoveSelectedTickerElement(int row) {
+		sendMessageToServer(new Message(OpCode.CTS_REMOVE_LIVE_TICKER_ELEMENT, this.tickerModel
+				.getValueAt(row).getId()));
+	}
+
+	public void sendRemoveSelectedTickerElements(int[] selectedRowsLiveTicker) {
+		Arrays.sort(selectedRowsLiveTicker);
+		for (int i = selectedRowsLiveTicker.length - 1; i >= 0; i--) {
+			sendRemoveSelectedTickerElement(selectedRowsLiveTicker[i]);
+		}
+	}
+
+	public void sendRemoveTheme(UUID toRemove) {
+		sendMessageToServer(new Message(OpCode.CTS_REMOVE_THEME, toRemove));
+	}
+
+	public void sendRequestFullSync() {
+		sendMessageToServer(new Message(OpCode.CTS_REQUEST_FULL_SYNC));
+	}
+
+	public void sendRequestServerShutdown() {
+		sendMessageToServer(new Message(OpCode.CTS_REQUEST_SERVER_SHUTDOWN));
+	}
+
+	public void sendResetShowCount(UUID mediaToReset) {
+		sendMessageToServer(new Message(OpCode.CTS_RESET_SHOW_COUNT, mediaToReset));
+	}
+
+	public void sendShowMediaFile(int row) {
+		sendMessageToServer(new Message(OpCode.CTS_SHOW_MEDIA_FILE, this.mediaModel.getValueAt(row)
+				.getId()));
+	}
+
+	public void sendShowMediaFile(UUID id) {
+		sendMessageToServer(new Message(OpCode.CTS_SHOW_MEDIA_FILE, id));
+	}
+
+	public void sendShowNextMediaFile() {
+		sendMessageToServer(new Message(OpCode.CTS_SHOW_NEXT_MEDIA_FILE));
+	}
+
+	public void sendStartLiveTicker() {
+		sendMessageToServer(new Message(OpCode.CTS_ENABLE_LIVE_TICKER));
+	}
+
+	public void sendStopLiveTicker() {
+		sendMessageToServer(new Message(OpCode.CTS_DISABLE_LIVE_TICKER));
 	}
 
 	private void serverShutdown(Message msg) {
-		client.serverShutdown();
-		serverShutdownListener.serverShutdown();
-	}
-
-	private void timeleftSync(Message msg) {
-		long currentTimeLeftInSeconds = (Long) msg.getData().get(0);
-		timeSyncListener.timesync(currentTimeLeftInSeconds);
-		
-	}
-
-	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
-		UUID toReset = (UUID) msg.getData().get(0);
-		mediaModel.resetShowCount(toReset);
-	}
-
-	private void liveTickerDisabled(Message msg) {
-		prefs.disableLiveTicker();
-	}
-
-	private void liveTickerEnabled(Message msg) {
-		prefs.enableLiveTicker();
-	}
-
-	private void fullscreenDisabled(Message msg) {
-		prefs.disableFullscreen();
-	}
-
-	private void fullscreenEnabled(Message msg) {
-		prefs.enableFullscreen();
-	}
-
-	private void autoModeDisabled(Message msg) {
-		prefs.disableAutomode();
-	}
-
-	private void autoModeEnabled(Message msg) {
-		prefs.enableAutomode(fullsync);
-	}
-
-	private void fullSyncStop() {
-		fullsync = false;
-	}
-
-	private void fullSyncStart() {
-		fullsync = true;
-	}
-
-	private void mediaFileDequeued(Message msg) throws MediaDoesNotExsistException,
-			OutOfSyncException {
-		DequeueData toDequeue = (DequeueData) msg.getData().get(0);
-		mediaModel.dequeueMediaFile(toDequeue.getRow(), toDequeue.getId());
-
-	}
-
-	private void mediaFileShowing(Message msg) throws MediaDoesNotExsistException {
-		UUID fileShowing = (UUID) msg.getData().get(0);
-		mediaModel.setAsCurrent(fileShowing);
-	}
-
-	private void mediaFileQueued(Message msg) throws MediaDoesNotExsistException {
-		UUID toQueue = (UUID) msg.getData().get(0);
-		mediaModel.queueMediaFile(toQueue);
-	}
-
-	private void loginDenied(Message msg) {
-		if(autoReconnectTimer != null) {
-			autoReconnectTimer.cancel();
-			autoReconnectTimer.purge();
-			autoReconnectTimer = null;
-		}
-		client.loginFailed((String) msg.getData().get(0));
-	}
-
-	private void connectionSuccessful(Message msg) {
-		if(autoReconnectTimer != null) {
-			autoReconnectTimer.cancel();
-			autoReconnectTimer.purge();
-			autoReconnectTimer = null;
-		}
-		client.loginSuccess();
-		sendRequestFullSync();
-	}
-
-	private void mediaFileEdited(Message msg) {
-		ClientMediaFile media = (ClientMediaFile) msg.getData().get(0);
-		try {
-			mediaModel.replaceMediaFile(media);
-		} catch (MediaDoesNotExsistException e) {
-			errorRequestFullSync(e);
-		}
-	}
-
-	private void liveTickerElementEdited(Message msg) {
-		TickerElement e = (TickerElement) msg.getData().get(0);
-		try {
-			tickerModel.replaceTickerElement(e);
-		} catch (MediaDoesNotExsistException e1) {
-			errorRequestFullSync(e1);
-		}
-	}
-
-	private void themeRemoved(Message msg) {
-		UUID toRemove = (UUID) msg.getData().get(0);
-		prefs.themeRemoved(toRemove);
-	}
-
-	private void priorityRemoved(Message msg) {
-		UUID toRemove = (UUID) msg.getData().get(0);
-		prefs.prioRemoved(toRemove);
-	}
-
-	private void themeAdded(Message msg) {
-		Theme toAdd = (Theme) msg.getData().get(0);
-		prefs.themeAdded(toAdd);
-	}
-
-	private void priorityAdded(Message msg) {
-		Priority toAdd = (Priority) msg.getData().get(0);
-		prefs.prioAdded(toAdd);
-	}
-
-	private void mediaFileRemoved(Message msg) throws MediaDoesNotExsistException {
-
-		UUID toRemove = (UUID) msg.getData().get(0);
-		mediaModel.removeMediaFile(toRemove);
-	}
-
-	private void liveTickerElementRemoved(Message msg) throws MediaDoesNotExsistException {
-		UUID toRemove = (UUID) msg.getData().get(0);
-		tickerModel.removeTickerElement(toRemove);
-	}
-
-	private void liveTickerElementAdded(Message msg) {
-		TickerElement toAdd = (TickerElement) msg.getData().get(0);
-		tickerModel.addTickerElement(toAdd);
-	}
-
-	private void mediaFileAdded(Message msg) {
-		ClientMediaFile toAdd = (ClientMediaFile) msg.getData().get(0);
-		mediaModel.addMediaFile(toAdd);
-	}
-
-	private void unkownMessageReceived(Message msg) throws UnkownMessageException {
-		throw new UnkownMessageException("A unkown message was received: " + msg.toString());
-	}
-
-	public Channel getChannelToServer() {
-		return channelToServer;
+		this.client.serverShutdown();
+		this.serverShutdownListener.serverShutdown();
 	}
 
 	public void setChannelToServer(Channel channelToServer) {
 		this.channelToServer = channelToServer;
 	}
 
-	public MediaModelClient getMediaModel() {
-		return mediaModel;
-	}
-
-	public TickerModelClient getTickerModel() {
-		return tickerModel;
-	}
-
-	public PreferencesModelClient getPrefs() {
-		return prefs;
-	}
-
-	public void setTimeSyncListener(TimeSyncListener timeSyncListener) {
-		this.timeSyncListener = timeSyncListener;
+	public void setServerPropertyUpdateListener(ServerPropertyUpdateListener serverPropertyUpdateListener) {
+		this.serverPropertyUpdateListener = serverPropertyUpdateListener;
 	}
 
 	public void setServerShutdownListener(ServerShutdownListener serverShutdownListener) {
 		this.serverShutdownListener = serverShutdownListener;
 	}
 
-	public void setServerPropertyUpdateListener(ServerPropertyUpdateListener serverPropertyUpdateListener) {
-		this.serverPropertyUpdateListener = serverPropertyUpdateListener;
+	public void setTimeSyncListener(TimeSyncListener timeSyncListener) {
+		this.timeSyncListener = timeSyncListener;
 	}
 
-	public Client getClient() {
-		return client;
+	private void themeAdded(Message msg) {
+		Theme toAdd = (Theme) msg.getData().get(0);
+		this.prefs.themeAdded(toAdd);
 	}
 
-	public Class<? extends PreferencesModelClient> getPrefsModelClazz() {
-		return prefsModelClazz;
+	private void themeRemoved(Message msg) {
+		UUID toRemove = (UUID) msg.getData().get(0);
+		this.prefs.themeRemoved(toRemove);
 	}
 
+	private void timeleftSync(Message msg) {
+		long currentTimeLeftInSeconds = (Long) msg.getData().get(0);
+		this.timeSyncListener.timesync(currentTimeLeftInSeconds);
+
+	}
+
+	private void unkownMessageReceived(Message msg) throws UnkownMessageException {
+		throw new UnkownMessageException("A unkown message was received: " + msg.toString());
+	}
+
+	private void updatePropertyAck(Message msg) {
+		String key = (String) msg.getData().get(0);
+		String newValue = (String) msg.getData().get(1);
+		this.prefs.serverPropertyUpdated(key, newValue);
+		if (this.serverPropertyUpdateListener != null) {
+			this.serverPropertyUpdateListener.propertyUpdated();
+		}
+	}
 
 }

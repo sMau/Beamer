@@ -18,68 +18,51 @@ import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class MediaModelServer {
-		
+
 	private static final Logger log = LoggerBuilder.createLogger(MediaModelServer.class);
-	
+
 	private final MessageProxyServer proxy;
 	private final HashMap<UUID, ServerMediaFile> allMediaFiles;
 	private final LinkedList<UUID> mediaStandardList;
 	private final LinkedList<UUID> mediaPrivateQueue;
 	private final Random rand;
-	
+
 	public MediaModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
-		allMediaFiles = new HashMap<UUID, ServerMediaFile>();
-		mediaStandardList = new LinkedList<UUID>();
-		mediaPrivateQueue = new LinkedList<UUID>();
-		rand = new Random();
+		this.allMediaFiles = new HashMap<UUID, ServerMediaFile>();
+		this.mediaStandardList = new LinkedList<UUID>();
+		this.mediaPrivateQueue = new LinkedList<UUID>();
+		this.rand = new Random();
 		log.debug("Media model successfully created");
 	}
-	
+
+	private void addAllMediaAndShuffle() {
+		this.mediaStandardList.addAll(this.allMediaFiles.keySet());
+		Collections.shuffle(this.mediaStandardList);
+	}
+
 	public UUID addMediaFile(ServerMediaFile file) {
-		allMediaFiles.put(file.getId(), file);
+		this.allMediaFiles.put(file.getId(), file);
 		addMediaFileAtRandomPosition(file);
 		log.debug("Media file added: " + file);
 		return file.getId();
 	}
 
 	private void addMediaFileAtRandomPosition(ServerMediaFile file) {
-		if(!mediaStandardList.contains(file.getId())) {
-			int insertionIndex = rand.nextInt(mediaStandardList.size() + 1);
-			if(insertionIndex == mediaStandardList.size()) {
-				mediaStandardList.addLast(file.getId());
+		if (!this.mediaStandardList.contains(file.getId())) {
+			int insertionIndex = this.rand.nextInt(this.mediaStandardList.size() + 1);
+			if (insertionIndex == this.mediaStandardList.size()) {
+				this.mediaStandardList.addLast(file.getId());
 			} else {
-				mediaStandardList.add(insertionIndex, file.getId());
+				this.mediaStandardList.add(insertionIndex, file.getId());
 			}
 		}
 	}
-	
-	public ServerMediaFile getMediaFileById(UUID id) throws MediaDoesNotExsistException {
-		testIfMediaFileExists(id);
-		log.debug("Getting media file: " + id);
-		return allMediaFiles.get(id);
-	}
-	
-	public void removeMediaFile(UUID id) throws MediaDoesNotExsistException {
-		testIfMediaFileExists(id);
-		log.debug("Removing media file: " + id);
-		ServerMediaFile removedFile = allMediaFiles.remove(id);
-		
-		while(mediaPrivateQueue.contains(id)) {
-			mediaPrivateQueue.remove(id);
-		}
-		while(mediaStandardList.contains(id)) {
-			mediaStandardList.remove(id);
-		}
-		
-		cleanUpAfterRemove(removedFile);
 
-	}
-	
 	private void cleanUpAfterRemove(ServerMediaFile removedFile) {
-		if(removedFile instanceof VideoFile) {
-			if(((VideoFile) removedFile).getVideoFile().exists()) {
-				if(removedFile.isCurrent()) {
+		if (removedFile instanceof VideoFile) {
+			if (((VideoFile) removedFile).getVideoFile().exists()) {
+				if (removedFile.isCurrent()) {
 					((VideoFile) removedFile).getVideoFile().deleteOnExit();
 				} else {
 					((VideoFile) removedFile).getVideoFile().delete();
@@ -88,62 +71,79 @@ public class MediaModelServer {
 		}
 	}
 
-	public void queue(UUID id) throws MediaDoesNotExsistException {
-		testIfMediaFileExists(id);
-		log.debug("Queuing media file: " + id);
-		mediaPrivateQueue.addLast(id);
-	}
-	
 	public void dequeue(UUID id, int row) throws MediaDoesNotExsistException, OutOfSyncException {
 		testIfMediaFileExists(id);
-		if(!mediaPrivateQueue.contains(id)) {
+		if (!this.mediaPrivateQueue.contains(id)) {
 			throw new MediaNotInQueueException("Media not in private queue.");
 		}
-		
-		if(mediaPrivateQueue.get(row).equals(id)) {
-			mediaPrivateQueue.remove(row);
-		} else {
-			throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
-		}
-		
-	}
-	
-	public ServerMediaFile getNext() throws MediaDoesNotExsistException, MediaListsEmptyException {
-		if(allMediaFiles.isEmpty()) {
-			throw new MediaListsEmptyException("No media files present.");
-		}
-		log.debug("Getting next media file");
-		if(!mediaPrivateQueue.isEmpty()) {
-			return getMediaFileById(mediaPrivateQueue.poll());
-		} else {
-			if(mediaStandardList.isEmpty()) {
-				addAllMediaAndShuffle();
-			}
-			return getMediaFileById(mediaStandardList.poll());
-		}
-	}
 
-	private void addAllMediaAndShuffle() {
-		mediaStandardList.addAll(allMediaFiles.keySet());
-		Collections.shuffle(mediaStandardList);
-	}
-	
-	private void testIfMediaFileExists(UUID id) throws MediaDoesNotExsistException {
-		if(allMediaFiles.get(id) == null) {
-			throw new MediaDoesNotExsistException("The requested media file does not exist. Query id: " + id);
+		if (this.mediaPrivateQueue.get(row).equals(id)) {
+			this.mediaPrivateQueue.remove(row);
+		} else {
+			throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync proably");
 		}
+
 	}
 
 	public HashMap<UUID, ServerMediaFile> getAllMediaFiles() {
-		return allMediaFiles;
+		return this.allMediaFiles;
+	}
+
+	public ServerMediaFile getMediaFileById(UUID id) throws MediaDoesNotExsistException {
+		testIfMediaFileExists(id);
+		log.debug("Getting media file: " + id);
+		return this.allMediaFiles.get(id);
 	}
 
 	public LinkedList<UUID> getMediaPrivateQueue() {
-		return mediaPrivateQueue;
+		return this.mediaPrivateQueue;
+	}
+
+	public ServerMediaFile getNext() throws MediaDoesNotExsistException, MediaListsEmptyException {
+		if (this.allMediaFiles.isEmpty()) {
+			throw new MediaListsEmptyException("No media files present.");
+		}
+		log.debug("Getting next media file");
+		if (!this.mediaPrivateQueue.isEmpty()) {
+			return getMediaFileById(this.mediaPrivateQueue.poll());
+		} else {
+			if (this.mediaStandardList.isEmpty()) {
+				addAllMediaAndShuffle();
+			}
+			return getMediaFileById(this.mediaStandardList.poll());
+		}
+	}
+
+	public void queue(UUID id) throws MediaDoesNotExsistException {
+		testIfMediaFileExists(id);
+		log.debug("Queuing media file: " + id);
+		this.mediaPrivateQueue.addLast(id);
+	}
+
+	public void removeMediaFile(UUID id) throws MediaDoesNotExsistException {
+		testIfMediaFileExists(id);
+		log.debug("Removing media file: " + id);
+		ServerMediaFile removedFile = this.allMediaFiles.remove(id);
+
+		while (this.mediaPrivateQueue.contains(id)) {
+			this.mediaPrivateQueue.remove(id);
+		}
+		while (this.mediaStandardList.contains(id)) {
+			this.mediaStandardList.remove(id);
+		}
+
+		cleanUpAfterRemove(removedFile);
+
 	}
 
 	public void resetShowCount(UUID toReset) throws MediaDoesNotExsistException {
 		getMediaFileById(toReset).resetShowCount();
 	}
-	
+
+	private void testIfMediaFileExists(UUID id) throws MediaDoesNotExsistException {
+		if (this.allMediaFiles.get(id) == null) {
+			throw new MediaDoesNotExsistException("The requested media file does not exist. Query id: " + id);
+		}
+	}
+
 }

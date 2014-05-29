@@ -6,8 +6,9 @@ import java.util.UUID;
 /**
  * 
  * Datastructure to hold the time to show connected with a identifier (uuid)
+ * 
  * @author samu
- *
+ * 
  */
 public class Priority implements Serializable {
 
@@ -19,8 +20,10 @@ public class Priority implements Serializable {
 
 	/**
 	 * 
-	 * @param name name of the priority
-	 * @param minutesToShow time to show the specific file holding this priority
+	 * @param name
+	 *            name of the priority
+	 * @param minutesToShow
+	 *            time to show the specific file holding this priority
 	 */
 	public Priority(String name, int minutesToShow) {
 		this.id = UUID.randomUUID();
@@ -28,62 +31,62 @@ public class Priority implements Serializable {
 		this.minutesToShow = minutesToShow;
 		this.defaultPriority = false;
 	}
-	
+
 	public Priority(String name, int minutesToShow, UUID id) {
 		this.id = id;
 		this.name = name;
 		this.minutesToShow = minutesToShow;
 		this.defaultPriority = false;
-	}	
-
-	public String getName() {
-		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	@Override
+	public boolean equals(Object other) {
+		if (other == null || this == null) {
+			return false;
+		} else if (other == this) {
+			return true;
+		} else if (other instanceof Priority) {
+			return ((Priority) other).getId().equals(this.getId());
+		} else {
+			return false;
+		}
+	}
+
+	public UUID getId() {
+		return this.id;
 	}
 
 	public int getMinutesToShow() {
-		return minutesToShow;
+		return this.minutesToShow;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public long getTimeToShowInMilliseconds() {
+		return this.minutesToShow * 60 * 1000;
+	}
+
+	public boolean isDefaultPriority() {
+		return this.defaultPriority;
+	}
+
+	public void setDefaultPriority(boolean defaultPriority) {
+		this.defaultPriority = defaultPriority;
 	}
 
 	public void setMinutesToShow(int minutesToShow) {
 		this.minutesToShow = minutesToShow;
 	}
 
-	public UUID getId() {
-		return id;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	public long getTimeToShowInMilliseconds() {
-		return minutesToShow*60*1000;
-	}
-	
+
 	@Override
 	public String toString() {
-		return name + " - " + minutesToShow;
-	}
-	
-	@Override
-	public boolean equals(Object other){
-	    if (other == null || this == null) {
-	    	return false;
-	    } else if(other == this){
-	    	return true;
-	    } else if(other instanceof Priority) {
-	    	return ((Priority) other).getId().equals(this.getId());
-	    } else {
-	    	return false;
-	    }
-	}
-
-	public boolean isDefaultPriority() {
-		return defaultPriority;
-	}
-
-	public void setDefaultPriority(boolean defaultPriority) {
-		this.defaultPriority = defaultPriority;
+		return this.name + " - " + this.minutesToShow;
 	}
 
 }

@@ -8,6 +8,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.bytes.ByteArrayEncoder;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -16,19 +17,25 @@ import io.netty.util.HashedWheelTimer;
 import java.io.File;
 import java.io.IOException;
 
-import old.de.netprojectev.networking.HandlerNames;
-import old.de.netprojectev.networking.MessageJoin;
-import old.de.netprojectev.networking.MessageReplayingDecoder;
-import old.de.netprojectev.server.networking.AuthHandlerServer;
-import old.de.netprojectev.server.networking.MessageHandlerServer;
-
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.networking.downstream.MessageDecoder;
+import de.netprojectev.networking.upstream.ClientMediaFileEncoder;
 import de.netprojectev.networking.upstream.FileByteEncoder;
+import de.netprojectev.networking.upstream.LoginByteEncoder;
 import de.netprojectev.networking.upstream.MessageSplit;
-import de.netprojectev.networking.upstream.OpCodeByteEncoder;
+import de.netprojectev.networking.upstream.PriorityByteEncoder;
+import de.netprojectev.networking.upstream.ServerMediaFileEncoder;
+import de.netprojectev.networking.upstream.ThemeByteEncoder;
+import de.netprojectev.networking.upstream.TickerElementEncoder;
+import de.netprojectev.networking.upstream.UUIDByteEncoder;
+import de.netprojectev.networking.upstream.primitives.BooleanByteEncoder;
+import de.netprojectev.networking.upstream.primitives.IntByteEncoder;
+import de.netprojectev.networking.upstream.primitives.MediaTypeByteEncoder;
+import de.netprojectev.networking.upstream.primitives.OpCodeByteEncoder;
+import de.netprojectev.networking.upstream.primitives.StringByteEncoder;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -51,17 +58,42 @@ public class Server {
 
 	}
 
+	private void bindListeningSocket() {
+
+		ServerBootstrap b = new ServerBootstrap();
+		b.group(bossGroup, workerGroup)
+				.channel(NioServerSocketChannel.class)
+				.childHandler(new ChannelInitializer<SocketChannel>() {
+					@Override
+					public void initChannel(SocketChannel ch) throws Exception {
+						ch.pipeline().addLast(new MessageDecoder(), proxy);
+						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayEncoder(), new IntByteEncoder(),
+								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
+								new UUIDByteEncoder(), new ThemeByteEncoder(), new PriorityByteEncoder(),
+								new LoginByteEncoder(), new ClientMediaFileEncoder(), new ServerMediaFileEncoder(),
+								new TickerElementEncoder(), new MessageSplit());
+					}
+				})
+				.option(ChannelOption.SO_BACKLOG, 128)
+				.childOption(ChannelOption.SO_KEEPALIVE, true)
+				.childOption(ChannelOption.TCP_NODELAY, true);
+
+		ChannelFuture f = b.bind(this.port);
+
+		log.info("Binding listening socket to port: " + this.port);
+	}
+
 	public MessageProxyServer bindServerSocket(boolean startInFullscreen) {
 
-		timer = new HashedWheelTimer();
+		this.timer = new HashedWheelTimer();
 		bindListeningSocket();
 
 		if (startInFullscreen) {
-			proxy.enableFullScreen();
+			this.proxy.enableFullScreen();
 		}
-		proxy.makeGUIVisible();
+		this.proxy.makeGUIVisible();
 
-		return proxy;
+		return this.proxy;
 		/*
 		 * when setup is finished make the gui visible
 		 */
@@ -86,62 +118,20 @@ public class Server {
 		}
 	}
 
-	private void bindListeningSocket() {
-
-		ServerBootstrap b = new ServerBootstrap();
-		b.group(bossGroup, workerGroup)
-				.channel(NioServerSocketChannel.class)
-				.childHandler(new ChannelInitializer<SocketChannel>() {
-					@Override
-					public void initChannel(SocketChannel ch) throws Exception {
-						//TODO next work here 03.04.14
-						/*
-						 * use filencoder and decoder for file transfers.
-						 * next to do is to add file decoders dynamically after meta data received
-						 * 
-						 * 1 all opcodes in bytes, Message not serializable anymore only contents as pojo
-						 * 2 files in bytes
-						 * 3 own object structures in bytes
-						 */
-						
-						
-						ch.pipeline().addLast(HandlerNames.OBJECT_ENCODER, new ObjectEncoder());
-						ch.pipeline().addLast(HandlerNames.FILE_TO_BYTE_ENCODER, new FileByteEncoder());
-						ch.pipeline().addLast(HandlerNames.OPCODE_BYTE_ENCODER, new OpCodeByteEncoder());
-						
-						ch.pipeline().addLast(HandlerNames.MESSAGE_SPLIT, new MessageSplit());
-						
-						ch.pipeline().addLast(HandlerNames.MESSAGE_REPLAYING_DECODER, new MessageReplayingDecoder());
-						
-						ch.pipeline().addLast(HandlerNames.OBJECT_DECODER, new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingResolver(null)));
-						ch.pipeline().addLast(HandlerNames.MESSAGE_JOIN, new MessageJoin());
-						ch.pipeline().addLast(HandlerNames.AUTH_HANDLER_SERVER, new AuthHandlerServer(proxy));
-						ch.pipeline().addLast(HandlerNames.MESSAGE_HANDLER_SERVER, new MessageHandlerServer(proxy));
-						
-
-
-						
-					}
-				})
-				.option(ChannelOption.SO_BACKLOG, 128)
-				.childOption(ChannelOption.SO_KEEPALIVE, true)
-				.childOption(ChannelOption.TCP_NODELAY, true);
-
-		ChannelFuture f = b.bind(port);
-		
-		log.info("Binding listening socket to port: " + port);
+	public MessageProxyServer getProxy() {
+		return this.proxy;
 	}
 
 	public void shutdownServer() {
 		log.info("Starting server shutdown, informing clients.");
-		proxy.broadcastMessage(new Message(OpCode.STC_SERVER_SHUTDOWN)).awaitUninterruptibly();
-		proxy.getAllClients().close().awaitUninterruptibly();
+		this.proxy.broadcastMessage(new Message(OpCode.STC_SERVER_SHUTDOWN)).awaitUninterruptibly();
+		this.proxy.getAllClients().close().awaitUninterruptibly();
 
 		Thread t = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				timer.stop();
+				Server.this.timer.stop();
 				workerGroup.shutdownGracefully();
 				bossGroup.shutdownGracefully();
 			}
@@ -151,16 +141,12 @@ public class Server {
 		log.info("Server shutdown complete.");
 
 		try {
-			proxy.getPrefsModel().serializeAll();
+			this.proxy.getPrefsModel().serializeAll();
 		} catch (IOException e) {
 			log.warn("Error during serilization.", e);
 		}
 
 		System.exit(0);
-	}
-
-	public MessageProxyServer getProxy() {
-		return proxy;
 	}
 
 }

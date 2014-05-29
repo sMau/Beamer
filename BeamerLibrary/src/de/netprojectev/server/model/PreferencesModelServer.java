@@ -25,17 +25,6 @@ public class PreferencesModelServer {
 	private static final int DEFAULT_PRIO_TIME = 1;
 
 	private static Properties props;
-	private final MessageProxyServer proxy;
-	private final HashMap<UUID, Priority> prios;
-	private final HashMap<UUID, Theme> themes;
-
-	private Priority defaultPriority;
-
-	public PreferencesModelServer(MessageProxyServer proxy) {
-		this.proxy = proxy;
-		prios = new HashMap<UUID, Priority>();
-		themes = new HashMap<UUID, Theme>();		
-	}
 
 	public static String getPropertyByKey(String key) {
 		log.debug("Getting property: " + key);
@@ -43,55 +32,8 @@ public class PreferencesModelServer {
 
 	}
 
-	public static void setProperty(String key, String value) {
-		log.debug("Setting property: " + key + ", to: " + value);
-		props.setProperty(key, value);
-	}
-
-	public UUID addPriority(Priority priority) {
-		log.debug("Adding priority: " + priority);
-		prios.put(priority.getId(), priority);
-		return priority.getId();
-	}
-
-	public UUID addTheme(Theme theme) {
-		log.debug("Adding theme: " + theme);
-		themes.put(theme.getId(), theme);
-		return theme.getId();
-	}
-
-	public void removePriority(UUID id) {
-		log.debug("Removing priority: " + id);
-		prios.remove(id);
-	}
-
-	public void removeTheme(UUID id) {
-		log.debug("Removing theme: " + id);
-		themes.remove(id);
-	}
-
-	public Priority getPriorityById(UUID id) throws PriorityDoesNotExistException {
-		if (prios.get(id) == null) {
-			throw new PriorityDoesNotExistException("Priority does not exist. ID: " + id);
-		} else {
-			log.debug("Getting priority: " + id);
-			return prios.get(id);
-		}
-	}
-
-	public Theme getThemeById(UUID id) throws ThemeDoesNotExistException {
-		if (themes.get(id) == null) {
-			throw new ThemeDoesNotExistException("Theme does not exist. ID: " + id);
-		} else {
-			log.debug("Getting theme: " + id);
-			return themes.get(id);
-		}
-
-	}
-
-	public static void saveProperties() throws IOException {
-		log.info("Saving properties");
-		HelperMethods.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
+	public static Properties getProps() {
+		return props;
 	}
 
 	public static void loadProperties() {
@@ -106,55 +48,47 @@ public class PreferencesModelServer {
 		props.putAll(propsLoaded);
 	}
 
-	public HashMap<UUID, Priority> getPrios() {
-		return prios;
+	public static void saveProperties() throws IOException {
+		log.info("Saving properties");
+		HelperMethods.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
 	}
 
-	public HashMap<UUID, Theme> getThemes() {
-		return themes;
+	public static void setProperty(String key, String value) {
+		log.debug("Setting property: " + key + ", to: " + value);
+		props.setProperty(key, value);
 	}
 
-	public Priority getDefaultPriority() {
-		return defaultPriority;
+	private final MessageProxyServer proxy;
+
+	private final HashMap<UUID, Priority> prios;
+
+	private final HashMap<UUID, Theme> themes;
+
+	private Priority defaultPriority;
+
+	public PreferencesModelServer(MessageProxyServer proxy) {
+		this.proxy = proxy;
+		this.prios = new HashMap<UUID, Priority>();
+		this.themes = new HashMap<UUID, Theme>();
 	}
 
-	public void setDefaultPriority(Priority defaultPriority) {
-		this.defaultPriority = defaultPriority;
+	public UUID addPriority(Priority priority) {
+		log.debug("Adding priority: " + priority);
+		this.prios.put(priority.getId(), priority);
+		return priority.getId();
 	}
 
-	public static Properties getProps() {
-		return props;
+	public UUID addTheme(Theme theme) {
+		log.debug("Adding theme: " + theme);
+		this.themes.put(theme.getId(), theme);
+		return theme.getId();
 	}
 
-	public void serializeMediaDatabase() throws IOException {
-		HelperMethods.saveToFile(proxy.getMediaModel().getAllMediaFiles(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_MEDIAFILES);
-	}
-
-	public void serializeTickerDatabase() throws IOException {
-		HelperMethods.saveToFile(proxy.getTickerModel().getElements(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_LIVETICKER);
-	}
-
-	public void serializePriorityDatabase() throws IOException {
-		HelperMethods.saveToFile(this.getPrios(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PRIORITIES);
-	}
-
-	public void serializeThemeDatabase() throws IOException {
-		HelperMethods.saveToFile(this.getThemes(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_THEMES);
-	}
-
-	public void serializeAll() throws IOException {
-		serializeMediaDatabase();
-		serializeTickerDatabase();
-		serializePriorityDatabase();
-		serializeThemeDatabase();
-		saveProperties();
-	}
-	
 	@SuppressWarnings("unchecked")
 	public void deserializeAll() {
-		
+
 		loadProperties();
-		
+
 		HashMap<UUID, ServerMediaFile> allMedia = null;
 		try {
 			allMedia = (HashMap<UUID, ServerMediaFile>) HelperMethods.loadFromFile(ConstantsServer.FILENAME_MEDIAFILES, ConstantsServer.SAVE_PATH);
@@ -188,44 +122,113 @@ public class PreferencesModelServer {
 			log.warn("Error during deserialization", e);
 		}
 
-		if(allMedia != null) {
+		if (allMedia != null) {
 			for (UUID id : allMedia.keySet()) {
-				proxy.getMediaModel().addMediaFile(allMedia.get(id));
+				this.proxy.getMediaModel().addMediaFile(allMedia.get(id));
 			}
 
 		}
-		
-		if(allTickerElements != null) {
+
+		if (allTickerElements != null) {
 			for (UUID id : allTickerElements.keySet()) {
-				proxy.getTickerModel().addTickerElement(allTickerElements.get(id));
+				this.proxy.getTickerModel().addTickerElement(allTickerElements.get(id));
 			}
-			
+
 		}
-		
+
 		boolean defaulPrioExists = false;
-		if(allPriorities != null) {
+		if (allPriorities != null) {
 			for (UUID id : allPriorities.keySet()) {
-				if(allPriorities.get(id).isDefaultPriority()) {
+				if (allPriorities.get(id).isDefaultPriority()) {
 					defaulPrioExists = true;
 				}
 				addPriority(allPriorities.get(id));
 			}
-				
+
 		}
-		if(!defaulPrioExists) {
+		if (!defaulPrioExists) {
 			Priority defaultPrio = new Priority("default", DEFAULT_PRIO_TIME);
 			defaultPrio.setDefaultPriority(true);
 			addPriority(defaultPrio);
 			this.defaultPriority = defaultPrio;
 		}
-		
-		if(allThemes != null) {
+
+		if (allThemes != null) {
 			for (UUID id : allThemes.keySet()) {
 				addTheme(allThemes.get(id));
 			}
-	
+
 		}
-		
+
+	}
+
+	public Priority getDefaultPriority() {
+		return this.defaultPriority;
+	}
+
+	public Priority getPriorityById(UUID id) throws PriorityDoesNotExistException {
+		if (this.prios.get(id) == null) {
+			throw new PriorityDoesNotExistException("Priority does not exist. ID: " + id);
+		} else {
+			log.debug("Getting priority: " + id);
+			return this.prios.get(id);
+		}
+	}
+
+	public HashMap<UUID, Priority> getPrios() {
+		return this.prios;
+	}
+
+	public Theme getThemeById(UUID id) throws ThemeDoesNotExistException {
+		if (this.themes.get(id) == null) {
+			throw new ThemeDoesNotExistException("Theme does not exist. ID: " + id);
+		} else {
+			log.debug("Getting theme: " + id);
+			return this.themes.get(id);
+		}
+
+	}
+
+	public HashMap<UUID, Theme> getThemes() {
+		return this.themes;
+	}
+
+	public void removePriority(UUID id) {
+		log.debug("Removing priority: " + id);
+		this.prios.remove(id);
+	}
+
+	public void removeTheme(UUID id) {
+		log.debug("Removing theme: " + id);
+		this.themes.remove(id);
+	}
+
+	public void serializeAll() throws IOException {
+		serializeMediaDatabase();
+		serializeTickerDatabase();
+		serializePriorityDatabase();
+		serializeThemeDatabase();
+		saveProperties();
+	}
+
+	public void serializeMediaDatabase() throws IOException {
+		HelperMethods.saveToFile(this.proxy.getMediaModel().getAllMediaFiles(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_MEDIAFILES);
+	}
+
+	public void serializePriorityDatabase() throws IOException {
+		HelperMethods.saveToFile(this.getPrios(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PRIORITIES);
+	}
+
+	public void serializeThemeDatabase() throws IOException {
+		HelperMethods.saveToFile(this.getThemes(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_THEMES);
+	}
+
+	public void serializeTickerDatabase() throws IOException {
+		HelperMethods.saveToFile(this.proxy.getTickerModel().getElements(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_LIVETICKER);
+	}
+
+	public void setDefaultPriority(Priority defaultPriority) {
+		this.defaultPriority = defaultPriority;
 	}
 
 }

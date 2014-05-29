@@ -1,6 +1,7 @@
 package de.netprojectev.server.datastructures;
 
-import de.netprojectev.datastructures.Priority;
+import java.util.UUID;
+
 import de.netprojectev.utils.HelperMethods;
 
 public class Countdown extends ServerMediaFile {
@@ -13,36 +14,40 @@ public class Countdown extends ServerMediaFile {
 	private long durationInSeconds;
 
 	private String timeString;
-	
+
 	public Countdown(String name, int durationInMinutes) {
-		super(name, new Priority("Countdown", durationInMinutes));
-		if(durationInMinutes <= 0) {
-			throw new IllegalArgumentException("duration have to be bigger than 0");
-		}
-		this.initDurationInSeconds = durationInMinutes * 60;
-		this.durationInSeconds = initDurationInSeconds;
-		this.timeString = HelperMethods.convertFromSecondsToTimeString((int) durationInSeconds, true);
+		// TODO fix the countdown shit
+		super(name, UUID.randomUUID()); // new Priority("Countdown",
+										// durationInMinutes)
+		throw new UnsupportedOperationException("Countdown is not working at the moment.");
+		/*
+		 * if(durationInMinutes <= 0) { throw new
+		 * IllegalArgumentException("duration have to be bigger than 0"); }
+		 * this.initDurationInSeconds = durationInMinutes * 60;
+		 * this.durationInSeconds = initDurationInSeconds; this.timeString =
+		 * HelperMethods.convertFromSecondsToTimeString((int) durationInSeconds,
+		 * true);
+		 */
 	}
 
-	public long getInitDurationInSeconds() {
-		return initDurationInSeconds;
-	}
-	
 	public void decreaseOneSecond() {
-		durationInSeconds--;
-		timeString = HelperMethods.convertFromSecondsToTimeString((int) durationInSeconds, true);
-		if(durationInSeconds < 0) {
-			durationInSeconds = initDurationInSeconds;
+		this.durationInSeconds--;
+		this.timeString = HelperMethods.convertFromSecondsToTimeString((int) this.durationInSeconds, true);
+		if (this.durationInSeconds < 0) {
+			this.durationInSeconds = this.initDurationInSeconds;
 		}
-	}
-	
-
-	public String getTimeString() {
-		return timeString;
 	}
 
 	public long getDurationInSeconds() {
-		return durationInSeconds;
+		return this.durationInSeconds;
 	}
-	
+
+	public long getInitDurationInSeconds() {
+		return this.initDurationInSeconds;
+	}
+
+	public String getTimeString() {
+		return this.timeString;
+	}
+
 }

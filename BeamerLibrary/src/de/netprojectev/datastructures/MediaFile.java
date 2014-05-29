@@ -3,7 +3,6 @@ package de.netprojectev.datastructures;
 import java.io.Serializable;
 import java.util.UUID;
 
-
 public abstract class MediaFile implements Serializable {
 
 	/**
@@ -12,51 +11,58 @@ public abstract class MediaFile implements Serializable {
 	private static final long serialVersionUID = 6210917731163785789L;
 	private final UUID id;
 	protected String name;
-	protected Priority priority;
+	protected UUID priorityID;
 	protected transient boolean current;
 	protected transient int showCount;
-	
-	protected MediaFile(String name, Priority priority, UUID id) {
+
+	protected MediaFile(String name, UUID priorityID, UUID id) {
 		this.id = id;
-		this.priority = priority;
+		this.priorityID = priorityID;
 		this.name = name;
 	}
-	
+
 	@Override
-	public boolean equals(Object other){
-	    if (other == null || this == null) {
-	    	return false;
-	    } else if(other == this){
-	    	return true;
-	    } else if(other instanceof MediaFile) {
-	    	return ((MediaFile) other).getId().equals(this.getId());
-	    } else {
-	    	return false;
-	    }
+	public boolean equals(Object other) {
+		if (other == null || this == null) {
+			return false;
+		} else if (other == this) {
+			return true;
+		} else if (other instanceof MediaFile) {
+			return ((MediaFile) other).getId().equals(this.getId());
+		} else {
+			return false;
+		}
 	}
 
 	public UUID getId() {
-		return id;
+		return this.id;
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public UUID getPriorityID() {
+		return this.priorityID;
 	}
 
-	public Priority getPriority() {
-		return priority;
+	public int getShowCount() {
+		return this.showCount;
 	}
 
-	public void setPriority(Priority priority) {
-		this.priority = priority;
+	public MediaFile increaseShowCount() {
+
+		this.showCount++;
+
+		return this;
 	}
 
 	public boolean isCurrent() {
-		return current;
+		return this.current;
+	}
+
+	public void resetShowCount() {
+		this.showCount = 0;
 	}
 
 	public MediaFile setCurrent(boolean current) {
@@ -64,20 +70,12 @@ public abstract class MediaFile implements Serializable {
 		return this;
 	}
 
-	public int getShowCount() {
-		return showCount;
-	}
-	
-	public void resetShowCount() {
-		showCount = 0;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public MediaFile increaseShowCount() {
-		
-		showCount++;
-		
-		return this;
+	public void setPriority(UUID priorityID) {
+		this.priorityID = priorityID;
 	}
-	
 
 }
