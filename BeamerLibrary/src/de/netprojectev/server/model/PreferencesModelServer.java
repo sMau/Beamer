@@ -7,13 +7,13 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.datastructures.Priority;
+import de.netprojectev.datastructures.Theme;
+import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerMediaFile;
-import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.HelperMethods;
 import de.netprojectev.utils.LoggerBuilder;
@@ -163,9 +163,9 @@ public class PreferencesModelServer {
 		} catch (IOException e) {
 			log.warn("Error during deserialization", e);
 		}
-		HashMap<UUID, ServerTickerElement> allTickerElements = null;
+		HashMap<UUID, TickerElement> allTickerElements = null;
 		try {
-			allTickerElements = (HashMap<UUID, ServerTickerElement>) HelperMethods.loadFromFile(ConstantsServer.FILENAME_LIVETICKER, ConstantsServer.SAVE_PATH);
+			allTickerElements = (HashMap<UUID, TickerElement>) HelperMethods.loadFromFile(ConstantsServer.FILENAME_LIVETICKER, ConstantsServer.SAVE_PATH);
 		} catch (ClassNotFoundException e) {
 			log.warn("Error during deserialization", e);
 		} catch (IOException e) {

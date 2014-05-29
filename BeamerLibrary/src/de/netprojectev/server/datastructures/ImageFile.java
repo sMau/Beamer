@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.Priority;
 import de.netprojectev.server.ConstantsServer;
 
 public class ImageFile extends ServerMediaFile {

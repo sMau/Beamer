@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.datastructures.Priority;
+import de.netprojectev.datastructures.Theme;
+import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.DecodeMessageException;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -50,7 +51,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			in.resetReaderIndex();
 			return;
 		}
-		
+
 		opCode = OpCode.values()[(int) in.readByte()];
 		dataObjectCount = in.readInt();
 
@@ -101,7 +102,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			data.add(value);
 			break;
 		case STC_INIT_PROPERTIES:
-			//TODO properties object is sent here, maybe change to repeatedly sending single props
+			// TODO properties object is sent here, maybe change to repeatedly
+			// sending single props
 			break;
 		case STC_TIMELEFT_SYNC:
 			long timeleft = decodeLong();
@@ -114,20 +116,23 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			data.add(decodePriority());
 			break;
 		case STC_ADD_LIVE_TICKER_ELEMENT_ACK:
-			
+			data.add(decodeTickerElement());
 			break;
 		case STC_EDIT_LIVE_TICKER_ELEMENT_ACK:
+			data.add(decodeTickerElement());
 			break;
 		case STC_ADD_MEDIA_FILE_ACK:
-
-			break;
-		case STC_RESET_SHOW_COUNT_ACK:
-			break;
-		case STC_LOGIN_DENIED:
+			// TODO polymorphism at the end :D
 			break;
 		case STC_EDIT_MEDIA_FILE_ACK:
+			// TODO polymorphism at the end :D
 			break;
-
+		case STC_LOGIN_DENIED:
+			// TODO anyway check the complete login procedure
+			break;
+		case STC_RESET_SHOW_COUNT_ACK:
+			data.add(decodeUUID());
+			break;
 		case STC_REMOVE_LIVE_TICKER_ELEMENT_ACK:
 			data.add(decodeUUID());
 			break;
@@ -154,47 +159,43 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		 * Client to server
 		 */
 		case CTS_ADD_LIVE_TICKER_ELEMENT:
-
-			break;
-		case CTS_ADD_VIDEO_FILE_DATA:
-
-			break;
-		case CTS_DEQUEUE_MEDIAFILE:
-
-			break;
-		case CTS_EDIT_MEDIA_FILE:
-
+			data.add(decodeTickerElement());
 			break;
 		case CTS_PROPERTY_UPDATE:
-
-			break;
-		case CTS_DISCONNECT:
-
+			String key1 = decodeString();
+			String value1 = decodeString();
+			data.add(key1);
+			data.add(value1);
 			break;
 		case CTS_RESET_SHOW_COUNT:
-
-			break;
-		case CTS_LOGIN_REQUEST:
+			data.add(decodeUUID());
 			break;
 		case CTS_ADD_THEME:
-
+			data.add(decodeTheme());
 			break;
 		case CTS_ADD_PRIORITY:
 			data.add(decodePriority());
-
 			break;
 		case CTS_EDIT_LIVE_TICKER_ELEMENT:
-
+			data.add(decodeTickerElement());
 			break;
-
 		case CTS_ADD_COUNTDOWN:
-
+			
+			break;
+		case CTS_EDIT_MEDIA_FILE:
 			break;
 		case CTS_ADD_IMAGE_FILE:
-
 			break;
 		case CTS_ADD_THEMESLIDE:
-
+			break;
+		case CTS_ADD_VIDEO_FILE_DATA:
+			break;
+		case CTS_LOGIN_REQUEST:
+			break;
+		case CTS_DISCONNECT:
+			break;
+		case CTS_DEQUEUE_MEDIAFILE:
+			data.add(decodeUUID());
 			break;
 		case CTS_REMOVE_LIVE_TICKER_ELEMENT:
 			data.add(decodeUUID());
@@ -211,16 +212,21 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		case CTS_REMOVE_MEDIA_FILE:
 			data.add(decodeUUID());
 			break;
-
 		case CTS_QUEUE_MEDIA_FILE:
 			data.add(decodeUUID());
 			break;
-
 		default:
 			throw new DecodeMessageException("The header says the message contains data, but it does not.");
 		}
 
 		return data;
+	}
+
+	private Object decodeTickerElement() {
+		UUID id = decodeUUID();
+		String text = decodeString();
+		boolean show = decodeBoolean();
+		return new TickerElement(text, id).setShow(show);
 	}
 
 	private Theme decodeTheme() {
@@ -246,12 +252,12 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		inDup.readBytes(decoded);
 		return decoded;
 	}
-	
+
 	private long decodeLong() {
 		inDup.readLong();
 		return inDup.readLong();
 	}
-	
+
 	private String decodeString() {
 		byte[] rawString = new byte[(int) inDup.readLong()];
 		inDup.readBytes(rawString);

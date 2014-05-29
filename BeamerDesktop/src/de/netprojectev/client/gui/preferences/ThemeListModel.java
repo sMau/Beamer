@@ -5,7 +5,7 @@ import javax.swing.SwingUtilities;
 
 import de.netprojectev.client.model.PreferencesModelClient.ThemeListChangedListener;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.datastructures.Theme;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 
 public class ThemeListModel extends AbstractListModel<Theme> {

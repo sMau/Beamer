@@ -3,7 +3,7 @@ package de.netprojectev.client.datastructures;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import de.netprojectev.datastructures.media.MediaFile;
+import de.netprojectev.datastructures.MediaFile;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;

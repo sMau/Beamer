@@ -11,7 +11,6 @@ import io.netty.util.Timeout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +29,9 @@ import old.de.netprojectev.server.networking.VideoFileReceiveHandler.ToManyMessa
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
-import de.netprojectev.client.datastructures.ClientTickerElement;
-import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.datastructures.Priority;
+import de.netprojectev.datastructures.Theme;
+import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.exceptions.OutOfSyncException;
@@ -45,7 +44,6 @@ import de.netprojectev.server.ServerGUI;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.ServerMediaFile;
-import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.model.MediaModelServer;
@@ -279,7 +277,7 @@ public class MessageProxyServer {
 	}
 	private void propertyUpdate(Message msg) {
 		String key = (String) msg.getData().get(0);
-		String newValue = (String) msg.getData().get(0);
+		String newValue = (String) msg.getData().get(1);
 				
 		PreferencesModelServer.setProperty(key, newValue);
 		
@@ -328,11 +326,11 @@ public class MessageProxyServer {
 	}
 	
 	private void editLiveTickerElement(Message msg) throws MediaDoesNotExsistException, IOException {
-		ClientTickerElement edited = (ClientTickerElement) msg.getData().get(0);
-		ServerTickerElement correlatedServerFile = tickerModel.getElementByID(edited.getId());
+		TickerElement edited = (TickerElement) msg.getData().get(0);
+		TickerElement correlatedServerFile = tickerModel.getElementByID(edited.getId());
 		correlatedServerFile.setShow(edited.isShow());
 		correlatedServerFile.setText(edited.getText());
-		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(correlatedServerFile)));
+		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, correlatedServerFile));
 		
 		prefsModel.serializeTickerDatabase();
 	}
@@ -445,7 +443,7 @@ public class MessageProxyServer {
 		
 		HashMap<UUID, ServerMediaFile> allMedia = mediaModel.getAllMediaFiles();
 		LinkedList<UUID> customQueue = mediaModel.getMediaPrivateQueue();
-		HashMap<UUID, ServerTickerElement> tickerElements = tickerModel.getElements();
+		HashMap<UUID, TickerElement> tickerElements = tickerModel.getElements();
 		HashMap<UUID, Theme> themes = prefsModel.getThemes();
 		HashMap<UUID, Priority> priorities = prefsModel.getPrios();
 		
@@ -462,7 +460,7 @@ public class MessageProxyServer {
 		}
 		
 		for(UUID id : tickerElements.keySet()) {
-			ctx.writeAndFlush(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(tickerElements.get(id))));
+			ctx.writeAndFlush(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, tickerElements.get(id)));
 		}
 		
 		for(UUID id : themes.keySet()) {
@@ -534,10 +532,10 @@ public class MessageProxyServer {
 	}
 
 	private void addLiveTickerElement(Message msg) throws IOException {
-		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData().get(0);
+		TickerElement eltToAdd = (TickerElement) msg.getData().get(0);
 		tickerModel.addTickerElement(eltToAdd);
 		serverGUI.updateLiveTickerString();
-		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(eltToAdd)));
+		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, eltToAdd));
 		
 		prefsModel.serializeTickerDatabase();
 	}

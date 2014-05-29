@@ -23,19 +23,18 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
-import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.model.TickerModelClient;
-import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.datastructures.Priority;
+import de.netprojectev.datastructures.Theme;
+import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.OutOfSyncException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.Countdown;
-import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.MediaFileFilter;
@@ -131,7 +130,7 @@ public class MessageProxyClient {
 	}
 
 	//TODO change editing, that not for every single editing a new encoder ist necessary 
-	public void sendEditTickerElement(ClientTickerElement eltToEdit) {
+	public void sendEditTickerElement(TickerElement eltToEdit) {
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_LIVE_TICKER_ELEMENT, eltToEdit));
 	}
 
@@ -220,7 +219,7 @@ public class MessageProxyClient {
 	//TODO send only text to use StringEncoder on netty low level
 	public void sendAddTickerElement(String text) {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT,
-				new ServerTickerElement(text)));
+				new TickerElement(text)));
 	}
 
 	//TODO send the data using the low level encoders of netty
@@ -275,8 +274,8 @@ public class MessageProxyClient {
 				.getValueAt(row).getId()));
 	}
 
-	public void sendResetShowCount(UUID medieToReset) {
-		sendMessageToServer(new Message(OpCode.CTS_RESET_SHOW_COUNT, medieToReset));
+	public void sendResetShowCount(UUID mediaToReset) {
+		sendMessageToServer(new Message(OpCode.CTS_RESET_SHOW_COUNT, mediaToReset));
 	}
 
 	public void sendAutoModeToggle(boolean selected) {
@@ -313,7 +312,7 @@ public class MessageProxyClient {
 	}
 	
 	public void sendAddAndShowCountdown(Countdown countdown) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown)).awaitUninterruptibly(5000);
+		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown)).awaitUninterruptibly(5000); //XXX not nice
 		sendShowMediaFile(countdown.getId());
 	}
 
@@ -551,7 +550,7 @@ public class MessageProxyClient {
 	}
 
 	private void liveTickerElementEdited(Message msg) {
-		ClientTickerElement e = (ClientTickerElement) msg.getData().get(0);
+		TickerElement e = (TickerElement) msg.getData().get(0);
 		try {
 			tickerModel.replaceTickerElement(e);
 		} catch (MediaDoesNotExsistException e1) {
@@ -591,7 +590,7 @@ public class MessageProxyClient {
 	}
 
 	private void liveTickerElementAdded(Message msg) {
-		ClientTickerElement toAdd = (ClientTickerElement) msg.getData().get(0);
+		TickerElement toAdd = (TickerElement) msg.getData().get(0);
 		tickerModel.addTickerElement(toAdd);
 	}
 

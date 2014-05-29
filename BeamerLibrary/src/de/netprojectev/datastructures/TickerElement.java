@@ -1,9 +1,9 @@
-package de.netprojectev.server.datastructures;
+package de.netprojectev.datastructures;
 
 import java.io.Serializable;
 import java.util.UUID;
 
-public class ServerTickerElement implements Serializable {
+public class TickerElement implements Serializable {
 	
 	/**
 	 * 
@@ -13,8 +13,14 @@ public class ServerTickerElement implements Serializable {
 	private String text;
 	private boolean show;
 	
-	public ServerTickerElement(String text) {
-		id = UUID.randomUUID();
+	public TickerElement(String text) {
+		this.id = UUID.randomUUID();
+		this.text = text;
+		this.show = true;
+	}
+	
+	public TickerElement(String text, UUID id) {
+		this.id = id;
 		this.text = text;
 		this.show = true;
 	}
@@ -23,8 +29,9 @@ public class ServerTickerElement implements Serializable {
 		return show;
 	}
 
-	public void setShow(boolean show) {
+	public TickerElement setShow(boolean show) {
 		this.show = show;
+		return this;
 	}
 
 	public UUID getId() {
@@ -41,8 +48,8 @@ public class ServerTickerElement implements Serializable {
 	    	return false;
 	    } else if(other == this){
 	    	return true;
-	    } else if(other instanceof ServerTickerElement) {
-	    	return ((ServerTickerElement) other).getId().equals(this.getId());
+	    } else if(other instanceof TickerElement) {
+	    	return ((TickerElement) other).getId().equals(this.getId());
 	    } else {
 	    	return false;
 	    }

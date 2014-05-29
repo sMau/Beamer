@@ -5,9 +5,9 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.ConstantsServer;
-import de.netprojectev.server.datastructures.ServerTickerElement;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -16,16 +16,16 @@ public class TickerModelServer {
 	private static final Logger log = LoggerBuilder.createLogger(TickerModelServer.class);
 
 	private final MessageProxyServer proxy;
-	private final HashMap<UUID, ServerTickerElement> elements;
+	private final HashMap<UUID, TickerElement> elements;
 	private String completeTickerText;
 	
 	public TickerModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
 		completeTickerText = "";
-		elements = new HashMap<UUID, ServerTickerElement>();
+		elements = new HashMap<UUID, TickerElement>();
 	}
 	
-	public UUID addTickerElement(ServerTickerElement e) {
+	public UUID addTickerElement(TickerElement e) {
 		log.debug("Adding ticker element: " + e);
 		elements.put(e.getId(), e);
 		return e.getId();
@@ -37,7 +37,7 @@ public class TickerModelServer {
 		elements.remove(id);
 	}
 	
-	public ServerTickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
+	public TickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
 		checkIfElementExists(id);
 		log.debug("Getting ticker element: " + id);
 		return elements.get(id);
@@ -62,7 +62,7 @@ public class TickerModelServer {
 		}
 	}
 
-	public HashMap<UUID, ServerTickerElement> getElements() {
+	public HashMap<UUID, TickerElement> getElements() {
 		return elements;
 	}
 

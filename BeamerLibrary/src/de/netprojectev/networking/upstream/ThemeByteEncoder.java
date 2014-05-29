@@ -3,7 +3,7 @@ package de.netprojectev.networking.upstream;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.datastructures.Theme;
 
 public class ThemeByteEncoder extends MessageToByteEncoder<Theme> {
 

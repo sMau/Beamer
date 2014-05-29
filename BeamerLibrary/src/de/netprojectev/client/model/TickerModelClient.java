@@ -6,8 +6,8 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
-import de.netprojectev.client.datastructures.ClientTickerElement;
 import de.netprojectev.client.networking.MessageProxyClient;
+import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.utils.LoggerBuilder;
@@ -22,7 +22,7 @@ public class TickerModelClient {
 	private static final Logger log = LoggerBuilder.createLogger(TickerModelClient.class);
 
 	private final MessageProxyClient proxy;
-	private final HashMap<UUID, ClientTickerElement> elements;
+	private final HashMap<UUID, TickerElement> elements;
 	private final ArrayList<UUID> allElementsList;
 
 	private UpdateTickerDataListener tickerDataListener = new UpdateTickerDataListener() {
@@ -34,11 +34,11 @@ public class TickerModelClient {
 	public TickerModelClient(MessageProxyClient proxy) {
 
 		this.proxy = proxy;
-		this.elements = new HashMap<UUID, ClientTickerElement>();
+		this.elements = new HashMap<UUID, TickerElement>();
 		this.allElementsList = new ArrayList<UUID>();
 	}
 
-	public UUID addTickerElement(ClientTickerElement e) {
+	public UUID addTickerElement(TickerElement e) {
 		log.debug("Adding ticker element: " + e);
 		elements.put(e.getId(), e);
 		if (!allElementsList.contains(e.getId())) {
@@ -48,7 +48,7 @@ public class TickerModelClient {
 		return e.getId();
 	}
 
-	public UUID replaceTickerElement(ClientTickerElement e) throws MediaDoesNotExsistException {
+	public UUID replaceTickerElement(TickerElement e) throws MediaDoesNotExsistException {
 		if (elements.get(e.getId()) == null) {
 			throw new MediaDoesNotExsistException("The media file to replace has no mapping yet.");
 		}
@@ -83,12 +83,12 @@ public class TickerModelClient {
 		}
 	}
 
-	public ClientTickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
+	public TickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
 		checkIfElementExists(id);
 		return elements.get(id);
 	}
 
-	public ClientTickerElement getValueAt(int row) {
+	public TickerElement getValueAt(int row) {
 		return elements.get(allElementsList.get(row));
 	}
 
@@ -114,7 +114,7 @@ public class TickerModelClient {
 		return text;
 	}
 
-	public HashMap<UUID, ClientTickerElement> getElements() {
+	public HashMap<UUID, TickerElement> getElements() {
 		return elements;
 	}
 

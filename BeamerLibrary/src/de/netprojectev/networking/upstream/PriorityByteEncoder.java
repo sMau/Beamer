@@ -3,7 +3,7 @@ package de.netprojectev.networking.upstream;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.Priority;
 
 public class PriorityByteEncoder extends MessageToByteEncoder<Priority> {
 

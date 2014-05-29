@@ -26,8 +26,8 @@ import de.netprojectev.client.model.PreferencesModelClient.LiveTickerStateListen
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.client.networking.MessageProxyClient.ServerPropertyUpdateListener;
-import de.netprojectev.datastructures.media.Priority;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.datastructures.Priority;
+import de.netprojectev.datastructures.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.server.ConstantsServer;

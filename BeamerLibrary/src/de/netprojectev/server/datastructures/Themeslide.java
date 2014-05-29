@@ -3,7 +3,7 @@ package de.netprojectev.server.datastructures;
 import java.io.IOException;
 import java.util.UUID;
 
-import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.Priority;
 
 public class Themeslide extends ServerMediaFile {
 

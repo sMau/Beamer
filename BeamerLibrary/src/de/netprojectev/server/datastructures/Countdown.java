@@ -1,6 +1,6 @@
 package de.netprojectev.server.datastructures;
 
-import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.Priority;
 import de.netprojectev.utils.HelperMethods;
 
 public class Countdown extends ServerMediaFile {
@@ -17,7 +17,7 @@ public class Countdown extends ServerMediaFile {
 	public Countdown(String name, int durationInMinutes) {
 		super(name, new Priority("Countdown", durationInMinutes));
 		if(durationInMinutes <= 0) {
-			throw new IllegalArgumentException("duration have to be bigge than 0");
+			throw new IllegalArgumentException("duration have to be bigger than 0");
 		}
 		this.initDurationInSeconds = durationInMinutes * 60;
 		this.durationInSeconds = initDurationInSeconds;

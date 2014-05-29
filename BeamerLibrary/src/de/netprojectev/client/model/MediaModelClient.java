@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.networking.MessageProxyClient;
-import de.netprojectev.datastructures.media.MediaFile;
+import de.netprojectev.datastructures.MediaFile;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaNotInQueueException;
 import de.netprojectev.exceptions.OutOfSyncException;

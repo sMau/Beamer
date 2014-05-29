@@ -17,7 +17,7 @@ import javax.swing.KeyStroke;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.networking.MessageProxyClient;
-import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.Priority;
 import de.netprojectev.utils.LoggerBuilder;
 
 /**

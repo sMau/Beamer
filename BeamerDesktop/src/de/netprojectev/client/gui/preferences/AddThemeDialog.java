@@ -22,7 +22,7 @@ import javax.swing.KeyStroke;
 import de.netprojectev.client.gui.main.MediaFileFilterDesktop;
 import de.netprojectev.client.gui.main.Misc;
 import de.netprojectev.client.networking.MessageProxyClient;
-import de.netprojectev.datastructures.media.Theme;
+import de.netprojectev.datastructures.Theme;
 
 /**
  *

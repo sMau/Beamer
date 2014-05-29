@@ -2,8 +2,8 @@ package de.netprojectev.server.datastructures;
 
 import java.util.UUID;
 
-import de.netprojectev.datastructures.media.MediaFile;
-import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.MediaFile;
+import de.netprojectev.datastructures.Priority;
 
 public class ServerMediaFile extends MediaFile {
 

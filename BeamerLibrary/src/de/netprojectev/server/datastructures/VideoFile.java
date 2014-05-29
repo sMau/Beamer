@@ -2,7 +2,7 @@ package de.netprojectev.server.datastructures;
 
 import java.io.File;
 
-import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.Priority;
 
 public class VideoFile extends ServerMediaFile {
 

@@ -43,7 +43,7 @@ import de.netprojectev.client.model.TickerModelClient;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.client.networking.MessageProxyClient.ServerShutdownListener;
 import de.netprojectev.client.networking.MessageProxyClient.TimeSyncListener;
-import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.Priority;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
