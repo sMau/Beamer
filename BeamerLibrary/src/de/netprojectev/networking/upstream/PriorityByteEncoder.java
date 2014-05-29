@@ -9,8 +9,13 @@ public class PriorityByteEncoder extends MessageToByteEncoder<Priority> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Priority msg, ByteBuf out) throws Exception {
-		// TODO Auto-generated method stub
-
+		
+		out.writeByte(4); // object count
+		ctx.write(msg.getId());
+		ctx.write(msg.getMinutesToShow());
+		ctx.write(msg.getName());
+		ctx.writeAndFlush(msg.isDefaultPriority());
+		
 	}
 
 }

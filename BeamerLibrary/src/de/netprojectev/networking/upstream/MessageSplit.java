@@ -29,7 +29,7 @@ public class MessageSplit extends MessageToMessageEncoder<Message> {
 			List<Object> out) throws Exception {
 		out.add(msg.getOpCode());
 		if(msg.getOpCode().isDataContained()) {
-			out.add(msg.getData().length);
+			out.add(msg.getData().size());
 			for(Object o : msg.getData()) {
 				out.add(o);
 			}

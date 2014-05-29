@@ -1,5 +1,7 @@
 package de.netprojectev.networking;
 
+import java.util.ArrayList;
+
 
 
 /**
@@ -9,7 +11,7 @@ package de.netprojectev.networking;
 public class Message {
 	
 	private final OpCode opCode;
-	private Object[] data;
+	private ArrayList<Object> data;
 	
 	public Message(OpCode opCode) {
 		this.opCode = opCode;
@@ -17,14 +19,17 @@ public class Message {
 	
 	public Message(OpCode opCode, Object... data) {
 		this.opCode = opCode;
-		this.data = data;
+		this.data = new ArrayList<Object>();
+		for(Object d : data) {
+			this.data.add(d);
+		}
 	}
 
 	public OpCode getOpCode() {
 		return opCode;
 	}
 
-	public Object[] getData() {
+	public ArrayList<Object> getData() {
 		return data;
 	}
 

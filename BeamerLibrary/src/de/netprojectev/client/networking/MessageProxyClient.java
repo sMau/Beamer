@@ -423,7 +423,7 @@ public class MessageProxyClient {
 	}
 
 	private void receivedServerFonts(Message msg) {
-		String[] fontFamilies = (String[]) msg.getData()[0];
+		String[] fontFamilies = (String[]) msg.getData().get(0);
 		prefs.setServerFonts(fontFamilies);
 	}
 
@@ -448,8 +448,8 @@ public class MessageProxyClient {
 	}
 
 	private void updatePropertyAck(Message msg) {
-		String key = (String) msg.getData()[0];
-		String newValue = (String) msg.getData()[1];
+		String key = (String) msg.getData().get(0);
+		String newValue = (String) msg.getData().get(1);
 		prefs.serverPropertyUpdated(key, newValue); 
 		if(serverPropertyUpdateListener != null) {
 			serverPropertyUpdateListener.propertyUpdated();
@@ -457,7 +457,7 @@ public class MessageProxyClient {
 	}
 
 	private void initServerProperties(Message msg) {
-		Properties serverProps = (Properties) msg.getData()[0];
+		Properties serverProps = (Properties) msg.getData().get(0);
 		prefs.initServerProperties(serverProps);
 	}
 
@@ -471,13 +471,13 @@ public class MessageProxyClient {
 	}
 
 	private void timeleftSync(Message msg) {
-		long currentTimeLeftInSeconds = (Long) msg.getData()[0];
+		long currentTimeLeftInSeconds = (Long) msg.getData().get(0);
 		timeSyncListener.timesync(currentTimeLeftInSeconds);
 		
 	}
 
 	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
-		UUID toReset = (UUID) msg.getData()[0];
+		UUID toReset = (UUID) msg.getData().get(0);
 		mediaModel.resetShowCount(toReset);
 	}
 
@@ -515,18 +515,18 @@ public class MessageProxyClient {
 
 	private void mediaFileDequeued(Message msg) throws MediaDoesNotExsistException,
 			OutOfSyncException {
-		DequeueData toDequeue = (DequeueData) msg.getData()[0];
+		DequeueData toDequeue = (DequeueData) msg.getData().get(0);
 		mediaModel.dequeueMediaFile(toDequeue.getRow(), toDequeue.getId());
 
 	}
 
 	private void mediaFileShowing(Message msg) throws MediaDoesNotExsistException {
-		UUID fileShowing = (UUID) msg.getData()[0];
+		UUID fileShowing = (UUID) msg.getData().get(0);
 		mediaModel.setAsCurrent(fileShowing);
 	}
 
 	private void mediaFileQueued(Message msg) throws MediaDoesNotExsistException {
-		UUID toQueue = (UUID) msg.getData()[0];
+		UUID toQueue = (UUID) msg.getData().get(0);
 		mediaModel.queueMediaFile(toQueue);
 	}
 
@@ -536,7 +536,7 @@ public class MessageProxyClient {
 			autoReconnectTimer.purge();
 			autoReconnectTimer = null;
 		}
-		client.loginFailed((String) msg.getData()[0]);
+		client.loginFailed((String) msg.getData().get(0));
 	}
 
 	private void connectionSuccessful(Message msg) {
@@ -550,7 +550,7 @@ public class MessageProxyClient {
 	}
 
 	private void mediaFileEdited(Message msg) {
-		ClientMediaFile media = (ClientMediaFile) msg.getData()[0];
+		ClientMediaFile media = (ClientMediaFile) msg.getData().get(0);
 		try {
 			mediaModel.replaceMediaFile(media);
 		} catch (MediaDoesNotExsistException e) {
@@ -559,7 +559,7 @@ public class MessageProxyClient {
 	}
 
 	private void liveTickerElementEdited(Message msg) {
-		ClientTickerElement e = (ClientTickerElement) msg.getData()[0];
+		ClientTickerElement e = (ClientTickerElement) msg.getData().get(0);
 		try {
 			tickerModel.replaceTickerElement(e);
 		} catch (MediaDoesNotExsistException e1) {
@@ -568,43 +568,43 @@ public class MessageProxyClient {
 	}
 
 	private void themeRemoved(Message msg) {
-		UUID toRemove = (UUID) msg.getData()[0];
+		UUID toRemove = (UUID) msg.getData().get(0);
 		prefs.themeRemoved(toRemove);
 	}
 
 	private void priorityRemoved(Message msg) {
-		UUID toRemove = (UUID) msg.getData()[0];
+		UUID toRemove = (UUID) msg.getData().get(0);
 		prefs.prioRemoved(toRemove);
 	}
 
 	private void themeAdded(Message msg) {
-		Theme toAdd = (Theme) msg.getData()[0];
+		Theme toAdd = (Theme) msg.getData().get(0);
 		prefs.themeAdded(toAdd);
 	}
 
 	private void priorityAdded(Message msg) {
-		Priority toAdd = (Priority) msg.getData()[0];
+		Priority toAdd = (Priority) msg.getData().get(0);
 		prefs.prioAdded(toAdd);
 	}
 
 	private void mediaFileRemoved(Message msg) throws MediaDoesNotExsistException {
 
-		UUID toRemove = (UUID) msg.getData()[0];
+		UUID toRemove = (UUID) msg.getData().get(0);
 		mediaModel.removeMediaFile(toRemove);
 	}
 
 	private void liveTickerElementRemoved(Message msg) throws MediaDoesNotExsistException {
-		UUID toRemove = (UUID) msg.getData()[0];
+		UUID toRemove = (UUID) msg.getData().get(0);
 		tickerModel.removeTickerElement(toRemove);
 	}
 
 	private void liveTickerElementAdded(Message msg) {
-		ClientTickerElement toAdd = (ClientTickerElement) msg.getData()[0];
+		ClientTickerElement toAdd = (ClientTickerElement) msg.getData().get(0);
 		tickerModel.addTickerElement(toAdd);
 	}
 
 	private void mediaFileAdded(Message msg) {
-		ClientMediaFile toAdd = (ClientMediaFile) msg.getData()[0];
+		ClientMediaFile toAdd = (ClientMediaFile) msg.getData().get(0);
 		mediaModel.addMediaFile(toAdd);
 	}
 

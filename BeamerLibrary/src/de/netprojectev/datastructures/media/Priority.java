@@ -5,14 +5,14 @@ import java.util.UUID;
 
 /**
  * 
- * Datastructure to hold the time to show connected with a identifier (name)
+ * Datastructure to hold the time to show connected with a identifier (uuid)
  * @author samu
  *
  */
 public class Priority implements Serializable {
 
 	private static final long serialVersionUID = 4619160913893672095L;
-	private final UUID id;
+	private UUID id;
 	private String name;
 	private int minutesToShow;
 	private boolean defaultPriority;
@@ -77,6 +77,10 @@ public class Priority implements Serializable {
 
 	public void setDefaultPriority(boolean defaultPriority) {
 		this.defaultPriority = defaultPriority;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
 	}
 
 }

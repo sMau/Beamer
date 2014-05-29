@@ -16,12 +16,12 @@ import io.netty.handler.codec.MessageToByteEncoder;
  *
  */
 
-public class DataCountByteEncoder extends MessageToByteEncoder<Integer> {
-	private static final Logger log = LoggerBuilder.createLogger(DataCountByteEncoder.class);
+public class IntByteEncoder extends MessageToByteEncoder<Integer> {
+	private static final Logger log = LoggerBuilder.createLogger(IntByteEncoder.class);
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Integer msg, ByteBuf out) throws Exception {
-		out.writeByte(msg);
+		out.writeInt(msg);
 	}
 	
 	@Override
