@@ -412,19 +412,11 @@ public class MessageProxyClient {
 		case STC_FORCE_RECONNECT:
 			reconnectForced();
 			break;
-		case STC_ALL_FONTS:
-			receivedServerFonts(msg);
-			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 
-	}
-
-	private void receivedServerFonts(Message msg) {
-		String[] fontFamilies = (String[]) msg.getData().get(0);
-		prefs.setServerFonts(fontFamilies);
 	}
 
 	public void reconnectForced() {

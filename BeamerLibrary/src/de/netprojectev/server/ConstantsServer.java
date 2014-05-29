@@ -86,8 +86,6 @@ public class ConstantsServer {
 	 */
 	
 	public static final int NUMBER_OF_WORKER_THREADS = 3;
-	
-	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-	
+		
 	public static final Date TIMESTAMP = new Date();
 }

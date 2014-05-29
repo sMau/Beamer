@@ -257,29 +257,29 @@ public class MessageProxyServer {
 	}
 	
 	private void addImageFile(Message msg) throws FileNotFoundException, IOException {
-		String name = (String) msg.getData()[0];
-		Priority priority = (Priority) msg.getData()[1];
-		byte[] imageByteData = (byte[]) msg.getData()[2];
+		String name = (String) msg.getData().get(0);
+		Priority priority = (Priority) msg.getData().get(1);
+		byte[] imageByteData = (byte[]) msg.getData().get(2);
 		addMediaFile(new ImageFile(name, priority, imageByteData));
 		
 	}
 	
 	private void addCountdown(Message msg) throws FileNotFoundException, IOException {
-		addMediaFile((ServerMediaFile) msg.getData()[0]);
+		addMediaFile((ServerMediaFile) msg.getData().get(0));
 	}
 	
 	private void addThemeSlide(Message msg) throws FileNotFoundException, IOException {
-		String name = (String) msg.getData()[0];
-		UUID themeId = (UUID) msg.getData()[1];
-		Priority priority = (Priority) msg.getData()[2];
-		byte[] imageByteData = (byte[]) msg.getData()[3];
+		String name = (String) msg.getData().get(0);
+		UUID themeId = (UUID) msg.getData().get(1);
+		Priority priority = (Priority) msg.getData().get(2);
+		byte[] imageByteData = (byte[]) msg.getData().get(3);
 		
 		addMediaFile(new Themeslide(name, themeId, priority, new ImageFile(name, priority, imageByteData)));
 		
 	}
 	private void propertyUpdate(Message msg) {
-		String key = (String) msg.getData()[0];
-		String newValue = (String) msg.getData()[1];
+		String key = (String) msg.getData().get(0);
+		String newValue = (String) msg.getData().get(0);
 				
 		PreferencesModelServer.setProperty(key, newValue);
 		
@@ -300,13 +300,13 @@ public class MessageProxyServer {
 	}
 	
 	private void videoTransferReceiveData(Message msg) throws IOException, ToManyMessagesException {
-		VideoFileData data = (VideoFileData) msg.getData()[0];
+		VideoFileData data = (VideoFileData) msg.getData().get(0);
 		
 		videoFileReceiveHandler.receiveData(data.getVideoFileUUID(), data.getByteBuffer());
 	}
 	
 	private void videoTransferFinished(Message msg) throws IOException {
-		VideoFile file = (VideoFile) msg.getData()[0];
+		VideoFile file = (VideoFile) msg.getData().get(0);
 		videoFileReceiveHandler.finishingReceivingVideo(file.getId());
 		
 		file.setVideoFile(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + file.getId()));
@@ -315,20 +315,20 @@ public class MessageProxyServer {
 	}
 	
 	private void videoTransferStarted(Message msg) throws FileNotFoundException {
-		UUID idOfVideoFile = (UUID) msg.getData()[0];
-		int estMsgCount = (Integer) msg.getData()[1];
+		UUID idOfVideoFile = (UUID) msg.getData().get(0);
+		int estMsgCount = (Integer) msg.getData().get(1);
 		videoFileReceiveHandler.startingReceivingVideo(idOfVideoFile, estMsgCount);
 	}
 	
 	private void resetShowCount(Message msg) throws MediaDoesNotExsistException, IOException {
-		UUID toReset = (UUID) msg.getData()[0];
+		UUID toReset = (UUID) msg.getData().get(0);
 		mediaModel.resetShowCount(toReset);
 		broadcastMessage(new Message(OpCode.STC_RESET_SHOW_COUNT_ACK, toReset));
 		
 	}
 	
 	private void editLiveTickerElement(Message msg) throws MediaDoesNotExsistException, IOException {
-		ClientTickerElement edited = (ClientTickerElement) msg.getData()[0];
+		ClientTickerElement edited = (ClientTickerElement) msg.getData().get(0);
 		ServerTickerElement correlatedServerFile = tickerModel.getElementByID(edited.getId());
 		correlatedServerFile.setShow(edited.isShow());
 		correlatedServerFile.setText(edited.getText());
@@ -338,7 +338,7 @@ public class MessageProxyServer {
 	}
 	
 	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException {
-		ClientMediaFile editedFile = (ClientMediaFile) msg.getData()[0];
+		ClientMediaFile editedFile = (ClientMediaFile) msg.getData().get(0);
 		ServerMediaFile correlatedServerFile = mediaModel.getMediaFileById(editedFile.getId());		
 		correlatedServerFile.setName(editedFile.getName());
 		correlatedServerFile.setPriority(editedFile.getPriority());
@@ -399,7 +399,7 @@ public class MessageProxyServer {
 	}
 	
 	private void dequeueMediaFile(Message msg) throws MediaDoesNotExsistException, OutOfSyncException {
-		DequeueData mediaToDequeue = (DequeueData) msg.getData()[0];
+		DequeueData mediaToDequeue = (DequeueData) msg.getData().get(0);
 		mediaModel.dequeue(mediaToDequeue.getId(), mediaToDequeue.getRow());
 		
 		broadcastMessage(new Message(OpCode.STC_DEQUEUE_MEDIAFILE_ACK, mediaToDequeue));
@@ -484,14 +484,12 @@ public class MessageProxyServer {
 		if(fullscreenEnabled) {
 			ctx.writeAndFlush(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 		}
-		
-		ctx.writeAndFlush(new Message(OpCode.STC_ALL_FONTS, (Serializable) ConstantsServer.FONT_FAMILIES));
-		
+				
 		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
 	
 	private void removePriority(Message msg) throws IOException {
-		UUID prioToRemove = (UUID) msg.getData()[0];
+		UUID prioToRemove = (UUID) msg.getData().get(0);
 		prefsModel.removePriority(prioToRemove);
 		broadcastMessage(new Message(OpCode.STC_REMOVE_PRIORITY_ACK, prioToRemove));
 		
@@ -499,7 +497,7 @@ public class MessageProxyServer {
 	}
 
 	private void removeTheme(Message msg) throws IOException {
-		UUID themeToRemove = (UUID) msg.getData()[0];
+		UUID themeToRemove = (UUID) msg.getData().get(0);
 		prefsModel.removeTheme(themeToRemove);
 		broadcastMessage(new Message(OpCode.STC_REMOVE_THEME_ACK, themeToRemove));
 		
@@ -507,7 +505,7 @@ public class MessageProxyServer {
 	}
 
 	private void addPriority(Message msg) throws IOException {
-		Priority prioToAdd = (Priority) msg.getData()[0];
+		Priority prioToAdd = (Priority) msg.getData().get(0);
 		prefsModel.addPriority(prioToAdd);
 		broadcastMessage(new Message(OpCode.STC_ADD_PRIORITY_ACK, prioToAdd));
 		
@@ -517,7 +515,7 @@ public class MessageProxyServer {
 	}
 
 	private void addTheme(Message msg) throws IOException {
-		Theme themeToAdd = (Theme) msg.getData()[0];
+		Theme themeToAdd = (Theme) msg.getData().get(0);
 		prefsModel.addTheme(themeToAdd);
 		broadcastMessage(new Message(OpCode.STC_ADD_THEME_ACK, themeToAdd));
 		
@@ -527,7 +525,7 @@ public class MessageProxyServer {
 	}
 	
 	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException, IOException {
-		UUID eltToRemove = (UUID) msg.getData()[0];
+		UUID eltToRemove = (UUID) msg.getData().get(0);
 		tickerModel.removeTickerElement(eltToRemove);
 		
 		broadcastMessage(new Message(OpCode.STC_REMOVE_LIVE_TICKER_ELEMENT_ACK, eltToRemove));
@@ -536,7 +534,7 @@ public class MessageProxyServer {
 	}
 
 	private void addLiveTickerElement(Message msg) throws IOException {
-		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData()[0];
+		ServerTickerElement eltToAdd = (ServerTickerElement) msg.getData().get(0);
 		tickerModel.addTickerElement(eltToAdd);
 		serverGUI.updateLiveTickerString();
 		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, new ClientTickerElement(eltToAdd)));
@@ -545,7 +543,7 @@ public class MessageProxyServer {
 	}
 
 	private void queueMediaFile(Message msg) throws MediaDoesNotExsistException {
-		UUID toQueue = (UUID) msg.getData()[0];
+		UUID toQueue = (UUID) msg.getData().get(0);
 		mediaModel.queue(toQueue);		
 		
 		broadcastMessage(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, toQueue));
@@ -566,7 +564,7 @@ public class MessageProxyServer {
 	}
 
 	private void showMediaFile(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException {
-		UUID toShow = (UUID) msg.getData()[0];
+		UUID toShow = (UUID) msg.getData().get(0);
 		ServerMediaFile fileToShow = mediaModel.getMediaFileById(toShow);
 		
 		showMedia(fileToShow);
@@ -609,7 +607,7 @@ public class MessageProxyServer {
 	}
 
 	private void removeMediaFile(Message msg) throws MediaDoesNotExsistException, IOException {
-		UUID toRemove = (UUID) msg.getData()[0];
+		UUID toRemove = (UUID) msg.getData().get(0);
 		mediaModel.removeMediaFile(toRemove);
 		
 		broadcastMessage(new Message(OpCode.STC_REMOVE_MEDIA_FILE_ACK, toRemove));

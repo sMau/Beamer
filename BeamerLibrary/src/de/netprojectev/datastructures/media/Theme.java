@@ -25,6 +25,13 @@ public class Theme implements Serializable {
 		this.name  = name;
 		this.backgroundImage = bgImg;
 	}
+	
+	public Theme(String name, byte[] bgImg, UUID id) {
+		this.id = id;
+		this.name  = name;
+		this.backgroundImage = bgImg;
+
+	}
 
 	public String getName() {
 		return name;

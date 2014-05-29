@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import sun.org.mozilla.javascript.internal.ObjArray;
-import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.datastructures.media.Priority;
+import de.netprojectev.datastructures.media.Theme;
 import de.netprojectev.exceptions.DecodeMessageException;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -55,6 +54,9 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		opCode = OpCode.values()[(int) in.readByte()];
 		dataObjectCount = in.readInt();
 
+		/*
+		 * wait for the data to be available
+		 */
 		if (dataObjectCount <= 0) {
 			out.add(new Message(opCode));
 		} else {
@@ -91,19 +93,28 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		/*
 		 * Server to client
 		 */
-		case STC_ALL_FONTS:
-			break;
+
 		case STC_PROPERTY_UPDATE_ACK:
+			String key = decodeString();
+			String value = decodeString();
+			data.add(key);
+			data.add(value);
 			break;
 		case STC_INIT_PROPERTIES:
+			//TODO properties object is sent here, maybe change to repeatedly sending single props
 			break;
 		case STC_TIMELEFT_SYNC:
+			long timeleft = decodeLong();
+			data.add(timeleft);
 			break;
 		case STC_ADD_THEME_ACK:
+			data.add(decodeTheme());
 			break;
 		case STC_ADD_PRIORITY_ACK:
+			data.add(decodePriority());
 			break;
 		case STC_ADD_LIVE_TICKER_ELEMENT_ACK:
+			
 			break;
 		case STC_EDIT_LIVE_TICKER_ELEMENT_ACK:
 			break;
@@ -169,15 +180,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 			break;
 		case CTS_ADD_PRIORITY:
-			UUID id = decodeUUID();
-			int minToShow = decodeInt();
-			String name = decodeString();
-			boolean defaultPriority = decodeBoolean();
-
-			Priority prio = new Priority(name, minToShow);
-			prio.setDefaultPriority(defaultPriority);
-			prio.setId(id);
-			data.add(prio);
+			data.add(decodePriority());
 
 			break;
 		case CTS_EDIT_LIVE_TICKER_ELEMENT:
@@ -220,6 +223,35 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return data;
 	}
 
+	private Theme decodeTheme() {
+		UUID themeID = decodeUUID();
+		String themeName = decodeString();
+		byte[] imageData = decodeByteArray();
+		return new Theme(themeName, imageData, themeID);
+	}
+
+	private Priority decodePriority() {
+		UUID id = decodeUUID();
+		int minToShow = decodeInt();
+		String name = decodeString();
+		boolean defaultPriority = decodeBoolean();
+
+		Priority prio = new Priority(name, minToShow, id);
+		prio.setDefaultPriority(defaultPriority);
+		return prio;
+	}
+
+	private byte[] decodeByteArray() {
+		byte[] decoded = new byte[(int) inDup.readLong()];
+		inDup.readBytes(decoded);
+		return decoded;
+	}
+	
+	private long decodeLong() {
+		inDup.readLong();
+		return inDup.readLong();
+	}
+	
 	private String decodeString() {
 		byte[] rawString = new byte[(int) inDup.readLong()];
 		inDup.readBytes(rawString);

@@ -9,8 +9,10 @@ public class ThemeByteEncoder extends MessageToByteEncoder<Theme> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Theme msg, ByteBuf out) throws Exception {
-		// TODO Auto-generated method stub
-
+		out.writeInt(3);
+		ctx.write(msg.getId());
+		ctx.write(msg.getName());
+		ctx.writeAndFlush(msg.getBackgroundImage());
 	}
 
 }
