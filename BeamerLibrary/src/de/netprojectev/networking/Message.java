@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Message {
 
 	private final OpCode opCode;
-	private ArrayList<Object> data;
+	private ArrayList<Object> data = new ArrayList<Object>();
 
 	public Message(OpCode opCode) {
 		this.opCode = opCode;
@@ -17,7 +17,6 @@ public class Message {
 
 	public Message(OpCode opCode, Object... data) {
 		this.opCode = opCode;
-		this.data = new ArrayList<Object>();
 		for (Object d : data) {
 			this.data.add(d);
 		}

@@ -6,6 +6,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import java.util.UUID;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
@@ -14,6 +15,7 @@ import de.netprojectev.datastructures.Priority;
 import de.netprojectev.datastructures.Theme;
 import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.DecodeMessageException;
+import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -130,8 +132,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			this.data.add(value);
 			break;
 		case STC_INIT_PROPERTIES:
-			// TODO properties object is sent here, maybe change to repeatedly
-			// sending single props
+			decodeProperties(dataObjectCount);
 			break;
 		case STC_TIMELEFT_SYNC:
 			long timeleft = decodeLong();
@@ -168,7 +169,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			this.data.add(decodeUUID());
 			break;
 		case STC_DEQUEUE_MEDIAFILE_ACK:
-			this.data.add(decodeUUID());
+			this.data.add(decodeDequeueData());
 			break;
 		case STC_QUEUE_MEDIA_FILE_ACK:
 			this.data.add(decodeUUID());
@@ -254,6 +255,24 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		}
 
 		return this.data;
+	}
+
+	private Properties decodeProperties(int dataObjectCount) {
+		Properties props = new Properties();
+		
+		for(int i = 0; i < dataObjectCount/2; i++) {
+			String key = decodeString();
+			String value  = decodeString();
+			props.setProperty(key, value);
+		}
+		
+		return props;
+	}
+
+	private DequeueData decodeDequeueData() {
+		UUID id = decodeUUID();
+		int row = decodeInt();
+		return new DequeueData(row, id);
 	}
 
 	private ImageFile decodeImageFile() {

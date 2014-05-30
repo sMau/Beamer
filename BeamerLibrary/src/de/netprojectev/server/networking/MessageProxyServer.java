@@ -526,7 +526,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		broadcastMessage(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, toQueue));
 	}
 
-	public void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException, PriorityDoesNotExistException, InterruptedException {
+	private void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException, PriorityDoesNotExistException, InterruptedException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_IMAGE_FILE:
 			addImageFile(msg);

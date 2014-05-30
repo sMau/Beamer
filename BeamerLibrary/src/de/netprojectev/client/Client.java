@@ -22,6 +22,7 @@ import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.downstream.MessageDecoder;
 import de.netprojectev.networking.upstream.ClientMediaFileEncoder;
+import de.netprojectev.networking.upstream.DequeueDataByteEncoder;
 import de.netprojectev.networking.upstream.FileByteEncoder;
 import de.netprojectev.networking.upstream.LoginByteEncoder;
 import de.netprojectev.networking.upstream.MessageSplit;
@@ -74,7 +75,7 @@ public class Client {
 						ch.pipeline().addLast(new MessageDecoder(), proxy);
 						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayEncoder(), new IntByteEncoder(),
 								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
-								new UUIDByteEncoder(), new ThemeByteEncoder(), new PriorityByteEncoder(),
+								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(), new PriorityByteEncoder(),
 								new LoginByteEncoder(), new ClientMediaFileEncoder(), new ServerMediaFileEncoder(),
 								new TickerElementEncoder(), new MessageSplit());
 					}
