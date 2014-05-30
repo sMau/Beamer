@@ -9,9 +9,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.bytes.ByteArrayEncoder;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -23,7 +20,6 @@ import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.downstream.MessageDecoder;
 import de.netprojectev.networking.upstream.ClientMediaFileEncoder;
 import de.netprojectev.networking.upstream.DequeueDataByteEncoder;
-import de.netprojectev.networking.upstream.FileByteEncoder;
 import de.netprojectev.networking.upstream.LoginByteEncoder;
 import de.netprojectev.networking.upstream.MessageSplit;
 import de.netprojectev.networking.upstream.PriorityByteEncoder;

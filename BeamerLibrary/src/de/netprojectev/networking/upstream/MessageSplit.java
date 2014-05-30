@@ -27,11 +27,13 @@ public class MessageSplit extends MessageToByteEncoder<Message> {
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
 		ctx.write(msg.getOpCode());
-		if (msg.getOpCode().isDataContained()) {
-			out.writeInt(msg.getData().size());
+		if (!msg.getData().isEmpty()) {
+			out.writeBoolean(true);
 			for (Object o : msg.getData()) {
 				ctx.write(o);
 			}
+		} else {
+			out.writeBoolean(false);
 		}
 		ctx.flush();
 	}

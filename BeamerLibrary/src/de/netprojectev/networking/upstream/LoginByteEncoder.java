@@ -9,7 +9,6 @@ public class LoginByteEncoder extends MessageToByteEncoder<LoginData> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, LoginData msg, ByteBuf out) throws Exception {
-		out.writeInt(2);
 		ctx.write(msg.getAlias());
 		ctx.writeAndFlush(msg.getKey());
 	}

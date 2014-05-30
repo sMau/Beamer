@@ -9,7 +9,6 @@ public class MediaTypeByteEncoder extends MessageToByteEncoder<MediaType> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, MediaType msg, ByteBuf out) throws Exception {
-		out.writeLong(1);
 		out.writeByte(msg.ordinal());
 	}
 

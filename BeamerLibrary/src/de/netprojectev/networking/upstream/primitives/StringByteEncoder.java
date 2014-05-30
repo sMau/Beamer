@@ -12,10 +12,7 @@ public class StringByteEncoder extends MessageToByteEncoder<String> {
 	 */
 	@Override
 	protected void encode(ChannelHandlerContext ctx, String msg, ByteBuf out) throws Exception {
-
-		byte[] stringAsByte = msg.getBytes();
-		out.writeLong(stringAsByte.length);
-		out.writeBytes(stringAsByte);
+		ctx.writeAndFlush(msg.getBytes());
 	}
 
 }

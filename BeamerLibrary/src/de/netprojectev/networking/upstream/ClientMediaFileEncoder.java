@@ -9,7 +9,6 @@ public class ClientMediaFileEncoder extends MessageToByteEncoder<ClientMediaFile
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, ClientMediaFile msg, ByteBuf out) throws Exception {
-		out.writeInt(7);
 		ctx.write(msg.getId());
 		ctx.write(msg.getName());
 		ctx.write(msg.getPreview());

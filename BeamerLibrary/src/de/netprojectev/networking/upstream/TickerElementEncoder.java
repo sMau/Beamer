@@ -9,7 +9,6 @@ public class TickerElementEncoder extends MessageToByteEncoder<TickerElement> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, TickerElement msg, ByteBuf out) throws Exception {
-		out.writeInt(3);
 		ctx.write(msg.getId());
 		ctx.write(msg.getText());
 		ctx.writeAndFlush(msg.isShow());

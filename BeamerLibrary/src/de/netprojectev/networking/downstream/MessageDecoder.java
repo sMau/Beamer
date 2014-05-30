@@ -34,7 +34,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	 * depending on opcodes different data encoding steps should be done
 	 */
 
-	private ByteBuf inDup;
+	private ByteBuf in;
 	private ArrayList<Object> data = new ArrayList<Object>(2);
 
 	public MessageDecoder() {
@@ -54,22 +54,24 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 		in.markReaderIndex();
 
-		if (in.readableBytes() < 5) {
+		if (in.readableBytes() < 2) {
 			in.resetReaderIndex();
 			return;
 		}
 
 		opCode = OpCode.values()[in.readByte()];
-		dataObjectCount = in.readInt();
-
+		boolean containsData = in.readBoolean();
+		
 		/*
 		 * wait for the data to be available
 		 */
-		if (dataObjectCount <= 0) {
+		if (!containsData) {
 			out.add(new Message(opCode));
 		} else {
-			this.inDup = in.duplicate();
-			for (int i = 0; i < dataObjectCount; i++) {
+			
+			this.in = in;
+			
+			/*for (int i = 0; i < dataObjectCount; i++) {
 				if (in.readableBytes() < 8) {
 					in.resetReaderIndex();
 					return;
@@ -82,20 +84,20 @@ public class MessageDecoder extends ByteToMessageDecoder {
 				}
 
 			}
-			// now all data should be available
-			out.add(new Message(opCode, decodeData(opCode, dataObjectCount)));
+			// now all data should be available*/
+			
+			out.add(new Message(opCode, decodeData(opCode)));
 		}
 
 	}
 
 	private boolean decodeBoolean() {
-		this.inDup.readLong();
-		return this.inDup.readBoolean();
+		return this.in.readBoolean();
 	}
 
 	private byte[] decodeByteArray() {
-		byte[] decoded = new byte[(int) this.inDup.readLong()];
-		this.inDup.readBytes(decoded);
+		byte[] decoded = new byte[this.in.readInt()];
+		this.in.readBytes(decoded);
 		return decoded;
 	}
 
@@ -111,7 +113,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
 	}
 
-	private ArrayList<Object> decodeData(OpCode opCode, int dataObjectCount) throws DecodeMessageException {
+	private ArrayList<Object> decodeData(OpCode opCode) throws DecodeMessageException {
 
 		/*
 		 * switch over all opcodes, indicating that data is contained
@@ -132,7 +134,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			this.data.add(value);
 			break;
 		case STC_INIT_PROPERTIES:
-			decodeProperties(dataObjectCount);
+			decodeProperties(in.readInt());
 			break;
 		case STC_TIMELEFT_SYNC:
 			long timeleft = decodeLong();
@@ -260,7 +262,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	private Properties decodeProperties(int dataObjectCount) {
 		Properties props = new Properties();
 		
-		for(int i = 0; i < dataObjectCount/2; i++) {
+		for(int i = 0; i < dataObjectCount; i++) {
 			String key = decodeString();
 			String value  = decodeString();
 			props.setProperty(key, value);
@@ -283,8 +285,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	}
 
 	private int decodeInt() {
-		this.inDup.readLong();
-		return this.inDup.readInt();
+		return this.in.readInt();
 	}
 
 	private Object decodeLoginData() {
@@ -294,13 +295,11 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	}
 
 	private long decodeLong() {
-		this.inDup.readLong();
-		return this.inDup.readLong();
+		return this.in.readLong();
 	}
 
 	private MediaType decodeMediaType() {
-		this.inDup.readLong();
-		return MediaType.values()[this.inDup.readByte()];
+		return MediaType.values()[this.in.readByte()];
 	}
 
 	private Priority decodePriority() {
@@ -315,9 +314,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	}
 
 	private String decodeString() {
-		byte[] rawString = new byte[(int) this.inDup.readLong()];
-		this.inDup.readBytes(rawString);
-		return new String(rawString);
+		return new String(decodeByteArray());
 	}
 
 	private Theme decodeTheme() {
@@ -341,9 +338,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	}
 
 	private UUID decodeUUID() {
-		this.inDup.readLong(); // read length
-		long least = this.inDup.readLong();
-		long most = this.inDup.readLong();
+		long least = this.in.readLong();
+		long most = this.in.readLong();
 		return new UUID(most, least);
 	}
 

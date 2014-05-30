@@ -8,7 +8,6 @@ public class BooleanByteEncoder extends MessageToByteEncoder<Boolean> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Boolean msg, ByteBuf out) throws Exception {
-		out.writeLong(1);
 		out.writeBoolean(msg);
 	}
 

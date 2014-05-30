@@ -19,11 +19,9 @@ public class ServerMediaFileEncoder extends MessageToByteEncoder<ServerMediaFile
 	protected void encode(ChannelHandlerContext ctx, ServerMediaFile msg, ByteBuf out) throws Exception {
 		if (msg instanceof ImageFile) {
 			ImageFile image = (ImageFile) msg;
-			out.writeInt(3);
 			encodeImageFile(ctx, image);
 			ctx.flush();
 		} else if (msg instanceof Themeslide) {
-			out.writeInt(4);
 			encodeImageFile(ctx, ((Themeslide) msg).getImageRepresantation());
 			ctx.writeAndFlush(((Themeslide) msg).getThemeId());
 		} else if (msg instanceof VideoFile) {

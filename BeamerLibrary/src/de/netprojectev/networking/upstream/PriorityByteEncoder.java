@@ -10,7 +10,6 @@ public class PriorityByteEncoder extends MessageToByteEncoder<Priority> {
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Priority msg, ByteBuf out) throws Exception {
 
-		out.writeInt(4); // object count
 		ctx.write(msg.getId());
 		ctx.write(msg.getMinutesToShow());
 		ctx.write(msg.getName());

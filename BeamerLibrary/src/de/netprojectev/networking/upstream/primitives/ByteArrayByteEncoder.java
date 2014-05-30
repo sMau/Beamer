@@ -8,7 +8,7 @@ public class ByteArrayByteEncoder extends MessageToByteEncoder<byte[]> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, byte[] msg, ByteBuf out) throws Exception {
-		out.writeLong(msg.length);
+		out.writeInt(msg.length);
 		out.writeBytes(msg);
 
 	}

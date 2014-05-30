@@ -23,7 +23,6 @@ public class IntByteEncoder extends MessageToByteEncoder<Integer> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Integer msg, ByteBuf out) throws Exception {
-		out.writeLong(4);
 		out.writeInt(msg);
 	}
 

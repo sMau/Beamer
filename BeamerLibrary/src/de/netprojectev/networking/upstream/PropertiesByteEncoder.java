@@ -13,7 +13,7 @@ public class PropertiesByteEncoder extends MessageToByteEncoder<Properties> {
 		if(msg.isEmpty()) {
 			return;
 		}
-		out.writeInt(msg.size() * 2);
+		out.writeInt(msg.size());
 		
 		for(String key : msg.stringPropertyNames()) {
 			ctx.write(key);

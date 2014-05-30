@@ -9,9 +9,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.bytes.ByteArrayEncoder;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.util.HashedWheelTimer;
 
 import java.io.File;
@@ -24,7 +21,6 @@ import de.netprojectev.networking.OpCode;
 import de.netprojectev.networking.downstream.MessageDecoder;
 import de.netprojectev.networking.upstream.ClientMediaFileEncoder;
 import de.netprojectev.networking.upstream.DequeueDataByteEncoder;
-import de.netprojectev.networking.upstream.FileByteEncoder;
 import de.netprojectev.networking.upstream.LoginByteEncoder;
 import de.netprojectev.networking.upstream.MessageSplit;
 import de.netprojectev.networking.upstream.PriorityByteEncoder;
@@ -79,7 +75,7 @@ public class Server {
 				.childOption(ChannelOption.SO_KEEPALIVE, true)
 				.childOption(ChannelOption.TCP_NODELAY, true);
 
-		ChannelFuture f = b.bind(this.port);
+		b.bind(this.port);
 
 		log.info("Binding listening socket to port: " + this.port);
 	}
