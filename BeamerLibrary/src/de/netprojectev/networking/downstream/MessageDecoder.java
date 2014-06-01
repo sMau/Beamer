@@ -70,50 +70,21 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		} else {
 			
 			this.in = in;
+			in.markReaderIndex();
 			
-			/*for (int i = 0; i < dataObjectCount; i++) {
-				if (in.readableBytes() < 8) {
-					in.resetReaderIndex();
-					return;
-				}
-				// TODO big file transfer is ignored here, have to fix this
-				long dataObjectLength = in.readLong();
-				if (in.readableBytes() < dataObjectLength) {
-					in.resetReaderIndex();
-					return;
-				}
-
+			ArrayList<Object> decodedData = decodeData(opCode);
+			
+			if (decodedData == null) {
+				in.resetReaderIndex();
+				return;
 			}
-			// now all data should be available*/
 			
-			out.add(new Message(opCode, decodeData(opCode)));
+			out.add(new Message(opCode, decodedData));
 		}
 
 	}
 
-	private boolean decodeBoolean() {
-		return this.in.readBoolean();
-	}
-
-	private byte[] decodeByteArray() {
-		byte[] decoded = new byte[this.in.readInt()];
-		this.in.readBytes(decoded);
-		return decoded;
-	}
-
-	private ClientMediaFile decodeClientMediaFile() {
-		UUID id = decodeUUID();
-		String name = decodeString();
-		byte[] preview = decodeByteArray();
-		UUID priorityID = decodeUUID();
-		int showCount = decodeInt();
-		MediaType type = decodeMediaType();
-		boolean current = decodeBoolean();
-
-		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
-	}
-
-	private ArrayList<Object> decodeData(OpCode opCode) throws DecodeMessageException {
+	private boolean decodeData(OpCode opCode) throws DecodeMessageException {
 
 		/*
 		 * switch over all opcodes, indicating that data is contained
@@ -258,6 +229,28 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 		return this.data;
 	}
+	
+ //TODO last worked here, next fix the wait for all data there thing. need to return when not all bytes are readable
+	private int decodeInt() {
+		return this.in.readInt();
+	}
+	
+	private long decodeLong() {
+		return this.in.readLong();
+	}
+	private MediaType decodeMediaType() {
+		return MediaType.values()[this.in.readByte()];
+	}
+	
+	private boolean decodeBoolean() {
+		return this.in.readBoolean();
+	}
+
+	private byte[] decodeByteArray() {
+		byte[] decoded = new byte[this.in.readInt()];
+		this.in.readBytes(decoded);
+		return decoded;
+	}
 
 	private Properties decodeProperties(int dataObjectCount) {
 		Properties props = new Properties();
@@ -270,7 +263,20 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		
 		return props;
 	}
+	
 
+	private ClientMediaFile decodeClientMediaFile() {
+		UUID id = decodeUUID();
+		String name = decodeString();
+		byte[] preview = decodeByteArray();
+		UUID priorityID = decodeUUID();
+		int showCount = decodeInt();
+		MediaType type = decodeMediaType();
+		boolean current = decodeBoolean();
+
+		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
+	}
+	
 	private DequeueData decodeDequeueData() {
 		UUID id = decodeUUID();
 		int row = decodeInt();
@@ -284,22 +290,10 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return new ImageFile(name, prioID, data);
 	}
 
-	private int decodeInt() {
-		return this.in.readInt();
-	}
-
 	private Object decodeLoginData() {
 		String alias = decodeString();
 		String key = decodeString();
 		return new LoginData(alias, key);
-	}
-
-	private long decodeLong() {
-		return this.in.readLong();
-	}
-
-	private MediaType decodeMediaType() {
-		return MediaType.values()[this.in.readByte()];
 	}
 
 	private Priority decodePriority() {
@@ -338,8 +332,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	}
 
 	private UUID decodeUUID() {
-		long least = this.in.readLong();
-		long most = this.in.readLong();
+		long least = decodeLong();
+		long most = decodeLong();
 		return new UUID(most, least);
 	}
 
