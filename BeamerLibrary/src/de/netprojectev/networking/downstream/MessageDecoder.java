@@ -36,7 +36,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	private ByteBuf in;
 	private ArrayList<Object> data = new ArrayList<Object>(2);
-
+	private boolean success;
+	
 	public MessageDecoder() {
 
 	}
@@ -46,7 +47,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			List<Object> out) throws Exception {
 
 		OpCode opCode;
-		int dataObjectCount = 0;
 
 		/*
 		 * wait for the header to be available
@@ -69,29 +69,27 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			out.add(new Message(opCode));
 		} else {
 			
-			this.in = in;
-			in.markReaderIndex();
+			this.in = in;			
+			decodeData(opCode);
 			
-			ArrayList<Object> decodedData = decodeData(opCode);
-			
-			if (decodedData == null) {
+			if (!success) {
 				in.resetReaderIndex();
 				return;
 			}
 			
-			out.add(new Message(opCode, decodedData));
+			out.add(new Message(opCode, data));
 		}
 
 	}
 
-	private boolean decodeData(OpCode opCode) throws DecodeMessageException {
+	private void decodeData(OpCode opCode) throws DecodeMessageException {
 
+		this.data = new ArrayList<Object>();
+		success = true;
+		
 		/*
 		 * switch over all opcodes, indicating that data is contained
 		 */
-
-		this.data.clear();
-
 		switch (opCode) {
 
 		/*
@@ -227,26 +225,46 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			throw new DecodeMessageException("The header says the message contains data, but it does not.");
 		}
 
-		return this.data;
 	}
 	
  //TODO last worked here, next fix the wait for all data there thing. need to return when not all bytes are readable
+	//the idea I started to implement is not this good propably, have to check for non primitives if its sufficent
 	private int decodeInt() {
+		if(in.readableBytes() < 4) {
+			success = false;
+			return -1;
+		}
 		return this.in.readInt();
 	}
 	
 	private long decodeLong() {
+		if(in.readableBytes() < 8) {
+			success = false;
+			return -1;
+		}
 		return this.in.readLong();
 	}
 	private MediaType decodeMediaType() {
+		if(in.readableBytes() < 1) {
+			success = false;
+			return MediaType.Unknown;
+		}
 		return MediaType.values()[this.in.readByte()];
 	}
 	
 	private boolean decodeBoolean() {
+		if(in.readableBytes() < 1) {
+			success = false;
+			return false;
+		}
 		return this.in.readBoolean();
 	}
 
 	private byte[] decodeByteArray() {
+		if(in.readableBytes() < 4) {
+			success = false;
+			return null;
+		}
 		byte[] decoded = new byte[this.in.readInt()];
 		this.in.readBytes(decoded);
 		return decoded;
