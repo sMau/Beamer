@@ -229,6 +229,10 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	
  //TODO last worked here, next fix the wait for all data there thing. need to return when not all bytes are readable
 	//the idea I started to implement is not this good propably, have to check for non primitives if its sufficent
+	
+	//better idea take a look at replaying decoder implementation. This raises an error which is catched at an 
+	//appriopriate point and readerIndex is reset. http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html
+	
 	private int decodeInt() {
 		if(in.readableBytes() < 4) {
 			success = false;
