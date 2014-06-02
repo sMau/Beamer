@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
 
+import org.apache.logging.log4j.Logger;
+
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.MediaType;
 import de.netprojectev.datastructures.Priority;
@@ -21,8 +23,11 @@ import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.Themeslide;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class MessageDecoder extends ReplayingDecoder<Void> {
+
+	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
 
 	/*
 	 * this one passes MEssage Objects to the next Handler, which should either
@@ -36,10 +41,6 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 
 	private ByteBuf in;
 	private ArrayList<Object> data = new ArrayList<Object>(15);
-	
-	public MessageDecoder() {
-
-	}
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
@@ -313,6 +314,12 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		long least = decodeLong();
 		long most = decodeLong();
 		return new UUID(most, least);
+	}
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		ctx.channel().close(); // XXX check if proper handling possible
 	}
 
 }

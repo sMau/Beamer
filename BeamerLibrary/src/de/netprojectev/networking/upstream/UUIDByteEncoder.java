@@ -21,7 +21,8 @@ public class UUIDByteEncoder extends MessageToByteEncoder<UUID> {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler, forcing reconnect.", cause.getCause());
-		ctx.channel().close(); // XXX
+		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		ctx.channel().close(); // XXX check if proper handling possible
 	}
+
 }

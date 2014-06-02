@@ -95,6 +95,12 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	protected void decode(ChannelHandlerContext ctx, Message msg, List<Object> out) throws Exception {
 		receiveMessage(msg);
 	}
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		ctx.channel().close(); // XXX check if proper handling possible
+	}
 
 
 	private void autoModeDisabled(Message msg) {
