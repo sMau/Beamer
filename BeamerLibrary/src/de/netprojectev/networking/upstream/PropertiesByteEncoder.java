@@ -21,7 +21,7 @@ public class PropertiesByteEncoder extends MessageToByteEncoder<Properties> {
 			return;
 		}
 		out.writeInt(msg.size());
-		
+	
 		for(String key : msg.stringPropertyNames()) {
 			ctx.write(key);
 			ctx.write(msg.getProperty(key));

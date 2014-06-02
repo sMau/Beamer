@@ -436,8 +436,6 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
 
-	// TODO todo list
-
 	public DefaultChannelGroup getAllClients() {
 		return this.allClients;
 	}
