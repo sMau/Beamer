@@ -28,6 +28,7 @@ import de.netprojectev.networking.upstream.ThemeByteEncoder;
 import de.netprojectev.networking.upstream.TickerElementEncoder;
 import de.netprojectev.networking.upstream.UUIDByteEncoder;
 import de.netprojectev.networking.upstream.primitives.BooleanByteEncoder;
+import de.netprojectev.networking.upstream.primitives.ByteArrayByteEncoder;
 import de.netprojectev.networking.upstream.primitives.IntByteEncoder;
 import de.netprojectev.networking.upstream.primitives.MediaTypeByteEncoder;
 import de.netprojectev.networking.upstream.primitives.OpCodeByteEncoder;
@@ -67,13 +68,13 @@ public class Client {
 				.handler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
-
-						ch.pipeline().addLast(new MessageDecoder(), proxy);
-						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayEncoder(), new IntByteEncoder(),
+						
+						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(),
 								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
 								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(), new PriorityByteEncoder(),
 								new LoginByteEncoder(), new ClientMediaFileEncoder(), new ServerMediaFileEncoder(),
 								new TickerElementEncoder(), new MessageSplit());
+						ch.pipeline().addLast(new MessageDecoder(), proxy);
 					}
 				});
 
@@ -81,13 +82,13 @@ public class Client {
 		b.option(ChannelOption.SO_KEEPALIVE, true);
 
 		ChannelFuture connectFuture = b.connect(this.host, this.port).sync();
-		connectFuture.awaitUninterruptibly(5000); // TODO change this fucking
+		connectFuture.awaitUninterruptibly(120000); // TODO change this fucking
 													// shit!
 		if (connectFuture.isSuccess()) {
 			this.proxy.setChannelToServer(connectFuture.channel());
 			log.info("Client successfully connected to " + this.host + ":" + this.port);
 
-			boolean loginSend = this.proxy.sendLoginRequest(this.login).awaitUninterruptibly(5000); // TODO shit!
+			boolean loginSend = this.proxy.sendLoginRequest(this.login).awaitUninterruptibly(120000); // TODO shit!
 			if (!loginSend) {
 				log.error("login message could not be send");
 				this.gui.errorDuringLogin("Login message could not be sent.");
@@ -105,7 +106,7 @@ public class Client {
 
 	public void disconnect() {
 		log.info("Client disconnecting");
-		this.proxy.sendDisconnectRequest().awaitUninterruptibly(5000);// TODO shit!
+		this.proxy.sendDisconnectRequest().awaitUninterruptibly(120000);// TODO shit!
 		releaseExternalRessources();
 		log.info("Disconnecting complete");
 	}

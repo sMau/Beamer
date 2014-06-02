@@ -29,6 +29,7 @@ import de.netprojectev.networking.upstream.ThemeByteEncoder;
 import de.netprojectev.networking.upstream.TickerElementEncoder;
 import de.netprojectev.networking.upstream.UUIDByteEncoder;
 import de.netprojectev.networking.upstream.primitives.BooleanByteEncoder;
+import de.netprojectev.networking.upstream.primitives.ByteArrayByteEncoder;
 import de.netprojectev.networking.upstream.primitives.IntByteEncoder;
 import de.netprojectev.networking.upstream.primitives.MediaTypeByteEncoder;
 import de.netprojectev.networking.upstream.primitives.OpCodeByteEncoder;
@@ -63,12 +64,13 @@ public class Server {
 				.childHandler(new ChannelInitializer<SocketChannel>() {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
-						ch.pipeline().addLast(new MessageDecoder(), proxy);
-						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayEncoder(), new IntByteEncoder(),
+						
+						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(),
 								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
 								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(), new PriorityByteEncoder(),
 								new LoginByteEncoder(), new ClientMediaFileEncoder(), new ServerMediaFileEncoder(),
 								new TickerElementEncoder(), new MessageSplit());
+						ch.pipeline().addLast(new MessageDecoder(), proxy);
 					}
 				})
 				.option(ChannelOption.SO_BACKLOG, 128)

@@ -15,6 +15,13 @@ public class Message {
 		this.opCode = opCode;
 	}
 
+	public Message(OpCode opCode, ArrayList<Object> data) {
+		this.opCode = opCode;
+		for (Object d : data) {
+			this.data.add(d);
+		}
+	}
+	
 	public Message(OpCode opCode, Object... data) {
 		this.opCode = opCode;
 		for (Object d : data) {

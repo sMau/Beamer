@@ -2,7 +2,7 @@ package de.netprojectev.networking.downstream;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ByteToMessageDecoder;
+import io.netty.handler.codec.ReplayingDecoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.Themeslide;
 
-public class MessageDecoder extends ByteToMessageDecoder {
+public class MessageDecoder extends ReplayingDecoder<Void> {
 
 	/*
 	 * this one passes MEssage Objects to the next Handler, which should either
@@ -35,8 +35,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	 */
 
 	private ByteBuf in;
-	private ArrayList<Object> data = new ArrayList<Object>(2);
-	private boolean success;
+	private ArrayList<Object> data = new ArrayList<Object>(15);
 	
 	public MessageDecoder() {
 
@@ -47,18 +46,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			List<Object> out) throws Exception {
 
 		OpCode opCode;
-
-		/*
-		 * wait for the header to be available
-		 */
-
-		in.markReaderIndex();
-
-		if (in.readableBytes() < 2) {
-			in.resetReaderIndex();
-			return;
-		}
-
 		opCode = OpCode.values()[in.readByte()];
 		boolean containsData = in.readBoolean();
 		
@@ -68,15 +55,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		if (!containsData) {
 			out.add(new Message(opCode));
 		} else {
-			
 			this.in = in;			
 			decodeData(opCode);
-			
-			if (!success) {
-				in.resetReaderIndex();
-				return;
-			}
-			
 			out.add(new Message(opCode, data));
 		}
 
@@ -84,8 +64,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	private void decodeData(OpCode opCode) throws DecodeMessageException {
 
-		this.data = new ArrayList<Object>();
-		success = true;
+		this.data.clear();
 		
 		/*
 		 * switch over all opcodes, indicating that data is contained
@@ -227,48 +206,25 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	}
 	
- //TODO last worked here, next fix the wait for all data there thing. need to return when not all bytes are readable
-	//the idea I started to implement is not this good propably, have to check for non primitives if its sufficent
-	
-	//better idea take a look at replaying decoder implementation. This raises an error which is catched at an 
-	//appriopriate point and readerIndex is reset. http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html
+ //TODO add states to the replaying decoder (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
+	// to improve the performance for longer messages
 	
 	private int decodeInt() {
-		if(in.readableBytes() < 4) {
-			success = false;
-			return -1;
-		}
 		return this.in.readInt();
 	}
 	
 	private long decodeLong() {
-		if(in.readableBytes() < 8) {
-			success = false;
-			return -1;
-		}
 		return this.in.readLong();
 	}
 	private MediaType decodeMediaType() {
-		if(in.readableBytes() < 1) {
-			success = false;
-			return MediaType.Unknown;
-		}
 		return MediaType.values()[this.in.readByte()];
 	}
 	
 	private boolean decodeBoolean() {
-		if(in.readableBytes() < 1) {
-			success = false;
-			return false;
-		}
 		return this.in.readBoolean();
 	}
 
 	private byte[] decodeByteArray() {
-		if(in.readableBytes() < 4) {
-			success = false;
-			return null;
-		}
 		byte[] decoded = new byte[this.in.readInt()];
 		this.in.readBytes(decoded);
 		return decoded;
