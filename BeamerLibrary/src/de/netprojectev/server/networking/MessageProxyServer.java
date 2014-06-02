@@ -492,7 +492,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			if (findUserByAlias(login.getAlias()) == null) {
 				clientConnected(ctx.channel(), login.getAlias());
 
-				ctx.writeAndFlush(new Message(OpCode.STC_CONNECTION_ACK)).sync(); //XXX maybe not wait
+				ctx.writeAndFlush(new Message(OpCode.STC_CONNECTION_ACK));
 
 				log.info("Client connected successfully. Alias: " + login.getAlias());
 			} else {

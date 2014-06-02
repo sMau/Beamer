@@ -16,11 +16,16 @@ public class PropertiesByteEncoder extends MessageToByteEncoder<Properties> {
 
 	
 	@Override
-	protected void encode(ChannelHandlerContext ctx, Properties msg, ByteBuf out) throws Exception {
-		if(msg.isEmpty()) {
-			return;
+	protected void encode(ChannelHandlerContext ctx, Properties msg, ByteBuf out) throws Exception {		
+		
+		//XXX terrible evaluation of the size of the properties set, but .size() always yields 0
+		int i = 0;
+		for(String key : msg.stringPropertyNames()) {
+			i++;
 		}
-		out.writeInt(msg.size());
+		log.info("Init Properties key val count: " + i);
+
+		out.writeInt(i);
 	
 		for(String key : msg.stringPropertyNames()) {
 			ctx.write(key);

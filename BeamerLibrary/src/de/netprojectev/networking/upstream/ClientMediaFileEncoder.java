@@ -21,7 +21,7 @@ public class ClientMediaFileEncoder extends MessageToByteEncoder<ClientMediaFile
 		ctx.write(msg.getPriorityID());
 		ctx.write(msg.getShowCount());
 		ctx.write(msg.getType());
-		ctx.write(msg.isCurrent());
+		ctx.writeAndFlush(msg.isCurrent());
 	}
 
 	@Override

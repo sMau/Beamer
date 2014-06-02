@@ -28,12 +28,12 @@ public class MessageSplit extends MessageToByteEncoder<Message> {
 	protected void encode(ChannelHandlerContext ctx, Message msg, ByteBuf out) throws Exception {
 		ctx.write(msg.getOpCode());
 		if (!msg.getData().isEmpty()) {
-			ctx.writeAndFlush(true);
+			ctx.write(true);
 			for (Object o : msg.getData()) {
 				ctx.write(o);
 			}
 		} else {
-			ctx.writeAndFlush(false);
+			ctx.write(false);
 		}
 		ctx.flush();
 	}

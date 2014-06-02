@@ -83,7 +83,9 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 			this.data.add(value);
 			break;
 		case STC_INIT_PROPERTIES:
-			decodeProperties(in.readInt());
+			int keyValueCount = in.readInt();
+			log.info("Init Properties key val count: " + keyValueCount);
+			decodeProperties(keyValueCount);
 			break;
 		case STC_TIMELEFT_SYNC:
 			long timeleft = decodeLong();
