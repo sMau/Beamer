@@ -79,7 +79,7 @@ public abstract class PreferencesModelClient {
 	private UUID defaultPriority;
 
 	protected Properties clientProperties;
-	protected Properties serverProperties;
+	protected Properties serverProperties = new Properties();
 
 	private String[] serverFonts;
 

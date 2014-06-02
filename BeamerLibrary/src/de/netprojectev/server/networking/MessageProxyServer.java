@@ -397,40 +397,42 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		HashMap<UUID, Theme> themes = this.prefsModel.getThemes();
 		HashMap<UUID, Priority> priorities = this.prefsModel.getPrios();
 
-		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_START));
+		ctx.write(new Message(OpCode.STC_FULL_SYNC_START));
 
-		ctx.writeAndFlush(new Message(OpCode.STC_INIT_PROPERTIES, PreferencesModelServer.getProps()));
-
+		for(String k : PreferencesModelServer.getProps().stringPropertyNames()) {
+			ctx.write(new Message(OpCode.STC_PROPERTY_UPDATE_ACK, k, PreferencesModelServer.getProps().getProperty(k)));
+		}
+		
 		for (UUID id : allMedia.keySet()) {
-			ctx.writeAndFlush(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
+			ctx.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
 		}
 
 		for (UUID id : customQueue) {
-			ctx.writeAndFlush(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
+			ctx.write(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
 		}
 
 		for (UUID id : tickerElements.keySet()) {
-			ctx.writeAndFlush(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, tickerElements.get(id)));
+			ctx.write(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, tickerElements.get(id)));
 		}
 
 		for (UUID id : themes.keySet()) {
-			ctx.writeAndFlush(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
+			ctx.write(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
 		}
 
 		for (UUID id : priorities.keySet()) {
-			ctx.writeAndFlush(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
+			ctx.write(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
 		}
 
 		if (this.automodeEnabled) {
-			ctx.writeAndFlush(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
+			ctx.write(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 		}
 
 		if (this.liveTickerEnabled) {
-			ctx.writeAndFlush(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
+			ctx.write(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
 		}
 
 		if (this.fullscreenEnabled) {
-			ctx.writeAndFlush(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
+			ctx.write(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 		}
 
 		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
