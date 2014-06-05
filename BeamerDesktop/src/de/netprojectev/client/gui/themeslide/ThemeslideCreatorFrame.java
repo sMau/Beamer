@@ -430,7 +430,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		if (name != null && priority != null && theme != null) {
 
-			proxy.sendAddThemeSlide(name, theme.getId(), priority, generateByteArray());
+			proxy.sendAddThemeSlide(name, theme.getId(), generateByteArray());
 
 			return true;
 		} else {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Class to encapsulate messages transfered via network in the control flow.
- * Actual network messages are converted to plain byte streams.
+ * Actually network messages are converted to plain byte streams.
  */
 public class Message {
 

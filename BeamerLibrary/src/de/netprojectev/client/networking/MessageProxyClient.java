@@ -401,8 +401,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		String name = file.getName();
 		byte[] imageDataAsBytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
 
-		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, new ImageFile(name,
-				this.prefs.getDefaultPriority(), imageDataAsBytes)));
+		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, name, imageDataAsBytes));
 	}
 
 	public void sendAddImageFiles(File[] files) throws IOException {
@@ -433,8 +432,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	// TODO send the data using the low level encoders of netty
-	public void sendAddThemeSlide(String name, UUID id, Priority priority, byte[] imageDataAsBytes) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, id, priority, imageDataAsBytes));
+	public void sendAddThemeSlide(String name, UUID theme, byte[] imageDataAsBytes) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name,imageDataAsBytes, theme));
 	}
 
 	// TODO send only text to use StringEncoder on netty low level
@@ -506,14 +505,14 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		return sendMessageToServer(new Message(OpCode.CTS_DISCONNECT, this.client.getLogin().getAlias()));
 	}
 
-	// TODO change editing, that not for every single editing a new encoder ist
+	// TODO change editing, that not for every single editing a new encoder is
 	// necessary
 	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
 		fileToEdit.setPreview(null);
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
 	}
 
-	// TODO change editing, that not for every single editing a new encoder ist
+	// TODO change editing, that not for every single editing a new encoder is
 	// necessary
 	public void sendEditTickerElement(TickerElement eltToEdit) {
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_LIVE_TICKER_ELEMENT, eltToEdit));

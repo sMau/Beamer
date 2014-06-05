@@ -23,6 +23,7 @@ import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.Themeslide;
+import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.utils.LoggerBuilder;
 
 public class MessageDecoder extends ReplayingDecoder<Void> {
@@ -92,7 +93,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 			this.data.add(timeleft);
 			break;
 		case STC_ADD_THEME_ACK:
-			this.data.add(decodeTheme());
+			this.data.add(decodeThemeAck());
 			break;
 		case STC_ADD_PRIORITY_ACK:
 			this.data.add(decodePriority());
@@ -211,7 +212,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 	
  //TODO add states to the replaying decoder (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
 	// to improve the performance for longer messages
-	
+
 	private int decodeInt() {
 		return this.in.readInt();
 	}
@@ -267,8 +268,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 	private ImageFile decodeImageFile() {
 		String name = decodeString();
 		byte[] data = decodeByteArray();
-		UUID prioID = decodeUUID();
-		return new ImageFile(name, prioID, data);
+		return new ImageFile(name, PreferencesModelServer.getDefaultPriority(), data);
 	}
 
 	private Object decodeLoginData() {
@@ -283,7 +283,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		String name = decodeString();
 		boolean defaultPriority = decodeBoolean();
 
-		Priority prio = new Priority(name, minToShow, id);
+		Priority prio = Priority.reconstruct(name, minToShow, id);
 		prio.setDefaultPriority(defaultPriority);
 		return prio;
 	}
@@ -291,12 +291,18 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 	private String decodeString() {
 		return new String(decodeByteArray());
 	}
-
+	
 	private Theme decodeTheme() {
+		String themeName = decodeString();
+		byte[] imageData = decodeByteArray();
+		return new Theme(themeName, imageData);
+	}
+
+	private Theme decodeThemeAck() {
 		UUID themeID = decodeUUID();
 		String themeName = decodeString();
 		byte[] imageData = decodeByteArray();
-		return new Theme(themeName, imageData, themeID);
+		return Theme.reconstruct(themeName, imageData, themeID);
 	}
 
 	private Themeslide decodeThemeslide() {

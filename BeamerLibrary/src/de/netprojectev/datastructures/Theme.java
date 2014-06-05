@@ -29,12 +29,24 @@ public class Theme implements Serializable {
 		this.name = name;
 		this.backgroundImage = bgImg;
 	}
+	
+	/**
+	 * Reconstructs an Theme by the given data.
+	 * Used for the client side, to be able to set the UUID according to the server ones.
+	 * 
+	 * @param name
+	 * @param bgImg
+	 * @param id
+	 * @return
+	 */
+	public static Theme reconstruct(String name, byte[] bgImg, UUID id) {
+		return new Theme(name, bgImg, id);
+	}
 
-	public Theme(String name, byte[] bgImg, UUID id) {
+	private Theme(String name, byte[] bgImg, UUID id) {
 		this.id = id;
 		this.name = name;
 		this.backgroundImage = bgImg;
-
 	}
 
 	@Override

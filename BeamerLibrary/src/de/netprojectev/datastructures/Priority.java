@@ -31,8 +31,12 @@ public class Priority implements Serializable {
 		this.minutesToShow = minutesToShow;
 		this.defaultPriority = false;
 	}
+	
+	public static Priority reconstruct(String name, int minutesToShow, UUID id) {
+		return new Priority(name, minutesToShow, id);
+	}
 
-	public Priority(String name, int minutesToShow, UUID id) {
+	private Priority(String name, int minutesToShow, UUID id) {
 		this.id = id;
 		this.name = name;
 		this.minutesToShow = minutesToShow;

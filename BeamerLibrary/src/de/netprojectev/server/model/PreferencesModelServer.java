@@ -22,7 +22,14 @@ public class PreferencesModelServer {
 
 	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelServer.class);
 
+	private final MessageProxyServer proxy;
+
+	private final HashMap<UUID, Priority> prios;
+
+	private final HashMap<UUID, Theme> themes;
+	
 	private static final int DEFAULT_PRIO_TIME = 1;
+	private static UUID defaultPriority;
 
 	private static Properties props;
 
@@ -57,14 +64,6 @@ public class PreferencesModelServer {
 		log.debug("Setting property: " + key + ", to: " + value);
 		props.setProperty(key, value);
 	}
-
-	private final MessageProxyServer proxy;
-
-	private final HashMap<UUID, Priority> prios;
-
-	private final HashMap<UUID, Theme> themes;
-
-	private Priority defaultPriority;
 
 	public PreferencesModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
@@ -150,7 +149,7 @@ public class PreferencesModelServer {
 			Priority defaultPrio = new Priority("default", DEFAULT_PRIO_TIME);
 			defaultPrio.setDefaultPriority(true);
 			addPriority(defaultPrio);
-			this.defaultPriority = defaultPrio;
+			defaultPriority = defaultPrio.getId();
 		}
 
 		if (allThemes != null) {
@@ -162,8 +161,8 @@ public class PreferencesModelServer {
 
 	}
 
-	public Priority getDefaultPriority() {
-		return this.defaultPriority;
+	public static UUID getDefaultPriority() {
+		return defaultPriority;
 	}
 
 	public Priority getPriorityById(UUID id) throws PriorityDoesNotExistException {
@@ -227,8 +226,5 @@ public class PreferencesModelServer {
 		HelperMethods.saveToFile(this.proxy.getTickerModel().getElements(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_LIVETICKER);
 	}
 
-	public void setDefaultPriority(Priority defaultPriority) {
-		this.defaultPriority = defaultPriority;
-	}
 
 }
