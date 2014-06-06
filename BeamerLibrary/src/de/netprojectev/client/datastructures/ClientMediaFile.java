@@ -1,5 +1,6 @@
 package de.netprojectev.client.datastructures;
 
+import java.io.IOException;
 import java.util.UUID;
 
 import de.netprojectev.datastructures.MediaFile;
@@ -16,23 +17,23 @@ public class ClientMediaFile extends MediaFile {
 	private byte[] preview;
 
 	
-	public ClientMediaFile(ServerMediaFile file) {
-		this(file.getName(), file.getId(), file.getPriorityID(), file.determineMediaType());
+	public ClientMediaFile(ServerMediaFile file) throws IOException {
+		this(file.getName(), file.getId(), file.getPriorityID(), file.determineMediaType(), file.determinePreview());
 	}
 	
 	public static ClientMediaFile reconstruct(UUID id, String name, byte[] preview, UUID priorityID,
 			int showCount, MediaType type, boolean current) {
-		ClientMediaFile res = new ClientMediaFile(name, id, priorityID, type);
-		res.setPreview(preview);
+		ClientMediaFile res = new ClientMediaFile(name, id, priorityID, type, preview);
 		res.setCurrent(current);
 		res.showCount = showCount;
 		
 		return res;
 	}
 
-	private ClientMediaFile(String name, UUID id, UUID priorityID, MediaType type) {
+	private ClientMediaFile(String name, UUID id, UUID priorityID, MediaType type, byte[] preview) {
 		super(name, id, priorityID);
 		this.type = type;
+		this.preview = preview;
 	}
 
 	public byte[] getPreview() {
@@ -60,7 +61,7 @@ public class ClientMediaFile extends MediaFile {
 	}
 
 	public ClientMediaFile copy() {
-		return new ClientMediaFile(name, getId(), priorityID, type);
+		return new ClientMediaFile(name, getId(), priorityID, type, preview);
 	}
 
 }

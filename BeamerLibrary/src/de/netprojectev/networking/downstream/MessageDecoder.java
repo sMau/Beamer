@@ -184,7 +184,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 			// TODO
 			break;
 		case CTS_DEQUEUE_MEDIAFILE:
-			this.data.add(decodeUUID());
+			this.data.add(decodeDequeueData());
 			break;
 		case CTS_REMOVE_LIVE_TICKER_ELEMENT:
 			this.data.add(decodeUUID());
