@@ -24,6 +24,7 @@ import de.netprojectev.networking.upstream.MessageSplit;
 import de.netprojectev.networking.upstream.PriorityByteEncoder;
 import de.netprojectev.networking.upstream.PropertiesByteEncoder;
 import de.netprojectev.networking.upstream.ServerMediaFileEncoder;
+import de.netprojectev.networking.upstream.StringArrayEncoder;
 import de.netprojectev.networking.upstream.ThemeByteEncoder;
 import de.netprojectev.networking.upstream.TickerElementEncoder;
 import de.netprojectev.networking.upstream.UUIDByteEncoder;
@@ -67,7 +68,8 @@ public class Server {
 						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(),
 								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
 								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(), new PriorityByteEncoder(),
-								new LoginByteEncoder(), new PropertiesByteEncoder(), new ClientMediaFileEncoder(), new ServerMediaFileEncoder(),
+								new LoginByteEncoder(), new PropertiesByteEncoder(), new StringArrayEncoder(),
+								new ClientMediaFileEncoder(), new ServerMediaFileEncoder(),
 								new TickerElementEncoder(), new MessageSplit());
 						ch.pipeline().addLast(new MessageDecoder(), proxy);
 					}

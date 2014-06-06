@@ -39,7 +39,6 @@ import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.Countdown;
-import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.MediaFileFilter;
@@ -353,11 +352,19 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		case STC_FORCE_RECONNECT:
 			reconnectForced();
 			break;
+		case STC_ALL_FONTS:
+			receivedServerFonts(msg);
+			break;
 		default:
 			unkownMessageReceived(msg);
 			break;
 		}
 
+	}
+	
+	private void receivedServerFonts(Message msg) {
+		String[] fontFamilies = (String[]) msg.getData().get(0);
+		prefs.setServerFonts(fontFamilies);
 	}
 
 	public void reconnectForced() {

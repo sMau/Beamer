@@ -137,6 +137,9 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		case STC_REMOVE_PRIORITY_ACK:
 			this.data.add(decodeUUID());
 			break;
+		case STC_ALL_FONTS:
+			this.data.add(decodeFonts());
+			break;
 
 		/*
 		 * Client to server
@@ -212,6 +215,16 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 	
  //TODO add states to the replaying decoder (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
 	// to improve the performance for longer messages
+
+	private String[] decodeFonts() {
+		String[] res = new String[this.in.readInt()];
+		int i = 0;
+		while(i < res.length) {
+			res[i] = decodeString();
+			i++;
+		}
+		return res;
+	}
 
 	private int decodeInt() {
 		return this.in.readInt();

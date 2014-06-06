@@ -437,6 +437,8 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		if (this.fullscreenEnabled) {
 			ctx.write(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 		}
+		
+		ctx.writeAndFlush(new Message(OpCode.STC_ALL_FONTS, (Object) ConstantsServer.FONT_FAMILIES));
 
 		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}

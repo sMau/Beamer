@@ -1,6 +1,7 @@
 package de.netprojectev.server;
 
 import java.awt.Color;
+import java.awt.GraphicsEnvironment;
 import java.util.Date;
 
 import de.netprojectev.datastructures.Priority;
@@ -80,6 +81,7 @@ public class ConstantsServer {
 	/*
 	 * MISC
 	 */
+	public static final String[] FONT_FAMILIES = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
 
 	public static final int NUMBER_OF_WORKER_THREADS = 3;
 
