@@ -405,10 +405,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	// TODO send file instead of byte array
 	public void sendAddImageFile(File file) throws IOException {
-		String name = file.getName();
-		byte[] imageDataAsBytes = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
-
-		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, name, imageDataAsBytes));
+		// testing code for the new chunked transfer
+		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, file));
 	}
 
 	public void sendAddImageFiles(File[] files) throws IOException {

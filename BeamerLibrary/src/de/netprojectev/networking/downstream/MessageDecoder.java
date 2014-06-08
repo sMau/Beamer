@@ -4,6 +4,11 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ReplayingDecoder;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -21,6 +26,7 @@ import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.Themeslide;
 import de.netprojectev.server.model.PreferencesModelServer;
@@ -29,7 +35,7 @@ import de.netprojectev.utils.LoggerBuilder;
 public class MessageDecoder extends ReplayingDecoder<Void> {
 
 	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
-
+	
 	/*
 	 * this one passes MEssage Objects to the next Handler, which should either
 	 * be a clientMessageProxy or a ServerMessageProxy
@@ -64,7 +70,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 
 	}
 
-	private void decodeData(OpCode opCode) throws DecodeMessageException {
+	private void decodeData(OpCode opCode) throws DecodeMessageException, IOException {
 
 		this.data.clear();
 		
@@ -278,10 +284,28 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		return new DequeueData(row, id);
 	}
 
-	private ImageFile decodeImageFile() {
+	private ImageFile decodeImageFile() throws IOException {
 		String name = decodeString();
-		byte[] data = decodeByteArray();
-		return new ImageFile(name, PreferencesModelServer.getDefaultPriority(), data);
+		long length = decodeLong();
+		int chunkCount = decodeInt();
+		int chunkSize = decodeInt();	
+		
+		File pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + UUID.randomUUID());
+		pathOnDisk.createNewFile();
+		
+		for(int i = 0; i < chunkCount - 1; i++) {
+			byte[] readChunk = new byte[chunkSize];
+			in.readBytes(readChunk);
+			Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
+		}
+		long sizeOfTransmittedChunks = ((long) chunkCount - 1) * (long) chunkSize;
+		int lastChunkSize = (int) (length - sizeOfTransmittedChunks);
+		
+		byte[] readChunk = new byte[lastChunkSize];
+		in.readBytes(readChunk);
+		Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
+		
+		return new ImageFile(name, PreferencesModelServer.getDefaultPriority(), pathOnDisk);
 	}
 
 	private Object decodeLoginData() {
@@ -318,7 +342,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		return Theme.reconstruct(themeName, imageData, themeID);
 	}
 
-	private Themeslide decodeThemeslide() {
+	private Themeslide decodeThemeslide() throws IOException {
 		ImageFile imageFile = decodeImageFile();
 		UUID themeID = decodeUUID();
 		return new Themeslide(imageFile.getName(), themeID, imageFile.getPriorityID(), imageFile);

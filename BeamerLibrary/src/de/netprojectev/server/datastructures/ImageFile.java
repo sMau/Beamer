@@ -18,17 +18,10 @@ public class ImageFile extends ServerMediaFile {
 	private transient byte[] image;
 	private File pathOnDisk;
 
-	public ImageFile(String name, UUID priorityID, byte[] imageAsBytes) {
+	public ImageFile(String name, UUID priorityID, File pathOnDisk) {
 		super(name, priorityID);
-		this.pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + getId());
+		this.pathOnDisk.renameTo(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + getId()));
 		this.image = null;
-
-		try {
-			Files.write(Paths.get(this.pathOnDisk.getAbsolutePath()), imageAsBytes);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public void clearMemory() {
