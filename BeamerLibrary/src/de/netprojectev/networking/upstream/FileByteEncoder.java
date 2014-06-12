@@ -3,13 +3,9 @@ package de.netprojectev.networking.upstream;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import io.netty.handler.stream.ChunkedFile;
 
 import java.io.File;
-import java.io.RandomAccessFile;
-import java.nio.ByteBuffer;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
-import java.nio.channels.FileChannel.MapMode;
 
 import org.apache.logging.log4j.Logger;
 
@@ -18,27 +14,35 @@ import de.netprojectev.utils.LoggerBuilder;
 public class FileByteEncoder extends MessageToByteEncoder<File> {
 
 	private static final Logger log = LoggerBuilder.createLogger(FileByteEncoder.class);
-	private int chunkSize = 52428800; // 50MB
+	private int chunkSize = 4096; // 4KB
 
-	public FileByteEncoder() {}
-	
-	/**
-	 * 
-	 * @param chunkSize the chunksize in byte
-	 * 
-	 */
-	public FileByteEncoder(int chunkSize) {
-		this.chunkSize = chunkSize;
-	}
-	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, File msg, ByteBuf out) throws Exception {
+		
 		int chunkCount = ((int) Math.ceil((msg.length() / chunkSize))) + 1;
 
-		ctx.write(msg.getName());
 		out.writeLong(msg.length());
-		ctx.write(chunkCount);
-		ctx.writeAndFlush(chunkSize);		
+		out.writeInt(chunkSize);
+		out.writeInt(chunkCount);	
+		
+		ChunkedFile chunkedFile = new ChunkedFile(msg, chunkSize);
+		
+		log.debug("Chunk count sending: " + chunkCount);
+		log.debug("Chunksize sending: " + chunkSize);
+		
+		
+		try {
+			for(int i = 0; i < chunkCount; i++) {
+				log.debug("writing chunk #i: " + i);
+				out.writeBytes(chunkedFile.readChunk(ctx));
+			}
+		} finally {
+			chunkedFile.close();
+		}
+		
+
+		/*
+		
 		RandomAccessFile raf = new RandomAccessFile(msg, "r");
 				
         FileChannel inChannel = raf.getChannel();
@@ -61,7 +65,8 @@ public class FileByteEncoder extends MessageToByteEncoder<File> {
         }
         
         inChannel.close();		
-		raf.close();
+		raf.close();*/
+		
 	}
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

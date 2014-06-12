@@ -9,7 +9,7 @@ public abstract class MediaFile implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6210917731163785789L;
-	private final UUID id;
+	protected final UUID id;
 	protected String name;
 	protected UUID priorityID;
 	protected transient boolean current;

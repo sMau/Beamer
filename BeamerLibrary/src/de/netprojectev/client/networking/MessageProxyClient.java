@@ -10,8 +10,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -403,10 +401,9 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
 	}
 
-	// TODO send file instead of byte array
 	public void sendAddImageFile(File file) throws IOException {
-		// testing code for the new chunked transfer
-		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, file));
+		log.debug("sending add image file, name: " + file.getName());
+		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, file.getName(), file));
 	}
 
 	public void sendAddImageFiles(File[] files) throws IOException {

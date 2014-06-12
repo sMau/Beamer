@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.utils.LoggerBuilder;
 
-public class ClientMediaFileEncoder extends MessageToByteEncoder<ClientMediaFile> {
 	
+public class ClientMediaFileEncoder extends MessageToByteEncoder<ClientMediaFile> {
 	private static final Logger log = LoggerBuilder.createLogger(ClientMediaFileEncoder.class);
 
 	@Override

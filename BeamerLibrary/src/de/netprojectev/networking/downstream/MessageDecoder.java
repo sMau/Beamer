@@ -48,7 +48,11 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 
 	private ByteBuf in;
 	private ArrayList<Object> data = new ArrayList<Object>(15);
-
+	
+	private UUID currentTmpFile = UUID.randomUUID();
+	private int writtenChunksCount = 0;
+	
+	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
@@ -57,9 +61,6 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		opCode = OpCode.values()[in.readByte()];
 		boolean containsData = in.readBoolean();
 		
-		/*
-		 * wait for the data to be available
-		 */
 		if (!containsData) {
 			out.add(new Message(opCode));
 		} else {
@@ -283,17 +284,27 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		int row = decodeInt();
 		return new DequeueData(row, id);
 	}
-
+	
 	private ImageFile decodeImageFile() throws IOException {
 		String name = decodeString();
+		log.debug("Decoded file name: " + name);
+		File file = decodeFile();
+		return new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file);
+	}
+	
+	private File decodeFile() throws IOException {
 		long length = decodeLong();
+		int chunkSize = decodeInt();
 		int chunkCount = decodeInt();
-		int chunkSize = decodeInt();	
 		
-		File pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + UUID.randomUUID());
+		log.debug("Chunk count receiving: " + chunkCount);
+		log.debug("Chunksize receiving: " + chunkSize);
+		
+		File pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + currentTmpFile);
 		pathOnDisk.createNewFile();
-		
-		for(int i = 0; i < chunkCount - 1; i++) {
+				
+		for(; writtenChunksCount < chunkCount - 1; writtenChunksCount++) {
+			log.debug("receiving chunk #i: " + writtenChunksCount);
 			byte[] readChunk = new byte[chunkSize];
 			in.readBytes(readChunk);
 			Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
@@ -301,11 +312,17 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		long sizeOfTransmittedChunks = ((long) chunkCount - 1) * (long) chunkSize;
 		int lastChunkSize = (int) (length - sizeOfTransmittedChunks);
 		
+		log.debug("receiving last chunk with size: " + lastChunkSize);
+		
 		byte[] readChunk = new byte[lastChunkSize];
 		in.readBytes(readChunk);
 		Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
+		writtenChunksCount++;
 		
-		return new ImageFile(name, PreferencesModelServer.getDefaultPriority(), pathOnDisk);
+		currentTmpFile = UUID.randomUUID(); //to avoid collision in short spacing file transfers
+		writtenChunksCount = 0;
+		
+		return pathOnDisk;
 	}
 
 	private Object decodeLoginData() {

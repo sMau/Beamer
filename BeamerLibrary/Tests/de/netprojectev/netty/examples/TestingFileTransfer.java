@@ -47,7 +47,7 @@ public class TestingFileTransfer {
              .childHandler(new ChannelInitializer<SocketChannel>() {
                  @Override
                  public void initChannel(SocketChannel ch) throws Exception {
-                     ch.pipeline().addLast(new FileByteEncoder(0));
+                     ch.pipeline().addLast(new FileByteEncoder());
                  }
              });
 

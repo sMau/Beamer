@@ -67,9 +67,9 @@ public class Server {
 						
 						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(),
 								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
-								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(), new PriorityByteEncoder(),
-								new LoginByteEncoder(), new PropertiesByteEncoder(), new StringArrayEncoder(),
-								new ClientMediaFileEncoder(), new ServerMediaFileEncoder(),
+								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(),
+								new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(),
+								new StringArrayEncoder(), new ClientMediaFileEncoder(),
 								new TickerElementEncoder(), new MessageSplit());
 						ch.pipeline().addLast(new MessageDecoder(), proxy);
 					}

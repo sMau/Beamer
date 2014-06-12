@@ -20,7 +20,8 @@ public class ImageFile extends ServerMediaFile {
 
 	public ImageFile(String name, UUID priorityID, File pathOnDisk) {
 		super(name, priorityID);
-		this.pathOnDisk.renameTo(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + getId()));
+		this.pathOnDisk = pathOnDisk;
+		this.pathOnDisk.renameTo(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + this.id));
 		this.image = null;
 	}
 
