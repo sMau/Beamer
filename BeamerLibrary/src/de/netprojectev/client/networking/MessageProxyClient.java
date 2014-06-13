@@ -5,9 +5,7 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -16,8 +14,6 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-
-import old.de.netprojectev.server.networking.VideoFileData;
 
 import org.apache.logging.log4j.Logger;
 
@@ -37,7 +33,6 @@ import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.datastructures.Countdown;
-import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.MediaFileFilter;
 
@@ -444,43 +439,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 				new TickerElement(text)));
 	}
 
-	// TODO use file encoding handler on netty low level
 	public void sendAddVideoFile(File file) throws IOException {
-
-		VideoFile toSend = new VideoFile(file.getName(), file);
-		FileInputStream fileInputStream = new FileInputStream(toSend.getVideoFile());
-		BufferedInputStream buf = new BufferedInputStream(fileInputStream);
-
-		int bestChunckSize = 1024 * 1024 * 8;
-		int messageNumber = 0;
-		long lengthInBytes = toSend.getVideoFile().length();
-		long overallBytesRead = 0L;
-
-		int messagesToSend = ((int) lengthInBytes / bestChunckSize) + 1;
-
-		log.debug("Starting video file transfer to server, with file length: " + lengthInBytes + " Msgs To Send: " + messagesToSend);
-
-		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_START, toSend.getId(), messagesToSend));
-
-		while (overallBytesRead < lengthInBytes) {
-			int chunckSize = (int) Math.min(bestChunckSize, (lengthInBytes - overallBytesRead));
-			byte[] bytesRead = new byte[chunckSize];
-
-			buf.read(bytesRead, 0, chunckSize);
-
-			log.debug("Sending video message data to server, Num: " + messageNumber);
-
-			sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_DATA, new VideoFileData(bytesRead, toSend.getId(), messageNumber)));
-
-			overallBytesRead += chunckSize;
-			messageNumber++;
-		}
-
-		buf.close();
-		fileInputStream.close();
-
-		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE_FINISH, toSend));
-
+		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE, file.getName(), file));
 	}
 
 	public void sendAutoModeToggle(boolean selected) {

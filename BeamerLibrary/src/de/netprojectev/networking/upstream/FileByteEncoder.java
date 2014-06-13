@@ -2,8 +2,9 @@ package de.netprojectev.networking.upstream;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.FileRegion;
 import io.netty.handler.codec.MessageToByteEncoder;
-import io.netty.handler.stream.ChunkedFile;
+import io.netty.handler.stream.ChunkedNioFile;
 
 import java.io.File;
 
@@ -14,8 +15,19 @@ import de.netprojectev.utils.LoggerBuilder;
 public class FileByteEncoder extends MessageToByteEncoder<File> {
 
 	private static final Logger log = LoggerBuilder.createLogger(FileByteEncoder.class);
-	private int chunkSize = 4096; // 4KB
-
+	private int chunkSize = 131072; // 128KB
+	//XXX maybe test different chunksizes and eval performance
+	/**
+	 * The default chunkSize is chosen. 128KB
+	 */
+	public FileByteEncoder() {
+		
+	}
+	
+	public FileByteEncoder(int chunkSizeInKB) {
+		this.chunkSize = chunkSizeInKB * 1024;
+	}
+	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, File msg, ByteBuf out) throws Exception {
 		
@@ -25,47 +37,21 @@ public class FileByteEncoder extends MessageToByteEncoder<File> {
 		out.writeInt(chunkSize);
 		out.writeInt(chunkCount);	
 		
-		ChunkedFile chunkedFile = new ChunkedFile(msg, chunkSize);
 		
-		log.debug("Chunk count sending: " + chunkCount);
-		log.debug("Chunksize sending: " + chunkSize);
+		log.debug("Writting file to out. Length: " + msg.length()
+					+ " chunkSize: " + chunkSize
+					+ " chunkCount: " + chunkCount);
 		
+		ChunkedNioFile chunkedFile = new ChunkedNioFile(msg, chunkSize);
 		
 		try {
 			for(int i = 0; i < chunkCount; i++) {
-				log.debug("writing chunk #i: " + i);
+				log.debug("Writing chunk #" + i);
 				out.writeBytes(chunkedFile.readChunk(ctx));
 			}
 		} finally {
 			chunkedFile.close();
 		}
-		
-
-		/*
-		
-		RandomAccessFile raf = new RandomAccessFile(msg, "r");
-				
-        FileChannel inChannel = raf.getChannel();
-                
-        long sizeOfTransmittedChunks = ((long) chunkCount - 1) * (long) chunkSize;
-		int lastChunkSize = (int) (msg.length() - sizeOfTransmittedChunks);
-		
-        int remainingChunks = chunkCount;
-        for(long pos = 0; pos < msg.length(); ) {
-        	MappedByteBuffer fileMap;
-        	if(remainingChunks > 1) {
-        		fileMap = inChannel.map(MapMode.READ_ONLY, pos, pos + chunkSize);
-        	} else {
-        		fileMap = inChannel.map(MapMode.READ_ONLY, pos, pos + lastChunkSize);
-        	}
-        	//TODO last worked here, this at the moment throws exception. problem is the chunking and the last chunk espacially
-        	fileMap.flip();
-            out.writeBytes(fileMap);
-            fileMap = null;
-        }
-        
-        inChannel.close();		
-		raf.close();*/
 		
 	}
 	@Override

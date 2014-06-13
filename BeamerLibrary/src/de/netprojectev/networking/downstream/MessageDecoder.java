@@ -27,8 +27,10 @@ import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
 import de.netprojectev.server.datastructures.Themeslide;
+import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -188,10 +190,10 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 			this.data.add(decodeString());
 			break;
 		case CTS_ADD_COUNTDOWN:
-			// TODO
+			this.data.add(decodeCountdown());
 			break;
-		case CTS_ADD_VIDEO_FILE_DATA:
-			// TODO
+		case CTS_ADD_VIDEO_FILE:
+			this.data.add(decodeVideoFile());
 			break;
 		case CTS_DEQUEUE_MEDIAFILE:
 			this.data.add(decodeDequeueData());
@@ -220,8 +222,20 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 
 	}
 	
- //TODO add states to the replaying decoder (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
+	private Countdown decodeCountdown() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	//TODO add states to the replaying decoder (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
 	// to improve the performance for longer messages
+
+	private VideoFile decodeVideoFile() throws IOException {
+		String name = decodeString();
+		log.debug("Decoded file name: " + name);
+		File file = decodeFile(OpCode.CTS_ADD_VIDEO_FILE);
+		return new VideoFile(name, file);
+	}
 
 	private String[] decodeFonts() {
 		String[] res = new String[this.in.readInt()];
@@ -288,28 +302,39 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 	private ImageFile decodeImageFile() throws IOException {
 		String name = decodeString();
 		log.debug("Decoded file name: " + name);
-		File file = decodeFile();
+		File file = decodeFile(OpCode.CTS_ADD_IMAGE_FILE);
 		return new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file);
 	}
 	
-	private File decodeFile() throws IOException {
+	private File decodeFile(OpCode opCode) throws IOException {
 		
-		File pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + currentTmpFile);
+		File pathOnDisk = null;
+		switch (opCode) {
+		case CTS_ADD_IMAGE_FILE:
+			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + currentTmpFile);
+			break;
+		case CTS_ADD_VIDEO_FILE:
+			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + currentTmpFile);
+			break;
+		default:
+			break;
+		}
 		
 		try { 
 			long length = decodeLong();
 			int chunkSize = decodeInt();
 			int chunkCount = decodeInt();
-			
-			log.debug("Chunk count receiving: " + chunkCount);
-			log.debug("Chunksize receiving: " + chunkSize);
 
+			log.debug("Receiving file. Length: " + length
+					+ " chunkSize: " + chunkSize
+					+ " chunkCount: " + chunkCount);
+			
 			if(writtenChunksCount < 1) {
 				pathOnDisk.createNewFile();
 			}
 			
 			for(; writtenChunksCount < chunkCount - 1; writtenChunksCount++) {
-				log.debug("receiving chunk #i: " + writtenChunksCount);
+				log.debug("Reciving chunk #" + writtenChunksCount);
 				byte[] readChunk = new byte[chunkSize];
 				in.readBytes(readChunk);
 				Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
@@ -318,7 +343,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 			long sizeOfTransmittedChunks = ((long) chunkCount - 1) * (long) chunkSize;
 			int lastChunkSize = (int) (length - sizeOfTransmittedChunks);
 			
-			log.debug("receiving last chunk with size: " + lastChunkSize);
+			log.debug("Receiving last chunk. Size: " + lastChunkSize);			
 			
 			byte[] readChunk = new byte[lastChunkSize];
 			in.readBytes(readChunk);

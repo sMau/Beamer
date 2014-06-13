@@ -10,7 +10,6 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -22,10 +21,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
-import old.de.netprojectev.server.networking.VideoFileData;
-import old.de.netprojectev.server.networking.VideoFileReceiveHandler;
-import old.de.netprojectev.server.networking.VideoFileReceiveHandler.ToManyMessagesException;
 
 import org.apache.logging.log4j.Logger;
 
@@ -113,7 +108,6 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private final MediaModelServer mediaModel;
 	private final TickerModelServer tickerModel;
 	private final PreferencesModelServer prefsModel;
-	private final VideoFileReceiveHandler videoFileReceiveHandler;
 	private final ServerGUI serverGUI;
 
 	private final Server server;
@@ -137,7 +131,6 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.tickerModel = new TickerModelServer(this);
 		this.prefsModel = new PreferencesModelServer(this);
 		this.prefsModel.deserializeAll();
-		this.videoFileReceiveHandler = new VideoFileReceiveHandler();
 		this.serverGUI = serverGUI;
 		this.server = server;
 		this.connectedUsers = new ArrayList<ConnectedUser>();
@@ -536,7 +529,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		broadcastMessage(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, toQueue));
 	}
 
-	private void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, ToManyMessagesException, PriorityDoesNotExistException, InterruptedException {
+	private void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, PriorityDoesNotExistException, InterruptedException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_IMAGE_FILE:
 			addImageFile(msg);
@@ -610,14 +603,8 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		case CTS_RESET_SHOW_COUNT:
 			resetShowCount(msg);
 			break;
-		case CTS_ADD_VIDEO_FILE_START:
-			videoTransferStarted(msg);
-			break;
-		case CTS_ADD_VIDEO_FILE_FINISH:
-			videoTransferFinished(msg);
-			break;
-		case CTS_ADD_VIDEO_FILE_DATA:
-			videoTransferReceiveData(msg);
+		case CTS_ADD_VIDEO_FILE:
+			addVideoFile(msg);
 			break;
 		case CTS_REQUEST_SERVER_SHUTDOWN:
 			serverShutdownRequested();
@@ -773,26 +760,9 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 
 	}
 
-	private void videoTransferFinished(Message msg) throws IOException {
+	private void addVideoFile(Message msg) throws IOException {
 		VideoFile file = (VideoFile) msg.getData().get(0);
-		this.videoFileReceiveHandler.finishingReceivingVideo(file.getId());
-
-		file.setVideoFile(new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + file.getId()));
-
 		addMediaFile(file);
 	}
-
-	private void videoTransferReceiveData(Message msg) throws IOException, ToManyMessagesException {
-		VideoFileData data = (VideoFileData) msg.getData().get(0);
-
-		this.videoFileReceiveHandler.receiveData(data.getVideoFileUUID(), data.getByteBuffer());
-	}
-
-	private void videoTransferStarted(Message msg) throws FileNotFoundException {
-		UUID idOfVideoFile = (UUID) msg.getData().get(0);
-		int estMsgCount = (Integer) msg.getData().get(1);
-		this.videoFileReceiveHandler.startingReceivingVideo(idOfVideoFile, estMsgCount);
-	}
-
 
 }

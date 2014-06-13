@@ -23,7 +23,6 @@ import de.netprojectev.networking.upstream.LoginByteEncoder;
 import de.netprojectev.networking.upstream.MessageSplit;
 import de.netprojectev.networking.upstream.PriorityByteEncoder;
 import de.netprojectev.networking.upstream.PropertiesByteEncoder;
-import de.netprojectev.networking.upstream.ServerMediaFileEncoder;
 import de.netprojectev.networking.upstream.StringArrayEncoder;
 import de.netprojectev.networking.upstream.ThemeByteEncoder;
 import de.netprojectev.networking.upstream.TickerElementEncoder;
