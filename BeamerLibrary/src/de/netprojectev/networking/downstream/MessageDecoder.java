@@ -284,7 +284,7 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 		int row = decodeInt();
 		return new DequeueData(row, id);
 	}
-	
+	//TODO always where "clean up" necessary make try-final blocks in the handlers code
 	private ImageFile decodeImageFile() throws IOException {
 		String name = decodeString();
 		log.debug("Decoded file name: " + name);
@@ -293,34 +293,40 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 	}
 	
 	private File decodeFile() throws IOException {
-		long length = decodeLong();
-		int chunkSize = decodeInt();
-		int chunkCount = decodeInt();
-		
-		log.debug("Chunk count receiving: " + chunkCount);
-		log.debug("Chunksize receiving: " + chunkSize);
 		
 		File pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + currentTmpFile);
-		pathOnDisk.createNewFile();
-				
-		for(; writtenChunksCount < chunkCount - 1; writtenChunksCount++) {
-			log.debug("receiving chunk #i: " + writtenChunksCount);
-			byte[] readChunk = new byte[chunkSize];
+		
+		try { 
+			long length = decodeLong();
+			int chunkSize = decodeInt();
+			int chunkCount = decodeInt();
+			
+			log.debug("Chunk count receiving: " + chunkCount);
+			log.debug("Chunksize receiving: " + chunkSize);
+
+			if(writtenChunksCount < 1) {
+				pathOnDisk.createNewFile();
+			}
+			
+			for(; writtenChunksCount < chunkCount - 1; writtenChunksCount++) {
+				log.debug("receiving chunk #i: " + writtenChunksCount);
+				byte[] readChunk = new byte[chunkSize];
+				in.readBytes(readChunk);
+				Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
+			}
+			
+			long sizeOfTransmittedChunks = ((long) chunkCount - 1) * (long) chunkSize;
+			int lastChunkSize = (int) (length - sizeOfTransmittedChunks);
+			
+			log.debug("receiving last chunk with size: " + lastChunkSize);
+			
+			byte[] readChunk = new byte[lastChunkSize];
 			in.readBytes(readChunk);
 			Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
+		} finally {
+			currentTmpFile = UUID.randomUUID(); //to avoid collision in short spacing file transfers
+			writtenChunksCount = 0;
 		}
-		long sizeOfTransmittedChunks = ((long) chunkCount - 1) * (long) chunkSize;
-		int lastChunkSize = (int) (length - sizeOfTransmittedChunks);
-		
-		log.debug("receiving last chunk with size: " + lastChunkSize);
-		
-		byte[] readChunk = new byte[lastChunkSize];
-		in.readBytes(readChunk);
-		Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
-		writtenChunksCount++;
-		
-		currentTmpFile = UUID.randomUUID(); //to avoid collision in short spacing file transfers
-		writtenChunksCount = 0;
 		
 		return pathOnDisk;
 	}
