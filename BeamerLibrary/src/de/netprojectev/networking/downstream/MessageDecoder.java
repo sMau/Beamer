@@ -37,23 +37,12 @@ import de.netprojectev.utils.LoggerBuilder;
 public class MessageDecoder extends ReplayingDecoder<Void> {
 
 	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
-	
-	/*
-	 * this one passes MEssage Objects to the next Handler, which should either
-	 * be a clientMessageProxy or a ServerMessageProxy
-	 * 
-	 * it only gets "really active" for file receiving as they are written to
-	 * disk directly and only a reference is passed.
-	 * 
-	 * depending on opcodes different data encoding steps should be done
-	 */
 
 	private ByteBuf in;
-	private ArrayList<Object> data = new ArrayList<Object>(15);
+	private ArrayList<Object> data = new ArrayList<Object>(16);
 	
 	private UUID currentTmpFile = UUID.randomUUID();
 	private int writtenChunksCount = 0;
-	
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,

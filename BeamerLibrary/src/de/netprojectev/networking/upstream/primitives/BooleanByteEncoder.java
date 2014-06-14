@@ -19,7 +19,7 @@ public class BooleanByteEncoder extends MessageToByteEncoder<Boolean> {
 	}
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		log.warn("Exception caught in channel handler " + getClass() + "\n" + cause.toString());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
 

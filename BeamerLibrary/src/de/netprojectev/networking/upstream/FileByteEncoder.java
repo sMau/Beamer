@@ -2,7 +2,6 @@ package de.netprojectev.networking.upstream;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.FileRegion;
 import io.netty.handler.codec.MessageToByteEncoder;
 import io.netty.handler.stream.ChunkedNioFile;
 
