@@ -2,7 +2,7 @@ package de.netprojectev.networking.downstream;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.ReplayingDecoder;
+import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,30 +34,47 @@ import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.utils.LoggerBuilder;
 
-public class MessageDecoder extends ReplayingDecoder<Void> {
+public class MessageDecoder extends ByteToMessageDecoder {
 
 	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
-
+	
 	private ByteBuf in;
 	private ArrayList<Object> data = new ArrayList<Object>(16);
 	
 	private UUID currentTmpFile = UUID.randomUUID();
 	private int writtenChunksCount = 0;
 	
+	private boolean dataDecodeSuccess;
+	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
 
+		//wait for the header
+		if(in.readableBytes() < 2) {
+			return;
+		}
+		
+		in.markReaderIndex();
+		
 		OpCode opCode;
 		opCode = OpCode.values()[in.readByte()];
 		boolean containsData = in.readBoolean();
+		dataDecodeSuccess = true;
 		
 		if (!containsData) {
 			out.add(new Message(opCode));
 		} else {
 			this.in = in;			
 			decodeData(opCode);
-			out.add(new Message(opCode, data));
+			
+			if(dataDecodeSuccess) {
+				out.add(new Message(opCode, data));
+			} else {
+				in.resetReaderIndex();
+				return;
+			}
+
 		}
 
 	}
@@ -237,22 +254,48 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 	}
 
 	private int decodeInt() {
+		if(in.readableBytes() < 4) {
+			dataDecodeSuccess  = false;
+			return 0;
+		}
 		return this.in.readInt();
 	}
 	
 	private long decodeLong() {
+		if(in.readableBytes() < 8) {
+			dataDecodeSuccess  = false;
+			return 0;
+		}
 		return this.in.readLong();
 	}
 	private MediaType decodeMediaType() {
+		if(in.readableBytes() < 1) {
+			dataDecodeSuccess = false;
+			return null;
+		}
 		return MediaType.values()[this.in.readByte()];
 	}
 	
 	private boolean decodeBoolean() {
+		if(in.readableBytes() < 1) {
+			dataDecodeSuccess = false;
+			return false;
+		}
 		return this.in.readBoolean();
 	}
 
 	private byte[] decodeByteArray() {
+		if(this.in.readableBytes() < 4) {
+			dataDecodeSuccess = false;
+			return null;
+		}
 		byte[] decoded = new byte[this.in.readInt()];
+		
+		if(this.in.readableBytes() < decoded.length) {
+			dataDecodeSuccess = false;
+			return null;
+		}
+		
 		this.in.readBytes(decoded);
 		return decoded;
 	}
@@ -363,7 +406,11 @@ public class MessageDecoder extends ReplayingDecoder<Void> {
 	}
 
 	private String decodeString() {
-		return new String(decodeByteArray());
+		byte[] bytes = decodeByteArray();
+		if(bytes == null) {
+			return null;
+		}
+		return new String(bytes);
 	}
 	
 	private Theme decodeTheme() {
