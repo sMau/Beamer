@@ -6,9 +6,6 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -66,8 +63,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			out.add(new Message(opCode));
 		} else {
 			this.in = in;
-			this.out = out;
 			this.ctx = ctx;
+			this.out = out;
 			decodeData(opCode);
 			
 			if(dataDecodeSuccess) {
@@ -245,7 +242,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
-				out.add(new VideoFile(name, file));
+				data.add(new VideoFile(name, file));
+				out.add(new Message(OpCode.CTS_ADD_VIDEO_FILE, data));
 			}
 		});
 		
@@ -347,7 +345,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
-				out.add(new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file));
+				data.add(new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file));
+				out.add(new Message(OpCode.CTS_ADD_IMAGE_FILE, data));
 			}
 		});
 	}
@@ -434,7 +433,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
 				ImageFile imgFile = new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file);
-				out.add(new Themeslide(imgFile.getName(), themeID, imgFile.getPriorityID(), imgFile));
+				data.add(new Themeslide(imgFile.getName(), themeID, imgFile.getPriorityID(), imgFile));
+				out.add(new Message(OpCode.CTS_ADD_THEMESLIDE, data));
 			}
 		});
 	}
