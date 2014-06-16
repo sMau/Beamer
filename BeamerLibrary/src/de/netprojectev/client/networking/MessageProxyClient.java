@@ -430,7 +430,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	// TODO send the data using the low level encoders of netty
 	public void sendAddThemeSlide(String name, UUID theme, byte[] imageDataAsBytes) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name,imageDataAsBytes, theme));
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name,theme, imageDataAsBytes));
 	}
 
 	// TODO send only text to use StringEncoder on netty low level

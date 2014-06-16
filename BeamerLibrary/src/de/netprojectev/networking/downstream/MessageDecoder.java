@@ -26,6 +26,7 @@ import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
+import de.netprojectev.networking.downstream.ChunkedFileDecoder.FileTransferFinishedListener;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
@@ -39,10 +40,9 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
 	
 	private ByteBuf in;
+	private List<Object> out;
+	private ChannelHandlerContext ctx;
 	private ArrayList<Object> data = new ArrayList<Object>(16);
-	
-	private UUID currentTmpFile = UUID.randomUUID();
-	private int writtenChunksCount = 0;
 	
 	private boolean dataDecodeSuccess;
 	
@@ -65,7 +65,9 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		if (!containsData) {
 			out.add(new Message(opCode));
 		} else {
-			this.in = in;			
+			this.in = in;
+			this.out = out;
+			this.ctx = ctx;
 			decodeData(opCode);
 			
 			if(dataDecodeSuccess) {
@@ -184,10 +186,10 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			this.data.add(decodeClientMediaFile());
 			break;
 		case CTS_ADD_IMAGE_FILE:
-			this.data.add(decodeImageFile());
+			decodeImageFile();
 			break;
 		case CTS_ADD_THEMESLIDE:
-			this.data.add(decodeThemeslide());
+			decodeThemeslide();
 			break;
 		case CTS_LOGIN_REQUEST:
 			this.data.add(decodeLoginData());
@@ -199,7 +201,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			this.data.add(decodeCountdown());
 			break;
 		case CTS_ADD_VIDEO_FILE:
-			this.data.add(decodeVideoFile());
+			decodeVideoFile();
 			break;
 		case CTS_DEQUEUE_MEDIAFILE:
 			this.data.add(decodeDequeueData());
@@ -236,11 +238,17 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	//TODO add states to the replaying decoder (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
 	// to improve the performance for longer messages
 
-	private VideoFile decodeVideoFile() throws IOException {
-		String name = decodeString();
+	private void decodeVideoFile() throws IOException {
+		final String name = decodeString();
 		log.debug("Decoded file name: " + name);
-		File file = decodeFile(OpCode.CTS_ADD_VIDEO_FILE);
-		return new VideoFile(name, file);
+		decodeFile(OpCode.CTS_ADD_VIDEO_FILE, new FileTransferFinishedListener() {
+			
+			@Override
+			public void fileTransferFinished(File file) throws IOException {
+				out.add(new VideoFile(name, file));
+			}
+		});
+		
 	}
 
 	private String[] decodeFonts() {
@@ -331,61 +339,52 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return new DequeueData(row, id);
 	}
 	//TODO always where "clean up" necessary make try-final blocks in the handlers code
-	private ImageFile decodeImageFile() throws IOException {
-		String name = decodeString();
+	private void decodeImageFile() throws IOException {
+		final String name = decodeString();
 		log.debug("Decoded file name: " + name);
-		File file = decodeFile(OpCode.CTS_ADD_IMAGE_FILE);
-		return new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file);
+		
+		decodeFile(OpCode.CTS_ADD_IMAGE_FILE, new FileTransferFinishedListener() {
+			
+			@Override
+			public void fileTransferFinished(File file) throws IOException {
+				out.add(new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file));
+			}
+		});
 	}
 	
-	private File decodeFile(OpCode opCode) throws IOException {
-		
+	private void decodeFile(OpCode opCode, FileTransferFinishedListener l) throws IOException {
+
 		File pathOnDisk = null;
 		switch (opCode) {
 		case CTS_ADD_IMAGE_FILE:
-			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + currentTmpFile);
+			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + UUID.randomUUID());
 			break;
 		case CTS_ADD_VIDEO_FILE:
-			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + currentTmpFile);
+			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + UUID.randomUUID());
 			break;
 		default:
 			break;
+		}	
+		
+		//wait for file meta data
+		if(in.readableBytes() < 16) {
+			dataDecodeSuccess = false;
+			return;
 		}
 		
-		try { 
-			long length = decodeLong();
-			int chunkSize = decodeInt();
-			int chunkCount = decodeInt();
+		//decode file meta data
+		long length = decodeLong();
+		int chunkSize = decodeInt();
+		int chunkCount = decodeInt();
 
-			log.debug("Receiving file. Length: " + length
-					+ " chunkSize: " + chunkSize
-					+ " chunkCount: " + chunkCount);
-			
-			if(writtenChunksCount < 1) {
-				pathOnDisk.createNewFile();
-			}
-			
-			for(; writtenChunksCount < chunkCount - 1; writtenChunksCount++) {
-				log.debug("Reciving chunk #" + writtenChunksCount);
-				byte[] readChunk = new byte[chunkSize];
-				in.readBytes(readChunk);
-				Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
-			}
-			
-			long sizeOfTransmittedChunks = ((long) chunkCount - 1) * (long) chunkSize;
-			int lastChunkSize = (int) (length - sizeOfTransmittedChunks);
-			
-			log.debug("Receiving last chunk. Size: " + lastChunkSize);			
-			
-			byte[] readChunk = new byte[lastChunkSize];
-			in.readBytes(readChunk);
-			Files.write(Paths.get(pathOnDisk.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
-		} finally {
-			currentTmpFile = UUID.randomUUID(); //to avoid collision in short spacing file transfers
-			writtenChunksCount = 0;
-		}
-		
-		return pathOnDisk;
+		log.debug("Receiving file. Length: " + length
+				+ " chunkSize: " + chunkSize
+				+ " chunkCount: " + chunkCount);
+
+		//replace with a file decode handler, which replaces itself after completion again with this one here
+		this.ctx.pipeline().replace(this, "ChunkedFileDecoder",
+				new ChunkedFileDecoder(this, pathOnDisk, length, chunkSize, chunkCount, l));
+
 	}
 
 	private Object decodeLoginData() {
@@ -426,10 +425,18 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return Theme.reconstruct(themeName, imageData, themeID);
 	}
 
-	private Themeslide decodeThemeslide() throws IOException {
-		ImageFile imageFile = decodeImageFile();
-		UUID themeID = decodeUUID();
-		return new Themeslide(imageFile.getName(), themeID, imageFile.getPriorityID(), imageFile);
+	private void decodeThemeslide() throws IOException {
+		
+		final String name = decodeString();
+		log.debug("Decoded file name: " + name);
+		final UUID themeID = decodeUUID();
+		decodeFile(OpCode.CTS_ADD_IMAGE_FILE, new FileTransferFinishedListener() {
+			@Override
+			public void fileTransferFinished(File file) throws IOException {
+				ImageFile imgFile = new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file);
+				out.add(new Themeslide(imgFile.getName(), themeID, imgFile.getPriorityID(), imgFile));
+			}
+		});
 	}
 
 	private TickerElement decodeTickerElement() {
