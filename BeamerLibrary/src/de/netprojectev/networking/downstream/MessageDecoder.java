@@ -37,11 +37,11 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
 	
 	private ByteBuf in;
-	private List<Object> out;
 	private ChannelHandlerContext ctx;
 	private ArrayList<Object> data = new ArrayList<Object>(16);
 	
 	private boolean dataDecodeSuccess;
+	private boolean decodingFile;
 	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
@@ -58,17 +58,19 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		opCode = OpCode.values()[in.readByte()];
 		boolean containsData = in.readBoolean();
 		dataDecodeSuccess = true;
+		decodingFile = false;
 		
 		if (!containsData) {
 			out.add(new Message(opCode));
 		} else {
 			this.in = in;
 			this.ctx = ctx;
-			this.out = out;
 			decodeData(opCode);
 			
 			if(dataDecodeSuccess) {
-				out.add(new Message(opCode, data));
+				if(!decodingFile) {
+					out.add(new Message(opCode, data));
+				}
 			} else {
 				in.resetReaderIndex();
 				return;
@@ -76,6 +78,10 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 		}
 
+	}
+	
+	private void sendUpstream(Message msg) {
+		ctx.fireChannelRead(msg);
 	}
 
 	private void decodeData(OpCode opCode) throws DecodeMessageException, IOException {
@@ -243,7 +249,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
 				data.add(new VideoFile(name, file));
-				out.add(new Message(OpCode.CTS_ADD_VIDEO_FILE, data));
 			}
 		});
 		
@@ -346,7 +351,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
 				data.add(new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file));
-				out.add(new Message(OpCode.CTS_ADD_IMAGE_FILE, data));
+				sendUpstream(new Message(OpCode.CTS_ADD_IMAGE_FILE, data));
 			}
 		});
 	}
@@ -371,6 +376,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			return;
 		}
 		
+		decodingFile = true;
+		
 		//decode file meta data
 		long length = decodeLong();
 		int chunkSize = decodeInt();
@@ -382,7 +389,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 		//replace with a file decode handler, which replaces itself after completion again with this one here
 		this.ctx.pipeline().replace(this, "ChunkedFileDecoder",
-				new ChunkedFileDecoder(this, pathOnDisk, length, chunkSize, chunkCount, l));
+				new ChunkedFileDecoder(pathOnDisk, length, chunkSize, chunkCount, l));
 
 	}
 
@@ -434,7 +441,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			public void fileTransferFinished(File file) throws IOException {
 				ImageFile imgFile = new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file);
 				data.add(new Themeslide(imgFile.getName(), themeID, imgFile.getPriorityID(), imgFile));
-				out.add(new Message(OpCode.CTS_ADD_THEMESLIDE, data));
+				sendUpstream(new Message(OpCode.CTS_ADD_IMAGE_FILE, data));
 			}
 		});
 	}

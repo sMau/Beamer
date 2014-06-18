@@ -27,15 +27,13 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 	private FileTransferFinishedListener finishListener;
 
 	private File savePath;
-	private MessageDecoder currentMsgDecoder;
 	private int chunkSize;
 	private int chunkCount;
 	private long length;
 
-	public ChunkedFileDecoder(MessageDecoder currentMsgDecoder, File savePath, long length,
+	public ChunkedFileDecoder(File savePath, long length,
 			int chunkSize, int chunkCount, FileTransferFinishedListener finishListener) throws IOException {
 		this.savePath = savePath;
-		this.currentMsgDecoder = currentMsgDecoder;
 		this.chunkCount = chunkCount;
 		this.length = length;
 		this.chunkSize = chunkSize;
@@ -81,7 +79,7 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 			in.readBytes(readChunk);
 			Files.write(Paths.get(savePath.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
 			
-			ctx.pipeline().replace(this, "MessageDecoder", currentMsgDecoder);
+			ctx.pipeline().replace(this, "MessageDecoder", new MessageDecoder());
 			finishListener.fileTransferFinished(savePath);
 			
 		} else {
