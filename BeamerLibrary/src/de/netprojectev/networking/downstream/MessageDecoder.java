@@ -249,6 +249,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
 				data.add(new VideoFile(name, file));
+				sendUpstream(new Message(OpCode.CTS_ADD_VIDEO_FILE, data));
 			}
 		});
 		
