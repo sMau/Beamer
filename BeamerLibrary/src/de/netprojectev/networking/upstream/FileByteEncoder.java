@@ -1,6 +1,8 @@
 package de.netprojectev.networking.upstream;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.DefaultFileRegion;
 import io.netty.handler.codec.MessageToByteEncoder;
@@ -23,12 +25,20 @@ public class FileByteEncoder extends MessageToByteEncoder<File> {
 
 		log.debug("Writting file to out. Length: " + msg.length());
 		
-		FileInputStream fis = new FileInputStream(msg);
+		final FileInputStream fis = new FileInputStream(msg);
 		DefaultFileRegion region = new DefaultFileRegion(fis.getChannel(), 0, msg.length());
-		ctx.write(region);
+		ctx.write(region).addListener(new ChannelFutureListener() {
+			
+			@Override
+			public void operationComplete(ChannelFuture future) throws Exception {
+				if(!future.isSuccess()) {
+					log.error("Error during writing file to network.", future.cause());
+				}
+				log.debug("Writing file to network opertion completed successful");
+				fis.close();
+			}
+		});
 		ctx.flush();
-		fis.close();
-		
 	}
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

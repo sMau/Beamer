@@ -6,7 +6,6 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.file.Files;
@@ -51,9 +50,21 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 			if(!in.isReadable()) {
 				return;
 			}
+			
 			int readableBytes = in.readableBytes();
-			writtenBytes += readableBytes;
-			byte[] readBytes = new byte[readableBytes];
+			byte[] readBytes;
+			
+			if(length > writtenBytes + readableBytes) {
+				readBytes = new byte[readableBytes];
+				writtenBytes += readableBytes;
+			} else {
+				readBytes = new byte[(int) (length - writtenBytes)];
+				writtenBytes += length - writtenBytes;
+			}
+
+			log.debug("Writing next bytes. Writtenbytes: " + writtenBytes
+					+ " currently readable bytes: " + readableBytes);
+			
 			in.readBytes(readBytes);
 			fileOut.write(readBytes, 0, readBytes.length);
 
