@@ -243,7 +243,11 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	private void decodeVideoFile() throws IOException {
 		final String name = decodeString();
+		if(dataDecodeSuccess == false) {
+			return;
+		}
 		log.debug("Decoded file name: " + name);
+		
 		decodeFile(OpCode.CTS_ADD_VIDEO_FILE, new FileTransferFinishedListener() {
 			
 			@Override
@@ -260,6 +264,9 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		int i = 0;
 		while(i < res.length) {
 			res[i] = decodeString();
+			if(dataDecodeSuccess == false) {
+				return null;
+			}
 			i++;
 		}
 		return res;
@@ -318,6 +325,9 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		for(int i = 0; i < dataObjectCount; i++) {
 			String key = decodeString();
 			String value  = decodeString();
+			if(dataDecodeSuccess == false) {
+				return null;
+			}
 			props.setProperty(key, value);
 		}
 		
@@ -327,19 +337,54 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	private ClientMediaFile decodeClientMediaFile() {
 		UUID id = decodeUUID();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		String name = decodeString();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		byte[] preview = decodeByteArray();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		UUID priorityID = decodeUUID();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		int showCount = decodeInt();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		MediaType type = decodeMediaType();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		boolean current = decodeBoolean();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
 
 		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
 	}
 	
 	private DequeueData decodeDequeueData() {
 		UUID id = decodeUUID();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		int row = decodeInt();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		return new DequeueData(row, id);
 	}
 	//TODO always where "clean up" necessary make try-final blocks in the handlers code
@@ -381,30 +426,51 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		
 		//decode file meta data
 		long length = decodeLong();
-		int chunkSize = decodeInt();
-		int chunkCount = decodeInt();
+		// int chunkSize = decodeInt();
+		// int chunkCount = decodeInt();
 
-		log.debug("Receiving file. Length: " + length
-				+ " chunkSize: " + chunkSize
-				+ " chunkCount: " + chunkCount);
+		log.debug("Receiving file. Length: " + length);
 
 		//replace with a file decode handler, which replaces itself after completion again with this one here
 		this.ctx.pipeline().replace(this, "ChunkedFileDecoder",
-				new ChunkedFileDecoder(pathOnDisk, length, chunkSize, chunkCount, l));
+				new ChunkedFileDecoder(pathOnDisk, length, l));
 
 	}
 
 	private Object decodeLoginData() {
 		String alias = decodeString();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		String key = decodeString();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		return new LoginData(alias, key);
 	}
 
 	private Priority decodePriority() {
 		UUID id = decodeUUID();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		int minToShow = decodeInt();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		String name = decodeString();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		boolean defaultPriority = decodeBoolean();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
 
 		Priority prio = Priority.reconstruct(name, minToShow, id);
 		prio.setDefaultPriority(defaultPriority);
@@ -413,30 +479,59 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	private String decodeString() {
 		byte[] bytes = decodeByteArray();
-		if(bytes == null) {
+		if(dataDecodeSuccess == false) {
 			return null;
 		}
+		
 		return new String(bytes);
 	}
 	
 	private Theme decodeTheme() {
 		String themeName = decodeString();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		byte[] imageData = decodeByteArray();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		return new Theme(themeName, imageData);
 	}
 
 	private Theme decodeThemeAck() {
 		UUID themeID = decodeUUID();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		String themeName = decodeString();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		byte[] imageData = decodeByteArray();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		return Theme.reconstruct(themeName, imageData, themeID);
 	}
 
 	private void decodeThemeslide() throws IOException {
 		
 		final String name = decodeString();
+		if(dataDecodeSuccess == false) {
+			return;
+		}
+		
 		log.debug("Decoded file name: " + name);
 		final UUID themeID = decodeUUID();
+		if(dataDecodeSuccess == false) {
+			return;
+		}
+		
 		decodeFile(OpCode.CTS_ADD_IMAGE_FILE, new FileTransferFinishedListener() {
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
@@ -449,12 +544,28 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	private TickerElement decodeTickerElement() {
 		UUID id = decodeUUID();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		String text = decodeString();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		boolean show = decodeBoolean();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		return new TickerElement(text, id).setShow(show);
 	}
 
 	private UUID decodeUUID() {
+		if(in.readableBytes() < 16) {
+			dataDecodeSuccess  = false;
+			return null;
+		}
 		long least = decodeLong();
 		long most = decodeLong();
 		return new UUID(most, least);

@@ -50,6 +50,9 @@ import de.netprojectev.server.model.PreferencesModelServer;
 import de.netprojectev.server.model.TickerModelServer;
 import de.netprojectev.utils.LoggerBuilder;
 
+//XXX maybe use sha1 checksums for the files to detect already "added" files and match them
+// or at least clean the chache in the other case
+
 @Sharable
 public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 
@@ -77,7 +80,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private class TimeoutTimerTask implements io.netty.util.TimerTask {
-
+		//TODO timeout handling improvement. use nettys build in handlers which also take sent traffic into account
 		@Override
 		public void run(Timeout timeout) throws Exception {
 
@@ -147,7 +150,8 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			log.warn("Read timeout is no number.", e);
 		}
 
-		this.timeoutChecker.newTimeout(new TimeoutTimerTask(), this.timeoutInSeconds, TimeUnit.SECONDS);
+		//XXX see todo in the TimeoutTimerTask
+		//this.timeoutChecker.newTimeout(new TimeoutTimerTask(), this.timeoutInSeconds, TimeUnit.SECONDS);
 
 	}
 	

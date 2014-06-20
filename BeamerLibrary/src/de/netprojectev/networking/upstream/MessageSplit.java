@@ -15,8 +15,7 @@ import de.netprojectev.utils.LoggerBuilder;
  * 
  * @author Samuel Schüppen
  * 
- *         Class to split a {@link Message} in its {@link OpCode} and its data
- *         objects.
+ * Class to split a {@link Message} in its {@link OpCode} and its data objects.
  * 
  */
 

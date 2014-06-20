@@ -1,0 +1,36 @@
+package de.netprojectev.networking.upstream.primitives;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToByteEncoder;
+
+import org.apache.logging.log4j.Logger;
+
+import de.netprojectev.utils.LoggerBuilder;
+
+/**
+ * 
+ * @author Samuel Schüppen
+ * 
+ *         Class used to write the total data count of the msg. Therefore only
+ *         the 8 lower order Bits are written, as there will never be more than
+ *         255 data objects in a msg.
+ * 
+ */
+
+public class LongByteEncoder extends MessageToByteEncoder<Long> {
+	private static final Logger log = LoggerBuilder.createLogger(LongByteEncoder.class);
+
+	@Override
+	protected void encode(ChannelHandlerContext ctx, Long msg, ByteBuf out) throws Exception {
+		out.writeLong(msg);
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		ctx.channel().close(); // XXX check if proper handling possible
+	}
+
+
+}

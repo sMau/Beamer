@@ -30,6 +30,7 @@ import de.netprojectev.networking.upstream.UUIDByteEncoder;
 import de.netprojectev.networking.upstream.primitives.BooleanByteEncoder;
 import de.netprojectev.networking.upstream.primitives.ByteArrayByteEncoder;
 import de.netprojectev.networking.upstream.primitives.IntByteEncoder;
+import de.netprojectev.networking.upstream.primitives.LongByteEncoder;
 import de.netprojectev.networking.upstream.primitives.MediaTypeByteEncoder;
 import de.netprojectev.networking.upstream.primitives.OpCodeByteEncoder;
 import de.netprojectev.networking.upstream.primitives.StringByteEncoder;
@@ -69,7 +70,7 @@ public class Client {
 					@Override
 					public void initChannel(SocketChannel ch) throws Exception {
 						
-						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(),
+						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(), new LongByteEncoder(),
 								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
 								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(), 
 								new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(), 

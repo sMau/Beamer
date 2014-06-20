@@ -4,8 +4,11 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -23,30 +26,45 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 
 	private static final Logger log = LoggerBuilder.createLogger(ChunkedFileDecoder.class);
 
-	private int writtenChunksCount = 0;
 	private FileTransferFinishedListener finishListener;
-
+	private OutputStream fileOut;
 	private File savePath;
-	private int chunkSize;
-	private int chunkCount;
 	private long length;
-
-	public ChunkedFileDecoder(File savePath, long length,
-			int chunkSize, int chunkCount, FileTransferFinishedListener finishListener) throws IOException {
+	private long writtenBytes;
+	
+	public ChunkedFileDecoder(File savePath, long length, FileTransferFinishedListener finishListener) throws IOException {
 		this.savePath = savePath;
-		this.chunkCount = chunkCount;
 		this.length = length;
-		this.chunkSize = chunkSize;
 		this.finishListener = finishListener;
-		
+		this.writtenBytes = 0;
 		savePath.createNewFile();
-		
+		this.fileOut = new BufferedOutputStream(Files.newOutputStream(Paths.get(savePath.getAbsolutePath()),
+				StandardOpenOption.APPEND));
 	}
 
 	//XXX do not always reopen the file by using Files.write, but do it manually
+
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
+
+		while(writtenBytes < length) {
+			if(!in.isReadable()) {
+				return;
+			}
+			int readableBytes = in.readableBytes();
+			writtenBytes += readableBytes;
+			byte[] readBytes = new byte[readableBytes];
+			in.readBytes(readBytes);
+			fileOut.write(readBytes, 0, readBytes.length);
+
+		} 
 		
+		//TODO last worked here, random file transfer failures...
+
+		ctx.pipeline().replace(this, "MessageDecoder", new MessageDecoder());
+		finishListener.fileTransferFinished(savePath);
+		
+		/*
 		if(writtenChunksCount < chunkCount - 1) {
 			
 			//wait for the next chunk
@@ -54,7 +72,6 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 				return;
 			}
 			
-			log.debug("Reciving chunk #" + writtenChunksCount);
 			byte[] readChunk = new byte[chunkSize];
 			in.readBytes(readChunk);
 			Files.write(Paths.get(savePath.getAbsolutePath()), readChunk, StandardOpenOption.APPEND);
@@ -85,7 +102,7 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 		} else {
 			throw new IOException("Error receiving chunked file. The written chunks cound is bigger than the chunk count.");
 		}
-
+*/
 	}
 
 }
