@@ -13,6 +13,7 @@ import io.netty.util.Timeout;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -295,7 +296,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.prefsModel.serializeTickerDatabase();
 	}
 
-	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException {
+	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException, URISyntaxException {
 		ClientMediaFile editedFile = (ClientMediaFile) msg.getData().get(0);
 		ServerMediaFile correlatedServerFile = this.mediaModel.getMediaFileById(editedFile.getId());
 		correlatedServerFile.setName(editedFile.getName());
@@ -402,11 +403,27 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		for(String k : PreferencesModelServer.getProps().stringPropertyNames()) {
 			ctx.write(new Message(OpCode.STC_PROPERTY_UPDATE_ACK, k, PreferencesModelServer.getProps().getProperty(k)));
 		}
+
+		ctx.flush();
+		
+		for (UUID id : priorities.keySet()) {
+			ctx.write(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
+		}
+
+		ctx.flush();
+		
+		for (UUID id : themes.keySet()) {
+			ctx.write(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
+		}
+		
+		ctx.flush();
 		
 		for (UUID id : allMedia.keySet()) {
 			ctx.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
 		}
 
+		ctx.flush();
+		
 		for (UUID id : customQueue) {
 			ctx.write(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
 		}
@@ -414,15 +431,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		for (UUID id : tickerElements.keySet()) {
 			ctx.write(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, tickerElements.get(id)));
 		}
-
-		for (UUID id : themes.keySet()) {
-			ctx.write(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
-		}
-
-		for (UUID id : priorities.keySet()) {
-			ctx.write(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
-		}
-
+		
 		if (this.automodeEnabled) {
 			ctx.write(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 		}
@@ -533,7 +542,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		broadcastMessage(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, toQueue));
 	}
 
-	private void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, PriorityDoesNotExistException, InterruptedException {
+	private void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, PriorityDoesNotExistException, InterruptedException, URISyntaxException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_IMAGE_FILE:
 			addImageFile(msg);

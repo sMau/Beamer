@@ -151,6 +151,13 @@ public class PreferencesModelServer {
 			addPriority(defaultPrio);
 			defaultPriority = defaultPrio.getId();
 		}
+		
+		if (!defaulPrioExists) {
+			Priority defaultPrio = new Priority("default", DEFAULT_PRIO_TIME);
+			defaultPrio.setDefaultPriority(true);
+			addPriority(defaultPrio);
+			defaultPriority = defaultPrio.getId();
+		}
 
 		if (allThemes != null) {
 			for (UUID id : allThemes.keySet()) {

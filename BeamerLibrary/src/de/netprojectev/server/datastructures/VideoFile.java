@@ -6,9 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.UUID;
 
 import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.server.model.PreferencesModelServer;
 
 public class VideoFile extends ServerMediaFile {
 
@@ -19,7 +19,7 @@ public class VideoFile extends ServerMediaFile {
 	private File videoFile;
 
 	public VideoFile(String name, File videoFile) throws IOException {
-		super(name, UUID.randomUUID()); // new Priority("Video", 0)
+		super(name, PreferencesModelServer.getDefaultPriority()); 
 		Path srcPath = Paths.get(videoFile.getAbsolutePath());
 		Path destPath = Paths.get(ConstantsServer.SAVE_PATH, ConstantsServer.CACHE_PATH_VIDEOS, this.id.toString());
 		Files.move(srcPath, destPath, StandardCopyOption.ATOMIC_MOVE);

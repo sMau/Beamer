@@ -1,6 +1,7 @@
 package de.netprojectev.client.datastructures;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.UUID;
 
 import de.netprojectev.datastructures.MediaFile;

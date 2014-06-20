@@ -1,6 +1,10 @@
 package de.netprojectev.server.datastructures;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.UUID;
 
 import de.netprojectev.client.datastructures.MediaType;
@@ -39,19 +43,31 @@ public class ServerMediaFile extends MediaFile {
 	 * 
 	 * @return the byte array representing the full image file, or null in case of video and countdown
 	 * @throws IOException iff corresponding files cannot be read from disk
+	 * @throws URISyntaxException 
 	 */
 	public byte[] determinePreview() throws IOException {
 		//TODO previewing for Videos and Countdowns 
 		if (this instanceof Countdown) {
-			return null;
+			return getNoPreviewImage();
 		} else if (this instanceof ImageFile) {
 			return ((ImageFile) this).get();
 		} else if (this instanceof VideoFile) {
-			return null;
+			return getNoPreviewImage();
 		} else if (this instanceof Themeslide) {
 			return ((Themeslide) this).get();
 		} else {
-			return null;
+			return getNoPreviewImage();
 		}
+	}
+	
+	private byte[] getNoPreviewImage() throws IOException {
+		URL url = this.getClass().getResource("/de/netprojectev/server/gfx/no_preview.png");
+		try {
+			return Files.readAllBytes(Paths.get(url.toURI()));
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
