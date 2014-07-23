@@ -51,7 +51,7 @@ public class Server {
 	
 	private static final Logger log = LoggerBuilder.createLogger(Server.class);
 
-	private static final EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
+	private static final EventLoopGroup bossGroup = new NioEventLoopGroup();
 	private static final EventLoopGroup workerGroup = new NioEventLoopGroup();
 
 	private final int port;
