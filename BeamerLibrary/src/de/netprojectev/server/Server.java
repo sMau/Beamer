@@ -39,6 +39,16 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public class Server {
 
+	/*TODO last worked here, work here again
+	 * TODO LIST WHAT TO DO NEXT 23.07.14
+	 *  Next check all functions for working
+	 *  Clean up and todo list check and resolve the single todos 
+	 *  clean switch to the master branch
+	 *  new branch for the new server GUI
+	 * 	android appliction
+	 */
+	
+	
 	private static final Logger log = LoggerBuilder.createLogger(Server.class);
 
 	private static final EventLoopGroup bossGroup = new NioEventLoopGroup(); // (1)
