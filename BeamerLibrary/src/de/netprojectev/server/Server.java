@@ -49,8 +49,8 @@ public class Server {
 	 */
 	
 	/* NOTES
-	 * # Priority of image files are not updatable, no error to see but it will not change
-	 * # Complete break down afer clicking 'next media file' (bu tprobalbe somethin before made this happen
+	 * # Toggling ticker elements activity state does not work and afer removing no refresh,
+	 * 		only refresh after adding new ticker element
 	 * 
 	 * 
 	 */
