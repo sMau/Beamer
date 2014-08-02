@@ -48,6 +48,13 @@ public class Server {
 	 * 	android appliction
 	 */
 	
+	/* NOTES
+	 * # Priority of image files are not updatable, no error to see but it will not change
+	 * # Complete break down afer clicking 'next media file' (bu tprobalbe somethin before made this happen
+	 * 
+	 * 
+	 */
+	
 	
 	private static final Logger log = LoggerBuilder.createLogger(Server.class);
 
@@ -63,6 +70,7 @@ public class Server {
 		this.proxy = new MessageProxyServer(this, serverGUI);
 
 		checkAndCreateDirs();
+		
 
 	}
 

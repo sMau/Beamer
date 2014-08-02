@@ -301,10 +301,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		ServerMediaFile correlatedServerFile = this.mediaModel.getMediaFileById(editedFile.getId());
 		correlatedServerFile.setName(editedFile.getName());
 		correlatedServerFile.setPriority(editedFile.getPriorityID());
-		broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, correlatedServerFile.getId(), 
-				correlatedServerFile.getName(),	correlatedServerFile.determinePreview(), 
-				correlatedServerFile.getPriorityID(), correlatedServerFile.getShowCount(),
-				correlatedServerFile.determineMediaType(), correlatedServerFile.isCurrent()));
+		broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(correlatedServerFile)));
 
 		this.prefsModel.serializeMediaDatabase();
 	}

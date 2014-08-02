@@ -60,6 +60,8 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		dataDecodeSuccess = true;
 		decodingFile = false;
 		
+		log.debug("Receiving new message, OpCode: " + opCode + ". Contains data: " + containsData);
+		
 		if (!containsData) {
 			out.add(new Message(opCode));
 		} else {
@@ -341,22 +343,18 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			return null;
 		}
 		
-		String name = decodeString();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		byte[] preview = decodeByteArray();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
 		UUID priorityID = decodeUUID();
 		if(dataDecodeSuccess == false) {
 			return null;
 		}
 		
 		int showCount = decodeInt();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
+		
+		String name = decodeString();
 		if(dataDecodeSuccess == false) {
 			return null;
 		}
@@ -370,7 +368,12 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		if(dataDecodeSuccess == false) {
 			return null;
 		}
-
+		
+		byte[] preview = decodeByteArray();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
 		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
 	}
 	

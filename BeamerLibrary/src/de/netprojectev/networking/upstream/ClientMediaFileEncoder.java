@@ -16,12 +16,12 @@ public class ClientMediaFileEncoder extends MessageToByteEncoder<ClientMediaFile
 	@Override
 	protected void encode(ChannelHandlerContext ctx, ClientMediaFile msg, ByteBuf out) throws Exception {
 		ctx.write(msg.getId());
-		ctx.write(msg.getName());
-		ctx.write(msg.getPreview());
 		ctx.write(msg.getPriorityID());
 		ctx.write(msg.getShowCount());
+		ctx.write(msg.getName());
 		ctx.write(msg.getType());
 		ctx.writeAndFlush(msg.isCurrent());
+		ctx.writeAndFlush(msg.getPreview());
 	}
 
 	@Override

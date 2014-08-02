@@ -17,6 +17,7 @@ import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.networking.LoginData;
 import de.netprojectev.networking.downstream.MessageDecoder;
+import de.netprojectev.networking.upstream.ClientMediaFileEncoder;
 import de.netprojectev.networking.upstream.DequeueDataByteEncoder;
 import de.netprojectev.networking.upstream.FileByteEncoder;
 import de.netprojectev.networking.upstream.LoginByteEncoder;
@@ -74,7 +75,7 @@ public class Client {
 								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
 								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(), 
 								new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(), 
-								new StringArrayEncoder(), new FileByteEncoder(),
+								new StringArrayEncoder(), new FileByteEncoder(), new ClientMediaFileEncoder(),
 								new TickerElementEncoder(), new MessageSplit());
 						ch.pipeline().addLast(new MessageDecoder(), proxy);
 					}

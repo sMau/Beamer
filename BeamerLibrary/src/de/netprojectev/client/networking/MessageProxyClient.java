@@ -467,15 +467,11 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		return sendMessageToServer(new Message(OpCode.CTS_DISCONNECT, this.client.getLogin().getAlias()));
 	}
 
-	// TODO change editing, that not for every single editing a new encoder is
-	// necessary
 	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
-		fileToEdit.setPreview(null);
+		//fileToEdit.setPreview(null); //XXX sending each time the preview is not efficient
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
 	}
 
-	// TODO change editing, that not for every single editing a new encoder is
-	// necessary
 	public void sendEditTickerElement(TickerElement eltToEdit) {
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_LIVE_TICKER_ELEMENT, eltToEdit));
 	}

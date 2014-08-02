@@ -56,9 +56,6 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 				readBytes = new byte[(int) (length - writtenBytes)];
 				writtenBytes += length - writtenBytes;
 			}
-
-			log.debug("Writing next bytes. Writtenbytes: " + writtenBytes
-					+ " currently readable bytes: " + readableBytes);
 			
 			in.readBytes(readBytes);
 			fileOut.write(readBytes);
