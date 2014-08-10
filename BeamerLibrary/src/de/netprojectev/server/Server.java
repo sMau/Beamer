@@ -53,6 +53,8 @@ public class Server {
 	 * 		only refresh after adding new ticker element
 	 * 
 	 * 
+	 * # on choose out of table in GUI the current priority is not updated, the old one is hold
+	 * 
 	 */
 	
 	

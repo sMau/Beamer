@@ -1054,7 +1054,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	private void jmiPopToggleActivatedActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jmiPopToggleActivatedActionPerformed
 		if (currentSelectedTickerElement != null) {
 			TickerElement copyToSend = currentSelectedTickerElement.copy();
-			copyToSend.setShow(!copyToSend.isShow());
+			copyToSend.setShow(!currentSelectedTickerElement.isShow());
 			proxy.sendEditTickerElement(copyToSend);
 			
 		}

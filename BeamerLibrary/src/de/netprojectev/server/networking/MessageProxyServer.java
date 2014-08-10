@@ -291,8 +291,10 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		TickerElement correlatedServerFile = this.tickerModel.getElementByID(edited.getId());
 		correlatedServerFile.setShow(edited.isShow());
 		correlatedServerFile.setText(edited.getText());
+		
+		this.serverGUI.updateLiveTickerString();
+		
 		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, correlatedServerFile));
-
 		this.prefsModel.serializeTickerDatabase();
 	}
 
@@ -641,6 +643,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		UUID eltToRemove = (UUID) msg.getData().get(0);
 		this.tickerModel.removeTickerElement(eltToRemove);
 
+		this.serverGUI.updateLiveTickerString();
 		broadcastMessage(new Message(OpCode.STC_REMOVE_LIVE_TICKER_ELEMENT_ACK, eltToRemove));
 
 		this.prefsModel.serializeTickerDatabase();
