@@ -49,8 +49,6 @@ public class Server {
 	 */
 	
 	/* NOTES
-	 * # Toggling ticker elements activity state does not work and afer removing no refresh,
-	 * 		only refresh after adding new ticker element
 	 * 
 	 * 
 	 * # on choose out of table in GUI the current priority is not updated, the old one is hold
