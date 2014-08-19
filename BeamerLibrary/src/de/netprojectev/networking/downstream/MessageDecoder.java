@@ -412,6 +412,9 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		case CTS_ADD_IMAGE_FILE:
 			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_IMAGES + UUID.randomUUID());
 			break;
+		case CTS_ADD_THEMESLIDE:
+			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_THEMESLIDES + UUID.randomUUID());
+			break;
 		case CTS_ADD_VIDEO_FILE:
 			pathOnDisk = new File(ConstantsServer.SAVE_PATH + ConstantsServer.CACHE_PATH_VIDEOS + UUID.randomUUID());
 			break;
@@ -535,14 +538,17 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			return;
 		}
 		
-		decodeFile(OpCode.CTS_ADD_IMAGE_FILE, new FileTransferFinishedListener() {
+		log.debug("Decoded theme id: " + themeID);
+
+		decodeFile(OpCode.CTS_ADD_THEMESLIDE, new FileTransferFinishedListener() {
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
 				ImageFile imgFile = new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file);
-				data.add(new Themeslide(imgFile.getName(), themeID, imgFile.getPriorityID(), imgFile));
-				sendUpstream(new Message(OpCode.CTS_ADD_IMAGE_FILE, data));
+				data.add(new Themeslide(name, themeID, imgFile.getPriorityID(), imgFile));
+				sendUpstream(new Message(OpCode.CTS_ADD_THEMESLIDE, data));
 			}
 		});
+
 	}
 
 	private TickerElement decodeTickerElement() {

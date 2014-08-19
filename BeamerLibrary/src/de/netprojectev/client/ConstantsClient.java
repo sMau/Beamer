@@ -8,8 +8,9 @@ public class ConstantsClient {
 	 * PATH AND FOLDERS
 	 */
 
-	public static final String SAVE_PATH = System.getProperty("user.home") + "/.beamermanager_client/";
-
+	public static final String SAVE_PATH = System.getProperty("user.home") + "/.beamermanager_client/";	
+	
+	
 	public static final String FILENAME_PROPERTIES = "properties.cfg";
 	public static final String FILENAME_DEFAULT_PROPERTIES = "default_properties.cfg";
 	public static final String FILENAME_LOGALL = "log_beamer_client_";

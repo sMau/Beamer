@@ -429,14 +429,12 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	// TODO send the data using the low level encoders of netty
-	public void sendAddThemeSlide(String name, UUID theme, byte[] imageDataAsBytes) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name,theme, imageDataAsBytes));
+	public void sendAddThemeSlide(String name, UUID theme, File fileToSend) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, theme, fileToSend));
 	}
 
-	// TODO send only text to use StringEncoder on netty low level
 	public void sendAddTickerElement(String text) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT,
-				new TickerElement(text)));
+		sendMessageToServer(new Message(OpCode.CTS_ADD_LIVE_TICKER_ELEMENT, new TickerElement(text)));
 	}
 
 	public void sendAddVideoFile(File file) throws IOException {

@@ -214,7 +214,6 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private void addThemeSlide(Message msg) throws FileNotFoundException, IOException {
 		Themeslide themeslide = (Themeslide) msg.getData().get(0);
 		addMediaFile(themeslide);
-
 	}
 
 	public ChannelGroupFuture broadcastMessage(Message msg) {

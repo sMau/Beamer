@@ -50,12 +50,11 @@ public class Server {
 	
 	/* NOTES
 	 * 
-	 * ### Adding Themeslides does not work
+	 * # sometimes default priority seems to be NULL on server side so on adding new files null is the priority
 	 * 
 	 * # after removing a priority which was still assigned to some media some probs occur -> auto switchback to defaultprio for thes
 	 * # on choose out of table in GUI the current priority is not updated, the old one is hold
 	 * # Ticker autostart and ticker start are not equal (on click on start the height of the bg is changed automatically, not by autostart).
-	 * 
 	 * 
 	 */
 	

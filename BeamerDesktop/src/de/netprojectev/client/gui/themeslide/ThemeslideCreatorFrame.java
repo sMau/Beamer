@@ -11,7 +11,12 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriter;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
@@ -309,6 +314,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			proxy.errorRequestFullSync(e);
 		} catch (ThemeDoesNotExistException e) {
 			proxy.errorRequestFullSync(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 		}
 		if (success) {
 			dispose();
@@ -323,6 +330,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			proxy.errorRequestFullSync(e);
 		} catch (ThemeDoesNotExistException e) {
 			proxy.errorRequestFullSync(e);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 		}
 		if (success) {
 			// TODO Add and show
@@ -403,8 +412,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 * 
 	 * @throws PriorityDoesNotExistException
 	 * @throws ThemeDoesNotExistException
+	 * @throws IOException 
 	 */
-	private boolean addThemeslide() throws PriorityDoesNotExistException, ThemeDoesNotExistException {
+	private boolean addThemeslide() throws PriorityDoesNotExistException, ThemeDoesNotExistException, IOException {
 
 		Priority priority = null;
 		Theme theme = null;
@@ -430,7 +440,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		if (name != null && priority != null && theme != null) {
 
-			proxy.sendAddThemeSlide(name, theme.getId(), generateByteArray());
+			proxy.sendAddThemeSlide(name, theme.getId(), generateFileToSend());
 
 			return true;
 		} else {
@@ -440,7 +450,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	}
 
-	private byte[] generateByteArray() {
+	private File generateFileToSend() throws IOException {
 		
 		//TODO check the efficiency of this conversion
 
@@ -461,16 +471,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		tmpG2D.dispose();
 
-		/*
-		 * int[][] rgbaValues = new
-		 * int[bufImage.getWidth()][bufImage.getHeight()];
-		 * 
-		 * for (int i = 0; i < bufImage.getWidth(); i++) { for (int j = 0; j <
-		 * bufImage.getHeight(); j++) { rgbaValues[i][j] = bufImage.getRGB(i,
-		 * j); } }
-		 */
+		File tmpFile = Files.createTempFile(null, null).toFile();
+		ImageIO.write(bufImage, "PNG", tmpFile);
 
-		return Misc.bufferedImageToByteArray(bufImage);
+		return tmpFile;
 	}
 
 	/**
