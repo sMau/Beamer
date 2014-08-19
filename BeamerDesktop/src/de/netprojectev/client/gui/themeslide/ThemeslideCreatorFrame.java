@@ -865,7 +865,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 					int currentSize;
 					try {
-						currentSize = Integer.parseInt(sizes[i].substring(0, sizes[i].length() - 2));
+						currentSize = Integer.parseInt(sizes[i]);
 						if (attr.containsAttribute(StyleConstants.FontSize, currentSize)) {
 							evtFromGUIupdateFontSize = true;
 							jComboBoxFontSize.setSelectedItem(sizes[i]);

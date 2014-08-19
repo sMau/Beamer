@@ -50,8 +50,8 @@ public class Server {
 	
 	/* NOTES
 	 * 
-	 * ### adding theme causes complete crash of network stack...
-	 * ## added fonts in the ticker editing prefs seem to repeat and some standard fonts are missing (eg arial...)
+	 * ### Adding Themeslides does not work
+	 * 
 	 * # after removing a priority which was still assigned to some media some probs occur -> auto switchback to defaultprio for thes
 	 * # on choose out of table in GUI the current priority is not updated, the old one is hold
 	 * # Ticker autostart and ticker start are not equal (on click on start the height of the bg is changed automatically, not by autostart).
