@@ -7,11 +7,15 @@ import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
 
+import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.datastructures.MediaFile;
 import de.netprojectev.datastructures.Priority;
 import de.netprojectev.datastructures.Theme;
 import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.networking.Message;
+import de.netprojectev.networking.OpCode;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.networking.MessageProxyServer;
@@ -193,8 +197,15 @@ public class PreferencesModelServer {
 		return this.themes;
 	}
 
-	public void removePriority(UUID id) {
+	public void removePriority(UUID id) throws IOException {
 		log.debug("Removing priority: " + id);
+		for(UUID key : proxy.getMediaModel().getAllMediaFiles().keySet()) {
+			ServerMediaFile curFile = proxy.getMediaModel().getAllMediaFiles().get(key);
+			if(curFile.getPriorityID().equals(id)) {
+				curFile.setPriority(defaultPriority);
+				proxy.broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(curFile)));
+			}
+		}
 		this.prios.remove(id);
 	}
 

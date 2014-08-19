@@ -180,7 +180,11 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private void addLiveTickerElement(Message msg) throws IOException {
 		TickerElement eltToAdd = (TickerElement) msg.getData().get(0);
 		this.tickerModel.addTickerElement(eltToAdd);
-		this.serverGUI.updateLiveTickerString();
+		
+		if(liveTickerEnabled) {
+			this.serverGUI.updateLiveTickerString();
+		}
+
 		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, eltToAdd));
 
 		this.prefsModel.serializeTickerDatabase();
@@ -291,7 +295,9 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		correlatedServerFile.setShow(edited.isShow());
 		correlatedServerFile.setText(edited.getText());
 		
-		this.serverGUI.updateLiveTickerString();
+		if(liveTickerEnabled) {
+			this.serverGUI.updateLiveTickerString();
+		}
 		
 		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, correlatedServerFile));
 		this.prefsModel.serializeTickerDatabase();
@@ -642,7 +648,10 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		UUID eltToRemove = (UUID) msg.getData().get(0);
 		this.tickerModel.removeTickerElement(eltToRemove);
 
-		this.serverGUI.updateLiveTickerString();
+		if(liveTickerEnabled) {
+			this.serverGUI.updateLiveTickerString();
+		}
+		
 		broadcastMessage(new Message(OpCode.STC_REMOVE_LIVE_TICKER_ELEMENT_ACK, eltToRemove));
 
 		this.prefsModel.serializeTickerDatabase();
