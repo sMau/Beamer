@@ -237,7 +237,7 @@ public class AddThemeDialog extends javax.swing.JDialog {
 		        return;
 			}
 			
-    		proxy.sendAddTheme(new Theme(name, Misc.bufferedImageToByteArray(backgroundImage)));
+    		proxy.sendAddTheme(name, Misc.bufferedImageToByteArray(backgroundImage));
     	}
         returnStatus = retStatus;
         setVisible(false);

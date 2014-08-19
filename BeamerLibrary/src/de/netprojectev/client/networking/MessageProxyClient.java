@@ -424,8 +424,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_PRIORITY, prioToAdd));
 	}
 
-	public void sendAddTheme(Theme themeToAdd) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEME, themeToAdd));
+	public void sendAddTheme(String name, byte[] bgImg) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_THEME, name, bgImg));
 	}
 
 	// TODO send the data using the low level encoders of netty
