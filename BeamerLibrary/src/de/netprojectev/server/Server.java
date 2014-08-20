@@ -49,7 +49,7 @@ public class Server {
 	 */
 	
 	/* NOTES
-	 * 
+	 * ### Countdowns are not working
 	 * # sometimes default priority seems to be NULL on server side so on adding new files null is the priority
 	 * 
 	 */
@@ -70,7 +70,6 @@ public class Server {
 
 		checkAndCreateDirs();
 		
-
 	}
 
 	private void bindListeningSocket() {
