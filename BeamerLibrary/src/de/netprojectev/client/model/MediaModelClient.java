@@ -159,16 +159,6 @@ public class MediaModelClient {
 
 	public void removeMediaFile(final UUID toRemove) throws MediaDoesNotExsistException {
 
-		/*
-		 * SwingUtilities.invokeLater(new Runnable() {
-		 * 
-		 * @Override public void run() {
-		 * 
-		 * 
-		 * 
-		 * } });
-		 */
-
 		try {
 			checkIfMediaExists(toRemove);
 		} catch (MediaDoesNotExsistException e) {

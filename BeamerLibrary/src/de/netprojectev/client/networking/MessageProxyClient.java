@@ -392,8 +392,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		sendShowMediaFile(countdown.getId());
 	}
 
-	public void sendAddCountdown(Countdown countdown) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown));
+	public void sendAddCountdown(String name, int minutesToShow) {
+		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, name, minutesToShow));
 	}
 
 	public void sendAddImageFile(File file) throws IOException {

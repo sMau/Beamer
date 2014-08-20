@@ -236,8 +236,17 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	}
 	
 	private Countdown decodeCountdown() {
-		// TODO Auto-generated method stub
-		return null;
+		String name = decodeString();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
+		int durationInMinutes = decodeInt();
+		if(dataDecodeSuccess == false) {
+			return null;
+		}
+		
+		return new Countdown(name, durationInMinutes);
 	}
 
 	//TODO add states to the replaying decoder (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)

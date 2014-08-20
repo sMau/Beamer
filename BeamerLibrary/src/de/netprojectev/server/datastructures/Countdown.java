@@ -2,6 +2,7 @@ package de.netprojectev.server.datastructures;
 
 import java.util.UUID;
 
+import de.netprojectev.datastructures.Priority;
 import de.netprojectev.utils.HelperMethods;
 
 public class Countdown extends ServerMediaFile {
@@ -16,23 +17,23 @@ public class Countdown extends ServerMediaFile {
 	private String timeString;
 
 	public Countdown(String name, int durationInMinutes) {
-		// TODO fix the countdown shit
-		super(name, UUID.randomUUID()); // new Priority("Countdown",
-										// durationInMinutes)
-		throw new UnsupportedOperationException("Countdown is not working at the moment.");
-		/*
-		 * if(durationInMinutes <= 0) { throw new
-		 * IllegalArgumentException("duration have to be bigger than 0"); }
-		 * this.initDurationInSeconds = durationInMinutes * 60;
-		 * this.durationInSeconds = initDurationInSeconds; this.timeString =
-		 * HelperMethods.convertFromSecondsToTimeString((int) durationInSeconds,
-		 * true);
-		 */
+		super(name, UUID.randomUUID());
+
+		if (durationInMinutes <= 0) {
+			throw new IllegalArgumentException(
+					"duration have to be bigger than 0");
+		}
+		this.initDurationInSeconds = durationInMinutes * 60;
+		this.durationInSeconds = initDurationInSeconds;
+		this.timeString = HelperMethods.convertFromSecondsToTimeString(
+				(int) durationInSeconds, true);
+
 	}
 
 	public void decreaseOneSecond() {
 		this.durationInSeconds--;
-		this.timeString = HelperMethods.convertFromSecondsToTimeString((int) this.durationInSeconds, true);
+		this.timeString = HelperMethods.convertFromSecondsToTimeString(
+				(int) this.durationInSeconds, true);
 		if (this.durationInSeconds < 0) {
 			this.durationInSeconds = this.initDurationInSeconds;
 		}

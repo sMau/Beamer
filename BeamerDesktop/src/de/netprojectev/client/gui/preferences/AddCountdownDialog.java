@@ -266,7 +266,7 @@ public class AddCountdownDialog extends javax.swing.JDialog {
 		
 		Countdown cntdwn = addCountdown();
 		if(cntdwn != null) {
-			proxy.sendAddCountdown(cntdwn);
+			proxy.sendAddCountdown(cntdwn.getName(), (int) (cntdwn.getInitDurationInSeconds() / 60));
 			dispose();
 		}
 		
