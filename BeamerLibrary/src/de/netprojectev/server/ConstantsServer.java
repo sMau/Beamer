@@ -3,7 +3,6 @@ package de.netprojectev.server;
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.util.Date;
-import java.util.UUID;
 
 import de.netprojectev.datastructures.Priority;
 

@@ -35,6 +35,7 @@ public class ClientMediaFile extends MediaFile {
 		super(name, id, priorityID);
 		this.type = type;
 		this.preview = preview;
+		
 	}
 
 	public byte[] getPreview() {
