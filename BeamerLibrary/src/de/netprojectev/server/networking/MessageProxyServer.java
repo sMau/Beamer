@@ -759,11 +759,19 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void updateAutoModeTimer() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
+		
 		if (this.automodeEnabled) {
+			
+			if(mediaModel.getAllMediaFiles().size() < 2) {
+				disableAutoMode();
+				return;
+			}
+			
 			if (this.autoModusTimer != null) {
 				this.autoModusTimer.cancel();
 				this.autoModusTimer.purge();
 			}
+			
 			this.autoModusTimer = new Timer();
 			if (this.currentFile == null) {
 				showNextMediaFile();

@@ -6,8 +6,11 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
@@ -38,11 +41,13 @@ public class DisplayMainComponent extends JComponent {
 	private Countdown countdown;
 	private Font countdownFont;
 	private Color countdownFontColor;
-	
+
 	private Color generalBGColor;
 
 	// TODO set a background for this component ( e.g. many 4s logos) that there
 	// isnt any grey space when showing a 4:3 resolution image
+	
+	// XXX Make repeating possible for much to small images, like about the factor of 2 to small
 
 	public DisplayMainComponent() {
 		super();
@@ -70,21 +75,34 @@ public class DisplayMainComponent extends JComponent {
 	 * 
 	 * @param file
 	 *            the image file to draw on component
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	protected void drawImage(ImageFile image) throws IOException {
-		
-		//TODO optimize this method cause of the many different conversions could be slow
-		final BufferedImage compImage = Misc.imageIconToBufferedImage(new ImageIcon(image.get()));
+				
+		InputStream in = new ByteArrayInputStream(image.get());
+		final BufferedImage compImage = ImageIO.read(in);
 		
 		log.debug(compImage.getHeight());
 		
 		countdownShowing = false;
 
-		//TODO check the scaling and respect aspect ratio
-		int newWidth = getWidth();
-		int newHeight = (int) (((double) getWidth() / (double) compImage.getWidth()) * (double) compImage.getHeight());
+		int newWidth;
+		int newHeight;
+				
+		double screenAspectRatio = ((double) getWidth()) / ((double) getHeight());
+		double imageAspectRatio = ((double) compImage.getWidth()) / ((double) compImage.getHeight());
 		
+		if(screenAspectRatio == imageAspectRatio) {
+			newWidth = getWidth();
+			newHeight = getHeight();
+		} else if(screenAspectRatio < imageAspectRatio) {
+			newWidth = getWidth();
+			newHeight = (int) ((double) newWidth / imageAspectRatio);
+		} else {
+			newHeight = getHeight();
+			newWidth = (int) ((double) newHeight * imageAspectRatio);
+		}
+
 		log.debug("new size of the image: " + newWidth + "x" + newHeight);
 		
 		this.image = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
@@ -111,16 +129,15 @@ public class DisplayMainComponent extends JComponent {
 	 * drawing the image centered.
 	 */
 	@Override
-	
 	protected void paintComponent(Graphics g) {
-		
+
 		Color oldColor = g.getColor();
-		
+
 		g.setColor(generalBGColor);
-        g.fillRect(0, 0, getWidth(), getHeight());
-		
-        g.setColor(oldColor);
-        
+		g.fillRect(0, 0, getWidth(), getHeight());
+
+		g.setColor(oldColor);
+
 		if (countdownShowing) {
 			Graphics2D tmpG2D = (Graphics2D) g.create();
 			tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);

@@ -48,14 +48,6 @@ public class Server {
 	 * 	android appliction
 	 */
 	
-	/* BUGS
-	 * 
-	 * ### Skalierung auf Server Seite checken
-	 * ## check iff after countdown finished, it is deleted from list.
-	 * 
-	 */
-	
-	
 	private static final Logger log = LoggerBuilder.createLogger(Server.class);
 
 	private static final EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -108,12 +100,10 @@ public class Server {
 		if (startInFullscreen) {
 			this.proxy.enableFullScreen();
 		}
+		
 		this.proxy.makeGUIVisible();
 
 		return this.proxy;
-		/*
-		 * when setup is finished make the gui visible
-		 */
 
 	}
 

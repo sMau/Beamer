@@ -37,8 +37,6 @@ public class ConstantsServer {
 	public static final String DEFAULT_MEDIUM_TICKER_SPEED = "30";
 	public static final String DEFAULT_HIGH_TICKER_SPEED = "20";
 
-	public static final int DEFAULT_PREVIEW_SCAL_WIDTH = 640;
-
 	public static final Priority NO_PRIORITY = new Priority("no priority", 0);
 
 	public static final String DEFAULT_PW = "";
@@ -63,7 +61,7 @@ public class ConstantsServer {
 	 */
 
 	public static final String PROP_GENERAL_BACKGROUND_COLOR = "general.backgroundColor";
-
+	
 	public static final String PROP_TICKER_SPEED = "ticker.speed";
 	public static final String PROP_TICKER_FONTSIZE = "ticker.fontSize";
 	public static final String PROP_TICKER_FONTTYPE = "ticker.fontType";

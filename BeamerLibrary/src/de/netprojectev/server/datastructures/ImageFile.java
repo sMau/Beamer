@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+import de.netprojectev.client.datastructures.MediaType;
 import de.netprojectev.server.ConstantsServer;
 
 public class ImageFile extends ServerMediaFile {
@@ -42,4 +43,13 @@ public class ImageFile extends ServerMediaFile {
 		return this.image;
 	}
 
+	@Override
+	public MediaType determineMediaType() {
+		return MediaType.Image;
+	}
+
+	@Override
+	public byte[] determinePreview() throws IOException {
+		return get();
+	}
 }

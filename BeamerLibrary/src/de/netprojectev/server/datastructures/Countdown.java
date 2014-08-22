@@ -1,7 +1,9 @@
 package de.netprojectev.server.datastructures;
 
+import java.io.IOException;
 import java.util.UUID;
 
+import de.netprojectev.client.datastructures.MediaType;
 import de.netprojectev.datastructures.Priority;
 import de.netprojectev.utils.HelperMethods;
 
@@ -51,6 +53,16 @@ public class Countdown extends ServerMediaFile {
 
 	public String getTimeString() {
 		return this.timeString;
+	}
+
+	@Override
+	public MediaType determineMediaType() {
+		return MediaType.Countdown;
+	}
+
+	@Override
+	public byte[] determinePreview() throws IOException {
+		return super.getNoPreviewImage();
 	}
 
 }

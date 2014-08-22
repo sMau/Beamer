@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import de.netprojectev.client.datastructures.MediaType;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.model.PreferencesModelServer;
 
@@ -34,4 +35,13 @@ public class VideoFile extends ServerMediaFile {
 		this.videoFile = videoFile;
 	}
 
+	@Override
+	public MediaType determineMediaType() {
+		return MediaType.Video;
+	}
+
+	@Override
+	public byte[] determinePreview() throws IOException {
+		return super.getNoPreviewImage();
+	}
 }

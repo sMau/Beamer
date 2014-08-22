@@ -3,6 +3,8 @@ package de.netprojectev.server.datastructures;
 import java.io.IOException;
 import java.util.UUID;
 
+import de.netprojectev.client.datastructures.MediaType;
+
 public class Themeslide extends ServerMediaFile {
 
 	/**
@@ -30,4 +32,13 @@ public class Themeslide extends ServerMediaFile {
 		return this.themeId;
 	}
 
+	@Override
+	public MediaType determineMediaType() {
+		return MediaType.Themeslide;
+	}
+
+	@Override
+	public byte[] determinePreview() throws IOException {
+		return get();
+	}
 }

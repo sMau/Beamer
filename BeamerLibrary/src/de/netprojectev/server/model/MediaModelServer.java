@@ -2,8 +2,10 @@ package de.netprojectev.server.model;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.logging.log4j.Logger;
@@ -12,6 +14,7 @@ import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.exceptions.MediaNotInQueueException;
 import de.netprojectev.exceptions.OutOfSyncException;
+import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ServerMediaFile;
 import de.netprojectev.server.datastructures.VideoFile;
 import de.netprojectev.server.networking.MessageProxyServer;
@@ -37,8 +40,17 @@ public class MediaModelServer {
 	}
 
 	private void addAllMediaAndShuffle() {
-		this.mediaStandardList.addAll(this.allMediaFiles.keySet());
+		Set<UUID> cleanedSet = new HashSet<UUID>();
+		
+		for(UUID id : this.allMediaFiles.keySet()) {
+			if(!(this.allMediaFiles.get(id) instanceof Countdown)) {
+				cleanedSet.add(id);
+			}
+		}
+		
+		this.mediaStandardList.addAll(cleanedSet);
 		Collections.shuffle(this.mediaStandardList);
+
 	}
 
 	public UUID addMediaFile(ServerMediaFile file) {
