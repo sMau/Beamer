@@ -3,6 +3,7 @@ package de.netprojectev.server;
 import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.util.Date;
+import java.util.UUID;
 
 import de.netprojectev.datastructures.Priority;
 
@@ -86,4 +87,5 @@ public class ConstantsServer {
 	public static final int NUMBER_OF_WORKER_THREADS = 3;
 
 	public static final Date TIMESTAMP = new Date();
+	
 }

@@ -10,6 +10,8 @@ public class Countdown extends ServerMediaFile {
 	/**
 	 * 
 	 */
+	public static final UUID COUNTDOWN_PRIORITY = new UUID(1337, 1337);
+
 	private final static long serialVersionUID = -4353683190496476107L;
 	private long initDurationInSeconds;
 	private long durationInSeconds;
@@ -17,7 +19,7 @@ public class Countdown extends ServerMediaFile {
 	private String timeString;
 
 	public Countdown(String name, int durationInMinutes) {
-		super(name, UUID.randomUUID());
+		super(name, COUNTDOWN_PRIORITY);
 
 		if (durationInMinutes <= 0) {
 			throw new IllegalArgumentException(

@@ -54,7 +54,7 @@ public class PreferencesModelServer {
 		try {
 			propsLoaded = HelperMethods.loadPropertiesFromDisk(ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
 		} catch (IOException e) {
-			log.warn("Properties could not be loaded from disk.", e);
+			log.warn("Properties could not be loaded from disk. Using defaults.", e);
 		}
 		props.putAll(propsLoaded);
 	}

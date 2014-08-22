@@ -48,9 +48,10 @@ public class Server {
 	 * 	android appliction
 	 */
 	
-	/* NOTES
-	 * ### Countdowns are not working
-	 * # sometimes default priority seems to be NULL on server side so on adding new files null is the priority
+	/* BUGS
+	 * 
+	 * ### Skalierung auf Server Seite checken
+	 * ## check iff after countdown finished, it is deleted from list.
 	 * 
 	 */
 	
