@@ -16,7 +16,6 @@ public class ClientMediaFile extends MediaFile {
 	//XXX safe the previews scaled to disk to save RAM
 	private final MediaType type;
 	private byte[] preview;
-
 	
 	public ClientMediaFile(ServerMediaFile file) throws IOException {
 		this(file.getName(), file.getId(), file.getPriorityID(), file.determineMediaType(), file.determinePreview());
@@ -44,10 +43,6 @@ public class ClientMediaFile extends MediaFile {
 
 	public MediaType getType() {
 		return this.type;
-	}
-
-	public void setPreview(byte[] preview) {
-		this.preview = preview;
 	}
 
 	@Override

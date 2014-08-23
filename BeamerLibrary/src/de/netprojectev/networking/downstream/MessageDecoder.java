@@ -35,14 +35,14 @@ import de.netprojectev.utils.LoggerBuilder;
 public class MessageDecoder extends ByteToMessageDecoder {
 
 	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
-	
+		
 	private ByteBuf in;
 	private ChannelHandlerContext ctx;
 	private ArrayList<Object> data = new ArrayList<Object>(16);
 	
 	private boolean dataDecodeSuccess;
 	private boolean decodingFile;
-	
+
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
@@ -382,7 +382,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		if(dataDecodeSuccess == false) {
 			return null;
 		}
-		
 		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
 	}
 	
