@@ -23,5 +23,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/BeamerLibrary/lib/log4j-core-2.0-rc1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/swingx-all-1.6.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

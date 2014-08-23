@@ -1,9 +1,18 @@
 package de.netprojectev.server.datastructures;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
+
 import de.netprojectev.client.datastructures.MediaType;
+import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.server.model.PreferencesModelServer;
+import de.netprojectev.utils.Misc;
 
 public class Themeslide extends ServerMediaFile {
 
@@ -39,6 +48,15 @@ public class Themeslide extends ServerMediaFile {
 
 	@Override
 	public byte[] determinePreview() throws IOException {
-		return get();
+		InputStream in = new ByteArrayInputStream(get());
+		final BufferedImage compImage = ImageIO.read(in);
+		double imageAspectRatio = ((double) compImage.getWidth()) / ((double) compImage.getHeight());
+		int newWidth = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_GENERAL_PREVIEW_WIDTH));
+		int newHeight = (int) ((double) newWidth / imageAspectRatio);
+		BufferedImage scaled = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);		
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ImageIO.write(scaled, "png", out);
+		out.flush();
+		return out.toByteArray();
 	}
 }

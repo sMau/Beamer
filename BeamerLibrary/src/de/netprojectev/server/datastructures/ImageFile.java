@@ -1,15 +1,24 @@
 package de.netprojectev.server.datastructures;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
+
 import de.netprojectev.client.datastructures.MediaType;
 import de.netprojectev.server.ConstantsServer;
+import de.netprojectev.server.model.PreferencesModelServer;
+import de.netprojectev.utils.Misc;
 
 public class ImageFile extends ServerMediaFile {
 
@@ -20,8 +29,6 @@ public class ImageFile extends ServerMediaFile {
 
 	private transient byte[] image;
 	private File pathOnDisk;
-
-	//TODO change all io.File refs to the nio.Path way
 	
 	public ImageFile(String name, UUID priorityID, File pathOnDisk) throws IOException {
 		super(name, priorityID);
@@ -50,6 +57,15 @@ public class ImageFile extends ServerMediaFile {
 
 	@Override
 	public byte[] determinePreview() throws IOException {
-		return get();
+		InputStream in = new ByteArrayInputStream(get());
+		final BufferedImage compImage = ImageIO.read(in);
+		double imageAspectRatio = ((double) compImage.getWidth()) / ((double) compImage.getHeight());
+		int newWidth = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_GENERAL_PREVIEW_WIDTH));
+		int newHeight = (int) ((double) newWidth / imageAspectRatio);
+		BufferedImage scaled = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);		
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ImageIO.write(scaled, "png", out);
+		out.flush();
+		return out.toByteArray();
 	}
 }

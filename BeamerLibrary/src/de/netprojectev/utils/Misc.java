@@ -1,4 +1,4 @@
-package de.netprojectev.server.gui;
+package de.netprojectev.utils;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;

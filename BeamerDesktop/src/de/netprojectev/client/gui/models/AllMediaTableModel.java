@@ -19,8 +19,6 @@ public class AllMediaTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1263313149575878071L;
 
-
-
 	private static final Logger log = LoggerBuilder.createLogger(AllMediaTableModel.class);
 
 	private final MediaModelClient mediaModel;
