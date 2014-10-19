@@ -16,8 +16,6 @@ import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.Logger;
 
-import com.sun.org.apache.bcel.internal.Constants;
-
 import de.netprojectev.server.ConstantsServer;
 
 /**
@@ -196,7 +194,7 @@ public class HelperMethods {
 	}
 
 	/**
-	 * Reads properties from disk using the in the {@link Constants} defined
+	 * Reads properties from disk using the in the defined
 	 * path.
 	 * 
 	 * @return from disk loaded property object

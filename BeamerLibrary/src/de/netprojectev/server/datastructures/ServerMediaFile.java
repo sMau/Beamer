@@ -1,10 +1,16 @@
 package de.netprojectev.server.datastructures;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import de.netprojectev.client.datastructures.MediaType;
@@ -36,14 +42,7 @@ public abstract class ServerMediaFile extends MediaFile {
 	public abstract byte[] determinePreview() throws IOException;
 	
 	protected byte[] getNoPreviewImage() throws IOException {
-		URL url = this.getClass().getResource("/de/netprojectev/server/gfx/no_preview.png");
-		try {
-			return Files.readAllBytes(Paths.get(url.toURI()));
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
+		return new byte[1];
 	}
 
 }
