@@ -149,10 +149,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a PlaceholderFragment (defined as a static inner class
-			// below).
-			return LoginFragment.newInstance();
+			switch (position) {
+			case 0:
+				return MediaFragment.newInstance();
+			case 1:
+				return TickerFragment.newInstance();
+			case 2:
+				return QueueFragment.newInstance();
+			}
+			return null;
 		}
 
 		@Override

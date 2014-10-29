@@ -1,5 +1,7 @@
 package de.netprojectev;
 
+import de.netprojectev.service.NetworkService;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,15 +17,17 @@ public class LoginFragment extends Fragment {
 	}
 
 	private LoginFragment() {
+		
 	}
-
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		
-		
+		Intent i = new Intent(getActivity(), NetworkService.class);
+		// potentially add data to the intent
+		i.putExtra("KEY1", "Value to be used by the service");
+		getActivity().startService(i); 
 		
 		super.onCreate(savedInstanceState);
-		
 	}
 	
 	@Override
