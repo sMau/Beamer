@@ -151,9 +151,8 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		 */
 		try {
 			jlDefaultPrioVar.setText(prefs.getPriorityByID(prefs.getDefaultPriority()).getName());
-		} catch (PriorityDoesNotExistException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+		} catch (PriorityDoesNotExistException e) {
+			log.error("Priority could not be found", e);
 		}
 
 		/*

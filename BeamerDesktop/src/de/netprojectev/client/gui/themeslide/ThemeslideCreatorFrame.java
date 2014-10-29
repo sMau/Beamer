@@ -32,16 +32,20 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 
+import org.apache.logging.log4j.Logger;
+
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.gui.main.Constants;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.gui.preferences.ColorPickerDialog;
+import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.Priority;
 import de.netprojectev.datastructures.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.utils.LoggerBuilder;
 
 /**
  * This is a GUI class to create and design a new Themeslide. It contains a
@@ -51,6 +55,7 @@ import de.netprojectev.exceptions.ThemeDoesNotExistException;
  *
  */
 public class ThemeslideCreatorFrame extends javax.swing.JFrame {
+	private static final Logger log = LoggerBuilder.createLogger(ThemeslideCreatorFrame.class);
 
 	private static final long serialVersionUID = -3653577264825548156L;
 
@@ -323,7 +328,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		} catch (ThemeDoesNotExistException e) {
 			proxy.errorRequestFullSync(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			log.error("IO Error", e);
 		}
 		if (success) {
 			dispose();
@@ -339,7 +344,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		} catch (ThemeDoesNotExistException e) {
 			proxy.errorRequestFullSync(e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			log.error("IO error", e);
 		}
 		if (success) {
 			// TODO Add and show
@@ -958,11 +963,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 				try {
 					new ThemeslideCreatorFrame(null, null).setVisible(true);
 				} catch (ThemeDoesNotExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error("Theme missing", e);
 				} catch (PriorityDoesNotExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error("Priority missing", e);
 				}
 
 			}

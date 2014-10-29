@@ -23,7 +23,7 @@ public class MediaModelClient {
 	}
 
 	public interface UpdateCurrentFileListener {
-		public void update();
+		public void update() throws PriorityDoesNotExistException;
 	}
 
 	public interface UpdateCustomQueueDataListener {
@@ -190,7 +190,7 @@ public class MediaModelClient {
 		updateCustomQueueTable();
 	}
 
-	public void setAsCurrent(UUID fileShowing) throws MediaDoesNotExsistException {
+	public void setAsCurrent(UUID fileShowing) throws MediaDoesNotExsistException, PriorityDoesNotExistException {
 		if (this.currentMediaFile != null) {
 			this.currentMediaFile.setCurrent(false);
 		}
@@ -213,7 +213,7 @@ public class MediaModelClient {
 	}
 
 	public int timeUntilShow(int rowIndex) throws MediaDoesNotExsistException, PriorityDoesNotExistException {
-		// TODO take current file time into account
+		// XXX take current file time into account
 		int res = 0;
 		for (int i = 0; i < rowIndex; i++) {
 			res += this.proxy.getPrefs().getPriorityByID(getMediaFileById(this.customQueue.get(i)).getPriorityID()).getMinutesToShow();

@@ -27,6 +27,7 @@ import de.netprojectev.datastructures.Theme;
 import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.OutOfSyncException;
+import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.UnkownMessageException;
 import de.netprojectev.networking.DequeueData;
 import de.netprojectev.networking.LoginData;
@@ -83,11 +84,11 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	}
 
-	private void autoModeDisabled(Message msg) {
+	private void autoModeDisabled(Message msg) throws PriorityDoesNotExistException {
 		this.prefs.disableAutomode();
 	}
 
-	private void autoModeEnabled(Message msg) {
+	private void autoModeEnabled(Message msg) throws PriorityDoesNotExistException {
 		this.prefs.enableAutomode(this.fullsync);
 	}
 
@@ -235,7 +236,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		this.mediaModel.removeMediaFile(toRemove);
 	}
 
-	private void mediaFileShowing(Message msg) throws MediaDoesNotExsistException {
+	private void mediaFileShowing(Message msg) throws MediaDoesNotExsistException, PriorityDoesNotExistException {
 		UUID fileShowing = (UUID) msg.getData().get(0);
 		this.mediaModel.setAsCurrent(fileShowing);
 	}
@@ -256,7 +257,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void receiveMessage(Message msg) throws UnkownMessageException,
-	MediaDoesNotExsistException, OutOfSyncException {
+	MediaDoesNotExsistException, OutOfSyncException, PriorityDoesNotExistException {
 		log.debug("Receiving message: " + msg.toString());
 		switch (msg.getOpCode()) {
 		case STC_ADD_MEDIA_FILE_ACK:
@@ -361,7 +362,6 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	public void reconnectForced() {
 		sendDisconnectRequest();
-		// XXX reconnect is crappy
 		if (this.autoReconnectTimer == null) {
 			this.autoReconnectTimer = new Timer();
 			this.autoReconnectTimer.schedule(new TimerTask() {
@@ -371,8 +371,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 					try {
 						MessageProxyClient.this.client.connect();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						log.error("Error during connection setup", e);
 					}
 				}
 			}, 2000, 5000);
@@ -385,9 +384,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void sendAddAndShowCountdown(Countdown countdown) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown)).awaitUninterruptibly(5000); // XXX
-		// not
-		// nice
+		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown)).awaitUninterruptibly(5000);
 		sendShowMediaFile(countdown.getId());
 	}
 
@@ -427,7 +424,6 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_THEME, name, bgImg));
 	}
 
-	// TODO send the data using the low level encoders of netty
 	public void sendAddThemeSlide(String name, UUID theme, File fileToSend) {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, theme, fileToSend));
 	}
@@ -465,8 +461,6 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
-		// fileToEdit.setPreview(null); //XXX sending each time the preview is
-		// not efficient
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
 	}
 

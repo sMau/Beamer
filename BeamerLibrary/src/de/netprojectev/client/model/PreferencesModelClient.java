@@ -17,9 +17,6 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public abstract class PreferencesModelClient {
 
-	// TODO XXX maybe check if this is better to implement than with this hacky
-	// reflections
-
 	public interface FullscreenStateListener {
 		public void update();
 	}
@@ -37,7 +34,7 @@ public abstract class PreferencesModelClient {
 	}
 
 	public interface UpdateAutoModeStateListener {
-		public void update(boolean fullsync);
+		public void update(boolean fullsync) throws PriorityDoesNotExistException;
 	}
 
 	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
@@ -98,7 +95,7 @@ public abstract class PreferencesModelClient {
 		}
 	}
 
-	public void disableAutomode() {
+	public void disableAutomode() throws PriorityDoesNotExistException {
 		this.automode = false;
 		this.autoModeStateListener.update(false);
 		log.debug("automode toggled, new value value: " + this.automode);
@@ -114,7 +111,7 @@ public abstract class PreferencesModelClient {
 		this.liveTickerStateListener.update();
 	}
 
-	public void enableAutomode(boolean fullsync) {
+	public void enableAutomode(boolean fullsync) throws PriorityDoesNotExistException {
 		this.automode = true;
 		this.autoModeStateListener.update(fullsync);
 		log.debug("automode toggled, new value value: " + this.automode);

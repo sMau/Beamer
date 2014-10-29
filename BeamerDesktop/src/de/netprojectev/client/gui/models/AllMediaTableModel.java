@@ -110,15 +110,13 @@ public class AllMediaTableModel extends AbstractTableModel {
 			case 4:
 				try {
 					if (media.getType().equals(MediaType.Countdown)) {
-						return "Countdown"; // TODO make it possible to show
-											// countdown duration
+						return "Countdown"; // TODO make it possible to show countdown duration
 					} else {
 						return mediaModel.getProxy().getPrefs().getPriorityByID(media.getPriorityID()).toString();
 					}
 
 				} catch (PriorityDoesNotExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error("Priority could not be found", e);
 				}
 			case 5:
 				return media.getType();

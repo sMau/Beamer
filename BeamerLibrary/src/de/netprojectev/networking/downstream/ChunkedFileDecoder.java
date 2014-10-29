@@ -36,9 +36,6 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 		this.fileOut = new FileOutputStream(savePath);
 	}
 
-	// XXX do not always reopen the file by using Files.write, but do it
-	// manually
-
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 

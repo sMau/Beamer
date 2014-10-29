@@ -144,10 +144,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
 	}
 
-	// TODO add states to the replaying decoder
-	// (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
-	// to improve the performance for longer messages
-
 	private Countdown decodeCountdown() {
 		String name = decodeString();
 		if (this.dataDecodeSuccess == false) {
@@ -377,8 +373,6 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return res;
 	}
 
-	// TODO always where "clean up" necessary make try-final blocks in the
-	// handlers code
 	private void decodeImageFile() throws IOException {
 		final String name = decodeString();
 		log.debug("Decoded file name: " + name);

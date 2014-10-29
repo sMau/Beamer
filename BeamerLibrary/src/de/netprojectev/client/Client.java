@@ -84,15 +84,15 @@ public class Client {
 		b.option(ChannelOption.TCP_NODELAY, true);
 		b.option(ChannelOption.SO_KEEPALIVE, true);
 
-		ChannelFuture connectFuture = b.connect(this.host, this.port).sync();
-		connectFuture.awaitUninterruptibly(120000); // TODO change this fucking
+		ChannelFuture connectFuture = b.connect(this.host, this.port);
+		connectFuture.awaitUninterruptibly(5000); 
 		// shit!
 		if (connectFuture.isSuccess()) {
 			this.proxy.setChannelToServer(connectFuture.channel());
 			log.info("Client successfully connected to " + this.host + ":" + this.port);
 
-			boolean loginSend = this.proxy.sendLoginRequest(this.login).awaitUninterruptibly(120000); // TODO
-																										// shit!
+			boolean loginSend = this.proxy.sendLoginRequest(this.login).awaitUninterruptibly(5000); 
+			
 			if (!loginSend) {
 				log.error("login message could not be send");
 				this.gui.errorDuringLogin("Login message could not be sent.");
@@ -110,8 +110,7 @@ public class Client {
 
 	public void disconnect() {
 		log.info("Client disconnecting");
-		this.proxy.sendDisconnectRequest().awaitUninterruptibly(120000);// TODO
-																		// shit!
+		this.proxy.sendDisconnectRequest().awaitUninterruptibly(5000);
 		releaseExternalRessources();
 		log.info("Disconnecting complete");
 	}

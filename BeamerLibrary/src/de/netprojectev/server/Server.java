@@ -39,15 +39,13 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public class Server {
 
-	/*TODO last worked here, work here again
-	 * TODO LIST WHAT TO DO NEXT 23.07.14
-	 *  Next check all functions for working
-	 *  Clean up and todo list check and resolve the single todos 
-	 *  clean switch to the master branch
-	 *  new branch for the new server GUI
-	 * 	android appliction
+	/*
+	 * TODO last worked here, work here again TODO LIST WHAT TO DO NEXT 23.07.14
+	 * !! Next check all functions for working Clean up and todo list check and
+	 * resolve the single todos clean switch to the master branch new branch for
+	 * the new server GUI android appliction
 	 */
-	
+
 	private static final Logger log = LoggerBuilder.createLogger(Server.class);
 
 	private static final EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -62,30 +60,30 @@ public class Server {
 		this.proxy = new MessageProxyServer(this, serverGUI);
 
 		checkAndCreateDirs();
-		
+
 	}
 
 	private void bindListeningSocket() {
 
 		ServerBootstrap b = new ServerBootstrap();
 		b.group(bossGroup, workerGroup)
-				.channel(NioServerSocketChannel.class)
-				.childHandler(new ChannelInitializer<SocketChannel>() {
-					@Override
-					public void initChannel(SocketChannel ch) throws Exception {
-						
+		.channel(NioServerSocketChannel.class)
+		.childHandler(new ChannelInitializer<SocketChannel>() {
+			@Override
+			public void initChannel(SocketChannel ch) throws Exception {
+
 						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(), new LongByteEncoder(),
-								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
-								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(),
-								new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(),
-								new StringArrayEncoder(), new ClientMediaFileEncoder(),
-								new TickerElementEncoder(), new MessageSplit());
-						ch.pipeline().addLast(new MessageDecoder(), proxy);
-					}
-				})
-				.option(ChannelOption.SO_BACKLOG, 128)
-				.childOption(ChannelOption.SO_KEEPALIVE, true)
-				.childOption(ChannelOption.TCP_NODELAY, true);
+						new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
+						new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(),
+						new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(),
+						new StringArrayEncoder(), new ClientMediaFileEncoder(),
+						new TickerElementEncoder(), new MessageSplit());
+				ch.pipeline().addLast(new MessageDecoder(), Server.this.proxy);
+			}
+		})
+		.option(ChannelOption.SO_BACKLOG, 128)
+		.childOption(ChannelOption.SO_KEEPALIVE, true)
+		.childOption(ChannelOption.TCP_NODELAY, true);
 
 		b.bind(this.port);
 
@@ -100,7 +98,7 @@ public class Server {
 		if (startInFullscreen) {
 			this.proxy.enableFullScreen();
 		}
-		
+
 		this.proxy.makeGUIVisible();
 
 		return this.proxy;

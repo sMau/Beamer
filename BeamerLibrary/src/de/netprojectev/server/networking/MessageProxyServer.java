@@ -63,8 +63,6 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		public void run() {
 			try {
 				showNextMediaFile();
-				// XXX catching the exceptions at a more senseful place where
-				// handling would be possible
 			} catch (MediaDoesNotExsistException e) {
 				log.warn("Media file could not be shown.", e);
 			} catch (MediaListsEmptyException e) {
@@ -129,8 +127,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private Timer autoModusTimer;
 
 	public MessageProxyServer(Server server, ServerGUI serverGUI) {
-		// TODO check if the defaulthcannelgroup is ok like this especially
-		// performance
+
 		this.allClients = new DefaultChannelGroup("beamer-clients", new NioEventLoopGroup().next());
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
@@ -152,9 +149,8 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			log.warn("Read timeout is no number.", e);
 		}
 
-		// XXX see todo in the TimeoutTimerTask
-		// this.timeoutChecker.newTimeout(new TimeoutTimerTask(),
-		// this.timeoutInSeconds, TimeUnit.SECONDS);
+		this.timeoutChecker.newTimeout(new TimeoutTimerTask(),
+		this.timeoutInSeconds, TimeUnit.SECONDS);
 
 	}
 

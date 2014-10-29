@@ -19,7 +19,6 @@ import de.netprojectev.utils.LoggerBuilder;
  *
  */
 
-// TODO check all sharables
 public class MessageSplit extends MessageToByteEncoder<Message> {
 	private static final Logger log = LoggerBuilder.createLogger(MessageSplit.class);
 

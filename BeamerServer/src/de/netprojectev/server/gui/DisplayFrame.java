@@ -153,8 +153,8 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 							} catch (MediaListsEmptyException e) {
 								log.warn("Video does not exist.", e);
 							} catch (PriorityDoesNotExistException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.warn("Priority does not exist.", e);
+
 							}
 						}
 					});

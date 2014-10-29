@@ -277,7 +277,6 @@ public class TickerComponent extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 
-		// TODO optimizing by store background of the ticker in an bufferedimage
 		Graphics2D tmpG2D = (Graphics2D) g.create();
 		tmpG2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		tmpG2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,

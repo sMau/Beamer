@@ -5,11 +5,15 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.UnsupportedLookAndFeelException;
 
+import org.apache.logging.log4j.Logger;
+
 import de.netprojectev.client.ConstantsClient;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class StarterClient {
 
 	private static String OS = System.getProperty("os.name").toLowerCase();
+	private static final Logger log = LoggerBuilder.createLogger(StarterClient.class);
 
 	/**
 	 * @param args
@@ -68,26 +72,10 @@ public class StarterClient {
 
 				try {
 					new MainClientGUIWindow();
-				} catch (InstantiationException e) {
-					e.printStackTrace();
+				} catch (Exception e) {
+					log.fatal("Error during GUI init.", e);
 					System.exit(0);
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-					System.exit(0);
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-					System.exit(0);
-				} catch (InvocationTargetException e) {
-					e.printStackTrace();
-					System.exit(0);
-				} catch (SecurityException e) {
-					e.printStackTrace();
-					System.exit(0);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+				} 
 			}
 		});
 	}

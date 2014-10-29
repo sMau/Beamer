@@ -44,9 +44,6 @@ public class DisplayMainComponent extends JComponent {
 
 	private Color generalBGColor;
 
-	// TODO set a background for this component ( e.g. many 4s logos) that there
-	// isnt any grey space when showing a 4:3 resolution image
-
 	// XXX Make repeating possible for much to small images, like about the
 	// factor of 2 to small
 

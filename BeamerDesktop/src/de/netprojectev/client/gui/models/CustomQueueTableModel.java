@@ -3,11 +3,14 @@ package de.netprojectev.client.gui.models;
 import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 
+import org.apache.logging.log4j.Logger;
+
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.model.MediaModelClient;
 import de.netprojectev.client.model.MediaModelClient.UpdateCustomQueueDataListener;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
+import de.netprojectev.utils.LoggerBuilder;
 
 public class CustomQueueTableModel extends AbstractTableModel {
 
@@ -15,6 +18,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 	 *
 	 */
 	private static final long serialVersionUID = -2863260660288778361L;
+	private static final Logger log = LoggerBuilder.createLogger(CustomQueueTableModel.class);
 
 	private final MediaModelClient mediaModel;
 	private final String[] columns = { " ", "#", "Name", "Priority", "Type" };
@@ -96,8 +100,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 				try {
 					return mediaModel.getProxy().getPrefs().getPriorityByID(media.getPriorityID()).toString();
 				} catch (PriorityDoesNotExistException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error("Priority could not be found", e);
 				}
 			case 4:
 				return media.getType();
