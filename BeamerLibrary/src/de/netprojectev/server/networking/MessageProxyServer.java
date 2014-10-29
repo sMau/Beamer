@@ -81,7 +81,8 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private class TimeoutTimerTask implements io.netty.util.TimerTask {
-		//TODO timeout handling improvement. use nettys build in handlers which also take sent traffic into account
+		// TODO timeout handling improvement. use nettys build in handlers which
+		// also take sent traffic into account
 		@Override
 		public void run(Timeout timeout) throws Exception {
 
@@ -151,21 +152,10 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			log.warn("Read timeout is no number.", e);
 		}
 
-		//XXX see todo in the TimeoutTimerTask
-		//this.timeoutChecker.newTimeout(new TimeoutTimerTask(), this.timeoutInSeconds, TimeUnit.SECONDS);
+		// XXX see todo in the TimeoutTimerTask
+		// this.timeoutChecker.newTimeout(new TimeoutTimerTask(),
+		// this.timeoutInSeconds, TimeUnit.SECONDS);
 
-	}
-	
-
-	@Override
-	protected void decode(ChannelHandlerContext ctx, Message msg, List<Object> out) throws Exception {
-		receiveMessage(msg, ctx);
-	}
-	
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
-		ctx.channel().close(); // XXX check if proper handling possible
 	}
 
 	private void addCountdown(Message msg) throws FileNotFoundException, IOException {
@@ -180,8 +170,8 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private void addLiveTickerElement(Message msg) throws IOException {
 		TickerElement eltToAdd = (TickerElement) msg.getData().get(0);
 		this.tickerModel.addTickerElement(eltToAdd);
-		
-		if(liveTickerEnabled) {
+
+		if (this.liveTickerEnabled) {
 			this.serverGUI.updateLiveTickerString();
 		}
 
@@ -220,6 +210,11 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		addMediaFile(themeslide);
 	}
 
+	private void addVideoFile(Message msg) throws IOException {
+		VideoFile file = (VideoFile) msg.getData().get(0);
+		addMediaFile(file);
+	}
+
 	public ChannelGroupFuture broadcastMessage(Message msg) {
 		log.debug("Broadcasting message: " + msg);
 		return this.allClients.writeAndFlush(msg);
@@ -248,6 +243,11 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		ConnectedUser user = findUserByChan(chan);
 		log.info("Client timed out. Alias: " + user.getAlias());
 		this.connectedUsers.remove(user);
+	}
+
+	@Override
+	protected void decode(ChannelHandlerContext ctx, Message msg, List<Object> out) throws Exception {
+		receiveMessage(msg, ctx);
 	}
 
 	private void denyAccessToClient(String reason, ChannelHandlerContext ctx) throws InterruptedException {
@@ -294,11 +294,11 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		TickerElement correlatedServerFile = this.tickerModel.getElementByID(edited.getId());
 		correlatedServerFile.setShow(edited.isShow());
 		correlatedServerFile.setText(edited.getText());
-		
-		if(liveTickerEnabled) {
+
+		if (this.liveTickerEnabled) {
 			this.serverGUI.updateLiveTickerString();
 		}
-		
+
 		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, correlatedServerFile));
 		this.prefsModel.serializeTickerDatabase();
 	}
@@ -335,6 +335,12 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		broadcastMessage(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
 	}
 
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		ctx.channel().close(); // XXX check if proper handling possible
+	}
+
 	public ConnectedUser findUserByAlias(String alias) {
 		for (ConnectedUser user : this.connectedUsers) {
 			if (user.getAlias().equals(alias)) {
@@ -360,37 +366,37 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	 * !!!!!!!!!!!!!!! !!!!!! Test with notebook as server (esp. video things
 	 * and fullscreen switches (preferred using tv as monitor like the beamer))
 	 * !!!!!!!!!!!!!!!
-	 * 
+	 *
 	 * DONE 1 Add proper serialization (properties are good, but serialize the
 	 * media and ticker elts and so on too) DONE 2 Check all TODOS DONE 3 next
 	 * exception handling DONE 4 reconnecting with a timer -> see todo reconnect
 	 * in clientmsghandler
-	 * 
+	 *
 	 * DONE add handling for further prefs like changing fonts and colors of
 	 * live ticker
-	 * 
+	 *
 	 * DONE Use Command line lib like: http://jewelcli.lexicalscope.com
 	 * http://pholser.github.io/jopt-simple/
-	 * 
+	 *
 	 * Use Installer lib like IzPack
-	 * 
+	 *
 	 * DONE pimp the live ticker a little slightly transparent overlay or
 	 * something like that next pimp server gui (Effects and so on)
-	 * 
+	 *
 	 * Advanced/Alternative themeslide creator using templates or something like
 	 * that
-	 * 
+	 *
 	 * check for already running server instances, and esp. get a port from the
 	 * os not fixed (scanning the network for the server is required then)
-	 * 
+	 *
 	 * pimp the client gui -> resizable areas, event log, loading dialogs during
 	 * network operations
-	 * 
+	 *
 	 * next check all the image to imageicon conversions and choose best for
 	 * performance and RAM usage
-	 * 
+	 *
 	 * show once funktion z.b. für countdown oder videos
-	 * 
+	 *
 	 * next proper login handling (also to see which user did what and when) and
 	 * maybe the possibility to send messages or notes or something like that
 	 */
@@ -404,30 +410,30 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 
 		ctx.write(new Message(OpCode.STC_FULL_SYNC_START));
 
-		for(String k : PreferencesModelServer.getProps().stringPropertyNames()) {
+		for (String k : PreferencesModelServer.getProps().stringPropertyNames()) {
 			ctx.write(new Message(OpCode.STC_PROPERTY_UPDATE_ACK, k, PreferencesModelServer.getProps().getProperty(k)));
 		}
 
 		ctx.flush();
-		
+
 		for (UUID id : priorities.keySet()) {
 			ctx.write(new Message(OpCode.STC_ADD_PRIORITY_ACK, priorities.get(id)));
 		}
 
 		ctx.flush();
-		
+
 		for (UUID id : themes.keySet()) {
 			ctx.write(new Message(OpCode.STC_ADD_THEME_ACK, themes.get(id)));
 		}
-		
+
 		ctx.flush();
-		
+
 		for (UUID id : allMedia.keySet()) {
 			ctx.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
 		}
 
 		ctx.flush();
-		
+
 		for (UUID id : customQueue) {
 			ctx.write(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, id));
 		}
@@ -435,7 +441,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		for (UUID id : tickerElements.keySet()) {
 			ctx.write(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, tickerElements.get(id)));
 		}
-		
+
 		if (this.automodeEnabled) {
 			ctx.write(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 		}
@@ -447,7 +453,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		if (this.fullscreenEnabled) {
 			ctx.write(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 		}
-		
+
 		ctx.writeAndFlush(new Message(OpCode.STC_ALL_FONTS, (Object) ConstantsServer.FONT_FAMILIES));
 
 		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
@@ -648,10 +654,10 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		UUID eltToRemove = (UUID) msg.getData().get(0);
 		this.tickerModel.removeTickerElement(eltToRemove);
 
-		if(liveTickerEnabled) {
+		if (this.liveTickerEnabled) {
 			this.serverGUI.updateLiveTickerString();
 		}
-		
+
 		broadcastMessage(new Message(OpCode.STC_REMOVE_LIVE_TICKER_ELEMENT_ACK, eltToRemove));
 
 		this.prefsModel.serializeTickerDatabase();
@@ -759,19 +765,19 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void updateAutoModeTimer() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
-		
+
 		if (this.automodeEnabled) {
-			
-			if(mediaModel.getAllMediaFiles().size() < 2) {
+
+			if (this.mediaModel.getAllMediaFiles().size() < 2) {
 				disableAutoMode();
 				return;
 			}
-			
+
 			if (this.autoModusTimer != null) {
 				this.autoModusTimer.cancel();
 				this.autoModusTimer.purge();
 			}
-			
+
 			this.autoModusTimer = new Timer();
 			if (this.currentFile == null) {
 				showNextMediaFile();
@@ -787,11 +793,6 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 
 		}
 
-	}
-
-	private void addVideoFile(Message msg) throws IOException {
-		VideoFile file = (VideoFile) msg.getData().get(0);
-		addMediaFile(file);
 	}
 
 }

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class LoginData implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5784399877829356516L;
 	private final String alias;
@@ -17,11 +17,11 @@ public class LoginData implements Serializable {
 	}
 
 	public String getAlias() {
-		return alias;
+		return this.alias;
 	}
 
 	public String getKey() {
-		return key;
+		return this.key;
 	}
 
 }

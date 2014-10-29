@@ -26,7 +26,7 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 	private File savePath;
 	private long length;
 	private long writtenBytes;
-	
+
 	public ChunkedFileDecoder(File savePath, long length, FileTransferFinishedListener finishListener) throws IOException {
 		this.savePath = savePath;
 		this.length = length;
@@ -36,36 +36,37 @@ public class ChunkedFileDecoder extends ByteToMessageDecoder {
 		this.fileOut = new FileOutputStream(savePath);
 	}
 
-	//XXX do not always reopen the file by using Files.write, but do it manually
+	// XXX do not always reopen the file by using Files.write, but do it
+	// manually
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
 
-		while(writtenBytes < length) {
-			if(!in.isReadable()) {
+		while (this.writtenBytes < this.length) {
+			if (!in.isReadable()) {
 				return;
 			}
-			
+
 			int readableBytes = in.readableBytes();
 			byte[] readBytes;
-			
-			if(length > writtenBytes + readableBytes) {
-				readBytes = new byte[readableBytes];
-				writtenBytes += readableBytes;
-			} else {
-				readBytes = new byte[(int) (length - writtenBytes)];
-				writtenBytes += length - writtenBytes;
-			}
-			
-			in.readBytes(readBytes);
-			fileOut.write(readBytes);
-			fileOut.flush();
 
-		} 
-		
-		finishListener.fileTransferFinished(savePath);
+			if (this.length > this.writtenBytes + readableBytes) {
+				readBytes = new byte[readableBytes];
+				this.writtenBytes += readableBytes;
+			} else {
+				readBytes = new byte[(int) (this.length - this.writtenBytes)];
+				this.writtenBytes += this.length - this.writtenBytes;
+			}
+
+			in.readBytes(readBytes);
+			this.fileOut.write(readBytes);
+			this.fileOut.flush();
+
+		}
+
+		this.finishListener.fileTransferFinished(this.savePath);
 		ctx.pipeline().replace(this, "MessageDecoder", new MessageDecoder());
-		
+
 	}
 
 }

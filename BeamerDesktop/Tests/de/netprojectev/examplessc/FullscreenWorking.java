@@ -12,10 +12,10 @@ import javax.swing.JFrame;
 
 public class FullscreenWorking extends JFrame implements ActionListener {
 
-	//http://www.java-forum.org/spiele-multimedia-programmierung/137035-ubuntu-gnome3-panel-always-top.html
-	
+	// http://www.java-forum.org/spiele-multimedia-programmierung/137035-ubuntu-gnome3-panel-always-top.html
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton gross, klein, exit;
@@ -36,7 +36,7 @@ public class FullscreenWorking extends JFrame implements ActionListener {
 		klein.addActionListener(this);
 		exit = new JButton(new AbstractAction("Exit") {
 			/**
-			 * 
+			 *
 			 */
 			private static final long serialVersionUID = -6915307674087790957L;
 

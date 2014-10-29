@@ -21,7 +21,7 @@ public class Message {
 			this.data.add(d);
 		}
 	}
-	
+
 	public Message(OpCode opCode, Object... data) {
 		this.opCode = opCode;
 		for (Object d : data) {

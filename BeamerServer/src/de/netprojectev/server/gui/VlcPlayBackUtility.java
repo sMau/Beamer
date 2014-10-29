@@ -11,28 +11,28 @@ public class VlcPlayBackUtility {
 
 	private final File toPlay;
 	private static String OS = System.getProperty("os.name").toLowerCase();
-	
+
 	public VlcPlayBackUtility(File toPlay) {
 		this.toPlay = toPlay;
 	}
 
 	public Process startPlay() throws Exception {
 
-		//TODO quit video if nexat is clicked before video playing is finished
+		// TODO quit video if nexat is clicked before video playing is finished
 		final ArrayList<String> vlcStartCommand = new ArrayList<String>();
-		
+
 		if (isMac()) {
 			vlcStartCommand.add("/Applications/VLC.app/Contents/MacOS/VLC");
 		} else if (isUnix()) {
 			vlcStartCommand.add("vlc");
 		}
-		
+
 		vlcStartCommand.add("-f");
 		vlcStartCommand.add("--no-video-title-show");
 		vlcStartCommand.add("--play-and-exit");
 		vlcStartCommand.add("--video-on-top");
 		vlcStartCommand.add(toPlay.getAbsolutePath());
-		
+
 		return new ProcessBuilder(vlcStartCommand).start();
 	}
 
@@ -60,7 +60,6 @@ public class VlcPlayBackUtility {
 		loggingReader.start();
 	}
 
-	
 	public static boolean isWindows() {
 
 		return (OS.indexOf("win") >= 0);

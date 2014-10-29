@@ -13,10 +13,10 @@ public class StarterClient {
 
 	/**
 	 * @param args
-	 * @throws UnsupportedLookAndFeelException 
-	 * @throws IllegalAccessException 
-	 * @throws InstantiationException 
-	 * @throws ClassNotFoundException 
+	 * @throws UnsupportedLookAndFeelException
+	 * @throws IllegalAccessException
+	 * @throws InstantiationException
+	 * @throws ClassNotFoundException
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 
@@ -24,72 +24,69 @@ public class StarterClient {
 			System.setProperty("sun.java2d.opengl", "False");
 			System.setProperty("sun.java2d.d3d", "True");
 
-				javax.swing.UIManager.setLookAndFeel(
-						javax.swing.UIManager.getSystemLookAndFeelClassName());
-
+			javax.swing.UIManager.setLookAndFeel(
+					javax.swing.UIManager.getSystemLookAndFeelClassName());
 
 		} else if (isMac()) {
 			System.setProperty("sun.java2d.opengl", "True");
-			
-				javax.swing.UIManager.setLookAndFeel(
-						javax.swing.UIManager.getSystemLookAndFeelClassName());
-			
+
+			javax.swing.UIManager.setLookAndFeel(
+					javax.swing.UIManager.getSystemLookAndFeelClassName());
+
 		} else if (isUnix()) {
 			System.setProperty("sun.java2d.opengl", "True");
-			
-				for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-						.getInstalledLookAndFeels()) {
-					if ("Nimbus".equals(info.getName())) {
-						javax.swing.UIManager.setLookAndFeel(info.getClassName());
-						break;
-					}
-				}
-			
 
-			
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+					.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+
 		} else if (isSolaris()) {
 			System.setProperty("sun.java2d.opengl", "True");
-			
-				for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
-						.getInstalledLookAndFeels()) {
-					if ("Nimbus".equals(info.getName())) {
-						javax.swing.UIManager.setLookAndFeel(info.getClassName());
-						break;
-					}
-				}
 
-			
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager
+					.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+
 		}
 
 		File savePath = new File(ConstantsClient.SAVE_PATH);
 		if (!savePath.exists()) {
 			savePath.mkdirs();
 		}
-		
+
 		java.awt.EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 
-					try {
-						new MainClientGUIWindow();
-					} catch (InstantiationException e) {
-						e.printStackTrace();
-						System.exit(0);
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-						System.exit(0);
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-						System.exit(0);
-					} catch (InvocationTargetException e) {
-						e.printStackTrace();
-						System.exit(0);
-					} catch (SecurityException e) {
-						e.printStackTrace();
-						System.exit(0);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				try {
+					new MainClientGUIWindow();
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+					System.exit(0);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+					System.exit(0);
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+					System.exit(0);
+				} catch (InvocationTargetException e) {
+					e.printStackTrace();
+					System.exit(0);
+				} catch (SecurityException e) {
+					e.printStackTrace();
+					System.exit(0);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 		});

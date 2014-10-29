@@ -1,7 +1,6 @@
 package de.netprojectev.networking.upstream;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
@@ -12,14 +11,15 @@ import de.netprojectev.networking.OpCode;
 import de.netprojectev.utils.LoggerBuilder;
 
 /**
- * 
+ *
  * @author Samuel Schüppen
- * 
- * Class to split a {@link Message} in its {@link OpCode} and its data objects.
- * 
+ *
+ *         Class to split a {@link Message} in its {@link OpCode} and its data
+ *         objects.
+ *
  */
 
-//TODO check all sharables
+// TODO check all sharables
 public class MessageSplit extends MessageToByteEncoder<Message> {
 	private static final Logger log = LoggerBuilder.createLogger(MessageSplit.class);
 
@@ -42,6 +42,5 @@ public class MessageSplit extends MessageToByteEncoder<Message> {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
-
 
 }

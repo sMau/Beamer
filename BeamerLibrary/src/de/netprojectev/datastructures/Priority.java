@@ -4,22 +4,27 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * 
+ *
  * Datastructure to hold the time to show connected with a identifier (uuid)
- * 
+ *
  * @author samu
- * 
+ *
  */
 public class Priority implements Serializable {
+
+	public static Priority reconstruct(String name, int minutesToShow, UUID id) {
+		return new Priority(name, minutesToShow, id);
+	}
 
 	private static final long serialVersionUID = 4619160913893672095L;
 	private final UUID id;
 	private String name;
 	private int minutesToShow;
+
 	private boolean defaultPriority;
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            name of the priority
 	 * @param minutesToShow
@@ -30,10 +35,6 @@ public class Priority implements Serializable {
 		this.name = name;
 		this.minutesToShow = minutesToShow;
 		this.defaultPriority = false;
-	}
-	
-	public static Priority reconstruct(String name, int minutesToShow, UUID id) {
-		return new Priority(name, minutesToShow, id);
 	}
 
 	private Priority(String name, int minutesToShow, UUID id) {

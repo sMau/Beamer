@@ -12,13 +12,13 @@ public class ByteArrayByteEncoder extends MessageToByteEncoder<byte[]> {
 
 	private static final Logger log = LoggerBuilder.createLogger(ByteArrayByteEncoder.class);
 
-	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, byte[] msg, ByteBuf out) throws Exception {
 		out.writeInt(msg.length);
 		out.writeBytes(msg);
 
 	}
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());

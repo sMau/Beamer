@@ -12,11 +12,11 @@ public class BooleanByteEncoder extends MessageToByteEncoder<Boolean> {
 
 	private static final Logger log = LoggerBuilder.createLogger(BooleanByteEncoder.class);
 
-	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Boolean msg, ByteBuf out) throws Exception {
 		out.writeBoolean(msg);
 	}
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler " + getClass() + "\n" + cause.toString());

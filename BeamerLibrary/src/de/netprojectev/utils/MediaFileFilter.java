@@ -5,9 +5,9 @@ import java.io.File;
 /**
  * This class is an imagefile filter that only accept the standard java
  * supported image formats
- * 
+ *
  * @author samu
- * 
+ *
  */
 public class MediaFileFilter {
 

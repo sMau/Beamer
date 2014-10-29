@@ -41,13 +41,13 @@ public class MediaModelServer {
 
 	private void addAllMediaAndShuffle() {
 		Set<UUID> cleanedSet = new HashSet<UUID>();
-		
-		for(UUID id : this.allMediaFiles.keySet()) {
-			if(!(this.allMediaFiles.get(id) instanceof Countdown)) {
+
+		for (UUID id : this.allMediaFiles.keySet()) {
+			if (!(this.allMediaFiles.get(id) instanceof Countdown)) {
 				cleanedSet.add(id);
 			}
 		}
-		
+
 		this.mediaStandardList.addAll(cleanedSet);
 		Collections.shuffle(this.mediaStandardList);
 

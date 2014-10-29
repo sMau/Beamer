@@ -23,7 +23,7 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer {
 	private static final Logger log = LoggerBuilder.createLogger(TableButtonRenderer.class);
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -2922120099859842011L;
 	private final boolean add;
@@ -54,6 +54,7 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer {
 		}
 	}
 
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		if (isSelected) {
 			setForeground(table.getSelectionForeground());
@@ -74,7 +75,7 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer {
 class ButtonEditor extends DefaultCellEditor {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 5485754352878058031L;
 
@@ -95,12 +96,14 @@ class ButtonEditor extends DefaultCellEditor {
 		button = new JButton();
 		button.setOpaque(true);
 		button.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				fireEditingStopped();
 			}
 		});
 	}
 
+	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		this.row = row;
 		if (isSelected) {
@@ -116,6 +119,7 @@ class ButtonEditor extends DefaultCellEditor {
 		return button;
 	}
 
+	@Override
 	public Object getCellEditorValue() {
 		if (isPushed) {
 			l.buttonClicked(row);
@@ -124,11 +128,13 @@ class ButtonEditor extends DefaultCellEditor {
 		return new String(label);
 	}
 
+	@Override
 	public boolean stopCellEditing() {
 		isPushed = false;
 		return super.stopCellEditing();
 	}
 
+	@Override
 	protected void fireEditingStopped() {
 		super.fireEditingStopped();
 	}

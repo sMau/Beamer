@@ -9,11 +9,11 @@ public class StringArrayEncoder extends MessageToByteEncoder<String[]> {
 	@Override
 	protected void encode(ChannelHandlerContext ctx, String[] msg, ByteBuf out) throws Exception {
 		ctx.write(msg.length);
-		for(String s : msg) {
+		for (String s : msg) {
 			ctx.write(s);
 		}
 		ctx.flush();
-		
+
 	}
 
 }

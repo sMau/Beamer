@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
 import org.apache.logging.log4j.Logger;
@@ -24,11 +23,11 @@ import de.netprojectev.utils.LoggerBuilder;
 import de.netprojectev.utils.Misc;
 
 /**
- * 
+ *
  * GUI Component to draw images and themeslide background images
- * 
+ *
  * @author samu
- * 
+ *
  */
 public class DisplayMainComponent extends JComponent {
 
@@ -47,8 +46,9 @@ public class DisplayMainComponent extends JComponent {
 
 	// TODO set a background for this component ( e.g. many 4s logos) that there
 	// isnt any grey space when showing a 4:3 resolution image
-	
-	// XXX Make repeating possible for much to small images, like about the factor of 2 to small
+
+	// XXX Make repeating possible for much to small images, like about the
+	// factor of 2 to small
 
 	public DisplayMainComponent() {
 		super();
@@ -73,39 +73,39 @@ public class DisplayMainComponent extends JComponent {
 
 	/**
 	 * Tell this to draw the given image.
-	 * 
+	 *
 	 * @param file
 	 *            the image file to draw on component
 	 * @throws IOException
 	 */
 	protected void drawImage(ImageFile image) throws IOException {
-				
+
 		InputStream in = new ByteArrayInputStream(image.get());
 		final BufferedImage compImage = ImageIO.read(in);
-		
+
 		log.debug(compImage.getHeight());
-		
+
 		countdownShowing = false;
 
 		int newWidth;
 		int newHeight;
-				
+
 		double screenAspectRatio = ((double) getWidth()) / ((double) getHeight());
 		double imageAspectRatio = ((double) compImage.getWidth()) / ((double) compImage.getHeight());
-		
-		if(screenAspectRatio == imageAspectRatio) {
+
+		if (screenAspectRatio == imageAspectRatio) {
 			newWidth = getWidth();
 			newHeight = getHeight();
-		} else if(screenAspectRatio < imageAspectRatio) {
+		} else if (screenAspectRatio < imageAspectRatio) {
 			newWidth = getWidth();
-			newHeight = (int) ((double) newWidth / imageAspectRatio);
+			newHeight = (int) (newWidth / imageAspectRatio);
 		} else {
 			newHeight = getHeight();
-			newWidth = (int) ((double) newHeight * imageAspectRatio);
+			newWidth = (int) (newHeight * imageAspectRatio);
 		}
 
 		log.debug("new size of the image: " + newWidth + "x" + newHeight);
-		
+
 		this.image = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
 		repaint(0, 0, getWidth(), getHeight());
 
@@ -113,7 +113,7 @@ public class DisplayMainComponent extends JComponent {
 
 	/**
 	 * Setting the countdown object which should be drawn by the component
-	 * 
+	 *
 	 * @param countdown
 	 *            the countdown object to draw
 	 */

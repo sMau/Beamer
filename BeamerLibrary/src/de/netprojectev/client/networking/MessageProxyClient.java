@@ -83,18 +83,6 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	}
 
-	@Override
-	protected void decode(ChannelHandlerContext ctx, Message msg, List<Object> out) throws Exception {
-		receiveMessage(msg);
-	}
-	
-	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
-		ctx.channel().close(); // XXX check if proper handling possible
-	}
-
-
 	private void autoModeDisabled(Message msg) {
 		this.prefs.disableAutomode();
 	}
@@ -113,10 +101,21 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		sendRequestFullSync();
 	}
 
+	@Override
+	protected void decode(ChannelHandlerContext ctx, Message msg, List<Object> out) throws Exception {
+		receiveMessage(msg);
+	}
+
 	public void errorRequestFullSync(Exception e) {
 		log.warn("The media read for updating does not exist. Requesting full sync.", e);
 		sendRequestFullSync();
 		this.client.getGui().errorRequestingFullsyncDialog();
+	}
+
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		ctx.channel().close(); // XXX check if proper handling possible
 	}
 
 	private void fullscreenDisabled(Message msg) {
@@ -210,7 +209,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	private void mediaFileDequeued(Message msg) throws MediaDoesNotExsistException,
-			OutOfSyncException {
+	OutOfSyncException {
 		DequeueData toDequeue = (DequeueData) msg.getData().get(0);
 		this.mediaModel.dequeueMediaFile(toDequeue.getRow(), toDequeue.getId());
 
@@ -251,8 +250,13 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		this.prefs.prioRemoved(toRemove);
 	}
 
+	private void receivedServerFonts(Message msg) {
+		String[] fontFamilies = (String[]) msg.getData().get(0);
+		this.prefs.setServerFonts(fontFamilies);
+	}
+
 	public void receiveMessage(Message msg) throws UnkownMessageException,
-			MediaDoesNotExsistException, OutOfSyncException {
+	MediaDoesNotExsistException, OutOfSyncException {
 		log.debug("Receiving message: " + msg.toString());
 		switch (msg.getOpCode()) {
 		case STC_ADD_MEDIA_FILE_ACK:
@@ -354,11 +358,6 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		}
 
 	}
-	
-	private void receivedServerFonts(Message msg) {
-		String[] fontFamilies = (String[]) msg.getData().get(0);
-		prefs.setServerFonts(fontFamilies);
-	}
 
 	public void reconnectForced() {
 		sendDisconnectRequest();
@@ -387,8 +386,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	public void sendAddAndShowCountdown(Countdown countdown) {
 		sendMessageToServer(new Message(OpCode.CTS_ADD_COUNTDOWN, countdown)).awaitUninterruptibly(5000); // XXX
-																											// not
-																											// nice
+		// not
+		// nice
 		sendShowMediaFile(countdown.getId());
 	}
 
@@ -466,7 +465,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
-		//fileToEdit.setPreview(null); //XXX sending each time the preview is not efficient
+		// fileToEdit.setPreview(null); //XXX sending each time the preview is
+		// not efficient
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
 	}
 

@@ -11,29 +11,25 @@ import de.netprojectev.exceptions.PriorityDoesNotExistException;
 
 public class CustomQueueTableModel extends AbstractTableModel {
 
-	
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -2863260660288778361L;
 
-
-
 	private final MediaModelClient mediaModel;
 	private final String[] columns = { " ", "#", "Name", "Priority", "Type" };
-	
+
 	public CustomQueueTableModel(MediaModelClient mediaModel) {
 		this.mediaModel = mediaModel;
 		this.mediaModel.setCustomQueueListener(new UpdateCustomQueueDataListener() {
-			
+
 			@Override
 			public void update() {
 				updateTableData();
 			}
 		});
 	}
-	
-	
+
 	/**
 	 * Updating the table View to the current Data Changes on the Model. Uses
 	 * invokeLater for clean and thread-save event handling.
@@ -41,13 +37,14 @@ public class CustomQueueTableModel extends AbstractTableModel {
 	private void updateTableData() {
 		SwingUtilities.invokeLater(new Runnable() {
 
+			@Override
 			public void run() {
 				fireTableDataChanged();
 			}
 		});
 
 	}
-	
+
 	@Override
 	public int getRowCount() {
 		return mediaModel.getCustomQueue().size();
@@ -70,7 +67,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if(columnIndex == 0) {
+		if (columnIndex == 0) {
 			return true;
 		} else {
 			return false;

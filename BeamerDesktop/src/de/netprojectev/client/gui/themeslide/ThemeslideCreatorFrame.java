@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageWriter;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
 import javax.swing.JOptionPane;
@@ -35,7 +34,6 @@ import javax.swing.text.StyledEditorKit;
 
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.gui.main.Constants;
-import de.netprojectev.client.gui.main.Misc;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.gui.preferences.ColorPickerDialog;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
@@ -48,9 +46,9 @@ import de.netprojectev.exceptions.ThemeDoesNotExistException;
 /**
  * This is a GUI class to create and design a new Themeslide. It contains a
  * small text editor and the possibilty to select a Theme (background).
- * 
+ *
  * @author samu
- * 
+ *
  */
 public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
@@ -149,6 +147,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		jLabel3.setText("Theme");
 
 		jComboBoxTheme.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jComboBoxThemeActionPerformed(evt);
 			}
@@ -160,6 +159,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		jButtonCancel.setText("Cancel");
 		jButtonCancel.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonCancelActionPerformed(evt);
 			}
@@ -167,6 +167,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		jButtonAdd.setText("Add");
 		jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonAddActionPerformed(evt);
 			}
@@ -174,6 +175,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		jButtonAddAndShow.setText("Add and show");
 		jButtonAddAndShow.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonAddAndShowActionPerformed(evt);
 			}
@@ -182,12 +184,14 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		jLabel1.setText("Priority");
 
 		jComboBoxFontSize.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jComboBoxFontSizeActionPerformed(evt);
 			}
 		});
 
 		jComboBoxFontType.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jComboBoxFontTypeActionPerformed(evt);
 			}
@@ -196,6 +200,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		jToggleButtonBold.setText("<html><body><b>B</b></body></html>");
 		jToggleButtonBold.setToolTipText("Toggle bold");
 		jToggleButtonBold.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jToggleButtonBoldActionPerformed(evt);
 			}
@@ -229,6 +234,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		jToggleButtonItalic.setText("<html><body><b><i>I</i></b></body></html>");
 		jToggleButtonItalic.setToolTipText("Toggle italic");
 		jToggleButtonItalic.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jToggleButtonItalicActionPerformed(evt);
 			}
@@ -237,6 +243,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		jToggleButtonUnderline.setText("<html><body><b><u>U</u></b></body></html>");
 		jToggleButtonUnderline.setToolTipText("Toggle underline");
 		jToggleButtonUnderline.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jToggleButtonUnderlineActionPerformed(evt);
 			}
@@ -245,6 +252,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		jButtonColorPicker.setText("Color");
 		jButtonColorPicker.setToolTipText("Choose text color");
 		jButtonColorPicker.addActionListener(new java.awt.event.ActionListener() {
+			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				jButtonColorPickerActionPerformed(evt);
 			}
@@ -342,7 +350,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	/**
 	 * on selection change, change the background image to the new selected
 	 * themes background
-	 * 
+	 *
 	 * @param evt
 	 */
 	private void jComboBoxThemeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxThemeActionPerformed
@@ -355,7 +363,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	/**
 	 * changing the selected text to bold
-	 * 
+	 *
 	 * @param evt
 	 */
 	private void jToggleButtonBoldActionPerformed(java.awt.event.ActionEvent evt) {
@@ -364,7 +372,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	/**
 	 * on selection change, changing the selected text to the new font size
-	 * 
+	 *
 	 * @param evt
 	 */
 	private void jComboBoxFontSizeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxFontSizeActionPerformed
@@ -378,7 +386,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 	/**
 	 * on selection change, changing the selected text to the new font family
-	 * 
+	 *
 	 * @param evt
 	 */
 	private void jComboBoxFontTypeActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jComboBoxFontTypeActionPerformed
@@ -409,10 +417,10 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	/**
 	 * handles the adding of the new themeslide to the media handler. checks all
 	 * data and adds it if everything is fine, else showing an error dialog
-	 * 
+	 *
 	 * @throws PriorityDoesNotExistException
 	 * @throws ThemeDoesNotExistException
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	private boolean addThemeslide() throws PriorityDoesNotExistException, ThemeDoesNotExistException, IOException {
 
@@ -451,8 +459,8 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	private File generateFileToSend() throws IOException {
-		
-		//TODO check the efficiency of this conversion
+
+		// TODO check the efficiency of this conversion
 
 		int w = textPaneThemeslide.getWidth();
 		int h = textPaneThemeslide.getHeight();
@@ -515,9 +523,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	/**
 	 * This class handles the event triggerd by bold button, and toggles the
 	 * bold text-attribute
-	 * 
+	 *
 	 * @author samu
-	 * 
+	 *
 	 */
 	class BoldAction extends StyledEditorKit.StyledTextAction {
 
@@ -527,10 +535,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			super("font-bold");
 		}
 
+		@Override
 		public String toString() {
 			return "Bold";
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			JEditorPane editor = getEditor(e);
@@ -549,12 +559,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	/**
-	 * 
+	 *
 	 * This class handles the event triggerd by italic button, and toggles the
 	 * italic text-attribute
-	 * 
+	 *
 	 * @author samu
-	 * 
+	 *
 	 */
 	class ItalicAction extends StyledEditorKit.StyledTextAction {
 
@@ -564,10 +574,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			super("font-italic");
 		}
 
+		@Override
 		public String toString() {
 			return "Italic";
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			JEditorPane editor = getEditor(e);
 			if (editor != null) {
@@ -585,12 +597,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	/**
-	 * 
+	 *
 	 * This class handles the event triggerd by underline button, and toggles
 	 * the underline text-attribute
-	 * 
+	 *
 	 * @author samu
-	 * 
+	 *
 	 */
 	class UnderlineAction extends StyledEditorKit.StyledTextAction {
 
@@ -600,10 +612,12 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 			super("font-underline");
 		}
 
+		@Override
 		public String toString() {
 			return "Underline";
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			JEditorPane editor = getEditor(e);
 			if (editor != null) {
@@ -620,19 +634,19 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	/**
-	 * 
+	 *
 	 * This class handles the event triggerd by fontfamily combobox, and resets
 	 * the selected text to the selected font family
-	 * 
+	 *
 	 * @author samu
-	 * 
+	 *
 	 */
 	class FontFamilyAction extends StyledEditorKit.StyledTextAction {
 
 		// TODO Bug: Setting font size then font type leads to reset of size,
 		// maybe the other way round too
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 3710617413958842313L;
 		private String selectedFamily;
@@ -643,6 +657,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		}
 
+		@Override
 		public String toString() {
 			return "Font Family";
 		}
@@ -663,17 +678,17 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	/**
-	 * 
+	 *
 	 * This class handles the event triggerd by fontsize combobox, and resets
 	 * the selected text to the selected font size
-	 * 
+	 *
 	 * @author samu
-	 * 
+	 *
 	 */
 	class FontSizeAction extends StyledEditorKit.StyledTextAction {
 
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 5817346150045790333L;
 
@@ -685,6 +700,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		}
 
+		@Override
 		public String toString() {
 			return "Font Size";
 		}
@@ -707,17 +723,17 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	}
 
 	/**
-	 * 
+	 *
 	 * This class handles the event triggerd by color picker, and sets the
 	 * selected text to the selected color
-	 * 
+	 *
 	 * @author samu
-	 * 
+	 *
 	 */
 	class FontColorAction extends StyledEditorKit.StyledTextAction {
 
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 9005216620313856874L;
 
@@ -729,6 +745,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 
 		}
 
+		@Override
 		public String toString() {
 			return "Font Color";
 		}
@@ -756,7 +773,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 * caret was at its last position and does not changed the position since
 	 * last event invokation Only then a update to the GUI is performed with the
 	 * styling attributes of the last character in the document.
-	 * 
+	 *
 	 * @param e
 	 *            CaretEvent
 	 */
@@ -772,7 +789,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		 * the moment there are false syncs and due to para attr setting,
 		 * sometimes smaller fonts needs much more space Maybe correcting para
 		 * attr with setAtr(null) to the right times
-		 * 
+		 *
 		 * setting the "logicalStyle" of the TextPane could be another solution
 		 */
 
@@ -812,7 +829,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	private void applyAsParagraphAttributes() {
 		final MutableAttributeSet attr = new SimpleAttributeSet();
 		StyleConstants.setFontFamily(attr, (String) jComboBoxFontType.getSelectedItem());
-		attr.addAttribute(StyleConstants.Size, (String) jComboBoxFontSize.getSelectedItem());
+		attr.addAttribute(StyleConstants.Size, jComboBoxFontSize.getSelectedItem());
 		StyleConstants.setForeground(attr, new Color(selectedColorMain.getRGB()));
 		StyleConstants.setUnderline(attr, jToggleButtonUnderline.isSelected());
 		StyleConstants.setBold(attr, jToggleButtonBold.isSelected());
@@ -834,7 +851,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 	 * This method performs GUI updates to all relevant styling elements
 	 * represented by the GUI e.g. the "bold button". It is invoked on every
 	 * caret position changed.
-	 * 
+	 *
 	 * @param attr
 	 *            {@link AttributeSet} which contains the attributes the GUI
 	 *            should sync to
@@ -935,6 +952,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		 */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 
+			@Override
 			public void run() {
 
 				try {

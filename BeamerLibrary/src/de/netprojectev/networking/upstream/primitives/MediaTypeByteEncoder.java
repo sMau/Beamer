@@ -13,11 +13,11 @@ public class MediaTypeByteEncoder extends MessageToByteEncoder<MediaType> {
 
 	private static final Logger log = LoggerBuilder.createLogger(MediaTypeByteEncoder.class);
 
-	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, MediaType msg, ByteBuf out) throws Exception {
 		out.writeByte(msg.ordinal());
 	}
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());

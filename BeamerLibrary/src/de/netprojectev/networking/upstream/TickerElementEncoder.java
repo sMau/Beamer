@@ -13,13 +13,13 @@ public class TickerElementEncoder extends MessageToByteEncoder<TickerElement> {
 
 	private static final Logger log = LoggerBuilder.createLogger(TickerElementEncoder.class);
 
-	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, TickerElement msg, ByteBuf out) throws Exception {
 		ctx.write(msg.getId());
 		ctx.write(msg.getText());
 		ctx.writeAndFlush(msg.isShow());
 	}
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());

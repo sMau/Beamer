@@ -15,7 +15,7 @@ import de.netprojectev.utils.LoggerBuilder;
 public class AllMediaTableModel extends AbstractTableModel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1263313149575878071L;
 
@@ -42,9 +42,10 @@ public class AllMediaTableModel extends AbstractTableModel {
 	 * invokeLater for clean and thread-save event handling.
 	 */
 	private void updateTableData() {
-		
+
 		SwingUtilities.invokeLater(new Runnable() {
 
+			@Override
 			public void run() {
 				fireTableDataChanged();
 
@@ -55,7 +56,7 @@ public class AllMediaTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		
+
 		return mediaModel.getAllMedia().size();
 	}
 
@@ -80,12 +81,11 @@ public class AllMediaTableModel extends AbstractTableModel {
 			return Object.class;
 		}
 
-		
 	}
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if(columnIndex == 0) {
+		if (columnIndex == 0) {
 			return true;
 		} else {
 			return false;
@@ -109,12 +109,13 @@ public class AllMediaTableModel extends AbstractTableModel {
 				return media.getName();
 			case 4:
 				try {
-					if(media.getType().equals(MediaType.Countdown)) {
-						return "Countdown"; //TODO make it possible to show countdown duration
+					if (media.getType().equals(MediaType.Countdown)) {
+						return "Countdown"; // TODO make it possible to show
+											// countdown duration
 					} else {
 						return mediaModel.getProxy().getPrefs().getPriorityByID(media.getPriorityID()).toString();
 					}
-					
+
 				} catch (PriorityDoesNotExistException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

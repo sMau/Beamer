@@ -8,9 +8,9 @@ import de.netprojectev.server.ServerCLI;
 public class Starter {
 
 	public static void main(String[] args) {
-		
+
 		System.setProperty("sun.java2d.opengl", "True");
-		
+
 		ServerCLI commands = null;
 		final Cli<ServerCLI> cli = CliFactory.createCli(ServerCLI.class);
 		try {
@@ -21,15 +21,15 @@ public class Starter {
 		}
 
 		int port = commands.getPort();
-		
-		if(!(port < 65535 && port > 1024)) {
+
+		if (!(port < 65535 && port > 1024)) {
 			System.out.println(cli.getHelpMessage());
 			System.exit(0);
 		}
-		
+
 		boolean fullscreen = commands.isFullscreen();
-		
+
 		new DisplayFrame(fullscreen, port);
 	}
-	
+
 }

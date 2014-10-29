@@ -6,7 +6,7 @@ import java.util.UUID;
 public class TickerElement implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 7790234554937908704L;
 	private final UUID id;
@@ -23,6 +23,10 @@ public class TickerElement implements Serializable {
 		this.id = id;
 		this.text = text;
 		this.show = true;
+	}
+
+	public TickerElement copy() {
+		return new TickerElement(this.text, this.id);
 	}
 
 	@Override
@@ -57,9 +61,5 @@ public class TickerElement implements Serializable {
 
 	public void setText(String text) {
 		this.text = text;
-	}
-
-	public TickerElement copy() {
-		return new TickerElement(text, id);
 	}
 }

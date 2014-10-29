@@ -6,7 +6,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,13 +22,13 @@ import de.netprojectev.utils.Misc;
 public class ImageFile extends ServerMediaFile {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -6972824512907132864L;
 
 	private transient byte[] image;
 	private File pathOnDisk;
-	
+
 	public ImageFile(String name, UUID priorityID, File pathOnDisk) throws IOException {
 		super(name, priorityID);
 		Path srcPath = Paths.get(pathOnDisk.getAbsolutePath());
@@ -43,13 +42,6 @@ public class ImageFile extends ServerMediaFile {
 		this.image = null;
 	}
 
-	public byte[] get() throws IOException {
-		if (this.image == null) {
-			this.image = Files.readAllBytes(Paths.get(this.pathOnDisk.getAbsolutePath()));
-		}
-		return this.image;
-	}
-
 	@Override
 	public MediaType determineMediaType() {
 		return MediaType.Image;
@@ -61,11 +53,18 @@ public class ImageFile extends ServerMediaFile {
 		final BufferedImage compImage = ImageIO.read(in);
 		double imageAspectRatio = ((double) compImage.getWidth()) / ((double) compImage.getHeight());
 		int newWidth = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_GENERAL_PREVIEW_WIDTH));
-		int newHeight = (int) ((double) newWidth / imageAspectRatio);
-		BufferedImage scaled = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);		
+		int newHeight = (int) (newWidth / imageAspectRatio);
+		BufferedImage scaled = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ImageIO.write(scaled, "png", out);
 		out.flush();
 		return out.toByteArray();
+	}
+
+	public byte[] get() throws IOException {
+		if (this.image == null) {
+			this.image = Files.readAllBytes(Paths.get(this.pathOnDisk.getAbsolutePath()));
+		}
+		return this.image;
 	}
 }

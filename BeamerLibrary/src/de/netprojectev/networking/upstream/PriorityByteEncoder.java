@@ -13,7 +13,6 @@ public class PriorityByteEncoder extends MessageToByteEncoder<Priority> {
 
 	private static final Logger log = LoggerBuilder.createLogger(PriorityByteEncoder.class);
 
-	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Priority msg, ByteBuf out) throws Exception {
 
@@ -23,6 +22,7 @@ public class PriorityByteEncoder extends MessageToByteEncoder<Priority> {
 		ctx.writeAndFlush(msg.isDefaultPriority());
 
 	}
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());

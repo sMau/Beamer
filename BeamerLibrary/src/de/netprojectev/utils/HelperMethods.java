@@ -20,17 +20,15 @@ import de.netprojectev.server.ConstantsServer;
 
 /**
  * Class to hold global methods not containing to a specific other class.
- * 
+ *
  * @author samu
  */
 public class HelperMethods {
 
-	private static final Logger log = LoggerBuilder.createLogger(HelperMethods.class);
-
 	/**
 	 * Converts seconds to a formatted String showing minutes and seconds
 	 * sperated by ":"
-	 * 
+	 *
 	 * @param seconds
 	 *            seconds to convert
 	 * @return a formatted string like mm:ss
@@ -79,7 +77,7 @@ public class HelperMethods {
 
 	/**
 	 * Generates font sizes based on stepwidth n, start and end size.
-	 * 
+	 *
 	 * @return array of possible sizes
 	 */
 	public static String[] generateFontSizes() {
@@ -168,7 +166,7 @@ public class HelperMethods {
 	/**
 	 * Deserializing a object from hard disk in save path with the given
 	 * filename.
-	 * 
+	 *
 	 * @param filename
 	 *            file to load from disk
 	 * @return deserialized object
@@ -194,9 +192,8 @@ public class HelperMethods {
 	}
 
 	/**
-	 * Reads properties from disk using the in the defined
-	 * path.
-	 * 
+	 * Reads properties from disk using the in the defined path.
+	 *
 	 * @return from disk loaded property object
 	 * @throws IOException
 	 */
@@ -210,7 +207,7 @@ public class HelperMethods {
 
 	/**
 	 * Saves the given property object to the in the Constants specified path.
-	 * 
+	 *
 	 * @param props
 	 *            the property object to save
 	 * @throws IOException
@@ -229,7 +226,7 @@ public class HelperMethods {
 	/**
 	 * serializing a given object to the save path specified in the constants
 	 * using the given filename.
-	 * 
+	 *
 	 * @param toSave
 	 *            a serializable object
 	 * @param filename
@@ -250,7 +247,7 @@ public class HelperMethods {
 
 	/**
 	 * Lists recursively all files in a directory.
-	 * 
+	 *
 	 * @param dir
 	 *            directory the search should start at
 	 * @return a complete list of all files in this and all subdirectories,
@@ -273,7 +270,7 @@ public class HelperMethods {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param dir
 	 *            directory where search for image files should be started
 	 * @return a {@link File} array of all image files in this and all
@@ -292,5 +289,7 @@ public class HelperMethods {
 		}
 		return imageFiles.toArray(new File[imageFiles.size()]);
 	}
+
+	private static final Logger log = LoggerBuilder.createLogger(HelperMethods.class);
 
 }

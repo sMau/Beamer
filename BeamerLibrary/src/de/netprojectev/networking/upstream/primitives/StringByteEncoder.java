@@ -10,7 +10,6 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public class StringByteEncoder extends MessageToByteEncoder<String> {
 
-	
 	private static final Logger log = LoggerBuilder.createLogger(StringByteEncoder.class);
 
 	/**
@@ -21,10 +20,11 @@ public class StringByteEncoder extends MessageToByteEncoder<String> {
 	protected void encode(ChannelHandlerContext ctx, String msg, ByteBuf out) throws Exception {
 		ctx.writeAndFlush(msg.getBytes());
 	}
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
 
-}	
+}

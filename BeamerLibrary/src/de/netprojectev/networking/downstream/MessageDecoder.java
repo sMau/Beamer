@@ -35,11 +35,11 @@ import de.netprojectev.utils.LoggerBuilder;
 public class MessageDecoder extends ByteToMessageDecoder {
 
 	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
-		
+
 	private ByteBuf in;
 	private ChannelHandlerContext ctx;
 	private ArrayList<Object> data = new ArrayList<Object>(16);
-	
+
 	private boolean dataDecodeSuccess;
 	private boolean decodingFile;
 
@@ -47,31 +47,31 @@ public class MessageDecoder extends ByteToMessageDecoder {
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
 
-		//wait for the header
-		if(in.readableBytes() < 2) {
+		// wait for the header
+		if (in.readableBytes() < 2) {
 			return;
 		}
-		
+
 		in.markReaderIndex();
-		
+
 		OpCode opCode;
 		opCode = OpCode.values()[in.readByte()];
 		boolean containsData = in.readBoolean();
-		dataDecodeSuccess = true;
-		decodingFile = false;
-		
+		this.dataDecodeSuccess = true;
+		this.decodingFile = false;
+
 		log.debug("Receiving new message, OpCode: " + opCode + ". Contains data: " + containsData);
-		
+
 		if (!containsData) {
 			out.add(new Message(opCode));
 		} else {
 			this.in = in;
 			this.ctx = ctx;
 			decodeData(opCode);
-			
-			if(dataDecodeSuccess) {
-				if(!decodingFile) {
-					out.add(new Message(opCode, data));
+
+			if (this.dataDecodeSuccess) {
+				if (!this.decodingFile) {
+					out.add(new Message(opCode, this.data));
 				}
 			} else {
 				in.resetReaderIndex();
@@ -81,15 +81,91 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		}
 
 	}
-	
-	private void sendUpstream(Message msg) {
-		ctx.fireChannelRead(msg);
+
+	private boolean decodeBoolean() {
+		if (this.in.readableBytes() < 1) {
+			this.dataDecodeSuccess = false;
+			return false;
+		}
+		return this.in.readBoolean();
+	}
+
+	private byte[] decodeByteArray() {
+		if (this.in.readableBytes() < 4) {
+			this.dataDecodeSuccess = false;
+			return null;
+		}
+		byte[] decoded = new byte[this.in.readInt()];
+
+		if (this.in.readableBytes() < decoded.length) {
+			this.dataDecodeSuccess = false;
+			return null;
+		}
+
+		this.in.readBytes(decoded);
+		return decoded;
+	}
+
+	private ClientMediaFile decodeClientMediaFile() {
+		UUID id = decodeUUID();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+
+		UUID priorityID = decodeUUID();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+
+		int showCount = decodeInt();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+
+		String name = decodeString();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+
+		MediaType type = decodeMediaType();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+
+		boolean current = decodeBoolean();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+
+		byte[] preview = decodeByteArray();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
+	}
+
+	// TODO add states to the replaying decoder
+	// (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
+	// to improve the performance for longer messages
+
+	private Countdown decodeCountdown() {
+		String name = decodeString();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+
+		int durationInMinutes = decodeInt();
+		if (this.dataDecodeSuccess == false) {
+			return null;
+		}
+
+		return new Countdown(name, durationInMinutes);
 	}
 
 	private void decodeData(OpCode opCode) throws DecodeMessageException, IOException {
 
 		this.data.clear();
-		
+
 		/*
 		 * switch over all opcodes, indicating that data is contained
 		 */
@@ -106,7 +182,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			this.data.add(value);
 			break;
 		case STC_INIT_PROPERTIES:
-			int keyValueCount = in.readInt();
+			int keyValueCount = this.in.readInt();
 			log.info("Init Properties key val count: " + keyValueCount);
 			decodeProperties(keyValueCount);
 			break;
@@ -163,9 +239,9 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			this.data.add(decodeFonts());
 			break;
 
-		/*
-		 * Client to server
-		 */
+			/*
+			 * Client to server
+			 */
 		case CTS_ADD_LIVE_TICKER_ELEMENT:
 			this.data.add(decodeTickerElement());
 			break;
@@ -234,185 +310,21 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		}
 
 	}
-	
-	private Countdown decodeCountdown() {
-		String name = decodeString();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		int durationInMinutes = decodeInt();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		return new Countdown(name, durationInMinutes);
-	}
 
-	//TODO add states to the replaying decoder (http://netty.io/4.0/api/io/netty/handler/codec/ReplayingDecoder.html)
-	// to improve the performance for longer messages
-
-	private void decodeVideoFile() throws IOException {
-		final String name = decodeString();
-		if(dataDecodeSuccess == false) {
-			return;
-		}
-		log.debug("Decoded file name: " + name);
-		
-		decodeFile(OpCode.CTS_ADD_VIDEO_FILE, new FileTransferFinishedListener() {
-			
-			@Override
-			public void fileTransferFinished(File file) throws IOException {
-				data.add(new VideoFile(name, file));
-				sendUpstream(new Message(OpCode.CTS_ADD_VIDEO_FILE, data));
-			}
-		});
-		
-	}
-
-	private String[] decodeFonts() {
-		String[] res = new String[this.in.readInt()];
-		int i = 0;
-		while(i < res.length) {
-			res[i] = decodeString();
-			if(dataDecodeSuccess == false) {
-				return null;
-			}
-			i++;
-		}
-		return res;
-	}
-
-	private int decodeInt() {
-		if(in.readableBytes() < 4) {
-			dataDecodeSuccess  = false;
-			return 0;
-		}
-		return this.in.readInt();
-	}
-	
-	private long decodeLong() {
-		if(in.readableBytes() < 8) {
-			dataDecodeSuccess  = false;
-			return 0;
-		}
-		return this.in.readLong();
-	}
-	private MediaType decodeMediaType() {
-		if(in.readableBytes() < 1) {
-			dataDecodeSuccess = false;
-			return null;
-		}
-		return MediaType.values()[this.in.readByte()];
-	}
-	
-	private boolean decodeBoolean() {
-		if(in.readableBytes() < 1) {
-			dataDecodeSuccess = false;
-			return false;
-		}
-		return this.in.readBoolean();
-	}
-
-	private byte[] decodeByteArray() {
-		if(this.in.readableBytes() < 4) {
-			dataDecodeSuccess = false;
-			return null;
-		}
-		byte[] decoded = new byte[this.in.readInt()];
-		
-		if(this.in.readableBytes() < decoded.length) {
-			dataDecodeSuccess = false;
-			return null;
-		}
-		
-		this.in.readBytes(decoded);
-		return decoded;
-	}
-
-	private Properties decodeProperties(int dataObjectCount) {
-		Properties props = new Properties();
-		
-		for(int i = 0; i < dataObjectCount; i++) {
-			String key = decodeString();
-			String value  = decodeString();
-			if(dataDecodeSuccess == false) {
-				return null;
-			}
-			props.setProperty(key, value);
-		}
-		
-		return props;
-	}
-	
-
-	private ClientMediaFile decodeClientMediaFile() {
-		UUID id = decodeUUID();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		UUID priorityID = decodeUUID();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		int showCount = decodeInt();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		
-		String name = decodeString();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		MediaType type = decodeMediaType();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		boolean current = decodeBoolean();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		
-		byte[] preview = decodeByteArray();
-		if(dataDecodeSuccess == false) {
-			return null;
-		}
-		return ClientMediaFile.reconstruct(id, name, preview, priorityID, showCount, type, current);
-	}
-	
 	private DequeueData decodeDequeueData() {
 		UUID id = decodeUUID();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		int row = decodeInt();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		return new DequeueData(row, id);
 	}
-	//TODO always where "clean up" necessary make try-final blocks in the handlers code
-	private void decodeImageFile() throws IOException {
-		final String name = decodeString();
-		log.debug("Decoded file name: " + name);
-		
-		decodeFile(OpCode.CTS_ADD_IMAGE_FILE, new FileTransferFinishedListener() {
-			
-			@Override
-			public void fileTransferFinished(File file) throws IOException {
-				data.add(new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file));
-				sendUpstream(new Message(OpCode.CTS_ADD_IMAGE_FILE, data));
-			}
-		});
-	}
-	
+
 	private void decodeFile(OpCode opCode, FileTransferFinishedListener l) throws IOException {
 
 		File pathOnDisk = null;
@@ -428,61 +340,115 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			break;
 		default:
 			break;
-		}	
-		
-		//wait for file meta data
-		if(in.readableBytes() < 16) {
-			dataDecodeSuccess = false;
+		}
+
+		// wait for file meta data
+		if (this.in.readableBytes() < 16) {
+			this.dataDecodeSuccess = false;
 			return;
 		}
-		
-		decodingFile = true;
-		
-		//decode file meta data
+
+		this.decodingFile = true;
+
+		// decode file meta data
 		long length = decodeLong();
 		// int chunkSize = decodeInt();
 		// int chunkCount = decodeInt();
 
 		log.debug("Receiving file. Length: " + length);
 
-		//replace with a file decode handler, which replaces itself after completion again with this one here
+		// replace with a file decode handler, which replaces itself after
+		// completion again with this one here
 		this.ctx.pipeline().replace(this, "ChunkedFileDecoder",
 				new ChunkedFileDecoder(pathOnDisk, length, l));
 
 	}
 
+	private String[] decodeFonts() {
+		String[] res = new String[this.in.readInt()];
+		int i = 0;
+		while (i < res.length) {
+			res[i] = decodeString();
+			if (this.dataDecodeSuccess == false) {
+				return null;
+			}
+			i++;
+		}
+		return res;
+	}
+
+	// TODO always where "clean up" necessary make try-final blocks in the
+	// handlers code
+	private void decodeImageFile() throws IOException {
+		final String name = decodeString();
+		log.debug("Decoded file name: " + name);
+
+		decodeFile(OpCode.CTS_ADD_IMAGE_FILE, new FileTransferFinishedListener() {
+
+			@Override
+			public void fileTransferFinished(File file) throws IOException {
+				MessageDecoder.this.data.add(new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file));
+				sendUpstream(new Message(OpCode.CTS_ADD_IMAGE_FILE, MessageDecoder.this.data));
+			}
+		});
+	}
+
+	private int decodeInt() {
+		if (this.in.readableBytes() < 4) {
+			this.dataDecodeSuccess = false;
+			return 0;
+		}
+		return this.in.readInt();
+	}
+
 	private Object decodeLoginData() {
 		String alias = decodeString();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		String key = decodeString();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		return new LoginData(alias, key);
+	}
+
+	private long decodeLong() {
+		if (this.in.readableBytes() < 8) {
+			this.dataDecodeSuccess = false;
+			return 0;
+		}
+		return this.in.readLong();
+	}
+
+	private MediaType decodeMediaType() {
+		if (this.in.readableBytes() < 1) {
+			this.dataDecodeSuccess = false;
+			return null;
+		}
+		return MediaType.values()[this.in.readByte()];
 	}
 
 	private Priority decodePriority() {
 		UUID id = decodeUUID();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		int minToShow = decodeInt();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		String name = decodeString();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		boolean defaultPriority = decodeBoolean();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
 
@@ -491,69 +457,84 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		return prio;
 	}
 
+	private Properties decodeProperties(int dataObjectCount) {
+		Properties props = new Properties();
+
+		for (int i = 0; i < dataObjectCount; i++) {
+			String key = decodeString();
+			String value = decodeString();
+			if (this.dataDecodeSuccess == false) {
+				return null;
+			}
+			props.setProperty(key, value);
+		}
+
+		return props;
+	}
+
 	private String decodeString() {
 		byte[] bytes = decodeByteArray();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		return new String(bytes);
 	}
-	
+
 	private Theme decodeTheme() {
 		String themeName = decodeString();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		byte[] imageData = decodeByteArray();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		return new Theme(themeName, imageData);
 	}
 
 	private Theme decodeThemeAck() {
 		UUID themeID = decodeUUID();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		String themeName = decodeString();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		byte[] imageData = decodeByteArray();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		return Theme.reconstruct(themeName, imageData, themeID);
 	}
 
 	private void decodeThemeslide() throws IOException {
-		
+
 		final String name = decodeString();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return;
 		}
-		
+
 		log.debug("Decoded file name: " + name);
 		final UUID themeID = decodeUUID();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return;
 		}
-		
+
 		log.debug("Decoded theme id: " + themeID);
 
 		decodeFile(OpCode.CTS_ADD_THEMESLIDE, new FileTransferFinishedListener() {
 			@Override
 			public void fileTransferFinished(File file) throws IOException {
 				ImageFile imgFile = new ImageFile(name, PreferencesModelServer.getDefaultPriority(), file);
-				data.add(new Themeslide(name, themeID, imgFile.getPriorityID(), imgFile));
-				sendUpstream(new Message(OpCode.CTS_ADD_THEMESLIDE, data));
+				MessageDecoder.this.data.add(new Themeslide(name, themeID, imgFile.getPriorityID(), imgFile));
+				sendUpstream(new Message(OpCode.CTS_ADD_THEMESLIDE, MessageDecoder.this.data));
 			}
 		});
 
@@ -561,37 +542,59 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	private TickerElement decodeTickerElement() {
 		UUID id = decodeUUID();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		String text = decodeString();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		boolean show = decodeBoolean();
-		if(dataDecodeSuccess == false) {
+		if (this.dataDecodeSuccess == false) {
 			return null;
 		}
-		
+
 		return new TickerElement(text, id).setShow(show);
 	}
 
 	private UUID decodeUUID() {
-		if(in.readableBytes() < 16) {
-			dataDecodeSuccess  = false;
+		if (this.in.readableBytes() < 16) {
+			this.dataDecodeSuccess = false;
 			return null;
 		}
 		long least = decodeLong();
 		long most = decodeLong();
 		return new UUID(most, least);
 	}
-	
+
+	private void decodeVideoFile() throws IOException {
+		final String name = decodeString();
+		if (this.dataDecodeSuccess == false) {
+			return;
+		}
+		log.debug("Decoded file name: " + name);
+
+		decodeFile(OpCode.CTS_ADD_VIDEO_FILE, new FileTransferFinishedListener() {
+
+			@Override
+			public void fileTransferFinished(File file) throws IOException {
+				MessageDecoder.this.data.add(new VideoFile(name, file));
+				sendUpstream(new Message(OpCode.CTS_ADD_VIDEO_FILE, MessageDecoder.this.data));
+			}
+		});
+
+	}
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
+	}
+
+	private void sendUpstream(Message msg) {
+		this.ctx.fireChannelRead(msg);
 	}
 
 }

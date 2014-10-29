@@ -8,7 +8,6 @@ import java.util.UUID;
 import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
-import de.netprojectev.datastructures.MediaFile;
 import de.netprojectev.datastructures.Priority;
 import de.netprojectev.datastructures.Theme;
 import de.netprojectev.datastructures.TickerElement;
@@ -24,18 +23,9 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public class PreferencesModelServer {
 
-	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelServer.class);
-
-	private final MessageProxyServer proxy;
-
-	private final HashMap<UUID, Priority> prios;
-
-	private final HashMap<UUID, Theme> themes;
-	
-	private static final int DEFAULT_PRIO_TIME = 1;
-	private static UUID defaultPriority;
-
-	private static Properties props;
+	public static UUID getDefaultPriority() {
+		return defaultPriority;
+	}
 
 	public static String getPropertyByKey(String key) {
 		log.debug("Getting property: " + key);
@@ -68,6 +58,20 @@ public class PreferencesModelServer {
 		log.debug("Setting property: " + key + ", to: " + value);
 		props.setProperty(key, value);
 	}
+
+	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelServer.class);
+
+	private final MessageProxyServer proxy;
+
+	private final HashMap<UUID, Priority> prios;
+
+	private final HashMap<UUID, Theme> themes;
+
+	private static final int DEFAULT_PRIO_TIME = 1;
+
+	private static UUID defaultPriority;
+
+	private static Properties props;
 
 	public PreferencesModelServer(MessageProxyServer proxy) {
 		this.proxy = proxy;
@@ -149,7 +153,7 @@ public class PreferencesModelServer {
 			}
 
 		}
-		
+
 		if (!defaulPrioExists) {
 			Priority defaultPrio = new Priority("default", DEFAULT_PRIO_TIME);
 			defaultPrio.setDefaultPriority(true);
@@ -164,10 +168,6 @@ public class PreferencesModelServer {
 
 		}
 
-	}
-
-	public static UUID getDefaultPriority() {
-		return defaultPriority;
 	}
 
 	public Priority getPriorityById(UUID id) throws PriorityDoesNotExistException {
@@ -199,11 +199,11 @@ public class PreferencesModelServer {
 
 	public void removePriority(UUID id) throws IOException {
 		log.debug("Removing priority: " + id);
-		for(UUID key : proxy.getMediaModel().getAllMediaFiles().keySet()) {
-			ServerMediaFile curFile = proxy.getMediaModel().getAllMediaFiles().get(key);
-			if(curFile.getPriorityID().equals(id)) {
+		for (UUID key : this.proxy.getMediaModel().getAllMediaFiles().keySet()) {
+			ServerMediaFile curFile = this.proxy.getMediaModel().getAllMediaFiles().get(key);
+			if (curFile.getPriorityID().equals(id)) {
 				curFile.setPriority(defaultPriority);
-				proxy.broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(curFile)));
+				this.proxy.broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(curFile)));
 			}
 		}
 		this.prios.remove(id);
@@ -237,6 +237,5 @@ public class PreferencesModelServer {
 	public void serializeTickerDatabase() throws IOException {
 		HelperMethods.saveToFile(this.proxy.getTickerModel().getElements(), ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_LIVETICKER);
 	}
-
 
 }

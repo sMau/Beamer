@@ -38,13 +38,13 @@ import de.netprojectev.utils.LoggerBuilder;
 /**
  * GUI class frame, to store the viewing components, as the live ticker and the
  * image and themeslide showing component.
- * 
+ *
  * @author samu
  */
 public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 863589702184282724L;
 	private static final Logger log = LoggerBuilder.createLogger(DisplayFrame.class);
@@ -55,9 +55,9 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 	private VideoFinishListener videoFinishedListener;
 
 	public DisplayFrame(boolean fullscreen, int port) {
-		
+
 		this.proxy = new Server(port, this).bindServerSocket(fullscreen);
-		
+
 		initComponents();
 		// Transparent 16 x 16 pixel cursor image.
 		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
@@ -107,6 +107,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 
 	}
 
+	@Override
 	public void showMediaFileInMainComponent(ServerMediaFile fileToShow) throws IOException {
 		if (fileToShow instanceof ImageFile) {
 			showImageFile((ImageFile) fileToShow);
@@ -194,15 +195,18 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 
 	}
 
+	@Override
 	public void startLiveTicker() {
 		tickerComponent.setTickerString(proxy.getTickerModel().generateCompleteTickerText());
 		tickerComponent.initLiveTickerAndStart();
 	}
 
+	@Override
 	public void updateLiveTickerString() {
 		tickerComponent.setTickerString(proxy.getTickerModel().generateCompleteTickerText());
 	}
 
+	@Override
 	public void stopLiveTicker() {
 		tickerComponent.stop();
 	}
@@ -213,23 +217,24 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 
 	/**
 	 * Setting the display frame as fullscreen exclusive window
-	 * 
+	 *
 	 * @param screenNumber
 	 *            the number of the screen to show on
 	 */
+	@Override
 	public void enterFullscreen(int screenNumber) {
 
 		if (!fullscreen) {
 			dispose();
 			this.setUndecorated(true);
-			//setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
-			//setResizable(false);
+			// setSize(java.awt.Toolkit.getDefaultToolkit().getScreenSize());
+			// setResizable(false);
 			setVisible(true);
-			
+
 			GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 			GraphicsDevice device = env.getDefaultScreenDevice();
 			device.setFullScreenWindow(this);
-			
+
 			fullscreen = true;
 		}
 
@@ -238,6 +243,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 	/**
 	 * lets the display window exiting the fullscreen
 	 */
+	@Override
 	public void exitFullscreen() {
 
 		if (fullscreen) {
@@ -245,12 +251,12 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 			GraphicsDevice[] myDevices = ge.getScreenDevices();
 			dispose();
 			this.setUndecorated(false);
-			//setResizable(true);
-			//setSize(getPreferredSize());
+			// setResizable(true);
+			// setSize(getPreferredSize());
 			setVisible(true);
-			
+
 			myDevices[0].setFullScreenWindow(null);
-			
+
 			fullscreen = false;
 		}
 	}
@@ -259,8 +265,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 	public void setVideoFinishedListener(VideoFinishListener videoFinishListener) {
 		this.videoFinishedListener = videoFinishListener;
 	}
-	
-	
+
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -288,36 +293,36 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 		tickerComponent.setLayout(tickerComponentLayout);
 		tickerComponentLayout.setHorizontalGroup(
 				tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGap(0, 800, Short.MAX_VALUE)
+				.addGap(0, 800, Short.MAX_VALUE)
 				);
 		tickerComponentLayout.setVerticalGroup(
 				tickerComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGap(0, 80, Short.MAX_VALUE)
+				.addGap(0, 80, Short.MAX_VALUE)
 				);
 
 		javax.swing.GroupLayout displayMainComponentLayout = new javax.swing.GroupLayout(displayMainComponent);
 		displayMainComponent.setLayout(displayMainComponentLayout);
 		displayMainComponentLayout.setHorizontalGroup(
 				displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addComponent(tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(tickerComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 		displayMainComponentLayout.setVerticalGroup(
 				displayMainComponentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayMainComponentLayout.createSequentialGroup()
-								.addContainerGap(338, Short.MAX_VALUE)
-								.addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-								.addGap(32, 32, 32))
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, displayMainComponentLayout.createSequentialGroup()
+						.addContainerGap(338, Short.MAX_VALUE)
+						.addComponent(tickerComponent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addGap(32, 32, 32))
 				);
 
 		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 		getContentPane().setLayout(layout);
 		layout.setHorizontalGroup(
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 		layout.setVerticalGroup(
 				layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-						.addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addComponent(displayMainComponent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 				);
 
 		pack();
@@ -367,6 +372,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 		 */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 
+			@Override
 			public void run() {
 				// new DisplayMainFrame().setVisible(true);
 			}
@@ -376,7 +382,6 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private de.netprojectev.server.gui.DisplayMainComponent displayMainComponent;
 	private de.netprojectev.server.gui.TickerComponent tickerComponent;
-
 
 	// End of variables declaration//GEN-END:variables
 

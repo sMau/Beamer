@@ -13,7 +13,6 @@ public class DequeueDataByteEncoder extends MessageToByteEncoder<DequeueData> {
 
 	private static final Logger log = LoggerBuilder.createLogger(DequeueDataByteEncoder.class);
 
-	
 	@Override
 	protected void encode(ChannelHandlerContext ctx, DequeueData msg, ByteBuf out) throws Exception {
 		ctx.write(msg.getId());

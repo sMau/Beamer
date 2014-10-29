@@ -6,7 +6,7 @@ import java.util.UUID;
 public abstract class MediaFile implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 6210917731163785789L;
 	protected final UUID id;

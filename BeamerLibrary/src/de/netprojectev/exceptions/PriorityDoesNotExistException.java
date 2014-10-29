@@ -3,7 +3,7 @@ package de.netprojectev.exceptions;
 public class PriorityDoesNotExistException extends Exception {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -5883465530849251782L;
 

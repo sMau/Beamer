@@ -14,25 +14,17 @@ import de.netprojectev.server.model.PreferencesModelServer;
 public class VideoFile extends ServerMediaFile {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 2033435655791192980L;
 	private File videoFile;
 
 	public VideoFile(String name, File videoFile) throws IOException {
-		super(name, PreferencesModelServer.getDefaultPriority()); 
+		super(name, PreferencesModelServer.getDefaultPriority());
 		Path srcPath = Paths.get(videoFile.getAbsolutePath());
 		Path destPath = Paths.get(ConstantsServer.SAVE_PATH, ConstantsServer.CACHE_PATH_VIDEOS, this.id.toString());
 		Files.move(srcPath, destPath, StandardCopyOption.ATOMIC_MOVE);
 		this.videoFile = destPath.toFile();
-	}
-
-	public File getVideoFile() {
-		return this.videoFile;
-	}
-
-	public void setVideoFile(File videoFile) {
-		this.videoFile = videoFile;
 	}
 
 	@Override
@@ -43,5 +35,13 @@ public class VideoFile extends ServerMediaFile {
 	@Override
 	public byte[] determinePreview() throws IOException {
 		return super.getNoPreviewImage();
+	}
+
+	public File getVideoFile() {
+		return this.videoFile;
+	}
+
+	public void setVideoFile(File videoFile) {
+		this.videoFile = videoFile;
 	}
 }

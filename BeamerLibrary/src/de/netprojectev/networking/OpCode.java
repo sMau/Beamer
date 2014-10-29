@@ -78,7 +78,7 @@ public enum OpCode {
 	STC_HEARTBEAT_REQUEST(false),
 	STC_INIT_PROPERTIES,
 	STC_FORCE_RECONNECT(false),
-	STC_PROPERTY_UPDATE_ACK, 
+	STC_PROPERTY_UPDATE_ACK,
 	STC_ALL_FONTS;
 
 	private final boolean dataContained;

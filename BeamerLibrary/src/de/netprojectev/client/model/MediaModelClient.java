@@ -94,9 +94,9 @@ public class MediaModelClient {
 
 		/*
 		 * SwingUtilities.invokeLater(new Runnable() {
-		 * 
+		 *
 		 * @Override public void run() {
-		 * 
+		 *
 		 * } });
 		 */
 		try {

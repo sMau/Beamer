@@ -23,9 +23,9 @@ import de.netprojectev.utils.LoggerBuilder;
 
 /**
  * GUI component to draw the live ticker string.
- * 
+ *
  * @author samu
- * 
+ *
  */
 public class TickerComponent extends JComponent {
 
@@ -63,6 +63,7 @@ public class TickerComponent extends JComponent {
 	private Timer liveTickerTimer;
 
 	class TickerTimerTask extends TimerTask {
+		@Override
 		public void run() {
 			runLiveTicker();
 		}
@@ -181,7 +182,7 @@ public class TickerComponent extends JComponent {
 		log.debug("Updating ticker background color.");
 		tickerBackgroundColor = new Color(Integer.parseInt(PreferencesModelServer
 				.getPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)));
-		
+
 		float hsbVals[] = Color.RGBtoHSB(tickerBackgroundColor.getRed(), tickerBackgroundColor.getGreen(),
 				tickerBackgroundColor.getBlue(), null);
 		tickerBackgroundColorSecondary = Color.getHSBColor(hsbVals[0], hsbVals[1], brightnessMultiplicator * hsbVals[2]);
@@ -230,7 +231,7 @@ public class TickerComponent extends JComponent {
 	/**
 	 * Set the ticker string to draw on the component. A GUI update is invoked
 	 * automatically after setting the new string.
-	 * 
+	 *
 	 * @param tickerString
 	 */
 	protected void setTickerString(String tickerString) {
@@ -286,7 +287,7 @@ public class TickerComponent extends JComponent {
 		Composite oldComposite = tmpG2D.getComposite();
 		Paint oldPaint = tmpG2D.getPaint();
 
-		GradientPaint p = new GradientPaint(0, 0, tickerBackgroundColor, 0, 
+		GradientPaint p = new GradientPaint(0, 0, tickerBackgroundColor, 0,
 				getHeight(), tickerBackgroundColorSecondary);
 		tmpG2D.setPaint(p);
 

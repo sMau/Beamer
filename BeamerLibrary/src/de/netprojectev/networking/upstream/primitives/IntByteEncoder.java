@@ -9,13 +9,13 @@ import org.apache.logging.log4j.Logger;
 import de.netprojectev.utils.LoggerBuilder;
 
 /**
- * 
+ *
  * @author Samuel Schüppen
- * 
+ *
  *         Class used to write the total data count of the msg. Therefore only
  *         the 8 lower order Bits are written, as there will never be more than
  *         255 data objects in a msg.
- * 
+ *
  */
 
 public class IntByteEncoder extends MessageToByteEncoder<Integer> {
@@ -31,6 +31,5 @@ public class IntByteEncoder extends MessageToByteEncoder<Integer> {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
-
 
 }

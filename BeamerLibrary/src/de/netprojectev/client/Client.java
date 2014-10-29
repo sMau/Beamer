@@ -66,32 +66,33 @@ public class Client {
 
 		Bootstrap b = new Bootstrap();
 		b.group(this.group)
-				.channel(NioSocketChannel.class)
-				.handler(new ChannelInitializer<SocketChannel>() {
-					@Override
-					public void initChannel(SocketChannel ch) throws Exception {
-						
+		.channel(NioSocketChannel.class)
+		.handler(new ChannelInitializer<SocketChannel>() {
+			@Override
+			public void initChannel(SocketChannel ch) throws Exception {
+
 						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(), new LongByteEncoder(),
-								new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
-								new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(), 
-								new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(), 
+						new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
+						new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(),
+								new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(),
 								new StringArrayEncoder(), new FileByteEncoder(), new ClientMediaFileEncoder(),
-								new TickerElementEncoder(), new MessageSplit());
-						ch.pipeline().addLast(new MessageDecoder(), proxy);
-					}
-				});
+						new TickerElementEncoder(), new MessageSplit());
+				ch.pipeline().addLast(new MessageDecoder(), Client.this.proxy);
+			}
+		});
 
 		b.option(ChannelOption.TCP_NODELAY, true);
 		b.option(ChannelOption.SO_KEEPALIVE, true);
 
 		ChannelFuture connectFuture = b.connect(this.host, this.port).sync();
 		connectFuture.awaitUninterruptibly(120000); // TODO change this fucking
-													// shit!
+		// shit!
 		if (connectFuture.isSuccess()) {
 			this.proxy.setChannelToServer(connectFuture.channel());
 			log.info("Client successfully connected to " + this.host + ":" + this.port);
 
-			boolean loginSend = this.proxy.sendLoginRequest(this.login).awaitUninterruptibly(120000); // TODO shit!
+			boolean loginSend = this.proxy.sendLoginRequest(this.login).awaitUninterruptibly(120000); // TODO
+																										// shit!
 			if (!loginSend) {
 				log.error("login message could not be send");
 				this.gui.errorDuringLogin("Login message could not be sent.");
@@ -109,7 +110,8 @@ public class Client {
 
 	public void disconnect() {
 		log.info("Client disconnecting");
-		this.proxy.sendDisconnectRequest().awaitUninterruptibly(120000);// TODO shit!
+		this.proxy.sendDisconnectRequest().awaitUninterruptibly(120000);// TODO
+																		// shit!
 		releaseExternalRessources();
 		log.info("Disconnecting complete");
 	}

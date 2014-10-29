@@ -1,17 +1,15 @@
 package de.netprojectev.server.datastructures;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.UUID;
 
 import de.netprojectev.client.datastructures.MediaType;
-import de.netprojectev.datastructures.Priority;
 import de.netprojectev.utils.HelperMethods;
 
 public class Countdown extends ServerMediaFile {
 
 	/**
-	 * 
+	 *
 	 */
 	public static final UUID COUNTDOWN_PRIORITY = new UUID(1337, 1337);
 
@@ -29,9 +27,9 @@ public class Countdown extends ServerMediaFile {
 					"duration have to be bigger than 0");
 		}
 		this.initDurationInSeconds = durationInMinutes * 60;
-		this.durationInSeconds = initDurationInSeconds;
+		this.durationInSeconds = this.initDurationInSeconds;
 		this.timeString = HelperMethods.convertFromSecondsToTimeString(
-				(int) durationInSeconds, true);
+				(int) this.durationInSeconds, true);
 
 	}
 
@@ -44,6 +42,16 @@ public class Countdown extends ServerMediaFile {
 		}
 	}
 
+	@Override
+	public MediaType determineMediaType() {
+		return MediaType.Countdown;
+	}
+
+	@Override
+	public byte[] determinePreview() throws IOException {
+		return super.getNoPreviewImage();
+	}
+
 	public long getDurationInSeconds() {
 		return this.durationInSeconds;
 	}
@@ -54,16 +62,6 @@ public class Countdown extends ServerMediaFile {
 
 	public String getTimeString() {
 		return this.timeString;
-	}
-
-	@Override
-	public MediaType determineMediaType() {
-		return MediaType.Countdown;
-	}
-
-	@Override
-	public byte[] determinePreview() throws IOException {
-		return super.getNoPreviewImage();
 	}
 
 }

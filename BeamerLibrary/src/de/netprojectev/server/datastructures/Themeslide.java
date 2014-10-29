@@ -17,7 +17,7 @@ import de.netprojectev.utils.Misc;
 public class Themeslide extends ServerMediaFile {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -14234502199126341L;
 	private UUID themeId;
@@ -27,18 +27,6 @@ public class Themeslide extends ServerMediaFile {
 		super(name, priorityID);
 		this.themeId = themeId;
 		this.imageRepresantation = imageRepresentation;
-	}
-
-	public byte[] get() throws IOException {
-		return this.imageRepresantation.get();
-	}
-
-	public ImageFile getImageRepresantation() {
-		return this.imageRepresantation;
-	}
-
-	public UUID getThemeId() {
-		return this.themeId;
 	}
 
 	@Override
@@ -52,11 +40,23 @@ public class Themeslide extends ServerMediaFile {
 		final BufferedImage compImage = ImageIO.read(in);
 		double imageAspectRatio = ((double) compImage.getWidth()) / ((double) compImage.getHeight());
 		int newWidth = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_GENERAL_PREVIEW_WIDTH));
-		int newHeight = (int) ((double) newWidth / imageAspectRatio);
-		BufferedImage scaled = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);		
+		int newHeight = (int) (newWidth / imageAspectRatio);
+		BufferedImage scaled = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ImageIO.write(scaled, "png", out);
 		out.flush();
 		return out.toByteArray();
+	}
+
+	public byte[] get() throws IOException {
+		return this.imageRepresantation.get();
+	}
+
+	public ImageFile getImageRepresantation() {
+		return this.imageRepresantation;
+	}
+
+	public UUID getThemeId() {
+		return this.themeId;
 	}
 }

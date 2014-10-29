@@ -4,21 +4,35 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * 
+ *
  * Datastructure to manage the a theme. Its to be hold by a themeslide, mostly
  * to specifiy the background image.
- * 
+ *
  * @author samu
  */
 public class Theme implements Serializable {
 
+	/**
+	 * Reconstructs an Theme by the given data. Used for the client side, to be
+	 * able to set the UUID according to the server ones.
+	 *
+	 * @param name
+	 * @param bgImg
+	 * @param id
+	 * @return
+	 */
+	public static Theme reconstruct(String name, byte[] bgImg, UUID id) {
+		return new Theme(name, bgImg, id);
+	}
+
 	private static final long serialVersionUID = 5562694101580970506L;
 	private final UUID id;
 	private String name;
+
 	private byte[] backgroundImage;
 
 	/**
-	 * 
+	 *
 	 * @param name
 	 *            name as identifier for the theme
 	 * @param bgImg
@@ -28,19 +42,6 @@ public class Theme implements Serializable {
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.backgroundImage = bgImg;
-	}
-	
-	/**
-	 * Reconstructs an Theme by the given data.
-	 * Used for the client side, to be able to set the UUID according to the server ones.
-	 * 
-	 * @param name
-	 * @param bgImg
-	 * @param id
-	 * @return
-	 */
-	public static Theme reconstruct(String name, byte[] bgImg, UUID id) {
-		return new Theme(name, bgImg, id);
 	}
 
 	private Theme(String name, byte[] bgImg, UUID id) {

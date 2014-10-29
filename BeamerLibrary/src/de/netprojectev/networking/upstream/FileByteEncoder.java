@@ -20,18 +20,18 @@ public class FileByteEncoder extends MessageToByteEncoder<File> {
 
 	@Override
 	protected void encode(final ChannelHandlerContext ctx, File msg, ByteBuf out) throws Exception {
-		
+
 		ctx.writeAndFlush(msg.length());
 
 		log.debug("Writting file to out. Length: " + msg.length());
-		
+
 		final FileInputStream fis = new FileInputStream(msg);
 		DefaultFileRegion region = new DefaultFileRegion(fis.getChannel(), 0, msg.length());
 		ctx.write(region).addListener(new ChannelFutureListener() {
-			
+
 			@Override
 			public void operationComplete(ChannelFuture future) throws Exception {
-				if(!future.isSuccess()) {
+				if (!future.isSuccess()) {
 					log.error("Error during writing file to network.", future.cause());
 				}
 				log.debug("Writing file to network opertion completed successful");
@@ -40,6 +40,7 @@ public class FileByteEncoder extends MessageToByteEncoder<File> {
 		});
 		ctx.flush();
 	}
+
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
 		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());

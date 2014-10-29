@@ -26,11 +26,10 @@ import org.jdesktop.swingx.util.GraphicsUtilities;
 
 import de.netprojectev.client.networking.MessageProxyClient;
 
-
 public class Misc {
 	public static ImageIcon getScaledImageIconFromBufImg(BufferedImage original, int widthToScaleTo) throws FileNotFoundException, IOException {
 
-		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(original, widthToScaleTo, (int) (widthToScaleTo * original.getHeight(null)) / original.getWidth(null)));
+		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(original, widthToScaleTo, widthToScaleTo * original.getHeight(null) / original.getWidth(null)));
 		original = null;
 
 		return scaled;
@@ -38,7 +37,7 @@ public class Misc {
 
 	public static ImageIcon getScaledImageIcon(ImageIcon original, int widthToScaleTo) throws FileNotFoundException, IOException {
 		BufferedImage bi = imageIconToBufferedImage(original);
-		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(bi, widthToScaleTo, (int) (widthToScaleTo * bi.getHeight(null)) / bi.getWidth(null)));
+		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(bi, widthToScaleTo, widthToScaleTo * bi.getHeight(null) / bi.getWidth(null)));
 
 		return scaled;
 	}
@@ -57,7 +56,7 @@ public class Misc {
 	 * instance of it. This method is written in optimizing performance without
 	 * big losings in quality. Especially downscaling is very highly optimized
 	 * due to the use of {@link GraphicsUtilities}
-	 * 
+	 *
 	 * @param imageToScale
 	 *            the {@link BufferedImage} that should be scaled
 	 * @param newWidth
@@ -145,7 +144,7 @@ public class Misc {
 		return compatibleImage;
 
 	}
-	
+
 	public static byte[] bufferedImageToByteArray(BufferedImage bufImage) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		try
@@ -160,8 +159,7 @@ public class Misc {
 		}
 		return baos.toByteArray();
 	}
-	
-	
+
 	/**
 	 * handling the programs termination showing up a confirmation dialog and
 	 * invokes the serialization
@@ -180,10 +178,10 @@ public class Misc {
 		}
 
 	}
-	
+
 	/**
 	 * Restarts the currently running jar file using the process builder.
-	 * 
+	 *
 	 * @throws URISyntaxException
 	 * @throws IOException
 	 */
@@ -191,8 +189,9 @@ public class Misc {
 		final String javaBin = System.getProperty("java.home") + File.separator + "bin" + File.separator + "java";
 		final File currentJar = new File(clazz.getProtectionDomain().getCodeSource().getLocation().toURI());
 
-		if (!currentJar.getName().endsWith(".jar"))
+		if (!currentJar.getName().endsWith(".jar")) {
 			return;
+		}
 
 		final ArrayList<String> command = new ArrayList<String>();
 		command.add(javaBin);
@@ -202,34 +201,29 @@ public class Misc {
 		builder.start();
 		System.exit(0);
 	}
-	
+
 	/*
-	public static void writeImageToDiskAsPNG(BufferedImage image, File path) {
-		Iterator<ImageWriter> itereratorImageWriter = ImageIO.getImageWritersByFormatName("png");
-		ImageWriter writer = (ImageWriter) itereratorImageWriter.next();
-		ImageWriteParam writeParams = writer.getDefaultWriteParam();
+	 * public static void writeImageToDiskAsPNG(BufferedImage image, File path)
+	 * { Iterator<ImageWriter> itereratorImageWriter =
+	 * ImageIO.getImageWritersByFormatName("png"); ImageWriter writer =
+	 * (ImageWriter) itereratorImageWriter.next(); ImageWriteParam writeParams =
+	 * writer.getDefaultWriteParam();
+	 * 
+	 * try { FileImageOutputStream fos = new FileImageOutputStream(path);
+	 * writer.setOutput(fos); IIOImage img = new IIOImage((RenderedImage) image,
+	 * null, null); writer.write(null, img, writeParams);
+	 * 
+	 * } catch (Exception ex) { ex.printStackTrace(); } }
+	 */
 
-		try {
-			FileImageOutputStream fos = new FileImageOutputStream(path);
-			writer.setOutput(fos);
-			IIOImage img = new IIOImage((RenderedImage) image, null, null);
-			writer.write(null, img, writeParams);
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
-	*/
-	
 	/**
 	 * reading current mouse pointer position
-	 * 
+	 *
 	 * @return current mouse pointer position.
 	 */
 	public static Point currentMousePosition() {
 		PointerInfo info = MouseInfo.getPointerInfo();
 		return info.getLocation();
 	}
-	
+
 }
