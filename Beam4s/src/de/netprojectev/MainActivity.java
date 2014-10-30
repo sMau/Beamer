@@ -1,44 +1,71 @@
 package de.netprojectev;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Locale;
 
-import de.netprojectev.client.Client;
-import de.netprojectev.client.ClientGUI;
-import de.netprojectev.client.model.PreferencesModelClientAndroid;
-import de.netprojectev.networking.LoginData;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
+import de.netprojectev.service.NetworkService;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, ClientGUI {
+public class MainActivity extends ActionBarActivity implements
+		ActionBar.TabListener {
 
-	/**
-	 * The {@link android.support.v4.view.PagerAdapter} that will provide
-	 * fragments for each of the sections. We use a {@link FragmentPagerAdapter}
-	 * derivative, which will keep every loaded fragment in memory. If this
-	 * becomes too memory intensive, it may be best to switch to a
-	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-	 */
-	SectionsPagerAdapter mSectionsPagerAdapter;
+	public static String KEY_USERNAME = "KEY_USERNAME";
+	public static String KEY_PASSWORD = "KEY_PASSWORD";
+	public static String KEY_IP = "KEY_PASSWORD";
+	public static String KEY_PORT = "KEY_PASSWORD";
+	
+	private NetworkService networkService;
+	
+	private SectionsPagerAdapter mSectionsPagerAdapter;
+	private ViewPager mViewPager;
+	
+	private ServiceConnection mConnection = new ServiceConnection() {
 
-	/**
-	 * The {@link ViewPager} that will host the section contents.
-	 */
-	ViewPager mViewPager;
+		public void onServiceConnected(ComponentName className, IBinder binder) {
+			NetworkService.NetworkServiceBinder b = (NetworkService.NetworkServiceBinder) binder;
+			networkService = b.getService();
+			Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT)
+					.show();
+		}
+
+		public void onServiceDisconnected(ComponentName className) {
+			networkService = null;
+		}
+	};
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		Intent intent = new Intent(this, NetworkService.class);
+		// potentially add data to the intent
+		intent.putExtra(KEY_USERNAME, "testuserandroid");
+		intent.putExtra(KEY_PASSWORD, "");
+		intent.putExtra(KEY_IP, "10.0.2.2");
+		intent.putExtra(KEY_PORT, 11111);
+
+		bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		unbindService(mConnection);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +78,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the activity.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(
+				getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -60,12 +88,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		// When swiping between different sections, select the corresponding
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
-		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-			@Override
-			public void onPageSelected(int position) {
-				actionBar.setSelectedNavigationItem(position);
-			}
-		});
+		mViewPager
+				.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+					@Override
+					public void onPageSelected(int position) {
+						actionBar.setSelectedNavigationItem(position);
+					}
+				});
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -73,34 +102,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 			// the adapter. Also specify this Activity object, which implements
 			// the TabListener interface, as the callback (listener) for when
 			// this tab is selected.
-			actionBar.addTab(
-					actionBar.newTab()
-							.setText(mSectionsPagerAdapter.getPageTitle(i))
-							.setTabListener(this));
+			actionBar.addTab(actionBar.newTab()
+					.setText(mSectionsPagerAdapter.getPageTitle(i))
+					.setTabListener(this));
 		}
+
 		
-		try {
-			Client client = new Client("10.0.2.2", 11111, new LoginData("smau", ""), this, PreferencesModelClientAndroid.class);
-			client.connect();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -123,18 +130,21 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 	}
 
 	@Override
-	public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	public void onTabSelected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
 		// When the given tab is selected, switch to the corresponding page in
 		// the ViewPager.
 		mViewPager.setCurrentItem(tab.getPosition());
 	}
 
 	@Override
-	public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	public void onTabUnselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
 	}
 
 	@Override
-	public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+	public void onTabReselected(ActionBar.Tab tab,
+			FragmentTransaction fragmentTransaction) {
 	}
 
 	/**
@@ -181,19 +191,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 		}
 	}
 
-	@Override
-	public void errorDuringLogin(String msg) {
-		Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-	}
-
-	@Override
-	public void errorRequestingFullsyncDialog() {
-		Toast.makeText(this, "Error. Requesting fullsync", Toast.LENGTH_LONG).show();
-	}
-
-	@Override
-	public void loginSuccess() {
-		Toast.makeText(this, "Login success", Toast.LENGTH_LONG).show();
+	public NetworkService getNetworkService() {
+		return networkService;
 	}
 
 }
