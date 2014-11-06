@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/BeamerDesktop/BeamerGUIDesktop.iml" filepath="$PROJECT_DIR$/BeamerDesktop/BeamerGUIDesktop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BeamerServer/BeamerGUIServer.iml" filepath="$PROJECT_DIR$/BeamerServer/BeamerGUIServer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" filepath="$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" />
+    </modules>
+  </component>
+</project>
