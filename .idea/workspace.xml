@@ -2,39 +2,83 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f1aca3d-e965-4aae-b380-a265984fa4ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerDesktop/.classpath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerDesktop/.project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerDesktop/.settings/org.eclipse.jdt.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerDesktop/build.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerDesktop/manifest.mf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/.classpath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/.project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/.settings/org.eclipse.jdt.core.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/.settings/org.eclipse.jdt.ui.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/.settings/org.eclipse.ltk.core.refactoring.prefs" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/Display.screen" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/Main (Filemanager Tab).screen" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/Main (Liveticker Tab).screen" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/Main (MenuBar).screen" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/NetworkingDesign" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/Pflichtenheft" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/TODO" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/TODO 26.10.13" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/ThemeslideCreateFrame.screen" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/Themeslidecreator.bmml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/beamer.graphml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/beamerUMLDiag.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/beamerV2.graphml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/network_proto_draft.graphml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/network_proto_draft.pdf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Analyse Entwurf/networking.graphml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/build.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/manifest.mf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/nb-build.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerServer/.classpath" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerServer/.project" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerServer/.settings/org.eclipse.jdt.core.prefs" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/out/artifacts/BeamerLibrary_jar/BeamerLibrary.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/gradle/wrapper/gradle-wrapper.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/.gitignore" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/.name" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/Beam4s.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/BeamerLibrary_jar.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/dummy/DummyContent.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MainActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/service/NetworkService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/activity_main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/app.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/compiler.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/encodings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_media_grid.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_media_list.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_queue_grid.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_queue_list.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_ticker_grid.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_ticker_list.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/gradle/wrapper/gradle-wrapper.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/gradle.properties" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/gradle.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/gradlew.bat" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/gradlew" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/menu_main.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/modules.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/copyright/profiles_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values/refs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values-large/refs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values-sw600dp/refs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/scopes/scope_settings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/settings.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values/styles.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values-v21/styles.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/.idea/vcs.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/.classpath" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/.project" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/AndroidManifest.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/ic_launcher-web.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/libs/android-support-v4.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/project.properties" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/res/layout/activity_main.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/res/layout/fragment_login.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/res/layout/fragment_main.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/res/menu/main.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/res/values-v11/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/res/values-v14/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/res/values/strings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/res/values/styles.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/src/de/netprojectev/LoginFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/src/de/netprojectev/MainActivity.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/src/de/netprojectev/MediaFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/src/de/netprojectev/QueueFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/src/de/netprojectev/TickerFragment.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/src/de/netprojectev/service/NetworkService.java" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Beam4s/proguard-project.txt" afterPath="$PROJECT_DIR$/Beam4s/app/proguard-rules.pro" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Beam4s/res/drawable-hdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/drawable-hdpi/ic_launcher.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Beam4s/res/drawable-mdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/drawable-mdpi/ic_launcher.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Beam4s/res/drawable-xhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/drawable-xhdpi/ic_launcher.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Beam4s/res/drawable-xxhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/drawable-xxhdpi/ic_launcher.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Beam4s/res/values-w820dp/dimens.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values-w820dp/dimens.xml" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/Beam4s/res/values/dimens.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values/dimens.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/BeamerGUIDesktop.iml" afterPath="$PROJECT_DIR$/BeamerDesktop/BeamerGUIDesktop.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerServer/BeamerGUIServer.iml" afterPath="$PROJECT_DIR$/BeamerServer/BeamerGUIServer.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" afterPath="$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Beamer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -70,6 +114,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/BeamerDesktop/nbproject/build-impl.xml" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/VideoFile.java" />
       </list>
     </option>
   </component>
@@ -134,6 +179,46 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="de.netprojectev" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeamerServer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeamerLibrary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeamerDesktop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -224,16 +309,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Beamer" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -244,7 +319,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -358,6 +433,14 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-options />
+      <gulpfile />
+      <tasks />
+      <pass-parent-envs>true</pass-parent-envs>
+      <envs />
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -376,14 +459,6 @@
       </option>
       <envs />
       <patterns />
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <pass-parent-envs>true</pass-parent-envs>
-      <envs />
       <method />
     </configuration>
     <list size="2">
@@ -420,41 +495,44 @@
       <updated>1415304000204</updated>
       <workItem from="1415304004088" duration="212000" />
       <workItem from="1415304402622" duration="1791000" />
+      <workItem from="1415307905712" duration="1001000" />
+      <workItem from="1415350709662" duration="1199000" />
+      <workItem from="1415357389434" duration="1944000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2003000" />
+    <option name="totallyTimeSpent" value="6147000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-2" y="0" width="1924" height="1056" extended-state="6" />
-    <editor active="false" />
+    <frame x="-2" y="0" width="1924" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.181439" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -482,7 +560,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08323699" vertical-offset="0" max-vertical-offset="25380">
           <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="30" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -490,7 +567,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="878">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -513,7 +589,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.38543898" vertical-offset="0" max-vertical-offset="1530">
           <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -521,7 +596,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1188">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -529,7 +603,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42398286" vertical-offset="0" max-vertical-offset="4536">
           <caret line="54" column="12" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -537,7 +610,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0385439" vertical-offset="0" max-vertical-offset="934">
           <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -550,6 +622,21 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33278146" vertical-offset="4623" max-vertical-offset="10566">
           <caret line="1272" column="23" selection-start-line="1272" selection-start-column="23" selection-end-line="1272" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/VideoFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.26256078" vertical-offset="0" max-vertical-offset="846">
+          <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/OpCode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.058346838" vertical-offset="0" max-vertical-offset="1746">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -560,10 +647,12 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
+          <last-edited>BeamerLibrary:jar</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>
@@ -611,6 +700,7 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
