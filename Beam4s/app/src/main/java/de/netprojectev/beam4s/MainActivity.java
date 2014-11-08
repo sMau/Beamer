@@ -20,16 +20,17 @@ import android.widget.Toast;
 import java.util.Locale;
 
 import de.netprojectev.beam4s.service.NetworkService;
+import roboguice.activity.RoboActionBarActivity;
 
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends RoboActionBarActivity implements ActionBar.TabListener {
 
 
 
-    public static String KEY_USERNAME = "KEY_USERNAME";
-    public static String KEY_PASSWORD = "KEY_PASSWORD";
-    public static String KEY_IP = "KEY_PASSWORD";
-    public static String KEY_PORT = "KEY_PASSWORD";
+    public final static String KEY_USERNAME = "KEY_USERNAME";
+    public final static String KEY_PASSWORD = "KEY_PASSWORD";
+    public final static String KEY_IP = "KEY_PASSWORD";
+    public final static String KEY_PORT = "KEY_PASSWORD";
 
     private NetworkService networkService;
 
@@ -55,11 +56,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onResume();
 
         Intent intent = new Intent(this, NetworkService.class);
-        // potentially add data to the intent
-        intent.putExtra(KEY_USERNAME, "testuserandroid");
-        intent.putExtra(KEY_PASSWORD, "");
-        intent.putExtra(KEY_IP, "10.0.2.2");
-        intent.putExtra(KEY_PORT, 11111);
+        //potentially add data to the intent
+        //intent.putExtra(KEY_USERNAME, "testuserandroid");
+        //intent.putExtra(KEY_PASSWORD, "");
+        //intent.putExtra(KEY_IP, "10.0.2.2");
+        //intent.putExtra(KEY_PORT, 11111);
+        intent.putExtras(getIntent().getExtras());
 
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }

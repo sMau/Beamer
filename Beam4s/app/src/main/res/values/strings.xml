@@ -7,5 +7,11 @@
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="bLogin">Login</string>
+    <string name="message_name_required">Please enter a valid username</string>
+    <string name="message_server_required">Please enter a valid server IP</string>
+    <string name="message_port_required">Please enter a valid port</string>
+
 
 </resources>

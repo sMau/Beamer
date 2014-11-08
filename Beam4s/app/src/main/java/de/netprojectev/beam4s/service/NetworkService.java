@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -68,8 +69,8 @@ public class NetworkService extends Service implements ClientGUI {
 
     @Override
     public void errorDuringLogin(String msg) {
-        // TODO Auto-generated method stub
-
+        Log.d("Login", "Login failed");
+        Log.d("Login", msg);
     }
 
     @Override
@@ -80,7 +81,6 @@ public class NetworkService extends Service implements ClientGUI {
 
     @Override
     public void loginSuccess() {
-        // TODO Auto-generated method stub
-
+        Log.d("Login", "Login success");
     }
 }
