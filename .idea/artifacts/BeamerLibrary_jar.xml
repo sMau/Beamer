@@ -1,15 +1,15 @@
 <component name="ArtifactManager">
   <artifact type="jar" build-on-make="true" name="BeamerLibrary:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/BeamerLibrary_jar</output-path>
+    <output-path>$PROJECT_DIR$/out/</output-path>
     <root id="archive" name="BeamerLibrary.jar">
       <element id="module-output" name="BeamerLibrary" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/log4j-api-2.0-rc1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.19.Final.jar" path-in-jar="/" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/log4j-core-2.0-rc1.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/junit-4.11.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/netty-example-4.0.19.Final.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/swingx-all-1.6.4.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/jewelcli-0.7.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/log4j-api-2.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/log4j-core-2.1.jar" path-in-jar="/" />
     </root>
   </artifact>
 </component>

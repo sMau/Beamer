@@ -1,8 +1,11 @@
 package de.netprojectev.beam4s;
 
 import android.content.Intent;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +16,9 @@ import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Required;
 
+import java.util.ArrayList;
+
+import de.netprojectev.beam4s.service.NetworkService;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.InjectView;
 
@@ -72,17 +78,25 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
 
     @Override
     public void onValidationSucceeded() {
-        String password = etPassword.getText().toString();
         String serverIP = etServerIP.getText().toString();
-        String username = etUsername.getText().toString();
         String port = etPort.getText().toString();
+        String username = etUsername.getText().toString();
+        String password = etPassword.getText().toString();
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(MainActivity.KEY_IP, serverIP);
-        intent.putExtra(MainActivity.KEY_PASSWORD, password);
-        intent.putExtra(MainActivity.KEY_USERNAME, username);
-        intent.putExtra(MainActivity.KEY_PORT, Integer.valueOf(port));
-        startActivity(intent);
+        ArrayList<String> toPass = new ArrayList<String>();
+        toPass.add(serverIP);
+        toPass.add(port);
+        toPass.add(username);
+        toPass.add(password);
+
+        Intent intent = new Intent(this, NetworkService.class);
+        intent.putStringArrayListExtra("values", toPass);
+
+        startService(intent);
+
+        // TODO loading bar for login, then show the activity
+
+        // startActivity(intent);
 
     }
 
@@ -90,4 +104,5 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
     public void onValidationFailed(View failedView, Rule<?> failedRule) {
 
     }
+
 }

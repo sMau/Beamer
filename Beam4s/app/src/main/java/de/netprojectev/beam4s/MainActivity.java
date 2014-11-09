@@ -55,15 +55,7 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
     @Override
     protected void onResume() {
         super.onResume();
-
         Intent intent = new Intent(this, NetworkService.class);
-        //potentially add data to the intent
-        //intent.putExtra(KEY_USERNAME, "testuserandroid");
-        //intent.putExtra(KEY_PASSWORD, "");
-        //intent.putExtra(KEY_IP, "10.0.2.2");
-        //intent.putExtra(KEY_PORT, 11111);
-        //intent.putExtras(getIntent().getExtras());
-        Log.d("MainActivity", "onResume called in Mainactivty");
         getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 

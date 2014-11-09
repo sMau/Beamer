@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.netprojectev.beam4s" >
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -19,7 +23,12 @@
             android:name="de.netprojectev.beam4s.MainActivity"
             android:label="@string/app_name" >
         </activity>
-        <service android:name="de.netprojectev.beam4s.service.NetworkService" />
-    </application>
+        <service
+            android:enabled="true"
+            android:name="de.netprojectev.beam4s.service.NetworkService">
+            <intent-filter>
+                <action android:name="de.netprojectev.beam4s.service.NetworkService" />
+            </intent-filter>
+        </service>    </application>
 
 </manifest>

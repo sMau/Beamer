@@ -7,6 +7,7 @@ import android.os.IBinder;
 import android.util.Log;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 
 import de.netprojectev.beam4s.MainActivity;
 import de.netprojectev.client.Client;
@@ -41,13 +42,11 @@ public class NetworkService extends Service implements ClientGUI {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.d("NetworkService", "onStart called ");
-        Log.d("NetworkService", "onStart called ");
-        Log.d("NetworkService", "onStart called ");
+        ArrayList<String> passed = intent.getStringArrayListExtra("values");
 
         try {
-            client = new Client(intent.getStringExtra(MainActivity.KEY_IP), intent.getIntExtra(MainActivity.KEY_PORT, 11111), new LoginData(intent.getStringExtra(MainActivity.KEY_USERNAME),
-                    intent.getStringExtra(MainActivity.KEY_PASSWORD)), this, PreferencesModelClientAndroid.class);
+            client = new Client(passed.get(0), Integer.valueOf(passed.get(1)), new LoginData(passed.get(2),
+                    passed.get(3)), this, PreferencesModelClientAndroid.class);
             client.connect();
         } catch (InstantiationException e) {
             Log.e("Login", "Error during login", e);
