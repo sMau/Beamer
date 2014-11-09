@@ -29,6 +29,7 @@
             <intent-filter>
                 <action android:name="de.netprojectev.beam4s.service.NetworkService" />
             </intent-filter>
-        </service>    </application>
+        </service>
+    </application>
 
 </manifest>

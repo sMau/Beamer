@@ -78,6 +78,11 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
 
     @Override
     public void onValidationSucceeded() {
+        etServerIP.setError(null);
+        etPort.setError(null);
+        etUsername.setError(null);
+        etPassword.setError(null);
+
         String serverIP = etServerIP.getText().toString();
         String port = etPort.getText().toString();
         String username = etUsername.getText().toString();
@@ -102,6 +107,10 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
 
     @Override
     public void onValidationFailed(View failedView, Rule<?> failedRule) {
+        if(failedView instanceof EditText){
+            failedView.requestFocus();
+            ((EditText)failedView).setError(failedRule.getFailureMessage());
+        }
 
     }
 
