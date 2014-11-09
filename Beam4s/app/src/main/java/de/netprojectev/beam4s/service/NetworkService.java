@@ -41,36 +41,33 @@ public class NetworkService extends Service implements ClientGUI {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        Log.d("NetworkService", "onStart called ");
+        Log.d("NetworkService", "onStart called ");
+        Log.d("NetworkService", "onStart called ");
+
         try {
             client = new Client(intent.getStringExtra(MainActivity.KEY_IP), intent.getIntExtra(MainActivity.KEY_PORT, 11111), new LoginData(intent.getStringExtra(MainActivity.KEY_USERNAME),
                     intent.getStringExtra(MainActivity.KEY_PASSWORD)), this, PreferencesModelClientAndroid.class);
             client.connect();
         } catch (InstantiationException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.e("Login", "Error during login", e);
         } catch (IllegalAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.e("Login", "Error during login", e);
         } catch (IllegalArgumentException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.e("Login", "Error during login", e);
         } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.e("Login", "Error during login", e);
         } catch (SecurityException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.e("Login", "Error during login", e);
         } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.e("Login", "Error during login", e);
         }
         return Service.START_NOT_STICKY;
     }
 
     @Override
     public void errorDuringLogin(String msg) {
-        Log.d("Login", "Login failed");
-        Log.d("Login", msg);
+        Log.e("Login", "Login failed: " + msg);
     }
 
     @Override

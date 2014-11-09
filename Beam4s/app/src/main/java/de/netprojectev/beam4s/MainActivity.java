@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -23,7 +24,7 @@ import de.netprojectev.beam4s.service.NetworkService;
 import roboguice.activity.RoboActionBarActivity;
 
 
-public class MainActivity extends RoboActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends RoboActionBarActivity implements ActionBar.TabListener, MediaFragment.OnFragmentInteractionListener, TickerFragment.OnFragmentInteractionListener, QueueFragment.OnFragmentInteractionListener {
 
 
 
@@ -61,9 +62,9 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
         //intent.putExtra(KEY_PASSWORD, "");
         //intent.putExtra(KEY_IP, "10.0.2.2");
         //intent.putExtra(KEY_PORT, 11111);
-        intent.putExtras(getIntent().getExtras());
-
-        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+        //intent.putExtras(getIntent().getExtras());
+        Log.d("MainActivity", "onResume called in Mainactivty");
+        getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -150,6 +151,11 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
     @Override
     public void onTabReselected(ActionBar.Tab tab,
                                 FragmentTransaction fragmentTransaction) {
+    }
+
+    @Override
+    public void onFragmentInteraction(String id) {
+
     }
 
     /**
