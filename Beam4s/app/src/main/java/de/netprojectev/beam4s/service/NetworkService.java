@@ -9,6 +9,7 @@ import android.util.Log;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import de.netprojectev.beam4s.LoginActivity;
 import de.netprojectev.beam4s.MainActivity;
 import de.netprojectev.client.Client;
 import de.netprojectev.client.ClientGUI;
@@ -21,6 +22,8 @@ import de.netprojectev.networking.LoginData;
 public class NetworkService extends Service implements ClientGUI {
 
     private final IBinder binder = new NetworkServiceBinder();
+
+    private LoginActivity loginActivity;
     private Client client;
 
     public class NetworkServiceBinder extends Binder {
@@ -33,10 +36,6 @@ public class NetworkService extends Service implements ClientGUI {
     public IBinder onBind(Intent intent) {
 
         return binder;
-    }
-
-    public Client getClient() {
-        return client;
     }
 
     @Override
@@ -67,6 +66,7 @@ public class NetworkService extends Service implements ClientGUI {
     @Override
     public void errorDuringLogin(String msg) {
         Log.e("Login", "Login failed: " + msg);
+        loginActivity.errorDuringLogin();
     }
 
     @Override
@@ -78,5 +78,16 @@ public class NetworkService extends Service implements ClientGUI {
     @Override
     public void loginSuccess() {
         Log.d("Login", "Login success");
+        loginActivity.loginSuccess();
+        loginActivity = null;
     }
+
+    public void setLoginActivity(LoginActivity loginActivity) {
+        this.loginActivity = loginActivity;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
 }

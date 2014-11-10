@@ -1,6 +1,11 @@
 package de.netprojectev.beam4s;
 
+import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.Rule;
 import com.mobsandgeeks.saripaar.Validator;
@@ -25,8 +31,9 @@ import roboguice.inject.InjectView;
 
 public class LoginActivity extends RoboActionBarActivity implements Validator.ValidationListener{
 
+    private ProgressDialog pDialog;
     private Validator mValidator;
-
+    private boolean serviceConnected = false;
 
     @InjectView(R.id.etPassword)
     private EditText etPassword;
@@ -41,6 +48,20 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
     private EditText etServerIP;
 
 
+    private ServiceConnection mConnection = new ServiceConnection() {
+
+        public void onServiceConnected(ComponentName className, IBinder binder) {
+            serviceConnected = true;
+            NetworkService.NetworkServiceBinder b = (NetworkService.NetworkServiceBinder) binder;
+            b.getService().setLoginActivity(LoginActivity.this);
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +70,15 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
         mValidator.setValidationListener(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(serviceConnected) {
+            unbindService(mConnection);
+        }
+
+        serviceConnected = false;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,11 +128,30 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
         intent.putStringArrayListExtra("values", toPass);
 
         startService(intent);
+        getApplicationContext().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        pDialog = ProgressDialog.show(this, "Sign in", "");
+
 
         // TODO loading bar for login, then show the activity
 
-        // startActivity(intent);
 
+
+    }
+
+    public void loginSuccess() {
+
+        Intent intent = new Intent(this, MainActivity.class);
+
+        pDialog.dismiss();
+
+        startActivity(intent);
+
+    }
+
+    public void errorDuringLogin() {
+        pDialog.dismiss();
+        Toast.makeText(this, "Error during the login", Toast.LENGTH_SHORT).show(); //XXX improve
     }
 
     @Override
