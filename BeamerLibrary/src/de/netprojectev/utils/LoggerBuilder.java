@@ -11,8 +11,6 @@ public class LoggerBuilder {
 		return logger;
 	}
 
-	Logger log = createLogger(this.getClass());
-
 	private LoggerBuilder() {
 
 	}

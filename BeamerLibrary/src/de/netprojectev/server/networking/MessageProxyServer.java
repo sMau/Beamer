@@ -149,8 +149,9 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			log.warn("Read timeout is no number.", e);
 		}
 
-		this.timeoutChecker.newTimeout(new TimeoutTimerTask(),
-		this.timeoutInSeconds, TimeUnit.SECONDS);
+		// TODO hearbeat mechanism is diasbled, but is actually also bullshit
+		// this.timeoutChecker.newTimeout(new TimeoutTimerTask(),
+		// this.timeoutInSeconds, TimeUnit.SECONDS);
 
 	}
 
