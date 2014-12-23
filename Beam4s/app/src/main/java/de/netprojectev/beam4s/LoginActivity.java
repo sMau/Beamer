@@ -5,16 +5,12 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -51,6 +47,7 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
     private ServiceConnection mConnection = new ServiceConnection() {
 
         public void onServiceConnected(ComponentName className, IBinder binder) {
+            Log.d("LoginActivity", "serviceConnected invoked");
             serviceConnected = true;
             NetworkService.NetworkServiceBinder b = (NetworkService.NetworkServiceBinder) binder;
             b.getService().setLoginActivity(LoginActivity.this);
@@ -74,10 +71,10 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
     protected void onPause() {
         super.onPause();
         if(serviceConnected) {
-            unbindService(mConnection);
+            getApplicationContext().unbindService(mConnection);
+            serviceConnected = false;
         }
 
-        serviceConnected = false;
     }
 
     @Override
@@ -118,7 +115,7 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
         String username = etUsername.getText().toString();
         String password = etPassword.getText().toString();
 
-        ArrayList<String> toPass = new ArrayList<String>();
+        ArrayList<String> toPass = new ArrayList<>();
         toPass.add(serverIP);
         toPass.add(port);
         toPass.add(username);
@@ -141,6 +138,7 @@ public class LoginActivity extends RoboActionBarActivity implements Validator.Va
 
     public void loginSuccess() {
 
+        Log.d("LoginActivity", "loginSuccess() invoked");
         Intent intent = new Intent(this, MainActivity.class);
 
         pDialog.dismiss();

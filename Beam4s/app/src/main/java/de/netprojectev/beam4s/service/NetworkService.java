@@ -83,7 +83,11 @@ public class NetworkService extends Service implements ClientGUI {
     }
 
     public void setLoginActivity(LoginActivity loginActivity) {
+        Log.d("LoginActivity", "setLoginActivity invoked");
         this.loginActivity = loginActivity;
+        if(client.isLoginSuccess()) {
+            loginSuccess();
+        }
     }
 
     public Client getClient() {

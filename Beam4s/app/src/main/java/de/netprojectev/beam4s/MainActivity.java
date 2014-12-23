@@ -26,12 +26,7 @@ import roboguice.activity.RoboActionBarActivity;
 
 public class MainActivity extends RoboActionBarActivity implements ActionBar.TabListener, MediaFragment.OnFragmentInteractionListener, TickerFragment.OnFragmentInteractionListener, QueueFragment.OnFragmentInteractionListener {
 
-
-
-    public final static String KEY_USERNAME = "KEY_USERNAME";
-    public final static String KEY_PASSWORD = "KEY_PASSWORD";
-    public final static String KEY_IP = "KEY_PASSWORD";
-    public final static String KEY_PORT = "KEY_PASSWORD";
+    private boolean serviceConnected = false;
 
     private NetworkService networkService;
 
@@ -43,8 +38,7 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
         public void onServiceConnected(ComponentName className, IBinder binder) {
             NetworkService.NetworkServiceBinder b = (NetworkService.NetworkServiceBinder) binder;
             networkService = b.getService();
-            Toast.makeText(MainActivity.this, "Connected", Toast.LENGTH_SHORT)
-                    .show();
+            serviceConnected = true;
         }
 
         public void onServiceDisconnected(ComponentName className) {
@@ -62,7 +56,12 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
     @Override
     protected void onPause() {
         super.onPause();
-        unbindService(mConnection);
+        if(serviceConnected) {
+            getApplicationContext().unbindService(mConnection);
+            serviceConnected = false;
+        }
+
+
     }
 
     @Override
