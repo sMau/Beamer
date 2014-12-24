@@ -3,6 +3,7 @@ package de.netprojectev.beam4s;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 
 
 import de.netprojectev.beam4s.dummy.DummyContent;
+import de.netprojectev.beam4s.model.MediaAdapter;
+import de.netprojectev.client.model.MediaModelClient;
 
 /**
  * A fragment representing a list of Items.
@@ -26,15 +29,7 @@ import de.netprojectev.beam4s.dummy.DummyContent;
  */
 public class MediaFragment extends Fragment implements AbsListView.OnItemClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    private MediaModelClient mediaModel;
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -48,10 +43,10 @@ public class MediaFragment extends Fragment implements AbsListView.OnItemClickLi
      */
     private ListAdapter mAdapter;
 
-    // TODO: Rename and change types of parameters
-    public static MediaFragment newInstance() {
+    public static MediaFragment newInstance(MediaModelClient mediaModel) {
+        Log.d("MediaFragment", "Creating new MediaFragment");
         MediaFragment fragment = new MediaFragment();
-
+        fragment.mediaModel = mediaModel;
         return fragment;
     }
 
@@ -66,14 +61,7 @@ public class MediaFragment extends Fragment implements AbsListView.OnItemClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
+        mAdapter = new MediaAdapter(mediaModel);
     }
 
     @Override

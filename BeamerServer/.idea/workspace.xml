@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ed94ec78-278b-4b3f-a708-2f7bcf004d1f" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../BeamerLibrary/Configs/log4j2.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Beam4s/app/libs/BeamerLibrary.jar" afterPath="$PROJECT_DIR$/../Beam4s/app/libs/BeamerLibrary.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../out/BeamerLibrary.jar" afterPath="$PROJECT_DIR$/../out/BeamerLibrary.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/LoginActivity.java" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/LoginActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/model/MediaAdapter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/model/QueueAdapter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/model/TickerAdapter.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/res/layout/allmedia_row_view.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/MainActivity.java" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" afterPath="$PROJECT_DIR$/../Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../.idea/workspace.xml" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BeamerServer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -77,6 +82,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -97,7 +103,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -258,15 +263,17 @@
       <workItem from="1419365183262" duration="39000" />
       <workItem from="1419365237537" duration="662000" />
       <workItem from="1419373800177" duration="212000" />
+      <workItem from="1419426390816" duration="72000" />
+      <workItem from="1419427705217" duration="23000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2212000" />
+    <option name="totallyTimeSpent" value="2307000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="0" width="1924" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32998565" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
