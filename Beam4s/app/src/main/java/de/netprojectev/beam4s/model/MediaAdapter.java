@@ -1,6 +1,7 @@
 package de.netprojectev.beam4s.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,15 @@ public class MediaAdapter extends BaseAdapter {
     private final MediaModelClient mediaModel;
 
     public MediaAdapter(MediaModelClient mediaModel) {
+
         this.mediaModel = mediaModel;
+        this.mediaModel.setListener(new MediaModelClient.UpdateAllMediaDataListener() {
+            @Override
+            public void update() {
+                Log.d("DATA Change", "data change registered");
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

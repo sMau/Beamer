@@ -51,6 +51,10 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		public void timesync(long timeLeftInSeconds);
 	}
 
+	public interface MessageReceivedListener {
+		public void received(Message msg);
+	}
+
 	private static final Logger log = LoggerBuilder.createLogger(MessageProxyClient.class);
 
 	private final Client client;
@@ -64,6 +68,12 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	private TimeSyncListener timeSyncListener;
 	private ServerShutdownListener serverShutdownListener;
 	private ServerPropertyUpdateListener serverPropertyUpdateListener;
+
+	public void setMsgReceivedListener(MessageReceivedListener msgReceivedListener) {
+		this.msgReceivedListener = msgReceivedListener;
+	}
+
+	private MessageReceivedListener msgReceivedListener;
 
 	private Timer autoReconnectTimer;
 
@@ -356,6 +366,10 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		default:
 			unkownMessageReceived(msg);
 			break;
+		}
+
+		if(msgReceivedListener != null) {
+			msgReceivedListener.received(msg);
 		}
 
 	}

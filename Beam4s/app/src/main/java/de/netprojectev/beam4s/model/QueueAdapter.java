@@ -1,6 +1,7 @@
 package de.netprojectev.beam4s.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,15 @@ public class QueueAdapter extends BaseAdapter {
     private final MediaModelClient mediaModel;
 
     public QueueAdapter(MediaModelClient mediaModel) {
+
         this.mediaModel = mediaModel;
+        this.mediaModel.setCustomQueueListener(new MediaModelClient.UpdateCustomQueueDataListener() {
+            @Override
+            public void update() {
+                Log.d("DATA Change", "data change registered");
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

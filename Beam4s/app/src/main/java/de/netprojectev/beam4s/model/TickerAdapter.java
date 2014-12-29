@@ -1,6 +1,7 @@
 package de.netprojectev.beam4s.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,13 @@ public class TickerAdapter extends BaseAdapter {
 
     public TickerAdapter(TickerModelClient mediaModel) {
         this.tickerModel = mediaModel;
+        this.tickerModel.setTickerDateListener(new TickerModelClient.UpdateTickerDataListener() {
+            @Override
+            public void update() {
+                Log.d("DATA Change","data change registered");
+                notifyDataSetChanged();
+            }
+        });
     }
 
     @Override

@@ -8,14 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
 
-import org.roboguice.shaded.goole.common.base.Ticker;
 
-import de.netprojectev.beam4s.dummy.DummyContent;
 import de.netprojectev.beam4s.model.TickerAdapter;
 import de.netprojectev.client.model.TickerModelClient;
 
@@ -103,7 +100,7 @@ public class TickerFragment extends Fragment implements AbsListView.OnItemClickL
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id); TODO
         }
     }
 
