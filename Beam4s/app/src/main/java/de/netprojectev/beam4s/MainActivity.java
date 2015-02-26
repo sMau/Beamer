@@ -27,6 +27,7 @@ import roboguice.activity.RoboActionBarActivity;
 public class MainActivity extends RoboActionBarActivity implements ActionBar.TabListener, MediaFragment.OnFragmentInteractionListener, TickerFragment.OnFragmentInteractionListener, QueueFragment.OnFragmentInteractionListener {
 
     private boolean serviceConnected = false;
+    private boolean firstStart = true;
 
     private NetworkService networkService;
 
@@ -40,39 +41,9 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
             networkService = b.getService();
             serviceConnected = true;
 
-            // Set up the action bar.
-            final ActionBar actionBar = getSupportActionBar();
-            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-            // Create the adapter that will return a fragment for each of the three
-            // primary sections of the activity.
-            mSectionsPagerAdapter = new SectionsPagerAdapter(
-                    getSupportFragmentManager());
-
-            // Set up the ViewPager with the sections adapter.
-            mViewPager = (ViewPager) findViewById(R.id.pager);
-            mViewPager.setAdapter(mSectionsPagerAdapter);
-
-            // When swiping between different sections, select the corresponding
-            // tab. We can also use ActionBar.Tab#select() to do this if we have
-            // a reference to the Tab.
-            mViewPager
-                    .setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                        @Override
-                        public void onPageSelected(int position) {
-                            actionBar.setSelectedNavigationItem(position);
-                        }
-                    });
-
-            // For each of the sections in the app, add a tab to the action bar.
-            for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
-                // Create a tab with text corresponding to the page title defined by
-                // the adapter. Also specify this Activity object, which implements
-                // the TabListener interface, as the callback (listener) for when
-                // this tab is selected.
-                actionBar.addTab(actionBar.newTab()
-                        .setText(mSectionsPagerAdapter.getPageTitle(i))
-                        .setTabListener(MainActivity.this));
+            if(firstStart) {
+                setUpTabs();
+                firstStart = false;
             }
 
         }
@@ -81,6 +52,43 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
             networkService = null;
         }
     };
+
+    private void setUpTabs() {
+        // Set up the action bar.
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(
+                getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+
+        // When swiping between different sections, select the corresponding
+        // tab. We can also use ActionBar.Tab#select() to do this if we have
+        // a reference to the Tab.
+        mViewPager
+                .setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        actionBar.setSelectedNavigationItem(position);
+                    }
+                });
+
+        // For each of the sections in the app, add a tab to the action bar.
+        for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
+            // Create a tab with text corresponding to the page title defined by
+            // the adapter. Also specify this Activity object, which implements
+            // the TabListener interface, as the callback (listener) for when
+            // this tab is selected.
+            actionBar.addTab(actionBar.newTab()
+                    .setText(mSectionsPagerAdapter.getPageTitle(i))
+                    .setTabListener(MainActivity.this));
+        }
+    }
 
     @Override
     protected void onResume() {
