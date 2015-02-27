@@ -41,7 +41,7 @@ public class Server {
 
 	/*
 	 * TODO last worked here, work here
-	 * the new server GUI android appliction
+	 * the new server GUI android application
 	 */
 
 	private static final Logger log = LoggerBuilder.createLogger(Server.class);
