@@ -59,7 +59,7 @@ public class QueueFragment extends Fragment implements AbsListView.OnItemClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new QueueAdapter(mediaModel);
+        mAdapter = new QueueAdapter(mediaModel, getActivity());
     }
 
     @Override

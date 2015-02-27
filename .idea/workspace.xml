@@ -2,61 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f1aca3d-e965-4aae-b380-a265984fa4ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/netty_all_4_0_25_Final.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Tests/de/netprojectev/netty/examples/TestingFileTransfer.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/log4j-api-2.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/log4j-core-2.1.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.19.Final-javadoc.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.19.Final-sources.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.19.Final.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-example-4.0.19.Final-sources.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-example-4.0.19.Final.jar" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/media_list_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/libs/BeamerLibrary.jar" afterPath="$PROJECT_DIR$/Beam4s/app/libs/BeamerLibrary.jar" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/BeamerLibrary.jar" afterPath="$PROJECT_DIR$/out/BeamerLibrary.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/AddPriorityDialog.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/AddPriorityDialog.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/Beam4s.iml" afterPath="$PROJECT_DIR$/Beam4s/Beam4s.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" afterPath="$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/BooleanByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/BooleanByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/ByteArrayByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/ByteArrayByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/ChunkedFileDecoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/ChunkedFileDecoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ClientMediaFileEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ClientMediaFileEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/CustomQueueTableModel.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/CustomQueueTableModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/DequeueDataByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/DequeueDataByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayFrame.java" afterPath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayMainComponent.java" afterPath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayMainComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/FileByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/FileByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/HelperMethods.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/HelperMethods.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/IntByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/IntByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/LoginByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/LoginByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/LongByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/LongByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/MediaModelClient.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/MediaModelClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/MediaTypeByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/MediaTypeByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/MessageDecoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/MessageDecoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/MessageSplit.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/MessageSplit.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/OpCodeByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/OpCodeByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/PreferencesFrame.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/PreferencesFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClient.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClientDesktop.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClientDesktop.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PriorityByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PriorityByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PropertiesByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PropertiesByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/Server.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/StarterClient.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/StarterClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/StringByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/StringByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/TableButtonRenderer.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/TableButtonRenderer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ThemeByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ThemeByteEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/themeslide/ThemeslideCreatorFrame.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/themeslide/ThemeslideCreatorFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/TickerComponent.java" afterPath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/TickerComponent.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/TickerElementEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/TickerElementEncoder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/TickerModelClient.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/TickerModelClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/TickerModelServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/TickerModelServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/UUIDByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/UUIDByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/BeamerLibrary_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/BeamerLibrary_jar.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/MediaAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/MediaAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/QueueAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/QueueAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/TickerAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/TickerAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/app.iml" afterPath="$PROJECT_DIR$/Beam4s/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/build.gradle" afterPath="$PROJECT_DIR$/Beam4s/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/.idea/gradle.xml" afterPath="$PROJECT_DIR$/Beam4s/.idea/gradle.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Beamer.iws" />
@@ -159,7 +119,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
+    <navigator currentView="PackagesPane" proportions="" version="1">
       <flattenPackages ProjectPane="true" />
       <showMembers />
       <showModules />
@@ -204,135 +164,9 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerLibrary">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerGUIServer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerServer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerGUIServer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerServer">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="de/netprojectev/server/gui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerGUIDesktop">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerDesktop">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerGUIDesktop">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerDesktop">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="de/netprojectev/client">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="gui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerGUIDesktop">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerDesktop">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="de/netprojectev/client">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="gui">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerGUIDesktop">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerDesktop">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="de/netprojectev/client">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -423,6 +257,46 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeamerGUIDesktop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="de.netprojectev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeamerGUIDesktop" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="de.netprojectev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="ProjectPane">
@@ -475,7 +349,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -692,12 +566,12 @@
       <workItem from="1419427727008" duration="1268000" />
       <workItem from="1419879356662" duration="3059000" />
       <workItem from="1424986587128" duration="1066000" />
-      <workItem from="1425030522531" duration="4734000" />
+      <workItem from="1425030522531" duration="8778000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30169000" />
+    <option name="totallyTimeSpent" value="34213000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -732,7 +606,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3262136" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262136" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291262" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18536325" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />

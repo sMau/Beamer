@@ -58,7 +58,7 @@ public class MediaFragment extends Fragment implements AbsListView.OnItemClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new MediaAdapter(mediaModel);
+        mAdapter = new MediaAdapter(mediaModel, getActivity());
     }
 
     @Override

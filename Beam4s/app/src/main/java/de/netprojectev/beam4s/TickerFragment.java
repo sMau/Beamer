@@ -59,7 +59,7 @@ public class TickerFragment extends Fragment implements AbsListView.OnItemClickL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new TickerAdapter(tickerModel);
+        mAdapter = new TickerAdapter(tickerModel, getActivity());
     }
 
     @Override

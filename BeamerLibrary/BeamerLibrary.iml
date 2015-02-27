@@ -26,7 +26,9 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
-    <orderEntry type="module-library" exported="">
+    <orderEntry type="library" exported="" name="netty-all-4.0.25.Final" level="project" />
+    <orderEntry type="library" name="swingx-all-1.6.4" level="project" />
+    <orderEntry type="module-library">
       <library name="jewelcli-0.7.6.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jewelcli-0.7.6.jar!/" />
@@ -35,7 +37,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="swingx-all-1.6.4" level="project" />
     <orderEntry type="module-library">
       <library name="junit4">
         <CLASSES>
@@ -45,6 +46,5 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" exported="" name="netty-all-4.0.25.Final" level="project" />
   </component>
 </module>

@@ -30,10 +30,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar')
-    provided 'org.roboguice:roboblender:3.+'
+    compile fileTree(include: '*.jar', dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.0'
-    compile 'org.roboguice:roboguice:3.+'
     compile 'com.android.support:support-v4:21.0.0'
     compile 'com.mobsandgeeks:android-saripaar:1.0.3'
+    compile 'org.roboguice:roboguice:3.0.1'
+    compile 'org.roboguice:roboblender:3.0.1'
+    compile 'org.roboguice:roboguice-aggregator:3.0.1'
 }
