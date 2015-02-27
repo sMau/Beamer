@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import de.netprojectev.beam4s.R;
 import de.netprojectev.client.model.MediaModelClient;
+import de.netprojectev.exceptions.PriorityDoesNotExistException;
 
 /**
  * Created by samu on 24.12.14.
@@ -55,9 +56,19 @@ public class QueueAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.allmedia_row_view, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.tvRowViewAllMedia);
-        textView.setText(mediaModel.getAllMedia().get(mediaModel.getCustomQueue().get(position)).getName());
+        View rowView = inflater.inflate(R.layout.media_list_item, parent, false);
+        TextView tvMediaName = (TextView) rowView.findViewById(R.id.tvName);
+        TextView tvMediaType = (TextView) rowView.findViewById(R.id.tvMediaType);
+        TextView tvShowCount = (TextView) rowView.findViewById(R.id.tvShowCount);
+        TextView tvPriority = (TextView) rowView.findViewById(R.id.tvPriority);
+        tvMediaName.setText(mediaModel.getValueAt(position).getName());
+        tvMediaType.setText(mediaModel.getValueAt(position).getType().toString());
+        tvShowCount.setText(String.valueOf(mediaModel.getValueAt(position).getShowCount()));
+        try {
+            tvPriority.setText(mediaModel.getProxy().getPrefs().getPriorityByID(mediaModel.getValueAt(position).getPriorityID()).getName());
+        } catch (PriorityDoesNotExistException e) {
+            tvPriority.setText("undefined");
+        }
         return rowView;
     }
 }

@@ -44,5 +44,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="jewelcli-0.7.6" level="project" />
   </component>
 </module>

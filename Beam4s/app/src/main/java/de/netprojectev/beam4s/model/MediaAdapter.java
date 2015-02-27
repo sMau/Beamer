@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import de.netprojectev.beam4s.R;
@@ -57,13 +58,19 @@ public class MediaAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.media_list_item, parent, false);
+        ((ImageButton) rowView.findViewById(R.id.ibMore)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.showContextMenu();
+            }
+        });
         TextView tvMediaName = (TextView) rowView.findViewById(R.id.tvName);
         TextView tvMediaType = (TextView) rowView.findViewById(R.id.tvMediaType);
         TextView tvShowCount = (TextView) rowView.findViewById(R.id.tvShowCount);
         TextView tvPriority = (TextView) rowView.findViewById(R.id.tvPriority);
         tvMediaName.setText(mediaModel.getValueAt(position).getName());
         tvMediaType.setText(mediaModel.getValueAt(position).getType().toString());
-        tvShowCount.setText(mediaModel.getValueAt(position).getShowCount());
+        tvShowCount.setText(String.valueOf(mediaModel.getValueAt(position).getShowCount()));
         try {
             tvPriority.setText(mediaModel.getProxy().getPrefs().getPriorityByID(mediaModel.getValueAt(position).getPriorityID()).getName());
         } catch (PriorityDoesNotExistException e) {

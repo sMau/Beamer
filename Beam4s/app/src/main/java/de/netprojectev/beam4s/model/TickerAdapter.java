@@ -54,8 +54,8 @@ public class TickerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.allmedia_row_view, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.tvRowViewAllMedia);
+        View rowView = inflater.inflate(R.layout.ticker_list_item, parent, false);
+        TextView textView = (TextView) rowView.findViewById(R.id.tvTickerItem);
         textView.setText(tickerModel.getValueAt(position).getText());
         return rowView;
     }
