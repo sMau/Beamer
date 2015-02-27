@@ -6,6 +6,7 @@ package de.netprojectev.client.gui.preferences;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -13,8 +14,6 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
-
-import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.Priority;
@@ -26,7 +25,7 @@ import de.netprojectev.utils.LoggerBuilder;
  */
 public class AddPriorityDialog extends javax.swing.JDialog {
 
-	private static final Logger log = LoggerBuilder.createLogger(AddPriorityDialog.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(AddPriorityDialog.class);
 
 	/**
 	 *
@@ -191,7 +190,7 @@ public class AddPriorityDialog extends javax.swing.JDialog {
 			try {
 				minutes = Integer.parseInt(jtfNewPrioMinutes.getText().trim());
 			} catch (NumberFormatException e) {
-				log.warn("minutes is no number.", e);
+				log.log(Level.WARNING, "minutes is no number.", e);
 				JOptionPane.showMessageDialog(this, "Please enter an numeric value for the time in minutes.");
 				return;
 			}

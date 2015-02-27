@@ -2,11 +2,61 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f1aca3d-e965-4aae-b380-a265984fa4ed" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerDesktop/Configs/log4j2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Configs/log4j2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerServer/Configs/log4j2.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Release.key" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/netty_all_4_0_25_Final.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/Tests/de/netprojectev/netty/examples/TestingFileTransfer.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/log4j-api-2.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/log4j-core-2.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.19.Final-javadoc.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.19.Final-sources.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.19.Final.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-example-4.0.19.Final-sources.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/BeamerLibrary/lib/netty-example-4.0.19.Final.jar" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/libs/BeamerLibrary.jar" afterPath="$PROJECT_DIR$/Beam4s/app/libs/BeamerLibrary.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/BeamerLibrary.jar" afterPath="$PROJECT_DIR$/out/BeamerLibrary.jar" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/AddPriorityDialog.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/AddPriorityDialog.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" afterPath="$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/BooleanByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/BooleanByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/ByteArrayByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/ByteArrayByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/ChunkedFileDecoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/ChunkedFileDecoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ClientMediaFileEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ClientMediaFileEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/CustomQueueTableModel.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/CustomQueueTableModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/DequeueDataByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/DequeueDataByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayFrame.java" afterPath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayMainComponent.java" afterPath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayMainComponent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/FileByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/FileByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/HelperMethods.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/HelperMethods.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/IntByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/IntByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/LoginByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/LoginByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/LongByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/LongByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/MediaModelClient.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/MediaModelClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/MediaTypeByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/MediaTypeByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/MessageDecoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/MessageDecoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/MessageSplit.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/MessageSplit.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/OpCodeByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/OpCodeByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/PreferencesFrame.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/PreferencesFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClient.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClientDesktop.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClientDesktop.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PriorityByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PriorityByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PropertiesByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PropertiesByteEncoder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/Server.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/Server.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/StarterClient.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/StarterClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/StringByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/StringByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/TableButtonRenderer.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/TableButtonRenderer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ThemeByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ThemeByteEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/themeslide/ThemeslideCreatorFrame.java" afterPath="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/themeslide/ThemeslideCreatorFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/TickerComponent.java" afterPath="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/TickerComponent.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/TickerElementEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/TickerElementEncoder.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/TickerModelClient.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/TickerModelClient.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/TickerModelServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/TickerModelServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/UUIDByteEncoder.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/UUIDByteEncoder.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Beamer.iws" />
@@ -34,18 +84,7 @@
     <favorites_list name="Beamer" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Server.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/Server.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19959678" vertical-offset="0" max-vertical-offset="2106">
-              <caret line="46" column="56" selection-start-line="46" selection-start-column="56" selection-end-line="46" selection-end-column="56" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,10 +94,50 @@
       <list>
         <option value="$PROJECT_DIR$/BeamerDesktop/nbproject/build-impl.xml" />
         <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/VideoFile.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClient.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/MediaModelClient.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClientDesktop.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/TickerModelClient.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/ChunkedFileDecoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/MessageDecoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/BooleanByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/ByteArrayByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/IntByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/LongByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/MediaTypeByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/OpCodeByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/primitives/StringByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ClientMediaFileEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/DequeueDataByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/FileByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/LoginByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/MessageSplit.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PriorityByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/PropertiesByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/ThemeByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/TickerElementEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/upstream/UUIDByteEncoder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/TickerModelServer.java" />
         <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java" />
-        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java" />
-        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java" />
         <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/Server.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java" />
+        <option value="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/TableButtonRenderer.java" />
+        <option value="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/StarterClient.java" />
+        <option value="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java" />
+        <option value="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/CustomQueueTableModel.java" />
+        <option value="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/AddPriorityDialog.java" />
+        <option value="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/PreferencesFrame.java" />
+        <option value="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/themeslide/ThemeslideCreatorFrame.java" />
+        <option value="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayFrame.java" />
+        <option value="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/TickerComponent.java" />
+        <option value="$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayMainComponent.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/HelperMethods.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java" />
+        <option value="$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/Tests/de/netprojectev/netty/examples/TestingFileTransfer.java" />
       </list>
     </option>
   </component>
@@ -135,19 +214,11 @@
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerLibrary">
+            <PATH_ELEMENT USER_OBJECT="BeamerGUIServer">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="BeamerLibrary">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="de/netprojectev">
+            <PATH_ELEMENT USER_OBJECT="BeamerServer">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -162,6 +233,14 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="BeamerServer">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="de/netprojectev/server/gui">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -202,6 +281,36 @@
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
             <PATH_ELEMENT USER_OBJECT="gui">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BeamerGUIDesktop">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="BeamerDesktop">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="de/netprojectev/client">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="gui">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="main">
               <option name="myItemId" value="" />
               <option name="myItemType" value="" />
             </PATH_ELEMENT>
@@ -366,7 +475,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="Downloaded.Files.Path.Enabled" value="false" />
@@ -379,7 +488,7 @@
     <property name="recentsLimit" value="5" />
     <property name="dynamic.classpath" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/BeamerLibrary/lib/log4j-core-2.1.jar!/" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.25.Final.jar!/" />
   </component>
   <component name="RunManager" selected="Application.StarterClient">
     <configuration default="false" name="StarterClient" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -410,7 +519,13 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="BeamerGUIServer" />
       <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
       <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
     </configuration>
@@ -494,7 +609,7 @@
       <method />
     </configuration>
     <configuration default="true" type="JarApplication" factoryName="JAR Application">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/BeamerLibrary/lib/jewelcli-0.7.6.jar" />
+      <option name="JAR_PATH" value="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.25.Final.jar" />
       <envs />
       <method />
     </configuration>
@@ -577,12 +692,12 @@
       <workItem from="1419427727008" duration="1268000" />
       <workItem from="1419879356662" duration="3059000" />
       <workItem from="1424986587128" duration="1066000" />
-      <workItem from="1425030522531" duration="311000" />
+      <workItem from="1425030522531" duration="4734000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25746000" />
+    <option name="totallyTimeSpent" value="30169000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -606,33 +721,33 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1174" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18230277" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291262" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298647" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262136" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3262136" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291262" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18536325" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18536325" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32848838" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19070514" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32622603" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942432" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -652,429 +767,431 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/ChunkedFileDecoder.java</url>
+          <line>2</line>
+          <properties />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/Server.java</url>
+          <line>2</line>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="2" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/DequeueData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2430">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="504">
+          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/MediaModelClient.java">
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/LoginData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1915" max-vertical-offset="3942">
-          <caret line="159" column="27" selection-start-line="159" selection-start-column="27" selection-end-line="159" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="522">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/Message.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1836" max-vertical-offset="2466">
-          <caret line="147" column="16" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="756">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/MediaModelClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3978">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="2430">
-          <caret line="69" column="58" selection-start-line="69" selection-start-column="58" selection-end-line="69" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="9756">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding>
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4538#4539#0" expanded="false" />
-            <element signature="e#4570#4571#0" expanded="false" />
-            <element signature="e#4598#4599#0" expanded="false" />
-            <element signature="e#5086#5087#0" expanded="false" />
-            <element signature="e#5151#5152#0" expanded="false" />
-            <element signature="e#17719#17720#0" expanded="false" />
-            <element signature="e#17766#17767#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13032">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2646">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="2430">
-          <caret line="69" column="58" selection-start-line="69" selection-start-column="58" selection-end-line="69" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="9756">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding>
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4538#4539#0" expanded="false" />
-            <element signature="e#4570#4571#0" expanded="false" />
-            <element signature="e#4598#4599#0" expanded="false" />
-            <element signature="e#5086#5087#0" expanded="false" />
-            <element signature="e#5151#5152#0" expanded="false" />
-            <element signature="e#17719#17720#0" expanded="false" />
-            <element signature="e#17766#17767#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13032">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2646">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="2430">
-          <caret line="69" column="58" selection-start-line="69" selection-start-column="58" selection-end-line="69" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="9756">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding>
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4538#4539#0" expanded="false" />
-            <element signature="e#4570#4571#0" expanded="false" />
-            <element signature="e#4598#4599#0" expanded="false" />
-            <element signature="e#5086#5087#0" expanded="false" />
-            <element signature="e#5151#5152#0" expanded="false" />
-            <element signature="e#17719#17720#0" expanded="false" />
-            <element signature="e#17766#17767#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13032">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2646">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="2430">
-          <caret line="69" column="58" selection-start-line="69" selection-start-column="58" selection-end-line="69" selection-end-column="58" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="9756">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding>
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4538#4539#0" expanded="false" />
-            <element signature="e#4570#4571#0" expanded="false" />
-            <element signature="e#4598#4599#0" expanded="false" />
-            <element signature="e#5086#5087#0" expanded="false" />
-            <element signature="e#5151#5152#0" expanded="false" />
-            <element signature="e#17719#17720#0" expanded="false" />
-            <element signature="e#17766#17767#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13032">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2646">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2430">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="2898">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2430">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="2898">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2430">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="2898">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2214">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/nbproject/build-impl.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.08323699" vertical-offset="0" max-vertical-offset="25380">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="30" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/nbproject/genfiles.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="878">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/CreateTickerElementDialog.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/LoginDialog.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/CreateTickerElementDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38543898" vertical-offset="0" max-vertical-offset="1530">
-          <caret line="30" column="0" selection-start-line="30" selection-start-column="0" selection-end-line="30" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/BeamerGUIDesktop.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1188">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42398286" vertical-offset="0" max-vertical-offset="4536">
-          <caret line="54" column="12" selection-start-line="54" selection-start-column="12" selection-end-line="54" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/ClientGUI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0385439" vertical-offset="0" max-vertical-offset="934">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/ColorPickerDialog.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/PreferencesFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33278146" vertical-offset="4623" max-vertical-offset="10566">
-          <caret line="1272" column="23" selection-start-line="1272" selection-start-column="23" selection-end-line="1272" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/VideoFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.26256078" vertical-offset="0" max-vertical-offset="846">
-          <caret line="9" column="55" selection-start-line="9" selection-start-column="55" selection-end-line="9" selection-end-column="55" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/OpCode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.058346838" vertical-offset="0" max-vertical-offset="1746">
+        <state vertical-scroll-proportion="0.035820894" vertical-offset="0" max-vertical-offset="1746">
           <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.20421393" vertical-offset="720" max-vertical-offset="2214">
-          <caret line="57" column="30" selection-start-line="57" selection-start-column="30" selection-end-line="57" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2898">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.46" vertical-offset="666" max-vertical-offset="12960">
-          <caret line="209" column="63" selection-start-line="209" selection-start-column="63" selection-end-line="209" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/BeamerLibrary/lib/log4j-api-2.1.jar!/org/apache/logging/log4j/LogManager.class">
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/Countdown.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18685122" vertical-offset="0" max-vertical-offset="3348">
-          <caret line="24" column="13" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/Client.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2430">
-          <caret line="45" column="42" selection-start-line="45" selection-start-column="37" selection-end-line="45" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1098">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/ImageFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="5365" max-vertical-offset="10080">
-          <caret line="373" column="0" selection-start-line="373" selection-start-column="0" selection-end-line="373" selection-end-column="0" />
-          <folding>
-            <element signature="e#4511#4512#0" expanded="false" />
-            <element signature="e#4538#4539#0" expanded="false" />
-            <element signature="e#4570#4571#0" expanded="false" />
-            <element signature="e#4598#4599#0" expanded="false" />
-            <element signature="e#5086#5087#0" expanded="false" />
-            <element signature="e#5151#5152#0" expanded="false" />
-            <element signature="e#17719#17720#0" expanded="false" />
-            <element signature="e#17766#17767#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/MediaModelClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3942">
-          <caret line="28" column="52" selection-start-line="28" selection-start-column="52" selection-end-line="28" selection-end-column="52" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/ServerMediaFile.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1005">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="702">
+          <caret line="9" column="22" selection-start-line="9" selection-start-column="22" selection-end-line="9" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java">
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/Themeslide.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12537314" vertical-offset="0" max-vertical-offset="1005">
-          <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="900">
+          <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/VideoFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23283581" vertical-offset="0" max-vertical-offset="1005">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2610">
+          <caret line="37" column="5" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/TickerModelServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="160" max-vertical-offset="1152">
+          <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/ConstantsServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1620">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/ConnectedUser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07164179" vertical-offset="0" max-vertical-offset="1005">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.2701613" vertical-offset="11968" max-vertical-offset="12960">
+          <caret line="730" column="35" selection-start-line="730" selection-start-column="35" selection-end-line="730" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19959678" vertical-offset="0" max-vertical-offset="2106">
-          <caret line="46" column="56" selection-start-line="46" selection-start-column="56" selection-end-line="46" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="1114" max-vertical-offset="2106">
+          <caret line="147" column="35" selection-start-line="147" selection-start-column="35" selection-end-line="147" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/ServerCLI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/MediaFileFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.19701493" vertical-offset="0" max-vertical-offset="2844">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/Misc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7439516" vertical-offset="810" max-vertical-offset="2646">
+          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3326613" vertical-offset="1380" max-vertical-offset="3960">
+          <caret line="117" column="67" selection-start-line="117" selection-start-column="67" selection-end-line="117" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/ServerGUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07164179" vertical-offset="0" max-vertical-offset="1005">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/CreateTickerElementDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="1692">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/LoginDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="486" max-vertical-offset="2844">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MediaFileFilterDesktop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/Misc.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3798">
+          <caret line="28" column="13" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/StarterClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="898" max-vertical-offset="1890">
+          <caret line="73" column="40" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/TableButtonRenderer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="270" max-vertical-offset="2268">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1209" max-vertical-offset="2214">
+          <caret line="118" column="43" selection-start-line="118" selection-start-column="43" selection-end-line="118" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/CustomQueueTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="759" max-vertical-offset="1764">
+          <caret line="102" column="43" selection-start-line="102" selection-start-column="43" selection-end-line="102" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/PriorityComboBoxModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/TickerTableModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="381" max-vertical-offset="1386">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/AddCountdownDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3348">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/AddPriorityDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1497" max-vertical-offset="2502">
+          <caret line="192" column="39" selection-start-line="192" selection-start-column="39" selection-end-line="192" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/AddThemeDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2916">
+          <caret line="29" column="13" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/ColorPickerDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1494">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/PreferencesFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="10060" max-vertical-offset="11052">
+          <caret line="1409" column="39" selection-start-line="1409" selection-start-column="39" selection-end-line="1409" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/PriorityListModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="936">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/preferences/ThemeListModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="972">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/themeslide/TextPanePanel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1584">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/themeslide/TextPaneThemeslide.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1404">
+          <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/themeslide/ThemeslideCreatorFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4173387" vertical-offset="11934" max-vertical-offset="13194">
+          <caret line="965" column="43" selection-start-line="965" selection-start-column="43" selection-end-line="965" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3927" max-vertical-offset="4932">
+          <caret line="164" column="35" selection-start-line="164" selection-start-column="35" selection-end-line="164" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/Starter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07164179" vertical-offset="0" max-vertical-offset="1005">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/TickerComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0029850747" vertical-offset="4233" max-vertical-offset="5238">
+          <caret line="257" column="35" selection-start-line="257" selection-start-column="35" selection-end-line="257" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/VlcPlayBackUtility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.4119403" vertical-offset="486" max-vertical-offset="1548">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/DisplayMainComponent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="732" max-vertical-offset="2736">
+          <caret line="79" column="57" selection-start-line="79" selection-start-column="57" selection-end-line="79" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/HelperMethods.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.2567165" vertical-offset="0" max-vertical-offset="5130">
+          <caret line="141" column="35" selection-start-line="141" selection-start-column="35" selection-end-line="141" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="9282" max-vertical-offset="9936">
+          <caret line="622" column="49" selection-start-line="622" selection-start-column="49" selection-end-line="622" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.470948" vertical-offset="7918" max-vertical-offset="24444">
+          <caret line="547" column="79" selection-start-line="547" selection-start-column="79" selection-end-line="547" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4317841" vertical-offset="0" max-vertical-offset="667">
+          <caret line="16" column="42" selection-start-line="16" selection-start-column="42" selection-end-line="16" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/Tests/de/netprojectev/netty/examples/TestingFileTransfer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.62349397" vertical-offset="0" max-vertical-offset="1098">
+          <caret line="23" column="18" selection-start-line="23" selection-start-column="18" selection-end-line="23" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -1133,12 +1250,11 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>BeamerLibrary</last-edited>
+          <last-edited>BeamerGUIDesktop</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -1146,7 +1262,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>swingx-all-1.6.4</last-edited>
+          <last-edited>netty-all-4.0.25.Final</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

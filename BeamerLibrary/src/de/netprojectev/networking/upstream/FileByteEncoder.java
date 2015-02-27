@@ -9,21 +9,20 @@ import io.netty.handler.codec.MessageToByteEncoder;
 
 import java.io.File;
 import java.io.FileInputStream;
-
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Level;
 
 import de.netprojectev.utils.LoggerBuilder;
 
 public class FileByteEncoder extends MessageToByteEncoder<File> {
 
-	private static final Logger log = LoggerBuilder.createLogger(FileByteEncoder.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(FileByteEncoder.class);
 
 	@Override
 	protected void encode(final ChannelHandlerContext ctx, File msg, ByteBuf out) throws Exception {
 
 		ctx.writeAndFlush(msg.length());
 
-		log.debug("Writting file to out. Length: " + msg.length());
+		log.fine("Writting file to out. Length: " + msg.length());
 
 		final FileInputStream fis = new FileInputStream(msg);
 		DefaultFileRegion region = new DefaultFileRegion(fis.getChannel(), 0, msg.length());
@@ -32,9 +31,9 @@ public class FileByteEncoder extends MessageToByteEncoder<File> {
 			@Override
 			public void operationComplete(ChannelFuture future) throws Exception {
 				if (!future.isSuccess()) {
-					log.error("Error during writing file to network.", future.cause());
+					log.log(Level.SEVERE, "Error during writing file to network.", future.cause());
 				}
-				log.debug("Writing file to network opertion completed successful");
+				log.fine("Writing file to network opertion completed successful");
 				fis.close();
 			}
 		});
@@ -43,7 +42,7 @@ public class FileByteEncoder extends MessageToByteEncoder<File> {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		log.log(Level.WARNING, "Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
 

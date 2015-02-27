@@ -4,13 +4,11 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.utils.LoggerBuilder;
 
 public class BooleanByteEncoder extends MessageToByteEncoder<Boolean> {
 
-	private static final Logger log = LoggerBuilder.createLogger(BooleanByteEncoder.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(BooleanByteEncoder.class);
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Boolean msg, ByteBuf out) throws Exception {
@@ -19,7 +17,7 @@ public class BooleanByteEncoder extends MessageToByteEncoder<Boolean> {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass() + "\n" + cause.toString());
+		log.warning("Exception caught in channel handler " + getClass() + "\n" + cause.toString());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
 

@@ -13,8 +13,6 @@ import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFile;
@@ -31,7 +29,7 @@ import de.netprojectev.utils.Misc;
  */
 public class DisplayMainComponent extends JComponent {
 
-	private static final Logger log = LoggerBuilder.createLogger(DisplayMainComponent.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(DisplayMainComponent.class);
 
 	private static final long serialVersionUID = 3915763660057625809L;
 	private BufferedImage image;
@@ -60,18 +58,17 @@ public class DisplayMainComponent extends JComponent {
 	 */
 	protected void updateCountdownFont() {
 		countdownFont = new Font(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTTYPE), Font.PLAIN, Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTSIZE)));
-		log.debug("countdown font updated to font: " + countdownFont);
+		log.fine("countdown font updated to font: " + countdownFont);
 	}
 
 	protected void updateCountdownFontColor() {
 		countdownFontColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
-		log.debug("updating countdown font color");
+		log.fine("updating countdown font color");
 	}
 
 	/**
 	 * Tell this to draw the given image.
 	 *
-	 * @param file
 	 *            the image file to draw on component
 	 * @throws IOException
 	 */
@@ -80,7 +77,7 @@ public class DisplayMainComponent extends JComponent {
 		InputStream in = new ByteArrayInputStream(image.get());
 		final BufferedImage compImage = ImageIO.read(in);
 
-		log.debug(compImage.getHeight());
+		log.fine(Integer.toString(compImage.getHeight()));
 
 		countdownShowing = false;
 
@@ -101,7 +98,7 @@ public class DisplayMainComponent extends JComponent {
 			newWidth = (int) (newHeight * imageAspectRatio);
 		}
 
-		log.debug("new size of the image: " + newWidth + "x" + newHeight);
+		log.fine("new size of the image: " + newWidth + "x" + newHeight);
 
 		this.image = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
 		repaint(0, 0, getWidth(), getHeight());
@@ -162,7 +159,7 @@ public class DisplayMainComponent extends JComponent {
 
 	protected void updateBackgroundColor() {
 		generalBGColor = new Color(Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)));
-		log.debug("updating general background color");
+		log.fine("updating general background color");
 		repaint(0, 0, getWidth(), getHeight());
 	}
 

@@ -11,8 +11,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.networking.LoginData;
@@ -39,7 +37,7 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public class Client {
 
-	private static final Logger log = LoggerBuilder.createLogger(Client.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(Client.class);
 
 	private LoginData login;
 
@@ -94,13 +92,13 @@ public class Client {
 			boolean loginSend = this.proxy.sendLoginRequest(this.login).awaitUninterruptibly(5000); 
 			
 			if (!loginSend) {
-				log.error("login message could not be send");
+				log.severe("login message could not be send");
 				this.gui.errorDuringLogin("Login message could not be sent.");
 			}
 			log.info("Login request sent to server");
 
 		} else {
-			log.warn("Connection failed. Reason: Host not reachable.");
+			log.warning("Connection failed. Reason: Host not reachable.");
 			releaseExternalRessources();
 			loginFailed("Connection failed. Reason: Host not reachable.");
 		}

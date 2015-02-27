@@ -8,8 +8,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
 import de.netprojectev.exceptions.MediaNotInQueueException;
@@ -22,7 +20,7 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public class MediaModelServer {
 
-	private static final Logger log = LoggerBuilder.createLogger(MediaModelServer.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(MediaModelServer.class);
 
 	private final MessageProxyServer proxy;
 	private final HashMap<UUID, ServerMediaFile> allMediaFiles;
@@ -36,7 +34,7 @@ public class MediaModelServer {
 		this.mediaStandardList = new LinkedList<UUID>();
 		this.mediaPrivateQueue = new LinkedList<UUID>();
 		this.rand = new Random();
-		log.debug("Media model successfully created");
+		log.fine("Media model successfully created");
 	}
 
 	private void addAllMediaAndShuffle() {
@@ -56,7 +54,7 @@ public class MediaModelServer {
 	public UUID addMediaFile(ServerMediaFile file) {
 		this.allMediaFiles.put(file.getId(), file);
 		addMediaFileAtRandomPosition(file);
-		log.debug("Media file added: " + file);
+		log.fine("Media file added: " + file);
 		return file.getId();
 	}
 
@@ -103,7 +101,7 @@ public class MediaModelServer {
 
 	public ServerMediaFile getMediaFileById(UUID id) throws MediaDoesNotExsistException {
 		testIfMediaFileExists(id);
-		log.debug("Getting media file: " + id);
+		log.fine("Getting media file: " + id);
 		return this.allMediaFiles.get(id);
 	}
 
@@ -115,7 +113,7 @@ public class MediaModelServer {
 		if (this.allMediaFiles.isEmpty()) {
 			throw new MediaListsEmptyException("No media files present.");
 		}
-		log.debug("Getting next media file");
+		log.fine("Getting next media file");
 		if (!this.mediaPrivateQueue.isEmpty()) {
 			return getMediaFileById(this.mediaPrivateQueue.poll());
 		} else {
@@ -128,13 +126,13 @@ public class MediaModelServer {
 
 	public void queue(UUID id) throws MediaDoesNotExsistException {
 		testIfMediaFileExists(id);
-		log.debug("Queuing media file: " + id);
+		log.fine("Queuing media file: " + id);
 		this.mediaPrivateQueue.addLast(id);
 	}
 
 	public void removeMediaFile(UUID id) throws MediaDoesNotExsistException {
 		testIfMediaFileExists(id);
-		log.debug("Removing media file: " + id);
+		log.fine("Removing media file: " + id);
 		ServerMediaFile removedFile = this.allMediaFiles.remove(id);
 
 		while (this.mediaPrivateQueue.contains(id)) {

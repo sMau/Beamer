@@ -11,8 +11,7 @@ import io.netty.util.HashedWheelTimer;
 
 import java.io.File;
 import java.io.IOException;
-
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Level;
 
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
@@ -44,7 +43,7 @@ public class Server {
 	 * the new server GUI android application
 	 */
 
-	private static final Logger log = LoggerBuilder.createLogger(Server.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(Server.class);
 
 	private static final EventLoopGroup bossGroup = new NioEventLoopGroup();
 	private static final EventLoopGroup workerGroup = new NioEventLoopGroup();
@@ -146,7 +145,7 @@ public class Server {
 		try {
 			this.proxy.getPrefsModel().serializeAll();
 		} catch (IOException e) {
-			log.warn("Error during serilization.", e);
+			log.log(Level.WARNING, "Error during serilization.", e);
 		}
 
 		System.exit(0);

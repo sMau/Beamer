@@ -11,11 +11,10 @@ import java.awt.Paint;
 import java.awt.RenderingHints;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
 
 import javax.swing.JComponent;
 import javax.swing.SwingUtilities;
-
-import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.model.PreferencesModelServer;
@@ -29,7 +28,7 @@ import de.netprojectev.utils.LoggerBuilder;
  */
 public class TickerComponent extends JComponent {
 
-	private static final Logger log = LoggerBuilder.createLogger(TickerComponent.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(TickerComponent.class);
 
 	private static final long serialVersionUID = 4472552567124740434L;
 
@@ -140,7 +139,7 @@ public class TickerComponent extends JComponent {
 		generateDrawingStrings();
 		liveTickerTimer = new Timer();
 		liveTickerTimer.schedule(new TickerTimerTask(), 0, tickerSpeed);
-		log.debug("Live Ticker started");
+		log.fine("Live Ticker started");
 	}
 
 	/**
@@ -173,13 +172,13 @@ public class TickerComponent extends JComponent {
 	}
 
 	protected void updateFontColor() {
-		log.debug("Updating ticker font color.");
+		log.fine("Updating ticker font color.");
 		tickerFontColor = new Color(Integer.parseInt(PreferencesModelServer
 				.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR)));
 	}
 
 	protected void updateBackgroundColor() {
-		log.debug("Updating ticker background color.");
+		log.fine("Updating ticker background color.");
 		tickerBackgroundColor = new Color(Integer.parseInt(PreferencesModelServer
 				.getPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)));
 
@@ -189,7 +188,7 @@ public class TickerComponent extends JComponent {
 	}
 
 	protected void updateBackgroundAlpha() {
-		log.debug("updating ticker background alpha");
+		log.fine("updating ticker background alpha");
 		tickerBackgroundAlpha = Float.parseFloat(PreferencesModelServer
 				.getPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA));
 	}
@@ -197,14 +196,14 @@ public class TickerComponent extends JComponent {
 	private void updateFont() {
 		Font oldFont = tickerFont;
 		try {
-			log.debug("Updating ticker font family and size.");
+			log.fine("Updating ticker font family and size.");
 			tickerFont = new Font(
 					PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTTYPE),
 					Font.PLAIN, Integer.parseInt(PreferencesModelServer
 							.getPropertyByKey(ConstantsServer.PROP_TICKER_FONTSIZE)));
 		} catch (NumberFormatException e) {
 			tickerFont = oldFont;
-			log.warn("Number format exeception", e);
+			log.log(Level.WARNING, "Number format exeception", e);
 		}
 		tickerStringHeight = getFontMetrics(tickerFont).getHeight();
 
@@ -217,13 +216,13 @@ public class TickerComponent extends JComponent {
 	}
 
 	private void updateSpeed() {
-		log.debug("Updating ticker speed.");
+		log.fine("Updating ticker speed.");
 		int oldspeed = tickerSpeed;
 		try {
 			tickerSpeed = Integer.parseInt(PreferencesModelServer
 					.getPropertyByKey(ConstantsServer.PROP_TICKER_SPEED));
 		} catch (NumberFormatException e) {
-			log.error("Tickerspeed is a non numeric value.", e);
+			log.log(Level.WARNING, "Tickerspeed is a non numeric value.", e);
 			tickerSpeed = oldspeed;
 		}
 	}
@@ -253,10 +252,10 @@ public class TickerComponent extends JComponent {
 	private void generateDrawingStrings() {
 		// log.log(Level.INFO, "generating new drawing strings");
 		if (tickerFont == null) {
-			log.error("TICKER FONT IS NULL!!!!!");
+			log.log(Level.WARNING, "TICKER FONT IS NULL!!!!!");
 		}
 		if (tickerString == null) {
-			log.error("TICKER STRING IS NULL!!!!!");
+			log.log(Level.WARNING, "TICKER STRING IS NULL!!!!!");
 		}
 
 		int tickerStringWidth = getFontMetrics(tickerFont).stringWidth(tickerString);

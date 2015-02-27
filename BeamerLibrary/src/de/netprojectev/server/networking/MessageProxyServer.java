@@ -22,8 +22,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Level;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.datastructures.Priority;
@@ -64,11 +63,11 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			try {
 				showNextMediaFile();
 			} catch (MediaDoesNotExsistException e) {
-				log.warn("Media file could not be shown.", e);
+				log.log(Level.WARNING, "Media file could not be shown.", e);
 			} catch (MediaListsEmptyException e) {
-				log.warn("Media file could not be shown.", e);
+				log.log(Level.WARNING, "Media file could not be shown.", e);
 			} catch (PriorityDoesNotExistException e) {
-				log.warn("Media file could not be shown.", e);
+				log.log(Level.WARNING, "Media file could not be shown.", e);
 			}
 		}
 
@@ -105,7 +104,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException;
 	}
 
-	private static final Logger log = LoggerBuilder.createLogger(MessageProxyServer.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(MessageProxyServer.class);
 	private final DefaultChannelGroup allClients;
 	private final ArrayList<ConnectedUser> connectedUsers;
 	private final MediaModelServer mediaModel;
@@ -146,7 +145,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			} catch (NumberFormatException e1) {
 				this.timeoutInSeconds = 30;
 			}
-			log.warn("Read timeout is no number.", e);
+			log.log(Level.WARNING, "Read timeout is no number.", e);
 		}
 
 		// TODO hearbeat mechanism is diasbled, but is actually also bullshit
@@ -213,7 +212,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	public ChannelGroupFuture broadcastMessage(Message msg) {
-		log.debug("Broadcasting message: " + msg);
+		log.fine("Broadcasting message: " + msg);
 		return this.allClients.writeAndFlush(msg);
 	}
 
@@ -248,7 +247,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void denyAccessToClient(String reason, ChannelHandlerContext ctx) throws InterruptedException {
-		log.warn("Login request denied: " + reason);
+		log.log(Level.WARNING, "Login request denied: " + reason);
 		ctx.writeAndFlush(new Message(OpCode.STC_LOGIN_DENIED, reason)).awaitUninterruptibly();
 		ctx.close().sync();
 	}
@@ -334,7 +333,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		log.log(Level.WARNING, "Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
 
@@ -729,7 +728,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		try {
 			this.serverGUI.showMediaFileInMainComponent(this.currentFile);
 		} catch (IOException e) {
-			log.warn("Media file could not be shown.", e);
+			log.log(Level.WARNING, "Media file could not be shown.", e);
 			return;
 		}
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));

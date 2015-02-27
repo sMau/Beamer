@@ -13,11 +13,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
-
-import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
 import de.netprojectev.exceptions.MediaListsEmptyException;
@@ -47,7 +46,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 	 *
 	 */
 	private static final long serialVersionUID = 863589702184282724L;
-	private static final Logger log = LoggerBuilder.createLogger(DisplayFrame.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(DisplayFrame.class);
 
 	private final MessageProxyServer proxy;
 	private boolean fullscreen;
@@ -102,7 +101,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 		} else if (key.equals(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)) {
 			displayMainComponent.updateBackgroundColor();
 		} else {
-			log.warn("received an unknown property key: " + key);
+			log.log(Level.WARNING, "received an unknown property key: " + key);
 		}
 
 	}
@@ -139,7 +138,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 					try {
 						vlc.waitFor();
 					} catch (InterruptedException e) {
-						log.warn("vlc interrupted", e);
+						log.log(Level.WARNING, "vlc interrupted", e);
 					}
 					SwingUtilities.invokeLater(new Runnable() {
 
@@ -149,11 +148,11 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 							try {
 								videoFinishedListener.videoFinished();
 							} catch (MediaDoesNotExsistException e) {
-								log.warn("Video does not exist.", e);
+								log.log(Level.WARNING, "Video does not exist.", e);
 							} catch (MediaListsEmptyException e) {
-								log.warn("Video does not exist.", e);
+								log.log(Level.WARNING, "Video does not exist.", e);
 							} catch (PriorityDoesNotExistException e) {
-								log.warn("Priority does not exist.", e);
+								log.log(Level.WARNING, "Priority does not exist.", e);
 
 							}
 						}
@@ -163,7 +162,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 			}).start();
 
 		} catch (Exception e) {
-			log.warn("Video could not be played.", e);
+			log.log(Level.WARNING, "Video could not be played.", e);
 		}
 
 	}

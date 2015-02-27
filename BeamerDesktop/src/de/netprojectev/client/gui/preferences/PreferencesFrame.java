@@ -9,14 +9,13 @@ import java.awt.Frame;
 import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.gui.main.Constants;
@@ -39,7 +38,7 @@ import de.netprojectev.utils.LoggerBuilder;
  */
 public class PreferencesFrame extends javax.swing.JFrame {
 
-	private static final Logger log = LoggerBuilder.createLogger(PreferencesFrame.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(PreferencesFrame.class);
 
 	/**
 	 *
@@ -139,7 +138,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		try {
 			genBGColor = new Color(Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_GENERAL_BACKGROUND_COLOR)));
 		} catch (NumberFormatException e) {
-			log.warn("Could not read ticker font color from prefs. Setting to black.", e);
+			log.log(Level.WARNING, "Could not read ticker font color from prefs. Setting to black.", e);
 			genBGColor = Color.BLACK;
 		}
 
@@ -152,7 +151,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		try {
 			jlDefaultPrioVar.setText(prefs.getPriorityByID(prefs.getDefaultPriority()).getName());
 		} catch (PriorityDoesNotExistException e) {
-			log.error("Priority could not be found", e);
+			log.log(Level.WARNING, "Priority could not be found", e);
 		}
 
 		/*
@@ -168,7 +167,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		try {
 			tickerFontColor = new Color(Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_FONTCOLOR)));
 		} catch (NumberFormatException e) {
-			log.warn("Could not read ticker font color from prefs. Setting to black.", e);
+			log.log(Level.WARNING, "Could not read ticker font color from prefs. Setting to black.", e);
 			tickerFontColor = Color.BLACK;
 		}
 
@@ -180,7 +179,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		try {
 			tickerBackgroundColor = new Color(Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_COLOR)));
 		} catch (NumberFormatException e) {
-			log.warn("Could not read ticker background color from prefs. Setting to white.", e);
+			log.log(Level.WARNING, "Could not read ticker background color from prefs. Setting to white.", e);
 			tickerBackgroundColor = Color.WHITE;
 		}
 
@@ -203,7 +202,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			tickerBacḱgroundAlpha = (int) (Float.parseFloat(prefs.getServerPropertyByKey(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA)) * 100);
 		} catch (NumberFormatException e1) {
 			tickerBacḱgroundAlpha = (int) (ConstantsServer.DEFAULT_TICKER_BACKGROUND_ALPHA * 100);
-			log.warn("Could not read ticker background alpha from prefs. Setting to default.", e1);
+			log.log(Level.WARNING, "Could not read ticker background alpha from prefs. Setting to default.", e1);
 		}
 		jslTickerBackgroundAlpha.setValue(tickerBacḱgroundAlpha);
 
@@ -225,7 +224,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 		try {
 			cntdwnFontColor = new Color(Integer.parseInt(prefs.getServerPropertyByKey(ConstantsServer.PROP_COUNTDOWN_FONTCOLOR)));
 		} catch (NumberFormatException e) {
-			log.warn("Could not read countdown font color from prefs. Setting to black.", e);
+			log.log(Level.WARNING, "Could not read countdown font color from prefs. Setting to black.", e);
 			cntdwnFontColor = Color.BLACK;
 		}
 		jbChooseCountdownFontColor.setBackground(cntdwnFontColor);
@@ -1288,7 +1287,7 @@ public class PreferencesFrame extends javax.swing.JFrame {
 
 	private void jbUpdateTickerBGAlphaActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbUpdateTickerBGAlphaActionPerformed
 		float alphaToSet = ((float) jslTickerBackgroundAlpha.getValue()) / 100;
-		log.debug("Read alpha in the client preferences before update: " + alphaToSet);
+		log.fine("Read alpha in the client preferences before update: " + alphaToSet);
 		proxy.sendPropertyUpdate(ConstantsServer.PROP_TICKER_BACKGROUND_ALPHA, Float.toString(alphaToSet));
 	}// GEN-LAST:event_jbUpdateTickerBGAlphaActionPerformed
 
@@ -1406,9 +1405,9 @@ public class PreferencesFrame extends javax.swing.JFrame {
 			} catch (ThemeDoesNotExistException e) {
 				proxy.errorRequestFullSync(e);
 			} catch (FileNotFoundException e) {
-				log.error("Could not find theme image background.", e);
+				log.log(Level.WARNING, "Could not find theme image background.", e);
 			} catch (IOException e) {
-				log.error("Could not read theme image background.", e);
+				log.log(Level.WARNING, "Could not read theme image background.", e);
 			}
 		}
 	}

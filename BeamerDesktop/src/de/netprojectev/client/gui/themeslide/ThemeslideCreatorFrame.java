@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -32,13 +33,10 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.gui.main.Constants;
 import de.netprojectev.client.gui.models.PriorityComboBoxModel;
 import de.netprojectev.client.gui.preferences.ColorPickerDialog;
-import de.netprojectev.client.gui.preferences.PreferencesFrame;
 import de.netprojectev.client.model.PreferencesModelClientDesktop;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.Priority;
@@ -55,7 +53,7 @@ import de.netprojectev.utils.LoggerBuilder;
  *
  */
 public class ThemeslideCreatorFrame extends javax.swing.JFrame {
-	private static final Logger log = LoggerBuilder.createLogger(ThemeslideCreatorFrame.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(ThemeslideCreatorFrame.class);
 
 	private static final long serialVersionUID = -3653577264825548156L;
 
@@ -328,7 +326,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		} catch (ThemeDoesNotExistException e) {
 			proxy.errorRequestFullSync(e);
 		} catch (IOException e) {
-			log.error("IO Error", e);
+			log.log(Level.WARNING, "IO Error", e);
 		}
 		if (success) {
 			dispose();
@@ -344,7 +342,7 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 		} catch (ThemeDoesNotExistException e) {
 			proxy.errorRequestFullSync(e);
 		} catch (IOException e) {
-			log.error("IO error", e);
+			log.log(Level.WARNING, "IO error", e);
 		}
 		if (success) {
 			// TODO Add and show
@@ -963,9 +961,9 @@ public class ThemeslideCreatorFrame extends javax.swing.JFrame {
 				try {
 					new ThemeslideCreatorFrame(null, null).setVisible(true);
 				} catch (ThemeDoesNotExistException e) {
-					log.error("Theme missing", e);
+					log.log(Level.WARNING, "Theme missing", e);
 				} catch (PriorityDoesNotExistException e) {
-					log.error("Priority missing", e);
+					log.log(Level.WARNING, "Priority missing", e);
 				}
 
 			}

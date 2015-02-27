@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.TickerElement;
 import de.netprojectev.exceptions.MediaDoesNotExsistException;
@@ -18,7 +16,7 @@ public class TickerModelClient {
 		public void update();
 	}
 
-	private static final Logger log = LoggerBuilder.createLogger(TickerModelClient.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(TickerModelClient.class);
 
 	private final MessageProxyClient proxy;
 	private final HashMap<UUID, TickerElement> elements;
@@ -38,7 +36,7 @@ public class TickerModelClient {
 	}
 
 	public UUID addTickerElement(TickerElement e) {
-		log.debug("Adding ticker element: " + e);
+		log.fine("Adding ticker element: " + e);
 		this.elements.put(e.getId(), e);
 		if (!this.allElementsList.contains(e.getId())) {
 			this.allElementsList.add(e.getId());
@@ -96,7 +94,7 @@ public class TickerModelClient {
 		 * } });
 		 */
 
-		log.debug("Removing ticker element: " + id);
+		log.fine("Removing ticker element: " + id);
 		try {
 			checkIfElementExists(id);
 		} catch (MediaDoesNotExsistException e) {

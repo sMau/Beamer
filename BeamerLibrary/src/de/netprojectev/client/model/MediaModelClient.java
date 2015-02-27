@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.UUID;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.MediaFile;
@@ -30,7 +28,7 @@ public class MediaModelClient {
 		public void update();
 	}
 
-	private static final Logger log = LoggerBuilder.createLogger(MediaModelClient.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(MediaModelClient.class);
 
 	private final MessageProxyClient proxy;
 	private final HashMap<UUID, ClientMediaFile> allMedia;
@@ -69,7 +67,7 @@ public class MediaModelClient {
 			this.allMediaList.add(fileToAdd.getId());
 		}
 
-		log.debug("Adding media file: " + fileToAdd);
+		log.fine("Adding media file: " + fileToAdd);
 		updateAllMediaTable();
 		updateCustomQueueTable();
 		return fileToAdd.getId();
@@ -83,7 +81,7 @@ public class MediaModelClient {
 
 	public void dequeueFirstMediaFile() {
 		if (!this.customQueue.isEmpty()) {
-			log.debug("Dequeueing first.");
+			log.fine("Dequeueing first.");
 			this.customQueue.removeFirst();
 
 			updateCustomQueueTable();
@@ -151,7 +149,7 @@ public class MediaModelClient {
 
 	public void queueMediaFile(UUID id) throws MediaDoesNotExsistException {
 		checkIfMediaExists(id);
-		log.debug("Queueing media file: " + id);
+		log.fine("Queueing media file: " + id);
 		this.customQueue.addLast(id);
 
 		updateCustomQueueTable();
@@ -164,7 +162,7 @@ public class MediaModelClient {
 		} catch (MediaDoesNotExsistException e) {
 			this.proxy.errorRequestFullSync(e);
 		}
-		log.debug("Removing media file: " + toRemove);
+		log.fine("Removing media file: " + toRemove);
 
 		while (this.customQueue.contains(toRemove)) {
 			this.customQueue.remove(toRemove);
@@ -223,7 +221,7 @@ public class MediaModelClient {
 
 	private void updateAllMediaTable() {
 		if (this.allMediaListener != null) {
-			log.debug("Update All media table invoked");
+			log.fine("Update All media table invoked");
 			this.allMediaListener.update();
 		}
 	}

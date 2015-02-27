@@ -27,21 +27,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="module-library" exported="">
-      <library name="netty-all-4.0.19.Final.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/netty-all-4.0.19.Final.jar!/" />
-        </CLASSES>
-        <JAVADOC>
-          <root url="jar://$MODULE_DIR$/lib/netty-all-4.0.19.Final-javadoc.jar!/" />
-        </JAVADOC>
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/netty-all-4.0.19.Final-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="library" exported="" name="log4j-core-2.1" level="project" />
-    <orderEntry type="library" exported="" name="log4j-api-2.1" level="project" />
-    <orderEntry type="module-library" exported="">
       <library name="jewelcli-0.7.6.jar">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/jewelcli-0.7.6.jar!/" />
@@ -52,17 +37,6 @@
     </orderEntry>
     <orderEntry type="library" exported="" name="swingx-all-1.6.4" level="project" />
     <orderEntry type="module-library">
-      <library name="netty-example-4.0.19.Final.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/netty-example-4.0.19.Final.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="jar://$MODULE_DIR$/lib/netty-example-4.0.19.Final-sources.jar!/" />
-        </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library name="junit4">
         <CLASSES>
           <root url="jar://$APPLICATION_HOME_DIR$/lib/junit-4.11.jar!/" />
@@ -71,5 +45,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" exported="" name="netty-all-4.0.25.Final" level="project" />
   </component>
 </module>

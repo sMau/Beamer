@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -16,8 +17,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.Client;
 import de.netprojectev.client.ClientGUI;
@@ -59,7 +58,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 	 *
 	 */
 	private static final long serialVersionUID = -4247573311423083026L;
-	private static final Logger log = LoggerBuilder.createLogger(MainClientGUIWindow.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(MainClientGUIWindow.class);
 
 	private final MessageProxyClient proxy;
 	private final MediaModelClient mediaModel;
@@ -501,7 +500,8 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 
 		tabbedPaneContainer.addTab("Ticker", jpLiveTicker);
 
-		jbAddFile.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
+
+		jbAddFile.setIcon(new javax.swing.ImageIcon(((Object) this).getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
 		jbAddFile.setText("File");
 		jbAddFile.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -510,7 +510,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			}
 		});
 
-		jbAddThemeslide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
+		jbAddThemeslide.setIcon(new javax.swing.ImageIcon(((Object) this).getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
 		jbAddThemeslide.setText("Themeslide");
 		jbAddThemeslide.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -519,7 +519,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			}
 		});
 
-		jbAddTickerElement.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
+		jbAddTickerElement.setIcon(new javax.swing.ImageIcon(((Object) this).getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"))); // NOI18N
 		jbAddTickerElement.setText("Ticker");
 		jbAddTickerElement.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -528,7 +528,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			}
 		});
 
-		jbRemoveFromList.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/delete_2.png"))); // NOI18N
+		jbRemoveFromList.setIcon(new javax.swing.ImageIcon(((Object) this).getClass().getResource("/de/netprojectev/client/gfx/delete_2.png"))); // NOI18N
 		jbRemoveFromList.setToolTipText("");
 		jbRemoveFromList.addActionListener(new java.awt.event.ActionListener() {
 			@Override
@@ -537,7 +537,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			}
 		});
 
-		jbShowSelected.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/play.png"))); // NOI18N
+		jbShowSelected.setIcon(new javax.swing.ImageIcon(((Object) this).getClass().getResource("/de/netprojectev/client/gfx/play.png"))); // NOI18N
 		jbShowSelected.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -545,7 +545,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			}
 		});
 
-		jbShowNext.setIcon(new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/next.png"))); // NOI18N
+		jbShowNext.setIcon(new javax.swing.ImageIcon(((Object) this).getClass().getResource("/de/netprojectev/client/gfx/next.png"))); // NOI18N
 		jbShowNext.addActionListener(new java.awt.event.ActionListener() {
 			@Override
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1097,7 +1097,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			jbShowSelected.setEnabled(false);
 			break;
 		default:
-			log.error("Invalid tab selection");
+			log.warning("Invalid tab selection");
 			jbShowSelected.setEnabled(true);
 			break;
 		}
@@ -1119,7 +1119,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			try {
 				proxy.sendAddMediaFiles(fileChooser.getSelectedFiles());
 			} catch (IOException e) {
-				log.warn("error adding send media file", e);
+				log.log(Level.WARNING, "error adding send media file", e);
 				JOptionPane.showMessageDialog(this, "Error during adding media files.\n Please try again.",
 						"Error adding files", JOptionPane.ERROR_MESSAGE);
 			}
@@ -1177,7 +1177,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			proxy.sendRemoveSelectedTickerElements(selectedRowsLiveTicker);
 			break;
 		default:
-			log.debug("remove: no propper tab selected");
+            log.fine("remove: no propper tab selected");
 			break;
 
 		}
@@ -1315,7 +1315,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			}
 			break;
 		default:
-			log.debug("remove: no propper tab selected");
+            log.fine("remove: no propper tab selected");
 			break;
 
 		}
@@ -1347,7 +1347,7 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			jlPreview.setText(tickerModel.completeTickerText());
 			break;
 		default:
-			log.debug("remove: no propper tab selected");
+            log.fine("remove: no propper tab selected");
 			break;
 
 		}

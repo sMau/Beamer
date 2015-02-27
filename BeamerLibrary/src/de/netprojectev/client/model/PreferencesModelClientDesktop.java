@@ -2,8 +2,7 @@ package de.netprojectev.client.model;
 
 import java.io.IOException;
 import java.util.Properties;
-
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Level;
 
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.client.networking.MessageProxyClient;
@@ -12,7 +11,7 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public class PreferencesModelClientDesktop extends PreferencesModelClient {
 
-	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClientDesktop.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(PreferencesModelClientDesktop.class);
 
 	public PreferencesModelClientDesktop(MessageProxyClient proxy) {
 		super(proxy);
@@ -32,7 +31,7 @@ public class PreferencesModelClientDesktop extends PreferencesModelClient {
 		try {
 			HelperMethods.savePropertiesToDisk(defProps, ConstantsClient.SAVE_PATH, ConstantsClient.FILENAME_DEFAULT_PROPERTIES);
 		} catch (IOException e) {
-			log.warn("Error during saving default properties to disk.", e);
+			log.log(Level.WARNING, "Error during saving default properties to disk.", e);
 		}
 
 		return defProps;

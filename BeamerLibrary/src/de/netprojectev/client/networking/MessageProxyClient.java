@@ -14,8 +14,7 @@ import java.util.Properties;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
-
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Level;
 
 import de.netprojectev.client.Client;
 import de.netprojectev.client.datastructures.ClientMediaFile;
@@ -55,7 +54,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		public void received(Message msg);
 	}
 
-	private static final Logger log = LoggerBuilder.createLogger(MessageProxyClient.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(MessageProxyClient.class);
 
 	private final Client client;
 
@@ -118,14 +117,14 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void errorRequestFullSync(Exception e) {
-		log.warn("The media read for updating does not exist. Requesting full sync.", e);
+		log.log(Level.WARNING, "The media read for updating does not exist. Requesting full sync.", e);
 		sendRequestFullSync();
 		this.client.getGui().errorRequestingFullsyncDialog();
 	}
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		log.log(Level.WARNING, "Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
 
@@ -268,7 +267,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	public void receiveMessage(Message msg) throws UnkownMessageException,
 	MediaDoesNotExsistException, OutOfSyncException, PriorityDoesNotExistException {
-		log.debug("Receiving message: " + msg.toString());
+		log.fine("Receiving message: " + msg.toString());
 		switch (msg.getOpCode()) {
 		case STC_ADD_MEDIA_FILE_ACK:
 			mediaFileAdded(msg);
@@ -385,7 +384,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 					try {
 						MessageProxyClient.this.client.connect();
 					} catch (InterruptedException e) {
-						log.error("Error during connection setup", e);
+						log.log(Level.WARNING, "Error during connection setup", e);
 					}
 				}
 			}, 2000, 5000);
@@ -407,7 +406,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void sendAddImageFile(File file) throws IOException {
-		log.debug("sending add image file, name: " + file.getName());
+		log.fine("sending add image file, name: " + file.getName());
 		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, file.getName(), file));
 	}
 
@@ -495,12 +494,12 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	private ChannelFuture sendMessageToServer(Message msgToSend) {
-		log.debug("Sending message to server: " + msgToSend);
+		log.fine("Sending message to server: " + msgToSend);
 		return this.channelToServer.writeAndFlush(msgToSend);
 	}
 
 	public void sendPropertyUpdate(String key, String newValue) {
-		log.debug("Sending property update for: " + key + ", to: " + newValue);
+		log.fine("Sending property update for: " + key + ", to: " + newValue);
 		sendMessageToServer(new Message(OpCode.CTS_PROPERTY_UPDATE, key, newValue));
 	}
 

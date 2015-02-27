@@ -1,11 +1,9 @@
 package de.netprojectev.client.gui.main;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
 
 import javax.swing.UnsupportedLookAndFeelException;
-
-import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.client.ConstantsClient;
 import de.netprojectev.utils.LoggerBuilder;
@@ -13,7 +11,7 @@ import de.netprojectev.utils.LoggerBuilder;
 public class StarterClient {
 
 	private static String OS = System.getProperty("os.name").toLowerCase();
-	private static final Logger log = LoggerBuilder.createLogger(StarterClient.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(StarterClient.class);
 
 	/**
 	 * @param args
@@ -73,7 +71,7 @@ public class StarterClient {
 				try {
 					new MainClientGUIWindow();
 				} catch (Exception e) {
-					log.fatal("Error during GUI init.", e);
+					log.log(Level.SEVERE, "Error during GUI init.", e);
 					System.exit(0);
 				} 
 			}

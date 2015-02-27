@@ -4,9 +4,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.utils.LoggerBuilder;
+
+import java.util.logging.Level;
 
 /**
  *
@@ -19,7 +19,7 @@ import de.netprojectev.utils.LoggerBuilder;
  */
 
 public class IntByteEncoder extends MessageToByteEncoder<Integer> {
-	private static final Logger log = LoggerBuilder.createLogger(IntByteEncoder.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(IntByteEncoder.class);
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, Integer msg, ByteBuf out) throws Exception {
@@ -28,7 +28,7 @@ public class IntByteEncoder extends MessageToByteEncoder<Integer> {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		log.log(Level.WARNING, "Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
 

@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.Properties;
 import java.util.UUID;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.datastructures.Priority;
 import de.netprojectev.datastructures.Theme;
@@ -37,7 +35,7 @@ public abstract class PreferencesModelClient {
 		public void update(boolean fullsync) throws PriorityDoesNotExistException;
 	}
 
-	private static final Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
 
 	private ThemeListChangedListener themeListChangeListener = new ThemeListChangedListener() {
 		@Override
@@ -98,7 +96,7 @@ public abstract class PreferencesModelClient {
 	public void disableAutomode() throws PriorityDoesNotExistException {
 		this.automode = false;
 		this.autoModeStateListener.update(false);
-		log.debug("automode toggled, new value value: " + this.automode);
+		log.fine("automode toggled, new value value: " + this.automode);
 	}
 
 	public void disableFullscreen() {
@@ -114,7 +112,7 @@ public abstract class PreferencesModelClient {
 	public void enableAutomode(boolean fullsync) throws PriorityDoesNotExistException {
 		this.automode = true;
 		this.autoModeStateListener.update(fullsync);
-		log.debug("automode toggled, new value value: " + this.automode);
+		log.fine("automode toggled, new value value: " + this.automode);
 	}
 
 	public void enableFullscreen() {
@@ -202,14 +200,14 @@ public abstract class PreferencesModelClient {
 			this.defaultPriority = prio.getId();
 		}
 		updateAllPrioChangedListeners();
-		log.debug("Priority added id: " + prio.getId());
+		log.fine("Priority added id: " + prio.getId());
 	}
 
 	public void prioRemoved(UUID prio) {
 		this.prios.remove(prio);
 		this.allPrioritiesList.remove(prio);
 		updateAllPrioChangedListeners();
-		log.debug("Priority removed, id: " + prio);
+		log.fine("Priority removed, id: " + prio);
 	}
 
 	public Priority[] prioritiesAsArray() throws PriorityDoesNotExistException {
@@ -236,7 +234,7 @@ public abstract class PreferencesModelClient {
 	}
 
 	public void setClientProperty(String key, String value) {
-		log.debug("Setting property: " + key + ", to: " + value);
+		log.fine("Setting property: " + key + ", to: " + value);
 		this.clientProperties.setProperty(key, value);
 	}
 
@@ -262,7 +260,7 @@ public abstract class PreferencesModelClient {
 			this.allThemesList.add(theme.getId());
 		}
 		this.themeListChangeListener.update();
-		log.debug("Theme added id: " + theme.getId());
+		log.fine("Theme added id: " + theme.getId());
 	}
 
 	public int themeCount() {
@@ -273,7 +271,7 @@ public abstract class PreferencesModelClient {
 		this.themes.remove(theme);
 		this.allThemesList.remove(theme);
 		this.themeListChangeListener.update();
-		log.debug("Theme removed, id: " + theme);
+		log.fine("Theme removed, id: " + theme);
 	}
 
 	public Theme[] themesAsArray() throws ThemeDoesNotExistException {

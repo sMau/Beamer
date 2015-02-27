@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.ImageIcon;
@@ -14,13 +15,11 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.TableCellRenderer;
 
-import org.apache.logging.log4j.Logger;
-
 import de.netprojectev.utils.LoggerBuilder;
 
 public class TableButtonRenderer extends JButton implements TableCellRenderer {
 
-	private static final Logger log = LoggerBuilder.createLogger(TableButtonRenderer.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(TableButtonRenderer.class);
 
 	/**
 	 *
@@ -36,9 +35,9 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer {
 			try {
 				iconPlus = Misc.getScaledImageIcon(iconPlus, 12);
 			} catch (FileNotFoundException e) {
-				log.error("could not load add image icon.", e);
+				log.log(Level.WARNING, "could not load add image icon.", e);
 			} catch (IOException e) {
-				log.error("could not load add image icon.", e);
+				log.log(Level.WARNING, "could not load add image icon.", e);
 			}
 			setIcon(iconPlus);
 		} else {
@@ -46,9 +45,9 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer {
 			try {
 				iconDelete = Misc.getScaledImageIcon(iconDelete, 12);
 			} catch (FileNotFoundException e) {
-				log.error("could not load delete image icon.", e);
+				log.log(Level.WARNING, "could not load delete image icon.", e);
 			} catch (IOException e) {
-				log.error("could not load delete image icon.", e);
+				log.log(Level.WARNING, "could not load delete image icon.", e);
 			}
 			setIcon(iconDelete);
 		}

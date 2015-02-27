@@ -11,10 +11,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Properties;
+import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.logging.log4j.Logger;
 
 import de.netprojectev.server.ConstantsServer;
 
@@ -140,7 +139,7 @@ public class HelperMethods {
 		try {
 			HelperMethods.savePropertiesToDisk(defProps, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_DEFAULT_PROPERTIES);
 		} catch (IOException e) {
-			log.warn("Error during saving default properties to disk.", e);
+			log.log(Level.WARNING, "Error during saving default properties to disk.", e);
 		}
 
 		return defProps;
@@ -290,6 +289,6 @@ public class HelperMethods {
 		return imageFiles.toArray(new File[imageFiles.size()]);
 	}
 
-	private static final Logger log = LoggerBuilder.createLogger(HelperMethods.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(HelperMethods.class);
 
 }

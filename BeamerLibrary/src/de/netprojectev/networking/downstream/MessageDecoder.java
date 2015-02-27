@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.UUID;
-
-import org.apache.logging.log4j.Logger;
+import java.util.logging.Level;
 
 import de.netprojectev.client.datastructures.ClientMediaFile;
 import de.netprojectev.client.datastructures.MediaType;
@@ -34,7 +33,7 @@ import de.netprojectev.utils.LoggerBuilder;
 
 public class MessageDecoder extends ByteToMessageDecoder {
 
-	private static final Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
+	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(MessageDecoder.class);
 
 	private ByteBuf in;
 	private ChannelHandlerContext ctx;
@@ -60,7 +59,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		this.dataDecodeSuccess = true;
 		this.decodingFile = false;
 
-		log.debug("Receiving new message, OpCode: " + opCode + ". Contains data: " + containsData);
+		log.fine("Receiving new message, OpCode: " + opCode + ". Contains data: " + containsData);
 
 		if (!containsData) {
 			out.add(new Message(opCode));
@@ -351,7 +350,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		// int chunkSize = decodeInt();
 		// int chunkCount = decodeInt();
 
-		log.debug("Receiving file. Length: " + length);
+		log.fine("Receiving file. Length: " + length);
 
 		// replace with a file decode handler, which replaces itself after
 		// completion again with this one here
@@ -375,7 +374,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	private void decodeImageFile() throws IOException {
 		final String name = decodeString();
-		log.debug("Decoded file name: " + name);
+		log.fine("Decoded file name: " + name);
 
 		decodeFile(OpCode.CTS_ADD_IMAGE_FILE, new FileTransferFinishedListener() {
 
@@ -515,13 +514,13 @@ public class MessageDecoder extends ByteToMessageDecoder {
 			return;
 		}
 
-		log.debug("Decoded file name: " + name);
+		log.fine("Decoded file name: " + name);
 		final UUID themeID = decodeUUID();
 		if (this.dataDecodeSuccess == false) {
 			return;
 		}
 
-		log.debug("Decoded theme id: " + themeID);
+		log.fine("Decoded theme id: " + themeID);
 
 		decodeFile(OpCode.CTS_ADD_THEMESLIDE, new FileTransferFinishedListener() {
 			@Override
@@ -568,7 +567,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 		if (this.dataDecodeSuccess == false) {
 			return;
 		}
-		log.debug("Decoded file name: " + name);
+		log.fine("Decoded file name: " + name);
 
 		decodeFile(OpCode.CTS_ADD_VIDEO_FILE, new FileTransferFinishedListener() {
 
@@ -583,7 +582,7 @@ public class MessageDecoder extends ByteToMessageDecoder {
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		log.warn("Exception caught in channel handler " + getClass(), cause.getCause());
+		log.log(Level.WARNING, "Exception caught in channel handler " + getClass(), cause.getCause());
 		ctx.channel().close(); // XXX check if proper handling possible
 	}
 
