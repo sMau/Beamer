@@ -1,7 +1,9 @@
 package de.netprojectev.beam4s;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
@@ -14,13 +16,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Locale;
 
 import de.netprojectev.beam4s.service.NetworkService;
+import de.netprojectev.datastructures.TickerElement;
 import roboguice.activity.RoboActionBarActivity;
 
 
@@ -128,10 +134,46 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.signOff:
+                networkService.getClient().disconnect();
+                finish();
+                return true;
+            case R.id.addMediaFile:
+                return true;
+            case R.id.addTickerElt:
+
+                LayoutInflater inflater = getLayoutInflater();
+                final View v = inflater.inflate(R.layout.add_ticker_element_dialog, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setView(v);
+                builder.setTitle(R.string.addTickerElt)
+                        .setPositiveButton(R.string.add, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                EditText tickerText = (EditText) v.findViewById(R.id.etTickerElt);
+                                networkService.getClient().getProxy().sendAddTickerElement(tickerText.getText().toString());
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                 builder.create();
+
+                return true;
+            case R.id.addThemeslide:
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
     }
 
     @Override

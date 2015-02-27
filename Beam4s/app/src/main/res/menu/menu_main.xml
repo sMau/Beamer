@@ -4,11 +4,11 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/addMediaFile"
-        android:title="@string/addMediaFile" />
+        android:title="@string/addMediaFile" android:orderInCategory="50" app:showAsAction="never" />
     <item android:id="@+id/addTickerElt"
-        android:title="@string/addTickerElt" />
+        android:title="@string/addTickerElt" android:orderInCategory="52" app:showAsAction="never" />
     <item android:id="@+id/addThemeslide"
-        android:title="@string/addThemeslide" />
+        android:title="@string/addThemeslide" android:orderInCategory="51" app:showAsAction="never" />
     <item android:id="@+id/signOff"
-        android:title="@string/signOff" />
+        android:title="@string/signOff" android:orderInCategory="120" app:showAsAction="never" />
 </menu>

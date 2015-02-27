@@ -2,19 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f1aca3d-e965-4aae-b380-a265984fa4ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/queue_context_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/ticker_context_menu.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/MediaAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/MediaAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/QueueAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/QueueAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/TickerAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/TickerAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/all_media_context_menu.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/all_media_context_menu.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/media_list_item.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/media_list_item.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/add_ticker_element_dialog.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MainActivity.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/menu_main.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/menu_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/ticker_list_item.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/ticker_list_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Beamer.iws" />
@@ -71,8 +61,8 @@
       <file leaf-file-name="MainClientGUIWindow.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.82033896" vertical-offset="13232" max-vertical-offset="24444">
-              <caret line="880" column="13" selection-start-line="875" selection-start-column="12" selection-end-line="880" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.9118644" vertical-offset="13232" max-vertical-offset="24444">
+              <caret line="883" column="9" selection-start-line="883" selection-start-column="9" selection-end-line="883" selection-end-column="9" />
               <folding>
                 <element signature="e#7082#7122#0" expanded="true" />
               </folding>
@@ -584,12 +574,12 @@
       <workItem from="1424986587128" duration="1066000" />
       <workItem from="1425030522531" duration="8778000" />
       <workItem from="1425065068133" duration="23000" />
-      <workItem from="1425065107461" duration="939000" />
+      <workItem from="1425065107461" duration="2135000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35175000" />
+    <option name="totallyTimeSpent" value="36371000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1031,8 +1021,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.82033896" vertical-offset="13232" max-vertical-offset="24444">
-          <caret line="880" column="13" selection-start-line="875" selection-start-column="12" selection-end-line="880" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.9118644" vertical-offset="13232" max-vertical-offset="24444">
+          <caret line="883" column="9" selection-start-line="883" selection-start-column="9" selection-end-line="883" selection-end-column="9" />
           <folding>
             <element signature="e#7082#7122#0" expanded="true" />
           </folding>
