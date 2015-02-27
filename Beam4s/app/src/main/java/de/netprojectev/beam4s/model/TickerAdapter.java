@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import de.netprojectev.beam4s.R;
@@ -55,7 +56,13 @@ public class TickerAdapter extends BaseAdapter {
 
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.ticker_list_item, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.tvTickerItem);
+        ((ImageButton) rowView.findViewById(R.id.ibMore)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.showContextMenu();
+            }
+        });
+        TextView textView = (TextView) rowView.findViewById(R.id.tvTickerElt);
         textView.setText(tickerModel.getValueAt(position).getText());
         return rowView;
     }

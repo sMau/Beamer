@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import de.netprojectev.beam4s.R;
@@ -57,7 +58,13 @@ public class QueueAdapter extends BaseAdapter {
 
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.media_list_item, parent, false);
-        TextView tvMediaName = (TextView) rowView.findViewById(R.id.tvName);
+        ((ImageButton) rowView.findViewById(R.id.ibMore)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.showContextMenu();
+            }
+        });
+        TextView tvMediaName = (TextView) rowView.findViewById(R.id.tvTickerElt);
         TextView tvMediaType = (TextView) rowView.findViewById(R.id.tvMediaType);
         TextView tvShowCount = (TextView) rowView.findViewById(R.id.tvShowCount);
         TextView tvPriority = (TextView) rowView.findViewById(R.id.tvPriority);

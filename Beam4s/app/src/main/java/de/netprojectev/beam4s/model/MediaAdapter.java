@@ -64,7 +64,7 @@ public class MediaAdapter extends BaseAdapter {
                 v.showContextMenu();
             }
         });
-        TextView tvMediaName = (TextView) rowView.findViewById(R.id.tvName);
+        TextView tvMediaName = (TextView) rowView.findViewById(R.id.tvTickerElt);
         TextView tvMediaType = (TextView) rowView.findViewById(R.id.tvMediaType);
         TextView tvShowCount = (TextView) rowView.findViewById(R.id.tvShowCount);
         TextView tvPriority = (TextView) rowView.findViewById(R.id.tvPriority);

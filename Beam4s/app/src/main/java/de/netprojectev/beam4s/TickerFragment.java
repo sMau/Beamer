@@ -3,7 +3,10 @@ package de.netprojectev.beam4s;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -15,6 +18,8 @@ import android.widget.TextView;
 
 import de.netprojectev.beam4s.model.TickerAdapter;
 import de.netprojectev.client.model.TickerModelClient;
+import de.netprojectev.client.networking.MessageProxyClient;
+import de.netprojectev.datastructures.TickerElement;
 
 /**
  * A fragment representing a list of Items.
@@ -25,10 +30,11 @@ import de.netprojectev.client.model.TickerModelClient;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class TickerFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class TickerFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private TickerModelClient tickerModel;
+    private MessageProxyClient proxy;
 
     /**
      * The fragment's ListView/GridView.
@@ -42,9 +48,10 @@ public class TickerFragment extends Fragment implements AbsListView.OnItemClickL
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static TickerFragment newInstance(TickerModelClient tickerModel) {
+    public static TickerFragment newInstance(TickerModelClient tickerModel, MessageProxyClient proxy) {
         TickerFragment fragment = new TickerFragment();
         fragment.tickerModel = tickerModel;
+        fragment.proxy = proxy;
         return fragment;
     }
 
@@ -70,10 +77,7 @@ public class TickerFragment extends Fragment implements AbsListView.OnItemClickL
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
         ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-
-        // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
-
+        registerForContextMenu(mListView);
         return view;
     }
 
@@ -94,16 +98,6 @@ public class TickerFragment extends Fragment implements AbsListView.OnItemClickL
         mListener = null;
     }
 
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id); TODO
-        }
-    }
-
     /**
      * The default content for this Fragment has a TextView that is shown when
      * the list is empty. If you would like to change the text, call this method
@@ -114,6 +108,36 @@ public class TickerFragment extends Fragment implements AbsListView.OnItemClickL
 
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater = getActivity().getMenuInflater();
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        inflater.inflate(R.menu.ticker_context_menu, menu);
+        if(tickerModel.getValueAt(info.position).isShow()) {
+            menu.getItem(0).setTitle(R.string.deactivate);
+        } else {
+            menu.getItem(0).setTitle(R.string.activate);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.toggleActivation:
+                TickerElement currentSelectedTickerElement = tickerModel.getValueAt(info.position);
+                TickerElement copyToSend = currentSelectedTickerElement.copy();
+                copyToSend.setShow(!currentSelectedTickerElement.isShow());
+                proxy.sendEditTickerElement(copyToSend);
+                return true;
+            case R.id.remove:
+                proxy.sendRemoveSelectedTickerElement(info.position);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 

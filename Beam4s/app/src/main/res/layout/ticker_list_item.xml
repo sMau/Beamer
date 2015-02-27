@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:paddingLeft="8dip"
+    android:paddingTop="8dip"
+    android:paddingRight="0dip"
+    android:paddingBottom="8dip"
+    android:clickable="true"
+    android:longClickable="true">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ticker Element"
+        android:id="@+id/tvTickerElt"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/ibMore"
+        android:layout_toStartOf="@+id/ibMore" />
+
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Item"
-        android:id="@+id/tvTickerItem"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:id="@+id/ibMore"
+        android:layout_alignTop="@+id/tvTickerElt"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@null"
+        android:padding="8dip"
+        android:src="@drawable/ic_action_overflow" />
+
 </RelativeLayout>

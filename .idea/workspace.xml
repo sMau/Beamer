@@ -2,21 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f1aca3d-e965-4aae-b380-a265984fa4ed" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/all_media_context_menu.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jewelcli_0_7_6.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/ticker_list_item.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/allmedia_row_view.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/BeamerLibrary.jar" afterPath="$PROJECT_DIR$/out/BeamerLibrary.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerServer/BeamerGUIServer.iml" afterPath="$PROJECT_DIR$/BeamerServer/BeamerGUIServer.iml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/queue_context_menu.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/ticker_context_menu.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/MediaAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/MediaAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/MediaFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/QueueAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/QueueAdapter.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/QueueFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/TickerAdapter.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/model/TickerAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/app.iml" afterPath="$PROJECT_DIR$/Beam4s/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/build.gradle" afterPath="$PROJECT_DIR$/Beam4s/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_media_list.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/fragment_media_list.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/java/de/netprojectev/beam4s/TickerFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/all_media_context_menu.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/all_media_context_menu.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/media_list_item.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/media_list_item.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/menu_main.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/menu/menu_main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/values/strings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/ticker_list_item.xml" afterPath="$PROJECT_DIR$/Beam4s/app/src/main/res/layout/ticker_list_item.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Beamer.iws" />
@@ -45,13 +43,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Starter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Starter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/Starter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27062705" vertical-offset="106" max-vertical-offset="738">
+            <state vertical-scroll-proportion="0.0" vertical-offset="106" max-vertical-offset="738">
               <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageProxyClient.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="7309" max-vertical-offset="9972">
+              <caret line="479" column="29" selection-start-line="479" selection-start-column="16" selection-end-line="479" selection-end-column="37" />
+              <folding>
+                <element signature="e#5058#5059#0" expanded="true" />
+                <element signature="e#5088#5089#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainClientGUIWindow.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.82033896" vertical-offset="13232" max-vertical-offset="24444">
+              <caret line="880" column="13" selection-start-line="875" selection-start-column="12" selection-end-line="880" selection-end-column="13" />
+              <folding>
+                <element signature="e#7082#7122#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -155,6 +178,60 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="BeamerLibrary" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeamerLibrary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="de.netprojectev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeamerLibrary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="de.netprojectev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Beamer" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BeamerLibrary" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="de.netprojectev" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="client" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="networking" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -507,12 +584,12 @@
       <workItem from="1424986587128" duration="1066000" />
       <workItem from="1425030522531" duration="8778000" />
       <workItem from="1425065068133" duration="23000" />
-      <workItem from="1425065107461" duration="891000" />
+      <workItem from="1425065107461" duration="939000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="35127000" />
+    <option name="totallyTimeSpent" value="35175000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -536,7 +613,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-2" y="0" width="1924" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -544,6 +621,7 @@
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291262" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3283582" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262136" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -554,11 +632,10 @@
       <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19029851" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18496802" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3251599" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18496802" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3251599" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32848838" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -924,20 +1001,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="9282" max-vertical-offset="9936">
-          <caret line="622" column="49" selection-start-line="622" selection-start-column="49" selection-end-line="622" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.470948" vertical-offset="7918" max-vertical-offset="24444">
-          <caret line="547" column="79" selection-start-line="547" selection-start-column="79" selection-end-line="547" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/LoggerBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4317841" vertical-offset="0" max-vertical-offset="667">
@@ -947,10 +1010,31 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/BeamerServer/src/de/netprojectev/server/gui/Starter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27062705" vertical-offset="106" max-vertical-offset="738">
+        <state vertical-scroll-proportion="0.0" vertical-offset="106" max-vertical-offset="738">
           <caret line="15" column="13" selection-start-line="15" selection-start-column="13" selection-end-line="15" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="7309" max-vertical-offset="9972">
+          <caret line="479" column="29" selection-start-line="479" selection-start-column="16" selection-end-line="479" selection-end-column="37" />
+          <folding>
+            <element signature="e#5058#5059#0" expanded="true" />
+            <element signature="e#5088#5089#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/main/MainClientGUIWindow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.82033896" vertical-offset="13232" max-vertical-offset="24444">
+          <caret line="880" column="13" selection-start-line="875" selection-start-column="12" selection-end-line="880" selection-end-column="13" />
+          <folding>
+            <element signature="e#7082#7122#0" expanded="true" />
           </folding>
         </state>
       </provider>

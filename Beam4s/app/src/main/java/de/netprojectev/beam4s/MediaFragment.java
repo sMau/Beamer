@@ -29,7 +29,7 @@ import de.netprojectev.client.model.MediaModelClient;
  * interface.
  */
 public class MediaFragment extends Fragment {
-
+    //XXX the list view items are ellipzied but with fixed dp with instead of dynamically.
     private MediaModelClient mediaModel;
     private OnFragmentInteractionListener mListener;
 
@@ -104,7 +104,9 @@ public class MediaFragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
-
+            case R.id.show:
+                mediaModel.getProxy().sendShowMediaFile(info.position);
+                return true;
             case R.id.addToQueue:
                 mediaModel.getProxy().sendQueueSelectedMedia(info.position);
                 return true;

@@ -13,8 +13,16 @@
     <string name="message_server_required">Please enter a valid server IP</string>
     <string name="message_port_required">Please enter a valid port</string>
     <string name="queue">Queue</string>
+    <string name="dequeue">Dequeue</string>
+    <string name="deactivate">Deactivate</string>
+    <string name="activate">Activate</string>
     <string name="play">Play</string>
     <string name="remove">Remove</string>
     <string name="changePrio">Change Priority</string>
     <string name="resetCounter">Reset Show Counter</string>
+    <string name="show">Show</string>
+    <string name="addTickerElt">Add Ticker Element</string>
+    <string name="addMediaFile">Add Media File</string>
+    <string name="addThemeslide">Add Themeslide</string>
+    <string name="signOff">Sign Off</string>
 </resources>

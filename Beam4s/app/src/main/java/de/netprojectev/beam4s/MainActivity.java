@@ -173,7 +173,7 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
                 case 0:
                     return MediaFragment.newInstance(networkService.getClient().getProxy().getMediaModel());
                 case 1:
-                    return TickerFragment.newInstance(networkService.getClient().getProxy().getTickerModel());
+                    return TickerFragment.newInstance(networkService.getClient().getProxy().getTickerModel(), networkService.getClient().getProxy());
                 case 2:
                     return QueueFragment.newInstance(networkService.getClient().getProxy().getMediaModel());
             }
