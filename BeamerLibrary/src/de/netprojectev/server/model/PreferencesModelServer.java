@@ -53,9 +53,10 @@ public class PreferencesModelServer {
 		HelperMethods.savePropertiesToDisk(props, ConstantsServer.SAVE_PATH, ConstantsServer.FILENAME_PROPERTIES);
 	}
 
-	public static void setProperty(String key, String value) {
+	public static void setProperty(String key, String value) throws IOException {
 		log.fine("Setting property: " + key + ", to: " + value);
 		props.setProperty(key, value);
+        saveProperties();
 	}
 
 	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(PreferencesModelServer.class);
@@ -145,6 +146,8 @@ public class PreferencesModelServer {
 		boolean defaulPrioExists = false;
 		if (allPriorities != null) {
 			for (UUID id : allPriorities.keySet()) {
+
+                log.info("Prio: " + allPriorities.get(id).toString());
 				if (allPriorities.get(id).isDefaultPriority()) {
 					defaulPrioExists = true;
 				}

@@ -528,7 +528,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.serverGUI.setVisible(true);
 	}
 
-	private void propertyUpdate(Message msg) {
+	private void propertyUpdate(Message msg) throws IOException {
 		String key = (String) msg.getData().get(0);
 		String newValue = (String) msg.getData().get(1);
 
