@@ -147,7 +147,7 @@ public class PreferencesModelServer {
 		if (allPriorities != null) {
 			for (UUID id : allPriorities.keySet()) {
 
-                log.info("Prio: " + allPriorities.get(id).toString());
+                log.severe("Prio: " + allPriorities.get(id).toString());
 				if (allPriorities.get(id).isDefaultPriority()) {
 					defaulPrioExists = true;
 				}
@@ -161,7 +161,13 @@ public class PreferencesModelServer {
 			defaultPrio.setDefaultPriority(true);
 			addPriority(defaultPrio);
 			defaultPriority = defaultPrio.getId();
-		}
+            try {
+                serializePriorityDatabase();
+            } catch (IOException e) {
+                log.log(Level.WARNING, "Error writing priorities to disk.", e);
+            }
+
+        }
 
 		if (allThemes != null) {
 			for (UUID id : allThemes.keySet()) {
