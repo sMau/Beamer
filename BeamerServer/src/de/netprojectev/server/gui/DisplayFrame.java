@@ -328,8 +328,7 @@ public class DisplayFrame extends javax.swing.JFrame implements ServerGUI {
 	}// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * @param args
-	 *            the command line arguments
+	 * @param args the command line arguments
 	 */
 	public static void main(String args[]) {
 		/*

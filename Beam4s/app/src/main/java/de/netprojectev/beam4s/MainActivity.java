@@ -32,6 +32,15 @@ import roboguice.activity.RoboActionBarActivity;
 
 public class MainActivity extends RoboActionBarActivity implements ActionBar.TabListener, MediaFragment.OnFragmentInteractionListener, TickerFragment.OnFragmentInteractionListener, QueueFragment.OnFragmentInteractionListener {
 
+    //TODO last worked here in android app
+    /*
+    preview activity for images
+    add media file
+    add themeslide
+    controls like next or previous
+    show the current file
+     */
+
     private boolean serviceConnected = false;
     private boolean firstStart = true;
 
@@ -130,9 +139,7 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         switch (id) {
@@ -143,6 +150,7 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
                 finish();
                 return true;
             case R.id.addMediaFile:
+                // TODO add media file
                 return true;
             case R.id.addTickerElt:
 
@@ -168,6 +176,7 @@ public class MainActivity extends RoboActionBarActivity implements ActionBar.Tab
 
                 return true;
             case R.id.addThemeslide:
+                // TODO add theme slide
                 return true;
 
             default:
