@@ -12,6 +12,9 @@ import java.io.File;
 public class MediaFileFilter {
 
 	public static boolean isImageFile(String fileName) {
+
+        fileName = fileName.toLowerCase();
+
 		if (fileName.endsWith(".jpg")) {
 			return true;
 		}
@@ -40,6 +43,8 @@ public class MediaFileFilter {
 	}
 
 	public static boolean isVideoFile(String fileName) {
+
+        fileName = fileName.toLowerCase();
 
 		if (fileName.endsWith(".mp4")) {
 			return true;

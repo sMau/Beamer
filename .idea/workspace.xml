@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f1aca3d-e965-4aae-b380-a265984fa4ed" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/BeamerLibrary.jar" afterPath="$PROJECT_DIR$/out/BeamerLibrary.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/MediaFileFilter.java" afterPath="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/MediaFileFilter.java" />
     </list>
     <ignored path="Beamer.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,8 +34,21 @@
       <file leaf-file-name="MessageProxyClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="7533" max-vertical-offset="9936">
-              <caret line="501" column="78" selection-start-line="501" selection-start-column="78" selection-end-line="501" selection-end-column="78" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="6165" max-vertical-offset="9972">
+              <caret line="421" column="45" selection-start-line="421" selection-start-column="45" selection-end-line="421" selection-end-column="45" />
+              <folding>
+                <element signature="e#4739#4740#0" expanded="true" />
+                <element signature="e#4764#4765#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MediaFileFilter.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/MediaFileFilter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.0678392" vertical-offset="324" max-vertical-offset="2934">
+              <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -52,21 +64,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AllMediaTableModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java">
+      <file leaf-file-name="MessageProxyServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1308" max-vertical-offset="2214">
-              <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2079" max-vertical-offset="12960">
+              <caret line="179" column="26" selection-start-line="179" selection-start-column="26" selection-end-line="179" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageProxyServer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
+      <file leaf-file-name="MediaModelServer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.1737346" vertical-offset="1205" max-vertical-offset="12960">
-              <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="401" max-vertical-offset="2610">
+              <caret line="53" column="16" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MessageDecoder.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/MessageDecoder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="8852" max-vertical-offset="10026">
+              <caret line="550" column="0" selection-start-line="550" selection-start-column="0" selection-end-line="550" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -166,6 +188,7 @@
         <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/HelperMethods.java" />
         <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/PreferencesModelServer.java" />
         <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java" />
+        <option value="$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/MediaFileFilter.java" />
       </list>
     </option>
   </component>
@@ -834,12 +857,12 @@
       <workItem from="1425030522531" duration="8778000" />
       <workItem from="1425065068133" duration="23000" />
       <workItem from="1425065107461" duration="2135000" />
-      <workItem from="1425376255129" duration="6789000" />
+      <workItem from="1425376255129" duration="8294000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43160000" />
+    <option name="totallyTimeSpent" value="44665000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -863,7 +886,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1920" height="1174" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -874,7 +897,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25145632" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20097087" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3291262" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18482906" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -928,13 +951,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/Countdown.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1098">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/datastructures/ImageFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="990">
@@ -963,13 +979,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2610">
-          <caret line="37" column="5" selection-start-line="37" selection-start-column="5" selection-end-line="37" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/TickerModelServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="160" max-vertical-offset="1152">
@@ -988,13 +997,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
           <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/MediaFileFilter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19701493" vertical-offset="0" max-vertical-offset="2844">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -1208,26 +1210,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="7533" max-vertical-offset="9936">
-          <caret line="501" column="78" selection-start-line="501" selection-start-column="78" selection-end-line="501" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BeamerDesktop/src/de/netprojectev/client/gui/models/AllMediaTableModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1308" max-vertical-offset="2214">
           <caret line="114" column="0" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClientDesktop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="936">
-          <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
           <folding />
         </state>
       </provider>
@@ -1299,10 +1285,53 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/networking/downstream/MessageDecoder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="8852" max-vertical-offset="10026">
+          <caret line="550" column="0" selection-start-line="550" selection-start-column="0" selection-end-line="550" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/networking/MessageProxyServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1737346" vertical-offset="1205" max-vertical-offset="12960">
-          <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2079" max-vertical-offset="12960">
+          <caret line="179" column="26" selection-start-line="179" selection-start-column="26" selection-end-line="179" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/server/model/MediaModelServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="401" max-vertical-offset="2610">
+          <caret line="53" column="16" selection-start-line="53" selection-start-column="16" selection-end-line="53" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/model/PreferencesModelClientDesktop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="68" max-vertical-offset="936">
+          <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/client/networking/MessageProxyClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="6165" max-vertical-offset="9972">
+          <caret line="421" column="45" selection-start-line="421" selection-start-column="45" selection-end-line="421" selection-end-column="45" />
+          <folding>
+            <element signature="e#4739#4740#0" expanded="true" />
+            <element signature="e#4764#4765#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BeamerLibrary/src/de/netprojectev/utils/MediaFileFilter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0678392" vertical-offset="324" max-vertical-offset="2934">
+          <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
           <folding />
         </state>
       </provider>

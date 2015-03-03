@@ -10,3 +10,5 @@ gen/
 R.java
 /BeamerLibraryServer/nbproject/private/
 /BeamerDesktop/nbproject/private/
+.idea/workspace.xml
+out/
