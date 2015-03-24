@@ -10,7 +10,7 @@
       <src_folder value="file://$MODULE_DIR$/Tests" expected_position="1" />
     </src_description>
   </component>
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_7" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/bin" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
@@ -19,7 +19,7 @@
       <excludeFolder url="file://$MODULE_DIR$/nbproject" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
     <orderEntry type="module" module-name="BeamerLibrary" />
     <orderEntry type="module-library">
       <library name="AbsoluteLayout.jar">

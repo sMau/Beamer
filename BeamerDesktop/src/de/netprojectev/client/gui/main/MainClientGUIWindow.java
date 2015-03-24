@@ -21,6 +21,7 @@ import javax.swing.event.ListSelectionListener;
 import de.netprojectev.client.Client;
 import de.netprojectev.client.ClientGUI;
 import de.netprojectev.client.datastructures.ClientMediaFile;
+import de.netprojectev.client.datastructures.MediaType;
 import de.netprojectev.client.gui.main.CreateTickerElementDialog.DialogClosedListener;
 import de.netprojectev.client.gui.models.AllMediaTableModel;
 import de.netprojectev.client.gui.models.CustomQueueTableModel;
@@ -1198,9 +1199,12 @@ public class MainClientGUIWindow extends javax.swing.JFrame implements ClientGUI
 			refreshTimeLeftTimer.stop();
 		}
 		if (!fullsync) {
-			if (mediaModel.getCurrentMediaFile() != null) {
-				timeleftData.setTimeleftInSeconds(prefs.getPriorityByID(mediaModel
-						.getCurrentMediaFile().getPriorityID()).getMinutesToShow() * 60);
+			if (mediaModel.getCurrentMediaFile() != null
+                    && ((ClientMediaFile) mediaModel.getCurrentMediaFile()).getType() != MediaType.Countdown
+                    && ((ClientMediaFile) mediaModel.getCurrentMediaFile()).getType() != MediaType.Video) {
+                timeleftData.setTimeleftInSeconds(prefs.getPriorityByID(mediaModel
+                            .getCurrentMediaFile().getPriorityID()).getMinutesToShow() * 60);
+
 
 				refreshTimeLeftTimer = new Timer(1000, new ActionListener() {
 

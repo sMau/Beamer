@@ -11,6 +11,7 @@ import de.netprojectev.datastructures.Priority;
 import de.netprojectev.datastructures.Theme;
 import de.netprojectev.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.exceptions.ThemeDoesNotExistException;
+import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.utils.LoggerBuilder;
 
 public abstract class PreferencesModelClient {
