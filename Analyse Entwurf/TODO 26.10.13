@@ -1,5 +1,0 @@
-Netzwerkkom. komplett auf Bytes auslegen -> Perofrmance optimierung
-Wechsel zu Netty 4
-abkoppeln des "Server Display Parts" von der Library in eigenem Projekt
-evtl. Maven benutzen
-evtl. Display native coden
