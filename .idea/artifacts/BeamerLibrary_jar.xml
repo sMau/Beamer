@@ -1,9 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="BeamerLibrary:jar">
-    <output-path>$PROJECT_DIR$/out/</output-path>
-    <root id="archive" name="BeamerLibrary.jar">
-      <element id="module-output" name="BeamerLibrary" />
-      <element id="extracted-dir" path="$PROJECT_DIR$/BeamerLibrary/lib/netty-all-4.0.25.Final.jar" path-in-jar="/" />
-    </root>
-  </artifact>
-</component>
