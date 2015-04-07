@@ -7,6 +7,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 import io.netty.util.HashedWheelTimer;
 
 import java.io.File;
@@ -15,24 +18,24 @@ import java.util.logging.Level;
 
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.networking.downstream.MessageDecoder;
-import de.netprojectev.networking.upstream.ClientMediaFileEncoder;
-import de.netprojectev.networking.upstream.DequeueDataByteEncoder;
-import de.netprojectev.networking.upstream.LoginByteEncoder;
-import de.netprojectev.networking.upstream.MessageSplit;
-import de.netprojectev.networking.upstream.PriorityByteEncoder;
-import de.netprojectev.networking.upstream.PropertiesByteEncoder;
-import de.netprojectev.networking.upstream.StringArrayEncoder;
-import de.netprojectev.networking.upstream.ThemeByteEncoder;
-import de.netprojectev.networking.upstream.TickerElementEncoder;
-import de.netprojectev.networking.upstream.UUIDByteEncoder;
-import de.netprojectev.networking.upstream.primitives.BooleanByteEncoder;
-import de.netprojectev.networking.upstream.primitives.ByteArrayByteEncoder;
-import de.netprojectev.networking.upstream.primitives.IntByteEncoder;
-import de.netprojectev.networking.upstream.primitives.LongByteEncoder;
-import de.netprojectev.networking.upstream.primitives.MediaTypeByteEncoder;
-import de.netprojectev.networking.upstream.primitives.OpCodeByteEncoder;
-import de.netprojectev.networking.upstream.primitives.StringByteEncoder;
+import de.netprojectev.networking.old.downstream.MessageDecoder;
+import de.netprojectev.networking.old.upstream.ClientMediaFileEncoder;
+import de.netprojectev.networking.old.upstream.DequeueDataByteEncoder;
+import de.netprojectev.networking.old.upstream.LoginByteEncoder;
+import de.netprojectev.networking.old.upstream.MessageSplit;
+import de.netprojectev.networking.old.upstream.PriorityByteEncoder;
+import de.netprojectev.networking.old.upstream.PropertiesByteEncoder;
+import de.netprojectev.networking.old.upstream.StringArrayEncoder;
+import de.netprojectev.networking.old.upstream.ThemeByteEncoder;
+import de.netprojectev.networking.old.upstream.TickerElementEncoder;
+import de.netprojectev.networking.old.upstream.UUIDByteEncoder;
+import de.netprojectev.networking.old.upstream.primitives.BooleanByteEncoder;
+import de.netprojectev.networking.old.upstream.primitives.ByteArrayByteEncoder;
+import de.netprojectev.networking.old.upstream.primitives.IntByteEncoder;
+import de.netprojectev.networking.old.upstream.primitives.LongByteEncoder;
+import de.netprojectev.networking.old.upstream.primitives.MediaTypeByteEncoder;
+import de.netprojectev.networking.old.upstream.primitives.OpCodeByteEncoder;
+import de.netprojectev.networking.old.upstream.primitives.StringByteEncoder;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 
@@ -69,13 +72,9 @@ public class Server {
 			@Override
 			public void initChannel(SocketChannel ch) throws Exception {
 
-						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(), new LongByteEncoder(),
-						new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
-						new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(),
-						new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(),
-						new StringArrayEncoder(), new ClientMediaFileEncoder(),
-						new TickerElementEncoder(), new MessageSplit());
-				ch.pipeline().addLast(new MessageDecoder(), Server.this.proxy);
+				ch.pipeline().addLast(new ObjectEncoder());
+				ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingConcurrentResolver(null)));
+				ch.pipeline().addLast(Server.this.proxy);
 			}
 		})
 		.option(ChannelOption.SO_BACKLOG, 128)

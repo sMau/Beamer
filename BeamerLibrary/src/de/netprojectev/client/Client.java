@@ -14,26 +14,10 @@ import java.lang.reflect.InvocationTargetException;
 import de.netprojectev.client.model.PreferencesModelClient;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.networking.LoginData;
-import de.netprojectev.networking.downstream.MessageDecoder;
-import de.netprojectev.networking.upstream.ClientMediaFileEncoder;
-import de.netprojectev.networking.upstream.DequeueDataByteEncoder;
-import de.netprojectev.networking.upstream.FileByteEncoder;
-import de.netprojectev.networking.upstream.LoginByteEncoder;
-import de.netprojectev.networking.upstream.MessageSplit;
-import de.netprojectev.networking.upstream.PriorityByteEncoder;
-import de.netprojectev.networking.upstream.PropertiesByteEncoder;
-import de.netprojectev.networking.upstream.StringArrayEncoder;
-import de.netprojectev.networking.upstream.ThemeByteEncoder;
-import de.netprojectev.networking.upstream.TickerElementEncoder;
-import de.netprojectev.networking.upstream.UUIDByteEncoder;
-import de.netprojectev.networking.upstream.primitives.BooleanByteEncoder;
-import de.netprojectev.networking.upstream.primitives.ByteArrayByteEncoder;
-import de.netprojectev.networking.upstream.primitives.IntByteEncoder;
-import de.netprojectev.networking.upstream.primitives.LongByteEncoder;
-import de.netprojectev.networking.upstream.primitives.MediaTypeByteEncoder;
-import de.netprojectev.networking.upstream.primitives.OpCodeByteEncoder;
-import de.netprojectev.networking.upstream.primitives.StringByteEncoder;
 import de.netprojectev.utils.LoggerBuilder;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 
 public class Client {
 
@@ -69,16 +53,12 @@ public class Client {
 			@Override
 			public void initChannel(SocketChannel ch) throws Exception {
 
-						ch.pipeline().addLast(new BooleanByteEncoder(), new ByteArrayByteEncoder(), new IntByteEncoder(), new LongByteEncoder(),
-						new StringByteEncoder(), new MediaTypeByteEncoder(), new OpCodeByteEncoder(),
-						new UUIDByteEncoder(), new DequeueDataByteEncoder(), new ThemeByteEncoder(),
-								new PriorityByteEncoder(), new LoginByteEncoder(), new PropertiesByteEncoder(),
-								new StringArrayEncoder(), new FileByteEncoder(), new ClientMediaFileEncoder(),
-						new TickerElementEncoder(), new MessageSplit());
-				ch.pipeline().addLast(new MessageDecoder(), Client.this.proxy);
+				ch.pipeline().addLast(new ObjectEncoder());
+				ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingConcurrentResolver(null)));
+				ch.pipeline().addLast(Client.this.proxy);
 			}
 		});
-
+		b.option(ChannelOption.SO_BACKLOG, 128);
 		b.option(ChannelOption.TCP_NODELAY, true);
 		b.option(ChannelOption.SO_KEEPALIVE, true);
 

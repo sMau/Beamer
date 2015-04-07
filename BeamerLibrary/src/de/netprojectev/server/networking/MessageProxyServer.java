@@ -12,6 +12,7 @@ import io.netty.util.Timeout;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -450,7 +451,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			ctx.write(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 		}
 
-		ctx.writeAndFlush(new Message(OpCode.STC_ALL_FONTS, (Object) ConstantsServer.FONT_FAMILIES));
+		ctx.writeAndFlush(new Message(OpCode.STC_ALL_FONTS, (Serializable) ConstantsServer.FONT_FAMILIES));
 
 		ctx.writeAndFlush(new Message(OpCode.STC_FULL_SYNC_STOP));
 	}
