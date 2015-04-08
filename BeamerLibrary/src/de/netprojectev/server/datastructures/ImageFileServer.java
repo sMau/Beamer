@@ -3,8 +3,13 @@ package de.netprojectev.server.datastructures;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
@@ -14,24 +19,32 @@ import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datamodel.PreferencesModelServer;
 import de.netprojectev.common.utils.Misc;
 
-public class Themeslide extends MediaFileServer {
+public class ImageFileServer extends MediaFileServer {
 
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = -14234502199126341L;
-	private UUID themeId;
-	private ImageFileServer imageRepresantation;
+	private static final long serialVersionUID = -6972824512907132864L;
 
-	public Themeslide(String name, UUID themeId, UUID priorityID, ImageFileServer imageRepresentation) {
+	private transient byte[] image;
+	private File pathOnDisk;
+
+	public ImageFileServer(String name, UUID priorityID, File pathOnDisk) throws IOException {
 		super(name, priorityID);
-		this.themeId = themeId;
-		this.imageRepresantation = imageRepresentation;
+		Path srcPath = Paths.get(pathOnDisk.getAbsolutePath());
+		Path destPath = Paths.get(ConstantsServer.SAVE_PATH, ConstantsServer.CACHE_PATH_IMAGES, this.id.toString());
+		Files.move(srcPath, destPath, StandardCopyOption.ATOMIC_MOVE);
+		this.pathOnDisk = destPath.toFile();
+		this.image = null;
+	}
+
+	public void clearMemory() {
+		this.image = null;
 	}
 
 	@Override
 	public MediaType determineMediaType() {
-		return MediaType.Themeslide;
+		return MediaType.Image;
 	}
 
 	@Override
@@ -49,14 +62,9 @@ public class Themeslide extends MediaFileServer {
 	}
 
 	public byte[] get() throws IOException {
-		return this.imageRepresantation.get();
-	}
-
-	public ImageFileServer getImageRepresantation() {
-		return this.imageRepresantation;
-	}
-
-	public UUID getThemeId() {
-		return this.themeId;
+		if (this.image == null) {
+			this.image = Files.readAllBytes(Paths.get(this.pathOnDisk.getAbsolutePath()));
+		}
+		return this.image;
 	}
 }

@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.util.UUID;
 
 import de.netprojectev.client.datastructures.MediaType;
-import de.netprojectev.utils.HelperMethods;
+import de.netprojectev.common.utils.HelperMethods;
 
-public class Countdown extends ServerMediaFile {
+public class Countdown extends MediaFileServer {
 
 	/**
 	 *

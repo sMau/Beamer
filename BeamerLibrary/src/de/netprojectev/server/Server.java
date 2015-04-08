@@ -16,10 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
-import de.netprojectev.networking.Message;
-import de.netprojectev.networking.OpCode;
+import de.netprojectev.common.networking.Message;
+import de.netprojectev.common.networking.OpCode;
 import de.netprojectev.server.networking.MessageProxyServer;
-import de.netprojectev.utils.LoggerBuilder;
+import de.netprojectev.common.utils.LoggerBuilder;
 
 public class Server {
 
@@ -37,9 +37,9 @@ public class Server {
 	private final MessageProxyServer proxy;
 	private HashedWheelTimer timer;
 
-	public Server(int port, ServerGUI serverGUI) {
+	public Server(int port, GUIServer GUIServer) {
 		this.port = port;
-		this.proxy = new MessageProxyServer(this, serverGUI);
+		this.proxy = new MessageProxyServer(this, GUIServer);
 
 		checkAndCreateDirs();
 

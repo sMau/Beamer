@@ -17,24 +17,24 @@ import java.util.UUID;
 import java.util.logging.Level;
 
 import de.netprojectev.client.Client;
-import de.netprojectev.client.datastructures.ClientMediaFile;
-import de.netprojectev.client.model.MediaModelClient;
-import de.netprojectev.client.model.PreferencesModelClient;
-import de.netprojectev.client.model.TickerModelClient;
-import de.netprojectev.datastructures.Priority;
-import de.netprojectev.datastructures.Theme;
-import de.netprojectev.datastructures.TickerElement;
-import de.netprojectev.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.exceptions.OutOfSyncException;
-import de.netprojectev.exceptions.PriorityDoesNotExistException;
-import de.netprojectev.exceptions.UnkownMessageException;
-import de.netprojectev.networking.DequeueData;
-import de.netprojectev.networking.LoginData;
-import de.netprojectev.networking.Message;
-import de.netprojectev.networking.OpCode;
+import de.netprojectev.client.datastructures.MediaFileClient;
+import de.netprojectev.client.datamodel.MediaModelClient;
+import de.netprojectev.client.datamodel.PreferencesModelClient;
+import de.netprojectev.client.datamodel.TickerModelClient;
+import de.netprojectev.common.datastructures.Priority;
+import de.netprojectev.common.datastructures.Theme;
+import de.netprojectev.common.datastructures.TickerElement;
+import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.OutOfSyncException;
+import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
+import de.netprojectev.common.exceptions.UnkownMessageException;
+import de.netprojectev.common.networking.DequeueData;
+import de.netprojectev.common.networking.LoginData;
+import de.netprojectev.common.networking.Message;
+import de.netprojectev.common.networking.OpCode;
 import de.netprojectev.server.datastructures.Countdown;
-import de.netprojectev.utils.LoggerBuilder;
-import de.netprojectev.utils.MediaFileFilter;
+import de.netprojectev.common.utils.LoggerBuilder;
+import de.netprojectev.common.utils.MediaFileFilter;
 
 public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
@@ -214,7 +214,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	private void mediaFileAdded(Message msg) {
-		ClientMediaFile toAdd = (ClientMediaFile) msg.getData().get(0);
+		MediaFileClient toAdd = (MediaFileClient) msg.getData().get(0);
 		this.mediaModel.addMediaFile(toAdd);
 	}
 
@@ -226,7 +226,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	private void mediaFileEdited(Message msg) {
-		ClientMediaFile media = (ClientMediaFile) msg.getData().get(0);
+		MediaFileClient media = (MediaFileClient) msg.getData().get(0);
 		try {
 			this.mediaModel.replaceMediaFile(media);
 		} catch (MediaDoesNotExsistException e) {
@@ -473,7 +473,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		return sendMessageToServer(new Message(OpCode.CTS_DISCONNECT, this.client.getLogin().getAlias()));
 	}
 
-	public void sendEditMediaFile(ClientMediaFile fileToEdit) {
+	public void sendEditMediaFile(MediaFileClient fileToEdit) {
 		sendMessageToServer(new Message(OpCode.CTS_EDIT_MEDIA_FILE, fileToEdit));
 	}
 

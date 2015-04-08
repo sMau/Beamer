@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.GraphicsEnvironment;
 import java.util.Date;
 
-import de.netprojectev.datastructures.Priority;
+import de.netprojectev.common.datastructures.Priority;
 
 public class ConstantsServer {
 	

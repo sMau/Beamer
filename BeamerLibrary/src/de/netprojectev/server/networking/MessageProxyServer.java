@@ -25,31 +25,31 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
-import de.netprojectev.client.datastructures.ClientMediaFile;
-import de.netprojectev.datastructures.Priority;
-import de.netprojectev.datastructures.Theme;
-import de.netprojectev.datastructures.TickerElement;
-import de.netprojectev.exceptions.MediaDoesNotExsistException;
-import de.netprojectev.exceptions.MediaListsEmptyException;
-import de.netprojectev.exceptions.OutOfSyncException;
-import de.netprojectev.exceptions.PriorityDoesNotExistException;
-import de.netprojectev.exceptions.UnkownMessageException;
-import de.netprojectev.networking.DequeueData;
-import de.netprojectev.networking.LoginData;
-import de.netprojectev.networking.Message;
-import de.netprojectev.networking.OpCode;
+import de.netprojectev.client.datastructures.MediaFileClient;
+import de.netprojectev.common.datastructures.Priority;
+import de.netprojectev.common.datastructures.Theme;
+import de.netprojectev.common.datastructures.TickerElement;
+import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaListsEmptyException;
+import de.netprojectev.common.exceptions.OutOfSyncException;
+import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
+import de.netprojectev.common.exceptions.UnkownMessageException;
+import de.netprojectev.common.networking.DequeueData;
+import de.netprojectev.common.networking.LoginData;
+import de.netprojectev.common.networking.Message;
+import de.netprojectev.common.networking.OpCode;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.Server;
-import de.netprojectev.server.ServerGUI;
+import de.netprojectev.server.GUIServer;
 import de.netprojectev.server.datastructures.Countdown;
-import de.netprojectev.server.datastructures.ImageFile;
-import de.netprojectev.server.datastructures.ServerMediaFile;
+import de.netprojectev.server.datastructures.ImageFileServer;
+import de.netprojectev.server.datastructures.MediaFileServer;
 import de.netprojectev.server.datastructures.Themeslide;
-import de.netprojectev.server.datastructures.VideoFile;
-import de.netprojectev.server.model.MediaModelServer;
-import de.netprojectev.server.model.PreferencesModelServer;
-import de.netprojectev.server.model.TickerModelServer;
-import de.netprojectev.utils.LoggerBuilder;
+import de.netprojectev.server.datastructures.VideoFileServer;
+import de.netprojectev.server.datamodel.MediaModelServer;
+import de.netprojectev.server.datamodel.PreferencesModelServer;
+import de.netprojectev.server.datamodel.TickerModelServer;
+import de.netprojectev.common.utils.LoggerBuilder;
 
 //XXX maybe use sha1 checksums for the files to detect already "added" files and match them
 // or at least clean the chache in the other case
@@ -111,7 +111,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private final MediaModelServer mediaModel;
 	private final TickerModelServer tickerModel;
 	private final PreferencesModelServer prefsModel;
-	private final ServerGUI serverGUI;
+	private final GUIServer GUIServer;
 
 	private final Server server;
 
@@ -122,18 +122,18 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private boolean fullscreenEnabled;
 	private boolean liveTickerEnabled;
 
-	private ServerMediaFile currentFile;
+	private MediaFileServer currentFile;
 
 	private Timer autoModusTimer;
 
-	public MessageProxyServer(Server server, ServerGUI serverGUI) {
+	public MessageProxyServer(Server server, GUIServer GUIServer) {
 
 		this.allClients = new DefaultChannelGroup("beamer-clients", new NioEventLoopGroup().next());
 		this.mediaModel = new MediaModelServer(this);
 		this.tickerModel = new TickerModelServer(this);
 		this.prefsModel = new PreferencesModelServer(this);
 		this.prefsModel.deserializeAll();
-		this.serverGUI = serverGUI;
+		this.GUIServer = GUIServer;
 		this.server = server;
 		this.connectedUsers = new ArrayList<ConnectedUser>();
 		this.timeoutChecker = new HashedWheelTimer();
@@ -156,11 +156,11 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void addCountdown(Message msg) throws FileNotFoundException, IOException {
-		addMediaFile((ServerMediaFile) msg.getData().get(0));
+		addMediaFile((MediaFileServer) msg.getData().get(0));
 	}
 
 	private void addImageFile(Message msg) throws FileNotFoundException, IOException {
-		ImageFile imageFile = (ImageFile) msg.getData().get(0);
+		ImageFileServer imageFile = (ImageFileServer) msg.getData().get(0);
 		addMediaFile(imageFile);
 	}
 
@@ -169,7 +169,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.tickerModel.addTickerElement(eltToAdd);
 
 		if (this.liveTickerEnabled) {
-			this.serverGUI.updateLiveTickerString();
+			this.GUIServer.updateLiveTickerString();
 		}
 
 		broadcastMessage(new Message(OpCode.STC_ADD_LIVE_TICKER_ELEMENT_ACK, eltToAdd));
@@ -177,9 +177,9 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.prefsModel.serializeTickerDatabase();
 	}
 
-	private void addMediaFile(ServerMediaFile toAdd) throws FileNotFoundException, IOException {
+	private void addMediaFile(MediaFileServer toAdd) throws FileNotFoundException, IOException {
 		this.mediaModel.addMediaFile(toAdd);
-		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(toAdd)));
+		broadcastMessage(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new MediaFileClient(toAdd)));
 
 		this.prefsModel.serializeMediaDatabase();
 	}
@@ -208,7 +208,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void addVideoFile(Message msg) throws IOException {
-		VideoFile file = (VideoFile) msg.getData().get(0);
+		VideoFileServer file = (VideoFileServer) msg.getData().get(0);
 		addMediaFile(file);
 	}
 
@@ -272,7 +272,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private void disableFullScreen() {
 		this.fullscreenEnabled = false;
 
-		this.serverGUI.exitFullscreen();
+		this.GUIServer.exitFullscreen();
 
 		broadcastMessage(new Message(OpCode.STC_DISABLE_FULLSCREEN_ACK));
 
@@ -281,7 +281,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private void disableLiveTicker() {
 		this.liveTickerEnabled = false;
 
-		this.serverGUI.stopLiveTicker();
+		this.GUIServer.stopLiveTicker();
 
 		broadcastMessage(new Message(OpCode.STC_DISABLE_LIVE_TICKER_ACK));
 	}
@@ -293,7 +293,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		correlatedServerFile.setText(edited.getText());
 
 		if (this.liveTickerEnabled) {
-			this.serverGUI.updateLiveTickerString();
+			this.GUIServer.updateLiveTickerString();
 		}
 
 		broadcastMessage(new Message(OpCode.STC_EDIT_LIVE_TICKER_ELEMENT_ACK, correlatedServerFile));
@@ -301,11 +301,11 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException, URISyntaxException {
-		ClientMediaFile editedFile = (ClientMediaFile) msg.getData().get(0);
-		ServerMediaFile correlatedServerFile = this.mediaModel.getMediaFileById(editedFile.getId());
+		MediaFileClient editedFile = (MediaFileClient) msg.getData().get(0);
+		MediaFileServer correlatedServerFile = this.mediaModel.getMediaFileById(editedFile.getId());
 		correlatedServerFile.setName(editedFile.getName());
 		correlatedServerFile.setPriority(editedFile.getPriorityID());
-		broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new ClientMediaFile(correlatedServerFile)));
+		broadcastMessage(new Message(OpCode.STC_EDIT_MEDIA_FILE_ACK, new MediaFileClient(correlatedServerFile)));
 
 		this.prefsModel.serializeMediaDatabase();
 	}
@@ -319,7 +319,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	public void enableFullScreen() {
 		this.fullscreenEnabled = true;
 
-		this.serverGUI.enterFullscreen(0);
+		this.GUIServer.enterFullscreen(0);
 
 		broadcastMessage(new Message(OpCode.STC_ENABLE_FULLSCREEN_ACK));
 	}
@@ -327,7 +327,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	private void enableLiveTicker() {
 		this.liveTickerEnabled = true;
 
-		this.serverGUI.startLiveTicker();
+		this.GUIServer.startLiveTicker();
 
 		broadcastMessage(new Message(OpCode.STC_ENABLE_LIVE_TICKER_ACK));
 	}
@@ -399,7 +399,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	 */
 	private void fullSyncRequested(Message msg, ChannelHandlerContext ctx) throws FileNotFoundException, IOException {
 
-		HashMap<UUID, ServerMediaFile> allMedia = this.mediaModel.getAllMediaFiles();
+		HashMap<UUID, MediaFileServer> allMedia = this.mediaModel.getAllMediaFiles();
 		LinkedList<UUID> customQueue = this.mediaModel.getMediaPrivateQueue();
 		HashMap<UUID, TickerElement> tickerElements = this.tickerModel.getElements();
 		HashMap<UUID, Theme> themes = this.prefsModel.getThemes();
@@ -426,7 +426,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		ctx.flush();
 
 		for (UUID id : allMedia.keySet()) {
-			ctx.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new ClientMediaFile(allMedia.get(id))));
+			ctx.write(new Message(OpCode.STC_ADD_MEDIA_FILE_ACK, new MediaFileClient(allMedia.get(id))));
 		}
 
 		ctx.flush();
@@ -468,12 +468,12 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		return this.connectedUsers;
 	}
 
-	public ServerMediaFile getCurrentFile() {
+	public MediaFileServer getCurrentFile() {
 		return this.currentFile;
 	}
 
-	public ServerGUI getFrame() {
-		return this.serverGUI;
+	public GUIServer getFrame() {
+		return this.GUIServer;
 	}
 
 	public MediaModelServer getMediaModel() {
@@ -526,7 +526,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	public void makeGUIVisible() {
-		this.serverGUI.setVisible(true);
+		this.GUIServer.setVisible(true);
 	}
 
 	private void propertyUpdate(Message msg) throws IOException {
@@ -652,7 +652,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.tickerModel.removeTickerElement(eltToRemove);
 
 		if (this.liveTickerEnabled) {
-			this.serverGUI.updateLiveTickerString();
+			this.GUIServer.updateLiveTickerString();
 		}
 
 		broadcastMessage(new Message(OpCode.STC_REMOVE_LIVE_TICKER_ELEMENT_ACK, eltToRemove));
@@ -705,15 +705,15 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.propertyUpdateListener = propertyUpdateListener;
 	}
 
-	private void showMedia(ServerMediaFile toShow) throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
+	private void showMedia(MediaFileServer toShow) throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
 		if (this.currentFile != null) {
 			this.currentFile.setCurrent(false);
 		}
 		this.currentFile = toShow;
 		toShow.setCurrent(true).increaseShowCount();
 
-		if (toShow instanceof VideoFile) {
-			this.serverGUI.setVideoFinishedListener(new VideoFinishListener() {
+		if (toShow instanceof VideoFileServer) {
+			this.GUIServer.setVideoFinishedListener(new VideoFinishListener() {
 
 				@Override
 				public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
@@ -727,7 +727,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		}
 
 		try {
-			this.serverGUI.showMediaFileInMainComponent(this.currentFile);
+			this.GUIServer.showMediaFileInMainComponent(this.currentFile);
 		} catch (IOException e) {
 			log.log(Level.WARNING, "Media file could not be shown.", e);
 			return;
@@ -737,7 +737,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 
 	private void showMediaFile(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
 		UUID toShow = (UUID) msg.getData().get(0);
-		ServerMediaFile fileToShow = this.mediaModel.getMediaFileById(toShow);
+		MediaFileServer fileToShow = this.mediaModel.getMediaFileById(toShow);
 
 		showMedia(fileToShow);
 
@@ -748,7 +748,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		if (!this.mediaModel.getMediaPrivateQueue().isEmpty()) {
 			fileFromPrivateQueue = true;
 		}
-		ServerMediaFile fileToShow = this.mediaModel.getNext();
+		MediaFileServer fileToShow = this.mediaModel.getNext();
 
 		showMedia(fileToShow);
 

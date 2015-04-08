@@ -11,10 +11,10 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.lang.reflect.InvocationTargetException;
 
-import de.netprojectev.client.model.PreferencesModelClient;
+import de.netprojectev.client.datamodel.PreferencesModelClient;
 import de.netprojectev.client.networking.MessageProxyClient;
-import de.netprojectev.networking.LoginData;
-import de.netprojectev.utils.LoggerBuilder;
+import de.netprojectev.common.networking.LoginData;
+import de.netprojectev.common.utils.LoggerBuilder;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
@@ -28,13 +28,13 @@ public class Client {
 	private final MessageProxyClient proxy;
 	private final String host;
 	private final int port;
-	private final ClientGUI gui;
+	private final GUIClient gui;
 
 	private boolean loginSuccess;
 
 	private EventLoopGroup group = new NioEventLoopGroup();
 
-	public Client(String host, int port, LoginData login, ClientGUI gui, Class<? extends PreferencesModelClient> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
+	public Client(String host, int port, LoginData login, GUIClient gui, Class<? extends PreferencesModelClient> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, SecurityException {
 		this.login = login;
 		this.host = host;
 		this.port = port;
@@ -93,7 +93,7 @@ public class Client {
 		log.info("Disconnecting complete");
 	}
 
-	public ClientGUI getGui() {
+	public GUIClient getGui() {
 		return this.gui;
 	}
 
