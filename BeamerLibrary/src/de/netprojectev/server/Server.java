@@ -18,24 +18,6 @@ import java.util.logging.Level;
 
 import de.netprojectev.networking.Message;
 import de.netprojectev.networking.OpCode;
-import de.netprojectev.networking.old.downstream.MessageDecoder;
-import de.netprojectev.networking.old.upstream.ClientMediaFileEncoder;
-import de.netprojectev.networking.old.upstream.DequeueDataByteEncoder;
-import de.netprojectev.networking.old.upstream.LoginByteEncoder;
-import de.netprojectev.networking.old.upstream.MessageSplit;
-import de.netprojectev.networking.old.upstream.PriorityByteEncoder;
-import de.netprojectev.networking.old.upstream.PropertiesByteEncoder;
-import de.netprojectev.networking.old.upstream.StringArrayEncoder;
-import de.netprojectev.networking.old.upstream.ThemeByteEncoder;
-import de.netprojectev.networking.old.upstream.TickerElementEncoder;
-import de.netprojectev.networking.old.upstream.UUIDByteEncoder;
-import de.netprojectev.networking.old.upstream.primitives.BooleanByteEncoder;
-import de.netprojectev.networking.old.upstream.primitives.ByteArrayByteEncoder;
-import de.netprojectev.networking.old.upstream.primitives.IntByteEncoder;
-import de.netprojectev.networking.old.upstream.primitives.LongByteEncoder;
-import de.netprojectev.networking.old.upstream.primitives.MediaTypeByteEncoder;
-import de.netprojectev.networking.old.upstream.primitives.OpCodeByteEncoder;
-import de.netprojectev.networking.old.upstream.primitives.StringByteEncoder;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.utils.LoggerBuilder;
 

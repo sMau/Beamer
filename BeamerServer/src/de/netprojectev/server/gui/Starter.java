@@ -3,7 +3,6 @@ package de.netprojectev.server.gui;
 import uk.co.flamingpenguin.jewel.cli.ArgumentValidationException;
 import uk.co.flamingpenguin.jewel.cli.Cli;
 import uk.co.flamingpenguin.jewel.cli.CliFactory;
-import de.netprojectev.server.ServerCLI;
 
 public class Starter {
 
