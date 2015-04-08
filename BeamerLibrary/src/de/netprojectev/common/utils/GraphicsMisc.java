@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 
 import org.jdesktop.swingx.util.GraphicsUtilities;
 
-public class Misc {
+public class GraphicsMisc {
 	// Creates a compatible image of the same dimension and
 	// transparency as the given image
 	public static BufferedImage createCompatibleImage(BufferedImage image) {
@@ -51,14 +51,14 @@ public class Misc {
 
 	public static ImageIcon getScaledImageIcon(ImageIcon original, int widthToScaleTo) throws FileNotFoundException, IOException {
 		BufferedImage bi = imageIconToBufferedImage(original);
-		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(bi, widthToScaleTo, widthToScaleTo * bi.getHeight(null) / bi.getWidth(null)));
+		ImageIcon scaled = new ImageIcon(GraphicsMisc.getScaledImageInstanceFast(bi, widthToScaleTo, widthToScaleTo * bi.getHeight(null) / bi.getWidth(null)));
 
 		return scaled;
 	}
 
 	public static ImageIcon getScaledImageIconFromBufImg(BufferedImage original, int widthToScaleTo) throws FileNotFoundException, IOException {
 
-		ImageIcon scaled = new ImageIcon(Misc.getScaledImageInstanceFast(original, widthToScaleTo, widthToScaleTo * original.getHeight(null) / original.getWidth(null)));
+		ImageIcon scaled = new ImageIcon(GraphicsMisc.getScaledImageInstanceFast(original, widthToScaleTo, widthToScaleTo * original.getHeight(null) / original.getWidth(null)));
 		original = null;
 
 		return scaled;

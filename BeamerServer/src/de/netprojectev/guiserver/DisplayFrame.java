@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.common.exceptions.MediaListsEmptyException;
 import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.server.ConstantsServer;
@@ -147,7 +147,7 @@ public class DisplayFrame extends javax.swing.JFrame implements GUIServer {
 							enterFullscreen(0);
 							try {
 								videoFinishedListener.videoFinished();
-							} catch (MediaDoesNotExsistException e) {
+							} catch (MediaDoesNotExistException e) {
 								log.log(Level.WARNING, "Video does not exist.", e);
 							} catch (MediaListsEmptyException e) {
 								log.log(Level.WARNING, "Video does not exist.", e);

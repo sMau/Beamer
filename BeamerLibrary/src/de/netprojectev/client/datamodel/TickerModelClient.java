@@ -6,14 +6,14 @@ import java.util.UUID;
 
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.common.datastructures.TickerElement;
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.common.utils.LoggerBuilder;
 
 public class TickerModelClient {
 
 	public interface UpdateTickerDataListener {
-		public void update();
+		void update();
 	}
 
 	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(TickerModelClient.class);
@@ -31,8 +31,8 @@ public class TickerModelClient {
 	public TickerModelClient(MessageProxyClient proxy) {
 
 		this.proxy = proxy;
-		this.elements = new HashMap<UUID, TickerElement>();
-		this.allElementsList = new ArrayList<UUID>();
+		this.elements = new HashMap<>();
+		this.allElementsList = new ArrayList<>();
 	}
 
 	public UUID addTickerElement(TickerElement e) {
@@ -45,13 +45,13 @@ public class TickerModelClient {
 		return e.getId();
 	}
 
-	private void checkIfElementExists(UUID id) throws MediaDoesNotExsistException {
+	private void checkIfElementExists(UUID id) throws MediaDoesNotExistException {
 		if (this.elements.get(id) == null) {
-			throw new MediaDoesNotExsistException("Ticker element does not exist. Query id: " + id);
+			throw new MediaDoesNotExistException("Ticker element does not exist. Query id: " + id);
 		}
 	}
 
-	public String completeTickerText() throws MediaDoesNotExsistException {
+	public String completeTickerText() throws MediaDoesNotExistException {
 		String text = "";
 
 		for (int i = 0; i < this.allElementsList.size(); i++) {
@@ -71,7 +71,7 @@ public class TickerModelClient {
 		return this.allElementsList;
 	}
 
-	public TickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
+	public TickerElement getElementByID(UUID id) throws MediaDoesNotExistException {
 		checkIfElementExists(id);
 		return this.elements.get(id);
 	}
@@ -84,7 +84,7 @@ public class TickerModelClient {
 		return this.elements.get(this.allElementsList.get(row));
 	}
 
-	public void removeTickerElement(final UUID id) throws MediaDoesNotExsistException {
+	public void removeTickerElement(final UUID id) throws MediaDoesNotExistException {
 
 		/*
 		 * SwingUtilities.invokeLater(new Runnable() {
@@ -97,7 +97,7 @@ public class TickerModelClient {
 		log.fine("Removing ticker element: " + id);
 		try {
 			checkIfElementExists(id);
-		} catch (MediaDoesNotExsistException e) {
+		} catch (MediaDoesNotExistException e) {
 			this.proxy.errorRequestFullSync(e);
 		}
 		this.elements.remove(id);
@@ -105,9 +105,9 @@ public class TickerModelClient {
 		updateTickerTable();
 	}
 
-	public UUID replaceTickerElement(TickerElement e) throws MediaDoesNotExsistException {
+	public UUID replaceTickerElement(TickerElement e) throws MediaDoesNotExistException {
 		if (this.elements.get(e.getId()) == null) {
-			throw new MediaDoesNotExsistException("The media file to replace has no mapping yet.");
+			throw new MediaDoesNotExistException("The media file to replace has no mapping yet.");
 		}
 		return addTickerElement(e);
 	}

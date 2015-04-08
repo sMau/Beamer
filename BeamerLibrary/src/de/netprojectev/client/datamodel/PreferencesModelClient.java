@@ -16,23 +16,23 @@ import de.netprojectev.common.utils.LoggerBuilder;
 public abstract class PreferencesModelClient {
 
 	public interface FullscreenStateListener {
-		public void update();
+		void update();
 	}
 
 	public interface LiveTickerStateListener {
-		public void update();
+		void update();
 	}
 
 	public interface PriorityListChangedListener {
-		public void update();
+		void update();
 	}
 
 	public interface ThemeListChangedListener {
-		public void update();
+		void update();
 	}
 
 	public interface UpdateAutoModeStateListener {
-		public void update(boolean fullsync) throws PriorityDoesNotExistException;
+		void update(boolean fullsync) throws PriorityDoesNotExistException;
 	}
 
 	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(PreferencesModelClient.class);
@@ -81,10 +81,10 @@ public abstract class PreferencesModelClient {
 	public PreferencesModelClient(MessageProxyClient proxy) {
 
 		this.proxy = proxy;
-		this.themes = new HashMap<UUID, Theme>();
-		this.prios = new HashMap<UUID, Priority>();
-		this.allPrioritiesList = new ArrayList<UUID>();
-		this.allThemesList = new ArrayList<UUID>();
+		this.themes = new HashMap<>();
+		this.prios = new HashMap<>();
+		this.allPrioritiesList = new ArrayList<>();
+		this.allThemesList = new ArrayList<>();
 	}
 
 	public void addPriorityChangedListener(PriorityListChangedListener priorityChangedListener) {

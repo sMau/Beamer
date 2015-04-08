@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 import de.netprojectev.client.datastructures.MediaType;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.datamodel.PreferencesModelServer;
-import de.netprojectev.common.utils.Misc;
+import de.netprojectev.common.utils.GraphicsMisc;
 
 public class ImageFileServer extends MediaFileServer {
 
@@ -54,7 +54,7 @@ public class ImageFileServer extends MediaFileServer {
 		double imageAspectRatio = ((double) compImage.getWidth()) / ((double) compImage.getHeight());
 		int newWidth = Integer.parseInt(PreferencesModelServer.getPropertyByKey(ConstantsServer.PROP_GENERAL_PREVIEW_WIDTH));
 		int newHeight = (int) (newWidth / imageAspectRatio);
-		BufferedImage scaled = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
+		BufferedImage scaled = GraphicsMisc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		ImageIO.write(scaled, "png", out);
 		out.flush();

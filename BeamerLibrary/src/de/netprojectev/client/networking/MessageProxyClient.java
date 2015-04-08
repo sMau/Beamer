@@ -24,10 +24,10 @@ import de.netprojectev.client.datamodel.TickerModelClient;
 import de.netprojectev.common.datastructures.Priority;
 import de.netprojectev.common.datastructures.Theme;
 import de.netprojectev.common.datastructures.TickerElement;
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.common.exceptions.OutOfSyncException;
 import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
-import de.netprojectev.common.exceptions.UnkownMessageException;
+import de.netprojectev.common.exceptions.UnknownMessageException;
 import de.netprojectev.common.networking.DequeueData;
 import de.netprojectev.common.networking.LoginData;
 import de.netprojectev.common.networking.Message;
@@ -190,12 +190,12 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		TickerElement e = (TickerElement) msg.getData().get(0);
 		try {
 			this.tickerModel.replaceTickerElement(e);
-		} catch (MediaDoesNotExsistException e1) {
+		} catch (MediaDoesNotExistException e1) {
 			errorRequestFullSync(e1);
 		}
 	}
 
-	private void liveTickerElementRemoved(Message msg) throws MediaDoesNotExsistException {
+	private void liveTickerElementRemoved(Message msg) throws MediaDoesNotExistException {
 		UUID toRemove = (UUID) msg.getData().get(0);
 		this.tickerModel.removeTickerElement(toRemove);
 	}
@@ -218,10 +218,10 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		this.mediaModel.addMediaFile(toAdd);
 	}
 
-	private void mediaFileDequeued(Message msg) throws MediaDoesNotExsistException,
+	private void mediaFileDequeued(Message msg) throws MediaDoesNotExistException,
 	OutOfSyncException {
 		DequeueData toDequeue = (DequeueData) msg.getData().get(0);
-		this.mediaModel.dequeueMediaFile(toDequeue.getRow(), toDequeue.getId());
+		this.mediaModel.dequeueMediaFile(toDequeue.getPosition(), toDequeue.getId());
 
 	}
 
@@ -229,23 +229,23 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		MediaFileClient media = (MediaFileClient) msg.getData().get(0);
 		try {
 			this.mediaModel.replaceMediaFile(media);
-		} catch (MediaDoesNotExsistException e) {
+		} catch (MediaDoesNotExistException e) {
 			errorRequestFullSync(e);
 		}
 	}
 
-	private void mediaFileQueued(Message msg) throws MediaDoesNotExsistException {
+	private void mediaFileQueued(Message msg) throws MediaDoesNotExistException {
 		UUID toQueue = (UUID) msg.getData().get(0);
 		this.mediaModel.queueMediaFile(toQueue);
 	}
 
-	private void mediaFileRemoved(Message msg) throws MediaDoesNotExsistException {
+	private void mediaFileRemoved(Message msg) throws MediaDoesNotExistException {
 
 		UUID toRemove = (UUID) msg.getData().get(0);
 		this.mediaModel.removeMediaFile(toRemove);
 	}
 
-	private void mediaFileShowing(Message msg) throws MediaDoesNotExsistException, PriorityDoesNotExistException {
+	private void mediaFileShowing(Message msg) throws MediaDoesNotExistException, PriorityDoesNotExistException {
 		UUID fileShowing = (UUID) msg.getData().get(0);
 		this.mediaModel.setAsCurrent(fileShowing);
 	}
@@ -265,8 +265,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		this.prefs.setServerFonts(fontFamilies);
 	}
 
-	public void receiveMessage(Message msg) throws UnkownMessageException,
-	MediaDoesNotExsistException, OutOfSyncException, PriorityDoesNotExistException {
+	public void receiveMessage(Message msg) throws UnknownMessageException,
+			MediaDoesNotExistException, OutOfSyncException, PriorityDoesNotExistException {
 		log.fine("Receiving message: " + msg.toString());
 		switch (msg.getOpCode()) {
 		case STC_ADD_MEDIA_FILE_ACK:
@@ -391,7 +391,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 		}
 	}
 
-	private void resetShowCount(Message msg) throws MediaDoesNotExsistException {
+	private void resetShowCount(Message msg) throws MediaDoesNotExistException {
 		UUID toReset = (UUID) msg.getData().get(0);
 		this.mediaModel.resetShowCount(toReset);
 	}
@@ -616,8 +616,8 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	}
 
-	private void unkownMessageReceived(Message msg) throws UnkownMessageException {
-		throw new UnkownMessageException("A unkown message was received: " + msg.toString());
+	private void unkownMessageReceived(Message msg) throws UnknownMessageException {
+		throw new UnknownMessageException("A unkown message was received: " + msg.toString());
 	}
 
 	private void updatePropertyAck(Message msg) {

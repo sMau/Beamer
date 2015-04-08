@@ -320,7 +320,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtAllMediaMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtAllMedia.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer(true));&#xa;jtAllMedia.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int row) {&#xa;        queue(row);&#xa;    }&#xa;}));&#xa;&#xa;jtAllMedia.getColumnModel().getColumn(1).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(2).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(0).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(0).setMinWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(1).setMinWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(2).setMinWidth(30);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtAllMedia.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer(true));&#xa;jtAllMedia.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int position) {&#xa;        queue(position);&#xa;    }&#xa;}));&#xa;&#xa;jtAllMedia.getColumnModel().getColumn(1).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(2).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(0).setMaxWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(0).setMinWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(1).setMinWidth(30);&#xa;jtAllMedia.getColumnModel().getColumn(2).setMinWidth(30);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -371,7 +371,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jtCustomQueueMouseClicked"/>
                   </Events>
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtCustomQueue.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer(false));&#xa;jtCustomQueue.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int row) {&#xa;        dequeue(row);&#xa;    }&#xa;}));&#xa;&#xa;jtCustomQueue.getColumnModel().getColumn(0).setMaxWidth(30);&#xa;jtCustomQueue.getColumnModel().getColumn(0).setMinWidth(30);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jtCustomQueue.getColumnModel().getColumn(0).setCellRenderer(new TableButtonRenderer(false));&#xa;jtCustomQueue.getColumnModel().getColumn(0).setCellEditor(new ButtonEditor(new JCheckBox(), new ButtonEditor.TableButtonActionListener() {&#xa;    public void buttonClicked(int position) {&#xa;        dequeue(position);&#xa;    }&#xa;}));&#xa;&#xa;jtCustomQueue.getColumnModel().getColumn(0).setMaxWidth(30);&#xa;jtCustomQueue.getColumnModel().getColumn(0).setMinWidth(30);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

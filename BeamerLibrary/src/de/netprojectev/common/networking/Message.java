@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Class to encapsulate messages transfered via network in the control flow.
+ * Class to encapsulate messages transferred via network in the control flow.
  * Actually network messages are converted to plain byte streams.
  */
 public class Message implements Serializable {
@@ -14,13 +14,6 @@ public class Message implements Serializable {
 
 	public Message(OpCode opCode) {
 		this.opCode = opCode;
-	}
-
-	public Message(OpCode opCode, ArrayList<Serializable> data) {
-		this.opCode = opCode;
-		for (Serializable d : data) {
-			this.data.add(d);
-		}
 	}
 
 	public Message(OpCode opCode, Serializable... data) {

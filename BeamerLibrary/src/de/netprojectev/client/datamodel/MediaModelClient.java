@@ -8,7 +8,7 @@ import java.util.UUID;
 import de.netprojectev.client.datastructures.MediaFileClient;
 import de.netprojectev.client.networking.MessageProxyClient;
 import de.netprojectev.common.datastructures.MediaFile;
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.common.exceptions.MediaNotInQueueException;
 import de.netprojectev.common.exceptions.OutOfSyncException;
 import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
@@ -17,15 +17,15 @@ import de.netprojectev.common.utils.LoggerBuilder;
 public class MediaModelClient {
 
 	public interface UpdateAllMediaDataListener {
-		public void update();
+		void update();
 	}
 
 	public interface UpdateCurrentFileListener {
-		public void update() throws PriorityDoesNotExistException;
+		void update() throws PriorityDoesNotExistException;
 	}
 
 	public interface UpdateCustomQueueDataListener {
-		public void update();
+		void update();
 	}
 
 	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(MediaModelClient.class);
@@ -55,9 +55,9 @@ public class MediaModelClient {
 
 	public MediaModelClient(MessageProxyClient proxy) {
 		this.proxy = proxy;
-		this.allMedia = new HashMap<UUID, MediaFileClient>();
-		this.allMediaList = new ArrayList<UUID>();
-		this.customQueue = new LinkedList<UUID>();
+		this.allMedia = new HashMap<>();
+		this.allMediaList = new ArrayList<>();
+		this.customQueue = new LinkedList<>();
 	}
 
 	public UUID addMediaFile(MediaFileClient fileToAdd) {
@@ -73,33 +73,17 @@ public class MediaModelClient {
 		return fileToAdd.getId();
 	}
 
-	private void checkIfMediaExists(UUID id) throws MediaDoesNotExsistException {
+	private void checkIfMediaExists(UUID id) throws MediaDoesNotExistException {
 		if (this.allMedia.get(id) == null) {
-			throw new MediaDoesNotExsistException("The requested media does not exist. ID: " + id);
+			throw new MediaDoesNotExistException("The requested media does not exist. ID: " + id);
 		}
 	}
 
-	public void dequeueFirstMediaFile() {
-		if (!this.customQueue.isEmpty()) {
-			log.fine("Dequeueing first.");
-			this.customQueue.removeFirst();
+	public void dequeueMediaFile(final int row, final UUID id) throws MediaDoesNotExistException, OutOfSyncException {
 
-			updateCustomQueueTable();
-		}
-	}
-
-	public void dequeueMediaFile(final int row, final UUID id) throws MediaDoesNotExsistException, OutOfSyncException {
-
-		/*
-		 * SwingUtilities.invokeLater(new Runnable() {
-		 *
-		 * @Override public void run() {
-		 *
-		 * } });
-		 */
 		try {
 			checkIfMediaExists(id);
-		} catch (MediaDoesNotExsistException e1) {
+		} catch (MediaDoesNotExistException e1) {
 			this.proxy.errorRequestFullSync(e1);
 		}
 		if (!this.customQueue.contains(id)) {
@@ -113,7 +97,7 @@ public class MediaModelClient {
 			this.customQueue.remove(row);
 		} else {
 			try {
-				throw new OutOfSyncException("The given row doesnt match the UUID of media file, Out of Sync propably");
+				throw new OutOfSyncException("The given row does not match the UUID of media file, Out of Sync probably");
 			} catch (OutOfSyncException e) {
 				this.proxy.errorRequestFullSync(e);
 			}
@@ -134,7 +118,7 @@ public class MediaModelClient {
 		return this.customQueue;
 	}
 
-	public MediaFileClient getMediaFileById(UUID id) throws MediaDoesNotExsistException {
+	public MediaFileClient getMediaFileById(UUID id) throws MediaDoesNotExistException {
 		checkIfMediaExists(id);
 		return this.allMedia.get(id);
 	}
@@ -147,7 +131,7 @@ public class MediaModelClient {
 		return this.allMedia.get(this.allMediaList.get(position));
 	}
 
-	public void queueMediaFile(UUID id) throws MediaDoesNotExsistException {
+	public void queueMediaFile(UUID id) throws MediaDoesNotExistException {
 		checkIfMediaExists(id);
 		log.fine("Queueing media file: " + id);
 		this.customQueue.addLast(id);
@@ -155,11 +139,11 @@ public class MediaModelClient {
 		updateCustomQueueTable();
 	}
 
-	public void removeMediaFile(final UUID toRemove) throws MediaDoesNotExsistException {
+	public void removeMediaFile(final UUID toRemove) throws MediaDoesNotExistException {
 
 		try {
 			checkIfMediaExists(toRemove);
-		} catch (MediaDoesNotExsistException e) {
+		} catch (MediaDoesNotExistException e) {
 			this.proxy.errorRequestFullSync(e);
 		}
 		log.fine("Removing media file: " + toRemove);
@@ -175,20 +159,20 @@ public class MediaModelClient {
 		updateCustomQueueTable();
 	}
 
-	public UUID replaceMediaFile(MediaFileClient replace) throws MediaDoesNotExsistException {
+	public UUID replaceMediaFile(MediaFileClient replace) throws MediaDoesNotExistException {
 		if (this.allMedia.get(replace.getId()) == null) {
-			throw new MediaDoesNotExsistException("The media file to replace has no mapping yet.");
+			throw new MediaDoesNotExistException("The media file to replace has no mapping yet.");
 		}
 		return addMediaFile(replace);
 	}
 
-	public void resetShowCount(UUID toReset) throws MediaDoesNotExsistException {
+	public void resetShowCount(UUID toReset) throws MediaDoesNotExistException {
 		getMediaFileById(toReset).resetShowCount();
 		updateAllMediaTable();
 		updateCustomQueueTable();
 	}
 
-	public void setAsCurrent(UUID fileShowing) throws MediaDoesNotExsistException, PriorityDoesNotExistException {
+	public void setAsCurrent(UUID fileShowing) throws MediaDoesNotExistException, PriorityDoesNotExistException {
 		if (this.currentMediaFile != null) {
 			this.currentMediaFile.setCurrent(false);
 		}
@@ -208,15 +192,6 @@ public class MediaModelClient {
 
 	public void setUpdateCurrentFileListener(UpdateCurrentFileListener updateCurrentFileListener) {
 		this.updateCurrentFileListener = updateCurrentFileListener;
-	}
-
-	public int timeUntilShow(int rowIndex) throws MediaDoesNotExsistException, PriorityDoesNotExistException {
-		// XXX take current file time into account
-		int res = 0;
-		for (int i = 0; i < rowIndex; i++) {
-			res += this.proxy.getPrefs().getPriorityByID(getMediaFileById(this.customQueue.get(i)).getPriorityID()).getMinutesToShow();
-		}
-		return res;
 	}
 
 	private void updateAllMediaTable() {

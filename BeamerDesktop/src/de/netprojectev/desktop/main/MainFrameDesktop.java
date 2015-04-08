@@ -41,7 +41,7 @@ import de.netprojectev.client.networking.MessageProxyClient.ServerShutdownListen
 import de.netprojectev.client.networking.MessageProxyClient.TimeSyncListener;
 import de.netprojectev.common.datastructures.Priority;
 import de.netprojectev.common.datastructures.TickerElement;
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.common.exceptions.ThemeDoesNotExistException;
 import de.netprojectev.common.networking.LoginData;
@@ -153,12 +153,12 @@ public class MainFrameDesktop extends javax.swing.JFrame implements GUIClient {
 			public void valueChanged(ListSelectionEvent e) {
 				try {
 					updatePreviewLable();
-				} catch (MediaDoesNotExsistException e1) {
+				} catch (MediaDoesNotExistException e1) {
 					proxy.errorRequestFullSync(e1);
 				}
 				try {
 					updateEditorLable();
-				} catch (MediaDoesNotExsistException e1) {
+				} catch (MediaDoesNotExistException e1) {
 					proxy.errorRequestFullSync(e1);
 				}
 			}
@@ -171,12 +171,12 @@ public class MainFrameDesktop extends javax.swing.JFrame implements GUIClient {
 			public void valueChanged(ListSelectionEvent e) {
 				try {
 					updatePreviewLable();
-				} catch (MediaDoesNotExsistException e1) {
+				} catch (MediaDoesNotExistException e1) {
 					proxy.errorRequestFullSync(e1);
 				}
 				try {
 					updateEditorLable();
-				} catch (MediaDoesNotExsistException e1) {
+				} catch (MediaDoesNotExistException e1) {
 					proxy.errorRequestFullSync(e1);
 				}
 			}
@@ -188,12 +188,12 @@ public class MainFrameDesktop extends javax.swing.JFrame implements GUIClient {
 			public void valueChanged(ListSelectionEvent e) {
 				try {
 					updatePreviewLable();
-				} catch (MediaDoesNotExsistException e1) {
+				} catch (MediaDoesNotExistException e1) {
 					proxy.errorRequestFullSync(e1);
 				}
 				try {
 					updateEditorLable();
-				} catch (MediaDoesNotExsistException e1) {
+				} catch (MediaDoesNotExistException e1) {
 					proxy.errorRequestFullSync(e1);
 				}
 			}
@@ -888,7 +888,7 @@ public class MainFrameDesktop extends javax.swing.JFrame implements GUIClient {
 	private void jbResetFileDataActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jbResetFileDataActionPerformed
 		try {
 			updateEditorLable();
-		} catch (MediaDoesNotExsistException e) {
+		} catch (MediaDoesNotExistException e) {
 			proxy.errorRequestFullSync(e);
 		}
 	}// GEN-LAST:event_jbResetFileDataActionPerformed
@@ -1230,7 +1230,7 @@ public class MainFrameDesktop extends javax.swing.JFrame implements GUIClient {
 		}
 	}
 
-	private void updateEditorLable() throws MediaDoesNotExsistException {
+	private void updateEditorLable() throws MediaDoesNotExistException {
 		int selectedTab = tabbedPaneContainer.getSelectedIndex();
 		int row;
 		switch (selectedTab) {
@@ -1325,7 +1325,7 @@ public class MainFrameDesktop extends javax.swing.JFrame implements GUIClient {
 
 	}
 
-	private void updatePreviewLable() throws MediaDoesNotExsistException {
+	private void updatePreviewLable() throws MediaDoesNotExistException {
 		int selectedTab = tabbedPaneContainer.getSelectedIndex();
 		int row;
 		switch (selectedTab) {

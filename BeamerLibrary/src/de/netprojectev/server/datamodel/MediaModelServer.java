@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.common.exceptions.MediaListsEmptyException;
 import de.netprojectev.common.exceptions.MediaNotInQueueException;
 import de.netprojectev.common.exceptions.OutOfSyncException;
@@ -81,7 +81,7 @@ public class MediaModelServer {
 		}
 	}
 
-	public void dequeue(UUID id, int row) throws MediaDoesNotExsistException, OutOfSyncException {
+	public void dequeue(UUID id, int row) throws MediaDoesNotExistException, OutOfSyncException {
 		testIfMediaFileExists(id);
 		if (!this.mediaPrivateQueue.contains(id)) {
 			throw new MediaNotInQueueException("Media not in private queue.");
@@ -99,7 +99,7 @@ public class MediaModelServer {
 		return this.allMediaFiles;
 	}
 
-	public MediaFileServer getMediaFileById(UUID id) throws MediaDoesNotExsistException {
+	public MediaFileServer getMediaFileById(UUID id) throws MediaDoesNotExistException {
 		testIfMediaFileExists(id);
 		log.fine("Getting media file: " + id);
 		return this.allMediaFiles.get(id);
@@ -109,7 +109,7 @@ public class MediaModelServer {
 		return this.mediaPrivateQueue;
 	}
 
-	public MediaFileServer getNext() throws MediaDoesNotExsistException, MediaListsEmptyException {
+	public MediaFileServer getNext() throws MediaDoesNotExistException, MediaListsEmptyException {
 		if (this.allMediaFiles.isEmpty()) {
 			throw new MediaListsEmptyException("No media files present.");
 		}
@@ -124,13 +124,13 @@ public class MediaModelServer {
 		}
 	}
 
-	public void queue(UUID id) throws MediaDoesNotExsistException {
+	public void queue(UUID id) throws MediaDoesNotExistException {
 		testIfMediaFileExists(id);
 		log.fine("Queuing media file: " + id);
 		this.mediaPrivateQueue.addLast(id);
 	}
 
-	public void removeMediaFile(UUID id) throws MediaDoesNotExsistException {
+	public void removeMediaFile(UUID id) throws MediaDoesNotExistException {
 		testIfMediaFileExists(id);
 		log.fine("Removing media file: " + id);
 		MediaFileServer removedFile = this.allMediaFiles.remove(id);
@@ -146,13 +146,13 @@ public class MediaModelServer {
 
 	}
 
-	public void resetShowCount(UUID toReset) throws MediaDoesNotExsistException {
+	public void resetShowCount(UUID toReset) throws MediaDoesNotExistException {
 		getMediaFileById(toReset).resetShowCount();
 	}
 
-	private void testIfMediaFileExists(UUID id) throws MediaDoesNotExsistException {
+	private void testIfMediaFileExists(UUID id) throws MediaDoesNotExistException {
 		if (this.allMediaFiles.get(id) == null) {
-			throw new MediaDoesNotExsistException("The requested media file does not exist. Query id: " + id);
+			throw new MediaDoesNotExistException("The requested media file does not exist. Query id: " + id);
 		}
 	}
 

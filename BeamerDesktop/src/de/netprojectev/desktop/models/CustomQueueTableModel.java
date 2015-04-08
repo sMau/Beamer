@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 import de.netprojectev.client.datastructures.MediaFileClient;
 import de.netprojectev.client.datamodel.MediaModelClient;
 import de.netprojectev.client.datamodel.MediaModelClient.UpdateCustomQueueDataListener;
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.common.utils.LoggerBuilder;
 
@@ -83,7 +83,7 @@ public class CustomQueueTableModel extends AbstractTableModel {
 		MediaFileClient media = null;
 		try {
 			media = mediaModel.getMediaFileById(mediaModel.getCustomQueue().get(rowIndex));
-		} catch (MediaDoesNotExsistException e) {
+		} catch (MediaDoesNotExistException e) {
 			mediaModel.getProxy().errorRequestFullSync(e);
 		}
 		if (media == null) {

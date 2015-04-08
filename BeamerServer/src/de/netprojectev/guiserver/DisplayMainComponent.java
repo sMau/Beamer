@@ -18,7 +18,7 @@ import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.server.datastructures.ImageFileServer;
 import de.netprojectev.server.datamodel.PreferencesModelServer;
 import de.netprojectev.common.utils.LoggerBuilder;
-import de.netprojectev.common.utils.Misc;
+import de.netprojectev.common.utils.GraphicsMisc;
 
 /**
  *
@@ -100,7 +100,7 @@ public class DisplayMainComponent extends JComponent {
 
 		log.fine("new size of the image: " + newWidth + "x" + newHeight);
 
-		this.image = Misc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
+		this.image = GraphicsMisc.getScaledImageInstanceFast(compImage, newWidth, newHeight);
 		repaint(0, 0, getWidth(), getHeight());
 
 	}

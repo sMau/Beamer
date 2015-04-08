@@ -2,9 +2,9 @@ package de.netprojectev.client;
 
 public interface GUIClient {
 
-	public void errorDuringLogin(String msg);
+	void errorDuringLogin(String msg);
 
-	public void errorRequestingFullsyncDialog();
+	void errorRequestingFullsyncDialog();
 
-	public void loginSuccess();
+	void loginSuccess();
 }

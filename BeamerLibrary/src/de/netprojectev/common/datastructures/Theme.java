@@ -29,7 +29,7 @@ public class Theme implements Serializable {
 	private final UUID id;
 	private String name;
 
-	private byte[] backgroundImage;
+	private byte[] backgroundImage; //TODO to improve. not very clever to hold the theme data in memory
 
 	/**
 	 *

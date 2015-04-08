@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 import de.netprojectev.common.datastructures.TickerElement;
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.server.ConstantsServer;
 import de.netprojectev.server.networking.MessageProxyServer;
 import de.netprojectev.common.utils.LoggerBuilder;
@@ -29,9 +29,9 @@ public class TickerModelServer {
 		return e.getId();
 	}
 
-	private void checkIfElementExists(UUID id) throws MediaDoesNotExsistException {
+	private void checkIfElementExists(UUID id) throws MediaDoesNotExistException {
 		if (this.elements.get(id) == null) {
-			throw new MediaDoesNotExsistException("Ticker element does not exist. Query id: " + id);
+			throw new MediaDoesNotExistException("Ticker element does not exist. Query id: " + id);
 		}
 	}
 
@@ -48,7 +48,7 @@ public class TickerModelServer {
 		return completeString;
 	}
 
-	public TickerElement getElementByID(UUID id) throws MediaDoesNotExsistException {
+	public TickerElement getElementByID(UUID id) throws MediaDoesNotExistException {
 		checkIfElementExists(id);
 		log.fine("Getting ticker element: " + id);
 		return this.elements.get(id);
@@ -58,7 +58,7 @@ public class TickerModelServer {
 		return this.elements;
 	}
 
-	public void removeTickerElement(UUID id) throws MediaDoesNotExsistException {
+	public void removeTickerElement(UUID id) throws MediaDoesNotExistException {
 		log.fine("Removing ticker element: " + id);
 		checkIfElementExists(id);
 		this.elements.remove(id);

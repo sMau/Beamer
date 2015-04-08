@@ -1,6 +1,6 @@
 package de.netprojectev.common.exceptions;
 
-public class MediaNotInQueueException extends MediaDoesNotExsistException {
+public class MediaNotInQueueException extends MediaDoesNotExistException {
 
 	/**
 	 *

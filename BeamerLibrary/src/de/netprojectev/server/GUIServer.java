@@ -7,20 +7,20 @@ import de.netprojectev.server.networking.MessageProxyServer.VideoFinishListener;
 
 public interface GUIServer {
 
-	public void enterFullscreen(int screenNumber);
+	void enterFullscreen(int screenNumber);
 
-	public void exitFullscreen();
+	void exitFullscreen();
 
-	public void setVideoFinishedListener(VideoFinishListener videoFinishListener);
+	void setVideoFinishedListener(VideoFinishListener videoFinishListener);
 
-	public void setVisible(boolean isVisible);
+	void setVisible(boolean isVisible);
 
-	public void showMediaFileInMainComponent(MediaFileServer toShow) throws IOException;
+	void showMediaFileInMainComponent(MediaFileServer toShow) throws IOException;
 
-	public void startLiveTicker();
+	void startLiveTicker();
 
-	public void stopLiveTicker();
+	void stopLiveTicker();
 
-	public void updateLiveTickerString();
+	void updateLiveTickerString();
 
 }

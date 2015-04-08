@@ -29,11 +29,11 @@ import de.netprojectev.client.datastructures.MediaFileClient;
 import de.netprojectev.common.datastructures.Priority;
 import de.netprojectev.common.datastructures.Theme;
 import de.netprojectev.common.datastructures.TickerElement;
-import de.netprojectev.common.exceptions.MediaDoesNotExsistException;
+import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.common.exceptions.MediaListsEmptyException;
 import de.netprojectev.common.exceptions.OutOfSyncException;
 import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
-import de.netprojectev.common.exceptions.UnkownMessageException;
+import de.netprojectev.common.exceptions.UnknownMessageException;
 import de.netprojectev.common.networking.DequeueData;
 import de.netprojectev.common.networking.LoginData;
 import de.netprojectev.common.networking.Message;
@@ -63,7 +63,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		public void run() {
 			try {
 				showNextMediaFile();
-			} catch (MediaDoesNotExsistException e) {
+			} catch (MediaDoesNotExistException e) {
 				log.log(Level.WARNING, "Media file could not be shown.", e);
 			} catch (MediaListsEmptyException e) {
 				log.log(Level.WARNING, "Media file could not be shown.", e);
@@ -102,7 +102,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	public interface VideoFinishListener {
-		public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException;
+		public void videoFinished() throws MediaDoesNotExistException, MediaListsEmptyException, PriorityDoesNotExistException;
 	}
 
 	private static final java.util.logging.Logger log = LoggerBuilder.createLogger(MessageProxyServer.class);
@@ -253,9 +253,9 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		ctx.close().sync();
 	}
 
-	private void dequeueMediaFile(Message msg) throws MediaDoesNotExsistException, OutOfSyncException {
+	private void dequeueMediaFile(Message msg) throws MediaDoesNotExistException, OutOfSyncException {
 		DequeueData mediaToDequeue = (DequeueData) msg.getData().get(0);
-		this.mediaModel.dequeue(mediaToDequeue.getId(), mediaToDequeue.getRow());
+		this.mediaModel.dequeue(mediaToDequeue.getId(), mediaToDequeue.getPosition());
 
 		broadcastMessage(new Message(OpCode.STC_DEQUEUE_MEDIAFILE_ACK, mediaToDequeue));
 
@@ -286,7 +286,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		broadcastMessage(new Message(OpCode.STC_DISABLE_LIVE_TICKER_ACK));
 	}
 
-	private void editLiveTickerElement(Message msg) throws MediaDoesNotExsistException, IOException {
+	private void editLiveTickerElement(Message msg) throws MediaDoesNotExistException, IOException {
 		TickerElement edited = (TickerElement) msg.getData().get(0);
 		TickerElement correlatedServerFile = this.tickerModel.getElementByID(edited.getId());
 		correlatedServerFile.setShow(edited.isShow());
@@ -300,7 +300,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.prefsModel.serializeTickerDatabase();
 	}
 
-	private void editMediaFile(Message msg) throws MediaDoesNotExsistException, FileNotFoundException, IOException, URISyntaxException {
+	private void editMediaFile(Message msg) throws MediaDoesNotExistException, FileNotFoundException, IOException, URISyntaxException {
 		MediaFileClient editedFile = (MediaFileClient) msg.getData().get(0);
 		MediaFileServer correlatedServerFile = this.mediaModel.getMediaFileById(editedFile.getId());
 		correlatedServerFile.setName(editedFile.getName());
@@ -310,7 +310,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.prefsModel.serializeMediaDatabase();
 	}
 
-	private void enableAutoMode() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
+	private void enableAutoMode() throws MediaDoesNotExistException, MediaListsEmptyException, PriorityDoesNotExistException {
 		this.automodeEnabled = true;
 		broadcastMessage(new Message(OpCode.STC_ENABLE_AUTO_MODE_ACK));
 		updateAutoModeTimer();
@@ -542,14 +542,14 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		broadcastMessage(new Message(OpCode.STC_PROPERTY_UPDATE_ACK, key, newValue));
 	}
 
-	private void queueMediaFile(Message msg) throws MediaDoesNotExsistException {
+	private void queueMediaFile(Message msg) throws MediaDoesNotExistException {
 		UUID toQueue = (UUID) msg.getData().get(0);
 		this.mediaModel.queue(toQueue);
 
 		broadcastMessage(new Message(OpCode.STC_QUEUE_MEDIA_FILE_ACK, toQueue));
 	}
 
-	private void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExsistException, MediaListsEmptyException, UnkownMessageException, OutOfSyncException, FileNotFoundException, IOException, PriorityDoesNotExistException, InterruptedException, URISyntaxException {
+	private void receiveMessage(Message msg, ChannelHandlerContext ctx) throws MediaDoesNotExistException, MediaListsEmptyException, UnknownMessageException, OutOfSyncException, FileNotFoundException, IOException, PriorityDoesNotExistException, InterruptedException, URISyntaxException {
 		switch (msg.getOpCode()) {
 		case CTS_ADD_IMAGE_FILE:
 			addImageFile(msg);
@@ -647,7 +647,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		}
 	}
 
-	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExsistException, IOException {
+	private void removeLiveTickerElement(Message msg) throws MediaDoesNotExistException, IOException {
 		UUID eltToRemove = (UUID) msg.getData().get(0);
 		this.tickerModel.removeTickerElement(eltToRemove);
 
@@ -660,7 +660,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.prefsModel.serializeTickerDatabase();
 	}
 
-	private void removeMediaFile(Message msg) throws MediaDoesNotExsistException, IOException {
+	private void removeMediaFile(Message msg) throws MediaDoesNotExistException, IOException {
 		UUID toRemove = (UUID) msg.getData().get(0);
 		this.mediaModel.removeMediaFile(toRemove);
 
@@ -685,7 +685,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.prefsModel.serializeThemeDatabase();
 	}
 
-	private void resetShowCount(Message msg) throws MediaDoesNotExsistException, IOException {
+	private void resetShowCount(Message msg) throws MediaDoesNotExistException, IOException {
 		UUID toReset = (UUID) msg.getData().get(0);
 		this.mediaModel.resetShowCount(toReset);
 		broadcastMessage(new Message(OpCode.STC_RESET_SHOW_COUNT_ACK, toReset));
@@ -705,7 +705,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		this.propertyUpdateListener = propertyUpdateListener;
 	}
 
-	private void showMedia(MediaFileServer toShow) throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
+	private void showMedia(MediaFileServer toShow) throws MediaDoesNotExistException, MediaListsEmptyException, PriorityDoesNotExistException {
 		if (this.currentFile != null) {
 			this.currentFile.setCurrent(false);
 		}
@@ -716,7 +716,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 			this.GUIServer.setVideoFinishedListener(new VideoFinishListener() {
 
 				@Override
-				public void videoFinished() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
+				public void videoFinished() throws MediaDoesNotExistException, MediaListsEmptyException, PriorityDoesNotExistException {
 					if (MessageProxyServer.this.automodeEnabled) {
 						showNextMediaFile();
 					}
@@ -735,7 +735,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		broadcastMessage(new Message(OpCode.STC_SHOW_MEDIA_FILE_ACK, toShow.getId()));
 	}
 
-	private void showMediaFile(Message msg) throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
+	private void showMediaFile(Message msg) throws MediaDoesNotExistException, MediaListsEmptyException, PriorityDoesNotExistException {
 		UUID toShow = (UUID) msg.getData().get(0);
 		MediaFileServer fileToShow = this.mediaModel.getMediaFileById(toShow);
 
@@ -743,7 +743,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 
 	}
 
-	private void showNextMediaFile() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
+	private void showNextMediaFile() throws MediaDoesNotExistException, MediaListsEmptyException, PriorityDoesNotExistException {
 		boolean fileFromPrivateQueue = false;
 		if (!this.mediaModel.getMediaPrivateQueue().isEmpty()) {
 			fileFromPrivateQueue = true;
@@ -757,11 +757,11 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 		}
 	}
 
-	private void unkownMessageReceived(Message msg) throws UnkownMessageException {
-		throw new UnkownMessageException("A unkown message was received. Debug information: " + msg.toString());
+	private void unkownMessageReceived(Message msg) throws UnknownMessageException {
+		throw new UnknownMessageException("A unkown message was received. Debug information: " + msg.toString());
 	}
 
-	private void updateAutoModeTimer() throws MediaDoesNotExsistException, MediaListsEmptyException, PriorityDoesNotExistException {
+	private void updateAutoModeTimer() throws MediaDoesNotExistException, MediaListsEmptyException, PriorityDoesNotExistException {
 
 		if (this.automodeEnabled) {
 

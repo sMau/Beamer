@@ -9,11 +9,11 @@ public class DequeueData implements Serializable {
 	 *
 	 */
 	private static final long serialVersionUID = 5472644686787312647L;
-	private final int row;
+	private final int position;
 	private final UUID id;
 
-	public DequeueData(int row, UUID id) {
-		this.row = row;
+	public DequeueData(int position, UUID id) {
+		this.position = position;
 		this.id = id;
 	}
 
@@ -21,7 +21,7 @@ public class DequeueData implements Serializable {
 		return this.id;
 	}
 
-	public int getRow() {
-		return this.row;
+	public int getPosition() {
+		return this.position;
 	}
 }
