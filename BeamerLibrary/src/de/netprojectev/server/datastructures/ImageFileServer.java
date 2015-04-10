@@ -29,9 +29,9 @@ public class ImageFileServer extends MediaFileServer {
 	private transient byte[] image;
 	private File pathOnDisk;
 
-	public ImageFileServer(String name, UUID priorityID, File pathOnDisk) throws IOException {
+	public ImageFileServer(String name, UUID priorityID, Path pathOnDisk) throws IOException {
 		super(name, priorityID);
-		Path srcPath = Paths.get(pathOnDisk.getAbsolutePath());
+		Path srcPath = pathOnDisk;
 		Path destPath = Paths.get(ConstantsServer.SAVE_PATH, ConstantsServer.CACHE_PATH_IMAGES, this.id.toString());
 		Files.move(srcPath, destPath, StandardCopyOption.ATOMIC_MOVE);
 		this.pathOnDisk = destPath.toFile();

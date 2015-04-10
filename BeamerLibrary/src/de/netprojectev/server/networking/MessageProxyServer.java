@@ -10,11 +10,17 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -160,7 +166,10 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void addImageFile(Message msg) throws FileNotFoundException, IOException {
-		ImageFileServer imageFile = (ImageFileServer) msg.getData().get(0);
+
+		Path destPath = Paths.get(ConstantsServer.SAVE_PATH, ConstantsServer.CACHE_PATH_IMAGES, UUID.randomUUID().toString());
+		Files.write(destPath, (byte[]) msg.getData().get(0), StandardOpenOption.WRITE);
+		ImageFileServer imageFile = new ImageFileServer((String) msg.getData().get(1), PreferencesModelServer.getDefaultPriority(), destPath);
 		addMediaFile(imageFile);
 	}
 
