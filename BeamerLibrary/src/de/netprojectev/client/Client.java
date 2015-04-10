@@ -1,6 +1,6 @@
 package de.netprojectev.client;
 
-import de.netprojectev.common.networking.FileEncoder;
+import de.netprojectev.common.networking.MediaFileEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
@@ -56,7 +56,7 @@ public class Client {
 
 				ch.pipeline().addLast(new ObjectEncoder());
 				ch.pipeline().addLast(new ObjectDecoder(Integer.MAX_VALUE, ClassResolvers.weakCachingConcurrentResolver(null)));
-				ch.pipeline().addLast(new FileEncoder());
+				ch.pipeline().addLast(new MediaFileEncoder());
 				ch.pipeline().addLast(Client.this.proxy);
 			}
 		});

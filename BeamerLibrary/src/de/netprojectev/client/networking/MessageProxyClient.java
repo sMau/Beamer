@@ -435,7 +435,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void sendAddThemeSlide(String name, UUID theme, File fileToSend) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, theme, fileToSend));
+		sendMessageToServer(new IntermediateFileData(OpCode.CTS_ADD_THEMESLIDE, fileToSend, name, theme));
 	}
 
 	public void sendAddTickerElement(String text) {
