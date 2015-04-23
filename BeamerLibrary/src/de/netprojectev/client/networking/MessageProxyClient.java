@@ -1,5 +1,6 @@
 package de.netprojectev.client.networking;
 
+import de.netprojectev.common.networking.*;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
@@ -28,10 +29,6 @@ import de.netprojectev.common.exceptions.MediaDoesNotExistException;
 import de.netprojectev.common.exceptions.OutOfSyncException;
 import de.netprojectev.common.exceptions.PriorityDoesNotExistException;
 import de.netprojectev.common.exceptions.UnknownMessageException;
-import de.netprojectev.common.networking.DequeueData;
-import de.netprojectev.common.networking.LoginData;
-import de.netprojectev.common.networking.Message;
-import de.netprojectev.common.networking.OpCode;
 import de.netprojectev.server.datastructures.Countdown;
 import de.netprojectev.common.utils.LoggerBuilder;
 import de.netprojectev.common.utils.MediaFileFilter;
@@ -407,7 +404,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 
 	public void sendAddImageFile(File file) throws IOException {
 		log.fine("sending add image file, name: " + file.getName());
-		sendMessageToServer(new Message(OpCode.CTS_ADD_IMAGE_FILE, file.getName(), file));
+		sendMessageToServer(new IntermediateFileData(OpCode.CTS_ADD_IMAGE_FILE, file));
 	}
 
 	public void sendAddImageFiles(File[] files) throws IOException {
@@ -438,7 +435,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void sendAddThemeSlide(String name, UUID theme, File fileToSend) {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_THEMESLIDE, name, theme, fileToSend));
+		sendMessageToServer(new IntermediateFileData(OpCode.CTS_ADD_THEMESLIDE, fileToSend, name, theme));
 	}
 
 	public void sendAddTickerElement(String text) {
@@ -446,7 +443,7 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	}
 
 	public void sendAddVideoFile(File file) throws IOException {
-		sendMessageToServer(new Message(OpCode.CTS_ADD_VIDEO_FILE, file.getName(), file));
+		sendMessageToServer(new IntermediateFileData(OpCode.CTS_ADD_VIDEO_FILE, file));
 	}
 
 	public void sendAutoModeToggle(boolean selected) {
@@ -496,6 +493,11 @@ public class MessageProxyClient extends MessageToMessageDecoder<Message> {
 	private ChannelFuture sendMessageToServer(Message msgToSend) {
 		log.fine("Sending message to server: " + msgToSend);
 		return this.channelToServer.writeAndFlush(msgToSend);
+	}
+
+	private ChannelFuture sendMessageToServer(IntermediateFileData fileDataToSend) {
+		log.fine("Sending message to server: " + fileDataToSend);
+		return this.channelToServer.writeAndFlush(fileDataToSend);
 	}
 
 	public void sendPropertyUpdate(String key, String newValue) {

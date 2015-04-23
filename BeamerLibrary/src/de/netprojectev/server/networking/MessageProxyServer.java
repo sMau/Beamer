@@ -10,11 +10,17 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.util.HashedWheelTimer;
 import io.netty.util.Timeout;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetSocketAddress;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -160,9 +166,18 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void addImageFile(Message msg) throws FileNotFoundException, IOException {
-		ImageFileServer imageFile = (ImageFileServer) msg.getData().get(0);
+
+		Path destPath = writeTmpFile(msg);
+		ImageFileServer imageFile = new ImageFileServer((String) msg.getData().get(1), PreferencesModelServer.getDefaultPriority(), destPath);
 		addMediaFile(imageFile);
 	}
+
+	private Path writeTmpFile(Message msg) throws IOException {
+		Path destPath = Paths.get(ConstantsServer.SAVE_PATH, ConstantsServer.CACHE_PATH_IMAGES, UUID.randomUUID().toString());
+		Files.write(destPath, (byte[]) msg.getData().get(0), StandardOpenOption.WRITE);
+		return destPath;
+	}
+
 
 	private void addLiveTickerElement(Message msg) throws IOException {
 		TickerElement eltToAdd = (TickerElement) msg.getData().get(0);
@@ -194,7 +209,7 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void addTheme(Message msg) throws IOException {
-		Theme themeToAdd = (Theme) msg.getData().get(0);
+		Theme themeToAdd = new Theme((String) msg.getData().get(0), (byte[]) msg.getData().get(0));
 		this.prefsModel.addTheme(themeToAdd);
 		broadcastMessage(new Message(OpCode.STC_ADD_THEME_ACK, themeToAdd));
 
@@ -203,7 +218,9 @@ public class MessageProxyServer extends MessageToMessageDecoder<Message> {
 	}
 
 	private void addThemeSlide(Message msg) throws FileNotFoundException, IOException {
-		Themeslide themeslide = (Themeslide) msg.getData().get(0);
+		Themeslide themeslide = new Themeslide((String) msg.getData().get(1), (UUID) msg.getData().get(2),
+				PreferencesModelServer.getDefaultPriority(), new ImageFileServer((String) msg.getData().get(1),
+				PreferencesModelServer.getDefaultPriority(), writeTmpFile(msg)));
 		addMediaFile(themeslide);
 	}
 

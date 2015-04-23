@@ -31,7 +31,7 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer {
 		setOpaque(true);
 		this.add = add;
 		if (this.add) {
-			ImageIcon iconPlus = new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/plus_2.png"));
+			ImageIcon iconPlus = new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/desktop/gfx/plus_2.png"));
 			try {
 				iconPlus = Misc.getScaledImageIcon(iconPlus, 12);
 			} catch (FileNotFoundException e) {
@@ -41,7 +41,7 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer {
 			}
 			setIcon(iconPlus);
 		} else {
-			ImageIcon iconDelete = new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/client/gfx/delete_2.png"));
+			ImageIcon iconDelete = new javax.swing.ImageIcon(getClass().getResource("/de/netprojectev/desktop/gfx/delete_2.png"));
 			try {
 				iconDelete = Misc.getScaledImageIcon(iconDelete, 12);
 			} catch (FileNotFoundException e) {
