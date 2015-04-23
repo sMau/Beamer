@@ -1,5 +1,4 @@
 build/
-dist/
 *bin/
 gen/
 *.class
@@ -8,9 +7,4 @@ gen/
 *.dex
 *.cache
 R.java
-/BeamerLibraryServer/nbproject/private/
-/BeamerDesktop/nbproject/private/
-*.idea/
 out/
-*.iml
-
