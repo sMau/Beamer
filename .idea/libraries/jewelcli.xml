@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jewelcli">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/jewelcli-0.7.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
