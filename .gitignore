@@ -8,3 +8,4 @@ gen/
 *.cache
 R.java
 out/
+.idea/copyright/
