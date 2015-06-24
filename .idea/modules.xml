@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Beam4s/Beam4s.iml" filepath="$PROJECT_DIR$/Beam4s/Beam4s.iml" />
       <module fileurl="file://$PROJECT_DIR$/BeamerDesktop/BeamerDesktop.iml" filepath="$PROJECT_DIR$/BeamerDesktop/BeamerDesktop.iml" />
       <module fileurl="file://$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" filepath="$PROJECT_DIR$/BeamerLibrary/BeamerLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/BeamerServer/BeamerServer.iml" filepath="$PROJECT_DIR$/BeamerServer/BeamerServer.iml" />
