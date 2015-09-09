@@ -498,7 +498,6 @@ SQLite ?<y:LabelModel>
       </data>
     </node>
     <node id="n27">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="92.5" width="134.0" x="478.0" y="660.0"/>
@@ -515,7 +514,6 @@ SQLite ?<y:LabelModel>
       </data>
     </node>
     <node id="n28">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="134.0" x="1122.0" y="686.0"/>
@@ -532,7 +530,6 @@ SQLite ?<y:LabelModel>
       </data>
     </node>
     <node id="n29">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.data">
           <y:Geometry height="40.0" width="80.0" x="752.0" y="660.0"/>
@@ -550,7 +547,6 @@ binary<y:LabelModel>
       </data>
     </node>
     <node id="n30">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.data">
           <y:Geometry height="40.0" width="80.0" x="752.0" y="712.5"/>
@@ -568,7 +564,6 @@ JSON<y:LabelModel>
       </data>
     </node>
     <node id="n31">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="134.0" x="972.0" y="660.0"/>
@@ -585,7 +580,6 @@ JSON<y:LabelModel>
       </data>
     </node>
     <node id="n32">
-      <data key="d5"/>
       <data key="d6">
         <y:GenericNode configuration="com.yworks.flowchart.process">
           <y:Geometry height="40.0" width="134.0" x="972.0" y="712.5"/>
@@ -765,7 +759,6 @@ Protocol<y:LabelModel>
       </data>
     </edge>
     <edge id="e12" source="n27" target="n29">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="27.0" sy="-26.25" tx="0.0" ty="0.0"/>
@@ -776,7 +769,6 @@ Protocol<y:LabelModel>
       </data>
     </edge>
     <edge id="e13" source="n29" target="n31">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
@@ -787,7 +779,6 @@ Protocol<y:LabelModel>
       </data>
     </edge>
     <edge id="e14" source="n27" target="n30">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="-3.0" sy="26.25" tx="0.0" ty="0.0"/>
@@ -798,7 +789,6 @@ Protocol<y:LabelModel>
       </data>
     </edge>
     <edge id="e15" source="n30" target="n32">
-      <data key="d9"/>
       <data key="d10">
         <y:PolyLineEdge>
           <y:Path sx="0.0" sy="0.0" tx="0.0" ty="0.0"/>
