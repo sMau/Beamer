@@ -1,3 +1,5 @@
+login_name = ''
+login_pw = ''
 media = []
 ticker_elements = []
 templates = set()

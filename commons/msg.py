@@ -7,6 +7,7 @@ class Msg(object):
         self.file_transfer = False
         self.ack = False
         self.command = True
+        self.init_msg = False
         self.cmd_id = CMD_UNDEFINED
         self.data = [] #TODO last worked here
 
