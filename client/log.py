@@ -3,11 +3,13 @@ import logging
 FILENAME = '/beamer_client.log'
 LOG_TO_GUI = True
 
+
 def configure(log_path='', lvl=logging.DEBUG):
     if log_path == '':
         logging.basicConfig(level=lvl)
     else:
         logging.basicConfig(filename=log_path + FILENAME,level=lvl)
+
 
 def d(msg):
     '''
@@ -16,6 +18,7 @@ def d(msg):
     :return:void
     '''
     logging.debug(msg)
+
 
 def i(msg):
     '''
@@ -36,6 +39,7 @@ def w(msg):
     logging.warning(msg)
     log_to_gui(msg)
 
+
 def e(msg, exc=None):
     '''
     Error
@@ -45,6 +49,7 @@ def e(msg, exc=None):
     '''
     logging.error(msg, exc)
     log_to_gui(msg, exc)
+
 
 def c(msg, exc=None):
     '''

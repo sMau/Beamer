@@ -1,5 +1,17 @@
+import server.data
+import server.gui
+
 connections = dict()
 timer = None #check out http://stackoverflow.com/questions/8600161/executing-periodic-actions-in-python
+
+
+def tear_up():
+    """
+    Open connection to listen for incoming messages.
+    Start FTP server.
+    :return: void
+    """
+    raise NotImplementedError
 
 
 def receive_message(msg):
