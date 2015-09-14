@@ -1,5 +1,0 @@
-
-
-
-class Command(object):
-    pass
