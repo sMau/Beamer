@@ -1,5 +1,6 @@
-login_name = ''
-login_pw = ''
+login_name = '1'
+login_pw = '2'
+host, port = '127.0.0.1', 11111
 media = []
 ticker_elements = []
 templates = set()

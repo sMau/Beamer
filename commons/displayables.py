@@ -6,6 +6,7 @@ TYPE_COUNTDOWN = 0
 TYPE_IMAGE = 1
 TYPE_VIDEO = 2
 
+
 def type_to_text(type):
     switcher = {
         -1: 'Undefined',
@@ -15,12 +16,12 @@ def type_to_text(type):
     }
     return switcher.get(type, 'undefined')
 
+
 def _generate_random_uuid():
     return uuid.uuid4()
 
 
 class MainDisplayable(metaclass=ABCMeta):
-
     def __init__(self, name, duration=0):
         self.id = _generate_random_uuid()
         self.name = name
@@ -28,15 +29,17 @@ class MainDisplayable(metaclass=ABCMeta):
         self.background_color = 0
         self.enabled = True
         self.duration = duration
-        self.__type = self.__determine_type()
+        self.type = self.__determine_type()
 
     @abstractmethod
     def __determine_type(self):
         return TYPE_UNDEFINED
 
+    def __str__(self):
+        return self.id + ', ' + self.name + ', ' + type_to_text(self.type) + ', ' + self.duration
+
 
 class Countdown(MainDisplayable):
-
     # TODO choose good formating for colors and select proper defaults for countdown
     def __init__(self, name, duration, background_color=0, foreground_color=0):
         super().__init__(id, name, duration)
@@ -44,29 +47,32 @@ class Countdown(MainDisplayable):
     def __determine_type(self):
         return TYPE_COUNTDOWN
 
-class MediaFile(MainDisplayable):
 
+class MediaFile(MainDisplayable):
     def __init__(self, name, path):
         super().__init__(id, name)
         self.path = path
 
     def __determine_type(self):
-        return TYPE_IMAGE # TODO
+        return TYPE_IMAGE
 
     def get_preview(self):
-        raise NotImplementedError('Get Preview is not implemented yet.') #TODO
+        raise NotImplementedError('Get Preview is not implemented yet.')  # TODO
 
 
 class TickerDisplayable(metaclass=ABCMeta):
-
     def __init__(self):
         self.id = _generate_random_uuid()
         self.enabled = True
 
+    def __str__(self):
+        return self.id
+
 
 class TickerTxtElt(TickerDisplayable):
-
     def __init__(self, text):
         super.__init__()
         self.text = text
 
+    def __str__(self):
+        return super.__str__(self) + ', ' + self.text

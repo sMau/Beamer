@@ -10,3 +10,4 @@ R.java
 out/
 .idea/copyright/
 .DS_STORE
+__pycache__*

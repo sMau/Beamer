@@ -1,26 +1,26 @@
+import json
+
 SEQ_DEF_VALUE = 0
 CMD_UNDEFINED = 0
+CMD_CONNECT = 1
+
 
 class Msg(object):
-    def __init__(self):
+    def __init__(self, file_transfer=False, ack=False, command=CMD_UNDEFINED):
         self.seq_no = SEQ_DEF_VALUE
-        self.file_transfer = False
-        self.ack = False
-        self.command = True
+        self.file_transfer = file_transfer
+        self.ack = ack
+        self.command = command
         self.init_msg = False
         self.cmd_id = CMD_UNDEFINED
-        self.data = [] #TODO last worked here
+        self.data = []  # TODO NEXT HERE. Define msg format, make it json packable and try some test msgs, e.g. connection ack
 
     def pack(self):
-        '''
-        :return: JSON string representation of a msg object
-        '''
-        raise NotImplementedError('')
+        """
+        :return: JSON string as bytes representation of a msg object
+        """
+        json_bytes = self.to_json().encode()
+        return len(json_bytes), json_bytes
 
-def unpack(json_msg):
-    '''
-    Unpacks a JSON string to a msg object.
-    :param json_msg: message in JSON representation
-    :return: valid message object
-    '''
-    raise NotImplementedError('')
+    def to_json(self):
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

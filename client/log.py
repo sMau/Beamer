@@ -1,14 +1,10 @@
 import logging
 
-FILENAME = '/beamer_client.log'
-LOG_TO_GUI = True
+import sys
 
-
-def configure(log_path='', lvl=logging.DEBUG):
-    if log_path == '':
-        logging.basicConfig(level=lvl)
-    else:
-        logging.basicConfig(filename=log_path + FILENAME,level=lvl)
+LOG_FILE = '' # '/beamer_client.log'
+LOG_TO_GUI = False
+logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
 
 
 def d(msg):

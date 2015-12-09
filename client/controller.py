@@ -1,18 +1,35 @@
-import client.gui
-import client.log
+import socket
 
-connection = None
+import client.data as data
+from commons import msg
+from commons.JsonSocket import JsonSocket
+from commons.msg import Msg
+
+json_connection = None
 gui = None
 
 
-def connect(client_gui):
-    global gui, connection
-    gui = client_gui
-    # do some connect stuff here TODO
+def tear_up(c_gui):
+
+    global gui
+    gui = c_gui
+    __connect()
 
 
-def __send_msg(msg):
-    raise NotImplementedError
+def __connect():
+    global json_connection
+    tmp_sock = socket.socket()
+    tmp_sock.connect((data.host, data.port))
+
+    json_connection = JsonSocket(tmp_sock)
+
+    con_msg = Msg(command=msg.CMD_CONNECT)
+    con_msg.data.append(data.login_name)
+    con_msg.data.append(data.login_pw)
+
+    json_connection.send_msg(con_msg)
+    # http://cpiekarski.com/2011/05/09/super-easy-python-json-client-server/
+
 
 
 def add_file(path):
