@@ -6,13 +6,12 @@ CMD_CONNECT = 1
 
 
 class Msg(object):
-    def __init__(self, file_transfer=False, ack=False, command=CMD_UNDEFINED):
+    def __init__(self, file_transfer=0, ack=0, cmd_id=CMD_UNDEFINED):
         self.seq_no = SEQ_DEF_VALUE
         self.file_transfer = file_transfer
         self.ack = ack
-        self.command = command
-        self.init_msg = False
-        self.cmd_id = CMD_UNDEFINED
+        self.cmd_id = cmd_id
+        self.init_msg = 0
         self.data = []  # TODO NEXT HERE. Define msg format, make it json packable and try some test msgs, e.g. connection ack
 
     def pack(self):

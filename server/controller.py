@@ -1,7 +1,9 @@
 import logging
 import threading
 
-from commons.JsonSocket import JsonSocket
+from commons.json_socket import JsonSocket
+from commons import msg
+from commons.msg import Msg
 import commons.displayables as displaybles
 import server.data as data
 import socket
@@ -31,7 +33,7 @@ def tear_up(srv_gui, host='127.0.0.1', port=11111):
     __socket_main.listen(32)
 
     t = threading.Thread(target=__listen_for_new_connections)
-    t.daemon = True
+    # t.daemon = True TODO ?
     t.start()
 
     logging.info('Started main server thread. Listening now for incoming connections.')
@@ -44,20 +46,38 @@ def tear_up(srv_gui, host='127.0.0.1', port=11111):
 def __check_for_new_messages():
     while True:
         time.sleep(0.2) # XXX eval a good timespan
+        broken_connections = []
         for con_key in list(connections):
-            msg_dict = connections[con_key].check_for_new_msg()
-            if msg_dict != None:
-                pass #TODO do something with the msg
+            try:
+                msg_dict = connections[con_key].check_for_new_msg()
+                if msg_dict is not None:
+                    cmd = int(msg_dict['cmd_id'])
+                    ack = int(msg_dict['ack'])
+
+                    if cmd == msg.CMD_CONNECT:
+                        msg_ack_connect = Msg(ack=1, cmd_id=msg.CMD_CONNECT)
+                        connections[con_key].send(msg_ack_connect)
+                    elif cmd == msg.CMD_UNDEFINED:
+                        pass
+                    else:
+                        pass
+            except ConnectionError:
+                logging.error('Connection error occured {!s}, removing client from list.'.format(con_key))
+                broken_connections.append(con_key)
+
+        for c in broken_connections:
+            del connections[c]
 
 
 def __listen_for_new_connections():
+    #TODO allow only one connection per client ip
     while True:
         time.sleep(1) # XXX eval, if long enough
         c, addr = __socket_main.accept()     # Establish connection with client.
-        logging.info('Connection accepted: %s', addr)
+        logging.info('Connection accepted: {}'.format(addr))
         connections[addr] = JsonSocket(c, addr)
         #c.send('Thank you for connecting') TODO send connection ack msg
-9
+
 
 def __add_file(file):
     raise NotImplementedError

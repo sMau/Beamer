@@ -57,7 +57,7 @@ class JsonSocket:
 
         return json_msg
 
-    def send_msg(self, msg_to_send):
+    def send(self, msg_to_send):
         """
         Send a msg object via this JSON Socket.
         :param msg_to_send: a msg object
