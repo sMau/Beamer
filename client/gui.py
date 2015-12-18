@@ -2,7 +2,6 @@ from abc import ABCMeta, abstractmethod
 
 
 class ClientGUI(metaclass=ABCMeta):
-
     def __init__(self, controller, settings_gui, slidecreator_gui):
         self.controller = controller
         self.settings = settings_gui

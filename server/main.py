@@ -1,5 +1,6 @@
-import server.controller as ctrl
 import logging
+
+import server.controller as ctrl
 from server.gui import ServerGUIImpl
 
 LOG_FILE = ''

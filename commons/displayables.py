@@ -1,5 +1,5 @@
-from abc import ABCMeta, abstractmethod
 import uuid
+from abc import ABCMeta, abstractmethod
 
 TYPE_UNDEFINED = -1
 TYPE_COUNTDOWN = 0
@@ -7,14 +7,14 @@ TYPE_IMAGE = 1
 TYPE_VIDEO = 2
 
 
-def type_to_text(type):
+def type_to_text(media_type):
     switcher = {
         -1: 'Undefined',
         0: 'Countdown',
         1: 'Image',
         2: 'Video'
     }
-    return switcher.get(type, 'undefined')
+    return switcher.get(media_type, 'undefined')
 
 
 def _generate_random_uuid():
@@ -42,7 +42,7 @@ class MainDisplayable(metaclass=ABCMeta):
 class Countdown(MainDisplayable):
     # TODO choose good formating for colors and select proper defaults for countdown
     def __init__(self, name, duration, background_color=0, foreground_color=0):
-        super().__init__(id, name, duration)
+        super(Countdown, self).__init__(name, duration=duration)
 
     def __determine_type(self):
         return TYPE_COUNTDOWN
@@ -50,7 +50,7 @@ class Countdown(MainDisplayable):
 
 class MediaFile(MainDisplayable):
     def __init__(self, name, path):
-        super().__init__(id, name)
+        super(MediaFile, self).__init__(id, name)
         self.path = path
 
     def __determine_type(self):
@@ -71,8 +71,8 @@ class TickerDisplayable(metaclass=ABCMeta):
 
 class TickerTxtElt(TickerDisplayable):
     def __init__(self, text):
-        super.__init__()
+        super(TickerTxtElt, self).__init__()
         self.text = text
 
     def __str__(self):
-        return super.__str__(self) + ', ' + self.text
+        return super(TickerTxtElt, self).__str__() + ', ' + self.text

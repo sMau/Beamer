@@ -11,7 +11,6 @@ gui = None
 
 
 def tear_up(c_gui):
-
     global gui
     gui = c_gui
     __connect()
@@ -58,7 +57,7 @@ def add_ticker_elt(*args):
     raise NotImplementedError
 
 
-def remove_something(id):
+def remove_something(media_id):
     raise NotImplementedError
 
 
@@ -66,7 +65,7 @@ def property_update(key, value):
     raise NotImplementedError
 
 
-def receive(msg):
+def receive(m):
     raise NotImplementedError
 
 

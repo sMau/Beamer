@@ -1,14 +1,13 @@
 import logging
-import threading
-
-from commons.json_socket import JsonSocket
-from commons import msg
-from commons.msg import Msg
-import commons.displayables as displaybles
-import server.data as data
 import socket
+import threading
 import time
 
+import commons.displayables as displaybles
+import server.data as data
+from commons import msg, recv_files
+from commons.json_socket import JsonSocket
+from commons.msg import Msg
 
 gui = None
 connections = dict()
@@ -16,10 +15,14 @@ timer = None  # check out http://stackoverflow.com/questions/8600161/executing-p
 __socket_main = None
 
 
-def tear_up(srv_gui, host='127.0.0.1', port=11111):
+def tear_up(srv_gui, host='127.0.0.1', port=11111, file_srv_port=11112):
     """
     Open connection to listen for incoming messages.
-    Start FTP server.
+    Start file receiver.
+    :param port: port the controll server should listen on
+    :param file_srv_port: port the file server should listen on
+    :param host: IP adress to bind to
+    :param srv_gui: current server gui object
     :return: void
     """
 
@@ -38,6 +41,10 @@ def tear_up(srv_gui, host='127.0.0.1', port=11111):
 
     logging.info('Started main server thread. Listening now for incoming connections.')
 
+    logging.info('Starting file receiver')
+
+    recv_files.init(listen_port=file_srv_port)
+
     logging.info('Starting message receive loop...')
 
     __check_for_new_messages()
@@ -45,7 +52,7 @@ def tear_up(srv_gui, host='127.0.0.1', port=11111):
 
 def __check_for_new_messages():
     while True:
-        time.sleep(0.2) # XXX eval a good timespan
+        time.sleep(0.2)  # XXX eval a good timespan
         broken_connections = []
         for con_key in list(connections):
             try:
@@ -70,13 +77,13 @@ def __check_for_new_messages():
 
 
 def __listen_for_new_connections():
-    #TODO allow only one connection per client ip
+    # TODO allow only one connection per client ip
     while True:
-        time.sleep(1) # XXX eval, if long enough
-        c, addr = __socket_main.accept()     # Establish connection with client.
+        time.sleep(1)  # XXX eval, if long enough
+        c, addr = __socket_main.accept()  # Establish connection with client.
         logging.info('Connection accepted: {}'.format(addr))
         connections[addr] = JsonSocket(c, addr)
-        #c.send('Thank you for connecting') TODO send connection ack msg
+        # c.send('Thank you for connecting') TODO send connection ack msg
 
 
 def __add_file(file):
@@ -133,5 +140,5 @@ def __display_next_main_rand():
     __display_in_main(data.get_rand_media())
 
 
-def broadcast(msg):
+def broadcast(m):
     raise NotImplementedError

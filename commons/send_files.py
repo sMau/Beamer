@@ -1,13 +1,19 @@
-#http://stackoverflow.com/questions/9382045/send-a-file-through-sockets-in-python
+# http://stackoverflow.com/questions/9382045/send-a-file-through-sockets-in-python
 import socket
 import struct
 import threading
 
-from client import data
-
 __queue = []
 __socket = None
 __t = None
+__remote_adr = None
+__remote_port = None
+
+
+def init(remote_adr, remote_port=11112):
+    global __remote_adr, __remote_port
+    __remote_adr = remote_adr
+    __remote_port = remote_port
 
 
 def transfer_file(name, path):
@@ -25,7 +31,7 @@ def __transfer():
 
     while __queue:
         __socket = socket.socket()
-        __socket.connect((data.host, data.file_port))
+        __socket.connect((__remote_adr, __remote_port))
 
         id, path = __queue.pop()
         byte_length = struct.pack('!I', len(str(id)))
