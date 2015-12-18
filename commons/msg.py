@@ -6,6 +6,9 @@ CMD_CONNECT = 1
 
 
 class Msg(object):
+    """
+    Object representation of a network layer message. For transfer its converted to JSON.
+    """
     def __init__(self, file_transfer=0, ack=0, cmd_id=CMD_UNDEFINED):
         self.seq_no = SEQ_DEF_VALUE
         self.file_transfer = file_transfer
@@ -22,4 +25,8 @@ class Msg(object):
         return len(json_bytes), json_bytes
 
     def to_json(self):
+        """
+
+        :return: JSON formatted string from a obj
+        """
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

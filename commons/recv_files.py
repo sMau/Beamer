@@ -8,6 +8,12 @@ s = socket.socket()
 
 
 def init(listen_adr='127.0.0.1', listen_port=11112):
+    """
+    Call this init method to start a thread listening for new file transfers.
+    :param listen_adr: adr to listen on
+    :param listen_port: port to listen on
+    :return:
+    """
     global s
     s.bind((listen_adr, listen_port))
     s.listen()
@@ -18,6 +24,10 @@ def init(listen_adr='127.0.0.1', listen_port=11112):
 
 
 def __listen_for_new_files():
+    """
+    Listening for new incoming file transfer connections.
+    :return: void
+    """
     name = None
     while True:
         time.sleep(0.1)

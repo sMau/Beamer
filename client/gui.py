@@ -2,6 +2,9 @@ from abc import ABCMeta, abstractmethod
 
 
 class ClientGUI(metaclass=ABCMeta):
+    """
+    Class representing the GUI of the client in an abstract way providing only the interface.
+    """
     def __init__(self, controller, settings_gui, slidecreator_gui):
         self.controller = controller
         self.settings = settings_gui
@@ -37,6 +40,9 @@ class ClientGUI(metaclass=ABCMeta):
 
 
 class ClientGUIImpl(ClientGUI):
+    """
+    Certain implementation of a Client GUI
+    """
     def server_shutdown(self):
         pass
 

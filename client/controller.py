@@ -11,12 +11,21 @@ gui = None
 
 
 def tear_up(c_gui):
+    """
+    Start up the client controller including connection init.
+    :param c_gui: The current client gui object
+    :return: void
+    """
     global gui
     gui = c_gui
     __connect()
 
 
 def __connect():
+    """
+    init connection to remote server. Server adress and port is taken from the data module.
+    :return: void
+    """
     global json_connection
     tmp_sock = socket.socket()
     tmp_sock.connect((data.host, data.control_port))
@@ -36,6 +45,10 @@ def __connect():
 
 
 def __check_for_new_msgs():
+    """
+    Infinite loop checking the control connection periodically for new messages.
+    :return: void
+    """
     while True:
         msg_dict = json_connection.check_for_new_msgs()
         if msg_dict is not None:
@@ -78,4 +91,8 @@ def __automode_changed(automode):
 
 
 def __login_success():
+    """
+    Called when the login is acked by the server.
+    :return: void
+    """
     gui.login_success()

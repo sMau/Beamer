@@ -8,6 +8,11 @@ TYPE_VIDEO = 2
 
 
 def type_to_text(media_type):
+    """
+    Converts from the media type as int to a human readable string representation.
+    :param media_type: type as int
+    :return: text based representation of the media type
+    """
     switcher = {
         -1: 'Undefined',
         0: 'Countdown',
@@ -18,11 +23,25 @@ def type_to_text(media_type):
 
 
 def _generate_random_uuid():
+    """
+
+    :return: random uuid 128 Bit
+    """
+
     return uuid.uuid4()
 
 
 class MainDisplayable(metaclass=ABCMeta):
+    """
+    Displayable in the main frame of the Beamer.
+    """
     def __init__(self, name, duration=0):
+        """
+
+        :param name: name to show to the clients
+        :param duration: duration to show
+        :return:
+        """
         self.id = _generate_random_uuid()
         self.name = name
         self.show_count = 0
@@ -33,6 +52,10 @@ class MainDisplayable(metaclass=ABCMeta):
 
     @abstractmethod
     def __determine_type(self):
+        """
+        Determines the type of the media.
+        :return: int representing the media type.
+        """
         return TYPE_UNDEFINED
 
     def __str__(self):
@@ -40,6 +63,9 @@ class MainDisplayable(metaclass=ABCMeta):
 
 
 class Countdown(MainDisplayable):
+    """
+    Countdown text-based, displayable in the main frame.
+    """
     # TODO choose good formating for colors and select proper defaults for countdown
     def __init__(self, name, duration, background_color=0, foreground_color=0):
         super(Countdown, self).__init__(name, duration=duration)
@@ -49,6 +75,9 @@ class Countdown(MainDisplayable):
 
 
 class MediaFile(MainDisplayable):
+    """
+    Media file, i.e., a video or a image file displayable in the main frame.
+    """
     def __init__(self, name, path):
         super(MediaFile, self).__init__(id, name)
         self.path = path
@@ -57,10 +86,13 @@ class MediaFile(MainDisplayable):
         return TYPE_IMAGE
 
     def get_preview(self):
-        raise NotImplementedError('Get Preview is not implemented yet.')  # TODO
+        raise NotImplementedError('Get Preview is not implemented yet.')
 
 
 class TickerDisplayable(metaclass=ABCMeta):
+    """
+    Objects displayble in the ticker frame of the beamer.
+    """
     def __init__(self):
         self.id = _generate_random_uuid()
         self.enabled = True
@@ -70,6 +102,9 @@ class TickerDisplayable(metaclass=ABCMeta):
 
 
 class TickerTxtElt(TickerDisplayable):
+    """
+    Text elements displayable in the beamers ticker frame.
+    """
     def __init__(self, text):
         super(TickerTxtElt, self).__init__()
         self.text = text

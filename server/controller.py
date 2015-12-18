@@ -51,6 +51,10 @@ def tear_up(srv_gui, host='127.0.0.1', port=11111, file_srv_port=11112):
 
 
 def __check_for_new_messages():
+    """
+    Checks each connection for new messages periodically
+    :return:
+    """
     while True:
         time.sleep(0.2)  # XXX eval a good timespan
         broken_connections = []
@@ -77,6 +81,10 @@ def __check_for_new_messages():
 
 
 def __listen_for_new_connections():
+    """
+    Listens for new client connections.
+    :return:
+    """
     # TODO allow only one connection per client ip
     while True:
         time.sleep(1)  # XXX eval, if long enough
@@ -91,22 +99,44 @@ def __add_file(file):
 
 
 def __add_countdown(countdown):
+    """
+    Add countdown to media list
+    :param countdown: countdown to add
+    :return:
+    """
     logging.info('Adding countdown %s' % countdown)
     data.media.add(countdown)
 
 
 def __add_ticker_elt(elt):
+    """
+    Adds element to ticker list.
+    :param elt: element to add
+    :return:
+    """
     logging.info('Adding ticker element %s' % elt)
     data.ticker_elements.add(elt)
 
 
 def __add_connection(id, con):
+    """
+    Adds socket connection to connection list after new client connected.
+    :param id: unique identifier of connection
+    :param con: connection socket
+    :return:
+    """
     logging.info('Client connected %s' % con)
     global connections
     connections[id] = con
 
 
 def __update_property(key, value):
+    """
+    Updates property in properties map.
+    :param key: key of property
+    :param value: new value
+    :return:
+    """
     logging.info('Updating config property %s to %s' % key, value)
     data.config[key] = value
 
@@ -116,14 +146,29 @@ def shutdown_gracefully():
 
 
 def __remove_main_displayable_by_id(id):
+    """
+    Removes main displayable from main media list.
+    :param id: to remove
+    :return:
+    """
     data.media.remove(data.get_media_by_id(id))
 
 
 def __remove_ticker_displayble_by_id(id):
+    """
+    Removes ticker displayable from ticker list.
+    :param id: to remove
+    :return:
+    """
     data.ticker_elements.remove(data.get_ticker_elt_by_id(id))
 
 
 def __display_in_main(id):
+    """
+    Display media in main frame.
+    :param id: to display
+    :return:
+    """
     media_to_show = data.get_media_by_id(id)
 
     if media_to_show.type == displaybles.TYPE_IMAGE:
@@ -137,6 +182,10 @@ def __display_in_main(id):
 
 
 def __display_next_main_rand():
+    """
+    Display random media in main frame.
+    :return:
+    """
     __display_in_main(data.get_rand_media())
 
 

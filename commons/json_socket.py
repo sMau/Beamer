@@ -24,7 +24,6 @@ class JsonSocket:
     def check_for_new_msg(self):
         # TODO detect socket close, gracefully and not gracefully
         """
-
         Check this socket for a new message.
         :return: Either returns the decoded msg as decoded dict or returns None.
         """
