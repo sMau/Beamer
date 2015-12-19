@@ -5,7 +5,7 @@ BASE_PATH = expanduser('~') + '/.beamersoftware_server/'
 MEDIA_PATH = BASE_PATH + 'media/'
 __DB_PATH = BASE_PATH + 'database.db'  # TODO implement db stuff etc
 
-# TODO __db_connection = sqlite3.connect(__DB_PATH)
+# __db_connection = sqlite3.connect(__DB_PATH)
 
 automode = False
 media = set()

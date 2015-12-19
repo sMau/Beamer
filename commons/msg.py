@@ -15,7 +15,7 @@ class Msg(object):
         self.ack = ack
         self.cmd_id = cmd_id
         self.init_msg = 0
-        self.data = []  # TODO NEXT HERE. Define msg format, make it json packable and try some test msgs, e.g. connection ack
+        self.data = []
 
     def pack(self):
         """

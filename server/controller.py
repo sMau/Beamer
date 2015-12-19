@@ -36,7 +36,6 @@ def tear_up(srv_gui, host='127.0.0.1', port=11111, file_srv_port=11112):
     __socket_main.listen(32)
 
     t = threading.Thread(target=__listen_for_new_connections)
-    # t.daemon = True TODO ?
     t.start()
 
     logging.info('Started main server thread. Listening now for incoming connections.')
@@ -56,7 +55,7 @@ def __check_for_new_messages():
     :return:
     """
     while True:
-        time.sleep(0.2)  # XXX eval a good timespan
+        time.sleep(0.2)
         broken_connections = []
         for con_key in list(connections):
             try:
@@ -87,7 +86,7 @@ def __listen_for_new_connections():
     """
     # TODO allow only one connection per client ip
     while True:
-        time.sleep(1)  # XXX eval, if long enough
+        time.sleep(1)
         c, addr = __socket_main.accept()  # Establish connection with client.
         logging.info('Connection accepted: {}'.format(addr))
         connections[addr] = JsonSocket(c, addr)
