@@ -2,9 +2,10 @@
 import socket
 import struct
 import threading
+from client import log
 
 
-class SendFiles():
+class SendFiles:
     """
     File sender bound to certain remote adr and port.
     """
@@ -13,7 +14,7 @@ class SendFiles():
 
         :param remote_adr: adr to connect to
         :param remote_port: port to connect to
-        :return:
+        :return: void
         """
         self.__remote_adr = remote_adr
         self.__remote_port = remote_port
@@ -26,36 +27,40 @@ class SendFiles():
         Transfer a file using this file sender. Uses an own thread, so returns immediately.
         :param name: name of the file to send
         :param path: full path to the file
-        :return:
+        :return: void
         """
-        global __t
+
+        log.d('Transfering file %s' % path)
         self.__queue.append((name, path))
-        if __t is not None:
-            if not __t.is_alive():
-                __t = threading.Thread(target=self.__transfer)
-                __t.daemon = True
-                __t.start()
+        if self.__t is None:
+            self.__t = threading.Thread(target=self.__transfer)
+            self.__t.start()
+        else:
+            if not self.__t.is_alive():
+                self.__t = threading.Thread(target=self.__transfer)
+                self.__t.start()
+
 
     def __transfer(self):
         """
         transfers all files in the queue and returns after all files are transfered.
-        :return:
+        :return: void
         """
 
         while self.__queue:
             self.__socket = socket.socket()
             self.__socket.connect((self.__remote_adr, self.__remote_port))
 
-            id, path = self.__queue.pop()
-            byte_length = struct.pack('!I', len(str(id)))
+            name, path = self.__queue.pop()
+            byte_length = struct.pack('!I', len(str(name)))
 
             self.__socket.send(byte_length)
-            self.__socket.send(id)
+            self.__socket.send(name.encode('utf-8'))
 
             with open(path, 'rb') as to_send:
-                chunk = to_send.recv(4096)
-                while to_send:
-                    self.__socket.send(to_send)
-                    chunk = to_send.recv(4096)
+                chunk = to_send.read(4096)
+                while chunk:
+                    self.__socket.send(chunk)
+                    chunk = to_send.read(4096)
 
             self.__socket.close()
