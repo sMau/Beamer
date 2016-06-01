@@ -10,15 +10,9 @@ import server.controller as server_ctrl
 class FileSend(unittest.TestCase):
 
     def setUp(self):
-        gui = ServerGUIImpl()
-        server_ctrl.tear_up(gui)
-
-        gui = ClientGUIImpl(None, None, None)  # TODO!!
-        client_ctrl.tear_up(gui)
-
         recv_files.init()
         send = send_files.SendFiles("127.0.0.1")
-        send.transfer_file('test', '/Users/samuel/Documents/0001-ARV-2016-9825.PDF')
+        send.transfer_file('test', '/Users/samuel/Downloads/Shameless-S06-7p-TVP-SO/Shameless.S06E02.Weg.damit.GERMAN.DL.DUBBED.720p.HDTV.x264-TVP/tvp-shameless-s06e02-720p.mkv')
 
 
     def tearDown(self):
@@ -26,6 +20,10 @@ class FileSend(unittest.TestCase):
 
 
     def test_connect_disconnect(self):
+
+
+
+
         self.assertEqual(True, False)
 
 

@@ -48,15 +48,7 @@ class MainDisplayable(metaclass=ABCMeta):
         self.background_color = 0
         self.enabled = True
         self.duration = duration
-        self.type = self.__determine_type()
-
-    @abstractmethod
-    def __determine_type(self):
-        """
-        Determines the type of the media.
-        :return: int representing the media type.
-        """
-        return TYPE_UNDEFINED
+        self.type = None
 
     def __str__(self):
         return self.id + ', ' + self.name + ', ' + type_to_text(self.type) + ', ' + self.duration
@@ -69,21 +61,19 @@ class Countdown(MainDisplayable):
     # TODO choose good formating for colors and select proper defaults for countdown
     def __init__(self, name, duration, background_color=0, foreground_color=0):
         super(Countdown, self).__init__(name, duration=duration)
+        self.type = TYPE_COUNTDOWN
 
-    def __determine_type(self):
-        return TYPE_COUNTDOWN
 
 
 class MediaFile(MainDisplayable):
     """
     Media file, i.e., a video or a image file displayable in the main frame.
     """
-    def __init__(self, name, path):
+    def __init__(self, name, path, type=TYPE_IMAGE):
         super(MediaFile, self).__init__(id, name)
         self.path = path
+        self.type = type
 
-    def __determine_type(self):
-        return TYPE_IMAGE
 
     def get_preview(self):
         raise NotImplementedError('Get Preview is not implemented yet.')

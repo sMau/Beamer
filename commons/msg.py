@@ -1,21 +1,50 @@
 import json
+from enum import Enum
+
 
 SEQ_DEF_VALUE = 0
-CMD_UNDEFINED = 0
-CMD_CONNECT = 1
+
+
+KEY_INIT_MSG = 'init_msg'
+KEY_SEQUENCE_NO = 'seq_no'
+KEY_FILE_TRANSFER = 'file_transfer'
+KEY_CMD_ID = 'cmd_id'
+KEY_ACK = 'ack'
+KEY_DATA = 'data'
+
+
+class MsgType(Enum):
+
+    CMD_UNDEFINED = -1
+    CMD_CONNECT = 0
+    CMD_DISPLAY = 1
+    CMD_DISPLAY_NEXT = 2
+    CMD_PROP_UPDATE = 3
+
+    ADD_FILE = 100
+    ADD_COUNTDOWN = 103
+    ADD_TICKER_TXTELT = 101
+    REMOVE_MAIN_DISPLAYABLE = 102
+    REMOVE_TICKER_DISPLAYABLE = 104
 
 
 class Msg(object):
     """
     Object representation of a network layer message. For transfer its converted to JSON.
+
+    Add file: 0 -> file_id, 1 -> displayable name, 2 -> type vid/img
+    Add file ack: 0 -> MediaFile(MainDisplayable)
+    Add countdown 0 -> name, 1 -> duration
+    Add ticket txt elt 0 -> text
+    Remove x: 0 -> id
     """
-    def __init__(self, file_transfer=0, ack=0, cmd_id=CMD_UNDEFINED):
+    def __init__(self,*args, file_transfer=0, ack=0, cmd_id=MsgType.CMD_UNDEFINED):
         self.seq_no = SEQ_DEF_VALUE
         self.file_transfer = file_transfer
         self.ack = ack
         self.cmd_id = cmd_id
         self.init_msg = 0
-        self.data = []
+        self.data = list(*args)
 
     def pack(self):
         """

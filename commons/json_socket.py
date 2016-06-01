@@ -3,6 +3,8 @@ import logging
 
 import struct
 
+from commons import msg
+
 
 class JsonSocket:
     """
@@ -51,12 +53,12 @@ class JsonSocket:
         :param msg: plain bytes of the received msg
         :return: decoded json msg as dict
         """
-        json_msg = json.loads(msg.decode())  # should return a dict
+        json_msg = json.loads(msg.decode())
         logging.debug('Decoded the following json %s' % json_msg)
 
         return json_msg
 
-    def send(self, msg_to_send):
+    def send(self, msg_to_send : msg.Msg):
         """
         Send a msg object via this JSON Socket.
         :param msg_to_send: a msg object
