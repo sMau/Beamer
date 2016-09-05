@@ -6,6 +6,7 @@ from commons import displayables
 
 BASE_PATH = expanduser('~') + '/.beamersoftware_server/'
 MEDIA_PATH = BASE_PATH + 'media/'
+LOG_PATH = BASE_PATH + 'log/'
 __DB_PATH = BASE_PATH + 'database.db'  # TODO implement db stuff etc
 
 # __db_connection = sqlite3.connect(__DB_PATH)

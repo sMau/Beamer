@@ -1,12 +1,17 @@
 import socket
 import threading
 
+import os
+
 import client.data as data
-from commons import msg
+from client import log
+from commons import msg, send_files
 from commons.json_socket import JsonSocket
 from commons.msg import Msg
 
+
 json_connection = None
+file_send_connection = None
 gui = None
 
 
@@ -32,9 +37,8 @@ def __connect():
 
     json_connection = JsonSocket(tmp_sock)
 
-    con_msg = Msg(cmd_id=msg.CMD_CONNECT)
-    con_msg.data.append(data.login_name)
-    con_msg.data.append(data.login_pw)
+    con_msg = Msg(data.login_name, cmd_id=msg.Type.CMD_CONNECT)
+
 
     json_connection.send(con_msg)
     # http://cpiekarski.com/2011/05/09/super-easy-python-json-client-server/
@@ -50,21 +54,32 @@ def __check_for_new_msgs():
     :return: void
     """
     while True:
-        msg_dict = json_connection.check_for_new_msgs()
+        msg_dict = json_connection.check_for_new_msg()
         if msg_dict is not None:
             cmd = int(msg_dict['cmd_id'])
             ack = int(msg_dict['ack'])
-            if cmd == msg.CMD_CONNECT and ack == 1:
+            if cmd == msg.Type.CMD_CONNECT and ack == 1:
                 __login_success()
-            elif cmd == msg.CMD_UNDEFINED:
+            elif cmd == msg.Type.CMD_UNDEFINED:
                 pass
             else:
                 pass
 
+def add_files(files):
+    files = filter_files(files)
+    for f in files:
+        add_file(f)
+
+
+def filter_files(files):
+    # TODO, filter non media files out, or files the server cannot work with
+    return files
+
 
 def add_file(path):
-    raise NotImplementedError
-
+    log.d('Adding file: {}'.format(os.path.basename(path)))
+    file_send_connection.transfer_file(os.path.basename(path), path)
+    # TODO last worked here, test if file is transferred
 
 def add_ticker_elt(*args):
     raise NotImplementedError
@@ -95,4 +110,6 @@ def __login_success():
     Called when the login is acked by the server.
     :return: void
     """
+    global file_send_connection
     gui.login_success()
+    file_send_connection = send_files.SendFiles(data.host, logger_name='beamer_client')

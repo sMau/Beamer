@@ -1,9 +1,31 @@
 import logging
 
-LOG_FILE = ''  # '/beamer_client.log'
-LOG_TO_GUI = False
-logging.basicConfig(filename=LOG_FILE, level=logging.DEBUG)
+import datetime
 
+from client import data
+
+timestamp = datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
+
+LOG_TO_FILE = False
+LOG_FILE = data.LOG_PATH + 'client_' + timestamp + '.log'
+
+logger = logging.getLogger('beamer_client')
+logger.propagate = False
+logger.setLevel(logging.DEBUG)
+
+form = logging.Formatter(fmt='%(asctime)s - %(levelname)s:%(module)s - %(message)s')
+
+if LOG_TO_FILE:
+    fh = logging.FileHandler(filename=LOG_FILE)
+    fh.setFormatter(form)
+    logger.addHandler(fh)
+
+console = logging.StreamHandler()
+console.setLevel(logging.DEBUG)
+console.setFormatter(form)
+logger.addHandler(console)
+
+status_bar = None
 
 def d(msg):
     """
@@ -11,7 +33,7 @@ def d(msg):
     :param msg: Message to log
     :return:void
     """
-    logging.debug(msg)
+    logger.debug(msg)
 
 
 def i(msg):
@@ -20,8 +42,8 @@ def i(msg):
     :param msg: Message to log
     :return:void
     """
-    logging.info(msg)
-    log_to_gui(msg)
+    logger.info(msg)
+    __log_to_gui(msg)
 
 
 def w(msg):
@@ -30,8 +52,8 @@ def w(msg):
     :param msg: Message to log
     :return:void
     """
-    logging.warning(msg)
-    log_to_gui(msg)
+    logger.warning(msg)
+    __log_to_gui(msg)
 
 
 def e(msg, exc=None):
@@ -41,8 +63,8 @@ def e(msg, exc=None):
     :param exc: Exception
     :return:void
     """
-    logging.error(msg, exc)
-    log_to_gui(msg, exc)
+    logger.error(msg, exc)
+    __log_to_gui(msg, exc)
 
 
 def c(msg, exc=None):
@@ -52,16 +74,16 @@ def c(msg, exc=None):
     :param exc: Exception
     :return:void
     """
-    logging.critical(msg, exc)
-    log_to_gui(msg, exc)
+    logger.critical(msg, exc)
+    __log_to_gui(msg, exc)
 
 
-def log_to_gui(msg, exc=None):
+def __log_to_gui(msg, exc=None):
     """
     Display a message to the gui logging module
     :param msg: Message to display
     :param exc: Exception
     :return: void
     """
-    if LOG_TO_GUI:
-        raise NotImplementedError('')
+    if status_bar is not None:
+        status_bar.showMessage(msg)

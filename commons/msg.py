@@ -1,5 +1,4 @@
 import json
-from enum import Enum
 
 
 SEQ_DEF_VALUE = 0
@@ -13,7 +12,7 @@ KEY_ACK = 'ack'
 KEY_DATA = 'data'
 
 
-class MsgType(Enum):
+class Type:
 
     CMD_UNDEFINED = -1
     CMD_CONNECT = 0
@@ -38,13 +37,13 @@ class Msg(object):
     Add ticket txt elt 0 -> text
     Remove x: 0 -> id
     """
-    def __init__(self,*args, file_transfer=0, ack=0, cmd_id=MsgType.CMD_UNDEFINED):
+    def __init__(self, *args, file_transfer=0, ack=0, cmd_id=Type.CMD_UNDEFINED):
         self.seq_no = SEQ_DEF_VALUE
         self.file_transfer = file_transfer
         self.ack = ack
         self.cmd_id = cmd_id
         self.init_msg = 0
-        self.data = list(*args)
+        self.data = list(args)
 
     def pack(self):
         """
@@ -58,4 +57,5 @@ class Msg(object):
 
         :return: JSON formatted string from a obj
         """
+
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)

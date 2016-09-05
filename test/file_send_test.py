@@ -1,10 +1,8 @@
 import unittest
 
-from client.gui import ClientGUIImpl
-import client.controller as client_ctrl
+
 from commons import recv_files, send_files
-from server.gui import ServerGUIImpl
-import server.controller as server_ctrl
+
 
 
 class FileSend(unittest.TestCase):

@@ -1,26 +1,33 @@
 # http://stackoverflow.com/questions/9382045/send-a-file-through-sockets-in-python
+import logging
 import socket
 import struct
 import threading
-from client import log
+
+
+logger = None
 
 
 class SendFiles:
     """
     File sender bound to certain remote adr and port.
     """
-    def __init__(self, remote_adr, remote_port=11112):
+    def __init__(self, remote_adr, logger_name='', remote_port=11112):
         """
-
+        :param logger_name: name of the logger to use in this module
         :param remote_adr: adr to connect to
         :param remote_port: port to connect to
         :return: void
         """
+        global logger
+
         self.__remote_adr = remote_adr
         self.__remote_port = remote_port
         self.__queue = []
         self.__socket = None
         self.__t = None
+
+        logger = logging.getLogger(logger_name)
 
     def transfer_file(self, name, path):
         """
@@ -30,7 +37,7 @@ class SendFiles:
         :return: void
         """
 
-        log.d('Transfering file %s' % path)
+        logger.debug('Transfering file %s' % path)
         self.__queue.append((name, path))
         if self.__t is None:
             self.__t = threading.Thread(target=self.__transfer)

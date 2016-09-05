@@ -18,4 +18,5 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h
 
 FORMS    += \
-    mainwindow.ui
+    mainwindow.ui \
+    busy_dialog.ui

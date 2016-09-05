@@ -1,3 +1,10 @@
+from os.path import expanduser
+
+
+BASE_PATH = expanduser('~') + '/.beamersoftware_client/'
+MEDIA_PATH = BASE_PATH + 'media/'
+LOG_PATH = BASE_PATH + 'log/'
+__DB_PATH = BASE_PATH + 'database.db'  # TODO implement db stuff etc
 
 
 login_name = '1'
