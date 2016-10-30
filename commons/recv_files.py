@@ -82,7 +82,7 @@ def __listen_for_new_files():
     :return: void
     """
     logger.debug('Listening for new files now.')
-    unique_id = None
+    file_name = None
     while not _stopper:
         time.sleep(0.1)
         sc, address = _s.accept()
@@ -94,18 +94,18 @@ def __listen_for_new_files():
             l = struct.unpack('!I', l_data)[0]  # The return value of unpack is always a tuple
 
             if l > 0:
-                logger.debug('Receiving id of length %s' % l)
-                unique_id = sc.recv(l)
-                unique_id = unique_id.decode('utf-8')
-                logger.debug('Filname: %s' % unique_id)
+                logger.debug('Receiving file name of length %s' % l)
+                file_name = sc.recv(l)
+                file_name = file_name.decode('utf-8')
+                logger.debug('Filname: %s' % file_name)
             else:
-                raise ConnectionError('Received a id of invalid size')
+                raise ConnectionError('Received a file name of invalid size')
 
-        file_path = _save_path + '/' + unique_id
+        file_path = _save_path + '/' + file_name
         with open(file_path, 'wb') as f:
             l = sc.recv(4096)
             while l:
                 f.write(l)
                 l = sc.recv(4096)
-            __transfer_finished(unique_id, file_path)
+            __transfer_finished(file_name, file_path)
             sc.close()

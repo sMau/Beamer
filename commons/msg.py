@@ -20,7 +20,7 @@ class Type:
     CMD_DISPLAY_NEXT = 2
     CMD_PROP_UPDATE = 3
 
-    ADD_FILE = 100
+    ADD_DISPLAYABLE_FILE = 100
     ADD_COUNTDOWN = 103
     ADD_TICKER_TXTELT = 101
     REMOVE_MAIN_DISPLAYABLE = 102
@@ -31,7 +31,7 @@ class Msg(object):
     """
     Object representation of a network layer message. For transfer its converted to JSON.
 
-    Add file: 0 -> file_id, 1 -> displayable name, 2 -> type vid/img
+    Add file: 0 -> displayable name, 1 -> type vid/img
     Add file ack: 0 -> MediaFile(MainDisplayable)
     Add countdown 0 -> name, 1 -> duration
     Add ticket txt elt 0 -> text

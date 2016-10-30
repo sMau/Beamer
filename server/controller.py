@@ -13,6 +13,7 @@ from utils.observer import Observer
 
 logger = logging.getLogger('beamer_server.controller')
 
+
 class FileTransferObserver(Observer):
 
     def __init__(self):
@@ -28,6 +29,8 @@ connections = dict()
 timer = None  # check out http://stackoverflow.com/questions/8600161/executing-periodic-actions-in-python
 __socket_main = None
 
+
+# TODO autoclean backlog with according error messages to the client
 file_receive_backlog = {}
 
 
@@ -77,6 +80,9 @@ def __check_for_new_messages():
         for con_key in list(connections):
             try:
                 msg_dict = connections[con_key].check_for_new_msg()
+
+                logger.debug('Received msg on control channel: {}'.format(str(msg_dict)))
+
                 if msg_dict is not None:
                     cmd = int(msg_dict[msg.KEY_CMD_ID])
 
@@ -86,8 +92,8 @@ def __check_for_new_messages():
                         pass
                     elif cmd == msg.Type.CMD_DISPLAY_NEXT:
                         pass
-                    elif cmd == msg.Type.ADD_FILE and msg_dict[msg.KEY_FILE_TRANSFER] == '1':
-                        __add_file_msg(msg_dict)
+                    elif cmd == msg.Type.ADD_DISPLAYABLE_FILE and msg_dict[msg.KEY_FILE_TRANSFER] == 1:
+                        __add_displayable_msg(msg_dict)
                     elif cmd == msg.Type.ADD_COUNTDOWN:
                         __add_countdown(msg_dict)
                     elif cmd == msg.Type.ADD_TICKER_TXTELT:
@@ -127,24 +133,31 @@ def __listen_for_new_connections():
         __add_connection(addr, JsonSocket(c, addr))
 
 
-def file_transfer_finished(file_id, file_path):
-    if file_id in file_receive_backlog:
-        name, type = file_receive_backlog.pop(file_id)
-        logger.info('Received file {}, {}'.format(file_id, name))
+def file_transfer_finished(name, file_path):
+    """
+    This function is called when a file transfer finishes. Called by the recv_files.py module.
+    :param file_id: The unique id of this file
+    :param file_path: path to the file, where the recv_files.py module stored the file
+    :return: void
+    """
+    logger.debug('Transfer finished, recognized name: {}'.format(name))
+    logger.debug(str(file_receive_backlog))
+    if name in file_receive_backlog:
+        name, type = file_receive_backlog.pop(name)
+        logger.info('Received file {}, {}'.format(name, type))
         m = data.add_media(MediaFile(name, file_path, type=type))
 
         # TODO add the transfer of a preview image to the client
-        ack_msg = Msg(m, ack=1, cmd_id=msg.Type.ADD_FILE)
+        ack_msg = Msg(m, ack=1, cmd_id=msg.Type.ADD_DISPLAYABLE_FILE)
         broadcast(ack_msg)
     else:
-        logger.error('Received unknown file with id {}'.format(file_id))
+        logger.error('Received unknown file with name {}'.format(name))
 
 
-def __add_file_msg(msg_dict):
-    file_id = msg_dict[msg.KEY_DATA][0]
-    name = msg_dict[msg.KEY_DATA][1]
-    type = msg_dict[msg.KEY_DATA][2]
-    file_receive_backlog[file_id] = name, type
+def __add_displayable_msg(msg_dict):
+    name = msg_dict[msg.KEY_DATA][0]
+    type = displayables.TYPE_IMAGE # TODO determine type correctly!!! At the moment assume always image type
+    file_receive_backlog[name] = name, type
 
 
 def __add_countdown(msg_dict : dict):
@@ -207,7 +220,6 @@ def __add_connection(id, con):
     :return:
     """
     logger.info('Client connected {}'.format(id))
-    global connections
     connections[id] = con
 
 
@@ -259,5 +271,5 @@ def __display_next_main_rand():
 
 
 def broadcast(m : msg.Msg):
-    for c in connections:
-        c.send(m)
+    for c in connections.keys():
+        connections[c].send(m)

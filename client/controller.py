@@ -10,7 +10,7 @@ from commons.json_socket import JsonSocket
 from commons.msg import Msg
 
 
-json_connection = None
+control_channel = None
 file_send_connection = None
 gui = None
 
@@ -31,16 +31,16 @@ def __connect():
     init connection to remote server. Server adress and port is taken from the data module.
     :return: void
     """
-    global json_connection
+    global control_channel
     tmp_sock = socket.socket()
     tmp_sock.connect((data.host, data.control_port))
 
-    json_connection = JsonSocket(tmp_sock)
+    control_channel = JsonSocket(tmp_sock)
 
     con_msg = Msg(data.login_name, cmd_id=msg.Type.CMD_CONNECT)
 
 
-    json_connection.send(con_msg)
+    control_channel.send(con_msg)
     # http://cpiekarski.com/2011/05/09/super-easy-python-json-client-server/
 
     t = threading.Thread(target=__check_for_new_msgs)
@@ -54,7 +54,7 @@ def __check_for_new_msgs():
     :return: void
     """
     while True:
-        msg_dict = json_connection.check_for_new_msg()
+        msg_dict = control_channel.check_for_new_msg()
         if msg_dict is not None:
             cmd = int(msg_dict['cmd_id'])
             ack = int(msg_dict['ack'])
@@ -64,6 +64,7 @@ def __check_for_new_msgs():
                 pass
             else:
                 pass
+
 
 def add_files(files):
     files = filter_files(files)
@@ -78,8 +79,14 @@ def filter_files(files):
 
 def add_file(path):
     log.d('Adding file: {}'.format(os.path.basename(path)))
-    file_send_connection.transfer_file(os.path.basename(path), path)
-    # TODO last worked here, test if file is transferred
+
+    file_name = os.path.basename(path)
+
+    add_media_msg = Msg(file_name,file_transfer=1, cmd_id=msg.Type.ADD_DISPLAYABLE_FILE)
+    control_channel.send(add_media_msg)
+
+    file_send_connection.transfer_file(file_name, path)
+
 
 def add_ticker_elt(*args):
     raise NotImplementedError

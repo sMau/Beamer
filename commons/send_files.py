@@ -34,7 +34,7 @@ class SendFiles:
         Transfer a file using this file sender. Uses an own thread, so returns immediately.
         :param name: name of the file to send
         :param path: full path to the file
-        :return: void
+        :return: id of the file transfer
         """
 
         logger.debug('Transfering file %s' % path)
@@ -46,7 +46,6 @@ class SendFiles:
             if not self.__t.is_alive():
                 self.__t = threading.Thread(target=self.__transfer)
                 self.__t.start()
-
 
     def __transfer(self):
         """
