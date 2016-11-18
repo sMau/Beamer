@@ -68,6 +68,5 @@ class JsonSocket:
 
         logging.debug('Sending msg. Length: %s, msg: %s' % (length, packed_msg))
         byte_length = struct.pack('!I', length)  # '!I' -> using network byteorder
-        print(byte_length)
         self.__socket.send(byte_length)
         self.__socket.send(packed_msg)

@@ -56,14 +56,23 @@ def __check_for_new_msgs():
     while True:
         msg_dict = control_channel.check_for_new_msg()
         if msg_dict is not None:
-            cmd = int(msg_dict['cmd_id'])
-            ack = int(msg_dict['ack'])
+            log.d('Received new msg: {}'.format(msg_dict))
+
+            msg_dec = Msg(from_dict_magic=msg_dict)
+
+            cmd = msg_dec.cmd_id
+            ack = msg_dec.ack
+
+            log.d('decoded msg: {!s}'.format(msg_dec))
+
             if cmd == msg.Type.CMD_CONNECT and ack == 1:
                 __login_success()
+            elif cmd == msg.Type.ADD_DISPLAYABLE_FILE and ack == 1:
+                data.add_media((msg_dec.data[0]))
             elif cmd == msg.Type.CMD_UNDEFINED:
                 pass
             else:
-                pass
+                log.e('Received msg with unknown cmd_id: {!s}'.format(cmd))
 
 
 def add_files(files):
@@ -118,5 +127,6 @@ def __login_success():
     :return: void
     """
     global file_send_connection
+    log.d('Login successful.')
     gui.login_success()
     file_send_connection = send_files.SendFiles(data.host, logger_name='beamer_client')

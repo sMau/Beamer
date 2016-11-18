@@ -80,10 +80,8 @@ def __check_for_new_messages():
         for con_key in list(connections):
             try:
                 msg_dict = connections[con_key].check_for_new_msg()
-
-                logger.debug('Received msg on control channel: {}'.format(str(msg_dict)))
-
                 if msg_dict is not None:
+                    logger.debug('Received msg on control channel: {}'.format(str(msg_dict)))
                     cmd = int(msg_dict[msg.KEY_CMD_ID])
 
                     if cmd == msg.Type.CMD_CONNECT:

@@ -51,7 +51,7 @@ class MainDisplayable(metaclass=ABCMeta):
         self.type = None
 
     def __str__(self):
-        return self.id + ', ' + self.name + ', ' + type_to_text(self.type) + ', ' + self.duration
+        return str(self.id) + ', ' + self.name + ', ' + type_to_text(self.type) + ', ' + str(self.duration)
 
 
 class Countdown(MainDisplayable):
@@ -70,7 +70,7 @@ class MediaFile(MainDisplayable):
     Media file, i.e., a video or a image file displayable in the main frame.
     """
     def __init__(self, name, path, type=TYPE_IMAGE):
-        super(MediaFile, self).__init__(id, name)
+        super(MediaFile, self).__init__(name)
         self.path = path
         self.type = type
 

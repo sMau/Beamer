@@ -1,4 +1,5 @@
 import json
+import logging
 
 
 SEQ_DEF_VALUE = 0
@@ -37,13 +38,23 @@ class Msg(object):
     Add ticket txt elt 0 -> text
     Remove x: 0 -> id
     """
-    def __init__(self, *args, file_transfer=0, ack=0, cmd_id=Type.CMD_UNDEFINED):
+    def __init__(self, *args, file_transfer=0, ack=0, cmd_id=Type.CMD_UNDEFINED, from_dict_magic=None):
+
         self.seq_no = SEQ_DEF_VALUE
         self.file_transfer = file_transfer
         self.ack = ack
         self.cmd_id = cmd_id
         self.init_msg = 0
         self.data = list(args)
+
+        if from_dict_magic:
+            self.__dict__.update(from_dict_magic)
+            for k, v in from_dict_magic.items():
+                if isinstance(v, dict):
+                    self.__dict__[k] = Msg(v)
+
+    def __str__(self):
+        return 'CMD ID: {!s}, ACK: {!s}, FTrans: {!s}'.format(self.cmd_id, self.ack, self.file_transfer)
 
     def pack(self):
         """
@@ -58,4 +69,14 @@ class Msg(object):
         :return: JSON formatted string from a obj
         """
 
-        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+        return json.dumps(self, default=_json_parse_helper, sort_keys=True, indent=4)
+
+
+def _json_parse_helper(o):
+    """
+    Function to parse any python object to a json parsable dict representation.
+    :param o: to parse
+    :return: dict representation of o
+    """
+    return o.__dict__
+
