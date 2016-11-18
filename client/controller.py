@@ -6,6 +6,7 @@ import os
 import client.data as data
 from client import log
 from commons import msg, send_files
+from commons.displayables import MediaFile
 from commons.json_socket import JsonSocket
 from commons.msg import Msg
 
@@ -68,7 +69,7 @@ def __check_for_new_msgs():
             if cmd == msg.Type.CMD_CONNECT and ack == 1:
                 __login_success()
             elif cmd == msg.Type.ADD_DISPLAYABLE_FILE and ack == 1:
-                data.add_media((msg_dec.data[0]))
+                data.add_media(MediaFile('','', from_dict_magic=msg_dec.data[0]))
             elif cmd == msg.Type.CMD_UNDEFINED:
                 pass
             else:

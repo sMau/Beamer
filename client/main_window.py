@@ -41,7 +41,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         controller.tear_up(self)
         log.i('Connection established.')
 
-    #TODO last worked here, next: 1. make it possible to add file; 2. send Ack; 3. Show file in table in the client
     def trig_add_file(self):
         files = QtWidgets.QFileDialog.getOpenFileNames()[0]
         log.d('Files selected, uploading now {}'.format(files))

@@ -25,7 +25,7 @@ def add_media(m:MainDisplayable):
     :return:
     """
     media.add(m)
-    log.i('Media File added successfully: {!s}'.format(m))
+    log.i('Media File added successfully: {!s}'.format(m.name))
 
 
 def serialize_gui_config():

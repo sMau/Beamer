@@ -49,9 +49,7 @@ class Msg(object):
 
         if from_dict_magic:
             self.__dict__.update(from_dict_magic)
-            for k, v in from_dict_magic.items():
-                if isinstance(v, dict):
-                    self.__dict__[k] = Msg(v)
+
 
     def __str__(self):
         return 'CMD ID: {!s}, ACK: {!s}, FTrans: {!s}'.format(self.cmd_id, self.ack, self.file_transfer)

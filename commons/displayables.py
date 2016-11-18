@@ -69,10 +69,13 @@ class MediaFile(MainDisplayable):
     """
     Media file, i.e., a video or a image file displayable in the main frame.
     """
-    def __init__(self, name, path, type=TYPE_IMAGE):
+    def __init__(self, name, path, type=TYPE_IMAGE, from_dict_magic=None):
         super(MediaFile, self).__init__(name)
         self.path = path
         self.type = type
+
+        if from_dict_magic:
+            self.__dict__.update(from_dict_magic)
 
 
     def get_preview(self):
@@ -100,4 +103,4 @@ class TickerTxtElt(TickerDisplayable):
         self.text = text
 
     def __str__(self):
-        return super(TickerTxtElt, self).__str__() + ', ' + self.text
+        return super(TickerTxtElt, self).__str__() + ', ' + self.texts
