@@ -38,9 +38,9 @@ def tear_up(srv_gui, host='127.0.0.1', port=11111, file_srv_port=11112):
     """
     Open connection to listen for incoming messages.
     Start file receiver.
-    :param port: port the controll server should listen on
+    :param port: port the control server should listen on
     :param file_srv_port: port the file server should listen on
-    :param host: IP adress to bind to
+    :param host: IP address to bind to
     :param srv_gui: current server gui object
     :return: void
     """

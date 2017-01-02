@@ -25,7 +25,9 @@ console.setLevel(logging.DEBUG)
 console.setFormatter(form)
 logger.addHandler(console)
 
-status_bar = None
+
+log_to_gui_signal = None
+
 
 def d(msg):
     """
@@ -85,5 +87,5 @@ def __log_to_gui(msg, exc=None):
     :param exc: Exception
     :return: void
     """
-    if status_bar is not None:
-        status_bar.showMessage(msg)
+    if log_to_gui_signal is not None:
+        log_to_gui_signal.emit(msg)

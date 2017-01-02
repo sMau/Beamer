@@ -77,7 +77,6 @@ class MediaFile(MainDisplayable):
         if from_dict_magic:
             self.__dict__.update(from_dict_magic)
 
-
     def get_preview(self):
         raise NotImplementedError('Get Preview is not implemented yet.')
 
@@ -91,16 +90,19 @@ class TickerDisplayable(metaclass=ABCMeta):
         self.enabled = True
 
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 
 class TickerTxtElt(TickerDisplayable):
     """
     Text elements displayable in the beamers ticker frame.
     """
-    def __init__(self, text):
+    def __init__(self, text, from_dict_magic=None):
         super(TickerTxtElt, self).__init__()
         self.text = text
 
+        if from_dict_magic:
+            self.__dict__.update(from_dict_magic)
+
     def __str__(self):
-        return super(TickerTxtElt, self).__str__() + ', ' + self.texts
+        return super(TickerTxtElt, self).__str__() + ', ' + self.text

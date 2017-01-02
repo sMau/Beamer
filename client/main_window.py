@@ -1,12 +1,13 @@
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QApplication
-
+from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtCore import QObject
 from client import controller, log
 from client.main_window_gen import Ui_MainWindow
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+
+    log_to_gui_sig = QtCore.pyqtSignal(str)
 
     def automode_changed(self):
         pass
@@ -33,7 +34,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
         self.actionAdd_File.triggered.connect(self.trig_add_file)
-        log.status_bar = self.statusBar()
+        self.actionAdd_Ticker.triggered.connect(self.trig_add_ticker_txt_elt)
+
+        self.log_to_gui_sig.connect(self.handle_log_to_gui)
+
+
+        log.log_to_gui_signal = self.log_to_gui_sig
+
         connect_to, ok_clicked = QtWidgets.QInputDialog.getText(self, 'Connect', 'Host')
         if not ok_clicked:
             sys.exit(0)
@@ -41,7 +48,20 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         controller.tear_up(self)
         log.i('Connection established.')
 
+
+
     def trig_add_file(self):
         files = QtWidgets.QFileDialog.getOpenFileNames()[0]
         log.d('Files selected, uploading now {}'.format(files))
         controller.add_files(files)
+
+    def trig_add_ticker_txt_elt(self):
+
+        text, ok_clicked = QtWidgets.QInputDialog.getText(self, 'Add Ticker Element', 'Text')
+        if ok_clicked:
+            log.d('Adding ticker element with text: {}'.format(text))
+            controller.add_ticker_elt(text)
+
+
+    def handle_log_to_gui(self, msg:str):
+        self.statusbar.showMessage(msg)

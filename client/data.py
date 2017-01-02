@@ -1,7 +1,8 @@
+from PyQt5 import QtCore
 from os.path import expanduser
 
 from client import log
-from commons.displayables import MainDisplayable
+from commons.displayables import MainDisplayable, TickerDisplayable
 
 BASE_PATH = expanduser('~') + '/.beamersoftware_client/'
 MEDIA_PATH = BASE_PATH + 'media/'
@@ -26,6 +27,12 @@ def add_media(m:MainDisplayable):
     """
     media.add(m)
     log.i('Media File added successfully: {!s}'.format(m.name))
+
+
+def add_ticker_element(e:TickerDisplayable):
+    ticker_elements.add(e)
+
+    log.i('Ticker element added successfully: {!s}'.format(e.text))
 
 
 def serialize_gui_config():
