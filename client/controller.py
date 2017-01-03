@@ -73,7 +73,7 @@ def __check_for_new_msgs():
             elif cmd == msg.Type.ADD_TICKER_TXTELT and ack == 1:
                 data.add_ticker_element(TickerTxtElt('', from_dict_magic=msg_dec.data[0]))
             elif cmd == msg.Type.ADD_COUNTDOWN and ack == 1:
-                data.add_media(Countdown('', from_dict_magic=msg_dec.data[0]))
+                data.add_media(Countdown('', 0, from_dict_magic=msg_dec.data[0]))
             elif cmd == msg.Type.CMD_UNDEFINED:
                 pass
             else:

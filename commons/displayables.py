@@ -45,7 +45,7 @@ class MainDisplayable(metaclass=ABCMeta):
         self.id = _generate_random_uuid()
         self.name = name
         self.show_count = 0
-        self.background_color = 0
+        self.background_color = (0,0,0)
         self.enabled = True
         self.duration = duration
         self.type = None
@@ -61,8 +61,8 @@ class Countdown(MainDisplayable):
     def __init__(self, name: str, duration: int, background_color: (int,int,int)=(0,0,0), foreground_color: (int,int,int)=(255,255,255), from_dict_magic: dict=None):
         super(Countdown, self).__init__(name, duration=duration)
         self.type = TYPE_COUNTDOWN
-        self.bg_col = background_color
-        self.fg_col = foreground_color
+        self.background_color = background_color
+        self.foreground_color = foreground_color
 
         if from_dict_magic:
             self.__dict__.update(from_dict_magic)

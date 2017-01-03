@@ -35,9 +35,10 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.actionAdd_File.triggered.connect(self.trig_add_file)
         self.actionAdd_Ticker.triggered.connect(self.trig_add_ticker_txt_elt)
+        self.actionAdd_Countdown.triggered.connect(self.trig_add_countdown)
+        self.actionAdd_Slide.triggered.connect(self.trig_add_slide)
 
-        self.log_to_gui_sig.connect(self.handle_log_to_gui)
-
+        self.log_to_gui_sig.connect(self.log_to_gui)
 
         log.log_to_gui_signal = self.log_to_gui_sig
 
@@ -47,8 +48,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         log.i('Connecting to {}'.format(connect_to))
         controller.tear_up(self)
         log.i('Connection established.')
-
-
 
     def trig_add_file(self):
         files = QtWidgets.QFileDialog.getOpenFileNames()[0]
@@ -62,6 +61,15 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             log.d('Adding ticker element with text: {}'.format(text))
             controller.add_ticker_elt(text)
 
+    def trig_add_countdown(self):
+        # TODO extend the input dialog to be able to add bg and fg color and a name
+        duration, ok_clicked = QtWidgets.QInputDialog.getInt(self, 'Add Countdown', 'Duration in seconds')
+        if ok_clicked:
+            log.d('Add countdown with duration: {!s}'.format(duration))
+            controller.add_countdown('Countdown_Name', duration)
 
-    def handle_log_to_gui(self, msg:str):
+    def trig_add_slide(self):
+        pass
+
+    def log_to_gui(self, msg:str):
         self.statusbar.showMessage(msg)
