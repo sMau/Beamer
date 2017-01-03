@@ -34,7 +34,7 @@ class Msg(object):
 
     Add file: 0 -> displayable name, 1 -> type vid/img
     Add file ack: 0 -> MediaFile(MainDisplayable)
-    Add countdown 0 -> name, 1 -> duration
+    Add countdown 0 -> name, 1 -> duration, 2 -> background_col (rgb), 3 -> foreground_col (rgb)
     Add ticket txt elt 0 -> text
     Remove x: 0 -> id
     """

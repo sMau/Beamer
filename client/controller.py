@@ -6,7 +6,7 @@ import os
 import client.data as data
 from client import log
 from commons import msg, send_files
-from commons.displayables import MediaFile, TickerTxtElt
+from commons.displayables import MediaFile, TickerTxtElt, Countdown
 from commons.json_socket import JsonSocket
 from commons.msg import Msg
 
@@ -72,6 +72,8 @@ def __check_for_new_msgs():
                 data.add_media(MediaFile('','', from_dict_magic=msg_dec.data[0]))
             elif cmd == msg.Type.ADD_TICKER_TXTELT and ack == 1:
                 data.add_ticker_element(TickerTxtElt('', from_dict_magic=msg_dec.data[0]))
+            elif cmd == msg.Type.ADD_COUNTDOWN and ack == 1:
+                data.add_media(Countdown('', from_dict_magic=msg_dec.data[0]))
             elif cmd == msg.Type.CMD_UNDEFINED:
                 pass
             else:
@@ -101,12 +103,19 @@ def add_file(path):
 
 
 def add_ticker_elt(text:str):
-    # TODO NEXT! 1. make adding ticker elements possible. 2. Make countdowns addable. 3. hole adding fine tuning, i.e. filtering of non valid media etc
+    # TODO NEXT!  2. Make countdowns addable. 3. hole adding fine tuning, i.e. filtering of non valid media etc
     log.d('Adding ticker text element: {}'.format(text))
 
     add_tick_msg = Msg(text, cmd_id=msg.Type.ADD_TICKER_TXTELT)
 
     control_channel.send(add_tick_msg)
+
+
+def add_countdown(name, duration, background_color=(0,0,0), foreground_color=(255,255,255)):
+    log.d('Add countdown: {!s}, Duration: {!s}'.format(name, duration))
+
+    add_cntdwn_msg = Msg(name, duration, background_color, foreground_color, file_transfer=0, cmd_id=msg.Type.ADD_COUNTDOWN, ack=0)
+    control_channel.send(add_cntdwn_msg)
 
 
 def remove_something(media_id):

@@ -167,7 +167,10 @@ def __add_countdown(msg_dict : dict):
     name = msg_dict[msg.KEY_DATA][0]
     duration = msg_dict[msg.KEY_DATA][1]
 
-    countdown = Countdown(name, duration)
+    bg_col = msg_dict[msg.KEY_DATA][2]
+    fg_col = msg_dict[msg.KEY_DATA][3]
+
+    countdown = Countdown(name, duration, background_color=bg_col, foreground_color=fg_col)
 
     logger.info('Adding countdown %s' % countdown)
     c = data.add_media(countdown)
@@ -235,7 +238,6 @@ def __update_property(msg_dict):
 
     m = Msg(key, value, ack=1, cmd_id=msg.Type.CMD_PROP_UPDATE)
     broadcast(m)
-
 
 
 def shutdown_gracefully():

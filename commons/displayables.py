@@ -58,18 +58,21 @@ class Countdown(MainDisplayable):
     """
     Countdown text-based, displayable in the main frame.
     """
-    # TODO choose good formating for colors and select proper defaults for countdown
-    def __init__(self, name, duration, background_color=0, foreground_color=0):
+    def __init__(self, name: str, duration: int, background_color: (int,int,int)=(0,0,0), foreground_color: (int,int,int)=(255,255,255), from_dict_magic: dict=None):
         super(Countdown, self).__init__(name, duration=duration)
         self.type = TYPE_COUNTDOWN
+        self.bg_col = background_color
+        self.fg_col = foreground_color
 
+        if from_dict_magic:
+            self.__dict__.update(from_dict_magic)
 
 
 class MediaFile(MainDisplayable):
     """
     Media file, i.e., a video or a image file displayable in the main frame.
     """
-    def __init__(self, name, path, type=TYPE_IMAGE, from_dict_magic=None):
+    def __init__(self, name: str, path: str, type=TYPE_IMAGE, from_dict_magic: dict=None):
         super(MediaFile, self).__init__(name)
         self.path = path
         self.type = type
@@ -97,7 +100,7 @@ class TickerTxtElt(TickerDisplayable):
     """
     Text elements displayable in the beamers ticker frame.
     """
-    def __init__(self, text, from_dict_magic=None):
+    def __init__(self, text: str, from_dict_magic: dict=None):
         super(TickerTxtElt, self).__init__()
         self.text = text
 
