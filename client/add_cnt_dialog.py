@@ -11,11 +11,15 @@ from client.add_cnt_dialog_gen import Ui_AddCountdownDialog
 
 class AddCountdownDialog(QDialog, Ui_AddCountdownDialog):
 
+    ok_clicked = False
+    duration = 60
     change_by_seconds = True
 
     def __init__(self, parent=None):
         super(AddCountdownDialog, self).__init__(parent)
         self.setupUi(self)
+
+        self.setWindowModality(QtCore.Qt.WindowModal)
 
         self.radBtnInSeconds.setChecked(True)
         self.durationAsDate.setEnabled(False)
@@ -29,7 +33,11 @@ class AddCountdownDialog(QDialog, Ui_AddCountdownDialog):
         self.durationAsDate.setMinimumTime(QtCore.QTime(now.hour, now.minute + 1, now.second))
         self.durationAsDate.setTime(QtCore.QTime(now.hour, now.minute + 1, now.second))
 
-        self.show()
+        self.buttonBox.accepted.connect(self.set_duration)
+
+    def set_duration(self):
+        self.duration = self.durationInSeconds.value()
+        self.ok_clicked = True
 
     def duration_in_seconds_changed(self):
         if self.change_by_seconds:
