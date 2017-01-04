@@ -154,7 +154,7 @@ def file_transfer_finished(name, file_path):
 
 def __add_displayable_msg(msg_dict):
     name = msg_dict[msg.KEY_DATA][0]
-    type = displayables.TYPE_IMAGE # TODO determine type correctly!!! At the moment assume always image type
+    type = displayables.determine_file_type(name)
     file_receive_backlog[name] = name, type
 
 

@@ -5,7 +5,7 @@ import os
 
 import client.data as data
 from client import log
-from commons import msg, send_files
+from commons import msg, send_files, displayables
 from commons.displayables import MediaFile, TickerTxtElt, Countdown
 from commons.json_socket import JsonSocket
 from commons.msg import Msg
@@ -81,14 +81,8 @@ def __check_for_new_msgs():
 
 
 def add_files(files):
-    files = filter_files(files)
     for f in files:
         add_file(f)
-
-
-def filter_files(files):
-    # TODO, filter non media files out, or files the server cannot work with
-    return files
 
 
 def add_file(path):
@@ -96,14 +90,13 @@ def add_file(path):
 
     file_name = os.path.basename(path)
 
-    add_media_msg = Msg(file_name,file_transfer=1, cmd_id=msg.Type.ADD_DISPLAYABLE_FILE)
+    add_media_msg = Msg(file_name, file_transfer=1, cmd_id=msg.Type.ADD_DISPLAYABLE_FILE)
     control_channel.send(add_media_msg)
 
     file_send_connection.transfer_file(file_name, path)
 
 
 def add_ticker_elt(text:str):
-    # TODO NEXT!  2. Make countdowns addable. 3. hole adding fine tuning, i.e. filtering of non valid media etc
     log.d('Adding ticker text element: {}'.format(text))
 
     add_tick_msg = Msg(text, cmd_id=msg.Type.ADD_TICKER_TXTELT)

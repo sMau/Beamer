@@ -1,6 +1,9 @@
 import uuid
 from abc import ABCMeta, abstractmethod
 
+IMAGE_EXTENSIONS_VALID = ('.png', '.jpg', '.jpeg', '.tiff', '.bmp')
+VIDEO_EXTENSIONS_VALID = ('.mkv', '.mv4', '.mp4', '.mpeg', '.mpg', '.avi', '.flv')
+
 TYPE_UNDEFINED = -1
 TYPE_COUNTDOWN = 0
 TYPE_IMAGE = 1
@@ -24,11 +27,16 @@ def type_to_text(media_type):
 
 def _generate_random_uuid():
     """
-
     :return: random uuid 128 Bit
     """
 
     return uuid.uuid4()
+
+def determine_file_type(file: str):
+    if file.lower().endswith(IMAGE_EXTENSIONS_VALID):
+        return TYPE_IMAGE
+    elif file.lower().endswith(VIDEO_EXTENSIONS_VALID):
+        return TYPE_VIDEO
 
 
 class MainDisplayable(metaclass=ABCMeta):

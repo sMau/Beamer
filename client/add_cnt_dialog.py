@@ -1,11 +1,9 @@
 import datetime
 
-import time
 from PyQt5 import QtCore
 
 from PyQt5.QtWidgets import QDialog
 
-from client import log
 from client.add_cnt_dialog_gen import Ui_AddCountdownDialog
 
 
@@ -14,6 +12,7 @@ class AddCountdownDialog(QDialog, Ui_AddCountdownDialog):
     ok_clicked = False
     duration = 60
     change_by_seconds = True
+    countdown_name = ''
 
     def __init__(self, parent=None):
         super(AddCountdownDialog, self).__init__(parent)
@@ -33,11 +32,12 @@ class AddCountdownDialog(QDialog, Ui_AddCountdownDialog):
         self.durationAsDate.setMinimumTime(QtCore.QTime(now.hour, now.minute + 1, now.second))
         self.durationAsDate.setTime(QtCore.QTime(now.hour, now.minute + 1, now.second))
 
-        self.buttonBox.accepted.connect(self.set_duration)
+        self.buttonBox.accepted.connect(self.accept_trig)
 
-    def set_duration(self):
+    def accept_trig(self):
         self.duration = self.durationInSeconds.value()
         self.ok_clicked = True
+        self.countdown_name = self.lineEditName.text()
 
     def duration_in_seconds_changed(self):
         if self.change_by_seconds:

@@ -29,7 +29,7 @@ class JsonSocket:
         :return: Either returns the decoded msg as decoded dict or returns None.
         """
         logging.debug('Checking connection %s for new msgs.' % str(self.__con_key))
-        l_data = self.__socket.recv(4)  # TODO check for correctness (if in any case exactly 4 bytes are received)
+        l_data = self.__socket.recv(4)
         if len(l_data) > 0:
             logging.debug('received %s bytes' % str(len(l_data)))
             # '!I' -> using network byteorder

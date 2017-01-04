@@ -63,13 +63,13 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
             controller.add_ticker_elt(text)
 
     def trig_add_countdown(self):
-        # TODO extend the input dialog to be able to add bg and fg color and a name
+        # TODO extend the input dialog to be able to add bg and fg color
         dialog = AddCountdownDialog(self)
         dialog.exec_()
 
         if dialog.ok_clicked:
             log.d('Add countdown with duration: {!s}'.format(dialog.duration))
-            controller.add_countdown('Countdown_Name', dialog.duration)
+            controller.add_countdown(dialog.countdown_name, dialog.duration)
 
     def trig_add_slide(self):
         pass
