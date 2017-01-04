@@ -19,4 +19,5 @@ HEADERS  += mainwindow.h
 
 FORMS    += \
     mainwindow.ui \
-    busy_dialog.ui
+    busy_dialog.ui \
+    add_cntdwn_dialog.ui
